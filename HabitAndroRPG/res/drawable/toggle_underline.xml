@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:state_window_focused="true"
+          android:drawable="@drawable/toggle_underline_activated"/>
+    <item android:state_checked="true"
+          android:drawable="@drawable/toggle_underline_activated"/>
+    <item
+          android:drawable="@drawable/toggle_underline_normal"/>
+</selector>

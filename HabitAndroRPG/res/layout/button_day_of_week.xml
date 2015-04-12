@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="48dp"
+    android:layout_width="48dp"
+    android:padding="0dp"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:gravity="center"
+    android:background="@drawable/item_background"
+    >
+    <ToggleButton
+        android:id="@+id/TB_choice"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:padding="0dp"
+        android:textColor="@color/days_gray"
+        android:background="@drawable/toggle_underline"
+        android:clickable="false"
+        android:singleLine="true"/>
+</FrameLayout>

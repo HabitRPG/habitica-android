@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/PS_param_title">
+    <com.magicmicky.habitrpgmobileapp.prefs.CustomListPreference
+        android:key="@string/SP_address"
+        android:title="@string/SP_address_title"
+	    android:dialogTitle="@string/SP_address_title"
+        android:entries="@array/prefs_items_array"
+		android:entryValues="@array/prefs_items_values"
+        android:summary="@string/SP_address_summary"
+        android:defaultValue="@string/SP_address_default"
+        android:descendantFocusability="afterDescendants"/>
+        
+   <EditTextPreference
+        android:key="@string/SP_userID"
+        android:title="@string/SP_userID_title"
+        android:summary="@string/SP_userID_summary"/>
+   <EditTextPreference
+        android:key="@string/SP_APIToken"
+        android:title="@string/SP_APIToken_title"
+        android:summary="@string/SP_APIToken_summary"/>
+
+</PreferenceScreen>

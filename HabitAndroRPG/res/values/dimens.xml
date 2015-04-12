@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">8dp</dimen>
+	<dimen name="card_vertical_padding">16dip</dimen>
+	<dimen name="card_horizontal_padding">4dip</dimen>
+
+	<dimen name="card_large_text">25.0sp</dimen>
+    <dimen name="card_medium_text">18.0sp</dimen>
+    <dimen name="card_small_text">14.0sp</dimen>
+    <dimen name="card_padding">16.0dip</dimen>
+
+	<dimen name="bar_size">25dp</dimen>
+	<dimen name="bar_padding">5dp</dimen>
+	<dimen name="avatar_width">90dp</dimen>
+    <dimen name="avatar_height">70dp</dimen>
+    <dimen name="header_height">70dp</dimen>
+
+	<dimen name="new_task_bar_size">48dp</dimen>
+	<dimen name="new_task_bat_btn_width">48dp</dimen>
+	<dimen name="new_task_bat_btn_padding">8dp</dimen>
+	<dimen name="PB_marginBottom">-10dp</dimen>
+	<dimen name="btn_separator_margin">4dip</dimen>
+
+	<dimen name="list_preferred_item_height">48dp</dimen>
+	<dimen name="minus_plus_buttonsize">50dp</dimen>
+	<dimen name="view_layout_margin">4dp</dimen>
+	<dimen name="row_size">58dp</dimen>
+    <dimen name="btn_height_reward">50dp</dimen>
+</resources>
