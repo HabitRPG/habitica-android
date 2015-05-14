@@ -28,4 +28,7 @@
 	<dimen name="view_layout_margin">4dp</dimen>
 	<dimen name="row_size">58dp</dimen>
     <dimen name="btn_height_reward">50dp</dimen>
+
+    <!-- Widget -->
+    <dimen name="widget_bar_horizontal_margin">20dp</dimen>
 </resources>

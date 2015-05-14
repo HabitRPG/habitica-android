@@ -28,7 +28,7 @@
         android:layout_height="@dimen/avatar_height"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/widget_bar_horizontal_margin"
         >
             <FrameLayout
                 android:layout_width="match_parent"
@@ -48,6 +48,7 @@
                     android:layout_height="@dimen/bar_size"
                     android:gravity="center|right"
                     android:background="@drawable/border"
+                    android:paddingRight="5dp"
                     android:text="HP" />
 
             </FrameLayout>
@@ -69,6 +70,7 @@
                     android:layout_height="@dimen/bar_size"
                     android:gravity="center|right"
                     android:background="@drawable/border"
+                    android:paddingRight="5dp"
                     android:text="XP" />
             </FrameLayout>
         </LinearLayout>
@@ -79,6 +81,7 @@
             android:scaleType="fitStart"
             android:src="@drawable/ic_menu_refresh"
             android:layout_gravity="top|right"
+            android:layout_marginTop="5dp"
             android:background="@color/transparent"
             />
     </FrameLayout>

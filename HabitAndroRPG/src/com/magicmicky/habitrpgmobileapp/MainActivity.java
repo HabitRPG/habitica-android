@@ -14,6 +14,7 @@ import com.magicmicky.habitrpgmobileapp.callbacks.TaskDeletionCallback;
 import com.magicmicky.habitrpgmobileapp.callbacks.TaskScoringCallback;
 import com.magicmicky.habitrpgmobileapp.callbacks.TaskUpdateCallback;
 import com.magicmicky.habitrpgmobileapp.prefs.PrefsActivity;
+import com.magicmicky.habitrpgmobileapp.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.api.HabitItemCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -38,6 +39,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -289,10 +291,8 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 		((DailyFragment) mPagerAdapter.getItem(1)).setDayStart(user.getPreferences().getDayStart());
 		((RewardFragment) mPagerAdapter.getItem(3)).setGold(user.getStats().getGp());
 
-//		this.username_TV.setText(user.getName());
-//		if(user.getLook()!=null)
-//			this.mUserPicture.setImageBitmap(this.dealWithUserPicture(user.getLook()));
-		//this.mUserPicture.setImageBitmap(new UserPicture(1, this	).draw());
+		//this.username_TV.setText(user.getName());
+		this.mUserPicture.setImageBitmap(new UserPicture(user, this	).draw());
 
 		if(this.mDrawerList!=null) {
 			this.mTagAdapter.updateTags(user.getTags());
@@ -309,16 +309,6 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
         return user.getProfile().getName();
 	}
 
-	/*private Bitmap dealWithUserPicture(UserLook look) {
-		UserPicture up = new UserPicture(look, this);
-        Resources r = getResources();
-        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_width), r.getDisplayMetrics());
-        int h =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_height), r.getDisplayMetrics());
-        Bitmap img = up.draw();
-        Log.d(TAG + "_avatar", "width=" + w + " height =" + h);
-		return Bitmap.createScaledBitmap(img, w,h,false);
-
-	}*/
 	private void notifyUser(double xp, double hp, double gold,
 			double lvl, double delta) {
 		StringBuilder message = new StringBuilder();

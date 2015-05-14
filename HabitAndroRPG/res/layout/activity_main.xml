@@ -47,7 +47,8 @@
 		            android:layout_height="@dimen/bar_size"
 		            android:gravity="center|right"
 		            android:background="@drawable/border"
-		            android:text="HP" />
+		            android:text="HP"
+                    android:paddingRight="5dp" />
 	        </FrameLayout>
 	        <FrameLayout
 			    android:layout_width="match_parent"
@@ -65,7 +66,8 @@
 		            android:layout_height="@dimen/bar_size"
 		            android:gravity="center|right"
 		            android:background="@drawable/border"
-		            android:text="XP" />
+		            android:text="XP"
+                    android:paddingRight="5dp" />
 	        </FrameLayout>
 		</LinearLayout>
 </LinearLayout>

@@ -4,9 +4,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.magicmicky.habitrpgmobileapp.APIHelper;
@@ -15,6 +19,7 @@ import com.magicmicky.habitrpgmobileapp.MainActivity;
 import com.magicmicky.habitrpgmobileapp.R;
 import com.magicmicky.habitrpgmobileapp.callbacks.HabitRPGUserCallback;
 import com.magicmicky.habitrpgmobileapp.prefs.PrefsActivity;
+import com.magicmicky.habitrpgmobileapp.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import retrofit.Callback;
@@ -83,27 +88,27 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
         ComponentName thisWidget = new ComponentName(this,SimpleWidget.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
         for (int widgetId : allWidgetIds) {
-//            RemoteViews remoteViews = new RemoteViews(this.getPackageName(),R.layout.simple_widget);
-//            remoteViews.setTextViewText(R.id.TV_HP, "" + (int) user.getHp() + "/" + (int) user.getMaxHp() + " " + this.getString(R.string.HP_default));
-//            remoteViews.setTextViewText(R.id.TV_XP, "" + (int) user.getXp() + "/" + (int) user.getMaxXp() + " " + this.getString(R.string.XP_default));
-//            remoteViews.setImageViewBitmap(R.id.IMG_ProfilePicture, dealWithUserPicture(user.getLook(),this));
-//            remoteViews.setProgressBar(R.id.V_HPBar,(int)user.getMaxHp(),(int)user.getHp(),false);
-//            remoteViews.setProgressBar(R.id.V_XPBar,(int)user.getMaxXp(),(int)user.getXp(),false);
-//
-//            // If user click on refresh: refresh
-//            Intent clickIntent = new Intent(this.getApplicationContext(),SimpleWidget.class);
-//            clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//            clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
-//            PendingIntent updateIntent = PendingIntent.getBroadcast(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
-//
-//            //If user click on life and xp: open the app
-//            Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
-//            PendingIntent openApp = PendingIntent.getActivity(this,0,openAppIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-//            remoteViews.setOnClickPendingIntent(R.id.LL_header, openApp);
-//            remoteViews.setOnClickPendingIntent(R.id.IMG_ProfilePicture, openApp);
-//
-//            appWidgetManager.updateAppWidget(widgetId, remoteViews);
+            RemoteViews remoteViews = new RemoteViews(this.getPackageName(),R.layout.simple_widget);
+            remoteViews.setTextViewText(R.id.TV_HP, "" + user.getStats().getHp().intValue() + "/" + (int) user.getStats().getMaxHealth() + " " + this.getString(R.string.HP_default));
+            remoteViews.setTextViewText(R.id.TV_XP, "" + user.getStats().getExp().intValue() + "/" + (int) user.getStats().getToNextLevel() + " " + this.getString(R.string.XP_default));
+            remoteViews.setImageViewBitmap(R.id.IMG_ProfilePicture, dealWithUserPicture(user,this));
+            remoteViews.setProgressBar(R.id.V_HPBar,(int)user.getStats().getMaxHealth(), user.getStats().getHp().intValue(), false);
+            remoteViews.setProgressBar(R.id.V_XPBar,(int)user.getStats().getToNextLevel(),user.getStats().getExp().intValue(), false);
+
+            // If user click on refresh: refresh
+            Intent clickIntent = new Intent(this.getApplicationContext(),SimpleWidget.class);
+            clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+            PendingIntent updateIntent = PendingIntent.getBroadcast(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
+
+            //If user click on life and xp: open the app
+            Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+            PendingIntent openApp = PendingIntent.getActivity(this,0,openAppIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.LL_header, openApp);
+            remoteViews.setOnClickPendingIntent(R.id.IMG_ProfilePicture, openApp);
+
+           appWidgetManager.updateAppWidget(widgetId, remoteViews);
 
 
             //If user click on the
@@ -128,15 +133,14 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
         //TODO
     }
 
-//    private Bitmap dealWithUserPicture(UserLook look, Context c) {
-//        UserPicture up = new UserPicture(look, this);
-//        Resources r = getResources();
-//        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_width), r.getDisplayMetrics());
-//        int h =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_height), r.getDisplayMetrics());
-//        Bitmap img = up.draw();
-//        return Bitmap.createScaledBitmap(img, w,h,false);
-//
-//    }
+    private Bitmap dealWithUserPicture(HabitRPGUser look, Context c) {
+        UserPicture up = new UserPicture(look, this);
+        Resources r = getResources();
+        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_width), r.getDisplayMetrics());
+        int h =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_height), r.getDisplayMetrics());
+        Bitmap img = up.draw();
+        return Bitmap.createScaledBitmap(img, w,h,false);
+    }
 //
 //
 //    @Override public void onNewUser(String s, String s2) {}
