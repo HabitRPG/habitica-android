@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
@@ -253,6 +254,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener{
 					try {
 						value = Double.valueOf(this.taskValue.getText().toString()).intValue();
 					} catch(Exception e) {
+                        Crashlytics.logException(e);
 						e.printStackTrace();
 					}
 				h = new Reward(null, notes, null, text, value);

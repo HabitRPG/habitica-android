@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgmobileapp.callbacks;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 
 import retrofit.Callback;
@@ -25,6 +26,8 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
 
     @Override
     public void failure(RetrofitError error) {
+        Crashlytics.logException(error);
+        
         this.mCallback.onTaskScoringFailed();
         Log.w("TaskScoring", "Task scoring failed " + error.getMessage());
     }

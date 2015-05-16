@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgmobileapp.callbacks;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.HabitRPGInteractor;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
@@ -27,6 +28,8 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
 
     @Override
     public void failure(RetrofitError error) {
+        Crashlytics.logException(error);
+
         Log.w("OMG", "user failed!" + error.getMessage());
 
         mCallback.onUserFail();

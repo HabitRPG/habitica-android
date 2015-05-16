@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgmobileapp.callbacks;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 
 import retrofit.Callback;
@@ -24,6 +25,8 @@ public class TaskCreationCallback implements Callback<HabitItem> {
 
     @Override
     public void failure(RetrofitError error) {
+        Crashlytics.logException(error);
+
         callback.onTaskCreationFail();
         Log.w("HabitCreation", "Error " + error.getMessage());
     }
