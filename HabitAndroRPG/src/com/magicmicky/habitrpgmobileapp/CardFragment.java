@@ -298,7 +298,7 @@ public abstract class CardFragment extends Fragment implements OnTasksChanged {
 				this.tags.addAll(tagsIds);
 				List<HabitItem> tsks = new ArrayList<HabitItem>();
 				for(HabitItem it: this.tasks) {
-					if(it.isTagged(tagsIds)) {
+					if(it.getTags().containsAll(tagsIds)) {
 						tsks.add(it);
 					}
 				}
