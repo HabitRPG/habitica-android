@@ -55,6 +55,9 @@
         </receiver>
         <service android:name="com.magicmicky.habitrpgmobileapp.widget.UpdateWidgetService"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2eb3b3edb3b0f4722d37d649a5af366656e46ddd" />
     </application>
 
 </manifest>

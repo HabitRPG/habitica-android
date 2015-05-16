@@ -1,5 +1,7 @@
 package com.magicmicky.habitrpgmobileapp;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -177,6 +179,7 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 			 }
 		 });
 		FragmentManager fm = super.getSupportFragmentManager();
+		Fabric.with(this, new Crashlytics());
         mPagerAdapter = new MyPagerAdapter(fm);
         mPager = (ViewPager) findViewById(R.id.home_pannels_pager);
         mPager.setAdapter(mPagerAdapter);
