@@ -20,9 +20,10 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.magicmicky.habitrpgwrapper:lib:1.6'
-    aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.6:sources@jar'
+    compile 'com.magicmicky.habitrpgwrapper:lib:1.7'
+    aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.7:sources@jar'
 
+    compile 'com.android.support:appcompat-v7:18.0.+'
 }
 
 android {

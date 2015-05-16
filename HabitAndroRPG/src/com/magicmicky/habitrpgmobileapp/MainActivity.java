@@ -375,7 +375,7 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
         this.onPreResult();
 		if(!editMode) {
 			List<String> tagsIds = this.selectedTags;
-			task.setTagsId(tagsIds);
+			task.setTags(tagsIds);
 			this.mAPIHelper.createUndefNewTask(task, new TaskCreationCallback(this));
 		} else {
 			this.mAPIHelper.uprateUndefinedTask(task, new TaskUpdateCallback(this));
