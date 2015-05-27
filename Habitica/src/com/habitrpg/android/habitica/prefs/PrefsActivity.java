@@ -18,6 +18,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 
 public class PrefsActivity extends PreferenceActivity {
     protected Method mLoadHeaders = null;
@@ -30,9 +31,7 @@ public class PrefsActivity extends PreferenceActivity {
         if (mHasHeaders!=null && mLoadHeaders!=null) {
             try {
                 return (Boolean)mHasHeaders.invoke(this);
-            } catch (IllegalArgumentException e) {
-            } catch (IllegalAccessException e) {
-            } catch (InvocationTargetException e) {
+            } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ignored) {
             }
         }
         return false;
@@ -92,8 +91,15 @@ public class PrefsActivity extends PreferenceActivity {
         }
     }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressLint("NewApi")
 	static public class PrefsFragment extends PreferenceFragment {
@@ -129,4 +135,9 @@ public class PrefsActivity extends PreferenceActivity {
 			}		
 			return config;
 	}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
