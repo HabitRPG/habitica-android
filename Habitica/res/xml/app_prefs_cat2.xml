@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/PS_contact_title" >
+    <Preference
+    android:icon="@drawable/ic_action_twitter"
+    android:title="@string/SP_open_twitter"
+    android:summary="@string/SP_open_twitter_summary">
+       <intent android:action="android.intent.action.VIEW"
+        	android:data="https://twitter.com/MagicMicky" />
+        
+    </Preference>
+    <Preference 
+        android:title="@string/SP_licences"
+        android:summary="@string/SP_licences_summary">
+    	<intent android:action="android.intent.action.VIEW"
+    	    android:data="https://dl.dropboxusercontent.com/u/9280157/HabitRPGNotice.html"/>
+    </Preference>
+    <Preference
+        android:key="@string/SP_last_seen_version"
+        android:title="@string/title_changelog"
+        android:summary="@string/SP_see_changelog"/>
+</PreferenceScreen>

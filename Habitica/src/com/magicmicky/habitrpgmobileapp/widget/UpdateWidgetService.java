@@ -1,0 +1,159 @@
+package com.magicmicky.habitrpgmobileapp.widget;
+
+import android.app.PendingIntent;
+import android.app.Service;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.os.IBinder;
+import android.util.Log;
+import android.util.TypedValue;
+import android.widget.RemoteViews;
+
+import com.magicmicky.habitrpgmobileapp.APIHelper;
+import com.magicmicky.habitrpgmobileapp.HostConfig;
+import com.magicmicky.habitrpgmobileapp.MainActivity;
+import com.magicmicky.habitrpgmobileapp.R;
+import com.magicmicky.habitrpgmobileapp.callbacks.HabitRPGUserCallback;
+import com.magicmicky.habitrpgmobileapp.prefs.PrefsActivity;
+import com.magicmicky.habitrpgmobileapp.userpicture.UserPicture;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+/**
+ * The service that should update the simple widget
+ * @see com.magicmicky.habitrpgmobileapp.widget.SimpleWidget
+ * Created by Mickael on 01/11/13.
+ */
+public class UpdateWidgetService extends Service implements HabitRPGUserCallback.OnUserReceived {
+    private static final String LOG = ".simplewidget.service";
+    private AppWidgetManager appWidgetManager;
+    private APIHelper apiHelper;
+
+    @Override
+    public int onStartCommand(final Intent intent, int flags, int startId) {
+        Log.i(LOG, "Service onStart Called");
+
+        this.appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] allWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+        ComponentName thisWidget = new ComponentName(this,
+                SimpleWidget.class);
+        int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
+        Log.w(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
+        Log.w(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
+
+        HostConfig hc = PrefsActivity.fromContext(this);
+        if(hc!=null && hc.getApi()!=null && !hc.getApi().equals("") && hc.getUser()!=null && !hc.getUser().equals("") ) {
+            this.apiHelper = new APIHelper(this, hc);
+            apiHelper.retrieveUser(new HabitRPGUserCallback(this));
+            for (int widgetId : allWidgetIds) {
+                RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);
+                appWidgetManager.updateAppWidget(widgetId, remoteViews);
+            }
+        } else {
+            Log.w(LOG,"HostConfig is null");
+            for (int widgetId : allWidgetIds) {
+                RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);
+                RemoteViews textConnect = new RemoteViews(this.getPackageName(),R.layout.simple_textview);
+                textConnect.setTextViewText(R.id.TV_simple_textview,getString(R.string.please_connect));
+                remoteViews.removeAllViews(R.id.LL_header);
+                remoteViews.addView(R.id.LL_header, textConnect);
+
+
+                Intent clickIntent = new Intent(this.getApplicationContext(),SimpleWidget.class);
+                clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+                PendingIntent updateIntent = PendingIntent.getBroadcast(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
+
+                Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+                PendingIntent openApp = PendingIntent.getActivity(this,0,openAppIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+                remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp);
+                appWidgetManager.updateAppWidget(widgetId, remoteViews);
+
+            }
+        }
+        stopSelf();
+
+        return START_STICKY;
+    }
+
+    private void updateData(HabitRPGUser user, AppWidgetManager appWidgetManager) {
+        ComponentName thisWidget = new ComponentName(this,SimpleWidget.class);
+        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        for (int widgetId : allWidgetIds) {
+            RemoteViews remoteViews = new RemoteViews(this.getPackageName(),R.layout.simple_widget);
+            remoteViews.setTextViewText(R.id.TV_HP, "" + user.getStats().getHp().intValue() + "/" + (int) user.getStats().getMaxHealth() + " " + this.getString(R.string.HP_default));
+            remoteViews.setTextViewText(R.id.TV_XP, "" + user.getStats().getExp().intValue() + "/" + (int) user.getStats().getToNextLevel() + " " + this.getString(R.string.XP_default));
+            remoteViews.setImageViewBitmap(R.id.IMG_ProfilePicture, dealWithUserPicture(user,this));
+            remoteViews.setProgressBar(R.id.V_HPBar,(int)user.getStats().getMaxHealth(), user.getStats().getHp().intValue(), false);
+            remoteViews.setProgressBar(R.id.V_XPBar,(int)user.getStats().getToNextLevel(),user.getStats().getExp().intValue(), false);
+
+            // If user click on refresh: refresh
+            Intent clickIntent = new Intent(this.getApplicationContext(),SimpleWidget.class);
+            clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
+            PendingIntent updateIntent = PendingIntent.getBroadcast(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
+
+            //If user click on life and xp: open the app
+            Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+            PendingIntent openApp = PendingIntent.getActivity(this,0,openAppIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.LL_header, openApp);
+            remoteViews.setOnClickPendingIntent(R.id.IMG_ProfilePicture, openApp);
+
+           appWidgetManager.updateAppWidget(widgetId, remoteViews);
+
+
+            //If user click on the
+        }
+
+
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onUserReceived(HabitRPGUser user) {
+        this.updateData(user,appWidgetManager);
+
+    }
+
+    @Override
+    public void onUserFail() {
+        //TODO
+    }
+
+    private Bitmap dealWithUserPicture(HabitRPGUser look, Context c) {
+        UserPicture up = new UserPicture(look, this);
+        Resources r = getResources();
+        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_width), r.getDisplayMetrics());
+        int h =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_height), r.getDisplayMetrics());
+        Bitmap img = up.draw();
+        return Bitmap.createScaledBitmap(img, w,h,false);
+    }
+//
+//
+//    @Override public void onNewUser(String s, String s2) {}
+//    @Override public void onUserReceived(User user) {
+//        Log.i(LOG,"User received");
+//        updateData(user, appWidgetManager);
+//    }
+//    @Override public void onUserItemsReceived(UserLook.UserItems userItems, Reward.SpecialReward specialReward) {}
+//    @Override public void onPostResult(double v, double v2, double v3, double v4, double v5) {}
+//    @Override public void onPreResult() {}
+//    @Override public void onError(HabitRPGException e) {}
+//    @Override public void onPostTaskAnswer(HabitItem habitItem) {}
+//    @Override public void onDeletedTask(HabitItem habitItem) {}
+//    @Override public void onEditTaskAnswer(HabitItem habitItem) {}
+//    @Override public void onUserConnected(String s, String s2) {}
+}

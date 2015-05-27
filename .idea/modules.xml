@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HabitAndroRPG/HabitAndroRPG.iml" filepath="$PROJECT_DIR$/HabitAndroRPG/HabitAndroRPG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Habitica/Habitica.iml" filepath="$PROJECT_DIR$/Habitica/Habitica.iml" />
       <module fileurl="file://$PROJECT_DIR$/habitrpg-android.iml" filepath="$PROJECT_DIR$/habitrpg-android.iml" />
     </modules>
   </component>
 </project>
-

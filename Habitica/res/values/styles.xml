@@ -1,0 +1,82 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <!--
+          <style name="CardTitle">
+        <item name="android:id">@android:id/title</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+    -->
+	<style name="TextReservedToPremium">
+		<item name="android:textStyle">italic</item>
+		<item name="android:textAppearance">@android:style/TextAppearance.Small.Inverse</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textColor">@color/card_light_text</item>
+
+	</style>
+    <style name="CardText">
+        <item name="android:textSize">@dimen/card_small_text</item>
+        <item name="android:textColor">@color/card_text</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="CardLightText" parent="@style/CardText">
+        <item name="android:textColor">@color/card_light_text</item>
+    </style>
+
+
+    <style name="CardTitle" parent="@style/CardText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/card_large_text</item>
+        <item name="android:textColor">@color/card_title_text</item>
+    </style>
+    
+   <style name="body">
+        <item name="android:textSize">18sp</item>
+       <!-- <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>-->
+    </style>
+	<style name="PopupTheme" parent="android:Theme.Holo.Light.Dialog">
+	    <item name="android:windowIsFloating">false</item>
+	    <item name="android:windowContentOverlay">@null</item>
+	    <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+	    <item name="android:windowIsTranslucent">true</item>
+	</style>
+
+	<style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar">
+		<item name="android:maxHeight">1.0dip</item>
+		<item name="android:indeterminateOnly">false</item>
+		<item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal</item>
+		<item name="android:progressDrawable">@drawable/progress_indeterminate_horizontal</item>
+		<item name="android:minHeight">16.0dip</item>
+
+	</style>
+
+	<style name="MyOwnListSeperatorTextViewStyle">
+		<item name="android:background">@drawable/border_lightgray</item>
+		<item name="android:drawablePadding">4dp</item>
+		<item name="android:layout_marginTop">8dp</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:textAllCaps"
+            tools:targetApi="14">true</item>
+		<item name="android:textSize">14sp</item>
+
+
+	</style>
+
+
+</resources>

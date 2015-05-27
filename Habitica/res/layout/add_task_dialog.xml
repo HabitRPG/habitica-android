@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@android:color/background_light">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+	 	android:paddingLeft="@dimen/activity_vertical_margin"
+	 	android:paddingRight="@dimen/activity_vertical_margin">
+        <TextView
+            android:id="@+id/TV_taskText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <EditText
+            android:id="@+id/ET_taskText"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/create_task_hint"
+            android:inputType="textCapSentences|textNoSuggestions"
+            android:singleLine="true" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	 	android:paddingLeft="@dimen/activity_vertical_margin"
+	 	android:paddingRight="@dimen/activity_vertical_margin" >
+        <TextView
+            android:id="@+id/TV_taskNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_note"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/ET_taskNote"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+			android:minLines="2"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textCapSentences|textMultiLine"
+            android:hint="@string/task_note_hint">
+
+        </EditText>
+
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/repeat_days"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="top"
+            android:orientation="horizontal"
+            android:visibility="gone"
+		 	android:paddingLeft="@dimen/activity_vertical_margin"
+		 	android:paddingRight="@dimen/activity_vertical_margin">
+            <!-- Day buttons are put here programatically -->
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="top"
+            android:orientation="horizontal"
+			android:visibility="gone"
+		 	android:paddingLeft="@dimen/activity_vertical_margin"
+		 	android:paddingRight="@dimen/activity_vertical_margin">
+	        <TextView
+	            android:id="@+id/TV_value"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/task_value"
+	            android:textAppearance="?android:attr/textAppearanceLarge" />
+	        <EditText
+	            android:id="@+id/ET_taskValue"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:hint="@string/task_value_hint"
+				android:singleLine="true"
+				android:inputType="number|phone"
+				android:digits="1234567890"
+					/>
+        
+        </LinearLayout>    
+        <LinearLayout
+            android:id="@+id/due_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            android:visibility="gone"
+		 	android:paddingLeft="@dimen/activity_vertical_margin"
+		 	android:paddingRight="@dimen/activity_vertical_margin">
+	        <TextView
+	            android:id="@+id/TV_due_date"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/task_duedate"
+	            android:textAppearance="?android:attr/textAppearanceLarge" />
+	       	<TextView 
+				style="?android:attr/spinnerStyle"
+	       	    android:id="@+id/due_date_spinner"
+	           	android:layout_width="match_parent"
+	           	android:layout_height="wrap_content"
+	       	    />
+        </LinearLayout>
+</LinearLayout>
+</ScrollView>
