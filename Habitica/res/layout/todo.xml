@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.magicmicky.habitrpgmobileapp.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.android.habitica.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
 		android:layout_height="@dimen/row_size"
 		android:background="@drawable/item_background"
@@ -63,4 +63,4 @@
 <!--             android:paddingLeft="10dp" -->
 <!--             /> -->
 
-</com.magicmicky.habitrpgmobileapp.CheckableLinearLayout>
+</com.habitrpg.android.habitica.CheckableLinearLayout>

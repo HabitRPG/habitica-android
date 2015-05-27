@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Habit AndroRPG</string>
+    <string name="app_name">Habitica</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
     <string name="hello_world">Hello world!</string>
@@ -16,7 +16,7 @@
 	<string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
 	<string name="settings_changed">Settings were successfully updated!</string>
 	<string name="pref_dialog_title">HabitRPG settings</string>
-	<string name="string_pref_dialog_positive">Ok!</string>
+	<string name="string_pref_dialog_positive">OK</string>
 	<!--  Prefs -->
 	<string name="PS_param_title">Params</string>
 	<string name="PS_param_summary">Server config</string>
@@ -48,7 +48,7 @@
 	<string name="task_value">Value:</string>
 	<string name="task_up">Up</string>
 	<string name="task_down">Down</string>
-	<string name="dialog_confirm_button">Ok</string>
+	<string name="dialog_confirm_button">OK</string>
 	<string name="dialog_cancel_button">Cancel</string>
 	<string name="task_value_hint">20</string>
 	<string name="task_creation_fail">Task creation has failed: you need to provide a title</string>
@@ -105,7 +105,7 @@
 		Try to be more careful with your dailies, and manage those bad habits!
 	</string>
 	<string name="string_revive">Revive</string>
-    <string name="refreshing_widget">Refreshing widget...</string>
+    <string name="refreshing_widget">Refreshing widget…</string>
     <string name="please_connect">Please connect through the application before using a widget</string>
     <!--<string name="upgrade_premium_widget">To use the widget, please upgrade to premium.</string>-->
     <string name="title_changelog">Change log</string>

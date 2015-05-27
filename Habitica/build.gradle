@@ -28,7 +28,7 @@ dependencies {
     aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.7:sources@jar'
 
     compile 'com.android.support:appcompat-v7:18.0.+'
-    compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.3.0@aar') {
         transitive = true;
     }
 }

@@ -65,3 +65,4 @@ local.properties
 #Android keystore
 *.keystores
 signingrelease.properties
+fabric.properties

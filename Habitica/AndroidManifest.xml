@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.magicmicky.habitrpgmobileapp"
+    package="com.habitrpg.android.habitica"
     android:versionCode="49"
     android:versionName="2.4.5" >
 
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.magicmicky.habitrpgmobileapp.MainActivity"
+            android:name="com.habitrpg.android.habitica.MainActivity"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
 		<activity
-				android:name="com.magicmicky.habitrpgmobileapp.prefs.PrefsActivity"
+				android:name="com.habitrpg.android.habitica.prefs.PrefsActivity"
 				android:label="@string/PS_param_title">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
 		</activity>
 
 		<activity
-			android:name="com.magicmicky.habitrpgmobileapp.LoginActivity"
+			android:name="com.habitrpg.android.habitica.LoginActivity"
 			android:label="@string/LoginActivityName"
 			android:windowSoftInputMode="adjustResize">
 		<intent-filter>
@@ -44,7 +44,7 @@
         <receiver
             android:icon="@drawable/ic_launcher"
             android:label="HabitRPG Simple Widget"
-            android:name=".widget.SimpleWidget" >
+            android:name="com.habitrpg.android.habitica.widget.SimpleWidget" >
             <intent-filter >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -53,7 +53,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
-        <service android:name="com.magicmicky.habitrpgmobileapp.widget.UpdateWidgetService"/>
+        <service android:name="com.habitrpg.android.habitica.widget.UpdateWidgetService"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
