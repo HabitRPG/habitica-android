@@ -15,7 +15,7 @@
         android:layout_height="@dimen/avatar_height"
         android:layout_gravity="center"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_launcher"
+        android:src="@mipmap/ic_launcher"
         />
 
     <FrameLayout

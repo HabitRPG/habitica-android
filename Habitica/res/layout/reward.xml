@@ -22,7 +22,7 @@
 
 
 	    <CheckedTextView
-		    android:id="@+id/TV_reward"
+		    android:id="@+id/TV_title"
 		    style="@style/CardText"
 		    android:layout_gravity="center|left"
 		    android:layout_width="wrap_content"

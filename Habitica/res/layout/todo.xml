@@ -1,66 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.habitrpg.android.habitica.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-		android:layout_height="@dimen/row_size"
-		android:background="@drawable/item_background"
-        android:gravity="center_vertical"
-        android:paddingBottom="0dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        style="@style/CardText"
-        >
-	
+    style="@style/CardText"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/row_size"
+    android:background="@drawable/item_background"
+    android:gravity="center_vertical"
+    android:paddingBottom="0dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp">
+
     <CheckBox
         android:id="@+id/plus"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginBottom="14dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="14dp"
-        android:button="@android:color/transparent"
-        android:background="@drawable/btn_check_holo_light"
         android:gravity="center" />
 
-		<FrameLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<!-- 		    <View -->
-<!-- 		        android:id="@+id/V_color_indic" -->
-<!-- 		        android:layout_width="50dp" -->
-<!-- 		        android:layout_height="10dp" -->
-<!-- 		        android:layout_marginRight="30dp" -->
-<!-- 		        android:background="@color/bad" -->
-<!-- 		        android:layout_gravity="top|right" /> -->
-			<ImageView
-			    android:id="@+id/IV_task_color"
-			    android:layout_width="30dp"
-			    android:layout_height="30dp"
-			    android:layout_gravity="right"
-			    android:src="@drawable/triangle_worst"/>
-		    <CheckedTextView
-			    android:id="@+id/TV_title"
-			    style="@style/CardText"
-			    android:layout_gravity="center|left"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_marginLeft="10dp"
-			    android:gravity="left"/>
+        <!-- 		    <View -->
+        <!-- 		        android:id="@+id/V_color_indic" -->
+        <!-- 		        android:layout_width="50dp" -->
+        <!-- 		        android:layout_height="10dp" -->
+        <!-- 		        android:layout_marginRight="30dp" -->
+        <!-- 		        android:background="@color/bad" -->
+        <!-- 		        android:layout_gravity="top|right" /> -->
+        <ImageView
+            android:id="@+id/IV_task_color"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:src="@drawable/triangle_worst" />
 
-		</FrameLayout>
-<!--         <CheckBox -->
-<!--             android:id="@+id/check_todo" -->
-<!--     		style="@style/CardLightText" -->
-<!-- 		    android:text="Habit 1" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="50dp" -->
-<!--             android:background="@drawable/selectable_background_cardbank" -->
-<!--             android:gravity="center_vertical" -->
-<!--             android:layout_marginLeft="10dp" -->
-<!--             android:paddingLeft="10dp" -->
-<!--             /> -->
+        <CheckedTextView
+            android:id="@+id/TV_title"
+            style="@style/CardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="10dp"
+            android:gravity="left" />
+
+    </FrameLayout>
 
 </com.habitrpg.android.habitica.CheckableLinearLayout>

@@ -60,7 +60,7 @@
 			    android:layout_gravity="right"
 			    android:src="@drawable/triangle_neutral"/>
 		    <CheckedTextView
-			    android:id="@+id/TV_habit"
+			    android:id="@+id/TV_title"
 			    style="@style/CardText"
 			    android:layout_gravity="center|left"
 			    android:layout_width="wrap_content"
