@@ -1,10 +1,21 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.magicmicky.habitrpgwrapper.lib.HabitRPGInteractor;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
+import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
@@ -12,26 +23,86 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
+import java.io.IOException;
 
 import retrofit.Callback;
+import retrofit.ErrorHandler;
+import retrofit.Profiler;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.converter.GsonConverter;
 
 
-public class APIHelper {
+public class APIHelper implements ErrorHandler, Profiler {
 
     private static final String TAG = "ApiHelper";
-    private Context mContext;
+	private final ApiService apiService;
+	private Context mContext;
 	//private OnHabitsAPIResult mResultListener;
 	//private HostConfig mConfig;
-    private HabitRPGInteractor hrpg;
-	public APIHelper(Context c, HostConfig cfg) {
+	public APIHelper(Context c, final HostConfig cfg) {
 		this.mContext = c;
-	    this.hrpg = new HabitRPGInteractor(cfg.getApi(), cfg.getUser(), new Server(cfg.getAddress()));
+
+		RequestInterceptor requestInterceptor = new RequestInterceptor() {
+			@Override
+			public void intercept(RequestInterceptor.RequestFacade request) {
+				request.addHeader("x-api-key", cfg.getApi());
+				request.addHeader("x-api-user", cfg.getUser());
+
+
+			}
+		};
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe())
+				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
+				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)
+				.create();
+
+		Server server = new Server(cfg.getAddress());
+
+		RestAdapter adapter = new RestAdapter.Builder()
+				.setEndpoint(server.toString())
+				.setErrorHandler(this)
+				.setProfiler(this)
+				.setLogLevel(RestAdapter.LogLevel.FULL)
+				.setRequestInterceptor(requestInterceptor)
+				.setConverter(new GsonConverter(gson))
+
+				.build();
+		this.apiService  = adapter.create(ApiService.class);
+
     }
+
+	private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
+		@Override public void write(JsonWriter out, Boolean value) throws IOException {
+			if (value == null) {
+				out.nullValue();
+			} else {
+				out.value(value);
+			}
+		}
+		@Override public Boolean read(JsonReader in) throws IOException {
+			JsonToken peek = in.peek();
+			switch (peek) {
+				case BOOLEAN:
+					return in.nextBoolean();
+				case NULL:
+					in.nextNull();
+					return null;
+				case NUMBER:
+					return in.nextInt() != 0;
+				case STRING:
+					return Boolean.parseBoolean(in.nextString());
+				default:
+					throw new IllegalStateException("Expected BOOLEAN or NUMBER but was " + peek);
+			}
+		}
+	};
+
 
     public void createUndefNewTask(HabitItem item, Callback cb) {
         if(item instanceof Habit) {
@@ -46,20 +117,20 @@ public class APIHelper {
     }
 
 	public void createNewTask(Habit habit,Callback<Habit> callback) {
-        this.hrpg.createItem(habit, callback);
+        this.apiService.createItem(habit, callback);
 	}
     public void createNewTask(ToDo toDo, Callback<ToDo> callback) {
-        this.hrpg.createItem(toDo, callback);
+        this.apiService.createItem(toDo, callback);
     }
     public void createNewTask(Daily d,Callback<Daily> callback) {
-        this.hrpg.createItem(d, callback);
+        this.apiService.createItem(d, callback);
     }
     public void createNewTask(Reward r,Callback<Reward> callback) {
-        this.hrpg.createItem(r, callback);
+        this.apiService.createItem(r, callback);
     }
 
 	public void retrieveUser(HabitRPGUserCallback callback) {
-		this.hrpg.getUser(callback);
+		this.apiService.getUser(callback);
 	}
 
 	public void updateTaskDirection(String id, String direction, TaskScoringCallback callback) {
@@ -69,7 +140,7 @@ public class APIHelper {
         } else {
             td = TaskDirection.down;
         }
-        this.hrpg.postTaskDirection(id,td, callback);
+        this.apiService.postTaskDirection(id, td.toString(), callback);
 	}
 	public void registerUser(View btnClicked, String username, String email, String password, String confirmPassword) {
 
@@ -85,23 +156,23 @@ public class APIHelper {
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);
-        this.hrpg.connectUser(auth, callback);
+        this.apiService.connectLocal(auth, callback);
 	}
 
 	public void deleteTask(HabitItem item, TaskDeletionCallback cb) {
-		this.hrpg.deleteItem(item.getId(), cb);
+		this.apiService.deleteTask(item.getId(), cb);
     }
     public void updateTask(Daily item, Callback<Daily> cb) {
-        this.hrpg.updateItem(item.getId(), item, cb);
+        this.apiService.updateTask(item.getId(), item, cb);
     }
     public void updateTask(Habit item, Callback<Habit> cb) {
-        this.hrpg.updateItem(item.getId(), item, cb);
+        this.apiService.updateTask(item.getId(), item, cb);
     }
     public void updateTask(ToDo item, Callback<ToDo> cb) {
-        this.hrpg.updateItem(item.getId(), item, cb);
+        this.apiService.updateTask(item.getId(), item, cb);
     }
     public void updateTask(Reward item, Callback<Reward> cb) {
-        this.hrpg.updateItem(item.getId(), item, cb);
+        this.apiService.updateTask(item.getId(), item, cb);
     }
     public void uprateUndefinedTask(HabitItem task, Callback cb) {
         if(task instanceof ToDo) {
@@ -129,6 +200,31 @@ public class APIHelper {
         Log.w(TAG, "Not done yet - revive");
 //		ATaskRevive rev = new ATaskRevive(mResultListener,mConfig);
 //		rev.execute();
+	}
+
+	@Override
+	public Throwable handleError(RetrofitError cause) {
+		//String json =  new String(((TypedByteArray)cause.getResponse().getBody()).getBytes());
+		//Log.v("failure", json.toString());
+
+		retrofit.client.Response res = cause.getResponse();
+
+		retrofit.mime.TypedInput body = res.getBody();
+
+
+		//JsonSyntaxException d = (JsonSyntaxException)cause;
+
+		return cause;
+	}
+
+	@Override
+	public Object beforeCall() {
+		return null;
+	}
+
+	@Override
+	public void afterCall(RequestInformation requestInfo, long elapsedTime, int statusCode, Object beforeCallData) {
+
 	}
 
 
