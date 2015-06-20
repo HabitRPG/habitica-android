@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import java.util.Calendar;
 

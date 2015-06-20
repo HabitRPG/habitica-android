@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 
 import java.util.HashMap;

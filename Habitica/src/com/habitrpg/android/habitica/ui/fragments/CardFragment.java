@@ -1,10 +1,16 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.AddTaskDialog;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.OnTasksChanged;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;

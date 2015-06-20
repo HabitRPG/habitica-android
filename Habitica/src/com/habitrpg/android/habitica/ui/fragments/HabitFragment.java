@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
@@ -71,7 +72,7 @@ public class HabitFragment extends CardFragment{
 	    	habitPlus.setOnClickListener(getOnClickListener());
 	    	Button habitMinus = (Button) convertView.findViewById(R.id.minus);
 	    	habitMinus.setOnClickListener(getOnClickListener());
-			TextView habit = (TextView) convertView.findViewById(R.id.TV_habit);
+			TextView habit = (TextView) convertView.findViewById(R.id.TV_title);
 			//View color_indic = convertView.findViewById(R.id.V_color_indic);
 			//color_indic.setBackgroundColor(getResources().getColor(getColorRes(currentItem.getValue())));
 			ImageView color_indic = (ImageView) convertView.findViewById(R.id.IV_task_color);

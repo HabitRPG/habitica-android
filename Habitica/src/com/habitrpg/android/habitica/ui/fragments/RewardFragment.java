@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
@@ -95,7 +96,7 @@ public class RewardFragment extends CardFragment {
 			}
 			Button price = (Button) convertView.findViewById(R.id.plus);
 			price.setCompoundDrawablesWithIntrinsicBounds(null, null,null,null);//(it.getType(), it.getLevel())), null);
-			TextView reward = (TextView) convertView.findViewById(R.id.TV_reward);
+			TextView reward = (TextView) convertView.findViewById(R.id.TV_title);
 			convertView.setId(position);
 			if(this.getItem(position) instanceof Reward.SpecialReward) {
 				Reward.SpecialReward it = (Reward.SpecialReward) this.getItem(position);
