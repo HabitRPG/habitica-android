@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
-    <release version="2.4.5" versioncode="49">
-        <bugfix>Widget not showing right avatar</bugfix>
+    <release version="0.0.1" versioncode="1">
+        <feature>Soon to be filled with many features</feature>
     </release>
-    <release version="2.4.4" versioncode="47">
-        <bugfix>You can create and edit your tasks again! Thanks a lot to Tyler who modified HabitRPG's API to help me</bugfix>
-        <change>Updated to the new version of my FreemiumLibrary (See licence notice for links.)</change>
-    </release>
-    <release version="2.4.3" versioncode="46">
-        <bugfix>The app now shows the correct user's avatar</bugfix>
-        <change>Known bugs: You can't buy items rewards for your avatar.</change>
-        <change>Known bugs: You can't create or update tasks.</change>
-    </release>
-    <release version="2.4.2" versioncode="45">
-        <bugfix>Dailies will take in account your custom day start.</bugfix>
-    </release>
-    <release version="2.4.1" versioncode="44">
-        <bugfix>Todo dates aren't wrong anymore.</bugfix>
-    </release>
-        <release version="2.4.0" versioncode="43">
-            <feature>New widget for premium users</feature>
-            <feature>New changelog to see what has changed from the app</feature>
-            <bugfix>You can now input some weird accent character, or some russian</bugfix>
-            <change>Fixing misc. bugs</change>
-        </release>   
 </changelog>
