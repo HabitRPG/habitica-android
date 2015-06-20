@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/avatar_with_bars_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:adjustViewBounds="true"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/IMG_ProfilePicture"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitStart"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/LL_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/bar_padding"
+        android:paddingTop="@dimen/bar_padding">
+
+        <include
+            android:id="@+id/hpBar"
+            layout="@layout/value_bar" />
+
+        <include
+            android:id="@+id/xpBar"
+            layout="@layout/value_bar" />
+
+        <include
+            android:id="@+id/mpBar"
+            layout="@layout/value_bar" />
+
+    </LinearLayout>
+</LinearLayout>

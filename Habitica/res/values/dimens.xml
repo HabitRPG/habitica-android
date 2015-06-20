@@ -11,7 +11,8 @@
     <dimen name="card_small_text">14.0sp</dimen>
     <dimen name="card_padding">16.0dip</dimen>
 
-	<dimen name="bar_size">25dp</dimen>
+	<dimen name="bar_size">29dp</dimen>
+	<dimen name="bar_inner_size">25dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
 	<dimen name="avatar_width">90dp</dimen>
     <dimen name="avatar_height">70dp</dimen>

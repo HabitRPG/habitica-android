@@ -14,7 +14,7 @@
             <shape>
 
             <solid
-                android:color="@color/habitrpg_yellow"
+                android:color="@color/xpColor"
                 />
             </shape>
         </clip>
