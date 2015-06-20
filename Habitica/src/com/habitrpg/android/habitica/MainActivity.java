@@ -1,32 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
-import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.prefs.PrefsActivity;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -49,26 +21,52 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
-import android.widget.ListView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+
+import com.crashlytics.android.Crashlytics;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
+import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
+import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
+import com.habitrpg.android.habitica.prefs.PrefsActivity;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.HabitItemAdapter;
+import com.habitrpg.android.habitica.ui.fragments.DailyFragment;
+import com.habitrpg.android.habitica.ui.fragments.RewardFragment;
+import com.habitrpg.android.habitica.ui.fragments.TagAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+import io.fabric.sdk.android.Fabric;
 
 
 /*
@@ -77,20 +75,14 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity implements OnTaskCreationListener, HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated, TaskDeletionCallback.OnTaskDeleted {
     private static final String TAG = "MainActivity";
-	private MyPagerAdapter mPagerAdapter;
+	private HabitItemAdapter mPagerAdapter;
 	private ViewPager mPager;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	private ImageView mUserPicture;
-	private TextView mUserExp;
-	private TextView mUserHealth;
 	private ProgressBar mProgressBar;
 	private EditText mCreateTaskText;
 	private ImageButton mCreateTask;
 	private ImageButton mEditTask;
-	private View mUserHealthBar;
-	private View mUserExpBar;
-	private int barWidth=0;
 	private HabitRPGUser user = new HabitRPGUser();
 	private APIHelper mAPIHelper;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -100,11 +92,16 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
     private HostConfig hostConfig;
     private int nbRequests=0;
 
+	AvatarWithBarsViewModel avatarWithBarsViewModel;
+
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main_with_drawer);
+
+		Crashlytics crashlytics = new Crashlytics.Builder().build();
+		Fabric.with(this, crashlytics);
 
 		this.hostConfig = PrefsActivity.fromContext(this);
 		if(hostConfig==null|| hostConfig.getApi()==null || hostConfig.getApi().equals("") || hostConfig.getUser() == null ||hostConfig.getUser().equals("")) {
@@ -119,13 +116,8 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 		/*
 		 * Retrieve all the views
 		 */
-		this.mUserExpBar = this.findViewById(R.id.V_XPBar);
-		this.mUserHealthBar = this.findViewById(R.id.V_HPBar);
 		this.mEditTask = (ImageButton) this.findViewById(R.id.BT_editTask);
-		this.mUserExp = (TextView) this.findViewById(R.id.TV_XP);
-		this.mUserHealth = (TextView) this.findViewById(R.id.TV_HP);
 		this.mProgressBar = (ProgressBar) this.findViewById(R.id.PB_AsyncTask);
-		this.mUserPicture = (ImageView) this.findViewById(R.id.IMG_ProfilePicture);
 		this.mCreateTask = (ImageButton) this.findViewById(R.id.BT_task_new);
 		this.mCreateTaskText = (EditText) this.findViewById(R.id.ET_addTask);
 
@@ -138,8 +130,14 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 				else
 					mCreateTask.setEnabled(true);
 			}
-			@Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-			@Override public void afterTextChanged(Editable s) {}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
 		});
 		this.mCreateTask.setOnClickListener(new OnClickListener() {
 			@Override
@@ -171,8 +169,12 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 			 }
 		 });
 		FragmentManager fm = super.getSupportFragmentManager();
-		Fabric.with(this, new Crashlytics());
-        mPagerAdapter = new MyPagerAdapter(fm);
+
+		View avatarWithBars = findViewById(R.id.avatar_with_bars);
+
+		avatarWithBarsViewModel = new AvatarWithBarsViewModel(this, avatarWithBars);
+
+		mPagerAdapter = new HabitItemAdapter(fm);
         mPager = (ViewPager) findViewById(R.id.home_pannels_pager);
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(0);
@@ -239,18 +241,17 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 		mDrawerList.setAdapter(mTagAdapter);
 
         mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView parent, View view, int position, long id) {
-                selectTag(position, view);
-            }
-        });
+			@Override
+			public void onItemClick(AdapterView parent, View view, int position, long id) {
+				selectTag(position, view);
+			}
+		});
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		//HostConfig config = PrefsActivity.fromContext(this);
 		this.mAPIHelper = new APIHelper(this, hostConfig);
         this.onPreResult();
 		mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
-
-
 	}
 
 	protected void onDestroy() {
@@ -264,18 +265,6 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 				: HabitType.todo.toString();
 	}
 	private void notifyDataChanged() {
-		if(this.barWidth==0) {
-			this.barWidth =  this.findViewById(R.id.LL_header).getWidth();
-		}
-		this.mUserHealth.setText("" + (int) (user.getStats().getHp().doubleValue()) + "/" + user.getStats().getMaxHealth() + " " + getString(R.string.HP_default));
-		this.mUserExp.setText("" + (int) user.getStats().getExp().doubleValue() + "/" + (int) (user.getStats().getToNextLevel()+user.getStats().getExp()) + " " + getString(R.string.XP_default));
-
-		double hppct = user.getStats().getHp() / user.getStats().getMaxHealth();
-		hppct*=this.barWidth;
-		double xppct = user.getStats().getExp() / (user.getStats().getToNextLevel()+user.getStats().getExp());
-		xppct*=this.barWidth;
-		this.mUserHealthBar.setLayoutParams(new FrameLayout.LayoutParams((int) hppct, LayoutParams.MATCH_PARENT));
-		this.mUserExpBar.setLayoutParams(new FrameLayout.LayoutParams((int) xppct, LayoutParams.MATCH_PARENT));
 		this.getSupportActionBar().setTitle(createTitle(user));
         List<HabitItem> items = new ArrayList<>();
         items.addAll(user.getHabits());
@@ -287,7 +276,7 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 		((RewardFragment) mPagerAdapter.getItem(3)).setGold(user.getStats().getGp());
 
 		//this.username_TV.setText(user.getName());
-		this.mUserPicture.setImageBitmap(new UserPicture(user, this	).draw());
+		this.avatarWithBarsViewModel.UpdateData(user);
 
 		if(this.mDrawerList!=null) {
 			this.mTagAdapter.updateTags(user.getTags());
@@ -399,7 +388,9 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 			return true;
 		}
 		switch(item.getItemId()) {
-
+			case R.id.action_showTestActivity:
+				startActivity(new Intent(this, MainActivityNew.class));
+				break;
 			case R.id.action_settings:
 				startActivity(new Intent(this, PrefsActivity.class));
 				break;
@@ -433,6 +424,9 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
+
+		MainActivityNew.User = user;
+
         this.notifyDataChanged();
         afterResults();
 //        checkTimeZone(habitRPGUser.getTimeZoneOffset());
@@ -531,74 +525,7 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter {
-		private SparseArray<CardFragment>  fragments = new SparseArray<CardFragment>();
-		List<HabitItem> items;
-        public MyPagerAdapter(FragmentManager fm) {
-			super(fm);
-			Log.v(TAG + "_FP", "Reinstanciating items");
-			CardFragment h = new HabitFragment();
-			CardFragment d = new DailyFragment();
-			CardFragment t = new ToDoFragment();
-			CardFragment r = new RewardFragment();
-			fragments.put(0,h);
-			fragments.put(1,d);
-			fragments.put(2,t);
-			fragments.put(3,r);
-		}
-        public int getCount() {
-            return 4;
-        }
-		@Override
-		public CardFragment getItem(int position) {
-			Log.v(TAG + "_FP", "instantiating fragment " + position);
-			return fragments.get(position);
-		}
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            CardFragment fragment = (CardFragment) super.instantiateItem(container, position);
-            Log.v(TAG + "_FP", "adding fragment" + position);
-            fragments.put(position, fragment);
-            if(items!=null) {
-            	fragment.onChange(items);
-				fragment.onTagFilter(selectedTags);
-			}
-			return fragment;
-        }
-        /*@Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-        	Log.v(TAG + "_FragmentPager", "removing fragment" + position);
-            fragments.remove(position);
-            super.destroyItem(container, position, object);
-        }*/
 
-
-		public void notifyFragments(List<HabitItem> items) {
-			this.items = items;
-			for(int i=0;i<=3;i++) { // f : fragments) {
-				CardFragment f = fragments.get(i);
-				if(f!=null) {
-					f.onChange(items);
-					f.onTagFilter(selectedTags);
-				} else {
-					Log.w(TAG + "_Notify", "no fragment " + i );
-				}
-				this.notifyDataSetChanged();
-			}
-		}
-
-		public void filterFragments(List<String> tags) {
-			for(int i=0;i<=3;i++) { // f : fragments) {
-				CardFragment f = fragments.get(i);
-				if(f!=null)
-					f.onTagFilter(tags);
-				else
-					Log.w(TAG + "_Filters", "no fragment " + i );
-				this.notifyDataSetChanged();
-			}
-
-		}
-	}
 
 	/** Swaps fragments in the main content view */
 	private void selectTag(int position, View viewClicked) {

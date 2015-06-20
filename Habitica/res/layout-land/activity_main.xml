@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
 
     tools:context=".MainActivity" >
-    
+
 	<LinearLayout
 	    android:layout_width="0dip"
 	    android:layout_height="wrap_content"
@@ -17,68 +17,19 @@
 	    android:layout_marginBottom="0dip"
 	    android:layout_marginTop="@dimen/activity_vertical_margin"
 	    >
-		<ImageView
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginRight="@dimen/activity_horizontal_margin"
-			android:id="@+id/IMG_ProfilePicture"
-		    android:layout_width="@dimen/avatar_width"
-		    android:layout_height="@dimen/avatar_height"
-		    android:scaleType="fitStart"
-		    android:layout_gravity="center"
-		    android:src="@drawable/ic_launcher" />
 
-        <LinearLayout
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginRight="@dimen/activity_horizontal_margin"
-			android:id="@+id/LL_header"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/avatar_height"
-            android:layout_marginTop="16dp"
-         	android:gravity="center"
-            android:orientation="vertical"
+		<include layout="@layout/avatar_with_bars"
+			android:id="@+id/avatar_with_bars"
+
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="16dp"
+			android:gravity="center"
+			android:orientation="vertical"
 			android:paddingTop="@dimen/bar_padding"
-			android:paddingBottom="@dimen/bar_padding">
+			android:paddingBottom="@dimen/bar_padding"/>
 
-	        <FrameLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="@dimen/bar_size"
-		        android:background="@drawable/border"
-				android:layout_marginBottom="@dimen/bar_padding"
 
-					>
-			    <View android:id="@+id/V_HPBar"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-					android:background="@color/habitrpg_red"
-					/>
-			    <TextView
-		            android:id="@+id/TV_HP"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-		            android:gravity="center|right"
-		            android:background="@drawable/border"
-		            android:text="HP" />
-	        </FrameLayout>
-	        <FrameLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="@dimen/bar_size"
-		        android:background="@drawable/border"
-				>
-			    <View android:id="@+id/V_XPBar"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-					android:background="@color/habitrpg_yellow"
-					/>
-			    <TextView
-		            android:id="@+id/TV_XP"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-		            android:gravity="center|right"
-		            android:background="@drawable/border"
-		            android:text="XP" />
-	        </FrameLayout>
- 
-        </LinearLayout>
 		<ProgressBar
 				android:id="@+id/PB_AsyncTask"
 				android:layout_width="match_parent"

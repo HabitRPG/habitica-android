@@ -2,89 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="0dip"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    tools:context=".MainActivity" >
-	<LinearLayout
-        android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/avatar_with_bars"
+        android:id="@+id/avatar_with_bars"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_pannels_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="0.9"
+        android:background="@android:color/transparent" />
+
+    <ProgressBar
+        android:id="@+id/PB_AsyncTask"
+        style="@style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:paddingRight="@dimen/activity_horizontal_margin"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        >
-        <ImageView
-            android:id="@+id/IMG_ProfilePicture"
-            android:layout_width="@dimen/avatar_width"
-            android:layout_height="@dimen/avatar_height"
-			android:layout_gravity="center_vertical"
-            android:scaleType="fitStart"
-            android:src="@drawable/ic_launcher" />
+        android:layout_marginBottom="@dimen/PB_marginBottom"
+        android:indeterminate="true" />
 
-		<LinearLayout
-		    android:id="@+id/LL_header"
-		    android:layout_width="match_parent"
-		    android:layout_height="@dimen/header_height"
-		    android:orientation="vertical"
-		    android:paddingTop="@dimen/bar_padding"
-			android:paddingBottom="@dimen/bar_padding">
-	        
-	        <FrameLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="@dimen/bar_size"
-		        android:background="@drawable/border"
-				android:layout_marginBottom="@dimen/bar_padding"
-				>
-			    <View android:id="@+id/V_HPBar"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-					android:background="@color/habitrpg_red"
-					/>
-			    <TextView
-		            android:id="@+id/TV_HP"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-		            android:gravity="center|right"
-		            android:background="@drawable/border"
-		            android:text="HP"
-                    android:paddingRight="5dp" />
-	        </FrameLayout>
-	        <FrameLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="@dimen/bar_size"
-		        android:background="@drawable/border"
-				>
-			    <View android:id="@+id/V_XPBar"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-					android:background="@color/habitrpg_yellow"
-					/>
-			    <TextView
-		            android:id="@+id/TV_XP"
-		            android:layout_width="match_parent"
-		            android:layout_height="@dimen/bar_size"
-		            android:gravity="center|right"
-		            android:background="@drawable/border"
-		            android:text="XP"
-                    android:paddingRight="5dp" />
-	        </FrameLayout>
-		</LinearLayout>
-</LinearLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/home_pannels_pager"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.9"
-            android:layout_height="0dip"
-            android:background="@android:color/transparent"/>
-<ProgressBar
-		    android:id="@+id/PB_AsyncTask"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-			style="@style/Widget.ProgressBar.Horizontal"
-		    android:indeterminate="true"
-			android:layout_marginBottom="@dimen/PB_marginBottom"
-	/>
     <RelativeLayout
         android:id="@+id/RL_addTask"
         android:layout_width="match_parent"
@@ -93,38 +36,41 @@
         android:background="@drawable/bottom_bar_bg"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:paddingBottom="0dp" >
-		<ImageButton
-				android:id="@+id/BT_task_new"
-				android:layout_width="@dimen/new_task_bat_btn_width"
-				android:layout_height="match_parent"
-				android:layout_gravity="top"
-				android:background="@drawable/selectable_background_cardbank"
-				android:padding="@dimen/new_task_bat_btn_padding"
-				android:src="@drawable/ic_menu_send"
-				android:layout_alignParentRight="true"
-				android:scaleType="fitCenter"/>
-		<ImageButton
-				android:id="@+id/BT_editTask"
-				android:layout_width="@dimen/new_task_bat_btn_width"
-				android:layout_height="match_parent"
-				android:padding="@dimen/new_task_bat_btn_padding"
-				android:background="@drawable/selectable_background_cardbank"
-				android:src="@drawable/ic_menu_edit"
-				android:layout_toLeftOf="@id/BT_task_new"
-				android:scaleType="fitCenter"/>
-		<EditText
-		    android:id="@+id/ET_addTask"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:hint="@string/create_habit_hint"
-		    android:imeOptions="actionDone"
-  			android:inputType="textCapSentences|textNoSuggestions"
-			android:layout_toLeftOf="@id/BT_editTask">
-			<!--	android:textColor="@color/white"
-				android:textColorHint="#FFC0C0C0"
-			 -->
-		</EditText>
-	</RelativeLayout>
-		
+        android:paddingBottom="0dp">
+
+        <ImageButton
+            android:id="@+id/BT_task_new"
+            android:layout_width="@dimen/new_task_bat_btn_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top"
+            android:background="@drawable/selectable_background_cardbank"
+            android:padding="@dimen/new_task_bat_btn_padding"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_menu_send" />
+
+        <ImageButton
+            android:id="@+id/BT_editTask"
+            android:layout_width="@dimen/new_task_bat_btn_width"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/BT_task_new"
+            android:background="@drawable/selectable_background_cardbank"
+            android:padding="@dimen/new_task_bat_btn_padding"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_menu_edit" />
+
+        <EditText
+            android:id="@+id/ET_addTask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/BT_editTask"
+            android:hint="@string/create_habit_hint"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences|textNoSuggestions">
+            <!--	android:textColor="@color/white"
+                android:textColorHint="#FFC0C0C0"
+             -->
+        </EditText>
+    </RelativeLayout>
+
 </LinearLayout>
