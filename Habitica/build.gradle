@@ -1,3 +1,8 @@
+apply plugin: 'com.android.application'
+apply plugin: 'aar-link-sources'
+apply plugin: 'com.android.databinding'
+apply plugin: 'io.fabric'
+
 buildscript {
     repositories {
         mavenLocal()
@@ -5,13 +10,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.1'
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-apply plugin: 'aar-link-sources'
 
 repositories {
     mavenLocal()
@@ -20,39 +21,72 @@ repositories {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     maven { url 'https://maven.fabric.io/public' }
+
+    // Material View Pager
+    maven {
+        url "http://dl.bintray.com/florent37/maven"
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.magicmicky.habitrpgwrapper:lib:1.7'
-    aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.7:sources@jar'
+    compile 'com.magicmicky.habitrpgwrapper:lib:1.8'
+    aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.8:sources@jar'
 
-    compile 'com.android.support:appcompat-v7:18.0.+'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.3.0@aar') {
         transitive = true;
     }
+
+    // View Elements Injection :)
+    compile 'com.jakewharton:butterknife:6.1.0'
+
+    compile('com.mikepenz:materialdrawer:3.0.5@aar') {
+        transitive = true
+    }
+
+    compile('com.github.florent37:materialviewpager:1.0.5@aar') {
+        transitive = true
+    }
+
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:design:22.2.0'
+    compile 'com.android.support:gridlayout-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+
+    // Icons
+    dependencies {
+        compile 'com.mikepenz:iconics:1.0.2@aar'
+    }
+
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+
+    // Instabug / In-App-Feedback
+    compile 'com.instabug.library:instabugsupport:1+'
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-        lintOptions {
-            abortOnError false
-        }
-        signingConfigs {
-            release
-        }
+    compileSdkVersion 22
+    //buildToolsVersion "23.0.0-rc2"
+    buildToolsVersion "22.0.1"
 
-        buildTypes {
-            debug {
-                applicationIdSuffix ".debug"
-                debuggable true
-            }
-            release {
-                signingConfig signingConfigs.release
-                debuggable false
-            }
+    lintOptions {
+        abortOnError false
+    }
+    signingConfigs {
+        release
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
         }
+        release {
+            signingConfig signingConfigs.release
+            debuggable false
+        }
+    }
 
     sourceSets {
         main {
@@ -71,10 +105,10 @@ android {
 
 def Properties props = new Properties()
 def propFile = new File('signingrelease.properties')
-if (propFile.canRead()){
+if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))
 
-    if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+    if (props != null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
             props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
         android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
         android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
@@ -84,7 +118,7 @@ if (propFile.canRead()){
         println 'signing.properties found but some entries are missing'
         android.buildTypes.release.signingConfig = null
     }
-}else {
+} else {
     println 'signing.properties not found'
     android.buildTypes.release.signingConfig = null
 }
