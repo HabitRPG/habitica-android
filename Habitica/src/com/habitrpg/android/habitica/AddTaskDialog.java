@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.crashlytics.android.Crashlytics;
+import com.habitrpg.android.habitica.ui.fragments.DatePickerFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
@@ -170,7 +171,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener{
     	spinner.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			    DialogFragment newFragment = new DatePickerFragment(); 
+			    DialogFragment newFragment = new DatePickerFragment();
 			    newFragment.setTargetFragment(AddTaskDialog.this, 0);
 			    newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
 			}

@@ -6,19 +6,11 @@
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
 
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    <!--
-          <style name="CardTitle">
-        <item name="android:id">@android:id/title</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/text_light</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
-    </style>
-    -->
+
+
 	<style name="TextReservedToPremium">
 		<item name="android:textStyle">italic</item>
 		<item name="android:textAppearance">@android:style/TextAppearance.Small.Inverse</item>
@@ -41,7 +33,7 @@
     <style name="CardTitle" parent="@style/CardText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/card_large_text</item>
+        <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:textColor">@color/card_title_text</item>
     </style>
     
@@ -78,5 +70,27 @@
 
 	</style>
 
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/drawerArrowColor</item>
+    </style>
 
+    <style name="CustomTheme" parent="style/MaterialDrawerTheme.TranslucentStatus">
+        <!-- ...and here we setting appcompat’s color theming attrs -->
+        <item name="colorPrimary">@color/material_drawer_primary</item>
+        <item name="colorPrimaryDark">@color/material_drawer_primary_dark</item>
+        <item name="colorAccent">@color/md_amber_200</item>
+
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">@color/material_drawer_background</item>
+        <item name="material_drawer_icons">@color/material_drawer_icons</item>
+        <item name="material_drawer_primary_text">@color/material_drawer_primary_text</item>
+        <item name="material_drawer_primary_icon">@color/material_drawer_primary_icon</item>
+        <item name="material_drawer_secondary_text">@color/material_drawer_secondary_text</item>
+        <item name="material_drawer_hint_text">@color/material_drawer_hint_text</item>
+        <item name="material_drawer_divider">@color/material_drawer_divider</item>
+        <item name="material_drawer_selected">@color/material_drawer_selected</item>
+        <item name="material_drawer_selected_text">@color/material_drawer_selected_text</item>
+        <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
+    </style>
 </resources>

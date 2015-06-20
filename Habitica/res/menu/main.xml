@@ -2,6 +2,12 @@
 		xmlns:abc="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_showTestActivity"
+        android:orderInCategory="100"
+        abc:showAsAction="never"
+        android:title="Test Activity"/>
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         abc:showAsAction="never"

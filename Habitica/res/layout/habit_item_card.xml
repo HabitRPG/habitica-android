@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem" />
+
+        <variable
+            name="habit"
+            type="HabitItem" />
+    </data>
+
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="@dimen/cardMarginVertical"
+            android:layout_marginLeft="@dimen/cardMarginHorizontal"
+            android:layout_marginRight="@dimen/cardMarginHorizontal"
+            android:layout_marginTop="@dimen/cardMarginVertical"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:cardPreventCornerOverlap="false"
+            app:contentPadding="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="fill_horizontal|center_vertical|center_horizontal|fill|clip_vertical|fill_vertical|center|start|clip_horizontal|bottom|left|right|end|top"
+                android:minHeight="250dp">
+
+
+                <Button
+                    android:id="@+id/btnPlus"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/checkedTextView"
+                    android:layout_toStartOf="@+id/checkedTextView"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/btnMinus"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/btnPlus"
+                    android:layout_alignStart="@+id/btnPlus"
+                    android:layout_below="@+id/btnPlus"
+                    android:backgroundTint="@color/best"
+                    android:text="-" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:text="@{habit.text}" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/CardText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/checkedTextView"
+                    android:layout_alignStart="@+id/checkedTextView"
+                    android:layout_below="@+id/checkedTextView"
+                    android:text="@{habit.notes}" />
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</layout>
