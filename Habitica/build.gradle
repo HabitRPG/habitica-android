@@ -30,9 +30,7 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.magicmicky.habitrpgwrapper:lib:1.8'
-    aarLinkSources 'com.magicmicky.habitrpgwrapper:lib:1.8:sources@jar'
-
+    compile 'com.squareup.retrofit:retrofit:1.6.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.3.0@aar') {
         transitive = true;
@@ -49,10 +47,10 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
-    compile 'com.android.support:gridlayout-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.+'
+    compile 'com.android.support:design:22.2.+'
+    compile 'com.android.support:gridlayout-v7:22.2.+'
+    compile 'com.android.support:recyclerview-v7:22.2.+'
 
     // Icons
     dependencies {
