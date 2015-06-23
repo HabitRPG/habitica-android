@@ -100,9 +100,10 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 
 		setContentView(R.layout.main_with_drawer);
 
-		Crashlytics crashlytics = new Crashlytics.Builder().build();
-		Fabric.with(this, crashlytics);
-
+		if (!BuildConfig.DEBUG) {
+			Crashlytics crashlytics = new Crashlytics.Builder().build();
+			Fabric.with(this, crashlytics);
+		}
 		this.hostConfig = PrefsActivity.fromContext(this);
 		if(hostConfig==null|| hostConfig.getApi()==null || hostConfig.getApi().equals("") || hostConfig.getUser() == null ||hostConfig.getUser().equals("")) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));

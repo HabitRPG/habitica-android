@@ -1,1 +1,1 @@
-include 'Habitica'
+include 'Habitica', ':Habitica'
