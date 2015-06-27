@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivityNew extends InstabugAppCompatActivity {
+    static final int ABOUT = 12;
+
     //region View Elements
     @InjectView(R.id.materialViewPager)
     MaterialViewPager materialViewPager;
@@ -60,9 +63,6 @@ public class MainActivityNew extends InstabugAppCompatActivity {
     Map<Integer, RecyclerViewFragment> ViewFragmentsDictionary = new HashMap<Integer, RecyclerViewFragment>();
 
     List<HabitItem> TaskList = new ArrayList<HabitItem>();
-
-
-    Random r = new Random();
 
     // just to test the view
     public static HabitRPGUser User = null;
@@ -138,7 +138,7 @@ public class MainActivityNew extends InstabugAppCompatActivity {
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName("News"),
                         new SecondaryDrawerItem().withName("Settings"),
-                        new SecondaryDrawerItem().withName("About")
+                        new SecondaryDrawerItem().withName("About").withIdentifier(ABOUT)
 
                 )
                 .withHeader(sidebarHeaderView)
@@ -148,6 +148,13 @@ public class MainActivityNew extends InstabugAppCompatActivity {
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
+
+                        switch (drawerItem.getIdentifier()) {
+                            case ABOUT:
+                                startActivity(new Intent(MainActivityNew.this, AboutActivity.class));
+
+                                return false;
+                        }
 
                         return true;
                     }

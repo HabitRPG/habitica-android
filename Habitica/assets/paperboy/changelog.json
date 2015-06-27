@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Verison 0.0.2",
+    "items": [
+      {
+        "type": "F",
+        "title": "Ability to add / edit / delete / check Checklists!"
+      },
+      {
+        "type": "B",
+        "title": "Fixed crash while the device is offline"
+      },
+      {
+        "type": "B",
+        "title": "Fixed loading user data, where the tags property was an array instead of an object"
+      },
+      {
+        "type": "I",
+        "title": "Added About and Changelog Views"
+      },
+      {
+        "type": "I",
+        "title": "Animate the value changes in the Bars (HP, MP, XP)"
+      },
+      {
+        "type": "N",
+        "title": "Removed the Changelog Dialog"
+      }
+    ]
+  }
+]

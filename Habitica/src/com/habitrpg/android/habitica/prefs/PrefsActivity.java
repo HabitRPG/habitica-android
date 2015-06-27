@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.habitrpg.android.habitica.ChangeLogDialog;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 
@@ -53,8 +52,8 @@ public class PrefsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.app_prefs_cat2);
             this.findPreference(this.getString(R.string.SP_last_seen_version)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(PrefsActivity.this);
-                    _ChangelogDialog.show();
+                    //ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(PrefsActivity.this);
+                    //_ChangelogDialog.show( getSupportFragmentManager());
                     return false;
                 }
             });
@@ -86,8 +85,8 @@ public class PrefsActivity extends PreferenceActivity {
     public void onHeaderClick(Header header, int position) {
         super.onHeaderClick(header, position);
         if (header.id == R.id.show_changelog) {
-            ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(PrefsActivity.this);
-            _ChangelogDialog.show();
+            //ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(PrefsActivity.this);
+            //_ChangelogDialog.show();
         }
     }
 

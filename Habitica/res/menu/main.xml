@@ -1,23 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:abc="http://schemas.android.com/apk/res-auto">
+		xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_showTestActivity"
-        android:orderInCategory="100"
-        abc:showAsAction="never"
+        android:orderInCategory="101"
+        app:showAsAction="never"
         android:title="Test Activity"/>
+
+    <item
+        android:id="@+id/action_showChangelogActivity"
+        android:orderInCategory="102"
+        app:showAsAction="never"
+        android:title="About"/>
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        abc:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_settings"/>
 	<item android:id="@+id/action_logout"
 		  android:orderInCategory="98"
 		  android:title="@string/logout"/>
     <item android:id="@+id/action_refresh"
         android:orderInCategory="99"
-        abc:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_refresh"/>
 
 </menu>

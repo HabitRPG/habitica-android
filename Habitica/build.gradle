@@ -26,6 +26,10 @@ repositories {
     maven {
         url "http://dl.bintray.com/florent37/maven"
     }
+
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -60,7 +64,16 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
     // Instabug / In-App-Feedback
-    compile 'com.instabug.library:instabugsupport:1+'
+    compile 'com.instabug.library:instabugsupport:+'
+
+    // Changelog Fragment, minSDK 17
+    //compile 'com.github.porokoro.paperboy:paperboy:1.0.0'
+    compile 'com.github.negue:paperboy:0d4e14bbb5'
+
+    // About View for all dependent Libraries, where are using
+    compile('com.mikepenz:aboutlibraries:5.0.5@aar') {
+        transitive = true
+    }
 }
 
 android {
