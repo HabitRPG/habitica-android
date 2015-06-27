@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
