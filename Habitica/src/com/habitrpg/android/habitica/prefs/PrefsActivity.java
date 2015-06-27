@@ -80,15 +80,6 @@ public class PrefsActivity extends PreferenceActivity {
         } catch (InvocationTargetException e) {
         }  
     }
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @Override
-    public void onHeaderClick(Header header, int position) {
-        super.onHeaderClick(header, position);
-        if (header.id == R.id.show_changelog) {
-            //ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(PrefsActivity.this);
-            //_ChangelogDialog.show();
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
