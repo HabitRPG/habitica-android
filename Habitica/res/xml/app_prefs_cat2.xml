@@ -15,8 +15,4 @@
     	<intent android:action="android.intent.action.VIEW"
     	    android:data="https://dl.dropboxusercontent.com/u/9280157/HabitRPGNotice.html"/>
     </Preference>
-    <Preference
-        android:key="@string/SP_last_seen_version"
-        android:title="@string/title_changelog"
-        android:summary="@string/SP_see_changelog"/>
 </PreferenceScreen>

@@ -22,10 +22,4 @@
     	<intent android:action="android.intent.action.VIEW"
     	    android:data="https://dl.dropboxusercontent.com/u/9280157/HabitRPGNotice.html"/>
     </header>
-    <header
-        android:id="@+id/show_changelog"
-        android:title="@string/title_changelog"
-        android:summary="@string/SP_see_changelog">
-    </header>
-
 </preference-headers>
