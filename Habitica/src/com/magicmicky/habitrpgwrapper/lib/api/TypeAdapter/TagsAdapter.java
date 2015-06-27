@@ -50,6 +50,15 @@ public class TagsAdapter extends TypeAdapter<Tags>{
                 case END_OBJECT:
                     in.endObject();
                     isClosed=true;
+                    break;
+                case BEGIN_ARRAY:
+                    in.beginArray();
+                    break;
+
+                case END_ARRAY:
+                    in.endArray();
+                    isClosed = true;
+                    break;
                 default:
             }
         } while(!isClosed);
