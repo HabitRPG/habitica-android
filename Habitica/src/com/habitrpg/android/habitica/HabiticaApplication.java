@@ -13,8 +13,7 @@ public class HabiticaApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (!BuildConfig.DEBUG) {
-            Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");
-        }
+        Instabug.DEBUG = BuildConfig.DEBUG;
+        Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");
     }
 }
