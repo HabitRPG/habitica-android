@@ -5,6 +5,8 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -77,7 +79,7 @@ public class AvatarWithBarsViewModel {
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
     private void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String postString, int color, int colorBackground, int textColor)
     {
-        double percent = value / valueMax;
+        double percent = Math.min(1, value / valueMax);
 
         if(percent == 1)
         {
@@ -105,5 +107,41 @@ public class AvatarWithBarsViewModel {
         layout.weight = weight;
 
         view.setLayoutParams(layout);
+    }
+
+    @BindingAdapter("app:layout_weight_anim")
+    public static void setLayoutWeightAnim(View view, float weight) {
+        LayoutWeightAnimation anim = new LayoutWeightAnimation(view, weight);
+        anim.setDuration(1250);
+
+        view.startAnimation(anim);
+    }
+
+    public static class LayoutWeightAnimation extends Animation {
+        float targetWeight;
+        float initializeWeight;
+        View view;
+
+        LinearLayout.LayoutParams layoutParams;
+
+        public LayoutWeightAnimation(View view, float targetWeight) {
+            this.view = view;
+            this.targetWeight = targetWeight;
+
+            layoutParams = (LinearLayout.LayoutParams)view.getLayoutParams();
+            initializeWeight = layoutParams.weight;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime;
+            
+           view.requestLayout();
+        }
+
+        @Override
+        public boolean willChangeBounds() {
+            return true;
+        }
     }
 }

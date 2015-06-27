@@ -49,14 +49,14 @@
                 android:layout_margin="2dip"
                 android:layout_weight="1"
                 android:background="@{barForegroundColor}"
-                app:layout_weight="@{weightToShow}" />
+                app:layout_weight_anim="@{weightToShow}" />
 
             <View
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:padding="2dip"
-                app:layout_weight="@{weightToHide}" />
+                app:layout_weight_anim="@{weightToHide}" />
         </LinearLayout>
 
 
