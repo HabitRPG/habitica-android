@@ -26,6 +26,12 @@ public abstract class Checklist extends HabitItem{
 		}
 	}
 
+	public void addItems(Checklist list){
+		for (ChecklistItem l : list.getItems())
+		{
+			this.checklist.add(l);
+		}
+	}
 
     public void addItem(ChecklistItem item) {
 		this.checklist.add(item);

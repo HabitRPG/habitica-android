@@ -24,13 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- 		    <View -->
-        <!-- 		        android:id="@+id/V_color_indic" -->
-        <!-- 		        android:layout_width="50dp" -->
-        <!-- 		        android:layout_height="10dp" -->
-        <!-- 		        android:layout_marginRight="30dp" -->
-        <!-- 		        android:background="@color/bad" -->
-        <!-- 		        android:layout_gravity="top|right" /> -->
         <ImageView
             android:id="@+id/IV_task_color"
             android:layout_width="30dp"
@@ -46,6 +39,16 @@
             android:layout_gravity="center|left"
             android:layout_marginLeft="10dp"
             android:gravity="left" />
+
+        <ImageButton
+            android:id="@+id/BT_checklist"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@color/transparent"
+            android:layout_marginRight="30dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_action_list" />
 
     </FrameLayout>
 

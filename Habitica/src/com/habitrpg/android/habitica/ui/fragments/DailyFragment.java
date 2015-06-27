@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.ChecklistDialog;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
@@ -75,6 +77,9 @@ public class DailyFragment extends CardFragment {
             CheckBox completed = (CheckBox) convertView.findViewById(R.id.plus);
             completed.setOnClickListener(this.getOnClickListener());
             TextView text = (TextView) convertView.findViewById(R.id.TV_title);
+
+            ImageButton checklist = (ImageButton) convertView.findViewById(R.id.BT_checklist);
+
             Calendar c = Calendar.getInstance();
             c.add(Calendar.HOUR_OF_DAY, -getDayStart());
             int index = c.get(Calendar.DAY_OF_WEEK)-2;
@@ -101,6 +106,16 @@ public class DailyFragment extends CardFragment {
             text.setText(currentItem.getText());
             completed.setChecked(isChecked(currentItem));
             convertView.setLongClickable(true);
+
+            List<com.magicmicky.habitrpgwrapper.lib.models.tasks.Checklist.ChecklistItem> items =currentItem.getItems();
+
+            if (items != null && !items.isEmpty()) {
+                checklist.setVisibility(View.VISIBLE);
+                checklist.setOnClickListener(openChecklist);
+            } else {
+                checklist.setVisibility(View.GONE);
+            }
+
             if(isItemChecked(position)) {
                 convertView.setBackgroundResource(R.drawable.list_focused_holo);
             } else {
@@ -136,7 +151,21 @@ public class DailyFragment extends CardFragment {
             return !isChecked ? "down" : "up";
 
         }
+        private View.OnClickListener openChecklist = new View.OnClickListener() {
+            @Override
 
+            public void onClick(View v) {
+
+                if(v.getParent() != null && v.getParent().getParent() != null) {
+
+                    int position = ((View) v.getParent().getParent()).getId();
+
+                    ChecklistDialog dialog = new ChecklistDialog(getActivity(),mAPIHelper,(Daily) getItem(position), null);
+
+                    dialog.show();
+                }
+            }
+        };
     }
 
     public int getDayStart() {

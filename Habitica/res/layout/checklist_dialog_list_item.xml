@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardText"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/row_size"
+    android:background="@drawable/item_background"
+    android:gravity="center_vertical"
+    android:paddingBottom="0dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp">
+
+    <CheckBox
+        android:id="@+id/plus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center" />
+
+    <ImageButton
+        android:id="@+id/BT_delete"
+        android:layout_width="@dimen/row_size"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_action_delete"
+        android:visibility="gone"/>
+
+    <CheckedTextView
+        android:id="@+id/TV_title"
+        style="@style/CardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center|left"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/BT_delete"
+        android:layout_toRightOf="@id/plus"
+        android:gravity="left" />
+
+
+</RelativeLayout>

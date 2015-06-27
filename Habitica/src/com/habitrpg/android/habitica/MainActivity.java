@@ -48,7 +48,7 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemAdapter;
 import com.habitrpg.android.habitica.ui.fragments.DailyFragment;
 import com.habitrpg.android.habitica.ui.fragments.RewardFragment;
-import com.habitrpg.android.habitica.ui.fragments.TagAdapter;
+import com.habitrpg.android.habitica.ui.adapter.TagAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
@@ -110,10 +110,11 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 			finish();
 		} else {
             if(this.isThisFirstTimeSinceUpdate()) {
-                ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(this);
-                _ChangelogDialog.show();
+               // ChangeLogDialog _ChangelogDialog = new ChangeLogDialog(this);
+               // _ChangelogDialog.show(getSupportFragmentManager());
             }
         }
+
 		/*
 		 * Retrieve all the views
 		 */
@@ -392,6 +393,9 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 			case R.id.action_showTestActivity:
 				startActivity(new Intent(this, MainActivityNew.class));
 				break;
+			case R.id.action_showChangelogActivity:
+				startActivity(new Intent(this, AboutActivity.class));
+				break;
 			case R.id.action_settings:
 				startActivity(new Intent(this, PrefsActivity.class));
 				break;
@@ -570,7 +574,9 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
     public Habit getHabit(int pos) {
         return user.getHabits().get(pos);
     }
+
     public ToDo getTodo(int pos) {
+
         return user.getTodos().get(pos);
     }
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/background_light">
+    <RelativeLayout
+        android:id="@+id/RL_addItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/BT_addItem"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_send"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/ET_addItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/checklist.item.hint"
+
+            android:layout_toLeftOf="@id/BT_addItem"
+
+            android:layout_centerVertical="true"
+
+            android:ems="10"
+            android:singleLine="true"
+
+            app:met_floatingLabel="normal" />
+        
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/LV_checklist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+</LinearLayout>

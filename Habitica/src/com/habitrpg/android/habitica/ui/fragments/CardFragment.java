@@ -49,7 +49,7 @@ public abstract class CardFragment extends Fragment implements OnTasksChanged {
 	private List<HabitItem> tmpTasks= new ArrayList<HabitItem>();
 	protected MyAdapter mAdapter;
 	private ListView mListView;
-	private APIHelper mAPIHelper;
+	protected APIHelper mAPIHelper;
 	private List<String> tmpTags = new ArrayList<String>();
 	private ActionMode mActionMode;
     private static final String API_KEY ="b89ef880-7e07-4d13-8a5f-b6be25437fd8";
