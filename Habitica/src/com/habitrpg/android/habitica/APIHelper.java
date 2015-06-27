@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -204,15 +207,30 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 	@Override
 	public Throwable handleError(RetrofitError cause) {
-		//String json =  new String(((TypedByteArray)cause.getResponse().getBody()).getBytes());
-		//Log.v("failure", json.toString());
 
 		retrofit.client.Response res = cause.getResponse();
 
-		retrofit.mime.TypedInput body = res.getBody();
+		if (res != null) {
+			retrofit.mime.TypedInput body = res.getBody();
+		}
 
+		if (cause.isNetworkError()) {
+            final Activity activity = (Activity) this.mContext;
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    new AlertDialog.Builder(activity)
+                            .setTitle(R.string.network_error_title)
+                            .setMessage(R.string.network_error_no_network_body)
+                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            });
 
-		//JsonSyntaxException d = (JsonSyntaxException)cause;
+		}
 
 		return cause;
 	}

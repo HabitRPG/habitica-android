@@ -114,11 +114,9 @@
     <string name="SP_see_changelog">See the changelog</string>
 	<string name="MP_default">MP</string>
 
-	<!-- Premium - ->
-    <string name="premium_sku">premium</string>
-    <string name="appPublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqxsCCpTSRrjW/vQoc1oSjFyaDqVqQIreY1+i5npLKbWbcwovdF4MbyFjIQzRBiGvbxPRYNlApmoDNIeHjr7qJrprsuPwSMThFLRv3unsGJws7/vxdbcp6YTpmyJODk2zSmRvI5OTu+hfB+SESzrfE1K960+mawCI+N7ee5xIg1sEZmV6e8mQ33f+gE3yaivPw6FYBnqSO6V0bq+k6nUyuN5Hk7wQKOXlZ4quJy1IsI/LhGl7ZSxx0fPoMe0QdjZpvW0leEpdXLU0LUpGR0fm2Ui2qj0gJP5OyDwo2EbF7PLDIz0zmisHWpV/vHKljGHCKzBZu46YgQZRn+zueqVjywIDAQAB</string>
-    <string name="adKey">ca-app-pub-3124440915077289/1083610578</string>
-    <string name="action_premium">Upgrade to premium</string>-->
+	<!-- Network Errors -->
+	<string name="network_error_title">Connection Error</string>
+	<string name="network_error_no_network_body">You are not connected to the internet.</string>
 
 
 </resources>
