@@ -43,7 +43,7 @@ dependencies {
     // View Elements Injection :)
     compile 'com.jakewharton:butterknife:6.1.0'
 
-    compile('com.mikepenz:materialdrawer:3.0.5@aar') {
+    compile('com.mikepenz:materialdrawer:3.0.8@aar') {
         transitive = true
     }
 
@@ -58,7 +58,7 @@ dependencies {
 
     // Icons
     dependencies {
-        compile 'com.mikepenz:iconics:1.0.2@aar'
+        compile 'com.mikepenz:iconics:1.1.0@aar'
     }
 
     compile 'com.rengwuxian.materialedittext:library:2.1.4'

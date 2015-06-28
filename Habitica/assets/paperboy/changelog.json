@@ -7,6 +7,10 @@
         "title": "Ability to add / edit / delete / check Checklists!"
       },
       {
+        "type": "F",
+        "title": "You can toggle the sleep-state!"
+      },
+      {
         "type": "B",
         "title": "Fixed crash while the device is offline"
       },

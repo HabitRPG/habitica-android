@@ -133,7 +133,7 @@ public class AboutActivity extends AppCompatActivity   {
             if(position == 0)
                 return getString(R.string.about_title);
 
-            return getString(R.string.about_changelog);
+            return getString(R.string.about_versionhistory);
         }
 
         @Override

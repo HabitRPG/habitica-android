@@ -9,7 +9,7 @@
     <string name="XP_default">XP</string>
     <string name="HP_default">HP</string>
     <string name="format_todo_date">%1$d-%2$d-%3$d</string>
-    <string name="new_task_added_message">A new task have been added</string>
+    <string name="new_task_added_message">Task added</string>
     <string name="lvlup">LVL UP!</string>
     <string name="action_barcode">Scan a barcode</string>
     <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
@@ -42,7 +42,7 @@
 
     <!-- Adding tasks -->
     <string name="task_note_hint">Add a note</string>
-    <string name="new_task">Creation of a new %s</string>
+    <string name="new_task">Add new %s</string>
     <string name="task_text">Task:</string>
     <string name="task_note">Note:</string>
     <string name="task_duedate">Due date:</string>
@@ -106,12 +106,11 @@
         
     <string name="close">Close</string>
     <string name="SP_last_seen_version">SP_last_version</string>
-    <string name="SP_see_changelog">See the changelog</string>
     <string name="MP_default">MP</string>
     <string name="update_btn">Update</string>
 
     <string name="about.title">About</string>
-    <string name="about.changelog">Changelog</string>
+    <string name="about.versionhistory">Version history</string>
 	<!-- Network Errors -->
 	<string name="network_error_title">Connection Error</string>
 	<string name="network_error_no_network_body">You are not connected to the internet.</string>
