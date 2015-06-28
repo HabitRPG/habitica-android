@@ -90,12 +90,15 @@ public interface ApiService {
 
     @POST("/user/auth/local")
     void connectLocal(@Body UserAuth auth, Callback<UserAuthResponse> callback);
+
+    @POST("/user/sleep")
+    void sleep(Callback<Void> voidCallback);
+
 /*
     @GET("/content")
     void getContent();//Check Callback
 
-    @POST("/user/sleep")
-    void sleep(Callback<HabitRPGDataCallback> habitRPGDataCallbackCallback);//Check callback.
+
 
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey);//Check callback. Key --> /content

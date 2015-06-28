@@ -21,7 +21,9 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.databinding.SidebarHeaderBinding;
+import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
@@ -46,8 +48,12 @@ import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class MainActivityNew extends InstabugAppCompatActivity {
+public class MainActivityNew extends InstabugAppCompatActivity
+        implements HabitRPGUserCallback.OnUserReceived, Callback<Void> {
     static final int ABOUT = 12;
 
     //region View Elements
@@ -64,10 +70,17 @@ public class MainActivityNew extends InstabugAppCompatActivity {
 
     List<HabitItem> TaskList = new ArrayList<HabitItem>();
 
-    // just to test the view
-    public static HabitRPGUser User = null;
+    private HostConfig hostConfig;
+    APIHelper mAPIHelper;
 
-    AvatarWithBarsViewModel avatarWithBarsViewModel;
+    android.support.v4.view.ViewPager viewPager;
+
+    // just to test the view
+    public HabitRPGUser User = null;
+
+    AvatarWithBarsViewModel avatarInSidebar;
+    AvatarWithBarsViewModel avatarInHeader;
+    SidebarHeaderBinding sidebarHeaderBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +89,8 @@ public class MainActivityNew extends InstabugAppCompatActivity {
 
         // Inject Controls
         ButterKnife.inject(this);
+
+        this.hostConfig = PrefsActivity.fromContext(this);
 
         toolbar = materialViewPager.getToolbar();
         setSupportActionBar(toolbar);
@@ -90,10 +105,8 @@ public class MainActivityNew extends InstabugAppCompatActivity {
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setHomeButtonEnabled(false);
 
-            toolbar.setTitle(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
 
             toolbar.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tool_bar_top_padding), 0, 0);
-
         }
 
         materialViewPager.setBackgroundColor(getResources().getColor(R.color.white));
@@ -101,16 +114,15 @@ public class MainActivityNew extends InstabugAppCompatActivity {
 
         View sidebarHeaderView = LayoutInflater.from(this).inflate(R.layout.sidebar_header, null, false);
 
-        final SidebarHeaderBinding sidebarHeaderBinding = DataBindingUtil.bind(sidebarHeaderView);
+        sidebarHeaderBinding = DataBindingUtil.bind(sidebarHeaderView);
 
-        avatarWithBarsViewModel = new AvatarWithBarsViewModel(this, sidebarHeaderView.findViewById(R.id.avatar_with_bars));
+        avatarInSidebar = new AvatarWithBarsViewModel(this, sidebarHeaderView.findViewById(R.id.avatar_with_bars));
 
         View mPagerRootView = materialViewPager.getRootView();
 
-        View test = mPagerRootView.findViewById(R.id.avatar_with_bars_layout);
+        View avatarHeaderView = mPagerRootView.findViewById(R.id.avatar_with_bars_layout);
 
-        final AvatarWithBarsViewModel avatarVM = new AvatarWithBarsViewModel(this, test);
-
+        avatarInHeader = new AvatarWithBarsViewModel(this, avatarHeaderView);
 
         drawer = new DrawerBuilder()
                 .withActivity(this)
@@ -118,7 +130,6 @@ public class MainActivityNew extends InstabugAppCompatActivity {
                 .withHeaderDivider(false)
                 .withTranslucentStatusBar(true)
                 .withAnimateDrawerItems(true)
-
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Tasks"),
 
@@ -164,7 +175,6 @@ public class MainActivityNew extends InstabugAppCompatActivity {
 
         final android.content.Context context = getApplicationContext();
 
-
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
@@ -181,11 +191,50 @@ public class MainActivityNew extends InstabugAppCompatActivity {
                 .append(drawer);
 
 
-        android.support.v4.view.ViewPager viewPager = materialViewPager.getViewPager();
+        viewPager = materialViewPager.getViewPager();
         viewPager.setOffscreenPageLimit(6);
 
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+
+                Log.d("PageSelected", "P=" + position);
+
+                RecyclerViewFragment fragment = ViewFragmentsDictionary.get(position);
+
+                if (fragment == null || fragment.mRecyclerView == null)
+                    return;
+
+                // fragment.mRecyclerView.smoothScrollToPosition(r.nextInt(fragment.mRecyclerView.getAdapter().getItemCount()));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        materialViewPager.getViewPager().setCurrentItem(1);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.mAPIHelper = new APIHelper(this, hostConfig);
+
+        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    public void FillTasks()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
@@ -284,65 +333,8 @@ public class MainActivityNew extends InstabugAppCompatActivity {
 
 
         });
-        //mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+
         materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                Log.d("PageSelected", "P=" + position);
-
-                RecyclerViewFragment fragment = ViewFragmentsDictionary.get(position);
-
-                if (fragment == null || fragment.mRecyclerView == null)
-                    return;
-
-                // fragment.mRecyclerView.smoothScrollToPosition(r.nextInt(fragment.mRecyclerView.getAdapter().getItemCount()));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        materialViewPager.getViewPager().setCurrentItem(1);
-
-        TaskList.addAll(User.getHabits());
-        TaskList.addAll(User.getDailys());
-        TaskList.addAll(User.getTodos());
-        TaskList.addAll(User.getRewards());
-
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                avatarWithBarsViewModel.UpdateData(User);
-                avatarVM.UpdateData(User);
-
-                android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
-
-                if (actionBarDrawerToggle != null) {
-                    actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-                }
-
-                sidebarHeaderBinding.setUserName(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
-
-                Double goldPoints = User.getStats().getGp();
-
-                sidebarHeaderBinding.setGold("" + goldPoints.intValue());
-                sidebarHeaderBinding.setSilver("" + (int) ((goldPoints - goldPoints.intValue()) * 100));
-
-                FillTagFilterDrawer();
-            }
-        }, 100);
     }
 
     public void FillTagFilterDrawer() {
@@ -398,17 +390,84 @@ public class MainActivityNew extends InstabugAppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        switch (id) {
+            case R.id.action_search:
+                filterDrawer.openDrawer();
 
-        if (id == R.id.action_search) {
-            filterDrawer.openDrawer();
+                return true;
+            case R.id.action_toggle_sleep:
+                mAPIHelper.toggleSleep(this);
 
-            return true;
+                User.getPreferences().setSleep(!User.getPreferences().isSleep());
+
+                updateUserAvatars();
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateUserAvatars()
+    {
+        avatarInSidebar.UpdateData(User);
+        avatarInHeader.UpdateData(User);
+    }
+
+    @Override
+    public void onUserReceived(HabitRPGUser user) {
+        TaskList.clear();
+
+        User = user;
+
+        if(user == null)
+            return;
+
+        toolbar.setTitle(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
+
+        TaskList.addAll(User.getHabits());
+        TaskList.addAll(User.getDailys());
+        TaskList.addAll(User.getTodos());
+        TaskList.addAll(User.getRewards());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                FillTasks();
+
+                updateUserAvatars();
+
+                android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
+
+                if (actionBarDrawerToggle != null) {
+                    actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+                }
+
+                sidebarHeaderBinding.setUserName(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
+
+                Double goldPoints = User.getStats().getGp();
+
+                sidebarHeaderBinding.setGold("" + goldPoints.intValue());
+                sidebarHeaderBinding.setSilver("" + (int) ((goldPoints - goldPoints.intValue()) * 100));
+
+                FillTagFilterDrawer();
+            }
+        }, 100);
+    }
+
+    @Override
+    public void onUserFail() {
+
+    }
+
+    @Override
+    public void success(Void aVoid, Response response) {
+
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+
     }
 }

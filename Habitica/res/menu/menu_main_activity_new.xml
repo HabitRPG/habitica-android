@@ -8,4 +8,12 @@
         android:icon="@drawable/ic_action_filter_list"
         android:title="filter"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_toggle_sleep"
+        android:orderInCategory="103"
+
+        android:title="Toggle Sleep"
+        />
+
 </menu>

@@ -67,7 +67,7 @@ public class AvatarWithBarsViewModel {
         
         SetValueBar(hpBar, stats.getHp().floatValue(), stats.getMaxHealth(), context.getString(R.string.HP_default),
                 res.getColor(R.color.hpColor), res.getColor(R.color.hpColorBackground), res.getColor(R.color.hpColorForeground));
-        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel()+stats.getExp().floatValue(), context.getString(R.string.XP_default),
+        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default),
                 res.getColor(R.color.xpColor), res.getColor(R.color.xpColorBackground), res.getColor(R.color.xpColorForeground));
         SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default),
                 res.getColor(R.color.mpColor), res.getColor(R.color.mpColorBackground),res.getColor(R.color.mpColorForeground));

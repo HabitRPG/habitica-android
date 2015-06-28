@@ -250,7 +250,7 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
 		});
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		//HostConfig config = PrefsActivity.fromContext(this);
+
 		this.mAPIHelper = new APIHelper(this, hostConfig);
         this.onPreResult();
 		mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
@@ -429,8 +429,6 @@ public class MainActivity extends ActionBarActivity implements OnTaskCreationLis
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
-
-		MainActivityNew.User = user;
 
         this.notifyDataChanged();
         afterResults();

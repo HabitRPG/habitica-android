@@ -245,6 +245,9 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 	}
 
+	public void toggleSleep(Callback<Void> cb){
+		apiService.sleep(cb);
+	}
 
 /*
 	private class ATaskGetUser extends AsyncTask<Void, Void, Void> {

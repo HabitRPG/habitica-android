@@ -40,13 +40,15 @@ public class UserPicture {
     private void drawAvatar(HabitRPGUser user, Bitmap imgSprites, Canvas cv) {
         drawSprite(UserSprite.getSkin(user.getPreferences().getSkin()), imgSprites, cv);
 
-//        if(user.getPreferences().getHair() != null) {
-//            Log.d("Avatar", "drawing head");
-//            drawSprite(UserSprite.gethair_bangs(user.getPreferences().getHair().getBangs(), user.getPreferences().getHair().getColor()), imgSprites, cv);
-//            drawSprite(UserSprite.gethair_mustache(user.getPreferences().getHair().getMustache(), user.getPreferences().getHair().getColor()), imgSprites, cv);
-//            drawSprite(UserSprite.gethair_base(user.getPreferences().getHair().getBase(), user.getPreferences().getHair().getColor()), imgSprites, cv);
-//            drawSprite(UserSprite.gethair_beard(user.getPreferences().getHair().getBeard(), user.getPreferences().getHair().getColor()), imgSprites, cv);
-//        }
+		com.magicmicky.habitrpgwrapper.lib.models.Preferences.Hair hair = user.getPreferences().getHair();
+
+		if(hair != null) {
+            Log.d("Avatar", "drawing head");
+            drawSprite(UserSprite.gethair_bangs(hair.getBangs(), hair.getColor()), imgSprites, cv);
+            drawSprite(UserSprite.gethair_mustache(hair.getMustache(), hair.getColor()), imgSprites, cv);
+            drawSprite(UserSprite.gethair_base(hair.getBase(), hair.getColor()), imgSprites, cv);
+            drawSprite(UserSprite.gethair_beard(hair.getBeard(), hair.getColor()), imgSprites, cv);
+        }
 //
 //        UserLook.UserItems items = user.getPreferences().isCostume() ? user.getItems().getGear() : user.getItems();
 //        drawSprite(UserSprite.getArmor(items.getArmor(), user.getSize(), user.getPreferences().getShirt()), imgSprites, cv);
