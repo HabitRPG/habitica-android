@@ -26,51 +26,43 @@
             app:cardPreventCornerOverlap="false"
             app:contentPadding="0dp">
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="fill_horizontal|center_vertical|center_horizontal|fill|clip_vertical|fill_vertical|center|start|clip_horizontal|bottom|left|right|end|top">
+                android:layout_above="@+id/textView6"
+                android:layout_alignLeft="@+id/checkedTextView"
+                android:layout_alignStart="@+id/checkedTextView">
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="false"
-                    android:layout_alignParentTop="true"
+                    android:layout_height="fill_parent"
                     android:checked="false"
-                    android:gravity="top" />
+                    android:gravity="center"/>
 
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+                    <CheckedTextView
+                        android:id="@+id/checkedTextView"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{todo.text}" />
 
-                <CheckedTextView
-                    android:id="@+id/checkedTextView"
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="false"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentLeft="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/checkBox"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@{todo.text}" />
+                    <TextView
+                        android:id="@+id/textView6"
+                        style="@style/CardText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@{todo.notes}" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView6"
-                    style="@style/CardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/checkedTextView"
-                    android:layout_toEndOf="@+id/checkBox"
-                    android:layout_toRightOf="@+id/checkBox"
-                    android:text="@{todo.notes}" />
+            </LinearLayout>
 
-            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
     </FrameLayout>

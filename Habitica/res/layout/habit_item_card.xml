@@ -40,8 +40,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/checkedTextView"
-                    android:layout_toStartOf="@+id/checkedTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:text="+" />
 
                 <Button
@@ -58,24 +58,25 @@
                 <CheckedTextView
                     android:id="@+id/checkedTextView"
                     style="@style/CardTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="false"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentStart="false"
+                    android:layout_toRightOf="@id/btnPlus"
+                    android:layout_toEndOf="@id/btnPlus"
                     android:layout_alignParentTop="true"
                     android:paddingBottom="5dp"
                     android:paddingRight="5dp"
+                    android:paddingEnd="5dp"
                     android:paddingTop="5dp"
                     android:text="@{habit.text}" />
 
                 <TextView
                     android:id="@+id/textView6"
                     style="@style/CardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignLeft="@+id/checkedTextView"
                     android:layout_alignStart="@+id/checkedTextView"
                     android:layout_below="@+id/checkedTextView"
