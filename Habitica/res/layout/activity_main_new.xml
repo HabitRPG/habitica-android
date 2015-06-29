@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         app:viewpager_logoMarginTop="70dp"
         app:viewpager_pagerTitleStrip="@layout/material_view_pager_pagertitlestrip_standard"
-        app:viewpager_color="@color/colorPrimary"
+        app:viewpager_color="@color/brand"
         app:viewpager_headerHeight="220dp"
         app:viewpager_headerAlpha="1"
         app:viewpager_logo="@layout/avatar_with_bars"

@@ -266,7 +266,7 @@ public abstract class CardFragment extends Fragment implements OnTasksChanged {
 					if(v.getParent()!=null) {
 						String direction = upOrDown(v, getItem(((View) v.getParent()).getId()));
 						String id = getIdString(((View) v.getParent()).getId());
-                        ((MainActivity) getActivity()).onPreResult();
+                        /*((MainActivityOld) getActivity()).onPreResult();*/
                         Log.d("OMG", "id : " + id + " - " + direction);
 						mAPIHelper.updateTaskDirection(id,direction, new TaskScoringCallback((MainActivity) getActivity()));
 					} else {
@@ -391,7 +391,7 @@ public abstract class CardFragment extends Fragment implements OnTasksChanged {
 					return true;
 				case R.id.deleteConfirmMenuBT:
 					HabitItem taskToDel = mAdapter.getItem(mAdapter.getItemCheckedPos());
-                    ((MainActivity) getActivity()).onPreResult();
+                    //((MainActivity) getActivity()).onPreResult();
 					mAPIHelper.deleteTask(taskToDel, new TaskDeletionCallback((MainActivity) getActivity(), taskToDel));
 					mActionMode.finish();
 					return true;

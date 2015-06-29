@@ -9,7 +9,6 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -36,8 +35,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.magicmicky.habitrpgwrapper.lib.utils.DaysUtils;
-
-import org.json.JSONObject;
 
 import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.*;
 import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.habit;
@@ -145,20 +142,20 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
 
         if (mEditMode) {
 //			this.reconstructObjectFrom(json);
-            switch (hType) {
+            /*switch (hType) {
                 case todo:
-                    this.populate(((MainActivity) getActivity()).getTodo(pos));
+                    this.populate(((MainActivityOld) getActivity()).getTodo(pos));
                     break;
                 case daily:
-                    this.populate(((MainActivity) getActivity()).getDaily(pos));
+                    this.populate(((MainActivityOld) getActivity()).getDaily(pos));
                     break;
                 case reward:
-                    this.populate(((MainActivity) getActivity()).getReward(pos));
+                    this.populate(((MainActivityOld) getActivity()).getReward(pos));
                     break;
                 case habit:
-                    this.populate(((MainActivity) getActivity()).getHabit(pos));
+                    this.populate(((MainActivityOld) getActivity()).getHabit(pos));
                     break;
-            }
+            }*/
         }
         builder.setTitle(getString(R.string.new_task, hType.toString()))
                 .setPositiveButton(R.string.dialog_confirm_button, new DialogInterface.OnClickListener() {

@@ -8,7 +8,7 @@
         <!-- API 11 theme customizations can go here. -->
     </style>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle
         </item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->

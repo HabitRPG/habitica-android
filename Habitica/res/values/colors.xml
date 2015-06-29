@@ -9,6 +9,7 @@
     <color name="mpColor">#4781e7</color>
     <color name="mpColorBackground">#eff4fd</color>
     <color name="mpColorForeground">#051228</color>
+    <color name="brand">#7a12f8</color>
 
     <!--  HabitRPG task color -->
     <color name="worst">#E6B8AF</color>
