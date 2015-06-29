@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,11 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -26,7 +23,6 @@ import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.databinding.SidebarHeaderBinding;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
@@ -87,7 +83,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_new);
+        setContentView(R.layout.activity_main);
 
         // Inject Controls
         ButterKnife.inject(this);
@@ -95,7 +91,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         this.hostConfig = PrefsActivity.fromContext(this);
 
         toolbar = materialViewPager.getToolbar();
-        setSupportActionBar(toolbar);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -125,7 +120,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHeaderDivider(false)
-                .withTranslucentStatusBar(true)
                 .withAnimateDrawerItems(true)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Tasks"),
@@ -214,7 +208,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
             }
         });
-        materialViewPager.getViewPager().setCurrentItem(1);
+        materialViewPager.getViewPager().setCurrentItem(0);
 
     }
 
