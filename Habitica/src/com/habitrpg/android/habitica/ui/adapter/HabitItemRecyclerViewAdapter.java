@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
+import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.Model;
 
 import java.util.List;
 
@@ -29,21 +34,39 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
-        extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> {
+        extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
+        implements FlowContentObserver.OnSpecificModelStateChangedListener {
 
     int layoutResource;
     private Class<ViewHolder<THabitItem>> viewHolderClass;
     List<THabitItem> contents;
+    Class<THabitItem> taskClass;
+    FlowContentObserver observer;
+    Context context;
 
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
 
 
-    public HabitItemRecyclerViewAdapter(List<THabitItem> contents, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass) {
-        this.contents = contents;
+    public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
+
+        this.context = newContext;
+        this.taskClass = newTaskClass;
+        this.loadContent();
+
+        observer = new FlowContentObserver();
+        observer.registerForContentChanges(this.context, this.taskClass);
+
+        observer.addSpecificModelChangeListener(this);
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        this.observer.unregisterForContentChanges(this.context);
+        super.onViewDetachedFromWindow(holder);
     }
 
     @Override
@@ -77,10 +100,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
                     case "HabitViewHolder":
                         return new HabitItemRecyclerViewAdapter.HabitViewHolder(view);
                     case "DailyViewHolder":
-
                         return new HabitItemRecyclerViewAdapter.DailyViewHolder(view);
                     case "TodoViewHolder":
-
                         return new HabitItemRecyclerViewAdapter.TodoViewHolder(view);
                     case "RewardViewHolder":
 
@@ -96,6 +117,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         HabitItem item = contents.get(position);
 
         holder.bindHolder(item, position);
+    }
+
+    @Override
+    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
+        //TODO: Not load all content every time something changed
+        this.loadContent();
     }
 
     public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder {
@@ -230,5 +257,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
             binding.setReward(habitItem);
         }
+    }
+
+    public void loadContent() {
+        this.contents = new Select().from(this.taskClass).queryList();
+        notifyDataSetChanged();
     }
 }

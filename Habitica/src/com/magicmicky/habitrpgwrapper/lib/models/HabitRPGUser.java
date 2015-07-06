@@ -100,10 +100,6 @@ public class HabitRPGUser extends BaseModel {
         this.habits = habits;
     }
 
-    public List<Tag> getTags() {
-        return tags;
-    }
-
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
@@ -158,7 +154,7 @@ public class HabitRPGUser extends BaseModel {
                     .queryList();
         }
         return dailys;
-}
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
     public List<ToDo> getTodos() {
@@ -170,7 +166,6 @@ public class HabitRPGUser extends BaseModel {
         return todos;
     }
 
-
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
     public List<Reward> getRewards() {
         if(rewards == null) {
@@ -179,6 +174,16 @@ public class HabitRPGUser extends BaseModel {
                     .queryList();
         }
         return rewards;
+    }
+
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
+    public List<Tag> getTags() {
+        if(tags == null) {
+            tags = new Select()
+                    .from(Tag.class)
+                    .queryList();
+        }
+        return tags;
     }
 
 }

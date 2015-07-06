@@ -60,8 +60,6 @@ public class HabitRPGInteractor {
                     }
                 }).registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe()).create();
 
-        Log.d("AASDASDASD", gson.toString());
-
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(server.toString())
                 .setRequestInterceptor(requestInterceptor)
