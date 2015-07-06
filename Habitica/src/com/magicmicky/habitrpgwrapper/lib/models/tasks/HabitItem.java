@@ -1,5 +1,11 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -9,48 +15,59 @@ import java.util.List;
  * @author MagicMicky
  *
  */
-public abstract class HabitItem {
+public abstract class HabitItem extends BaseModel {
     private String _id;
-    private String id;
-	private String notes;
-	private Float priority;
-	private String text;
-	private Double value;
-	private String attribute;
+
+    @Column
+    @PrimaryKey
+    String id;
+
+	@Column
+	public String notes;
+
+	@Column
+    public Float priority;
+
+	@Column
+    public String text;
+
+	@Column
+    public Double value;
+
+	@Column
+    public String attribute;
+
 	private Tags tags;
 	/**
 	 * Create a new HabitItem from what is necessary
-	 * @param id the id of the habit
 	 * @param notes the notes associated to a habit
 	 * @param priority the priority of the habit
 	 * @param text the text of the habit
 	 * @param value the value (points) of the habit
 	 */
-	public HabitItem(String id, String notes, Float priority, String text, Double value) {
-		this.setId(id);
+	public HabitItem(String notes, Float priority, String text, Double value) {
 		this.setNotes(notes);
 		this.setPriority(priority);
 		this.setText(text);
 		this.setValue(value);
 		this.tags=new Tags();
-        this.id = id;
 
 	}
 	public HabitItem() {
-		this(null,null,null,null,null);
+		this(null,null,null,null);
 	}
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 	/**
 	 * @return the notes
 	 */

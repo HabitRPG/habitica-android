@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Checklist;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
@@ -84,7 +85,7 @@ public class ChecklistDialog<THabitItem extends Checklist> implements DialogInte
                 @Override
                 public void onClick(View v) {
                     if (addItem.getText() != null && addItem.getText().length() > 0) {
-                        Checklist.ChecklistItem item = new Checklist.ChecklistItem();
+                        ChecklistItem item = new ChecklistItem();
                         item.setText(addItem.getText().toString());
                         adapter.addItem(item);
                         adapter.notifyDataSetChanged();
@@ -146,7 +147,7 @@ public class ChecklistDialog<THabitItem extends Checklist> implements DialogInte
         }
 
         @Override
-        public Checklist.ChecklistItem getItem(int position) {
+        public ChecklistItem getItem(int position) {
             return checklist.getItems().get(position);
         }
 
@@ -163,10 +164,10 @@ public class ChecklistDialog<THabitItem extends Checklist> implements DialogInte
             }
             CheckBox completed = (CheckBox) convertView.findViewById(R.id.plus);
             TextView text = (TextView) convertView.findViewById(R.id.TV_title);
-            Checklist.ChecklistItem currentItem = this.getItem(position);
+            ChecklistItem currentItem = this.getItem(position);
             text.setText(currentItem.getText());
             convertView.setId(position);
-            completed.setChecked(currentItem.isCompleted());
+            completed.setChecked(currentItem.getCompleted());
             completed.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -200,7 +201,7 @@ public class ChecklistDialog<THabitItem extends Checklist> implements DialogInte
             this.notifyDataSetChanged();
         }
 
-        public void addItem(Checklist.ChecklistItem item) {
+        public void addItem(ChecklistItem item) {
             this.checklist.addItem(item);
         }
     }

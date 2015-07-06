@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -28,6 +30,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
+import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 
@@ -59,7 +62,19 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 			}
 		};
+		//Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
 		Gson gson = new GsonBuilder()
+				.setExclusionStrategies(new ExclusionStrategy() {
+					@Override
+					public boolean shouldSkipField(FieldAttributes f) {
+						return f.getDeclaredClass().equals(ModelAdapter.class);
+					}
+
+					@Override
+					public boolean shouldSkipClass(Class<?> clazz) {
+						return false;
+					}
+				})
 				.registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe())
 				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
 				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)

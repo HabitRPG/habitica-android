@@ -1,28 +1,48 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+
 /**
  * A reward. Contain a reward that you can see on the website
  * @author MagicMicky
  *
  */
+@Table(databaseName = HabitDatabase.NAME, allFields = true)
 public class Reward extends HabitItem{
 	private final HabitType type = HabitType.reward;
+
 	/**
 	 * Create a new Reward
-	 * @param id the id of the habit
-	 * @param notes the notes associated to a habit
-	 * @param priority the priority of the habit
-	 * @param text the text of the habit
-	 * @param value the value (points) of the habit
+	 * @param id the id of the reward
+	 * @param notes the notes associated to a reward
+	 * @param priority the priority of the reward
+	 * @param text the text of the reward
+	 * @param value the value (points) of the reward
 	 */
 	public Reward(String id, String notes, Float priority, String text,
 			double value) {
-		super(id, notes, priority, text, value);
+		super(notes, priority, text, value);
+		this.setId(id);
 	}
 
 	public Reward() {
 		super();
+	}
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

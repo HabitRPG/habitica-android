@@ -1,15 +1,38 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.List;
+
 /**
  * A daily item. It contains the item called "Daily" on the website
  * @author MagicMicky
  */
+@Table(databaseName = HabitDatabase.NAME)
 public class Daily extends Checklist{
 	private final HabitType type=HabitType.daily;
+
+    @Column
 	private Boolean completed;
-	private Days repeat;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
+            columnType = Long.class,
+            foreignColumnName = "id")})
+    private Days repeat;
 	//TODO: private String lastCompleted;
+
+    @Column
 	private Integer streak;
 	/**
 	 * Construct a daily based on all the information needed
@@ -26,7 +49,8 @@ public class Daily extends Checklist{
     public Daily(String id, String notes, Float priority, String text,
                  Double value, Boolean completed, Days repeat, Integer streak, String lastCompleted) {
         //this(id, notes, priority, text, value,completed,repeat,lastCompleted);
-        super(id,notes,priority,text,value);
+        super(notes,priority,text,value);
+        this.setId(id);
         this.setCompleted(completed);
         this.setRepeat(repeat);
         this.setStreak(streak);
@@ -40,10 +64,11 @@ public class Daily extends Checklist{
 	public Daily() {
 		this(null,null,null,null,null,null,null);
 	}
+
 	/**
 	 * @return if the daily is completed
 	 */
-	public boolean isCompleted() {
+	public boolean getCompleted() {
 		return completed;
 	}
 	/**
@@ -96,73 +121,4 @@ public class Daily extends Checklist{
 	public void setStreak(Integer streak) {
 		this.streak = streak;
 	}
-
-    public static class Days {
-        private boolean m, t,w, th,f,s,su;
-        public Days() {
-            this.m=false;
-            this.t=false;
-            this.w=false;
-            this.th=false;
-            this.f=false;
-            this.s=true;
-            this.su=true;
-        }
-
-        public boolean isT() {
-            return t;
-        }
-
-        public void setT(boolean t) {
-            this.t = t;
-        }
-
-        public boolean isW() {
-            return w;
-        }
-
-        public void setW(boolean w) {
-            this.w = w;
-        }
-
-        public boolean isTh() {
-            return th;
-        }
-
-        public void setTh(boolean th) {
-            this.th = th;
-        }
-
-        public boolean isF() {
-            return f;
-        }
-
-        public void setF(boolean f) {
-            this.f = f;
-        }
-
-        public boolean isS() {
-            return s;
-        }
-
-        public void setS(boolean s) {
-            this.s = s;
-        }
-
-        public boolean isSu() {
-            return su;
-        }
-
-        public void setSu(boolean su) {
-            this.su = su;
-        }
-
-        public boolean isM() {
-            return m;
-        }
-
-        public void setM(boolean m) {
-            this.m = m;
-        }
-    }
 }

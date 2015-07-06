@@ -32,6 +32,7 @@ import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -40,6 +41,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,7 +91,10 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         ButterKnife.inject(this);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-
+        if(hostConfig==null|| hostConfig.getApi()==null || hostConfig.getApi().equals("") || hostConfig.getUser() == null ||hostConfig.getUser().equals("")) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
         toolbar = materialViewPager.getToolbar();
 
         if (toolbar != null) {
@@ -210,6 +215,9 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         });
         materialViewPager.getViewPager().setCurrentItem(0);
 
+
+        List<Habit> users = new Select().from(Habit.class).queryList();
+        Log.d("MainActivity", users.toString());
     }
 
     @Override
@@ -275,11 +283,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                         return "Todos";
                     case 3:
                         return "Rewards";
-             /*       case 4:
-                        return "Skills";
-
-                    case 5:
-                        return "Skills 2";*/
                 }
                 return "";
             }
@@ -351,7 +354,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
             case R.id.action_toggle_sleep:
                 mAPIHelper.toggleSleep(this);
 
-                User.getPreferences().setSleep(!User.getPreferences().isSleep());
+                User.getPreferences().setSleep(!User.getPreferences().getSleep());
 
                 updateUserAvatars();
 

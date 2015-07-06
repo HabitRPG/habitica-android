@@ -1,11 +1,29 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by MagicMicky on 16/03/14.
  */
-public class Preferences {
+
+@Table(databaseName = HabitDatabase.NAME)
+public class Preferences extends BaseModel {
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    long id;
+
+    @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
+
+    @Column
     private String allocationMode, shirt, skin, size;
+
+    @Column
     private int dayStart, timezoneOffset;
     private Hair hair;
     public Preferences() {
@@ -37,7 +55,7 @@ public class Preferences {
         this.dayStart = dayStart;
     }
 
-    public boolean isCostume() {
+    public boolean getCostume() {
         return costume;
     }
 
@@ -45,7 +63,7 @@ public class Preferences {
         this.costume = costume;
     }
 
-    public boolean isToolbarCollapsed() {
+    public boolean getToolbarCollapsed() {
         return toolbarCollapsed;
     }
 
@@ -53,7 +71,7 @@ public class Preferences {
         this.toolbarCollapsed = toolbarCollapsed;
     }
 
-    public boolean isAdvancedCollapsed() {
+    public boolean getAdvancedCollapsed() {
         return advancedCollapsed;
     }
 
@@ -61,7 +79,7 @@ public class Preferences {
         this.advancedCollapsed = advancedCollapsed;
     }
 
-    public boolean isTagsCollapsed() {
+    public boolean getTagsCollapsed() {
         return tagsCollapsed;
     }
 
@@ -69,7 +87,7 @@ public class Preferences {
         this.tagsCollapsed = tagsCollapsed;
     }
 
-    public boolean isNewTaskEdit() {
+    public boolean getNewTaskEdit() {
         return newTaskEdit;
     }
 
@@ -77,7 +95,7 @@ public class Preferences {
         this.newTaskEdit = newTaskEdit;
     }
 
-    public boolean isDisableClasses() {
+    public boolean getDisableClasses() {
         return disableClasses;
     }
 
@@ -85,7 +103,7 @@ public class Preferences {
         this.disableClasses = disableClasses;
     }
 
-    public boolean isStickyHeader() {
+    public boolean getStickyHeader() {
         return stickyHeader;
     }
 
@@ -93,7 +111,7 @@ public class Preferences {
         this.stickyHeader = stickyHeader;
     }
 
-    public boolean isSleep() {
+    public boolean getSleep() {
         return sleep;
     }
 
@@ -101,7 +119,7 @@ public class Preferences {
         this.sleep = sleep;
     }
 
-    public boolean isHideHeader() {
+    public boolean getHideHeader() {
         return hideHeader;
     }
 

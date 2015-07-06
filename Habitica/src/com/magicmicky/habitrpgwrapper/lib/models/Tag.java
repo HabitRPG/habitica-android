@@ -1,11 +1,24 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Description of a Tag in HabitRPG
  * Created by MagicMicky on 16/03/14.
  */
-public class Tag {
+
+@Table(databaseName = HabitDatabase.NAME)
+public class Tag extends BaseModel{
+
+    @Column
+    @PrimaryKey
     String id;
+
+    @Column
     String name;
 
     public Tag() {

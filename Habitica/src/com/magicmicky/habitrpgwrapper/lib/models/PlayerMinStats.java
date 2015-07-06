@@ -1,17 +1,40 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.Table;
 
 /**
  * Created by MagicMicky on 12/06/2014.
  */
+
+@Table(databaseName = HabitDatabase.NAME, allFields = true)
 public class PlayerMinStats extends BasicStats {
-    private BasicStats training;//stats.training
-    private Buffs buffs;//stats.buffs
-    private int points, lvl;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "trainingstats_id",
+            columnType = Long.class,
+            foreignColumnName = "id")})
+    public BasicStats training;//stats.training
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "buffs_id",
+            columnType = Long.class,
+            foreignColumnName = "id")})
+    public Buffs buffs;//stats.buffs
+
+    @Column
+    public int points, lvl;
+
+    @Column
     @SerializedName("class")
-    private HabitRpgClass _class;
-    private Double gp, exp, mp, hp;
+    public HabitRpgClass _class;
+
+    @Column
+    public Double gp, exp, mp, hp;
 
 
 
@@ -85,36 +108,6 @@ public class PlayerMinStats extends BasicStats {
 
     public void setHp(Double hp) {
         this.hp = hp;
-    }
-
-
-
-    protected class Buffs extends BasicStats {
-        private boolean snowball;
-        private boolean streaks;
-        private Buffs() {
-            this(false,false);
-        }
-        private Buffs(boolean snowball, boolean streaks) {
-            this.snowball = snowball;
-            this.streaks = streaks;
-        }
-
-        public boolean getSnowball() {
-            return snowball;
-        }
-
-        public void setSnowball(boolean snowball) {
-            this.snowball = snowball;
-        }
-
-        public boolean getStreaks() {
-            return streaks;
-        }
-
-        public void setStreaks(boolean streaks) {
-            this.streaks = streaks;
-        }
     }
 
 }

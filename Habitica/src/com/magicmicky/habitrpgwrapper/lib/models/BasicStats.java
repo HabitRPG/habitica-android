@@ -1,14 +1,29 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
  * Created by MagicMicky on 10/06/2014.
  */
-public class BasicStats {
-    private float con, str, per;
+
+@Table(databaseName = HabitDatabase.NAME)
+public class BasicStats extends BaseModel {
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    long id;
+
+    @Column
+    public float con, str, per;
+
+    @Column
     @SerializedName("int")
-    private float _int;
+    public float _int;
 
     public BasicStats() {
         this(0,0,0,0);

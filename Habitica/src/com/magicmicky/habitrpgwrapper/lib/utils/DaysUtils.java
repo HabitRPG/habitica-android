@@ -1,6 +1,8 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+
 /**
  * Created by magicmicky on 04/02/15.
  */
@@ -8,8 +10,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 
 
 public class DaysUtils {
-    public static Daily.Days getDaysFromBooleans(boolean[] b) {
-        Daily.Days d = new Daily.Days();
+    public static Days getDaysFromBooleans(boolean[] b) {
+        Days d = new Days();
         d.setM(b[0]);
         d.setT(b[1]);
         d.setW(b[2]);
@@ -19,15 +21,15 @@ public class DaysUtils {
         d.setSu(b[6]);
         return d;
     }
-    public static boolean[] getBooleansFromDays(Daily.Days days) {
+    public static boolean[] getBooleansFromDays(Days days) {
         boolean[] b = new boolean[7];
-        b[0] = days.isM();
-        b[1] = days.isT();
-        b[2] = days.isW();
-        b[3] = days.isTh();
-        b[4] = days.isF();
-        b[5] = days.isS();
-        b[6] = days.isSu();
+        b[0] = days.getM();
+        b[1] = days.getT();
+        b[2] = days.getW();
+        b[3] = days.getTh();
+        b[4] = days.getF();
+        b[5] = days.getS();
+        b[6] = days.getSu();
         return b;
     }
 }

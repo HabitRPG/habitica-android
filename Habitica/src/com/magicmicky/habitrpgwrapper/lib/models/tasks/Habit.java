@@ -1,14 +1,24 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+
 /**
  * An habit item. It contains the item called "Habits" on the website
  * @author MagicMicky
  *
  */
+@Table(databaseName = HabitDatabase.NAME)
 public class Habit extends HabitItem{
 	private final HabitType type = HabitType.habit;
+
+	@Column
 	private Boolean up;
+
+	@Column
 	private Boolean down;
 	/**
 	 * Create a new Habit based on all the information needed
@@ -22,7 +32,8 @@ public class Habit extends HabitItem{
 	 */
 	public Habit(String id, String notes, Float priority, String text, double value
 			, Boolean up, Boolean down) {
-		super(id, notes, priority, text, value);
+		super(notes, priority, text, value);
+        this.setId(id);
 		this.setUp(up);
 		this.setDown(down);
 	}
@@ -34,7 +45,7 @@ public class Habit extends HabitItem{
 	/**
 	 * @return whether or not the habit can be "upped"
 	 */
-	public boolean isUp() {
+	public boolean getUp() {
 		return up;
 	}
 	/**
@@ -47,7 +58,7 @@ public class Habit extends HabitItem{
 	/**
 	 * @return whether or not the habit can be "down"
 	 */
-	public boolean isDown() {
+	public boolean getDown() {
 		return down;
 	}
 	/**

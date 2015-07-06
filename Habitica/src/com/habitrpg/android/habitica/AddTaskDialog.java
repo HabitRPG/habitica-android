@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,7 +29,9 @@ import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.ChecklistDialog.CheckListUpdater;
 import com.habitrpg.android.habitica.ui.fragments.DatePickerFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Checklist;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
@@ -64,6 +67,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
     private String mEditingId;
     private Double oldValue = null;
     private Checklist mChecklist = new Checklist() {
+
         @Override
         protected HabitType getType() {
             return daily;
@@ -272,7 +276,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
         if (text != null) {
             switch (this.hType) {
                 case daily:
-                    Daily.Days d = DaysUtils.getDaysFromBooleans(repeat);
+                    Days d = DaysUtils.getDaysFromBooleans(repeat);
                     h = new Daily(null, notes, null, text, oldValue != null ? oldValue : 0, false, d);
                     break;
                 case habit:
@@ -351,7 +355,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
 
     private void populate(Habit result) {
         populate((HabitItem) result);
-        if (result.isUp()) {
+        if (result.getUp()) {
             buttonOn(1);
             down_up[1] = true;
         } else {
@@ -360,7 +364,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
 
         }
 
-        if (result.isDown()) {
+        if (result.getDown()) {
             buttonOn(0);
             down_up[0] = true;
 

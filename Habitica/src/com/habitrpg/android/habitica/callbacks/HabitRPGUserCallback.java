@@ -21,8 +21,8 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     }
     @Override
     public void success(HabitRPGUser habitRPGUser, Response response) {
-        Log.d("OMG", "user retrieved!");
         mCallback.onUserReceived(habitRPGUser);
+        habitRPGUser.save();
     }
 
     @Override

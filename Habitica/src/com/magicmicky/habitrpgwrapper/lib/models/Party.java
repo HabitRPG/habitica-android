@@ -1,35 +1,49 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by MagicMicky on 16/03/14.
  */
-public class Party {
-    private String currrent; //id
+
+@Table(databaseName = HabitDatabase.NAME)
+public class Party extends BaseModel {
+
+    @Column
+    @PrimaryKey
+    public String id; //id
+    @Column
     private String invitation;
+    @Column
     private String lastMessageSeen;
+    @Column
     private boolean leader;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "quest_id",
+            columnType = String.class,
+            foreignColumnName = "key")})
     private Quest quest;
+    @Column
     private String order;//Order to display ppl
 
     public Party() {
 
     }
 
-    public Party(String currrent, String invitation, String lastMessageSeen, boolean leader, Quest quest, String order) {
-        this.currrent = currrent;
+    public Party(String id, String invitation, String lastMessageSeen, boolean leader, Quest quest, String order) {
+        this.id = id;
         this.invitation = invitation;
         this.lastMessageSeen = lastMessageSeen;
         this.leader = leader;
         this.quest = quest;
         this.order = order;
-    }
-
-    public String getCurrrent() {
-        return currrent;
-    }
-
-    public void setCurrrent(String currrent) {
-        this.currrent = currrent;
     }
 
     public String getInvitation() {
@@ -48,7 +62,7 @@ public class Party {
         this.lastMessageSeen = lastMessageSeen;
     }
 
-    public boolean isLeader() {
+    public boolean getLeader() {
         return leader;
     }
 
@@ -72,54 +86,4 @@ public class Party {
         this.order = order;
     }
 
-    public class Quest {
-        private String key;
-        private Progress progress;
-
-        private Quest(String key, Progress progress) {
-            this.key = key;
-            this.progress = progress;
-        }
-
-        public Progress getProgress() {
-            return progress;
-        }
-
-        public void setProgress(Progress progress) {
-            this.progress = progress;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        private class Progress {
-            private float down, up;
-
-            private Progress(float down, float up) {
-                this.down = down;
-                this.up = up;
-            }
-
-            public float getDown() {
-                return down;
-            }
-
-            public void setDown(float down) {
-                this.down = down;
-            }
-
-            public float getUp() {
-                return up;
-            }
-
-            public void setUp(float up) {
-                this.up = up;
-            }
-        }
-    }
 }

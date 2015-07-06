@@ -1,13 +1,31 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.Date;
 
 /**
  * Created by MagicMicky on 16/03/14.
  */
-public class Items {
+
+@Table(databaseName = HabitDatabase.NAME)
+public class Items extends BaseModel {
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    long id;
+
+    @Column
     private String currentMount, currentPet;
+
+    @Column
     private int lastDrop_count;
+
+    @Column
     private Date lastDrop_date;
 
     //private Quest quest;
@@ -51,4 +69,6 @@ public class Items {
     public void setLastDrop_date(Date lastDrop_date) {
         this.lastDrop_date = lastDrop_date;
     }
+
+    public Items() {}
 }

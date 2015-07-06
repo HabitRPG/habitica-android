@@ -1,5 +1,9 @@
 package com.magicmicky.habitrpgwrapper.lib;
 
+import android.util.Log;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
@@ -18,6 +22,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
+import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.util.List;
 
@@ -40,7 +45,22 @@ public class HabitRPGInteractor {
                 request.addHeader("x-api-user",userKey);
             }
         };
-        Gson gson = new GsonBuilder().registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe()).create();
+
+        //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getDeclaredClass().equals(ModelAdapter.class);
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                }).registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe()).create();
+
+        Log.d("AASDASDASD", gson.toString());
 
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(server.toString())

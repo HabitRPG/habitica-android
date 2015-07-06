@@ -3,8 +3,24 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 /**
  * Created by MagicMicky on 16/03/14.
  */
-public class Profile {
+
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+@Table(databaseName = HabitDatabase.NAME)
+public class Profile extends BaseModel {
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    long id;
+
+    @Column
     private String name;
+
+    @Column
     private String blurb, imageUrl;
 
     public Profile(String name) {
@@ -38,5 +54,9 @@ public class Profile {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Profile() {
+
     }
 }
