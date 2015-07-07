@@ -35,6 +35,8 @@
     <color name="completed">#D9D9D9</color>
     <color name="completed_btn">#989898</color>
 
+    <color name="changelog.note">#ffcf42</color>
+
     <!-- Cards -->
     <color name="stroke">#dddddd</color>
     <color name="text_light">#66000000</color>

@@ -27,7 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustResize">:D
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +44,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/LoginActivityName"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppThemeWithActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -69,7 +70,8 @@
             android:name="io.fabric.ApiKey"
             android:value="2eb3b3edb3b0f4722d37d649a5af366656e46ddd" />
 
-        <activity android:name=".AboutActivity" />
+        <activity android:name=".AboutActivity"
+            android:theme="@style/AppThemeWithActionBar"/>
     </application>
 
 </manifest>

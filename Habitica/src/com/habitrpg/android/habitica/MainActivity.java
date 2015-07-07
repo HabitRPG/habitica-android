@@ -86,7 +86,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     android.support.v4.view.ViewPager viewPager;
 
     // just to test the view
-    public HabitRPGUser User = null;
+    private HabitRPGUser User;
 
     AvatarWithBarsViewModel avatarInHeader;
 
@@ -101,10 +101,12 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         ButterKnife.inject(this);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        if(hostConfig==null|| hostConfig.getApi()==null || hostConfig.getApi().equals("") || hostConfig.getUser() == null ||hostConfig.getUser().equals("")) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return;
         }
+
         toolbar = materialViewPager.getToolbar();
 
         if (toolbar != null) {
@@ -112,7 +114,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
             ActionBar actionBar = getSupportActionBar();
 
-            if(actionBar != null) {
+            if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(false);
                 actionBar.setDisplayShowTitleEnabled(true);
@@ -198,31 +200,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         viewPager = materialViewPager.getViewPager();
         viewPager.setOffscreenPageLimit(6);
 
-
-
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-            @Override
-            public void onPageSelected(int position) {
-
-                Log.d("PageSelected", "P=" + position);
-
-                RecyclerViewFragment fragment = ViewFragmentsDictionary.get(position);
-
-                if (fragment == null || fragment.mRecyclerView == null)
-                    return;
-
-                // fragment.mRecyclerView.smoothScrollToPosition(r.nextInt(fragment.mRecyclerView.getAdapter().getItemCount()));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         materialViewPager.getViewPager().setCurrentItem(0);
 
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
@@ -231,9 +208,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
         this.observer.addSpecificModelChangeListener(this);
 
-        this.loadTaskLists();
-        FillTagFilterDrawer();
-        updateHeader();
+        SetUserData();
     }
 
     @Override
@@ -247,12 +222,14 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
     @Override
     protected void onDestroy() {
-        this.observer.unregisterForContentChanges(this.getApplicationContext());
+        if (observer != null) {
+            this.observer.unregisterForContentChanges(this.getApplicationContext());
+        }
+
         super.onDestroy();
     }
 
-    public void loadTaskLists()
-    {
+    public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
@@ -329,8 +306,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                     new PrimaryDrawerItem().withName(t.getName()).withBadge("" + CountTagUsedInTasks(t.getId()))
             );
         }
-
-
     }
 
     /**
@@ -387,8 +362,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUserAvatars()
-    {
+    private void updateUserAvatars() {
         avatarInHeader.UpdateData(User);
     }
 
@@ -475,6 +449,20 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
-        updateHeader();
+
+        SetUserData();
+    }
+
+    private void SetUserData() {
+        if (User != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loadTaskLists();
+                    FillTagFilterDrawer();
+                    updateHeader();
+                }
+            });
+        }
     }
 }

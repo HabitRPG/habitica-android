@@ -28,7 +28,7 @@ public class TagsAdapter extends TypeAdapter<Tags>{
             out.value(true);
         }
         out.endObject();
-        Log.d("TagsAdapter", "Finished tagging");
+        //Log.d("TagsAdapter", "Finished tagging");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TagsAdapter extends TypeAdapter<Tags>{
                     if(in.nextBoolean()) {
                         tags.add(tag);
                     }
-                    Log.d("TagsAdapter", "Added tag " + tag);
+                    //Log.d("TagsAdapter", "Added tag " + tag);
                     break;
                 case END_OBJECT:
                     in.endObject();

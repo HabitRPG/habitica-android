@@ -10,8 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.github.porokoro.paperboy.PaperboyFragment;
-import com.github.porokoro.paperboy.Themes;
+import com.github.porokoro.paperboy.PaperboyFragmentBuilder;
 import com.github.porokoro.paperboy.ViewTypes;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -19,7 +18,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class AboutActivity extends AppCompatActivity   {
+public class AboutActivity extends AppCompatActivity {
 
     @InjectView(R.id.pager)
     ViewPager pager;
@@ -43,6 +42,7 @@ public class AboutActivity extends AppCompatActivity   {
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setHomeButtonEnabled(false);
+            actionBar.setElevation(0);
         }
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -100,10 +100,9 @@ public class AboutActivity extends AppCompatActivity   {
 
             switch (position) {
                 case 0:
-                    Fragment tab1 =    new LibsBuilder()
+                    Fragment tab1 = new LibsBuilder()
                             //Pass the fields of your application to the lib so it can find all external lib information
                             .withFields(R.string.class.getFields())
-                            //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
                             .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                             .withAboutAppName(getString(R.string.app_name))
                             .withAboutDescription("<h2>Used Libraries</h2>")
@@ -116,13 +115,18 @@ public class AboutActivity extends AppCompatActivity   {
 
                     return tab1;
                 case 1:
-                    PaperboyFragment tab2 = new PaperboyFragment.Builder(AboutActivity.this)
-                        .setTheme(Themes.DARK)
-                        .setViewType(ViewTypes.HEADER)
-                        .setFile("paperboy/changelog.json")
-                        .build();
+                    PaperboyFragmentBuilder builder = new PaperboyFragmentBuilder(AboutActivity.this)
+                            .setViewType(ViewTypes.HEADER)
+                            .setFile("paperboy/changelog.json");
 
-                    return tab2;
+                    builder.withDefinition(1000, "Note", "n")
+                            .setColorRes(R.color.changelog_note)
+                            .setTitleSingular("Note")
+                            .setTitlePlural("Notes")
+                            .setSortOrder(0)
+                            .add();
+
+                    return builder.build();
                 default:
                     return null;
             }
@@ -130,7 +134,7 @@ public class AboutActivity extends AppCompatActivity   {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position == 0)
+            if (position == 0)
                 return getString(R.string.about_title);
 
             return getString(R.string.about_versionhistory);

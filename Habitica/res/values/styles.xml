@@ -5,11 +5,16 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="@style/MaterialDrawerTheme.Light.DarkToolbar.TranslucentStatus">
 		<item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+
+        <item name="android:windowContentOverlay">@null</item>
 
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand</item>
@@ -28,6 +33,13 @@
         <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
     </style>
 
+    <style name="AppThemeWithActionBar" parent="AppTheme">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">false</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="21">false</item>
+    </style>
 
 	<style name="TextReservedToPremium">
 		<item name="android:textStyle">italic</item>
@@ -89,9 +101,5 @@
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/drawerArrowColor</item>
-    </style>
-
-    <style name="CustomTheme" parent="">
-
     </style>
 </resources>

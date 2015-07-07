@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -17,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
@@ -45,7 +48,8 @@ import retrofit.client.Response;
 /**
  * @author Mickael Goubin
  */
-public class    LoginActivity extends ActionBarActivity implements Callback<UserAuthResponse>,HabitRPGUserCallback.OnUserReceived {
+public class LoginActivity extends AppCompatActivity
+	implements Callback<UserAuthResponse>,HabitRPGUserCallback.OnUserReceived {
 	private final static String TAG_ADDRESS="address";
 	private final static String TAG_USERID="user";
 	private final static String TAG_APIKEY="key";
@@ -64,6 +68,7 @@ public class    LoginActivity extends ActionBarActivity implements Callback<User
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.login_screen);
+
 		mRegisterBtn = (Button) this.findViewById(R.id.register_btn);
 		mLoginNormalBtn = (Button) this.findViewById(R.id.login_normal_btn);
 		mLoginTokensBtn = (Button) this.findViewById(R.id.login_tokens_btn);
