@@ -39,6 +39,8 @@
 
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">false</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="21">false</item>
+
+        <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
 	<style name="TextReservedToPremium">
