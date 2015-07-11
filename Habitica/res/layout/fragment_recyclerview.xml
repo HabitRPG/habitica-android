@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FABActivity">
-<RelativeLayout
     android:id="@+id/relativeLayoutView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,8 +13,7 @@
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
-        android:scrollbars="vertical"/>
-</RelativeLayout>
+        android:scrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,9 +22,10 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        app:backgroundTint="@color/brand"
         app:fabSize="normal"
-        app:layout_anchor="@id/coordinatorLayout"
-        app:layout_anchorGravity="bottom|right|end"
-        app:backgroundTint="@color/brand"/>
+        android:layout_alignBottom="@id/recyclerView"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+
