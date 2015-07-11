@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -39,8 +41,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -331,13 +331,23 @@ public class LoginActivity extends AppCompatActivity
 			}
 			startMainActivity();
 		} catch (JSONException e) {
-			Crouton.makeText(this, getString(R.string.ERR_pb_barcode), Style.ALERT).show();
+			showSnackbar(getString(R.string.ERR_pb_barcode));
 			e.printStackTrace();
 		} catch(Exception e) {
 			if("PB_string_commit".equals(e.getMessage())) {
-				Crouton.makeText(this, getString(R.string.ERR_pb_barcode), Style.ALERT).show();
+				showSnackbar(getString(R.string.ERR_pb_barcode));
 			}
 		}
+	}
+
+	private void showSnackbar(String content)
+	{
+		Snackbar snackbar = Snackbar
+				.make(this.findViewById(R.id.login_linear_layout), content, Snackbar.LENGTH_LONG);
+
+		View snackbarView = snackbar.getView();
+		snackbarView.setBackgroundColor(getResources().getColor(R.color.red));//change Snackbar's background color;
+		snackbar.show(); // Don’t forget to show!
 	}
 
 	@Override
@@ -474,6 +484,6 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onUserFail() {
-        Crouton.makeText(this, R.string.unknown_error, Style.ALERT).show();
+		showSnackbar(getString(R.string.unknown_error));
     }
 }
