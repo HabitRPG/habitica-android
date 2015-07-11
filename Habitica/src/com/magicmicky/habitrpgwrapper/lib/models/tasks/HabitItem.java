@@ -149,7 +149,7 @@ public abstract class HabitItem extends BaseModel {
 	 * Returns a string of the type of the HabitItem
 	 * @return the string of the Item type
 	 */
-	protected abstract HabitType getType();
+	public abstract HabitType getType();
 
 	/**
 	 * Creates a JSON String for this HabitItem using the basic information.<br>

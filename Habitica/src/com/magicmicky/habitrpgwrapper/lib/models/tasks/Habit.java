@@ -69,7 +69,7 @@ public class Habit extends HabitItem{
 		this.down = down;
 	}
 	@Override
-	protected HabitType getType() {
+	public HabitType getType() {
 		return type;
 	}
 

@@ -92,7 +92,7 @@ public class Daily extends Checklist{
 		this.repeat = repeat;
 	}
 	@Override
-	protected HabitType getType() {
+	public HabitType getType() {
 		return type;
 	}
 	/**

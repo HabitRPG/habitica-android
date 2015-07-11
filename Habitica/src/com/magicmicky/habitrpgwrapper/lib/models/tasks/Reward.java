@@ -46,7 +46,7 @@ public class Reward extends HabitItem{
 	}
 
 	@Override
-	protected HabitType getType() {
+	public HabitType getType() {
 		return type;
 	}
 

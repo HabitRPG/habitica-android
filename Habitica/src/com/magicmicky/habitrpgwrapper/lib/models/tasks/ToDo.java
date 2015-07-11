@@ -81,7 +81,7 @@ public class ToDo extends Checklist{
 	}
 
 	@Override
-	protected HabitType getType() {
+	public HabitType getType() {
 		return type;
 	}
 
