@@ -79,7 +79,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/beta/1.1.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics-core/2.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics/2.3.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.florent37/materialviewpager/1.0.6/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.florent37/materialviewpager/1.0.7/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.ksoichiro/android-observablescrollview/1.5.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.porokoro/paperboy/364c77b49f/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.instabug.library/instabugcore/1.4/jars" />
@@ -105,8 +105,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/layout-info" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
-      <excludeFolder url="file://$MODULE_DIR$/build/test-results" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
@@ -120,10 +118,11 @@
     <orderEntry type="library" exported="" name="mimecraft-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="auto-common-0.3" level="project" />
     <orderEntry type="library" exported="" name="antlr4-annotations-4.4" level="project" />
-    <orderEntry type="library" exported="" name="materialviewpager-1.0.6" level="project" />
+    <orderEntry type="library" exported="" name="materialviewpager-1.0.7" level="project" />
     <orderEntry type="library" exported="" name="DBFlow-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="android-observablescrollview-1.5.2" level="project" />
     <orderEntry type="library" exported="" name="antlr4-4.4" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="materialdrawer-3.0.8" level="project" />
     <orderEntry type="library" exported="" name="gridlayout-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.0" level="project" />
@@ -160,8 +159,8 @@
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
     <orderEntry type="library" exported="" name="compiler-1.0-rc0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
     <orderEntry type="library" exported="" name="auto-service-1.0-rc2" level="project" />
+    <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="javawriter-2.5.0" level="project" />
   </component>

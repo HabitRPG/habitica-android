@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'aar-link-sources'
 apply plugin: 'com.android.databinding'
+apply plugin: 'aar-link-sources'
 apply plugin: 'io.fabric'
 
 buildscript {
@@ -47,7 +47,7 @@ dependencies {
         transitive = true
     }
 
-    compile('com.github.florent37:materialviewpager:1.0.6@aar') {
+    compile('com.github.florent37:materialviewpager:1.0.7@aar') {
         transitive = true
     }
 
@@ -78,6 +78,8 @@ dependencies {
     provided 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
     compile "com.raizlabs.android:DBFlow-Core:2.2.1"
     compile "com.raizlabs.android:DBFlow:2.2.1"
+
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
 
 android {
