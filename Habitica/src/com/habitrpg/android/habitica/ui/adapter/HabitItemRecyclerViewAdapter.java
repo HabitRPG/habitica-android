@@ -10,15 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
+import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.TodoCheckedEvent;
 import com.habitrpg.android.habitica.ui.helpers.HabitColorHelper;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
@@ -268,7 +271,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         }
     }
 
-    public class TodoViewHolder extends ViewHolder<ToDo> {
+    public class TodoViewHolder extends ViewHolder<ToDo> implements CompoundButton.OnCheckedChangeListener {
 
         @InjectView(R.id.checkBox)
         CheckBox checkbox;
@@ -279,6 +282,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
+
+            checkbox.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -292,6 +297,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
             ViewHelper.SetBackgroundTint(checkbox, resources.getColor(btnColorRes));
         }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            TodoCheckedEvent event = new TodoCheckedEvent();
+            event.ToDo = Item;
+
+            EventBus.getDefault().post(event);
+        }
     }
 
     public class RewardViewHolder extends ViewHolder<Reward> {
@@ -301,6 +314,21 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
+
+            binding.btnReward.setClickable(true);
+            binding.btnReward.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            BuyRewardTappedEvent event = new BuyRewardTappedEvent();
+
+            if (v == binding.btnReward) {
+                event.Reward = Item;
+
+                EventBus.getDefault().post(event);
+            } else super.onClick(v);
         }
 
         @Override

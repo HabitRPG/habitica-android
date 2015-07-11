@@ -151,14 +151,8 @@ public class APIHelper implements ErrorHandler, Profiler {
 		this.apiService.getUser(callback);
 	}
 
-	public void updateTaskDirection(String id, String direction, TaskScoringCallback callback) {
-		TaskDirection td;
-        if(direction.equals(TaskDirection.up.toString())) {
-            td = TaskDirection.up;
-        } else {
-            td = TaskDirection.down;
-        }
-        this.apiService.postTaskDirection(id, td.toString(), callback);
+	public void updateTaskDirection(String id, TaskDirection direction, TaskScoringCallback callback) {
+        this.apiService.postTaskDirection(id, direction.toString(), callback);
 	}
 	public void registerUser(View btnClicked, String username, String email, String password, String confirmPassword) {
 

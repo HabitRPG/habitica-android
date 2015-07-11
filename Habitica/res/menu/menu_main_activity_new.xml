@@ -12,7 +12,6 @@
     <item
         android:id="@+id/action_toggle_sleep"
         android:orderInCategory="103"
-
         android:title="Toggle Sleep"
         />
 

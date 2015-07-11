@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayoutView"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
+
         android:scrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16dp"
+
         app:backgroundTint="@color/brand"
         app:fabSize="normal"
-        android:layout_alignBottom="@id/recyclerView"
-        android:layout_alignParentRight="true" />
-</RelativeLayout>
+        app:layout_anchor="@id/coordinatorLayout"
+        app:layout_anchorGravity="bottom|right|end"
+        android:layout_gravity="bottom|right" />
 
-
+</android.support.design.widget.CoordinatorLayout>

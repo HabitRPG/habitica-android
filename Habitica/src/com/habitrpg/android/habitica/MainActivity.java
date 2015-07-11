@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
@@ -14,16 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
-import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
-import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.*;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
@@ -32,6 +29,7 @@ import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
@@ -59,13 +57,15 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends InstabugAppCompatActivity implements OnTaskCreationListener, HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated, TaskDeletionCallback.OnTaskDeleted, Callback<Void>,
+public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
+        TaskScoringCallback.OnTaskScored, Callback<Void>, OnTaskCreationListener,
         FlowContentObserver.OnSpecificModelStateChangedListener {
+    static final int SETTINGS = 11;
     static final int ABOUT = 12;
 
     //region View Elements
@@ -104,6 +104,12 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
         // Receive Events
         EventBus.getDefault().register(this);
+
+        // Initialize Crashlytics
+        Crashlytics crashlytics = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
@@ -161,7 +167,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName("News"),
-                        new SecondaryDrawerItem().withName("Settings"),
+                        new SecondaryDrawerItem().withName("Settings").withIdentifier(SETTINGS),
                         new SecondaryDrawerItem().withName("About").withIdentifier(ABOUT)
 
                 )
@@ -172,6 +178,10 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                         // do something with the clicked item :D
 
                         switch (drawerItem.getIdentifier()) {
+                            case SETTINGS:
+                                startActivity(new Intent(MainActivity.this, PrefsActivity.class));
+                                return false;
+
                             case ABOUT:
                                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
 
@@ -235,20 +245,94 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         super.onDestroy();
     }
 
-    public void onEvent(TaskTappedEvent event){
-        Toast.makeText(this, event.Task.text, Toast.LENGTH_SHORT).show();
+    private void showSnackbar(String content) {
+        showSnackbar(content, false);
     }
 
-    public void onEvent(TaskLongPressedEvent event){
-        Toast.makeText(this, "LongPress: " +event.Task.text, Toast.LENGTH_SHORT).show();
+    private void showSnackbar(String content, boolean negative) {
+        Fragment f = ViewFragmentsDictionary.get(materialViewPager.getViewPager().getCurrentItem());
+
+        Snackbar snackbar = Snackbar.make(f.getView().findViewById(R.id.fab), content, Snackbar.LENGTH_LONG);
+
+        if (negative) {
+            View snackbarView = snackbar.getView();
+
+            //change Snackbar's background color;
+            snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+        }
+
+        snackbar.show();
     }
 
-    public void onEvent(HabitScoreEvent event){
-        Toast.makeText(this, "Score Up="+event.Up+" " +event.Habit.text, Toast.LENGTH_SHORT).show();
+    public void onEvent(TaskTappedEvent event) {
+        Bundle b = new Bundle();
+        b.putString("type", event.Task.getType().toString());
+        b.putString("taskId", event.Task.getId());
+
+        AddTaskDialog dialog = new AddTaskDialog();
+        dialog.setArguments(b);
+        dialog.show(getSupportFragmentManager(), "AddTaskDialog");
     }
 
-    public void onEvent(AddTaskTappedEvent event){
-        Toast.makeText(this, "Add Task " +event.ClassType.getSimpleName(), Toast.LENGTH_SHORT).show();
+    public void onEvent(TaskLongPressedEvent event) {
+        showSnackbar("LongPress: " + event.Task.text);
+    }
+
+    public void onEvent(TodoCheckedEvent event){
+        showSnackbar("ToDo Checked= "+event.ToDo.getText(), true);
+    }
+
+    public void onEvent(HabitScoreEvent event) {
+        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this));
+    }
+
+    public void onEvent(AddTaskTappedEvent event) {
+        showSnackbar("Add Task " + event.ClassType.getSimpleName());
+    }
+
+    public void onEvent(BuyRewardTappedEvent event) {
+        showSnackbar("Buy Reward " + event.Reward.getText());
+    }
+
+    private void notifyUser(double xp, double hp, double gold,
+                            double lvl, double delta) {
+        StringBuilder message = new StringBuilder();
+        boolean neg = false;
+        if (lvl > User.getStats().getLvl()) {
+            message.append(getString(R.string.lvlup));
+            //If user lvl up, we need to fetch again the data from the server...
+            this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            User.getStats().setLvl((int) lvl);
+            showSnackbar(message.toString());
+        } else {
+            com.magicmicky.habitrpgwrapper.lib.models.Stats stats = User.getStats();
+
+            if (xp > stats.getExp()) {
+                message.append(" + ").append(round(xp - stats.getExp(), 2)).append(" XP");
+                User.getStats().setExp(xp);
+            }
+            if (hp != stats.getHp()) {
+                neg = true;
+                message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
+                User.getStats().setHp(hp);
+            }
+            if (gold > stats.getGp()) {
+                message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
+                stats.setGp(gold);
+            } else if (gold < stats.getGp()) {
+                neg = true;
+                message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
+                stats.setGp(gold);
+            }
+            showSnackbar(message.toString(), neg);
+
+            updateUserAvatars();
+        }
+    }
+
+    static public Double round(Double value, int n) {
+        double r = (Math.round(value.doubleValue() * Math.pow(10, n))) / (Math.pow(10, n));
+        return Double.valueOf(r);
     }
 
     public void loadTaskLists() {
@@ -270,6 +354,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
                         fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Habit.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), Habit.class);
+
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
@@ -284,7 +369,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                         fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(ToDo.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), ToDo.class);
                 }
 
-                // ViewFragmentsDictionary.put(position, fragment);
+                ViewFragmentsDictionary.put(position, fragment);
 
                 return fragment;
             }
@@ -308,8 +393,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                 }
                 return "";
             }
-
-
         });
 
         materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
@@ -320,7 +403,6 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         filterDrawer.addItems(
                 new SectionDrawerItem().withName("Filter by Tag"),
                 new EditTextDrawer()
-
         );
 
         for (Tag t : User.getTags()) {
@@ -419,48 +501,8 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     }
 
     @Override
-    public void onTaskCreated(HabitItem habit) {
-
-    }
-
-    @Override
-    public void onTaskCreationFail() {
-
-    }
-
-    @Override
-    public void onTaskUpdated(HabitItem habit) {
-
-    }
-
-    @Override
-    public void onTaskUpdateFail() {
-
-    }
-
-    @Override
-    public void onTaskCreation(HabitItem task, boolean editMode) {
-
-    }
-
-    @Override
-    public void onTaskCreationFail(String message) {
-
-    }
-
-    @Override
-    public void onTaskDeleted(HabitItem deleted) {
-
-    }
-
-    @Override
-    public void onTaskDeletionFail() {
-
-    }
-
-    @Override
     public void onTaskDataReceived(TaskDirectionData data) {
-
+        notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
     }
 
     @Override
@@ -482,7 +524,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(!onlyHeader) {
+                    if (!onlyHeader) {
                         taskListAlreadyAdded = true;
                         loadTaskLists();
                         FillTagFilterDrawer();
@@ -491,5 +533,17 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                 }
             });
         }
+    }
+
+    @Override
+    public void onTaskCreation(HabitItem task, boolean editMode) {
+        task.save();
+
+        // TODO update task in list
+    }
+
+    @Override
+    public void onTaskCreationFail(String message) {
+        showSnackbar(message, true);
     }
 }

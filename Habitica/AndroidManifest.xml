@@ -36,7 +36,8 @@
         </activity>
         <activity
             android:name=".prefs.PrefsActivity"
-            android:label="@string/PS_param_title">
+            android:label="@string/PS_param_title"
+            android:theme="@style/AppThemeWithActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

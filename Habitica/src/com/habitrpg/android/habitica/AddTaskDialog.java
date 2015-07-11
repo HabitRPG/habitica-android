@@ -38,6 +38,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.magicmicky.habitrpgwrapper.lib.utils.DaysUtils;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.*;
 import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.habit;
@@ -69,7 +70,7 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
     private Checklist mChecklist = new Checklist() {
 
         @Override
-        protected HabitType getType() {
+        public HabitType getType() {
             return daily;
         }
     };
@@ -106,10 +107,10 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
         this.taskValue = (EditText) mainView.findViewById(R.id.ET_taskValue);
 
         Bundle b = this.getArguments();
-        int pos = b.getInt("pos", -1);
+        String taskId = b.getString("taskId", "");
         String type;
         String text;
-        if (pos != -1) {
+        if (!taskId.isEmpty()) {
             this.mEditMode = true;
         }
 
@@ -141,25 +142,31 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
         } else if (hType == reward) {
             LinearLayout value = (LinearLayout) mainView.findViewById(R.id.value);
             value.setVisibility(View.VISIBLE);
-
         }
 
         if (mEditMode) {
-//			this.reconstructObjectFrom(json);
-            /*switch (hType) {
+		    switch (hType) {
                 case todo:
-                    this.populate(((MainActivityOld) getActivity()).getTodo(pos));
+                    ToDo todo = new Select().from(ToDo.class).byIds(taskId).querySingle();
+
+                    this.populate(todo);
                     break;
                 case daily:
-                    this.populate(((MainActivityOld) getActivity()).getDaily(pos));
+                    Daily daily = new Select().from(Daily.class).byIds(taskId).querySingle();
+
+                    this.populate(daily);
                     break;
                 case reward:
-                    this.populate(((MainActivityOld) getActivity()).getReward(pos));
+                    Reward reward = new Select().from(Reward.class).byIds(taskId).querySingle();
+
+                    this.populate(reward);
                     break;
                 case habit:
-                    this.populate(((MainActivityOld) getActivity()).getHabit(pos));
+                    Habit habit = new Select().from(Habit.class).byIds(taskId).querySingle();
+
+                    this.populate(habit);
                     break;
-            }*/
+            }
         }
         builder.setTitle(getString(R.string.new_task, hType.toString()))
                 .setPositiveButton(R.string.dialog_confirm_button, new DialogInterface.OnClickListener() {

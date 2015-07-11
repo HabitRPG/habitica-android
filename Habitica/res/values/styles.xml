@@ -18,7 +18,7 @@
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand</item>
-        <item name="colorAccent">@color/md_amber_200</item>
+        <item name="colorAccent">@color/md_teal_300</item>
 
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/material_drawer_background</item>
@@ -31,6 +31,9 @@
         <item name="material_drawer_selected">@color/material_drawer_selected</item>
         <item name="material_drawer_selected_text">@color/brand</item>
         <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
+
+
+        <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
     </style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">
@@ -43,13 +46,10 @@
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
-	<style name="TextReservedToPremium">
-		<item name="android:textStyle">italic</item>
-		<item name="android:textAppearance">@android:style/TextAppearance.Small.Inverse</item>
-		<item name="android:gravity">center_vertical</item>
-		<item name="android:textColor">@color/card_light_text</item>
+    <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/accent_color</item>
+    </style>
 
-	</style>
     <style name="CardText">
         <item name="android:textSize">@dimen/card_small_text</item>
         <item name="android:textColor">@color/card_text</item>
@@ -60,7 +60,6 @@
     <style name="CardLightText" parent="@style/CardText">
         <item name="android:textColor">@color/card_light_text</item>
     </style>
-
 
     <style name="CardTitle" parent="@style/CardText">
         <item name="android:layout_width">wrap_content</item>
@@ -74,12 +73,7 @@
        <!-- <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">sans-serif-condensed</item>-->
     </style>
-	<style name="PopupTheme" parent="android:Theme.Holo.Light.Dialog">
-	    <item name="android:windowIsFloating">false</item>
-	    <item name="android:windowContentOverlay">@null</item>
-	    <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
-	    <item name="android:windowIsTranslucent">true</item>
-	</style>
+
 
 	<style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar">
 		<item name="android:maxHeight">1.0dip</item>

@@ -27,7 +27,7 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
 
     @Override
     public void failure(RetrofitError error) {
-        Crashlytics.logException(error);
+        Crashlytics.getInstance().core.logException(error);
 
         Log.w("OMG", "user failed!" + error.getMessage());
 
