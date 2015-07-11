@@ -15,22 +15,29 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
 
+import de.greenrobot.event.EventBus;
+
 /**
-RecyclerViewFragment
- - Creates the View only once
- - Adds FAB Icon
- - Handles the ScrollPosition - if anyone has a better solution please share it
-
-
+ * TaskRecyclerViewFragment
+ * - Creates the View only once
+ * - Adds FAB Icon
+ * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
-public class RecyclerViewFragment extends Fragment {
+public class TaskRecyclerViewFragment extends Fragment implements View.OnClickListener {
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private Class<?> classType;
 
-    public void SetInnerAdapter(RecyclerView.Adapter adapter, String tag) {
+    public void SetInnerAdapter(RecyclerView.Adapter adapter, Class<?> classType) {
+        this.classType = classType;
         mAdapter = new RecyclerViewMaterialAdapter(adapter);
     }
 
@@ -60,9 +67,13 @@ public class RecyclerViewFragment extends Fragment {
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
-        IconicsDrawable icon = new IconicsDrawable(context, FontAwesome.Icon.faw_plus).color(Color.WHITE).sizeDp(24);
+        if (fab.getDrawable() == null) {
+            IconicsDrawable icon = new IconicsDrawable(context, FontAwesome.Icon.faw_plus).color(Color.WHITE).sizeDp(24);
 
-        fab.setImageDrawable(icon);
+            fab.setImageDrawable(icon);
+            fab.setOnClickListener(this);
+            fab.setClickable(true);
+        }
 
         layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
 
@@ -81,13 +92,21 @@ public class RecyclerViewFragment extends Fragment {
         alreadyCreated = true;
     }
 
-    public static RecyclerViewFragment newInstance(RecyclerView.Adapter adapter, String tag) {
-        RecyclerViewFragment fragment = new RecyclerViewFragment();
+    public static TaskRecyclerViewFragment newInstance(RecyclerView.Adapter adapter, Class<?> classType) {
+        TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
 
-        fragment.SetInnerAdapter(adapter, tag);
+        fragment.SetInnerAdapter(adapter, classType);
 
-        Log.d("RecyclerViewFragment", "newInstance");
+        Log.d("TaskRecyclerViewFragment", "newInstance");
 
         return fragment;
+    }
+
+    @Override
+    public void onClick(View v) {
+        AddTaskTappedEvent event = new AddTaskTappedEvent();
+        event.ClassType = classType;
+
+        EventBus.getDefault().post(event);
     }
 }

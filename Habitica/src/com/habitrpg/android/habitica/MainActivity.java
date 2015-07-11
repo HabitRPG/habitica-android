@@ -3,13 +3,10 @@ package com.habitrpg.android.habitica;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,11 +20,15 @@ import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
+import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.RecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -76,7 +78,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     Drawer filterDrawer;
     //endregion
 
-    Map<Integer, RecyclerViewFragment> ViewFragmentsDictionary = new HashMap<Integer, RecyclerViewFragment>();
+    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<Integer, TaskRecyclerViewFragment>();
 
     List<HabitItem> TaskList = new ArrayList<HabitItem>();
 
@@ -99,6 +101,9 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
         // Inject Controls
         ButterKnife.inject(this);
+
+        // Receive Events
+        EventBus.getDefault().register(this);
 
         this.hostConfig = PrefsActivity.fromContext(this);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
@@ -208,7 +213,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
 
         this.observer.addSpecificModelChangeListener(this);
 
-        SetUserData();
+        SetUserData(false);
     }
 
     @Override
@@ -225,8 +230,25 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
         if (observer != null) {
             this.observer.unregisterForContentChanges(this.getApplicationContext());
         }
+        EventBus.getDefault().unregister(this);
 
         super.onDestroy();
+    }
+
+    public void onEvent(TaskTappedEvent event){
+        Toast.makeText(this, event.Task.text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(TaskLongPressedEvent event){
+        Toast.makeText(this, "LongPress: " +event.Task.text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(HabitScoreEvent event){
+        Toast.makeText(this, "Score Up="+event.Up+" " +event.Habit.text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(AddTaskTappedEvent event){
+        Toast.makeText(this, "Add Task " +event.ClassType.getSimpleName(), Toast.LENGTH_SHORT).show();
     }
 
     public void loadTaskLists() {
@@ -239,7 +261,7 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
             @Override
             public Fragment getItem(int position) {
                 int layoutOfType;
-                RecyclerViewFragment fragment;
+                TaskRecyclerViewFragment fragment;
 
                 String fragmentkey = "Recycler$" + position;
                 final android.content.Context context = getApplicationContext();
@@ -247,19 +269,19 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = RecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Habit.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), fragmentkey);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Habit.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), Habit.class);
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = RecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Daily.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, context), fragmentkey);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Daily.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, context), Daily.class);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = RecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), fragmentkey);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Reward.class);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = RecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(ToDo.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), fragmentkey);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(ToDo.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), ToDo.class);
                 }
 
                 // ViewFragmentsDictionary.put(position, fragment);
@@ -450,16 +472,21 @@ public class MainActivity extends InstabugAppCompatActivity implements OnTaskCre
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
-        SetUserData();
+        SetUserData(!taskListAlreadyAdded);
     }
 
-    private void SetUserData() {
+    private boolean taskListAlreadyAdded;
+
+    private void SetUserData(final boolean onlyHeader) {
         if (User != null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    loadTaskLists();
-                    FillTagFilterDrawer();
+                    if(!onlyHeader) {
+                        taskListAlreadyAdded = true;
+                        loadTaskLists();
+                        FillTagFilterDrawer();
+                    }
                     updateHeader();
                 }
             });

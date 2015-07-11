@@ -16,6 +16,9 @@ import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.ui.helpers.HabitColorHelper;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
@@ -32,6 +35,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
@@ -104,7 +108,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
                     case "TodoViewHolder":
                         return new HabitItemRecyclerViewAdapter.TodoViewHolder(view);
                     case "RewardViewHolder":
-
                         return new HabitItemRecyclerViewAdapter.RewardViewHolder(view);
                 }
             }
@@ -125,7 +128,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         this.loadContent();
     }
 
-    public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder {
+    public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @InjectView(R.id.card_view)
         protected CardView cardView;
@@ -146,6 +149,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         public ViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+            itemView.setClickable(true);
+
+            itemView.setOnLongClickListener(this);
+            itemView.setLongClickable(true);
+
             ButterKnife.inject(this, itemView);
 
             resources = itemView.getResources();
@@ -157,6 +166,27 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
             SetCardBackgroundColor(resources.getColor(itemColorRes));
             Item = habitItem;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v != itemView)
+                return;
+
+            TaskTappedEvent event = new TaskTappedEvent();
+            event.Task = Item;
+
+            EventBus.getDefault().post(event);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            TaskLongPressedEvent event = new TaskLongPressedEvent();
+            event.Task = Item;
+
+            EventBus.getDefault().post(event);
+
+            return true;
         }
     }
 
@@ -174,6 +204,28 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
+
+            btnPlus.setClickable(true);
+            btnPlus.setOnClickListener(this);
+
+            btnMinus.setClickable(true);
+            btnMinus.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            HabitScoreEvent event = new HabitScoreEvent();
+
+            if (v == btnPlus) {
+                event.Up = true;
+                event.Habit = Item;
+
+                EventBus.getDefault().post(event);
+            } else if (v == btnMinus) {
+                event.Habit = Item;
+
+                EventBus.getDefault().post(event);
+            } else super.onClick(v);
         }
 
         @Override
