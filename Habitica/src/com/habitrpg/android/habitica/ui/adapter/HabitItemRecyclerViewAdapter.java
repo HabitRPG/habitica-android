@@ -2,8 +2,10 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
+    private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
 
     public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
@@ -68,6 +71,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
+    }
+
+    public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter)
+    {
+        this.parentAdapter = parentAdapter;
     }
 
     @Override
@@ -125,10 +133,19 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         holder.bindHolder(item, position);
     }
 
+    private Handler handler = new Handler();
+    private Runnable reloadContentRunable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("Reload Content","");
+            loadContent();
+        }
+    };
+
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        //TODO: Not load all content every time something changed
-        this.loadContent();
+        handler.removeCallbacks(reloadContentRunable);
+        handler.postDelayed(reloadContentRunable, 200);
     }
 
     public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -341,6 +358,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
     public void loadContent() {
         this.contents = new Select().from(this.taskClass).queryList();
-        notifyDataSetChanged();
+
+        if(parentAdapter != null)
+        {
+            parentAdapter.notifyDataSetChanged();
+        }
+        else
+        {
+            notifyDataSetChanged();
+        }
     }
 }

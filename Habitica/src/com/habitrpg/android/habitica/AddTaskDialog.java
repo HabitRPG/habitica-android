@@ -119,10 +119,10 @@ public class AddTaskDialog extends DialogFragment implements OnDateSetListener, 
 
         this.taskText.setText(text);
         Log.d("AddTaskDialog", "type=" + type);
-        hType = type.equals(daily.toString()) ?
-                daily : type.equals(reward.toString()) ?
-                reward : type.equals(todo.toString()) ?
-                todo : habit;
+        hType = type.equals(daily.toString()) ? daily
+                : type.equals(reward.toString()) ? reward
+                : type.equals(todo.toString()) ? todo
+                : habit;
         LinearLayout specialView = (LinearLayout) mainView.findViewById(R.id.repeat_days);
         if (hType == daily) {
             this.initializeSpecialButtons(specialView, mShortWeekDayStrings, repeat);

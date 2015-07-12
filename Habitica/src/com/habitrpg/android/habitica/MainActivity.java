@@ -19,7 +19,9 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.events.*;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -64,7 +66,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, Callback<Void>, OnTaskCreationListener,
-        FlowContentObserver.OnSpecificModelStateChangedListener {
+        FlowContentObserver.OnSpecificModelStateChangedListener, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated {
     static final int SETTINGS = 11;
     static final int ABOUT = 12;
 
@@ -278,8 +280,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         showSnackbar("LongPress: " + event.Task.text);
     }
 
-    public void onEvent(TodoCheckedEvent event){
-        showSnackbar("ToDo Checked= "+event.ToDo.getText(), true);
+    public void onEvent(TodoCheckedEvent event) {
+        showSnackbar("ToDo Checked= " + event.ToDo.getText(), true);
     }
 
     public void onEvent(HabitScoreEvent event) {
@@ -287,7 +289,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(AddTaskTappedEvent event) {
-        showSnackbar("Add Task " + event.ClassType.getSimpleName());
+        Bundle b = new Bundle();
+        b.putString("type", event.ClassType.getSimpleName().toLowerCase());
+
+        AddTaskDialog dialog = new AddTaskDialog();
+        dialog.setArguments(b);
+        dialog.show(getSupportFragmentManager(), "AddTaskDialog");
     }
 
     public void onEvent(BuyRewardTappedEvent event) {
@@ -537,7 +544,11 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @Override
     public void onTaskCreation(HabitItem task, boolean editMode) {
-        task.save();
+        if (!editMode) {
+            this.mAPIHelper.createUndefNewTask(task, new TaskCreationCallback(this));
+        } else {
+            this.mAPIHelper.uprateUndefinedTask(task, new TaskUpdateCallback(this));
+        }
 
         // TODO update task in list
     }
@@ -545,5 +556,27 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onTaskCreationFail(String message) {
         showSnackbar(message, true);
+    }
+
+    // TaskCreationCallback
+    @Override
+    public void onTaskCreated(HabitItem habit) {
+        habit.save();
+    }
+
+    @Override
+    public void onTaskCreationFail() {
+
+    }
+
+    // TaskUpdateCallback
+    @Override
+    public void onTaskUpdated(HabitItem habit) {
+        habit.save();
+    }
+
+    @Override
+    public void onTaskUpdateFail() {
+
     }
 }

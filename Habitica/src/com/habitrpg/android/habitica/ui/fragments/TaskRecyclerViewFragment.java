@@ -36,9 +36,10 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     private RecyclerView.Adapter mAdapter;
     private Class<?> classType;
 
-    public void SetInnerAdapter(RecyclerView.Adapter adapter, Class<?> classType) {
+    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, Class<?> classType) {
         this.classType = classType;
         mAdapter = new RecyclerViewMaterialAdapter(adapter);
+        adapter.setParentAdapter(mAdapter);
     }
 
     private View view;
@@ -92,7 +93,7 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
         alreadyCreated = true;
     }
 
-    public static TaskRecyclerViewFragment newInstance(RecyclerView.Adapter adapter, Class<?> classType) {
+    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, Class<?> classType) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
 
         fragment.SetInnerAdapter(adapter, classType);
