@@ -49,6 +49,9 @@ public class UserPicture {
             drawSprite(UserSprite.gethair_base(hair.getBase(), hair.getColor()), imgSprites, cv);
             drawSprite(UserSprite.gethair_beard(hair.getBeard(), hair.getColor()), imgSprites, cv);
         }
+
+		if(user.getPreferences().getSleep())
+			drawSprite(UserSprite.zzz, imgSprites, cv);
 //
 //        UserLook.UserItems items = user.getPreferences().isCostume() ? user.getItems().getGear() : user.getItems();
 //        drawSprite(UserSprite.getArmor(items.getArmor(), user.getSize(), user.getPreferences().getShirt()), imgSprites, cv);
