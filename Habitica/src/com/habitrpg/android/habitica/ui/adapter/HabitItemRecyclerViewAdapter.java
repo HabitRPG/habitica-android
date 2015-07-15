@@ -2,6 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +52,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
     private Class<ViewHolder<THabitItem>> viewHolderClass;
     List<THabitItem> contents;
     Class<THabitItem> taskClass;
+    private ObservableArrayList<THabitItem> observableContent;
     FlowContentObserver observer;
     Context context;
 
@@ -59,15 +62,61 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
 
     public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
+        this(newTaskClass, layoutResource, viewHolderClass, newContext, null);
+    }
+
+    public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass,
+                                        Context newContext, final ObservableArrayList<THabitItem> content) {
 
         this.context = newContext;
         this.taskClass = newTaskClass;
-        this.loadContent();
+        observableContent = content;
 
-        observer = new FlowContentObserver();
-        observer.registerForContentChanges(this.context, this.taskClass);
+        if(content == null)
+        {
+            this.loadContent();
 
-        observer.addSpecificModelChangeListener(this);
+            observer = new FlowContentObserver();
+            observer.registerForContentChanges(this.context, this.taskClass);
+
+            observer.addSpecificModelChangeListener(this);
+        }
+        else
+        {
+            content.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
+                @Override
+                public void onChanged(ObservableList sender) {
+                    handler.removeCallbacks(reloadContentRunable);
+                    handler.postDelayed(reloadContentRunable, 200);
+                }
+
+                @Override
+                public void onItemRangeChanged(ObservableList sender, int positionStart, int itemCount) {
+                    handler.removeCallbacks(reloadContentRunable);
+                    handler.postDelayed(reloadContentRunable, 200);
+                }
+
+                @Override
+                public void onItemRangeInserted(ObservableList sender, int positionStart, int itemCount) {
+                    handler.removeCallbacks(reloadContentRunable);
+                    handler.postDelayed(reloadContentRunable, 200);
+                }
+
+                @Override
+                public void onItemRangeMoved(ObservableList sender, int fromPosition, int toPosition, int itemCount) {
+                    handler.removeCallbacks(reloadContentRunable);
+                    handler.postDelayed(reloadContentRunable, 200);
+                }
+
+                @Override
+                public void onItemRangeRemoved(ObservableList sender, int positionStart, int itemCount) {
+                    handler.removeCallbacks(reloadContentRunable);
+                    handler.postDelayed(reloadContentRunable, 200);
+                }
+            });
+
+            loadContent();
+        }
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
@@ -357,7 +406,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
     }
 
     public void loadContent() {
-        this.contents = new Select().from(this.taskClass).queryList();
+        if(this.observableContent == null) {
+
+            this.contents = new Select().from(this.taskClass).queryList();
+        }
+        else
+        {
+            this.contents = observableContent;
+        }
 
         if(parentAdapter != null)
         {

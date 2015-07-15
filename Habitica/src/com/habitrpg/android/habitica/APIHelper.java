@@ -46,7 +46,8 @@ import retrofit.converter.GsonConverter;
 public class APIHelper implements ErrorHandler, Profiler {
 
     private static final String TAG = "ApiHelper";
-	private final ApiService apiService;
+	// I think we don't need the APIHelper anymore we could just use ApiService
+	public final ApiService apiService;
 	private Context mContext;
 	//private OnHabitsAPIResult mResultListener;
 	//private HostConfig mConfig;
@@ -199,10 +200,10 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
 
-	public void buyItem(Reward.SpecialReward itemBought, View btn) {
+	//public void buyItem(Reward.SpecialReward itemBought, View btn) {
 	//	ATaskBuyItem buyItem = new ATaskBuyItem(mResultListener,btn, mConfig);
 	//	buyItem.execute(itemBought);
-	}
+	//}
 	public void changeTimeZone(int timeZoneOffset) {
 //		ATaskChangeTimeZone changeTimeZone= new ATaskChangeTimeZone(mResultListener,mConfig);
 	//	changeTimeZone.execute(timeZoneOffset);

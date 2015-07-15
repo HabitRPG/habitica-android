@@ -35,9 +35,12 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private Class<?> classType;
+    private boolean showFloatingButton;
 
-    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, Class<?> classType) {
+    // TODO needs a bit of cleanup
+    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, Class<?> classType, boolean showFloatingButton) {
         this.classType = classType;
+        this.showFloatingButton = showFloatingButton;
         mAdapter = new RecyclerViewMaterialAdapter(adapter);
         adapter.setParentAdapter(mAdapter);
     }
@@ -76,6 +79,8 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
             fab.setClickable(true);
         }
 
+        fab.setVisibility(showFloatingButton ? View.VISIBLE : View.INVISIBLE);
+
         layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
 
         if (layoutManager == null) {
@@ -94,9 +99,13 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     }
 
     public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, Class<?> classType) {
+       return newInstance(adapter, classType, true);
+    }
+
+    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, Class<?> classType, boolean showFloatingButton) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
 
-        fragment.SetInnerAdapter(adapter, classType);
+        fragment.SetInnerAdapter(adapter, classType,showFloatingButton);
 
         Log.d("TaskRecyclerViewFragment", "newInstance");
 

@@ -1,15 +1,15 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 
@@ -34,6 +34,14 @@ public interface ApiService {
     @GET("/user/")
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
 
+    @GET("/user/inventory/buy")
+    void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
+
+    @GET("/content")
+    void getContent(Callback<ContentResult> contentResultCallback);
+
+    @POST("/user/inventory/buy/{key}")
+    void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
 
    // @POST("/user/revive")
    // void revive(Callback<HabitRPGUser> habitRPGUserCallback);
@@ -100,8 +108,7 @@ public interface ApiService {
 
 
 
-    @POST("/user/inventory/buy/{key}")
-    void buyItem(@Path("key") String itemKey);//Check callback. Key --> /content
+
 
     @POST("/user/inventory/sell/{type}/{key}")
     void sellItem(@Path("type") String type, @Path("key") String key);//Check callback

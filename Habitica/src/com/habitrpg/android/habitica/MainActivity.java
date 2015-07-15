@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Intent;
+import android.databinding.ObservableArrayList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -36,7 +38,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -47,6 +51,8 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.builder.ConditionQueryBuilder;
+import com.raizlabs.android.dbflow.sql.language.ColumnAlias;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
@@ -65,8 +71,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored, Callback<Void>, OnTaskCreationListener,
-        FlowContentObserver.OnSpecificModelStateChangedListener, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated {
+        TaskScoringCallback.OnTaskScored, OnTaskCreationListener,
+        FlowContentObserver.OnSpecificModelStateChangedListener, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
+        Callback<List<ItemData>> {
     static final int SETTINGS = 11;
     static final int ABOUT = 12;
 
@@ -225,8 +232,15 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         this.observer.addSpecificModelChangeListener(this);
 
+        try {
+            hasItemData = new Select().from(ItemData.class).querySingle() != null;
+        } catch (Exception e) {
+
+        }
         SetUserData(false);
     }
+
+    private boolean hasItemData = false;
 
     @Override
     protected void onResume() {
@@ -297,8 +311,52 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         dialog.show(getSupportFragmentManager(), "AddTaskDialog");
     }
 
-    public void onEvent(BuyRewardTappedEvent event) {
-        showSnackbar("Buy Reward " + event.Reward.getText());
+    public void onEvent(final BuyRewardTappedEvent event) {
+        final String rewardKey = event.Reward.getId();
+
+        if (User.getStats().getGp() < event.Reward.getValue()) {
+            showSnackbar("Not enough Gold", true);
+            return;
+        }
+
+        if (event.Reward instanceof RewardItem) {
+            if (rewardKey.equals("potion")) {
+                int currentHp = User.getStats().getHp().intValue();
+                int maxHp = User.getStats().getMaxHealth();
+
+                if(currentHp == maxHp) {
+                    showSnackbar("You don't need to buy an health potion", true);
+                    return;
+                }
+            }
+
+            mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
+                @Override
+                public void success(Void aVoid, Response response) {
+
+                    switch (rewardKey) {
+                        case "potion":
+                            double newHp = Math.min(User.getStats().getMaxHealth(), User.getStats().getHp() + 15);
+                            User.getStats().setHp(newHp);
+
+                            updateHeader();
+
+                            break;
+                    }
+
+                    showSnackbar("Buy Reward Successful " + event.Reward.getText());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                    showSnackbar("Buy Reward Error " + event.Reward.getText(), true);
+                }
+            });
+        } else {
+            // User created Rewards
+            mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
+        }
     }
 
     private void notifyUser(double xp, double hp, double gold,
@@ -340,7 +398,10 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     static public Double round(Double value, int n) {
         double r = (Math.round(value.doubleValue() * Math.pow(10, n))) / (Math.pow(10, n));
         return Double.valueOf(r);
+
     }
+
+    private ObservableArrayList<Reward> GearRewards = new ObservableArrayList<>();
 
     public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -371,6 +432,11 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                         layoutOfType = R.layout.reward_item_card;
                         fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Reward.class);
                         break;
+                    case 4:
+                        layoutOfType = R.layout.reward_item_card;
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class,
+                                context, GearRewards), Reward.class, false);
+                        break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
                         fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(ToDo.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), ToDo.class);
@@ -383,7 +449,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -397,6 +463,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                         return "Todos";
                     case 3:
                         return "Rewards";
+                    case 4:
+                        return "Gear";
                 }
                 return "";
             }
@@ -461,7 +529,17 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
                 return true;
             case R.id.action_toggle_sleep:
-                mAPIHelper.toggleSleep(this);
+                mAPIHelper.toggleSleep(new Callback<Void>() {
+                    @Override
+                    public void success(Void aVoid, Response response) {
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
 
                 User.getPreferences().setSleep(!User.getPreferences().getSleep());
 
@@ -497,9 +575,40 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     }
 
-    @Override
-    public void success(Void aVoid, Response response) {
 
+    @Override
+    public void success(List<ItemData> items, Response response) {
+
+        // TODO Order Rewards
+        // TODO add Gear Images
+
+        Condition.In keyCondition = Condition.column("key").in("potion");
+
+        for (ItemData item : items) {
+            keyCondition = keyCondition.and(item.key);
+        }
+
+
+        ConditionQueryBuilder<ItemData> queryBuilder = new ConditionQueryBuilder<ItemData>(ItemData.class,
+                keyCondition);
+
+        List<ItemData> itemsFromDb = new Select().from(ItemData.class).where(queryBuilder).queryList();
+
+        ArrayList<Reward> rewardList = new ArrayList<Reward>();
+
+
+        for (ItemData item : itemsFromDb) {
+            Reward reward = new RewardItem();
+            reward.text = item.text;
+            reward.notes = item.notes;
+            reward.value = item.value;
+            reward.setId(item.key);
+
+            rewardList.add(reward);
+        }
+
+        GearRewards.clear();
+        GearRewards.addAll(rewardList);
     }
 
     @Override
@@ -526,6 +635,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private boolean taskListAlreadyAdded;
 
+    private boolean getContentCalled = false;
+
     private void SetUserData(final boolean onlyHeader) {
         if (User != null) {
             runOnUiThread(new Runnable() {
@@ -539,6 +650,39 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                     updateHeader();
                 }
             });
+
+
+            if (mAPIHelper != null && !getContentCalled && !hasItemData) {
+                getContentCalled = true;
+                mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
+                    @Override
+                    public void success(ContentResult contentResult, Response response) {
+                        ArrayList<ItemData> list = new ArrayList<>();
+                        list.add(contentResult.potion);
+                        list.add(contentResult.armoire);
+                        list.addAll(contentResult.gear.flat.values());
+
+                        for (ItemData itemData : list) {
+                            itemData.save();
+                        }
+
+                        hasItemData = true;
+
+                        mAPIHelper.apiService.getInventoryBuyableGear(MainActivity.this);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+
+            }
+
+            if (mAPIHelper != null && hasItemData) {
+                mAPIHelper.apiService.getInventoryBuyableGear(this);
+            }
         }
     }
 
