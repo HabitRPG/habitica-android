@@ -25,6 +25,7 @@ public class AvatarWithBarsViewModel {
     ValueBarBinding mpBar;
 
     ImageView image;
+    UserPicture userPicture;
 
     android.content.res.Resources res;
 
@@ -46,7 +47,6 @@ public class AvatarWithBarsViewModel {
         View hpBarView = v.findViewById(R.id.hpBar);
 
         image = (ImageView) v.findViewById(R.id.IMG_ProfilePicture);
-
         hpBar = DataBindingUtil.bind(hpBarView);
         xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
@@ -58,7 +58,6 @@ public class AvatarWithBarsViewModel {
                 res.getColor(R.color.xpColor), res.getColor(R.color.xpColorBackground), res.getColor(R.color.xpColorForeground));
         SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default),
                 res.getColor(R.color.mpColor), res.getColor(R.color.mpColorBackground),res.getColor(R.color.mpColorForeground));
-
     }
 
     public void UpdateData(HabitRPGUser user)
@@ -72,7 +71,7 @@ public class AvatarWithBarsViewModel {
         SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default),
                 res.getColor(R.color.mpColor), res.getColor(R.color.mpColorBackground),res.getColor(R.color.mpColorForeground));
 
-        image.setImageBitmap(new UserPicture(user, context).draw());
+        new UserPicture(user, this.context).setPictureOn(image);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values

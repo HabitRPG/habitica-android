@@ -14,8 +14,8 @@
 	<dimen name="bar_size">29dp</dimen>
 	<dimen name="bar_inner_size">25dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
-	<dimen name="avatar_width">90dp</dimen>
-    <dimen name="avatar_height">70dp</dimen>
+	<dimen name="avatar_width">140dp</dimen>
+    <dimen name="avatar_height">147dp</dimen>
     <dimen name="header_height">70dp</dimen>
 
 	<dimen name="new_task_bar_size">48dp</dimen>

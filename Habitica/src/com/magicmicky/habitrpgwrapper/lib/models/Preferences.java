@@ -21,7 +21,7 @@ public class Preferences extends BaseModel {
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
 
     @Column
-    private String allocationMode, shirt, skin, size;
+    private String allocationMode, shirt, skin, size, background;
 
     @Column
     private int dayStart, timezoneOffset;
@@ -46,6 +46,12 @@ public class Preferences extends BaseModel {
         this.dayStart = dayStart;
         this.timezoneOffset = timezoneOffset;
     }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {this.background = background;}
 
     public int getDayStart() {
         return dayStart;

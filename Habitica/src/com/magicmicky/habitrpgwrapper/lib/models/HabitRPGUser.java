@@ -17,6 +17,9 @@ import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransact
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,8 +53,8 @@ public class HabitRPGUser extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "profile_id",
-                                                  columnType = Long.class,
-                                                  foreignColumnName = "id")})
+            columnType = Long.class,
+            foreignColumnName = "id")})
     private Profile profile;
 
 
@@ -186,4 +189,52 @@ public class HabitRPGUser extends BaseModel {
         return tags;
     }
 
+
+    public List<String> getAvatarLayerNames() {
+        List<String> layerNames = new ArrayList<String>();
+
+        Preferences prefs = this.getPreferences();
+
+        if (prefs.getSleep()) {
+            layerNames.add("skin_" + prefs.getSkin() + "_sleep");
+        } else {
+            layerNames.add("skin_" + prefs.getSkin());
+        }
+        layerNames.add(prefs.getSize() + "_shirt_" + prefs.getShirt());
+        layerNames.add("head_0");
+
+        Outfit outfit;
+        if (prefs.getCostume()) {
+            outfit = this.getItems().getGear().getCostume();
+        } else {
+            outfit = this.getItems().getGear().getEquipped();
+        }
+        if (outfit != null) {
+            layerNames.add(outfit.getBack());
+            layerNames.add(outfit.getEyeWear());
+            layerNames.add(prefs.getSize() + "_armor_" + outfit.getArmor());
+            layerNames.add(outfit.getBody());
+        }
+
+        Preferences.Hair hair = prefs.getHair();
+        if (hair != null) {
+            layerNames.add("hair_base_"+hair.getBase() + hair.getColor());
+            layerNames.add("hair_bangs_"+hair.getBangs() + hair.getColor());
+            layerNames.add("hair_mustache_"+hair.getMustache() + hair.getColor());
+            layerNames.add("hair_beard_"+hair.getBeard() + hair.getColor());
+        }
+
+        if (outfit != null) {
+            layerNames.add(outfit.getHead());
+            layerNames.add(outfit.getHeadAccessory());
+            layerNames.add(outfit.getShield());
+            layerNames.add(outfit.getWeapon());
+        }
+
+        if (prefs.getSleep()) {
+            layerNames.add("zzz");
+        }
+
+        return layerNames;
+    }
 }

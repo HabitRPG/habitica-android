@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.userpicture;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,126 +13,138 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.util.Log;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class UserPicture {
-	
-	private Context mContext;
-    private Items items;
+
+    static Integer width = 140;
+    static Integer height = 147;
+
     private HabitRPGUser user;
-	public UserPicture(HabitRPGUser user, Context context) {
-		this.user = user;
-		this.mContext= context;
-	}
-	
-	
-	public Bitmap draw() {
+    private ImageView imageView;
+    private Context context;
+    public int numOfTasks = 0;
 
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inScaled = false;
-		Bitmap imgSprites = BitmapFactory.decodeResource(mContext.getResources(), getSprites(),o);
+    private boolean hasBackground, hasMount, hasPet;
 
-		Bitmap res = Bitmap.createBitmap(114, 90, Bitmap.Config.ARGB_8888);//114 is the maximum width of the gears.
-		Canvas myCanvas = new Canvas(res);
-        if(user !=null)
-           drawAvatar(user, imgSprites, myCanvas);
-        return res;
-	}
+    List layers = new ArrayList();
 
-    private void drawAvatar(HabitRPGUser user, Bitmap imgSprites, Canvas cv) {
-        drawSprite(UserSprite.getSkin(user.getPreferences().getSkin()), imgSprites, cv);
+    public UserPicture(HabitRPGUser user, Context context) {
+        this.user = user;
+        this.context = context;
+    }
 
-		com.magicmicky.habitrpgwrapper.lib.models.Preferences.Hair hair = user.getPreferences().getHair();
+    public void allTasksComplete(){
 
-		if(hair != null) {
-            Log.d("Avatar", "drawing head");
-            drawSprite(UserSprite.gethair_bangs(hair.getBangs(), hair.getColor()), imgSprites, cv);
-            drawSprite(UserSprite.gethair_mustache(hair.getMustache(), hair.getColor()), imgSprites, cv);
-            drawSprite(UserSprite.gethair_base(hair.getBase(), hair.getColor()), imgSprites, cv);
-            drawSprite(UserSprite.gethair_beard(hair.getBeard(), hair.getColor()), imgSprites, cv);
+        if(this.numOfTasks == 0){
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inScaled = false;
+
+            Bitmap res = Bitmap.createBitmap(140, 147, Bitmap.Config.ARGB_8888);
+            Canvas myCanvas = new Canvas(res);
+            Integer layerNumber = 0;
+            for (Object layer : this.layers) {
+                if (layer.getClass() == Bitmap.class) {
+                    Bitmap layerBitmap = (Bitmap) layer;
+                    this.modifyCanvas(layerBitmap, myCanvas, layerNumber);
+                }
+                layerNumber++;
+            }
+            this.imageView.setImageBitmap(res);
         }
 
-		if(user.getPreferences().getSleep())
-			drawSprite(UserSprite.zzz, imgSprites, cv);
-//
-//        UserLook.UserItems items = user.getPreferences().isCostume() ? user.getItems().getGear() : user.getItems();
-//        drawSprite(UserSprite.getArmor(items.getArmor(), user.getSize(), user.getPreferences().getShirt()), imgSprites, cv);
-//        drawSprite(UserSprite.getWeapon(items.getWeapon()),imgSprites,cv);
-//        drawSprite(UserSprite.getShield(items.getShield()),imgSprites,cv);
-//        drawSprite(UserSprite.getHead(items.getHead()),imgSprites,cv);
     }
 
-    private void drawSprite(UserObject obj, Bitmap img, Canvas cv) {
-        if(obj!=null)
-            modifyCanvas(img,(-1)*obj.getX(),(-1)*obj.getY(),obj.getWidth(), obj.getHeight(),cv);
-        else
-            Log.e("Avatar", "obj draw sprite = null");
+    public void setPictureOn(ImageView imageView) {
+        this.imageView = imageView;
+        List<String> layerNames = this.user.getAvatarLayerNames();
+
+        if (this.user.getItems().getCurrentMount() != null) {
+            layerNames.add(0, "Mount_Body_" + this.user.getItems().getCurrentMount());
+            layerNames.add("Mount_Head_" + this.user.getItems().getCurrentMount());
+            this.hasMount = true;
+        }
+
+        if (this.user.getItems().getCurrentPet() != null) {
+            layerNames.add("Pet-" + this.user.getItems().getCurrentPet());
+            this.hasPet = true;
+        }
+
+        if (this.user.getPreferences().getBackground() != null) {
+            layerNames.add(0, "background_" + this.user.getPreferences().getBackground());
+            this.hasBackground = true;
+        }
+
+        Integer layerNumber = 0;
+        this.numOfTasks = layerNames.size();
+        for (String layer : layerNames) {
+            layers.add(0);
+            SpriteTarget target = new SpriteTarget(layerNumber);
+            Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/"+ layer +".png").into(target);
+            layerNumber = layerNumber + 1;
+        }
     }
 
-	private int getSprites() {
-		return R.drawable.spritesmith;
-	}
-
-	private void modifyCanvas(Bitmap img, int start_x, int start_y,int width, int height, Canvas canvas) {
-		Rect source = new Rect(start_x,start_y, start_x+width, start_y +height);
-		Rect dest = new Rect(0,0,width, height);
+	private void modifyCanvas(Bitmap img, Canvas canvas, Integer layerNumber) {
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
-        canvas.drawBitmap(img, source, dest, paint);
 
+        Integer xOffset = 25;
+        Integer yOffset = 18;
+
+        if (this.hasBackground && layerNumber == 0) {
+            xOffset = 0;
+            yOffset = 0;
+        }
+
+        if (this.hasMount && !((this.hasBackground && layerNumber == 1) ||
+                                (!this.hasBackground && layerNumber == 0) ||
+                                (this.hasPet && layerNumber == this.layers.size()-2) ||
+                                (!this.hasPet && layerNumber == this.layers.size()-1)
+        )) {
+            yOffset = 0;
+        }
+
+        if (this.hasPet && layerNumber == this.layers.size()-1) {
+            xOffset = 0;
+            yOffset = 43;
+        }
+
+        canvas.drawBitmap(img, new Rect(0, 0, img.getWidth(), img.getHeight()),
+                new Rect(xOffset, yOffset, img.getWidth()+xOffset, img.getHeight()+yOffset), paint);
 	}
 
-	/**
-	 * From StackOverflow
-	 * find the rect value to scale the image (delete the transparent side)
-	 * @param image the image to search in
-	 * @return the x1,x2,y1,y2 to form the new Rect(res[0],res[2],res[1],res[3])
-	 */
-	private int[] findRectValues(Bitmap image)
-	{
-		int[] res = {0,0,0,0};//x1,x2,y1,y2
+    private class SpriteTarget implements Target {
 
-		for(int x = 0; x < image.getWidth(); x++){
-			for(int y = 0; y < image.getHeight(); y++){
-				if(image.getPixel(x, y) != Color.TRANSPARENT){
-					res[0] = x;
-					break;
-				}
-			}
-			if(res[0] != 0)
-				break;
-		}
-		for(int x = image.getWidth()-1; x > 0; x--)	{
-			for(int y = 0; y < image.getHeight(); y++){
-				if(image.getPixel(x, y) != Color.TRANSPARENT){
-					res[1] = x;
-					break;
-				}
-			}
-			if(res[1] != 0)
-				break;
-		}
-		for(int y = 0; y < image.getHeight(); y++){
-			for(int x = 0; x < image.getWidth(); x++){
-				if(image.getPixel(x, y) != Color.TRANSPARENT){
-					res[2] = y;
-					break;
-				}
-			}
-			if(res[2] != 0)
-				break;
-		}
-		for(int y = image.getHeight()-1; y > 0; y--){
-			for(int x = 0; x < image.getWidth(); x++){
-				if(image.getPixel(x, y) != Color.TRANSPARENT){
-					res[3] = y;
-					break;
-				}
-			}
-			if(res[3] != 0)
-				break;
-		}
-		return res;
-	}
+        private Integer layerNumber;
+
+        public SpriteTarget(Integer layerNumber) {
+            this.layerNumber = layerNumber;
+        }
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            layers.set(this.layerNumber, bitmap);
+            numOfTasks--;
+            allTasksComplete();
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            numOfTasks--;
+            allTasksComplete();
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+        }
+    }
 
 }

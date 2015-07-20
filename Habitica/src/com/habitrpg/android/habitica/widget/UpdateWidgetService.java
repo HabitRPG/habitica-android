@@ -87,7 +87,7 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
             RemoteViews remoteViews = new RemoteViews(this.getPackageName(),R.layout.simple_widget);
             remoteViews.setTextViewText(R.id.TV_HP, "" + user.getStats().getHp().intValue() + "/" + (int) user.getStats().getMaxHealth() + " " + this.getString(R.string.HP_default));
             remoteViews.setTextViewText(R.id.TV_XP, "" + user.getStats().getExp().intValue() + "/" + (int) user.getStats().getToNextLevel() + " " + this.getString(R.string.XP_default));
-            remoteViews.setImageViewBitmap(R.id.IMG_ProfilePicture, dealWithUserPicture(user,this));
+            //remoteViews.setImageViewBitmap(R.id.IMG_ProfilePicture, dealWithUserPicture(user,this));
             remoteViews.setProgressBar(R.id.V_HPBar,(int)user.getStats().getMaxHealth(), user.getStats().getHp().intValue(), false);
             remoteViews.setProgressBar(R.id.V_XPBar,(int)user.getStats().getToNextLevel(),user.getStats().getExp().intValue(), false);
 
@@ -129,14 +129,16 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
         //TODO
     }
 
+    /*
     private Bitmap dealWithUserPicture(HabitRPGUser look, Context c) {
-        UserPicture up = new UserPicture(look, this);
+        UserPicture up = new UserPicture(look);
         Resources r = getResources();
         int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_width), r.getDisplayMetrics());
         int h =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r.getDimension(R.dimen.avatar_height), r.getDisplayMetrics());
-        Bitmap img = up.draw();
+        Bitmap img = up.getPicture();
         return Bitmap.createScaledBitmap(img, w,h,false);
     }
+    */
 //
 //
 //    @Override public void onNewUser(String s, String s2) {}

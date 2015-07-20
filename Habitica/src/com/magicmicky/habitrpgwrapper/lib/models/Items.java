@@ -2,6 +2,8 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -30,6 +32,11 @@ public class Items extends BaseModel {
 
     //private Quest quest;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "gear_id",
+            columnType = Long.class,
+            foreignColumnName = "id")})
+    private Gear gear;
 
     public Items(String currentMount, String currentPet, int lastDrop_count, Date lastDrop_date) {
         this.currentMount = currentMount;
@@ -68,6 +75,14 @@ public class Items extends BaseModel {
 
     public void setLastDrop_date(Date lastDrop_date) {
         this.lastDrop_date = lastDrop_date;
+    }
+
+    public Gear getGear() {
+        return gear;
+    }
+
+    public void setGear(Gear gear) {
+        this.gear = gear;
     }
 
     public Items() {}
