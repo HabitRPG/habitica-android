@@ -118,4 +118,17 @@
     <string name="checklist.title.add">Add checklist</string>
     <string name="checklist.title.edit">Edit checklist</string>
     <string name="checklist.item.hint">Add item…</string>
+    <string name="title_activity_task_form">Add Task</string>
+
+    <string name="discard_changed">Discard Changes</string>
+    <string name="notes">Notes</string>
+    <string name="text">Text</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="start_date">Start Date</string>
+    <string name="positive_habit_form">Positive ( + )</string>
+    <string name="negative_habit_form">Negative ( - )</string>
+    <string name="checklist">Checklist</string>
+    <string name="actions">Actions</string>
+    <string name="task">Task</string>
+
 </resources>

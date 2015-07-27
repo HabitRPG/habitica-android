@@ -283,13 +283,13 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         if(event.Task instanceof RewardItem)
             return;
 
-        Bundle b = new Bundle();
-        b.putString("type", event.Task.getType().toString());
-        b.putString("taskId", event.Task.getId());
+        Bundle bundle = new Bundle();
+        bundle.putString("type", event.Task.getType().toString());
+        bundle.putString("taskId", event.Task.getId());
 
-        AddTaskDialog dialog = new AddTaskDialog();
-        dialog.setArguments(b);
-        dialog.show(getSupportFragmentManager(), "AddTaskDialog");
+        Intent intent = new Intent(this, TaskFormActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void onEvent(TaskLongPressedEvent event) {
@@ -305,12 +305,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(AddTaskTappedEvent event) {
-        Bundle b = new Bundle();
-        b.putString("type", event.ClassType.getSimpleName().toLowerCase());
+        Bundle bundle = new Bundle();
+        bundle.putString("type", event.ClassType.getSimpleName().toLowerCase());
 
-        AddTaskDialog dialog = new AddTaskDialog();
-        dialog.setArguments(b);
-        dialog.show(getSupportFragmentManager(), "AddTaskDialog");
+        Intent intent = new Intent(this, TaskFormActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void onEvent(final BuyRewardTappedEvent event) {
