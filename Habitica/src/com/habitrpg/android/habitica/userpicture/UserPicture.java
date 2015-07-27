@@ -15,6 +15,7 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPicture {
 
@@ -24,7 +25,7 @@ public class UserPicture {
     private HabitRPGUser user;
     private ImageView imageView;
     private Context context;
-    public int numOfTasks = 0;
+    private AtomicInteger numOfTasks = new AtomicInteger(0);
 
     private boolean hasBackground, hasMount, hasPet;
 
@@ -35,9 +36,17 @@ public class UserPicture {
         this.context = context;
     }
 
+    public void addTask(){
+        numOfTasks.incrementAndGet();
+    }
+
+    public void removeTask(){
+        numOfTasks.decrementAndGet();
+    }
+
     public void allTasksComplete(){
 
-        if(this.numOfTasks == 0){
+        if(this.numOfTasks.get() == 0){
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inScaled = false;
 
@@ -77,7 +86,7 @@ public class UserPicture {
         }
 
         Integer layerNumber = 0;
-        this.numOfTasks = layerNames.size();
+        this.numOfTasks.set(layerNames.size());
         for (String layer : layerNames) {
             layers.add(0);
             SpriteTarget target = new SpriteTarget(layerNumber);
@@ -126,13 +135,13 @@ public class UserPicture {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             layers.set(this.layerNumber, bitmap);
-            numOfTasks--;
+            removeTask();
             allTasksComplete();
         }
 
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
-            numOfTasks--;
+            removeTask();
             allTasksComplete();
         }
 

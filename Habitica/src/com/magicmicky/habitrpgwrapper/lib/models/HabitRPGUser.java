@@ -190,6 +190,17 @@ public class HabitRPGUser extends BaseModel {
 
         Preferences prefs = this.getPreferences();
 
+        Outfit outfit;
+        if (prefs.getCostume()) {
+            outfit = this.getItems().getGear().getCostume();
+        } else {
+            outfit = this.getItems().getGear().getEquipped();
+        }
+
+        if (outfit != null) {
+            if (outfit.getBack() != null) {layerNames.add(outfit.getBack());}
+        }
+
         if (prefs.getSleep()) {
             layerNames.add("skin_" + prefs.getSkin() + "_sleep");
         } else {
@@ -198,35 +209,37 @@ public class HabitRPGUser extends BaseModel {
         layerNames.add(prefs.getSize() + "_shirt_" + prefs.getShirt());
         layerNames.add("head_0");
 
-        Gear gear = this.getItems().getGear();
-
-        Outfit outfit;
-
-        if(gear != null) {
-            if (prefs.getCostume()) {
-                outfit = gear.getCostume();
-            } else {
-                outfit = gear.getEquipped();
-            }
-            if (outfit != null) {
-                layerNames.add(outfit.getBack());
-                layerNames.add(outfit.getEyeWear());
+        if (outfit != null) {
+            if (outfit.getArmor() != null && !outfit.getArmor().equals("armor_base_0")) {
                 layerNames.add(prefs.getSize() + "_armor_" + outfit.getArmor());
+            }
+            if (outfit.getBody() != null && !outfit.getBody().equals("body_base_0")) {
                 layerNames.add(outfit.getBody());
             }
+        }
 
-            Preferences.Hair hair = prefs.getHair();
-            if (hair != null) {
-                layerNames.add("hair_base_" + hair.getBase() + hair.getColor());
-                layerNames.add("hair_bangs_" + hair.getBangs() + hair.getColor());
-                layerNames.add("hair_mustache_" + hair.getMustache() + hair.getColor());
-                layerNames.add("hair_beard_" + hair.getBeard() + hair.getColor());
+        Preferences.Hair hair = prefs.getHair();
+        if (hair != null) {
+            if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() + hair.getColor());}
+            if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() + hair.getColor());}
+            if (hair.getMustache() > 0) {layerNames.add("hair_mustache_"+hair.getMustache() + hair.getColor());}
+            if (hair.getBeard() > 0) {layerNames.add("hair_beard_"+hair.getBeard() + hair.getColor());}
+        }
+
+        if (outfit != null) {
+            if (outfit.getEyeWear() != null && !outfit.getEyeWear().equals("eyewear_base_0")) {
+                layerNames.add(outfit.getEyeWear());
             }
-
-            if (outfit != null) {
+            if (outfit.getHead() != null && !outfit.getHead().equals("head_base_0")) {
                 layerNames.add(outfit.getHead());
+            }
+            if (outfit.getHeadAccessory() != null && !outfit.getHeadAccessory().equals("headAccessory_base_0")) {
                 layerNames.add(outfit.getHeadAccessory());
+            }
+            if (outfit.getShield() != null && !outfit.getShield().equals("shield_base_0")) {
                 layerNames.add(outfit.getShield());
+            }
+            if (outfit.getWeapon() != null && !outfit.getWeapon().equals("weapon_base_0")) {
                 layerNames.add(outfit.getWeapon());
             }
         }
