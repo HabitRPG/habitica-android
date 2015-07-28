@@ -16,10 +16,7 @@ import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
 

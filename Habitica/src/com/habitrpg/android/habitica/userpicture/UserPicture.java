@@ -1,25 +1,19 @@
 package com.habitrpg.android.habitica.userpicture;
 
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Items;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.util.Log;
 import android.widget.ImageView;
 
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserPicture {

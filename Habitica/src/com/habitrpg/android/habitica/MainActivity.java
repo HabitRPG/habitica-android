@@ -52,7 +52,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.builder.ConditionQueryBuilder;
-import com.raizlabs.android.dbflow.sql.language.ColumnAlias;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
@@ -401,7 +400,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     }
 
-    private ObservableArrayList<Reward> GearRewards = new ObservableArrayList<>();
+    private ObservableArrayList<RewardItem> GearRewards = new ObservableArrayList<>();
 
     public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -434,8 +433,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                         break;
                     case 4:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class,
-                                context, GearRewards), Reward.class, false);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(RewardItem.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardItemViewHolder.class,
+                                context, GearRewards), RewardItem.class, false);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
@@ -594,11 +593,10 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         List<ItemData> itemsFromDb = new Select().from(ItemData.class).where(queryBuilder).queryList();
 
-        ArrayList<Reward> rewardList = new ArrayList<Reward>();
-
+        ArrayList<RewardItem> rewardList = new ArrayList<>();
 
         for (ItemData item : itemsFromDb) {
-            Reward reward = new RewardItem();
+            RewardItem reward = new RewardItem();
             reward.text = item.text;
             reward.notes = item.notes;
             reward.value = item.value;

@@ -11,13 +11,8 @@ import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,32 +198,37 @@ public class HabitRPGUser extends BaseModel {
         layerNames.add(prefs.getSize() + "_shirt_" + prefs.getShirt());
         layerNames.add("head_0");
 
+        Gear gear = this.getItems().getGear();
+
         Outfit outfit;
-        if (prefs.getCostume()) {
-            outfit = this.getItems().getGear().getCostume();
-        } else {
-            outfit = this.getItems().getGear().getEquipped();
-        }
-        if (outfit != null) {
-            layerNames.add(outfit.getBack());
-            layerNames.add(outfit.getEyeWear());
-            layerNames.add(prefs.getSize() + "_armor_" + outfit.getArmor());
-            layerNames.add(outfit.getBody());
-        }
 
-        Preferences.Hair hair = prefs.getHair();
-        if (hair != null) {
-            layerNames.add("hair_base_"+hair.getBase() + hair.getColor());
-            layerNames.add("hair_bangs_"+hair.getBangs() + hair.getColor());
-            layerNames.add("hair_mustache_"+hair.getMustache() + hair.getColor());
-            layerNames.add("hair_beard_"+hair.getBeard() + hair.getColor());
-        }
+        if(gear != null) {
+            if (prefs.getCostume()) {
+                outfit = gear.getCostume();
+            } else {
+                outfit = gear.getEquipped();
+            }
+            if (outfit != null) {
+                layerNames.add(outfit.getBack());
+                layerNames.add(outfit.getEyeWear());
+                layerNames.add(prefs.getSize() + "_armor_" + outfit.getArmor());
+                layerNames.add(outfit.getBody());
+            }
 
-        if (outfit != null) {
-            layerNames.add(outfit.getHead());
-            layerNames.add(outfit.getHeadAccessory());
-            layerNames.add(outfit.getShield());
-            layerNames.add(outfit.getWeapon());
+            Preferences.Hair hair = prefs.getHair();
+            if (hair != null) {
+                layerNames.add("hair_base_" + hair.getBase() + hair.getColor());
+                layerNames.add("hair_bangs_" + hair.getBangs() + hair.getColor());
+                layerNames.add("hair_mustache_" + hair.getMustache() + hair.getColor());
+                layerNames.add("hair_beard_" + hair.getBeard() + hair.getColor());
+            }
+
+            if (outfit != null) {
+                layerNames.add(outfit.getHead());
+                layerNames.add(outfit.getHeadAccessory());
+                layerNames.add(outfit.getShield());
+                layerNames.add(outfit.getWeapon());
+            }
         }
 
         if (prefs.getSleep()) {

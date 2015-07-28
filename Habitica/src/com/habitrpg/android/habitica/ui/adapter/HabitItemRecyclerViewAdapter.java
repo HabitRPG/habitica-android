@@ -4,6 +4,8 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -32,11 +34,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -169,6 +174,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
                         return new HabitItemRecyclerViewAdapter.TodoViewHolder(view);
                     case "RewardViewHolder":
                         return new HabitItemRecyclerViewAdapter.RewardViewHolder(view);
+                    case "RewardItemViewHolder":
+                        return new HabitItemRecyclerViewAdapter.RewardItemViewHolder(view);
                 }
             }
         }
@@ -383,8 +390,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
             binding.btnReward.setClickable(true);
             binding.btnReward.setOnClickListener(this);
+            binding.imageView3.setVisibility(View.GONE);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -402,6 +409,57 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super.bindHolder(habitItem, position);
 
             binding.setReward(habitItem);
+        }
+    }
+
+    public class RewardItemViewHolder extends ViewHolder<RewardItem> implements Target
+    {
+        RewardItemCardBinding binding;
+
+        public RewardItemViewHolder(View itemView) {
+            super(itemView);
+
+            binding = DataBindingUtil.bind(itemView);
+
+            binding.btnReward.setClickable(true);
+            binding.btnReward.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            BuyRewardTappedEvent event = new BuyRewardTappedEvent();
+
+            if (v == binding.btnReward) {
+                event.Reward = Item;
+
+                EventBus.getDefault().post(event);
+            } else super.onClick(v);
+        }
+
+        @Override
+        public void bindHolder(RewardItem habitItem, int position) {
+            super.bindHolder(habitItem, position);
+
+            binding.setReward(habitItem);
+
+            binding.imageView3.setImageBitmap(null);
+
+            Picasso.with(context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ habitItem.getId() +".png").into(this);
+        }
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            binding.imageView3.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
         }
     }
 
