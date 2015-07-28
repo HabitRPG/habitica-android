@@ -280,6 +280,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(TaskTappedEvent event) {
+        if(event.Task instanceof RewardItem)
+            return;
+
         Bundle b = new Bundle();
         b.putString("type", event.Task.getType().toString());
         b.putString("taskId", event.Task.getId());
