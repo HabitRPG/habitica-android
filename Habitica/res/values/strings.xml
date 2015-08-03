@@ -124,11 +124,27 @@
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive ( + )</string>
     <string name="negative_habit_form">Negative ( - )</string>
     <string name="checklist">Checklist</string>
     <string name="actions">Actions</string>
     <string name="task">Task</string>
+
+    <string name="frequency">Frequency</string>
+    <string name="frequency_weekly">On Certain Days of the Week</string>
+    <string name="frequency_daily">Every X Days</string>
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
 </resources>

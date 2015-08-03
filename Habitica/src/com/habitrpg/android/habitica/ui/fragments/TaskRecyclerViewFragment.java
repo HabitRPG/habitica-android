@@ -112,7 +112,7 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         AddTaskTappedEvent event = new AddTaskTappedEvent();
-        event.ClassType = classType;
+        event.ClassType = this.classType;
 
         EventBus.getDefault().post(event);
     }

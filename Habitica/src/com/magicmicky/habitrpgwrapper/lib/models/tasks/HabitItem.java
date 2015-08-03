@@ -8,6 +8,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +17,7 @@ import java.util.List;
  * @author MagicMicky
  *
  */
-public abstract class HabitItem extends BaseModel {
+public abstract class HabitItem extends BaseModel implements Serializable {
     private String _id;
 
     @Column
@@ -124,7 +126,7 @@ public abstract class HabitItem extends BaseModel {
     public void setValue(double value) {
         this.setValue(Double.valueOf(value));
     }
-	
+
 	/**
 	 * @return the tags
 	 */

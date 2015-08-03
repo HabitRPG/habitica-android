@@ -75,6 +75,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         Callback<List<ItemData>> {
     static final int SETTINGS = 11;
     static final int ABOUT = 12;
+    static final int TASK_CREATED_RESULT = 1;
+    static final int TASK_UPDATED_RESULT = 2;
 
     //region View Elements
     @InjectView(R.id.materialViewPager)
@@ -289,7 +291,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, TASK_UPDATED_RESULT);
     }
 
     public void onEvent(TaskLongPressedEvent event) {
@@ -310,7 +312,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, TASK_CREATED_RESULT);
     }
 
     public void onEvent(final BuyRewardTappedEvent event) {
@@ -358,6 +360,15 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             // User created Rewards
             mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
+        }
+    }
+
+    public void onEvent(final TaskSaveEvent event) {
+        HabitItem task = (HabitItem) event.task;
+        if (event.created) {
+            this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
+        } else {
+            this.mAPIHelper.updateTask(task, new TaskUpdateCallback(this));
         }
     }
 
@@ -690,7 +701,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onTaskCreation(HabitItem task, boolean editMode) {
         if (!editMode) {
-            this.mAPIHelper.createUndefNewTask(task, new TaskCreationCallback(this));
+            this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
         } else {
             this.mAPIHelper.uprateUndefinedTask(task, new TaskUpdateCallback(this));
         }

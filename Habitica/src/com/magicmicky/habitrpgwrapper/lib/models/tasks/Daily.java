@@ -12,6 +12,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,12 @@ public class Daily extends Checklist{
 
     @Column
 	private Boolean completed;
+
+	@Column
+    private String frequency;
+
+    @Column
+    private Integer everyX;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
@@ -58,11 +65,11 @@ public class Daily extends Checklist{
     }
 	public Daily(String id, String notes, Float priority, String text,
 			Double value, Boolean completed, Days repeat) {
-		this(id, notes, priority, text, value,completed,repeat,null,null);
+		this(id, notes, priority, text, value, completed, repeat, null, null);
 	}
 
 	public Daily() {
-		this(null,null,null,null,null,null,null);
+		this(null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -78,6 +85,13 @@ public class Daily extends Checklist{
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
 	}
+
+    public String getFrequency() { return frequency; }
+    public void setFrequency(String frequency) { this.frequency = frequency; }
+
+    public Integer getEveryX() { return everyX; }
+    public void setEveryX(Integer everyX) { this.everyX = everyX; }
+
 	/**
 	 * @return the repeat array.<br/>
 	 * This array contains 7 values, one for each days, starting from monday.

@@ -7,4 +7,26 @@
     <string-array name="prefs_items_values">
         <item>https://habitrpg.com/</item>
     </string-array>
+
+    <string-array name="task_difficulties">
+        <item>@string/trivial</item>
+        <item>@string/easy</item>
+        <item>@string/medium</item>
+        <item>@string/hard</item>
+    </string-array>
+
+    <string-array name="daily_frequencies">
+        <item>@string/frequency_weekly</item>
+        <item>@string/frequency_daily</item>
+    </string-array>
+
+    <string-array name="weekdays">
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+    </string-array>
 </resources>

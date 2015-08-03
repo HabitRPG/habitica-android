@@ -139,30 +139,29 @@
         </RelativeLayout>
 
         <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="72dp">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/negative_habit_form"
-            android:id="@+id/textView8"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="11dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/negative_habit_form"
+                android:id="@+id/textView8"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="11dp" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/task_negative_checkbox"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="0dp" />
-
-
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/task_negative_checkbox"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="0dp" />
         </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -179,6 +178,36 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/checklist"
             android:id="@+id/textView9" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/task_weekdays_wrapper"
+        android:layout_marginTop="@dimen/abc_action_bar_content_inset_material" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/frequency"
+            android:id="@+id/textView10" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:id="@+id/task_frequency_spinner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/task_frequency_container"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
     </LinearLayout>
 

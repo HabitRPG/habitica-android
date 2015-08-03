@@ -123,7 +123,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 	};
 
 
-    public void createUndefNewTask(HabitItem item, Callback cb) {
+    public void createNewTask(HabitItem item, Callback cb) {
         if(item instanceof Habit) {
             createNewTask((Habit) item, cb);
         } else if(item instanceof Daily) {
@@ -175,6 +175,19 @@ public class APIHelper implements ErrorHandler, Profiler {
 	public void deleteTask(HabitItem item, TaskDeletionCallback cb) {
 		this.apiService.deleteTask(item.getId(), cb);
     }
+
+	public void updateTask(HabitItem item, Callback cb) {
+		if(item instanceof Habit) {
+			updateTask((Habit) item, cb);
+		} else if(item instanceof Daily) {
+			updateTask((Daily) item, cb);
+		} else if(item instanceof ToDo) {
+			updateTask((ToDo) item, cb);
+		} else if(item instanceof Reward) {
+			updateTask((Reward) item, cb);
+		}
+	}
+
     public void updateTask(Daily item, Callback<Daily> cb) {
         this.apiService.updateTask(item.getId(), item, cb);
     }
