@@ -16,10 +16,7 @@ public class Habit extends HabitItem{
 	private final HabitType type = HabitType.habit;
 
 	@Column
-	private Boolean up;
-
-	@Column
-	private Boolean down;
+	public Boolean up, down;
 	/**
 	 * Create a new Habit based on all the information needed
 	 * @param id the id of the habit

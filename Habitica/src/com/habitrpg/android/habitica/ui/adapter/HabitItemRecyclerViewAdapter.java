@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
@@ -28,7 +30,6 @@ import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TodoCheckedEvent;
-import com.habitrpg.android.habitica.ui.helpers.HabitColorHelper;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
@@ -204,6 +205,26 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         handler.postDelayed(reloadContentRunable, 200);
     }
 
+    @BindingAdapter("bind:imageName")
+    public static void loadImage(ImageView view, String imageName) {
+        Picasso.with(view.getContext()).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ imageName +".png").into(view);
+    }
+
+    @BindingAdapter("bind:cardColor")
+    public static void setCardColor(CardView cardView, int color) {
+        cardView.setCardBackgroundColor(cardView.getResources().getColor(color));
+    }
+
+    @BindingAdapter("app:backgroundColor")
+    public static void setBackgroundTintColor(CheckBox view, int color) {
+        ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
+    }
+
+    @BindingAdapter("app:backgroundColor")
+    public static void setBackgroundTintColor(Button view, int color) {
+        ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
+    }
+
     public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @InjectView(R.id.card_view)
@@ -215,12 +236,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         protected android.content.res.Resources resources;
 
         public THabitItem Item;
-
-        public void SetCardBackgroundColor(int color) {
-            if (cardView != null) {
-                cardView.setCardBackgroundColor(color);
-            }
-        }
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -238,9 +253,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
         public void bindHolder(THabitItem habitItem, int position) {
             double itemvalue = habitItem.getValue();
-            int itemColorRes = HabitColorHelper.GetItemColorByValue(itemvalue);
-
-            SetCardBackgroundColor(resources.getColor(itemColorRes));
             Item = habitItem;
         }
 
@@ -264,6 +276,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
             return true;
         }
+
     }
 
     public class HabitViewHolder extends ViewHolder<Habit> {
@@ -309,12 +322,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super.bindHolder(habitItem, position);
 
             binding.setHabit(habitItem);
-
-            double itemvalue = habitItem.getValue();
-            int btnColorRes = HabitColorHelper.GetItemButtonColorByValue(itemvalue);
-
-            ViewHelper.SetBackgroundTint(btnPlus, resources.getColor(btnColorRes));
-            ViewHelper.SetBackgroundTint(btnMinus, resources.getColor(btnColorRes));
         }
     }
 
@@ -336,11 +343,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super.bindHolder(habitItem, position);
 
             binding.setDaily(habitItem);
-
-            double itemvalue = habitItem.getValue();
-            int btnColorRes = HabitColorHelper.GetItemButtonColorByValue(itemvalue);
-
-            ViewHelper.SetBackgroundTint(checkbox, resources.getColor(btnColorRes));
         }
     }
 
@@ -364,11 +366,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
             super.bindHolder(habitItem, position);
 
             binding.setTodo(habitItem);
-
-            double itemvalue = habitItem.getValue();
-            int btnColorRes = HabitColorHelper.GetItemButtonColorByValue(itemvalue);
-
-            ViewHelper.SetBackgroundTint(checkbox, resources.getColor(btnColorRes));
         }
 
         @Override
@@ -439,12 +436,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         @Override
         public void bindHolder(RewardItem habitItem, int position) {
             super.bindHolder(habitItem, position);
-
             binding.setReward(habitItem);
-
-            binding.imageView3.setImageBitmap(null);
-
-            Picasso.with(context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ habitItem.getId() +".png").into(this);
         }
 
         @Override

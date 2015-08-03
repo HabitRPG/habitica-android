@@ -23,10 +23,10 @@ public class ToDo extends Checklist{
 	private final HabitType type=HabitType.todo;
 
 	@Column
-	private Boolean completed;
+	public Boolean completed;
 
 	@Column
-	private String date;
+	public String date;
 	/**
 	 * Construct a daily based on all the information needed
 	 * @param id the id of the daily

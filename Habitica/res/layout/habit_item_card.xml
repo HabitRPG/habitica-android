@@ -3,11 +3,12 @@
 
     <data>
 
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit" />
+        <import type="android.view.View"/>
 
         <variable
             name="habit"
-            type="HabitItem" />
+            type="Habit" />
     </data>
 
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +26,8 @@
             app:cardCornerRadius="2dp"
             app:cardElevation="2dp"
             app:cardPreventCornerOverlap="false"
-            app:contentPadding="0dp">
+            app:contentPadding="0dp"
+            app:cardColor="@{habit.getLightTaskColor}">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,27 +35,33 @@
                 android:gravity="fill_horizontal|center_vertical|center_horizontal|fill|clip_vertical|fill_vertical|center|start|clip_horizontal|bottom|left|right|end|top"
                 android:minHeight="250dp">
 
-
-                <Button
-                    android:id="@+id/btnPlus"
-                    style="?android:attr/buttonStyleSmall"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="+" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/btnLayout">
+                    <Button
+                        android:id="@+id/btnPlus"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
+                        android:text="+"
+                        android:textSize="15sp"
+                        app:backgroundColor="@{habit.getDarkTaskColor}" />
 
-                <Button
-                    android:id="@+id/btnMinus"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/btnPlus"
-                    android:layout_alignStart="@+id/btnPlus"
-                    android:layout_below="@+id/btnPlus"
-                    android:backgroundTint="@color/best"
-                    android:text="-" />
+                    <Button
+                        android:id="@+id/btnMinus"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:visibility="@{habit.down ? View.VISIBLE : View.GONE}"
+                        app:backgroundColor="@{habit.getDarkTaskColor}"
+                        android:text="-"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
                 <CheckedTextView
                     android:id="@+id/checkedTextView"
@@ -63,10 +71,11 @@
                     android:layout_alignParentBottom="false"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/btnPlus"
-                    android:layout_toEndOf="@id/btnPlus"
+                    android:layout_toRightOf="@id/btnLayout"
+                    android:layout_toEndOf="@id/btnLayout"
                     android:layout_alignParentTop="true"
                     android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
                     android:paddingTop="5dp"

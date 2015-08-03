@@ -24,7 +24,7 @@ public class Daily extends Checklist{
 	private final HabitType type=HabitType.daily;
 
     @Column
-	private Boolean completed;
+	public Boolean completed;
 
 	@Column
     private String frequency;

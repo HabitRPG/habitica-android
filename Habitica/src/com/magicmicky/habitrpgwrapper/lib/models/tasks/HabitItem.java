@@ -1,6 +1,9 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import android.graphics.Color;
+
 import com.habitrpg.android.habitica.HabitDatabase;
+import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -195,4 +198,41 @@ public abstract class HabitItem extends BaseModel implements Serializable {
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
+
+    public int getLightTaskColor()
+    {
+        if (this.value < -20)
+            return R.color.worst;
+        if (this.value < -10)
+            return R.color.worse;
+        if (this.value < -1)
+            return R.color.bad;
+        if (this.value < 5)
+            return R.color.neutral;
+        if (this.value < 10)
+            return R.color.better;
+        return R.color.best;
+    }
+
+    /**
+     * Get the button color resources depending on a certain score
+     *
+     * @param d the score
+     * @return the color resource id
+     */
+    public int getDarkTaskColor()
+    {
+        if (this.value < -20)
+            return R.color.worst_btn;
+        if (this.value < -10)
+            return R.color.worse_btn;
+        if (this.value < -1)
+            return R.color.bad_btn;
+        if (this.value < 5)
+            return R.color.neutral_btn;
+        if (this.value < 10)
+            return R.color.better_btn;
+
+        return R.color.best_btn;
+    }
 }
