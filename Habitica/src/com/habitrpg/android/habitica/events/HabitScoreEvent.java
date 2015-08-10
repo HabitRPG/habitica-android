@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 /**
  * Created by Negue on 10.07.2015.
@@ -8,5 +8,5 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
 public class HabitScoreEvent {
     public boolean Up = false;
 
-    public Habit Habit;
+    public Task Habit;
 }

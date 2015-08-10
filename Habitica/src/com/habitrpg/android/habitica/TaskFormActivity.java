@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,30 +16,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.services.concurrency.Task;
-
-import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.daily;
-import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.habit;
-import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.reward;
-import static com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitType.todo;
 
 public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private HabitType taskType;
+    private String taskType;
     private String taskId;
-    private HabitItem task;
+    private Task task;
 
     private EditText taskText, taskNotes;
     private Spinner taskDifficultySpinner, dailyFrequencySpinner;
@@ -62,10 +50,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (type == null) {
             return;
         }
-        taskType = type.equals(daily.toString()) ? daily
-                : type.equals(reward.toString()) ? reward
-                : type.equals(todo.toString()) ? todo
-                : habit;
 
         LinearLayout mainWrapper = (LinearLayout) findViewById(R.id.task_main_wrapper);
         taskText = (EditText) findViewById(R.id.task_text_edittext);
@@ -77,7 +61,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskDifficultySpinner.setAdapter(adapter);
 
-        if (taskType == habit) {
+        if (taskType.equals("habit")) {
             LinearLayout startDateLayout = (LinearLayout) findViewById(R.id.task_startdate_layout);
             LinearLayout taskWrapper = (LinearLayout) findViewById(R.id.task_task_wrapper);
             taskWrapper.removeView(startDateLayout);
@@ -89,13 +73,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             negativeCheckBox = (CheckBox) findViewById(R.id.task_negative_checkbox);
         }
 
-        if (taskType != habit) {
+        if (taskType.equals("habit")) {
             LinearLayout actionsLayout = (LinearLayout) findViewById(R.id.task_actions_wrapper);
             mainWrapper.removeView(actionsLayout);
         }
 
         LinearLayout weekdayWrapper = (LinearLayout)findViewById(R.id.task_weekdays_wrapper);
-        if (taskType == daily) {
+        if (taskType.equals("daily")) {
             this.dailyFrequencySpinner = (Spinner) weekdayWrapper.findViewById(R.id.task_frequency_spinner);
 
             ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(this,
@@ -110,23 +94,9 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
 
         if (taskId != null) {
-            switch (taskType) {
-                case todo:
-                    ToDo todo = new Select().from(ToDo.class).byIds(taskId).querySingle();
-                    this.task = todo;
-                    this.populate(todo);
-                    break;
-                case daily:
-                    Daily daily = new Select().from(Daily.class).byIds(taskId).querySingle();
-                    this.task = daily;
-                    this.populate(daily);
-                    break;
-                case habit:
-                    Habit habit = new Select().from(Habit.class).byIds(taskId).querySingle();
-                    this.task = habit;
-                    this.populate(habit);
-                    break;
-            }
+            Task task = new Select().from(Task.class).byIds(taskId).querySingle();
+            this.task = task;
+            this.populate(task);
         }
     }
 
@@ -153,18 +123,17 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
 
         if (this.task != null) {
-            Daily daily = (Daily) this.task;
 
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                this.weekdayCheckboxes.get(0).setChecked(daily.getRepeat().getM());
-                this.weekdayCheckboxes.get(1).setChecked(daily.getRepeat().getT());
-                this.weekdayCheckboxes.get(2).setChecked(daily.getRepeat().getW());
-                this.weekdayCheckboxes.get(3).setChecked(daily.getRepeat().getTh());
-                this.weekdayCheckboxes.get(4).setChecked(daily.getRepeat().getF());
-                this.weekdayCheckboxes.get(5).setChecked(daily.getRepeat().getS());
-                this.weekdayCheckboxes.get(6).setChecked(daily.getRepeat().getSu());
+                this.weekdayCheckboxes.get(0).setChecked(this.task.getRepeat().getM());
+                this.weekdayCheckboxes.get(1).setChecked(this.task.getRepeat().getT());
+                this.weekdayCheckboxes.get(2).setChecked(this.task.getRepeat().getW());
+                this.weekdayCheckboxes.get(3).setChecked(this.task.getRepeat().getTh());
+                this.weekdayCheckboxes.get(4).setChecked(this.task.getRepeat().getF());
+                this.weekdayCheckboxes.get(5).setChecked(this.task.getRepeat().getS());
+                this.weekdayCheckboxes.get(6).setChecked(this.task.getRepeat().getSu());
             } else {
-                this.frequencyPicker.setValue(daily.getEveryX());
+                this.frequencyPicker.setValue(this.task.getEveryX());
             }
         }
 
@@ -193,7 +162,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
-    private void populate(HabitItem task) {
+    private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
         float priority = task.getPriority();
@@ -206,41 +175,36 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         } else if (priority == 2.0) {
             this.taskDifficultySpinner.setSelection(3);
         }
-    }
 
-    private void populate(Habit task) {
-        populate((HabitItem) task);
-        positiveCheckBox.setChecked(task.getUp());
-        negativeCheckBox.setChecked(task.getDown());
-    }
+        if (task.type.equals("habit")) {
+            positiveCheckBox.setChecked(task.getUp());
+            negativeCheckBox.setChecked(task.getDown());
+        }
 
-    private void populate(Daily task) {
-        populate((HabitItem) task);
-
-        if (task.getFrequency().equals("weekly")) {
-            this.dailyFrequencySpinner.setSelection(0);
-            if (weekdayCheckboxes.size() == 7) {
-                this.weekdayCheckboxes.get(0).setChecked(task.getRepeat().getM());
-                this.weekdayCheckboxes.get(1).setChecked(task.getRepeat().getT());
-                this.weekdayCheckboxes.get(2).setChecked(task.getRepeat().getW());
-                this.weekdayCheckboxes.get(3).setChecked(task.getRepeat().getTh());
-                this.weekdayCheckboxes.get(4).setChecked(task.getRepeat().getF());
-                this.weekdayCheckboxes.get(5).setChecked(task.getRepeat().getS());
-                this.weekdayCheckboxes.get(6).setChecked(task.getRepeat().getSu());
-            }
-        } else {
-            this.dailyFrequencySpinner.setSelection(1);
-            if (this.frequencyPicker != null) {
-                this.frequencyPicker.setValue(task.getEveryX());
+        if (task.type.equals("daily")) {
+            if (task.getFrequency().equals("weekly")) {
+                this.dailyFrequencySpinner.setSelection(0);
+                if (weekdayCheckboxes.size() == 7) {
+                    this.weekdayCheckboxes.get(0).setChecked(task.getRepeat().getM());
+                    this.weekdayCheckboxes.get(1).setChecked(task.getRepeat().getT());
+                    this.weekdayCheckboxes.get(2).setChecked(task.getRepeat().getW());
+                    this.weekdayCheckboxes.get(3).setChecked(task.getRepeat().getTh());
+                    this.weekdayCheckboxes.get(4).setChecked(task.getRepeat().getF());
+                    this.weekdayCheckboxes.get(5).setChecked(task.getRepeat().getS());
+                    this.weekdayCheckboxes.get(6).setChecked(task.getRepeat().getSu());
+                }
+            } else {
+                this.dailyFrequencySpinner.setSelection(1);
+                if (this.frequencyPicker != null) {
+                    this.frequencyPicker.setValue(task.getEveryX());
+                }
             }
         }
+
     }
 
-    private void populate(ToDo task) {
-        populate((HabitItem) task);
-    }
 
-    private void saveTask(HabitItem task) {
+    private void saveTask(Task task) {
         task.text = taskText.getText().toString();
         task.notes = taskNotes.getText().toString();
 
@@ -253,33 +217,27 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 3) {
             task.setPriority((float) 2.0);
         }
-    }
 
-    private void saveTask(Habit task) {
-        task.setUp(positiveCheckBox.isChecked());
-        task.setDown(negativeCheckBox.isChecked());
-        this.saveTask((HabitItem) task);
-    }
-
-    private void saveTask(Daily task) {
-        if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-            task.setFrequency("weekly");
-            task.getRepeat().setM(this.weekdayCheckboxes.get(0).isChecked());
-            task.getRepeat().setT(this.weekdayCheckboxes.get(1).isChecked());
-            task.getRepeat().setW(this.weekdayCheckboxes.get(2).isChecked());
-            task.getRepeat().setTh(this.weekdayCheckboxes.get(3).isChecked());
-            task.getRepeat().setF(this.weekdayCheckboxes.get(4).isChecked());
-            task.getRepeat().setS(this.weekdayCheckboxes.get(5).isChecked());
-            task.getRepeat().setSu(this.weekdayCheckboxes.get(6).isChecked());
-        } else {
-            task.setFrequency("daily");
-            task.setEveryX(this.frequencyPicker.getValue());
+        if (task.type.equals("habit")) {
+            task.setUp(positiveCheckBox.isChecked());
+            task.setDown(negativeCheckBox.isChecked());
         }
-        this.saveTask((HabitItem) task);
-    }
 
-    private void saveTask(ToDo task) {
-        this.saveTask((HabitItem) task);
+        if (task.type.equals("daily")) {
+            if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
+                task.setFrequency("weekly");
+                task.getRepeat().setM(this.weekdayCheckboxes.get(0).isChecked());
+                task.getRepeat().setT(this.weekdayCheckboxes.get(1).isChecked());
+                task.getRepeat().setW(this.weekdayCheckboxes.get(2).isChecked());
+                task.getRepeat().setTh(this.weekdayCheckboxes.get(3).isChecked());
+                task.getRepeat().setF(this.weekdayCheckboxes.get(4).isChecked());
+                task.getRepeat().setS(this.weekdayCheckboxes.get(5).isChecked());
+                task.getRepeat().setSu(this.weekdayCheckboxes.get(6).isChecked());
+            } else {
+                task.setFrequency("daily");
+                task.setEveryX(this.frequencyPicker.getValue());
+            }
+        }
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
@@ -295,17 +253,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         TaskSaveEvent event = new TaskSaveEvent();
         if (this.task == null) {
             event.created = true;
-            switch (taskType) {
-                case todo:
-                    this.task = new ToDo();
-                    break;
-                case daily:
-                    this.task = new Daily();
-                    break;
-                case habit:
-                    this.task = new Habit();
-                    break;
-            }
+            this.task = new Task();
+            this.task.setType(taskType);
         }
         this.saveTask(this.task);
 

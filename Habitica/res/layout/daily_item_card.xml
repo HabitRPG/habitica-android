@@ -2,11 +2,11 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
 
         <variable
             name="daily"
-            type="Daily" />
+            type="Task" />
     </data>
 
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"

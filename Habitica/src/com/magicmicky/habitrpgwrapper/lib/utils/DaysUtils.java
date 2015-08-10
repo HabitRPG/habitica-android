@@ -1,6 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 
 /**

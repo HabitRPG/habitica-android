@@ -31,13 +31,11 @@ import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TodoCheckedEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
@@ -50,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
-public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
+public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
         implements FlowContentObserver.OnSpecificModelStateChangedListener {
 
@@ -58,6 +56,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
     private Class<ViewHolder<THabitItem>> viewHolderClass;
     List<THabitItem> contents;
     Class<THabitItem> taskClass;
+    String taskType;
     private ObservableArrayList<THabitItem> observableContent;
     FlowContentObserver observer;
     Context context;
@@ -67,13 +66,13 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
 
-    public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
-        this(newTaskClass, layoutResource, viewHolderClass, newContext, null);
+    public HabitItemRecyclerViewAdapter(String taskType, Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
+        this(taskType, newTaskClass, layoutResource, viewHolderClass, newContext, null);
     }
 
-    public HabitItemRecyclerViewAdapter(Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass,
+    public HabitItemRecyclerViewAdapter(String taskType, Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass,
                                         Context newContext, final ObservableArrayList<THabitItem> content) {
-
+        this.taskType = taskType;
         this.context = newContext;
         this.taskClass = newTaskClass;
         observableContent = content;
@@ -185,7 +184,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HabitItem item = contents.get(position);
+        Task item = contents.get(position);
 
         holder.bindHolder(item, position);
     }
@@ -225,7 +224,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
     }
 
-    public abstract class ViewHolder<THabitItem extends HabitItem> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @InjectView(R.id.card_view)
         protected CardView cardView;
@@ -279,7 +278,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
     }
 
-    public class HabitViewHolder extends ViewHolder<Habit> {
+    public class HabitViewHolder extends ViewHolder<Task> {
 
         @InjectView(R.id.btnPlus)
         Button btnPlus;
@@ -318,14 +317,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         }
 
         @Override
-        public void bindHolder(Habit habitItem, int position) {
+        public void bindHolder(Task habitItem, int position) {
             super.bindHolder(habitItem, position);
 
             binding.setHabit(habitItem);
         }
     }
 
-    public class DailyViewHolder extends ViewHolder<Daily> {
+    public class DailyViewHolder extends ViewHolder<Task> {
         @InjectView(R.id.checkBox)
         CheckBox checkbox;
 
@@ -339,14 +338,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
 
 
         @Override
-        public void bindHolder(Daily habitItem, int position) {
+        public void bindHolder(Task habitItem, int position) {
             super.bindHolder(habitItem, position);
 
             binding.setDaily(habitItem);
         }
     }
 
-    public class TodoViewHolder extends ViewHolder<ToDo> implements CompoundButton.OnCheckedChangeListener {
+    public class TodoViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
         @InjectView(R.id.checkBox)
         CheckBox checkbox;
@@ -362,7 +361,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
         }
 
         @Override
-        public void bindHolder(ToDo habitItem, int position) {
+        public void bindHolder(Task habitItem, int position) {
             super.bindHolder(habitItem, position);
 
             binding.setTodo(habitItem);
@@ -458,7 +457,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends HabitItem>
     public void loadContent() {
         if(this.observableContent == null) {
 
-            this.contents = new Select().from(this.taskClass).queryList();
+            this.contents = new Select().from(this.taskClass)
+                    .where(Condition.column("type").eq(this.taskType))
+                    .queryList();
         }
         else
         {

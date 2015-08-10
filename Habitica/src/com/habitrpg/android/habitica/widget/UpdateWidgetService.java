@@ -150,8 +150,8 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
 //    @Override public void onPostResult(double v, double v2, double v3, double v4, double v5) {}
 //    @Override public void onPreResult() {}
 //    @Override public void onError(HabitRPGException e) {}
-//    @Override public void onPostTaskAnswer(HabitItem habitItem) {}
-//    @Override public void onDeletedTask(HabitItem habitItem) {}
-//    @Override public void onEditTaskAnswer(HabitItem habitItem) {}
+//    @Override public void onPostTaskAnswer(Task habitItem) {}
+//    @Override public void onDeletedTask(Task habitItem) {}
+//    @Override public void onEditTaskAnswer(Task habitItem) {}
 //    @Override public void onUserConnected(String s, String s2) {}
 }

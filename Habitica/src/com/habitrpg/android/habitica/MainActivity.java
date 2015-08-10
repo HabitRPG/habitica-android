@@ -35,13 +35,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -90,7 +87,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<Integer, TaskRecyclerViewFragment>();
 
-    List<HabitItem> TaskList = new ArrayList<HabitItem>();
+    List<Task> TaskList = new ArrayList<Task>();
 
     private HostConfig hostConfig;
     APIHelper mAPIHelper;
@@ -364,7 +361,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(final TaskSaveEvent event) {
-        HabitItem task = (HabitItem) event.task;
+        Task task = (Task) event.task;
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
         } else {
@@ -434,25 +431,20 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Habit.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), Habit.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("habit", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), Task.class);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Daily.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, context), Daily.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("daily", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, context), Task.class);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Reward.class);
-                        break;
-                    case 4:
-                        layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(RewardItem.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardItemViewHolder.class,
-                                context, GearRewards), RewardItem.class, false);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Reward.class);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(ToDo.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), ToDo.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("todo", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), Task.class);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -462,7 +454,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
             @Override
             public int getCount() {
-                return 5;
+                return 4;
             }
 
             @Override
@@ -476,8 +468,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                         return "Todos";
                     case 3:
                         return "Rewards";
-                    case 4:
-                        return "Gear";
                 }
                 return "";
             }
@@ -495,23 +485,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         for (Tag t : User.getTags()) {
             filterDrawer.addItem(
-                    new PrimaryDrawerItem().withName(t.getName()).withBadge("" + CountTagUsedInTasks(t.getId()))
+                    new PrimaryDrawerItem().withName(t.getName()).withBadge("" + t.getTasks().size())
             );
         }
-    }
-
-    /**
-     * Anyone a better solution to count the Tag?
-     */
-    public int CountTagUsedInTasks(String tagId) {
-        int count = 0;
-
-        for (HabitItem task : TaskList) {
-            if (task.getTags().contains(tagId))
-                count++;
-        }
-
-        return count;
     }
 
     public int adjustAlpha(int color, float factor) {
@@ -699,11 +675,11 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     @Override
-    public void onTaskCreation(HabitItem task, boolean editMode) {
+    public void onTaskCreation(Task task, boolean editMode) {
         if (!editMode) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
         } else {
-            this.mAPIHelper.uprateUndefinedTask(task, new TaskUpdateCallback(this));
+            this.mAPIHelper.updateTask(task, new TaskUpdateCallback(this));
         }
 
         // TODO update task in list
@@ -716,7 +692,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     // TaskCreationCallback
     @Override
-    public void onTaskCreated(HabitItem habit) {
+    public void onTaskCreated(Task habit) {
         habit.save();
     }
 
@@ -727,7 +703,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     // TaskUpdateCallback
     @Override
-    public void onTaskUpdated(HabitItem habit) {
+    public void onTaskUpdated(Task habit) {
         habit.save();
     }
 

@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -14,9 +14,9 @@ import retrofit.client.Response;
  */
 public class TaskDeletionCallback  implements Callback<Void> {
     private final OnTaskDeleted callback;
-    private final HabitItem taskToDelete;
+    private final Task taskToDelete;
 
-    public TaskDeletionCallback(OnTaskDeleted cb, HabitItem taskToDelete) {
+    public TaskDeletionCallback(OnTaskDeleted cb, Task taskToDelete) {
         this.callback = cb;
         this.taskToDelete = taskToDelete;
     }
@@ -35,6 +35,6 @@ public class TaskDeletionCallback  implements Callback<Void> {
 
 
     public interface OnTaskDeleted {
-        public void onTaskDeleted(HabitItem deleted);
+        public void onTaskDeleted(Task deleted);
         public void onTaskDeletionFail();
     }}
