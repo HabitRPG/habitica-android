@@ -1,16 +1,15 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -28,10 +27,10 @@ public class HabitRPGUser extends BaseModel {
     @PrimaryKey
     private String id;
 
-    List<Daily> dailys;
-    List<ToDo> todos;
+    List<Task> dailys;
+    List<Task> todos;
     List<Reward> rewards;
-    List<Habit> habits;
+    List<Task> habits;
     List<Tag> tags;
 
     @Column
@@ -82,11 +81,11 @@ public class HabitRPGUser extends BaseModel {
         this.id = id;
     }
 
-    public void setDailys(List<Daily> dailys) {
+    public void setDailys(List<Task> dailys) {
         this.dailys = dailys;
     }
 
-    public void setTodos(List<ToDo> todos) {
+    public void setTodos(List<Task> todos) {
         this.todos = todos;
     }
 
@@ -94,7 +93,7 @@ public class HabitRPGUser extends BaseModel {
         this.rewards = rewards;
     }
 
-    public void setHabits(List<Habit> habits) {
+    public void setHabits(List<Task> habits) {
         this.habits = habits;
     }
 
@@ -135,30 +134,33 @@ public class HabitRPGUser extends BaseModel {
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
-    public List<Habit> getHabits() {
+    public List<Task> getHabits() {
         if(habits == null) {
             habits = new Select()
-                    .from(Habit.class)
+                    .from(Task.class)
+                    .where(Condition.column("type").eq("habit"))
                     .queryList();
         }
         return habits;
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "dailys")
-    public List<Daily> getDailys() {
+    public List<Task> getDailys() {
         if(dailys == null) {
             dailys = new Select()
-                    .from(Daily.class)
+                    .from(Task.class)
+                    .where(Condition.column("type").eq("daily"))
                     .queryList();
         }
         return dailys;
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
-    public List<ToDo> getTodos() {
+    public List<Task> getTodos() {
         if(todos == null) {
             todos = new Select()
-                    .from(ToDo.class)
+                    .from(Task.class)
+                    .where(Condition.column("type").eq("todo"))
                     .queryList();
         }
         return todos;
@@ -174,7 +176,7 @@ public class HabitRPGUser extends BaseModel {
         return rewards;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<Tag> getTags() {
         if(tags == null) {
             tags = new Select()

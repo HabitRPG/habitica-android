@@ -1,7 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib;
 
-import android.util.Log;
-
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -16,12 +14,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.util.List;
@@ -58,7 +52,7 @@ public class HabitRPGInteractor {
                     public boolean shouldSkipClass(Class<?> clazz) {
                         return false;
                     }
-                }).registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe()).create();
+                }).registerTypeAdapter(TagsAdapter.class, new TagsAdapter().nullSafe()).create();
 
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(server.toString())
@@ -92,31 +86,12 @@ public class HabitRPGInteractor {
      * Retrieve a daily from HabitRPG's API
      * @param dailyId       the id of the daily to retrieve
      * @param dailyCallback the callback called when the daily is retrieved
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily
+     * @see Task
      */
-    public void getDaily(String dailyId, Callback<Daily> dailyCallback) {
-        this.apiService.getDaily(dailyId,dailyCallback);
+    public void getTask(String dailyId, Callback<Task> dailyCallback) {
+        this.apiService.getTask(dailyId, dailyCallback);
     }
 
-    /**
-     * Retrieve a Habit from HabitRPG's API
-     * @param habitId       the id of the habit to retrieve.
-     * @param habitCallback the callback called when the habit is retrieved.
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit
-     */
-    public void getHabit(String habitId, Callback<Habit> habitCallback) {
-        this.apiService.getHabit(habitId,habitCallback);
-    }
-
-    /**
-     * Retrieve a To do from HabitRPG's API
-     * @param todoId        the id of the item to retrieve
-     * @param todoCallback  the callback called when the item is retrieved.
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo
-     */
-    public void getToDo(String todoId, Callback<ToDo> todoCallback) {
-        this.apiService.getToDo(todoId,todoCallback);
-    }
 
     /**
      * Retrieve a Reward form HabitRPG's API
@@ -125,7 +100,7 @@ public class HabitRPGInteractor {
      * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward
      */
     public void getReward(String rewardId, Callback<Reward> rewardCallback) {
-        this.apiService.getReward(rewardId,rewardCallback);
+        this.apiService.getReward(rewardId, rewardCallback);
     }
 
     /**
@@ -141,32 +116,12 @@ public class HabitRPGInteractor {
 
     /**
      * Create a daily on HabitRPG
-     * @param daily         the daily to create
-     * @param dailyCallback the callback called when the daily is created
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily
+     * @param task         the daily to create
+     * @param taskCallback the callback called when the daily is created
+     * @see Task
      */
-    public void createItem(Daily daily, Callback<Daily> dailyCallback) {
-            this.apiService.createItem(daily, dailyCallback );
-    }
-
-    /**
-     * Create an Habit
-     * @param habit         the haibt to create
-     * @param habitCallback the callback called once the habit is created
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit
-     */
-    public void createItem(Habit habit, Callback<Habit> habitCallback) {
-        this.apiService.createItem(habit, habitCallback);
-    }
-
-    /**
-     * Create a To do
-     * @param todoItem          the item to create
-     * @param toDoCallback  the callback called once the item is created
-     * @see com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo
-     */
-    public void createItem(ToDo todoItem, Callback<ToDo> toDoCallback) {
-        this.apiService.createItem(todoItem, toDoCallback);
+    public void createItem(Task task, Callback<Task> taskCallback) {
+            this.apiService.createItem(task, taskCallback);
     }
 
     /**
@@ -180,32 +135,12 @@ public class HabitRPGInteractor {
 
     /**
      * Update an habit
-     * @param habitId       the id of the habit to update
-     * @param habit         the habit to update, with updated field
-     * @param habitCallback the callback called once the habit is updated
+     * @param taskId       the id of the habit to update
+     * @param task         the habit to update, with updated field
+     * @param taskCallback the callback called once the habit is updated
      */
-    public void updateItem(String habitId, Habit habit, Callback<Habit> habitCallback) {
-        this.apiService.updateTask(habitId, habit, habitCallback);
-    }
-
-    /**
-     * Updates a daily
-     * @param dailyId       the id of the daily to update
-     * @param daily         the new daily item, with updated field
-     * @param habitCallback the callback called once the daily is updated
-     */
-    public void updateItem(String dailyId, Daily daily, Callback<Daily> habitCallback) {
-        this.apiService.updateTask(dailyId, daily, habitCallback);
-    }
-
-    /**
-     * Updates a To do item
-     * @param todoId        the id of the item to update
-     * @param todoItem      the item to udpate, with updated field
-     * @param toDoCallback  the callback called once the item is updated
-     */
-    public void updateItem(String todoId, ToDo todoItem, Callback<ToDo> toDoCallback) {
-        this.apiService.updateTask(todoId, todoItem, toDoCallback);
+    public void updateItem(String taskId, Task task, Callback<Task> taskCallback) {
+        this.apiService.updateTask(taskId, task, taskCallback);
     }
 
     /**

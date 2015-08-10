@@ -104,8 +104,6 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
         fragment.SetInnerAdapter(adapter, classType,showFloatingButton);
 
-        Log.d("TaskRecyclerViewFragment", "newInstance");
-
         return fragment;
     }
 

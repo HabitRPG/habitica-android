@@ -1,14 +1,11 @@
 package com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter;
 
-import android.util.Log;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
-
-import org.json.JSONTokener;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,23 +14,24 @@ import java.util.List;
 /**
  * Created by magicmicky on 15/05/15.
  */
-public class TagsAdapter extends TypeAdapter<Tags>{
+public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
 
     @Override
-    public void write(JsonWriter out, Tags value) throws IOException {
-        List<String> list = value.getTags();
+    public void write(JsonWriter out, List<TaskTag> value) throws IOException {
         out.beginObject();
-        for(String s : list) {
-            out.name(s);
+        for(TaskTag tag : value) {
+            out.name(tag.getTag().getId());
             out.value(true);
         }
         out.endObject();
-        //Log.d("TagsAdapter", "Finished tagging");
     }
 
     @Override
-    public Tags read(JsonReader in) throws IOException {
-        List<String> tags = new ArrayList<>();
+    public List<TaskTag> read(JsonReader in) throws IOException {
+        List<TaskTag> tags = new ArrayList<>();
+        List<Tag> allTags = new Select()
+                .from(Tag.class)
+                .queryList();
         boolean isClosed=false;
         do {
             switch(in.peek()) {
@@ -41,11 +39,18 @@ public class TagsAdapter extends TypeAdapter<Tags>{
                     in.beginObject();
                     break;
                 case NAME:
-                    String tag = in.nextName();
+                    String taskId = in.nextName();
+
                     if(in.nextBoolean()) {
-                        tags.add(tag);
+                        TaskTag taskTag = new TaskTag();
+                        for (Tag tag : allTags) {
+                            if (tag.getId().equals(taskId)) {
+                                taskTag.setTag(tag);
+                                break;
+                            }
+                        }
+                        tags.add(taskTag);
                     }
-                    //Log.d("TagsAdapter", "Added tag " + tag);
                     break;
                 case END_OBJECT:
                     in.endObject();
@@ -62,6 +67,6 @@ public class TagsAdapter extends TypeAdapter<Tags>{
                 default:
             }
         } while(!isClosed);
-        return new Tags(tags);
+        return tags;
     }
 }

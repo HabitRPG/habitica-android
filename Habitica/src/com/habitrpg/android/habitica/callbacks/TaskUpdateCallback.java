@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -12,14 +12,14 @@ import retrofit.client.Response;
 /**
  * Created by magicmicky on 02/04/15.
  */
-public class TaskUpdateCallback implements Callback<HabitItem> {
+public class TaskUpdateCallback implements Callback<Task> {
     private OnHabitUpdated callback;
 
     public TaskUpdateCallback(OnHabitUpdated cb) {
         callback = cb;
     }
     @Override
-    public void success(HabitItem habit, Response response) {
+    public void success(Task habit, Response response) {
         callback.onTaskUpdated(habit);
     }
 
@@ -31,7 +31,7 @@ public class TaskUpdateCallback implements Callback<HabitItem> {
         Log.w("HabitUpdate", "Error " + error.getMessage());
     }
     public interface OnHabitUpdated {
-        void onTaskUpdated(HabitItem habit);
+        void onTaskUpdated(Task habit);
         void onTaskUpdateFail();
     }
 }

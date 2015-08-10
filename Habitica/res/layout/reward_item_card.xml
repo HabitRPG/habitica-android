@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward" />
 
         <variable
             name="reward"
-            type="HabitItem" />
+            type="Reward" />
     </data>
 
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"

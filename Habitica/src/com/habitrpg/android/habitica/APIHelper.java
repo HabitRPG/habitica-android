@@ -24,12 +24,8 @@ import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Daily;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.HabitItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Tags;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ToDo;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
@@ -76,7 +72,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 						return false;
 					}
 				})
-				.registerTypeAdapter(Tags.class, new TagsAdapter().nullSafe())
+				.registerTypeAdapter(TagsAdapter.class, new TagsAdapter().nullSafe())
 				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
 				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)
 				.create();
@@ -123,29 +119,8 @@ public class APIHelper implements ErrorHandler, Profiler {
 	};
 
 
-    public void createNewTask(HabitItem item, Callback cb) {
-        if(item instanceof Habit) {
-            createNewTask((Habit) item, cb);
-        } else if(item instanceof Daily) {
-            createNewTask((Daily) item, cb);
-        } else if(item instanceof ToDo) {
-            createNewTask((ToDo) item, cb);
-        } else if(item instanceof Reward) {
-            createNewTask((Reward) item, cb);
-        }
-    }
-
-	public void createNewTask(Habit habit,Callback<Habit> callback) {
-        this.apiService.createItem(habit, callback);
-	}
-    public void createNewTask(ToDo toDo, Callback<ToDo> callback) {
-        this.apiService.createItem(toDo, callback);
-    }
-    public void createNewTask(Daily d,Callback<Daily> callback) {
-        this.apiService.createItem(d, callback);
-    }
-    public void createNewTask(Reward r,Callback<Reward> callback) {
-        this.apiService.createItem(r, callback);
+    public void createNewTask(Task item, Callback cb) {
+		this.apiService.createItem(item, cb);
     }
 
 	public void retrieveUser(HabitRPGUserCallback callback) {
@@ -172,46 +147,17 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.connectLocal(auth, callback);
 	}
 
-	public void deleteTask(HabitItem item, TaskDeletionCallback cb) {
+	public void deleteTask(Task item, TaskDeletionCallback cb) {
 		this.apiService.deleteTask(item.getId(), cb);
     }
 
-	public void updateTask(HabitItem item, Callback cb) {
-		if(item instanceof Habit) {
-			updateTask((Habit) item, cb);
-		} else if(item instanceof Daily) {
-			updateTask((Daily) item, cb);
-		} else if(item instanceof ToDo) {
-			updateTask((ToDo) item, cb);
+	public void updateTask(Task item, Callback cb) {
+		if(item instanceof Task) {
+			this.apiService.updateTask(item.getId(), item, cb);
 		} else if(item instanceof Reward) {
-			updateTask((Reward) item, cb);
+			this.apiService.updateTask(item.getId(), item, cb);
 		}
 	}
-
-    public void updateTask(Daily item, Callback<Daily> cb) {
-        this.apiService.updateTask(item.getId(), item, cb);
-    }
-    public void updateTask(Habit item, Callback<Habit> cb) {
-        this.apiService.updateTask(item.getId(), item, cb);
-    }
-    public void updateTask(ToDo item, Callback<ToDo> cb) {
-        this.apiService.updateTask(item.getId(), item, cb);
-    }
-    public void updateTask(Reward item, Callback<Reward> cb) {
-        this.apiService.updateTask(item.getId(), item, cb);
-    }
-    public void uprateUndefinedTask(HabitItem task, Callback cb) {
-        if(task instanceof ToDo) {
-            this.updateTask((ToDo) task, cb);
-        } else if(task instanceof Daily) {
-            this.updateTask((Daily) task, cb);
-        } else if(task instanceof Reward) {
-            this.updateTask((Reward) task, cb);
-        } else if(task instanceof Habit) {
-            this.updateTask((Habit) task,cb);
-        }
-    }
-
 
 	//public void buyItem(Reward.SpecialReward itemBought, View btn) {
 	//	ATaskBuyItem buyItem = new ATaskBuyItem(mResultListener,btn, mConfig);
@@ -329,7 +275,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
     
     
-    private class ATaskPostTask extends AsyncTask<HabitItem, Void, Void> {
+    private class ATaskPostTask extends AsyncTask<Task, Void, Void> {
     	private OnHabitsAPIResult callback;
     	private HostConfig config;		
     	public ATaskPostTask(OnHabitsAPIResult callback, HostConfig config) {
@@ -342,7 +288,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     		this.callback.onPreResult();
     	}
 		@Override
-		protected Void doInBackground(HabitItem... habit) {
+		protected Void doInBackground(Task... habit) {
 			PostTask post = new PostTask(callback, config, habit[0]);
 			Answer as = post.getData();
 			if(as!=null)
@@ -351,7 +297,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 		}
     }
 
-	private class ATaskDeleteTask extends AsyncTask<HabitItem, Void, Void> {
+	private class ATaskDeleteTask extends AsyncTask<Task, Void, Void> {
 		private OnHabitsAPIResult callback;
 		private HostConfig config;
 		public ATaskDeleteTask(OnHabitsAPIResult callback, HostConfig config) {
@@ -364,7 +310,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 			this.callback.onPreResult();
 		}
 		@Override
-		protected Void doInBackground(HabitItem... habit) {
+		protected Void doInBackground(Task... habit) {
 			DeleteTask del = new DeleteTask(callback, config, habit[0]);
 			Answer as = del.getData();
 			if(as!=null)
@@ -372,7 +318,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 			return null;
 		}
 	}
-	private class ATaskUpdateTask extends AsyncTask<HabitItem, Void, Void> {
+	private class ATaskUpdateTask extends AsyncTask<Task, Void, Void> {
 		private OnHabitsAPIResult callback;
 		private HostConfig config;
 		public ATaskUpdateTask(OnHabitsAPIResult callback, HostConfig config) {
@@ -385,7 +331,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 			this.callback.onPreResult();
 		}
 		@Override
-		protected Void doInBackground(HabitItem... habit) {
+		protected Void doInBackground(Task... habit) {
 			PutTask put = new PutTask(callback, config, habit[0]);
 			Answer as = put.getData();
 			if(as!=null)

@@ -3,12 +3,12 @@
 
     <data>
 
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Habit" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
         <import type="android.view.View"/>
 
         <variable
             name="habit"
-            type="Habit" />
+            type="Task" />
     </data>
 
     <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"

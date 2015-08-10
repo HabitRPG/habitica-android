@@ -24,15 +24,15 @@ public class ChecklistItem extends BaseModel {
 
     @Column
     private boolean completed;
-
-    /*@Column
+/*
+    @Column
     @ForeignKey(
-            references = {@ForeignKeyReference(columnName = "checklist_id",
+            references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
                     foreignColumnName = "id")},
-            saveForeignKeyModel = false)*/
-    ForeignKeyContainer<Checklist> queenModelContainer;
-
+            saveForeignKeyModel = false)
+    ForeignKeyContainer<Task> task;
+*/
     public ChecklistItem() {
         this(null,null);
     }
