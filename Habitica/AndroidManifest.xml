@@ -77,7 +77,7 @@
         <activity
             android:name=".TaskFormActivity"
             android:label="@string/title_activity_task_form"
-            android:theme="@style/AppThemeWithActionBar"
+            android:theme="@style/AppThemeWithActionBarBlackText"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
