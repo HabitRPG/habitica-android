@@ -47,7 +47,7 @@ dependencies {
         transitive = true
     }
 
-    compile('com.github.florent37:materialviewpager:1.0.6@aar') {
+    compile('com.github.florent37:materialviewpager:1.1.0@aar') {
         transitive = true
     }
 
