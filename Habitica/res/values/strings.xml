@@ -6,8 +6,9 @@
     <string name="action_refresh">Refresh</string>
     <string name="plus_sign">+</string>
     <string name="minus_sign">-</string>
-    <string name="XP_default">XP</string>
-    <string name="HP_default">HP</string>
+    <string name="XP_default">Experience</string>
+    <string name="HP_default">Health</string>
+    <string name="MP_default">Mana</string>
     <string name="format_todo_date">%1$d-%2$d-%3$d</string>
     <string name="new_task_added_message">Task added</string>
     <string name="lvlup">LVL UP!</string>
@@ -106,7 +107,6 @@
         
     <string name="close">Close</string>
     <string name="SP_last_seen_version">SP_last_version</string>
-    <string name="MP_default">MP</string>
     <string name="update_btn">Update</string>
 
     <string name="about.title">About</string>

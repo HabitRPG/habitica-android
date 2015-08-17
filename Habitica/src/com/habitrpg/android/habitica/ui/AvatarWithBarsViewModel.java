@@ -3,6 +3,9 @@ package com.habitrpg.android.habitica.ui;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -52,31 +55,25 @@ public class AvatarWithBarsViewModel {
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
 
-        SetValueBar(hpBar, 50, 50, context.getString(R.string.HP_default),
-                res.getColor(R.color.hpColor), res.getColor(R.color.hpColorBackground), res.getColor(R.color.hpColorForeground));
-        SetValueBar(xpBar, 1, 1, context.getString(R.string.XP_default),
-                res.getColor(R.color.xpColor), res.getColor(R.color.xpColorBackground), res.getColor(R.color.xpColorForeground));
-        SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default),
-                res.getColor(R.color.mpColor), res.getColor(R.color.mpColorBackground),res.getColor(R.color.mpColorForeground));
+        SetValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor);
+        SetValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor);
+        SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor);
     }
 
     public void UpdateData(HabitRPGUser user)
     {
         Stats stats = user.getStats();
         
-        SetValueBar(hpBar, stats.getHp().floatValue(), stats.getMaxHealth(), context.getString(R.string.HP_default),
-                res.getColor(R.color.hpColor), res.getColor(R.color.hpColorBackground), res.getColor(R.color.hpColorForeground));
-        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default),
-                res.getColor(R.color.xpColor), res.getColor(R.color.xpColorBackground), res.getColor(R.color.xpColorForeground));
-        SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default),
-                res.getColor(R.color.mpColor), res.getColor(R.color.mpColorBackground),res.getColor(R.color.mpColorForeground));
+        SetValueBar(hpBar, stats.getHp().floatValue(), stats.getMaxHealth(), context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor));
+        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor));
+        SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor));
 
         new UserPicture(user, this.context).setPictureOn(image);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String postString, int color, int colorBackground, int textColor)
+    private void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color)
     {
         double percent = Math.min(1, value / valueMax);
 
@@ -91,17 +88,16 @@ public class AvatarWithBarsViewModel {
             valueBar.setWeightToHide((float) percent);
         }
 
-        valueBar.setText((int) value + "/" + (int) valueMax + " " + postString);
+        valueBar.setText((int) value + "/" + (int) valueMax);
+        valueBar.setDescription(description);
         valueBar.setBarForegroundColor(color);
-        valueBar.setBarBackgroundColor(colorBackground);
-        valueBar.setTextColor(textColor);
     }
 
     @BindingAdapter("app:layout_weight")
     public static void setLayoutWeight(View view, float weight) {
         LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)view.getLayoutParams();
 
-        Log.d("setLayoutWeight", weight+"");
+        Log.d("setLayoutWeight", weight + "");
 
         layout.weight = weight;
 
@@ -114,6 +110,17 @@ public class AvatarWithBarsViewModel {
         anim.setDuration(1250);
 
         view.startAnimation(anim);
+    }
+
+    @BindingAdapter("app:rounded_background")
+    public static void setRoundedBackground(View view, int color) {
+        Drawable drawable = view.getResources().getDrawable(R.drawable.layout_rounded_bg);
+        drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        if(Build.VERSION.SDK_INT < 16) {
+            view.setBackgroundDrawable(drawable);
+        } else {
+            view.setBackground(drawable);
+        }
     }
 
     public static class LayoutWeightAnimation extends Animation {

@@ -11,9 +11,9 @@
     <dimen name="card_small_text">14.0sp</dimen>
     <dimen name="card_padding">16.0dip</dimen>
 
-	<dimen name="bar_size">29dp</dimen>
-	<dimen name="bar_inner_size">25dp</dimen>
+	<dimen name="bar_size">15dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
+	<dimen name="bar_radius">5dp</dimen>
 	<dimen name="avatar_width">140dp</dimen>
     <dimen name="avatar_height">147dp</dimen>
     <dimen name="header_height">70dp</dimen>
@@ -37,5 +37,5 @@
 
 	<dimen name="hairline_height">0.5dp</dimen>
 	<dimen name="checklist_divider_width">14dp</dimen>
-	<dimen name="checklist_wrapper_width">35dp</dimen>
+	<dimen name="checklist_wrapper_width">36dp</dimen>
 </resources>
