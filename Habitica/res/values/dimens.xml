@@ -32,4 +32,10 @@
 
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
+
+	<dimen name="button_width">60dp</dimen>
+
+	<dimen name="hairline_height">0.5dp</dimen>
+	<dimen name="checklist_divider_width">14dp</dimen>
+	<dimen name="checklist_wrapper_width">35dp</dimen>
 </resources>

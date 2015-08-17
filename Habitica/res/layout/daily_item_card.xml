@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
             <CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent"
                 android:checked="@{daily.completed}"
                 app:backgroundColor="@{daily.getLightTaskColor}"
@@ -56,7 +56,7 @@
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"
                     android:id="@+id/checklistIndicatorWrapper"
-                    android:layout_width="30dp"
+                    android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
                     app:backgroundColor="@{daily.getLightTaskColor}"
                     android:visibility="@{daily.checklist.size > 0 ? View.VISIBLE : View.GONE}"
@@ -74,8 +74,8 @@
                         android:layout_above="@+id/checklistDivider"/>
                     <View
                         android:id="@+id/checklistDivider"
-                        android:layout_width="10dp"
-                        android:layout_height="0.5dp"
+                        android:layout_width="@dimen/checklist_divider_width"
+                        android:layout_height="@dimen/hairline_height"
                         android:background="@color/white"
                         android:layout_centerInParent="true"/>
                     <TextView
@@ -101,7 +101,7 @@
         <View
             android:id="@+id/bottomBorderView"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/hairline_height"
             android:background="@color/cell_separator"/>
     </LinearLayout>
 </layout>
