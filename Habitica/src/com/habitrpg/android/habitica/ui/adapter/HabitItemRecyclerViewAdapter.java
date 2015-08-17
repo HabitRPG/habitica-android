@@ -217,10 +217,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
     }
 
-    public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    @BindingAdapter("app:backgroundColor")
+    public static void setBackgroundTintColor(View view, int color) {
+        view.setBackgroundColor(view.getResources().getColor(color));
+    }
 
-        @InjectView(R.id.checkedTextView)
-        protected CheckedTextView checkedTextView;
+    public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         protected android.content.res.Resources resources;
 
