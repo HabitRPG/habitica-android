@@ -25,13 +25,15 @@ public class TaskTag extends BaseModel {
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "tag_id",
             columnType = String.class,
-            foreignColumnName = "id")})
+            foreignColumnName = "id")},
+            saveForeignKeyModel = false)
     public ForeignKeyContainer<Tag> tag;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "task_id",
             columnType = String.class,
-            foreignColumnName = "id")})
+            foreignColumnName = "id")},
+            saveForeignKeyModel = false)
     public ForeignKeyContainer<Task> task;
 
     public Tag getTag() {
@@ -41,6 +43,7 @@ public class TaskTag extends BaseModel {
     public void setTag(Tag tag) {
         this.tag = new ForeignKeyContainer<>(Tag.class);
         this.tag.setModel(tag);
+        this.tag.put("id", tag.id);
     }
 
     public Task getTask() {
@@ -50,6 +53,7 @@ public class TaskTag extends BaseModel {
     public void setTask(Task task) {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
+        this.task.put("id", task.id);
     }
 
 }

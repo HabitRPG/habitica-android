@@ -2,7 +2,6 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -29,7 +28,7 @@ public class HabitRPGUser extends BaseModel {
 
     List<Task> dailys;
     List<Task> todos;
-    List<Reward> rewards;
+    List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
 
@@ -89,7 +88,7 @@ public class HabitRPGUser extends BaseModel {
         this.todos = todos;
     }
 
-    public void setRewards(List<Reward> rewards) {
+    public void setRewards(List<Task> rewards) {
         this.rewards = rewards;
     }
 
@@ -167,10 +166,10 @@ public class HabitRPGUser extends BaseModel {
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
-    public List<Reward> getRewards() {
+    public List<Task> getRewards() {
         if(rewards == null) {
             rewards = new Select()
-                    .from(Reward.class)
+                    .from(Task.class)
                     .queryList();
         }
         return rewards;

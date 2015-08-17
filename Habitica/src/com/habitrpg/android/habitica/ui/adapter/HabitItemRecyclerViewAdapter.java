@@ -5,8 +5,6 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -32,15 +30,12 @@ import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TodoCheckedEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -174,8 +169,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                         return new HabitItemRecyclerViewAdapter.TodoViewHolder(view);
                     case "RewardViewHolder":
                         return new HabitItemRecyclerViewAdapter.RewardViewHolder(view);
-                    case "RewardItemViewHolder":
-                        return new HabitItemRecyclerViewAdapter.RewardItemViewHolder(view);
                 }
             }
         }
@@ -225,9 +218,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
-        @InjectView(R.id.card_view)
-        protected CardView cardView;
 
         @InjectView(R.id.checkedTextView)
         protected CheckedTextView checkedTextView;
@@ -376,7 +366,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     }
 
-    public class RewardViewHolder extends ViewHolder<Reward> {
+    public class RewardViewHolder extends ViewHolder<Task> {
         RewardItemCardBinding binding;
 
         public RewardViewHolder(View itemView) {
@@ -401,58 +391,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
 
         @Override
-        public void bindHolder(Reward habitItem, int position) {
-            super.bindHolder(habitItem, position);
+        public void bindHolder(Task reward, int position) {
+            super.bindHolder(reward, position);
 
-            binding.setReward(habitItem);
+            binding.setReward(reward);
         }
     }
 
-    public class RewardItemViewHolder extends ViewHolder<RewardItem> implements Target
-    {
-        RewardItemCardBinding binding;
 
-        public RewardItemViewHolder(View itemView) {
-            super(itemView);
-
-            binding = DataBindingUtil.bind(itemView);
-
-            binding.btnReward.setClickable(true);
-            binding.btnReward.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            BuyRewardTappedEvent event = new BuyRewardTappedEvent();
-
-            if (v == binding.btnReward) {
-                event.Reward = Item;
-
-                EventBus.getDefault().post(event);
-            } else super.onClick(v);
-        }
-
-        @Override
-        public void bindHolder(RewardItem habitItem, int position) {
-            super.bindHolder(habitItem, position);
-            binding.setReward(habitItem);
-        }
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            binding.imageView3.setImageBitmap(bitmap);
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
-
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-        }
-    }
 
     public void loadContent() {
         if(this.observableContent == null) {

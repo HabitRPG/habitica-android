@@ -5,9 +5,11 @@ import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * Created by viirus on 10/08/15.
  */
+@ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
 public class Task extends BaseModel {
 
@@ -31,13 +34,21 @@ public class Task extends BaseModel {
     @Column
     public Double value;
 
+    public List<TaskTag> tags;
 
+    //Habits
     @Column
     public Boolean up, down;
 
+
+    //todos/dailies
     @Column
     public Boolean completed;
 
+    public List<ChecklistItem> checklist;
+
+
+    //dailies
     @Column
     public String frequency;
 
@@ -51,8 +62,11 @@ public class Task extends BaseModel {
     public Days repeat;
     //TODO: private String lastCompleted;
 
+
+    //todos
     @Column
     public String date;
+
 
     /**
      * @return the id
@@ -132,6 +146,24 @@ public class Task extends BaseModel {
 
     public void setType(String type) {this.type = type;}
 
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
+    public List<TaskTag> getTags() {
+        if(tags == null) {
+            tags = new Select()
+                    .from(TaskTag.class)
+                    .where(Condition.column("task_id").eq(this.id))
+                    .queryList();
+        }
+        return tags;
+    }
+
+    public void setTags(List<TaskTag> tags) {
+        for (TaskTag tag : tags) {
+            tag.setTask(this);
+        }
+        this.tags = tags;
+    }
+
     /**
      * @return whether or not the habit can be "upped"
      */
@@ -171,6 +203,35 @@ public class Task extends BaseModel {
         this.completed = completed;
     }
 
+
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "checklist")
+    public List<ChecklistItem> getChecklist() {
+        if(this.checklist == null) {
+            this.checklist = new Select()
+                    .from(ChecklistItem.class)
+                    .where(Condition.column("task_id").eq(this.id))
+                    .queryList();
+        }
+        return this.checklist;
+    }
+
+    public void setChecklist(List<ChecklistItem> checklist) {
+        for (ChecklistItem checklistItem : checklist) {
+            checklistItem.setTask(this);
+        }
+        this.checklist = checklist;
+    }
+
+    public Integer getCompletedChecklistCount() {
+        Integer count = 0;
+        for (ChecklistItem item : this.getChecklist()) {
+            if (item.getCompleted()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public String getFrequency() { return frequency; }
     public void setFrequency(String frequency) { this.frequency = frequency; }
 
@@ -190,20 +251,7 @@ public class Task extends BaseModel {
     public void setRepeat(Days repeat) {
         this.repeat = repeat;
     }
-    /**
-     * Formated:
-     * SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-     * @return the lastCompleted
-     */
-/*	public String getLastCompleted() {
-		return lastCompleted;
-	}
-	/**
-	 * @param lastCompleted the lastCompleted to set
-	 */
-/*	public void setLastCompleted(String lastCompleted) {
-		this.lastCompleted = lastCompleted;
-	}
+
 	/**
 	 * @return the streak
 	 */
@@ -244,6 +292,22 @@ public class Task extends BaseModel {
      */
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+
+    @Override
+    public void save() {
+        if (this.tags != null) {
+            for (TaskTag tag : this.tags) {
+                tag.setTask(this);
+            }
+        }
+        if (this.checklist != null) {
+            for (ChecklistItem item : this.checklist) {
+                item.setTask(this);
+            }
+        }
+        super.save();
     }
 
     public int getLightTaskColor()

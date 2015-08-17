@@ -7,9 +7,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.List;
 
@@ -46,8 +45,6 @@ public interface ApiService {
 
 
     @GET("/user/tasks/{id}")
-    void getReward(@Path("id") String id, Callback<Reward> habitItemCallback);
-    @GET("/user/tasks/{id}")
     void getTask(@Path("id") String id, Callback<Task> habitItemCallback);
 
 
@@ -56,13 +53,9 @@ public interface ApiService {
 
 
     @POST("/user/tasks")
-    void createItem(@Body Reward item, Callback<Reward> habitItemCallback);
-    @POST("/user/tasks")
     void createItem(@Body Task item, Callback<Task> habitItemCallback);
 
 
-    @PUT("/user/tasks/{id}")
-    void updateTask(@Path("id") String id, @Body Reward item, Callback<Reward> habitItemCallback);
     @PUT("/user/tasks/{id}")
     void updateTask(@Path("id") String id, @Body Task item, Callback<Task> habitItemCallback);
 

@@ -37,8 +37,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RewardItem;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -279,7 +277,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(TaskTappedEvent event) {
-        if(event.Task instanceof RewardItem)
+        if(event.Task.type.equals("reward"))
             return;
 
         Bundle bundle = new Bundle();
@@ -320,6 +318,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
         }
 
+        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
+
+        /*
         if (event.Reward instanceof RewardItem) {
             if (rewardKey.equals("potion")) {
                 int currentHp = User.getStats().getHp().intValue();
@@ -356,8 +357,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             });
         } else {
             // User created Rewards
-            mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
-        }
+        }*/
     }
 
     public void onEvent(final TaskSaveEvent event) {
@@ -411,8 +411,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     }
 
-    private ObservableArrayList<RewardItem> GearRewards = new ObservableArrayList<>();
-
     public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -440,7 +438,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Reward.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Reward.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Task.class);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
@@ -577,7 +575,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             keyCondition = keyCondition.and(item.key);
         }
 
-
+/*
         ConditionQueryBuilder<ItemData> queryBuilder = new ConditionQueryBuilder<ItemData>(ItemData.class,
                 keyCondition);
 
@@ -597,6 +595,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         GearRewards.clear();
         GearRewards.addAll(rewardList);
+        */
     }
 
     @Override
