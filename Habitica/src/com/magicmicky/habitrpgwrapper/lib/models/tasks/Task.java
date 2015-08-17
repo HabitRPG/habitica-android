@@ -313,16 +313,37 @@ public class Task extends BaseModel {
     public int getLightTaskColor()
     {
         if (this.value < -20)
-            return R.color.worst;
+            return R.color.worst_100;
         if (this.value < -10)
-            return R.color.worse;
+            return R.color.worse_100;
         if (this.value < -1)
-            return R.color.bad;
+            return R.color.bad_100;
         if (this.value < 5)
-            return R.color.neutral;
+            return R.color.neutral_100;
         if (this.value < 10)
-            return R.color.better;
-        return R.color.best;
+            return R.color.better_100;
+        return R.color.best_100;
+    }
+
+    /**
+     * Get the button color resources depending on a certain score
+     *
+     * @return the color resource id
+     */
+    public int getMediumTaskColor()
+    {
+        if (this.value < -20)
+            return R.color.worst_50;
+        if (this.value < -10)
+            return R.color.worse_50;
+        if (this.value < -1)
+            return R.color.bad_50;
+        if (this.value < 5)
+            return R.color.neutral_50;
+        if (this.value < 10)
+            return R.color.better_50;
+
+        return R.color.best_50;
     }
 
     /**
@@ -333,16 +354,16 @@ public class Task extends BaseModel {
     public int getDarkTaskColor()
     {
         if (this.value < -20)
-            return R.color.worst_btn;
+            return R.color.worst_10;
         if (this.value < -10)
-            return R.color.worse_btn;
+            return R.color.worse_10;
         if (this.value < -1)
-            return R.color.bad_btn;
+            return R.color.bad_10;
         if (this.value < 5)
-            return R.color.neutral_btn;
+            return R.color.neutral_10;
         if (this.value < 10)
-            return R.color.better_btn;
+            return R.color.better_10;
 
-        return R.color.best_btn;
+        return R.color.best_10;
     }
 }
