@@ -57,11 +57,12 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.+'
 
     // Icons
-    dependencies {
-        compile 'com.mikepenz:iconics:1.1.0@aar'
-    }
+    compile 'com.mikepenz:iconics:1.1.0@aar'
 
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+
+    // Instant Layout Changing w/o recompile
+    compile 'com.github.mmin18.layoutcast:library:1.+@aar'
 
     // Instabug / In-App-Feedback
     compile 'com.instabug.library:instabugsupport:+'
