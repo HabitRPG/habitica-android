@@ -2,21 +2,13 @@
   {
     "name": "Verison 0.0.2",
     "items": [
-      {
-        "type": "F",
-        "title": "Ability to add / edit / delete / check Checklists!"
-      },
-      {
+       {
         "type": "F",
         "title": "You can toggle the sleep-state!"
       },
       {
         "type": "B",
         "title": "Fixed crash while the device is offline"
-      },
-      {
-        "type": "B",
-        "title": "Fixed loading user data, where the tags property was an array instead of an object"
       },
       {
         "type": "I",

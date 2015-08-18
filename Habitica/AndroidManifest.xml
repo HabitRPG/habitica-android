@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.habitrpg.android.habitica"
-    android:versionCode="1"
-    android:versionName="0.0.1" >
+    android:versionCode="2"
+    android:versionName="0.0.2" >
 
     <uses-sdk
         android:minSdkVersion="13"
@@ -45,7 +45,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/LoginActivityName"
-            android:theme="@style/AppThemeWithActionBar"
+            android:theme="@style/AppThemeWithActionBarBlackText"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
