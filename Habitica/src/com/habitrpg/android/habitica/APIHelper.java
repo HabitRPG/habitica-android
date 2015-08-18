@@ -12,6 +12,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -25,10 +26,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.ErrorHandler;
@@ -59,7 +62,11 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 			}
 		};
-		//Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
+
+        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {}.getType();
+
+
+        //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
 		Gson gson = new GsonBuilder()
 				.setExclusionStrategies(new ExclusionStrategy() {
 					@Override
@@ -72,7 +79,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 						return false;
 					}
 				})
-				.registerTypeAdapter(TagsAdapter.class, new TagsAdapter().nullSafe())
+				.registerTypeAdapter(taskTagClassListType, new TagsAdapter())
 				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
 				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)
 				.create();
@@ -152,11 +159,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
 	public void updateTask(Task item, Callback cb) {
-		if(item instanceof Task) {
 			this.apiService.updateTask(item.getId(), item, cb);
-		} else if(item instanceof Reward) {
-			this.apiService.updateTask(item.getId(), item, cb);
-		}
 	}
 
 	//public void buyItem(Reward.SpecialReward itemBought, View btn) {

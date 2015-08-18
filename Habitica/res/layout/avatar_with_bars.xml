@@ -10,13 +10,19 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="horizontal"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/IMG_ProfilePicture"
         android:layout_width="@dimen/avatar_width"
         android:layout_height="@dimen/avatar_height"
         android:layout_gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="24dp"
+        android:paddingEnd="24dp"
         android:scaleType="fitStart"
         android:src="@mipmap/ic_launcher" />
 

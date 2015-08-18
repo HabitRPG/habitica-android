@@ -24,7 +24,7 @@ public class ChecklistItem extends BaseModel {
 
     @Column
     private boolean completed;
-/*
+
     @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
@@ -32,7 +32,7 @@ public class ChecklistItem extends BaseModel {
                     foreignColumnName = "id")},
             saveForeignKeyModel = false)
     ForeignKeyContainer<Task> task;
-*/
+
     public ChecklistItem() {
         this(null,null);
     }
@@ -69,5 +69,15 @@ public class ChecklistItem extends BaseModel {
     }
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Task getTask() {
+        return task.toModel();
+    }
+
+    public void setTask(Task task) {
+        this.task = new ForeignKeyContainer<>(Task.class);
+        this.task.setModel(task);
+        this.task.put("id", task.id);
     }
 }

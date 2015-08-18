@@ -3,6 +3,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -17,6 +18,7 @@ import java.util.List;
  * Created by MagicMicky on 16/03/14.
  */
 
+@ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
 public class Tag extends BaseModel{
 
@@ -42,6 +44,7 @@ public class Tag extends BaseModel{
         if(tasks == null) {
             tasks = new Select()
                     .from(TaskTag.class)
+                    .where(Condition.column("tag_id").eq(this.id))
                     .queryList();
         }
         return tasks;

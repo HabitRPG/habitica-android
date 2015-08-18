@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="hpColor">#da5353</color>
-    <color name="hpColorBackground">#fcf0f0</color>
-    <color name="hpColorForeground">#250808</color>
-    <color name="xpColor">#ffcc35</color>
-    <color name="xpColorBackground">#fffbf0</color>
-    <color name="xpColorForeground">#2e2200</color>
-    <color name="mpColor">#4781e7</color>
-    <color name="mpColorBackground">#eff4fd</color>
-    <color name="mpColorForeground">#051228</color>
-    <color name="brand">#7a12f8</color>
+
+    <color name="brand_50">#36205D</color>
+    <color name="brand_100">#432874</color>
+    <color name="brand_200">#4F2A93</color>
+    <color name="brand_300">#6133B4</color>
+    <color name="brand_400">#9A62FF</color>
+    <color name="brand_500">#BDA8FF</color>
+    <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
-    <color name="worst">#E6B8AF</color>
-    <color name="worst_btn">#c96652</color>
-    <color name="worse">#F4CCCC</color>
-    <color name="worse_btn">#dc5d5d</color>
+    <color name="worst_100">#E6B8AF</color>
+    <color name="worst_50">#c96652</color>
+    <color name="worst_10">#c96652</color>
 
-    <color name="bad">#FCE5CD</color>
-    <color name="bad_btn">#f4a24c</color>
+    <color name="worse_100">#FF6165</color>
+    <color name="worse_50">#F74E52</color>
+    <color name="worse_10">#F23035</color>
 
-    <color name="neutral">#FFF2CC</color>
-    <color name="neutral_btn">#ffcf42</color>
+    <color name="bad_100">#FF944C</color>
+    <color name="bad_50">#FA8537</color>
+    <color name="bad_10">#F47825</color>
 
-    <color name="good">#D9EAD3</color>
-    <color name="good_btn">#8bbf79</color>
+    <color name="neutral_100">#FFBE5D</color>
+    <color name="neutral_50">#FFB445</color>
+    <color name="neutral_10">#FFA624</color>
 
-    <color name="better">#D0E0E3</color>
-    <color name="better_btn">#7eaab2</color>
+    <color name="good_100">#D9EAD3</color>
+    <color name="good_50">#8bbf79</color>
+    <color name="good_10">#8bbf79</color>
 
-    <color name="best">#C9DAF8</color>
-    <color name="best_btn">#5288e9</color>
+    <color name="better_100">#5AE4B2</color>
+    <color name="better_50">#3FDAA2</color>
+    <color name="better_10">#23CC8F</color>
+
+    <color name="best_100">#50B5E9</color>
+    <color name="best_50">#46A7D9</color>
+    <color name="best_10">#2995CD</color>
 
     <color name="completed">#D9D9D9</color>
     <color name="completed_btn">#989898</color>
+
+    <color name="hpColor">@color/worse_100</color>
+    <color name="hpColorBackground">#fcf0f0</color>
+    <color name="hpColorForeground">#250808</color>
+    <color name="xpColor">@color/neutral_100</color>
+    <color name="xpColorBackground">#fffbf0</color>
+    <color name="xpColorForeground">#2e2200</color>
+    <color name="mpColor">@color/best_100</color>
+    <color name="mpColorBackground">#eff4fd</color>
+    <color name="mpColorForeground">#051228</color>
 
     <color name="changelog.note">#ffcf42</color>
 
@@ -71,8 +87,10 @@
     <color name="material_drawer_dark_divider">#1FFFFFFF</color>
     <!-- MaterialDrawer DEFAULT DARK drawer colors -->
     <color name="material_drawer_dark_selected">#202020</color>
-    <color name="material_drawer_dark_selected_text">@color/material_drawer_primary</color>
+    <color name="material_drawer_dark_selected_text">@color/brand</color>
     <color name="material_drawer_dark_header_selection_text">#FFF</color>
 
     <color name="checkbox_tint_color">#ffd8dcdd</color>
+
+    <color name="cell_separator">#c3c2c6</color>
 </resources>

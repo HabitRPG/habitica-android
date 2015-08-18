@@ -3,46 +3,33 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
+        <import type="android.view.View"/>
 
         <variable
             name="todo"
             type="Task" />
     </data>
 
-    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.CardView
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <LinearLayout
             android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginBottom="@dimen/cardMarginVertical"
-            android:layout_marginLeft="@dimen/cardMarginHorizontal"
-            android:layout_marginRight="@dimen/cardMarginHorizontal"
-            android:layout_marginTop="@dimen/cardMarginVertical"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="2dp"
-            app:cardPreventCornerOverlap="false"
-            app:contentPadding="0dp"
-            app:cardColor="@{todo.getLightTaskColor}">
-
-            <LinearLayout
+            android:layout_height="match_parent">
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="fill_parent"
+                android:checked="@{todo.completed}"
+                app:backgroundColor="@{todo.getLightTaskColor}"
+                android:gravity="center"/>
+            <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/textView6"
-                android:layout_alignLeft="@+id/checkedTextView"
-                android:layout_alignStart="@+id/checkedTextView">
-
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:checked="@{todo.completed}"
-                    app:backgroundColor="@{todo.getDarkTaskColor}"
-                    android:gravity="center"/>
-
+                android:layout_height="match_parent">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -62,10 +49,54 @@
                         android:layout_height="match_parent"
                         android:text="@{todo.notes}" />
                 </LinearLayout>
+                <RelativeLayout android:orientation="vertical"
+                    android:id="@+id/checklistIndicatorWrapper"
+                    android:layout_width="@dimen/checklist_wrapper_width"
+                    android:layout_height="match_parent"
+                    app:backgroundColor="@{todo.getLightTaskColor}"
+                    android:visibility="@{todo.checklist.size > 0 ? View.VISIBLE : View.GONE}"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(todo.getCompletedChecklistCount)}"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_above="@+id/checklistDivider"/>
+                    <View
+                        android:id="@+id/checklistDivider"
+                        android:layout_width="@dimen/checklist_divider_width"
+                        android:layout_height="@dimen/hairline_height"
+                        android:background="@color/white"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(todo.checklist.size)}"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_below="@+id/checklistDivider"/>
+                </RelativeLayout>
+                <View
+                    android:id="@+id/rightBorderView"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    app:backgroundColor="@{todo.getLightTaskColor}"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
 
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </FrameLayout>
+        </LinearLayout>
+        <View
+            android:id="@+id/bottomBorderView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hairline_height"
+            android:background="@color/cell_separator"/>
+    </LinearLayout>
 </layout>
