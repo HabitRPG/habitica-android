@@ -30,8 +30,11 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
     private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck)
     {
         for(TaskTag t : list)
-            if(t.getTag().getId().equals(idToCheck))
+        {
+            if(t.getTag().getId().equals(idToCheck)) {
                 return true;
+            }
+        }
 
         return false;
     }
@@ -58,7 +61,9 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
                                 taskTag.setTag(tag);
 
                                 if(!alreadyContainsTag(tags, tagId))
+                                {
                                     tags.add(taskTag);
+                                }
 
                                 break;
                             }
