@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Intent;
-import android.databinding.ObservableArrayList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -23,10 +22,17 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.events.*;
+import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
+import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.TodoCheckedEvent;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
+import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
@@ -35,18 +41,15 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.builder.ConditionQueryBuilder;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
@@ -68,8 +71,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         TaskScoringCallback.OnTaskScored, OnTaskCreationListener,
         FlowContentObserver.OnSpecificModelStateChangedListener, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
         Callback<List<ItemData>> {
-    static final int SETTINGS = 11;
-    static final int ABOUT = 12;
+
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
 
@@ -149,54 +151,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatarHeaderView);
 
-        drawer = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withHeaderDivider(false)
-                .withAnimateDrawerItems(true)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Tasks"),
-
-                        new SectionDrawerItem().withName("Social"),
-                        new PrimaryDrawerItem().withName("Tavern"),
-                        new PrimaryDrawerItem().withName("Party"),
-                        new PrimaryDrawerItem().withName("Guilds"),
-                        new PrimaryDrawerItem().withName("Challenges"),
-
-
-                        new SectionDrawerItem().withName("Inventory"),
-
-                        new PrimaryDrawerItem().withName("Avatar"),
-                        new PrimaryDrawerItem().withName("Equipment"),
-                        new PrimaryDrawerItem().withName("Stable"),
-
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("News"),
-                        new SecondaryDrawerItem().withName("Settings").withIdentifier(SETTINGS),
-                        new SecondaryDrawerItem().withName("About").withIdentifier(ABOUT)
-
-                )
-                .withStickyFooterDivider(false)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-
-                        switch (drawerItem.getIdentifier()) {
-                            case SETTINGS:
-                                startActivity(new Intent(MainActivity.this, PrefsActivity.class));
-                                return false;
-
-                            case ABOUT:
-                                startActivity(new Intent(MainActivity.this, AboutActivity.class));
-
-                                return false;
-                        }
-
-                        return true;
-                    }
-                })
-
+        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
+                .withSelectedItem(0)
                 .build();
 
         final android.content.Context context = getApplicationContext();

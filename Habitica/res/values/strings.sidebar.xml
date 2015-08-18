@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sidebar.tasks">Tasks</string>
+    <string name="sidebar.section.social">Social</string>
+    <string name="sidebar.tavern">Tavern</string>
+    <string name="sidebar.party">Party</string>
+    <string name="sidebar.guilds">Guilds</string>
+    <string name="sidebar.challenges">Challenges</string>
+    <string name="sidebar.section.inventory">Inventory</string>
+    <string name="sidebar.avatar">Avatar</string>
+    <string name="sidebar.equipment">Equipment</string>
+    <string name="sidebar.stable">Stable</string>
+    <string name="sidebar.news">News</string>
+    <string name="sidebar.settings">Settings</string>
+    <string name="sidebar.about">About</string>
+</resources>

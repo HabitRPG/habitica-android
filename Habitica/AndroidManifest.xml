@@ -77,8 +77,17 @@
         <activity
             android:name=".TaskFormActivity"
             android:label="@string/title_activity_task_form"
-            android:theme="@style/AppThemeWithActionBarBlackText"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeWithActionBarBlackText" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.habitrpg.android.habitica.MainActivity" />
+        </activity>
+        <activity
+            android:name=".TavernActivity"
+            android:label="@string/title_activity_tavern"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeWithOwnActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />

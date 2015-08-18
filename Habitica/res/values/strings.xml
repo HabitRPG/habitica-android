@@ -15,7 +15,7 @@
     <string name="action_barcode">Scan a barcode</string>
     <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
     <string name="settings_changed">Settings were successfully updated!</string>
-    <string name="pref_dialog_title">HabitRPG settings</string>
+    <string name="pref_dialog_title">Habitica settings</string>
     <string name="string_pref_dialog_positive">OK</string>
 
     <!--  Prefs -->
@@ -24,7 +24,7 @@
     <string name="SP_address">ServerAdress</string>
     <string name="SP_address_title">Server Address</string>
     <string name="SP_address_summary">Enter the address of the server</string>
-    <string name="SP_address_default">https://habitrpg.com/</string>
+    <string name="SP_address_default">https://habitica.com/</string>
     <string name="SP_address_hint">Your custom server</string>
     <string name="SP_userID">UserID</string>
     <string name="SP_userID_title">User ID</string>
@@ -146,5 +146,6 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="title_activity_tavern">Tavern</string>
 
 </resources>
