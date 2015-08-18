@@ -8,6 +8,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,15 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
         out.endObject();
     }
 
+    private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck)
+    {
+        for(TaskTag t : list)
+            if(t.getTag().getId().equals(idToCheck))
+                return true;
+
+        return false;
+    }
+
     @Override
     public List<TaskTag> read(JsonReader in) throws IOException {
         List<TaskTag> tags = new ArrayList<>();
@@ -39,17 +49,20 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
                     in.beginObject();
                     break;
                 case NAME:
-                    String taskId = in.nextName();
+                    String tagId = in.nextName();
 
                     if(in.nextBoolean()) {
                         TaskTag taskTag = new TaskTag();
                         for (Tag tag : allTags) {
-                            if (tag.getId().equals(taskId)) {
+                            if (tag.getId().equals(tagId)) {
                                 taskTag.setTag(tag);
+
+                                if(!alreadyContainsTag(tags, tagId))
+                                    tags.add(taskTag);
+
                                 break;
                             }
                         }
-                        tags.add(taskTag);
                     }
                     break;
                 case END_OBJECT:

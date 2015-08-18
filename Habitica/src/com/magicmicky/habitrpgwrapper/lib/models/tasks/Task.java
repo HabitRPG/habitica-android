@@ -297,17 +297,20 @@ public class Task extends BaseModel {
 
     @Override
     public void save() {
+        super.save();
+
         if (this.tags != null) {
             for (TaskTag tag : this.tags) {
                 tag.setTask(this);
+                tag.save();
             }
         }
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
                 item.setTask(this);
+                item.save();
             }
         }
-        super.save();
     }
 
     public int getLightTaskColor()
