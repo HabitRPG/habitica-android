@@ -45,7 +45,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String type = bundle.getString("type");
+        taskType = bundle.getString("type");
         taskId = bundle.getString("taskId");
         if (type == null) {
             return;
