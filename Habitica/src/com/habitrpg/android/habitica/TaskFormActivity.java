@@ -47,7 +47,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString("type");
         taskId = bundle.getString("taskId");
-        if (type == null) {
+        if (taskType == null) {
             return;
         }
 
@@ -71,9 +71,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
             positiveCheckBox = (CheckBox) findViewById(R.id.task_positive_checkbox);
             negativeCheckBox = (CheckBox) findViewById(R.id.task_negative_checkbox);
-        }
-
-        if (taskType.equals("habit")) {
+        } else {
             LinearLayout actionsLayout = (LinearLayout) findViewById(R.id.task_actions_wrapper);
             mainWrapper.removeView(actionsLayout);
         }
@@ -154,7 +152,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_discard_changes) {
+            finish();
             return true;
         }
 

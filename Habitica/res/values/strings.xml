@@ -120,7 +120,7 @@
     <string name="checklist.item.hint">Add item…</string>
     <string name="title_activity_task_form">Add Task</string>
 
-    <string name="discard_changed">Discard Changes</string>
+    <string name="discard_changes">Discard Changes</string>
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
