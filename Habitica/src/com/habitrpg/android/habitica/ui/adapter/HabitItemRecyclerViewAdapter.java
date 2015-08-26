@@ -45,7 +45,7 @@ import de.greenrobot.event.EventBus;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements FlowContentObserver.OnSpecificModelStateChangedListener {
+        implements FlowContentObserver.OnModelStateChangedListener {
 
     int layoutResource;
     private Class<ViewHolder<THabitItem>> viewHolderClass;
@@ -78,8 +78,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             observer = new FlowContentObserver();
             observer.registerForContentChanges(this.context, this.taskClass);
-
-            observer.addSpecificModelChangeListener(this);
+            observer.addModelChangeListener(this);
         }
         else
         {
@@ -191,12 +190,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     };
 
-    @Override
-    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        handler.removeCallbacks(reloadContentRunable);
-        handler.postDelayed(reloadContentRunable, 200);
-    }
-
     @BindingAdapter("bind:imageName")
     public static void loadImage(ImageView view, String imageName) {
         Picasso.with(view.getContext()).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ imageName +".png").into(view);
@@ -220,6 +213,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(View view, int color) {
         view.setBackgroundColor(view.getResources().getColor(color));
+    }
+
+    @Override
+    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action) {
+        handler.removeCallbacks(reloadContentRunable);
+        handler.postDelayed(reloadContentRunable, 200);
     }
 
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
