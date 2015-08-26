@@ -20,9 +20,11 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
     @Override
     public void write(JsonWriter out, List<TaskTag> value) throws IOException {
         out.beginObject();
-        for(TaskTag tag : value) {
-            out.name(tag.getTag().getId());
-            out.value(true);
+        if (value != null) {
+            for(TaskTag tag : value) {
+                out.name(tag.getTag().getId());
+                out.value(true);
+            }
         }
         out.endObject();
     }
