@@ -19,8 +19,9 @@ public class TaskUpdateCallback implements Callback<Task> {
         callback = cb;
     }
     @Override
-    public void success(Task habit, Response response) {
-        callback.onTaskUpdated(habit);
+    public void success(Task task, Response response) {
+        task.save();
+        callback.onTaskUpdated(task);
     }
 
     @Override

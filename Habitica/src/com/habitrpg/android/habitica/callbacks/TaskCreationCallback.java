@@ -22,8 +22,9 @@ public class TaskCreationCallback implements Callback<Task> {
 
 
     @Override
-    public void success(Task habit, Response response) {
-        callback.onTaskCreated(habit);
+    public void success(Task task, Response response) {
+        task.save();
+        callback.onTaskCreated(task);
     }
 
     @Override
