@@ -189,7 +189,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } catch (Exception e) {
 
         }
-        SetUserData(false);
+        SetUserData();
     }
 
     private boolean hasItemData = false;
@@ -469,25 +469,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         switch (id) {
             case R.id.action_search:
                 filterDrawer.openDrawer();
-
                 return true;
-            case R.id.action_toggle_sleep:
-                mAPIHelper.toggleSleep(new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
-
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-
-                User.getPreferences().setSleep(!User.getPreferences().getSleep());
-
-                updateUserAvatars();
-
+            case R.id.action_reload:
+                mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
                 return true;
         }
 
@@ -573,19 +557,19 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
-        SetUserData(!taskListAlreadyAdded);
+        SetUserData();
     }
 
     private boolean taskListAlreadyAdded;
 
     private boolean getContentCalled = false;
 
-    private void SetUserData(final boolean onlyHeader) {
+    private void SetUserData() {
         if (User != null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (!onlyHeader) {
+                    if (!taskListAlreadyAdded) {
                         taskListAlreadyAdded = true;
                         loadTaskLists();
                         FillTagFilterDrawer();
@@ -593,39 +577,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                     updateHeader();
                 }
             });
-
-
-            if (mAPIHelper != null && !getContentCalled && !hasItemData) {
-                getContentCalled = true;
-                mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
-                    @Override
-                    public void success(ContentResult contentResult, Response response) {
-                        ArrayList<ItemData> list = new ArrayList<>();
-                        list.add(contentResult.potion);
-                        list.add(contentResult.armoire);
-                        list.addAll(contentResult.gear.flat.values());
-
-                        for (ItemData itemData : list) {
-                            itemData.save();
-                        }
-
-                        hasItemData = true;
-
-                        mAPIHelper.apiService.getInventoryBuyableGear(MainActivity.this);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-
-
-            }
-
-            if (mAPIHelper != null && hasItemData) {
-                mAPIHelper.apiService.getInventoryBuyableGear(this);
-            }
         }
     }
 
