@@ -237,7 +237,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
 
         Bundle bundle = new Bundle();
-        bundle.putString("type", event.Task.getType().toString());
+        bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
 
         Intent intent = new Intent(this, TaskFormActivity.class);
@@ -254,7 +254,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(HabitScoreEvent event) {
-        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this));
+        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this, event.Habit.getId()));
     }
 
     public void onEvent(AddTaskTappedEvent event) {
@@ -274,7 +274,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
         }
 
-        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
+        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
 
         /*
         if (event.Reward instanceof RewardItem) {
@@ -362,9 +362,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     static public Double round(Double value, int n) {
-        double r = (Math.round(value.doubleValue() * Math.pow(10, n))) / (Math.pow(10, n));
-        return Double.valueOf(r);
-
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
     public void loadTaskLists() {
