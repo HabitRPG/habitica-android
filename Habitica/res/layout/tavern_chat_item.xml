@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.ChatMessage" />
+
+        <variable
+            name="msg"
+            type="ChatMessage" />
+    </data>
+
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_columnWeight="5"
+            android:layout_gravity="center|left"
+            android:background="@drawable/layout_rounded_bg"
+            app:rounded_background_int="@{msg.getContributorColor()}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                style="@style/ChatMessageUserTextViewStyle"
+                android:text="@{msg.user}"
+                app:foregroundColor="@{msg.getContributorForegroundColor()}" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="8"
+            android:text="@{msg.text}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="5"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:layout_row="0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+
+                android:text="@{msg.getAgoString()}" />
+
+            <ImageView
+                android:id="@+id/btn_options"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_more_vert" />
+        </LinearLayout>
+
+    </GridLayout>
+
+</layout>
+

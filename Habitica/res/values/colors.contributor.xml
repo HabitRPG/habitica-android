@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="contributor.0">#aaa</color>
+    <color name="contributor.1">#f57a9d</color>
+    <color name="contributor.2">#b93030</color>
+    <color name="contributor.3">#ff3300</color>
+    <color name="contributor.4">#ff9500</color>
+    <color name="contributor.5">#fff700</color>
+    <color name="contributor.6">#5eff00</color>
+    <color name="contributor.7">#00aaff</color>
+    <color name="contributor.mod">#130ead</color>
+    <color name="contributor.staff">#88108f</color>
+    <color name="contributor.npc">#000</color>
+    <color name="contributor.npc.font">#00FF00</color>
+</resources>

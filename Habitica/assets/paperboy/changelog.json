@@ -1,6 +1,15 @@
 [
   {
-    "name": "Verison 0.0.2",
+    "name": "Version 0.0.3",
+    "items":[
+      {
+        "type": "F",
+        "title": "Tavern :)"
+      }
+    ]
+  },
+  {
+    "name": "Version 0.0.2",
     "items": [
        {
         "type": "F",

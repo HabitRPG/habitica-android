@@ -1,7 +1,9 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -9,6 +11,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.squareup.okhttp.Call;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by MagicMicky on 10/06/2014.
@@ -80,6 +84,15 @@ public interface ApiService {
 
     @POST("/user/sleep")
     void sleep(Callback<Void> voidCallback);
+
+    @GET("/groups/{gid}/chat")
+    void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
+
+    @POST("/groups/{gid}/chat")
+    void postGroupChat(@Path("gid") String groupId, @Query("message") String message, Callback<PostChatMessageResult> cb);
+
+    @DELETE("/groups/{gid}/chat/{messageId}")
+    void deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId, Callback<Void> cb);
 
 /*
     @GET("/content")

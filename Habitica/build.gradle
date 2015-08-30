@@ -98,10 +98,15 @@ android {
         release
     }
 
+    dexOptions{
+        preDexLibraries = false
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
             debuggable true
+
         }
         release {
             signingConfig signingConfigs.release

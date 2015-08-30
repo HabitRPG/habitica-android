@@ -32,8 +32,9 @@
         <item name="material_drawer_selected_text">@color/brand</item>
         <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
 
-
+        <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
+        <item name="android:popupMenuStyle">@style/PopupTheme</item>
     </style>
 
     <style name="AppThemeWithOwnActionBar" parent="AppTheme">
@@ -57,6 +58,8 @@
     <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/accent_color</item>
     </style>
+
+
 
     <style name="CardText">
         <item name="android:textSize">@dimen/card_small_text</item>
@@ -107,4 +110,10 @@
         <item name="color">@color/drawerArrowColor</item>
     </style>
 
+    <style name="ChatMessageUserTextViewStyle">
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
 </resources>

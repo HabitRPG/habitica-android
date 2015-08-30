@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/menu.chat.copy.as.todo"
+        android:icon="@drawable/ic_action_launch"
+
+        android:title="Copy as ToDo" />
+    <item
+        android:id="@+id/menu.chat.send.pm"
+        android:icon="@drawable/ic_action_chat"
+
+        android:title="Send PM" />
+    <group>
+
+        <item
+            android:id="@+id/menu.chat.flag"
+            android:icon="@drawable/ic_action_warning"
+            android:showAsAction="always|withText"
+            android:title="Flag" />
+
+        <item
+            android:id="@+id/menu.chat.delete"
+            android:icon="@drawable/ic_action_delete_white_24"
+
+            android:title="Delete" />
+    </group>
+</menu>

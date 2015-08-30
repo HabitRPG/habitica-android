@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
@@ -197,6 +198,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         handler.postDelayed(reloadContentRunable, 200);
     }
 
+    // TODO Move them to a separate class
+
     @BindingAdapter("bind:imageName")
     public static void loadImage(ImageView view, String imageName) {
         Picasso.with(view.getContext()).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ imageName +".png").into(view);
@@ -220,6 +223,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(View view, int color) {
         view.setBackgroundColor(view.getResources().getColor(color));
+    }
+
+    @BindingAdapter("app:foregroundColor")
+    public static void setForegroundTintColor(TextView view, int color) {
+        view.setTextColor(view.getResources().getColor(color));
     }
 
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

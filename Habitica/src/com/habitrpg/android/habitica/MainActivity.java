@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TodoCheckedEvent;
+import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
@@ -198,9 +199,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     protected void onResume() {
         super.onResume();
 
-        this.mAPIHelper = new APIHelper(this, hostConfig);
+        if(mAPIHelper == null)
+        {
+            this.mAPIHelper = new APIHelper(this, hostConfig);
 
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+        }
     }
 
     @Override
@@ -323,6 +327,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             this.mAPIHelper.updateTask(task, new TaskUpdateCallback(this));
         }
+    }
+
+    public void onEvent(ToggledInnStateEvent event) {
+        User.getPreferences().setSleep(event.Inn);
+
+        updateUserAvatars();
     }
 
     private void notifyUser(double xp, double hp, double gold,
@@ -471,24 +481,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 filterDrawer.openDrawer();
 
                 return true;
-            case R.id.action_toggle_sleep:
-                mAPIHelper.toggleSleep(new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
 
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-
-                User.getPreferences().setSleep(!User.getPreferences().getSleep());
-
-                updateUserAvatars();
-
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
