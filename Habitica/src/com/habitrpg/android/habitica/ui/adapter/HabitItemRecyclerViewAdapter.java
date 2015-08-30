@@ -46,7 +46,7 @@ import de.greenrobot.event.EventBus;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements FlowContentObserver.OnSpecificModelStateChangedListener {
+        implements FlowContentObserver.OnModelStateChangedListener {
 
     int layoutResource;
     private Class<ViewHolder<THabitItem>> viewHolderClass;
@@ -79,8 +79,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             observer = new FlowContentObserver();
             observer.registerForContentChanges(this.context, this.taskClass);
-
-            observer.addSpecificModelChangeListener(this);
+            observer.addModelChangeListener(this);
         }
         else
         {
@@ -192,12 +191,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     };
 
-    @Override
-    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        handler.removeCallbacks(reloadContentRunable);
-        handler.postDelayed(reloadContentRunable, 200);
-    }
-
     // TODO Move them to a separate class
 
     @BindingAdapter("bind:imageName")
@@ -228,6 +221,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @BindingAdapter("app:foregroundColor")
     public static void setForegroundTintColor(TextView view, int color) {
         view.setTextColor(view.getResources().getColor(color));
+    }
+
+    @Override
+    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action) {
+        handler.removeCallbacks(reloadContentRunable);
+        handler.postDelayed(reloadContentRunable, 200);
     }
 
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

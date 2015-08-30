@@ -190,7 +190,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } catch (Exception e) {
 
         }
-        SetUserData(false);
+        SetUserData();
     }
 
     private boolean hasItemData = false;
@@ -241,7 +241,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
 
         Bundle bundle = new Bundle();
-        bundle.putString("type", event.Task.getType().toString());
+        bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
 
         Intent intent = new Intent(this, TaskFormActivity.class);
@@ -258,7 +258,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     public void onEvent(HabitScoreEvent event) {
-        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this));
+        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this, event.Habit.getId()));
     }
 
     public void onEvent(AddTaskTappedEvent event) {
@@ -278,7 +278,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
         }
 
-        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this));
+        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
 
         /*
         if (event.Reward instanceof RewardItem) {
@@ -372,9 +372,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     static public Double round(Double value, int n) {
-        double r = (Math.round(value.doubleValue() * Math.pow(10, n))) / (Math.pow(10, n));
-        return Double.valueOf(r);
-
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
     public void loadTaskLists() {
@@ -479,9 +477,10 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         switch (id) {
             case R.id.action_search:
                 filterDrawer.openDrawer();
-
                 return true;
-
+            case R.id.action_reload:
+                mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -566,19 +565,19 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
-        SetUserData(!taskListAlreadyAdded);
+        SetUserData();
     }
 
     private boolean taskListAlreadyAdded;
 
     private boolean getContentCalled = false;
 
-    private void SetUserData(final boolean onlyHeader) {
+    private void SetUserData() {
         if (User != null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (!onlyHeader) {
+                    if (!taskListAlreadyAdded) {
                         taskListAlreadyAdded = true;
                         loadTaskLists();
                         FillTagFilterDrawer();
@@ -586,39 +585,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                     updateHeader();
                 }
             });
-
-
-            if (mAPIHelper != null && !getContentCalled && !hasItemData) {
-                getContentCalled = true;
-                mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
-                    @Override
-                    public void success(ContentResult contentResult, Response response) {
-                        ArrayList<ItemData> list = new ArrayList<>();
-                        list.add(contentResult.potion);
-                        list.add(contentResult.armoire);
-                        list.addAll(contentResult.gear.flat.values());
-
-                        for (ItemData itemData : list) {
-                            itemData.save();
-                        }
-
-                        hasItemData = true;
-
-                        mAPIHelper.apiService.getInventoryBuyableGear(MainActivity.this);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
-
-
-            }
-
-            if (mAPIHelper != null && hasItemData) {
-                mAPIHelper.apiService.getInventoryBuyableGear(this);
-            }
         }
     }
 

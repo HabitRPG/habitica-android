@@ -10,9 +10,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_toggle_sleep"
+        android:id="@+id/action_reload"
         android:orderInCategory="103"
-        android:title="Toggle Sleep"
+        android:title="@string/action_refresh"
         />
 
 </menu>
