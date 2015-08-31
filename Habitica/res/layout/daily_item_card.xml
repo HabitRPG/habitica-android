@@ -8,6 +8,9 @@
         <variable
             name="daily"
             type="Task" />
+        <variable
+            name="displayChecklist"
+            type="Boolean" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -103,5 +106,21 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/hairline_height"
             android:background="@color/cell_separator"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checklistView"
+            android:orientation="vertical"
+            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/checklist_separator"
+            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hairline_height"
+            android:background="@color/cell_separator"
+            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 </layout>

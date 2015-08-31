@@ -5,6 +5,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 /**
  * Created by Negue on 11.07.2015.
  */
-public class TodoCheckedEvent {
-    public Task ToDo;
+public class TaskCheckedEvent {
+    public Task Task;
 }

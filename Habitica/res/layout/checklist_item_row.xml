@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:minHeight="@dimen/checklist_item_min_height">
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="fill_parent"
+            android:textColor="@color/days_black"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/checkedTextView"
+            style="@style/CardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+    <View
+        android:id="@+id/bottomBorderView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hairline_height"
+        android:background="@color/cell_separator"/>
+</LinearLayout>

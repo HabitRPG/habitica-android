@@ -10,9 +10,9 @@
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
-    <color name="worst_100">#E6B8AF</color>
-    <color name="worst_50">#c96652</color>
-    <color name="worst_10">#c96652</color>
+    <color name="worst_100">#a13f44</color>
+    <color name="worst_50">#a1334d</color>
+    <color name="worst_10">#a10013</color>
 
     <color name="worse_100">#FF6165</color>
     <color name="worse_50">#F74E52</color>
@@ -93,4 +93,5 @@
     <color name="checkbox_tint_color">#ffd8dcdd</color>
 
     <color name="cell_separator">#c3c2c6</color>
+    <color name="checklist_separator">#ededed</color>
 </resources>

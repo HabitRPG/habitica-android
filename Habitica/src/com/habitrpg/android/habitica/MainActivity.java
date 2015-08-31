@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.TodoCheckedEvent;
+import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -253,8 +252,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         showSnackbar("LongPress: " + event.Task.text);
     }
 
-    public void onEvent(TodoCheckedEvent event) {
-        showSnackbar("ToDo Checked= " + event.ToDo.getText(), true);
+    public void onEvent(TaskCheckedEvent event) {
+        showSnackbar("ToDo Checked= " + event.Task.getText(), true);
+        mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(this, event.Task.getId()));
     }
 
     public void onEvent(HabitScoreEvent event) {
