@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -208,27 +209,42 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @BindingAdapter("bind:cardColor")
     public static void setCardColor(CardView cardView, int color) {
-        cardView.setCardBackgroundColor(cardView.getResources().getColor(color));
+        if (color > 0) {
+            color = cardView.getResources().getColor(color);
+        }
+        cardView.setCardBackgroundColor(color);
     }
 
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(CheckBox view, int color) {
-        ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
+        if (color > 0) {
+            color = view.getResources().getColor(color);
+        }
+        ViewHelper.SetBackgroundTint(view, color);
     }
 
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(Button view, int color) {
-        ViewHelper.SetBackgroundTint(view, view.getResources().getColor(color));
+        if (color > 0) {
+            color = view.getResources().getColor(color);
+        }
+        ViewHelper.SetBackgroundTint(view, color);
     }
 
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(View view, int color) {
-        view.setBackgroundColor(view.getResources().getColor(color));
+        if (color > 0) {
+            color = view.getResources().getColor(color);
+        }
+        view.setBackgroundColor(color);
     }
 
     @BindingAdapter("app:foregroundColor")
     public static void setForegroundTintColor(TextView view, int color) {
-        view.setTextColor(view.getResources().getColor(color));
+        if (color > 0) {
+            color = view.getResources().getColor(color);
+        }
+        view.setTextColor(color);
     }
 
     @Override
@@ -331,7 +347,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     }
 
-    public class ChecklistedViewHolder extends ViewHolder<Task> {
+    public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
+
+        @InjectView(R.id.checkBox)
+        CheckBox checkbox;
 
         @InjectView(R.id.checklistView)
         LinearLayout checklistView;
@@ -344,6 +363,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public ChecklistedViewHolder(View itemView) {
             super(itemView);
             checklistIndicatorWrapper.setOnClickListener(this);
+            checkbox.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -373,12 +393,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public void setDisplayChecklist(Boolean displayChecklist) {
             this.displayChecklist = displayChecklist;
+            //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
             if (this.checklistView != null) {
                 if (this.displayChecklist && this.Item.checklist != null) {
                     LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     for (ChecklistItem item : this.Item.checklist) {
                         LinearLayout itemView = (LinearLayout)layoutInflater.inflate(R.layout.checklist_item_row, null);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
+                        checkbox.setOnCheckedChangeListener(this);
                         TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
                         textView.setText(item.getText());
@@ -390,11 +412,28 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 }
             }
         }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView == checkbox) {
+                if (isChecked != Item.getCompleted()) {
+                    TaskCheckedEvent event = new TaskCheckedEvent();
+                    event.Task = Item;
+                    EventBus.getDefault().post(event);
+                }
+            } else {
+                Integer position = (Integer) ((ViewGroup)checkbox.getParent().getParent()).indexOfChild((View)checkbox.getParent());
+                if (isChecked != Item.checklist.get(position).getCompleted()) {
+                    TaskSaveEvent event = new TaskSaveEvent();
+                    Item.checklist.get(position).setCompleted(isChecked);
+                    event.task = Item;
+                    EventBus.getDefault().post(event);
+                }
+            }
+        }
     }
 
-    public class DailyViewHolder extends ChecklistedViewHolder implements CompoundButton.OnCheckedChangeListener {
-        @InjectView(R.id.checkBox)
-        CheckBox checkbox;
+    public class DailyViewHolder extends ChecklistedViewHolder {
 
         DailyItemCardBinding binding;
 
@@ -420,21 +459,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super.setDisplayChecklist(displayChecklist);
         }
 
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked != Item.getCompleted()) {
-                TaskCheckedEvent event = new TaskCheckedEvent();
-                event.Task = Item;
-                EventBus.getDefault().post(event);
-            }
-        }
-
     }
 
-    public class TodoViewHolder extends ChecklistedViewHolder implements CompoundButton.OnCheckedChangeListener {
-
-        @InjectView(R.id.checkBox)
-        CheckBox checkbox;
+    public class TodoViewHolder extends ChecklistedViewHolder {
 
         TodoItemCardBinding binding;
 
@@ -442,8 +469,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
-
-            checkbox.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -451,15 +476,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super.bindHolder(habitItem, position);
 
             binding.setTodo(habitItem);
-        }
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked != Item.getCompleted()) {
-                TaskCheckedEvent event = new TaskCheckedEvent();
-                event.Task = Item;
-                EventBus.getDefault().post(event);
-            }
         }
 
         @Override

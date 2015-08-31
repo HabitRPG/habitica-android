@@ -94,4 +94,5 @@
 
     <color name="cell_separator">#c3c2c6</color>
     <color name="checklist_separator">#ededed</color>
+    <color name="task_gray">#b5b5b5</color>
 </resources>

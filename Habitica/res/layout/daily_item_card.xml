@@ -26,7 +26,7 @@
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent"
                 android:checked="@{daily.completed}"
-                app:backgroundColor="@{daily.getLightTaskColor}"
+                app:backgroundColor="@{daily.isDue ?  daily.getLightTaskColor : @color/task_gray}"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal" />
             <RelativeLayout
@@ -61,7 +61,7 @@
                     android:id="@+id/checklistIndicatorWrapper"
                     android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.getLightTaskColor}"
+                    app:backgroundColor="@{daily.checklist.size != daily.getCompletedChecklistCount ? daily.getLightTaskColor : @color/task_gray}"
                     android:visibility="@{daily.checklist.size > 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
@@ -93,7 +93,8 @@
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.getLightTaskColor}"
+                    app:backgroundColor="@{daily.isDue ?  daily.getLightTaskColor : @color/task_gray}"
+                    android:visibility="@{daily.checklist.size == 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"

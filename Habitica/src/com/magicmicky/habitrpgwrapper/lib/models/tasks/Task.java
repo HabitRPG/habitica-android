@@ -369,4 +369,9 @@ public class Task extends BaseModel {
 
         return R.color.best_10;
     }
+
+    public Boolean isDue() {
+        //TODO: check if daily is due
+        return !this.getCompleted();
+    }
 }

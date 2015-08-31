@@ -50,13 +50,14 @@
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{todo.notes}" />
+                        android:text="@{todo.notes}"
+                        android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}" />
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"
                     android:id="@+id/checklistIndicatorWrapper"
                     android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{todo.getLightTaskColor}"
+                    app:backgroundColor="@{todo.checklist.size != todo.getCompletedChecklistCount ? todo.getLightTaskColor : @color/task_gray}"
                     android:visibility="@{todo.checklist.size > 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
@@ -89,6 +90,7 @@
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
                     app:backgroundColor="@{todo.getLightTaskColor}"
+                    android:visibility="@{todo.checklist.size == 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
