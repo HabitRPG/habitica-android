@@ -25,6 +25,7 @@ public class ChatMessage {
         contributorColorDict.put(6, R.color.contributor_6);
         contributorColorDict.put(7, R.color.contributor_7);
         contributorColorDict.put(8, R.color.contributor_mod);
+        contributorColorDict.put(9, R.color.contributor_staff);
     }
 
 
@@ -42,6 +43,8 @@ public class ChatMessage {
 
     public Contributor contributor;
 
+    public Backer backer;
+
     public String user;
 
     public int getContributorColor() {
@@ -49,11 +52,14 @@ public class ChatMessage {
 
 
         if (contributor != null) {
-            if (contributor.admin) {
-                rColor = R.color.contributor_staff;
-            } else {
-                if (contributorColorDict.containsKey(contributor.level))
+                if (contributorColorDict.containsKey(contributor.level)) {
                     rColor = contributorColorDict.get(contributor.level);
+                }
+        }
+
+        if (backer != null) {
+            if (backer.npc != null) {
+                rColor = android.R.color.black;
             }
         }
 
@@ -63,7 +69,7 @@ public class ChatMessage {
     public int getContributorForegroundColor() {
         int rColor = android.R.color.white;
 
-        if (contributor != null && contributor.level == 8) {
+        if (backer != null && backer.npc != null) {
             rColor = R.color.contributor_npc_font;
         }
 
