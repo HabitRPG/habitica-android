@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <item
@@ -16,7 +17,7 @@
         <item
             android:id="@+id/menu.chat.flag"
             android:icon="@drawable/ic_action_warning"
-            android:showAsAction="always|withText"
+            app:showAsAction="always|withText"
             android:title="Flag" />
 
         <item
