@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.habitrpg.android.habitica.AboutActivity;
+import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TavernActivity;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -24,6 +25,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  */
 public class MainDrawerBuilder {
 
+    static final int SIDEBAR_TASKS = 1;
     static final int SIDEBAR_TAVERN = 2;
     static final int SIDEBAR_SETTINGS = 11;
     static final int SIDEBAR_ABOUT = 12;
@@ -39,23 +41,21 @@ public class MainDrawerBuilder {
         builder.withHeaderDivider(false)
                 .withAnimateDrawerItems(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)),
+                        /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
-
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
-
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)),*/
 
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
+                        //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
                         new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS),
                         new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT)
 
@@ -66,23 +66,35 @@ public class MainDrawerBuilder {
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
 
+                        Class selectedClass = null;
+
                         switch (drawerItem.getIdentifier()) {
+                            case SIDEBAR_TASKS: {
+                                selectedClass = MainActivity.class;
+                                break;
+                            }
                             case SIDEBAR_TAVERN: {
-                                activity.startActivity(new Intent(activity, TavernActivity.class));
-                                return false;
+                                selectedClass = TavernActivity.class;
+                                break;
                             }
-
                             case SIDEBAR_SETTINGS: {
-                                activity.startActivity(new Intent(activity, PrefsActivity.class));
-                                return false;
+                                selectedClass = PrefsActivity.class;
+                                break;
                             }
-
                             case SIDEBAR_ABOUT: {
-                                activity.startActivity(new Intent(activity, AboutActivity.class));
-
-                                return false;
+                                selectedClass = AboutActivity.class;
+                                break;
                             }
                         }
+
+                        if (selectedClass != null && activity.getClass() != selectedClass) {
+                            activity.startActivity(new Intent(activity, selectedClass));
+                            return false;
+                        } else if (selectedClass != null) {
+                            //same item was clicked again
+                            return false;
+                        }
+
 
                         return true;
                     }
