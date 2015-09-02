@@ -205,6 +205,15 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
 
+        // filter flagged messages
+        for (int i = chatMessages.size() - 1; i >= 0; i--) {
+            ChatMessage msg = chatMessages.get(i);
+
+            if(msg.flagCount >= 2){
+                chatMessages.remove(msg);
+            }
+        }
+
         TavernRecyclerViewAdapter tavernAdapter = new TavernRecyclerViewAdapter(chatMessages, this, User.getId());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

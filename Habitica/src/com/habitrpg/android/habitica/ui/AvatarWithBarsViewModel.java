@@ -125,7 +125,9 @@ public class AvatarWithBarsViewModel {
 
     @BindingAdapter("app:rounded_background_int")
     public static void setRoundedBackgroundInt(View view, int color) {
-        setRoundedBackground(view, view.getResources().getColor(color));
+        if(color != 0){
+            setRoundedBackground(view, view.getResources().getColor(color));
+        }
     }
 
     public static class LayoutWeightAnimation extends Animation {

@@ -8,6 +8,18 @@
         <variable
             name="msg"
             type="ChatMessage" />
+
+        <variable
+            name="likeCountText"
+            type="String" />
+
+        <variable
+            name="likeTextBackgroundColor"
+            type="int" />
+
+        <variable
+            name="likeTextForegroundColor"
+            type="int" />
     </data>
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,17 +31,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_columnWeight="5"
             android:layout_gravity="center|left"
+            android:layout_margin="10dp"
             android:background="@drawable/layout_rounded_bg"
             app:rounded_background_int="@{msg.getContributorColor()}">
 
             <TextView
+                style="@style/ChatMessageUserTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                style="@style/ChatMessageUserTextViewStyle"
                 android:text="@{msg.user}"
                 app:foregroundColor="@{msg.getContributorForegroundColor()}" />
         </LinearLayout>
@@ -59,6 +71,29 @@
                 android:layout_gravity="center|right"
 
                 android:text="@{msg.getAgoString()}" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/layout_rounded_bg"
+                app:rounded_background="@{likeTextBackgroundColor}">
+
+                <TextView
+                    android:id="@+id/tvLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:text="@{likeCountText}"
+                    android:textColor="@{likeTextForegroundColor}" />
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/btn_options"

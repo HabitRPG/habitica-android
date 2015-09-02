@@ -35,9 +35,9 @@ public class ChatMessage {
 
     public long timestamp;
 
-    // TODO LIKES
+    public HashMap<String, Boolean> likes;
 
-    // TODO Flags
+    public int flagCount;
 
     public String uuid;
 

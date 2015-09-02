@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.PopupMenu;
@@ -26,6 +27,7 @@ import com.mikepenz.iconics.typeface.FontAwesome;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -67,8 +69,8 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
     @Override
     public TavernRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int rLayout = R.layout.tavern_chat_item;;
-
+        int rLayout = R.layout.tavern_chat_item;
+        
         switch (viewType) {
             case TYPE_DANIEL: {
                 rLayout = R.layout.tavern_daniel_item;
@@ -123,6 +125,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         Button btnSendNewMessage;
 
         Context context;
+        Resources res;
 
         public TavernRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String uuid) {
             super(itemView);
@@ -133,18 +136,20 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
             context = viewContext;
 
+            res = context.getResources();
+
             switch (layoutType) {
                 case TYPE_DANIEL: {
                     btnToggleInn.setOnClickListener(this);
 
-                    ViewHelper.SetBackgroundTint(btnToggleInn, itemView.getResources().getColor(R.color.brand));
+                    ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
 
                     break;
                 }
 
                 case TYPE_NEW_MESSAGE: {
                     btnSendNewMessage.setOnClickListener(this);
-                    int color = itemView.getResources().getColor(R.color.brand);
+                    int color = res.getColor(R.color.brand);
 
                     // Using the Iconics buttons, it is unable to tint the background
                     btnSendNewMessage.setTypeface(Iconics.findFont(FontAwesome.Icon.faw_comment).getTypeface(context));
@@ -158,8 +163,9 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 default: {
                     chatItemBinding = DataBindingUtil.bind(itemView);
 
-                    chatItemBinding.btnOptions.setClickable(true);
                     chatItemBinding.btnOptions.setOnClickListener(this);
+
+                    chatItemBinding.tvLikes.setOnClickListener(this);
                 }
             }
         }
@@ -167,66 +173,118 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         public void bind(ChatMessage msg) {
             if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
                 chatItemBinding.setMsg(msg);
+                setLikeProperties(msg);
             }
+        }
+
+        private void setLikeProperties(ChatMessage msg){
+
+            int likeCount = 0;
+            boolean currentUserLikedPost = false;
+
+            for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
+                if(e.getValue()){
+                    likeCount++;
+                }
+
+                if(e.getKey().equals(uuid)){
+                    currentUserLikedPost = true;
+                }
+            }
+
+            chatItemBinding.setLikeCountText("+" + likeCount);
+
+            int backgroundColorRes = 0;
+            int foregroundColorRes = 0;
+
+            if(likeCount != 0){
+                if(currentUserLikedPost){
+                    backgroundColorRes = R.color.tavern_userliked_background;
+                    foregroundColorRes = R.color.tavern_userliked_foreground;
+                }else{
+                    backgroundColorRes = R.color.tavern_somelikes_background;
+                    foregroundColorRes = R.color.tavern_somelikes_foreground;
+                }
+            } else {
+                backgroundColorRes = R.color.tavern_nolikes_background;
+                foregroundColorRes = R.color.tavern_nolikes_foreground;
+            }
+
+            chatItemBinding.setLikeTextBackgroundColor(res.getColor(backgroundColorRes));
+            chatItemBinding.setLikeTextForegroundColor(res.getColor(foregroundColorRes));
         }
 
         @Override
         public void onClick(View v) {
-            if (chatItemBinding != null && chatItemBinding.btnOptions == v) {
-                PopupMenu popupMenu = new PopupMenu(context, v);
+            if (chatItemBinding != null) {
+                if (chatItemBinding.btnOptions == v) {
+                    PopupMenu popupMenu = new PopupMenu(context, v);
 
-                //set my own listener giving the View that activates the event onClick (i.e. YOUR ImageView)
-                popupMenu.setOnMenuItemClickListener(this);
-                //inflate your PopUpMenu
-                popupMenu.getMenuInflater().inflate(R.menu.chat_message, popupMenu.getMenu());
+                    //set my own listener giving the View that activates the event onClick (i.e. YOUR ImageView)
+                    popupMenu.setOnMenuItemClickListener(this);
+                    //inflate your PopUpMenu
+                    popupMenu.getMenuInflater().inflate(R.menu.chat_message, popupMenu.getMenu());
 
-                // Force icons to show
-                Object menuHelper = null;
-                Class[] argTypes;
-                try {
-                    Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
-                    fMenuHelper.setAccessible(true);
-                    menuHelper = fMenuHelper.get(popupMenu);
-                    argTypes = new Class[]{boolean.class};
-                    menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
-                } catch (Exception e) {
+                    // Force icons to show
+                    Object menuHelper = null;
+                    Class[] argTypes;
+                    try {
+                        Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+                        fMenuHelper.setAccessible(true);
+                        menuHelper = fMenuHelper.get(popupMenu);
+                        argTypes = new Class[]{boolean.class};
+                        menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+                    } catch (Exception e) {
+                    }
+
+                    ChatMessage chatMsg = chatItemBinding.getMsg();
+                    if (!chatMsg.uuid.equals(uuid)) {
+                        popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
+                    }
+
+                    popupMenu.show();
+
+                    // Try to force some horizontal offset
+                    try {
+                        Field fListPopup = menuHelper.getClass().getDeclaredField("mPopup");
+                        fListPopup.setAccessible(true);
+                        Object listPopup = fListPopup.get(menuHelper);
+                        argTypes = new Class[]{int.class};
+                        Class listPopupClass = listPopup.getClass();
+
+                        // Get the width of the popup window
+                        int width = (Integer) listPopupClass.getDeclaredMethod("getWidth").invoke(listPopup);
+
+                        // Invoke setHorizontalOffset() with the negative width to move left by that distance
+                        listPopupClass.getDeclaredMethod("setHorizontalOffset", argTypes).invoke(listPopup, -width);
+
+                        // Invoke show() to update the window's position
+                        listPopupClass.getDeclaredMethod("show").invoke(listPopup);
+                    } catch (Exception e) {
+
+                    }
+
+                    return;
                 }
 
-                ChatMessage chatMsg = chatItemBinding.getMsg();
-                if (!chatMsg.uuid.equals(uuid)) {
-                    popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
+                if (chatItemBinding.tvLikes == v) {
+                    // Toggle Likes
+
+
+                    return;
                 }
-
-                popupMenu.show();
-
-                // Try to force some horizontal offset
-                try {
-                    Field fListPopup = menuHelper.getClass().getDeclaredField("mPopup");
-                    fListPopup.setAccessible(true);
-                    Object listPopup = fListPopup.get(menuHelper);
-                    argTypes = new Class[]{int.class};
-                    Class listPopupClass = listPopup.getClass();
-
-                    // Get the width of the popup window
-                    int width = (Integer) listPopupClass.getDeclaredMethod("getWidth").invoke(listPopup);
-
-                    // Invoke setHorizontalOffset() with the negative width to move left by that distance
-                    listPopupClass.getDeclaredMethod("setHorizontalOffset", argTypes).invoke(listPopup, -width);
-
-                    // Invoke show() to update the window's position
-                    listPopupClass.getDeclaredMethod("show").invoke(listPopup);
-                } catch (Exception e) {
-
-                }
-            } else if (v == btnToggleInn) {
-                EventBus.getDefault().post(new ToggleInnCommand());
-            } else {
-                String text = textNewMessage.getText().toString();
-
-                EventBus.getDefault().post(new SendNewGroupMessageCommand("habitrpg", text));
-
-                textNewMessage.setText("");
             }
+
+            if (v == btnToggleInn) {
+                EventBus.getDefault().post(new ToggleInnCommand());
+                return;
+            }
+
+            String text = textNewMessage.getText().toString();
+
+            EventBus.getDefault().post(new SendNewGroupMessageCommand("habitrpg", text));
+
+            textNewMessage.setText("");
         }
 
         @Override
