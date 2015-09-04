@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TavernActivity extends AppCompatActivity implements Callback<List<ChatMessage>> {
+public class TavernActivity extends AppCompatActivity implements Callback<List<ChatMessage>>, SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -53,6 +54,9 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
 
     @InjectView(R.id.tavern_list)
     RecyclerView recyclerView;
+
+    @InjectView(R.id.tavern_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private AvatarWithBarsViewModel avatarInHeader;
     private APIHelper mAPIHelper;
@@ -64,6 +68,11 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
         setContentView(R.layout.activity_tavern);
 
         ButterKnife.inject(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setSmoothScrollbarEnabled(true);
+
+        recyclerView.setLayoutManager(layoutManager);
 
         setSupportActionBar(toolbar);
 
@@ -100,7 +109,9 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
-        mAPIHelper.apiService.listGroupChat("habitrpg", this);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        onRefresh();
     }
 
     private void showSnackbar(String msg, boolean negative){
@@ -232,17 +243,21 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
 
         TavernRecyclerViewAdapter tavernAdapter = new TavernRecyclerViewAdapter(chatMessages, this, User.getId());
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(tavernAdapter);
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void failure(RetrofitError error) {
-
         showSnackbar(error.getMessage(), true);
     }
 
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+
+        mAPIHelper.apiService.listGroupChat("habitrpg", this);
+    }
 }

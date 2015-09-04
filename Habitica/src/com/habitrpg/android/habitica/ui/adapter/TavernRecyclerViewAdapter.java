@@ -185,6 +185,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
         private void setLikeProperties(ChatMessage msg){
             likeCount = 0;
+            currentUserLikedPost = false;
 
             for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
                 if(e.getValue()){
