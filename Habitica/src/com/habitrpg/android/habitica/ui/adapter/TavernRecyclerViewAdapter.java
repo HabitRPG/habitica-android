@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
+import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.mikepenz.iconics.Iconics;
@@ -70,7 +71,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
     @Override
     public TavernRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int rLayout = R.layout.tavern_chat_item;
-        
+
         switch (viewType) {
             case TYPE_DANIEL: {
                 rLayout = R.layout.tavern_daniel_item;
@@ -88,7 +89,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(rLayout, parent, false);
 
-        return new TavernRecyclerViewHolder(view, viewType, viewContext, uuid);
+        return new TavernRecyclerViewHolder(view, viewType, viewContext, uuid, "habitrpg");
     }
 
     @Override
@@ -107,6 +108,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
         private int layoutType;
         private String uuid;
+        private String groupId;
 
         private TavernChatItemBinding chatItemBinding;
 
@@ -127,10 +129,11 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         Context context;
         Resources res;
 
-        public TavernRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String uuid) {
+        public TavernRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
             this.layoutType = layoutType;
-            this.uuid = uuid;
+            this.uuid = currentUserId;
+            this.groupId = groupId;
 
             ButterKnife.inject(this, itemView);
 
@@ -177,10 +180,11 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
             }
         }
 
-        private void setLikeProperties(ChatMessage msg){
+        int likeCount = 0;
+        boolean currentUserLikedPost = false;
 
-            int likeCount = 0;
-            boolean currentUserLikedPost = false;
+        private void setLikeProperties(ChatMessage msg){
+            likeCount = 0;
 
             for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
                 if(e.getValue()){
@@ -192,6 +196,10 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 }
             }
 
+            setLikeProperties(likeCount);
+        }
+
+        private void setLikeProperties(int likeCount) {
             chatItemBinding.setLikeCountText("+" + likeCount);
 
             int backgroundColorRes = 0;
@@ -242,6 +250,9 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
                     }
 
+                    popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
+                    popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
+
                     popupMenu.show();
 
                     // Try to force some horizontal offset
@@ -268,8 +279,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 }
 
                 if (chatItemBinding.tvLikes == v) {
-                    // Toggle Likes
-
+                    toggleLike();
 
                     return;
                 }
@@ -282,26 +292,35 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
             String text = textNewMessage.getText().toString();
 
-            EventBus.getDefault().post(new SendNewGroupMessageCommand("habitrpg", text));
+            EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
 
             textNewMessage.setText("");
+        }
+
+        private void toggleLike(){
+            int newCount = currentUserLikedPost ? --likeCount : ++likeCount;
+            currentUserLikedPost = !currentUserLikedPost;
+
+            setLikeProperties(newCount);
+
+            EventBus.getDefault().post(new ToggleLikeMessageCommand(groupId, chatItemBinding.getMsg()));
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-                    EventBus.getDefault().post(new DeleteChatMessageCommand("habitrpg", chatItemBinding.getMsg()));
+                    EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, chatItemBinding.getMsg()));
 
                     break;
                 }
                 case R.id.menu_chat_flag: {
-                    EventBus.getDefault().post(new FlagChatMessageCommand());
+                    EventBus.getDefault().post(new FlagChatMessageCommand(groupId, chatItemBinding.getMsg()));
 
                     break;
                 }
                 case R.id.menu_chat_copy_as_todo: {
-                    EventBus.getDefault().post(new CopyChatAsTodoCommand());
+                    EventBus.getDefault().post(new CopyChatAsTodoCommand(groupId, chatItemBinding.getMsg()));
 
                     break;
                 }

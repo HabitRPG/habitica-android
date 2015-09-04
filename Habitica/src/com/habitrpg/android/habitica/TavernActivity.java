@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -115,16 +116,31 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
         snackbar.show();
     }
 
-    public void onEvent(FlagChatMessageCommand cmd){
-        showSnackbar("Not yet implemented!", false);
+    public void onEvent(final FlagChatMessageCommand cmd){
+        mAPIHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                showSnackbar("Flagged message by " + cmd.chatMessage.user, false);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                showSnackbar("Failed to flag message by " + cmd.chatMessage.user, true);
+            }
+        });
     }
 
-    public void onEvent(OpenNewPMActivityCommand cmd){
-        showSnackbar("Not yet implemented!", false);
-    }
+    public void onEvent(final ToggleLikeMessageCommand cmd){
+        mAPIHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id, new Callback<List<Void>>() {
+            @Override
+            public void success(List<Void> aVoid, Response response) {
+            }
 
-    public void onEvent(CopyChatAsTodoCommand cmd){
-        showSnackbar("Not yet implemented!", false);
+            @Override
+            public void failure(RetrofitError error) {
+                showSnackbar("Failed to like message by " + cmd.chatMessage.user, true);
+            }
+        });
     }
 
     public void onEvent(final DeleteChatMessageCommand cmd) {

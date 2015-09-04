@@ -85,6 +85,8 @@ public interface ApiService {
     @POST("/user/sleep")
     void sleep(Callback<Void> voidCallback);
 
+    /* Group API */
+
     @GET("/groups/{gid}/chat")
     void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
 
@@ -93,6 +95,16 @@ public interface ApiService {
 
     @DELETE("/groups/{gid}/chat/{messageId}")
     void deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId, Callback<Void> cb);
+
+    // Like returns the full chat list
+    @POST("/groups/{gid}/chat/{mid}/like")
+    void likeMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<List<Void>> cb);
+
+    @POST("/groups/{gid}/chat/{mid}/flag")
+    void flagMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<Void> cb);
+
+    @POST("/groups/{gid}/chat/seen")
+    void seenMessage(@Path("gid") String groupId, Callback<Void> cb);
 
 /*
     @GET("/content")
