@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.TavernChatItemBinding;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.ui.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.mikepenz.iconics.Iconics;
@@ -110,8 +112,6 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         private String uuid;
         private String groupId;
 
-        private TavernChatItemBinding chatItemBinding;
-
         // Toggle Inn State
         @InjectView(R.id.btn_toggle_inn)
         @Optional
@@ -125,6 +125,34 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         @InjectView(R.id.btn_send_message)
         @Optional
         Button btnSendNewMessage;
+
+        @InjectView(R.id.btn_options)
+        @Optional
+        ImageView btnOptions;
+
+        @InjectView(R.id.user_background_layout)
+        @Optional
+        LinearLayout userBackground;
+
+        @InjectView(R.id.like_background_layout)
+        @Optional
+        LinearLayout likeBackground;
+
+        @InjectView(R.id.user_label)
+        @Optional
+        TextView userLabel;
+
+        @InjectView(R.id.message_text)
+        @Optional
+        TextView messageText;
+
+        @InjectView(R.id.ago_label)
+        @Optional
+        TextView agoLabel;
+
+        @InjectView(R.id.tvLikes)
+        @Optional
+        TextView tvLikes;
 
         Context context;
         Resources res;
@@ -164,35 +192,43 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 }
 
                 default: {
-                    chatItemBinding = DataBindingUtil.bind(itemView);
-
-                    chatItemBinding.btnOptions.setOnClickListener(this);
-
-                    chatItemBinding.tvLikes.setOnClickListener(this);
+                    btnOptions.setOnClickListener(this);
+                    tvLikes.setOnClickListener(this);
                 }
             }
         }
 
-        public void bind(ChatMessage msg) {
+        private ChatMessage currentMsg;
+
+        public void bind(final ChatMessage msg) {
+            currentMsg = msg;
+
             if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
-                chatItemBinding.setMsg(msg);
                 setLikeProperties(msg);
+
+                DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+
+                userLabel.setText(msg.user);
+                DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
+
+                messageText.setText(msg.text.trim());
+                agoLabel.setText(msg.getAgoString());
             }
         }
 
         int likeCount = 0;
         boolean currentUserLikedPost = false;
 
-        private void setLikeProperties(ChatMessage msg){
+        private void setLikeProperties(ChatMessage msg) {
             likeCount = 0;
             currentUserLikedPost = false;
 
             for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
-                if(e.getValue()){
+                if (e.getValue()) {
                     likeCount++;
                 }
 
-                if(e.getKey().equals(uuid)){
+                if (e.getKey().equals(uuid)) {
                     currentUserLikedPost = true;
                 }
             }
@@ -201,16 +237,16 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         }
 
         private void setLikeProperties(int likeCount) {
-            chatItemBinding.setLikeCountText("+" + likeCount);
+            tvLikes.setText("+" + likeCount);
 
             int backgroundColorRes = 0;
             int foregroundColorRes = 0;
 
-            if(likeCount != 0){
-                if(currentUserLikedPost){
+            if (likeCount != 0) {
+                if (currentUserLikedPost) {
                     backgroundColorRes = R.color.tavern_userliked_background;
                     foregroundColorRes = R.color.tavern_userliked_foreground;
-                }else{
+                } else {
                     backgroundColorRes = R.color.tavern_somelikes_background;
                     foregroundColorRes = R.color.tavern_somelikes_foreground;
                 }
@@ -219,14 +255,14 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 foregroundColorRes = R.color.tavern_nolikes_foreground;
             }
 
-            chatItemBinding.setLikeTextBackgroundColor(res.getColor(backgroundColorRes));
-            chatItemBinding.setLikeTextForegroundColor(res.getColor(foregroundColorRes));
+            DataBindingUtils.setRoundedBackground(likeBackground, res.getColor(backgroundColorRes));
+            tvLikes.setTextColor(res.getColor(foregroundColorRes));
         }
 
         @Override
         public void onClick(View v) {
-            if (chatItemBinding != null) {
-                if (chatItemBinding.btnOptions == v) {
+            if (currentMsg != null) {
+                if (btnOptions == v) {
                     PopupMenu popupMenu = new PopupMenu(context, v);
 
                     //set my own listener giving the View that activates the event onClick (i.e. YOUR ImageView)
@@ -246,7 +282,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                     } catch (Exception e) {
                     }
 
-                    ChatMessage chatMsg = chatItemBinding.getMsg();
+                    ChatMessage chatMsg = currentMsg;
                     if (!chatMsg.uuid.equals(uuid)) {
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
                     }
@@ -278,13 +314,14 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
                     return;
                 }
-
-                if (chatItemBinding.tvLikes == v) {
-                    toggleLike();
-
-                    return;
-                }
             }
+
+            if (tvLikes == v) {
+                toggleLike();
+
+                return;
+            }
+
 
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
@@ -293,35 +330,37 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
             String text = textNewMessage.getText().toString();
 
-            EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
+            if(!text.equals("")) {
+                EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
+            }
 
             textNewMessage.setText("");
         }
 
-        private void toggleLike(){
+        private void toggleLike() {
             int newCount = currentUserLikedPost ? --likeCount : ++likeCount;
             currentUserLikedPost = !currentUserLikedPost;
 
             setLikeProperties(newCount);
 
-            EventBus.getDefault().post(new ToggleLikeMessageCommand(groupId, chatItemBinding.getMsg()));
+            EventBus.getDefault().post(new ToggleLikeMessageCommand(groupId, currentMsg));
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-                    EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, chatItemBinding.getMsg()));
+                    EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
 
                     break;
                 }
                 case R.id.menu_chat_flag: {
-                    EventBus.getDefault().post(new FlagChatMessageCommand(groupId, chatItemBinding.getMsg()));
+                    EventBus.getDefault().post(new FlagChatMessageCommand(groupId, currentMsg));
 
                     break;
                 }
                 case R.id.menu_chat_copy_as_todo: {
-                    EventBus.getDefault().post(new CopyChatAsTodoCommand(groupId, chatItemBinding.getMsg()));
+                    EventBus.getDefault().post(new CopyChatAsTodoCommand(groupId, currentMsg));
 
                     break;
                 }

@@ -18,12 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize" />
 
-            />
-
-        <!-- As the main content view, the view below consumes the entire
-             space available using match_parent in both dimensions. -->
         <LinearLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
@@ -44,9 +40,11 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/tavern.list"
-                    android:scrollbars="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:divider="@null"
+                    android:scrollbars="vertical" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>

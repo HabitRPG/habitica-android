@@ -200,52 +200,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     };
 
-    // TODO Move them to a separate class
-
-    @BindingAdapter("bind:imageName")
-    public static void loadImage(ImageView view, String imageName) {
-        Picasso.with(view.getContext()).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_"+ imageName +".png").into(view);
-    }
-
-    @BindingAdapter("bind:cardColor")
-    public static void setCardColor(CardView cardView, int color) {
-        if (color > 0) {
-            color = cardView.getResources().getColor(color);
-        }
-        cardView.setCardBackgroundColor(color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(CheckBox view, int color) {
-        if (color > 0) {
-            color = view.getResources().getColor(color);
-        }
-        ViewHelper.SetBackgroundTint(view, color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(Button view, int color) {
-        if (color > 0) {
-            color = view.getResources().getColor(color);
-        }
-        ViewHelper.SetBackgroundTint(view, color);
-    }
-
-    @BindingAdapter("app:backgroundColor")
-    public static void setBackgroundTintColor(View view, int color) {
-        if (color > 0) {
-            color = view.getResources().getColor(color);
-        }
-        view.setBackgroundColor(color);
-    }
-
-    @BindingAdapter("app:foregroundColor")
-    public static void setForegroundTintColor(TextView view, int color) {
-        if (color > 0) {
-            color = view.getResources().getColor(color);
-        }
-        view.setTextColor(color);
-    }
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action) {
