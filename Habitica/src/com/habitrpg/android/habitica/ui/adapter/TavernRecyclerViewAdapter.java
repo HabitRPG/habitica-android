@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.mikepenz.iconics.Iconics;

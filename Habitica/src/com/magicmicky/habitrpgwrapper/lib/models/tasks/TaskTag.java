@@ -19,8 +19,8 @@ import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 public class TaskTag extends BaseModel {
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
+    @PrimaryKey
+    String id;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "tag_id",
@@ -44,6 +44,9 @@ public class TaskTag extends BaseModel {
         this.tag = new ForeignKeyContainer<>(Tag.class);
         this.tag.setModel(tag);
         this.tag.put("id", tag.id);
+
+        tagId = tag.id;
+        updatePrimaryKey();
     }
 
     public Task getTask() {
@@ -54,6 +57,15 @@ public class TaskTag extends BaseModel {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
         this.task.put("id", task.id);
+
+        taskId = task.id;
+        updatePrimaryKey();
     }
 
+    private String tagId = "";
+    private String taskId = "";
+
+    private void updatePrimaryKey(){
+        this.id = taskId+"_"+tagId;
+    }
 }

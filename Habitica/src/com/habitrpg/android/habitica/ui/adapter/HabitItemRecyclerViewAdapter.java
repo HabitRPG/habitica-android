@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.os.Handler;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,11 +26,11 @@ import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.TaskCheckedEvent;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
@@ -39,7 +38,6 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -53,10 +51,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     int layoutResource;
     private Class<ViewHolder<THabitItem>> viewHolderClass;
-    List<THabitItem> contents;
     Class<THabitItem> taskClass;
     Integer displayedChecklist = null;
     String taskType;
+    private ObservableArrayList<THabitItem> filteredObservableContent;
     private ObservableArrayList<THabitItem> observableContent;
     FlowContentObserver observer;
     Context context;
@@ -77,16 +75,13 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.taskClass = newTaskClass;
         observableContent = content;
 
-        if(content == null)
-        {
+        if (content == null) {
             this.loadContent();
 
             observer = new FlowContentObserver();
             observer.registerForContentChanges(this.context, this.taskClass);
             observer.addModelChangeListener(this);
-        }
-        else
-        {
+        } else {
             content.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
                 @Override
                 public void onChanged(ObservableList sender) {
@@ -124,10 +119,38 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
+
+        EventBus.getDefault().register(this);
+        onEvent(null);
     }
 
-    public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter)
-    {
+    public void onEvent(FilterTasksByTagsCommand cmd) {
+        if (cmd == null || cmd.tagList.size() == 0) {
+            filteredObservableContent = observableContent;
+        } else {
+            filteredObservableContent = new ObservableArrayList<THabitItem>();
+
+            for (THabitItem e : observableContent) {
+                if (e.containsAllTagIds(cmd.tagList)) {
+                    filteredObservableContent.add(e);
+                }
+            }
+        }
+
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+
+                if (parentAdapter != null) {
+                    parentAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+    }
+
+    public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
         this.parentAdapter = parentAdapter;
     }
 
@@ -152,7 +175,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @Override
     public int getItemCount() {
-        return contents.size();
+        return filteredObservableContent.size();
     }
 
     @Override
@@ -181,21 +204,23 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Task item = contents.get(position);
+        Task item = filteredObservableContent.get(position);
 
         holder.bindHolder(item, position);
 
-        if (this.displayedChecklist != null &&  ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
+        if (this.displayedChecklist != null && ChecklistedViewHolder.class.isAssignableFrom(holder.getClass())) {
             ChecklistedViewHolder checklistedHolder = (ChecklistedViewHolder) holder;
             checklistedHolder.setDisplayChecklist(this.displayedChecklist == position);
         }
     }
 
+    // todo use debounce
+
     private Handler handler = new Handler();
     private Runnable reloadContentRunable = new Runnable() {
         @Override
         public void run() {
-            Log.d("Reload Content","");
+            Log.d("Reload Content", "");
             loadContent();
         }
     };
@@ -350,9 +375,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             //This needs to be a LinearLayout, as ListViews can not be inside other ListViews.
             if (this.checklistView != null) {
                 if (this.displayChecklist && this.Item.checklist != null) {
-                    LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     for (ChecklistItem item : this.Item.checklist) {
-                        LinearLayout itemView = (LinearLayout)layoutInflater.inflate(R.layout.checklist_item_row, null);
+                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
                         checkbox.setOnCheckedChangeListener(this);
                         TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
@@ -376,7 +401,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     EventBus.getDefault().post(event);
                 }
             } else {
-                Integer position = (Integer) ((ViewGroup)checkbox.getParent().getParent()).indexOfChild((View)checkbox.getParent());
+                Integer position = (Integer) ((ViewGroup) checkbox.getParent().getParent()).indexOfChild((View) checkbox.getParent());
                 if (isChecked != Item.checklist.get(position).getCompleted()) {
                     TaskSaveEvent event = new TaskSaveEvent();
                     Item.checklist.get(position).setCompleted(isChecked);
@@ -472,25 +497,19 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
 
-
     public void loadContent() {
-        if(this.observableContent == null) {
+        if (this.observableContent == null) {
 
-            this.contents = new Select().from(this.taskClass)
+            this.observableContent = new ObservableArrayList<>();
+
+            this.observableContent.addAll(new Select().from(this.taskClass)
                     .where(Condition.column("type").eq(this.taskType))
-                    .queryList();
-        }
-        else
-        {
-            this.contents = observableContent;
+                    .queryList());
         }
 
-        if(parentAdapter != null)
-        {
+        if (parentAdapter != null) {
             parentAdapter.notifyDataSetChanged();
-        }
-        else
-        {
+        } else {
             notifyDataSetChanged();
         }
     }

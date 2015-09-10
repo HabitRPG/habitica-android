@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui;
+package com.habitrpg.android.habitica.ui.helpers;
 
 import android.databinding.BindingAdapter;
 import android.graphics.PorterDuff;

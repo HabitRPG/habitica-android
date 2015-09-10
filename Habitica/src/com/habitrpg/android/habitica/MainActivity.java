@@ -12,8 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
+import android.widget.CompoundButton;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -25,17 +24,20 @@ import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -45,9 +47,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.OnCheckedChangeListener;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -68,9 +71,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored, OnTaskCreationListener,
-        FlowContentObserver.OnSpecificModelStateChangedListener, TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
-        Callback<List<ItemData>> {
+        TaskScoringCallback.OnTaskScored, FlowContentObserver.OnSpecificModelStateChangedListener,
+        TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
+        Callback<List<ItemData>>, OnCheckedChangeListener {
 
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
@@ -85,9 +88,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     Drawer filterDrawer;
     //endregion
 
-    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<Integer, TaskRecyclerViewFragment>();
+    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
-    List<Task> TaskList = new ArrayList<Task>();
+    List<Task> TaskList = new ArrayList<>();
 
     private HostConfig hostConfig;
     APIHelper mAPIHelper;
@@ -159,19 +162,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
-                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        Toast toast = Toast.makeText(context, "Long Pressed", Toast.LENGTH_LONG);
-
-                        toast.show();
-
-                        return true;
-                    }
-                })
                 .withDrawerGravity(Gravity.RIGHT)
+                .withCloseOnClick(false)
                 .append(drawer);
-
 
         viewPager = materialViewPager.getViewPager();
         viewPager.setOffscreenPageLimit(6);
@@ -198,8 +191,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     protected void onResume() {
         super.onResume();
 
-        if(mAPIHelper == null)
-        {
+        if (mAPIHelper == null) {
             this.mAPIHelper = new APIHelper(this, hostConfig);
 
             mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
@@ -235,8 +227,28 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         snackbar.show();
     }
 
+    //region Events
+
+    public void onEvent(CreateTagCommand event) {
+        Tag t = new Tag();
+        t.setName(event.tagName);
+        t.save();
+
+        mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
+            @Override
+            public void success(List<Tag> tags, Response response) {
+                FillTagFilterDrawer(tags);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                showSnackbar("Error: " + error.getMessage(), true);
+            }
+        });
+    }
+
     public void onEvent(TaskTappedEvent event) {
-        if(event.Task.type.equals("reward"))
+        if (event.Task.type.equals("reward"))
             return;
 
         Bundle bundle = new Bundle();
@@ -335,6 +347,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         updateUserAvatars();
     }
 
+    //endregion Events
+
     private void notifyUser(double xp, double hp, double gold,
                             double lvl, double delta) {
         StringBuilder message = new StringBuilder();
@@ -388,25 +402,24 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 TaskRecyclerViewFragment fragment;
 
                 String fragmentkey = "Recycler$" + position;
-                final android.content.Context context = getApplicationContext();
 
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("habit", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, context), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("habit", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.class);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("daily", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, context), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("daily", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.class);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, context), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.class);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("todo", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, context), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("todo", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.class);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -438,19 +451,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
     }
 
-    public void FillTagFilterDrawer() {
-        filterDrawer.removeAllItems();
-        filterDrawer.addItems(
-                new SectionDrawerItem().withName("Filter by Tag"),
-                new EditTextDrawer()
-        );
-
-        for (Tag t : User.getTags()) {
-            filterDrawer.addItem(
-                    new PrimaryDrawerItem().withName(t.getName()).withBadge("" + t.getTasks().size())
-            );
-        }
-    }
 
     public int adjustAlpha(int color, float factor) {
         int alpha = Math.round(Color.alpha(color) * factor);
@@ -580,28 +580,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                     if (!taskListAlreadyAdded) {
                         taskListAlreadyAdded = true;
                         loadTaskLists();
-                        FillTagFilterDrawer();
+                        FillTagFilterDrawer(User.getTags());
                     }
                     updateHeader();
                 }
             });
         }
-    }
-
-    @Override
-    public void onTaskCreation(Task task, boolean editMode) {
-        if (!editMode) {
-            this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
-        } else {
-            this.mAPIHelper.updateTask(task, new TaskUpdateCallback(this));
-        }
-
-        // TODO update task in list
-    }
-
-    @Override
-    public void onTaskCreationFail(String message) {
-        showSnackbar(message, true);
     }
 
     // TaskCreationCallback
@@ -624,5 +608,56 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onTaskUpdateFail() {
 
+    }
+
+    // Filter Tags
+
+    public void FillTagFilterDrawer(List<Tag> tagList) {
+        filterDrawer.removeAllItems();
+        filterDrawer.addItems(
+                new SectionDrawerItem().withName("Filter by Tag"),
+                new EditTextDrawer()
+        );
+
+        for (Tag t : tagList) {
+            filterDrawer.addItem(new SwitchDrawerItem()
+                            .withName(t.getName())
+                            .withTag(t)
+                            .withDescription("" + t.getTasks().size())
+                            .withOnCheckedChangeListener(this)
+            );
+        }
+    }
+
+    // A Filter was checked
+
+    private Debounce filterChangedHandler = new Debounce(1500, 1000) {
+        @Override
+        public void execute() {
+            ArrayList<String> tagList = new ArrayList<String>();
+
+            for (Map.Entry<String, Boolean> f : tagFilterMap.entrySet()) {
+                if (f.getValue()) {
+                    tagList.add(f.getKey());
+                }
+            }
+
+            EventBus.getDefault().post(new FilterTasksByTagsCommand(tagList));
+        }
+    };
+
+
+    private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
+
+    @Override
+    public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
+        Tag t = (Tag) iDrawerItem.getTag();
+
+        if (t != null) {
+            tagFilterMap.put(t.getId(), b);
+            filterChangedHandler.hit();
+
+            showSnackbar(t.getName() + " : " + b);
+        }
     }
 }

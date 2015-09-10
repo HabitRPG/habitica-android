@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -162,6 +163,30 @@ public class Task extends BaseModel {
             tag.setTask(this);
         }
         this.tags = tags;
+    }
+
+    public boolean containsAnyTagId(ArrayList<String> tagIdList){
+        getTags();
+
+        for (TaskTag t : tags){
+            if(tagIdList.contains(t.getTag().getId())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean containsAllTagIds(ArrayList<String> tagIdList){
+        getTags();
+
+        ArrayList<String> allTagIds = new ArrayList<String>();
+
+        for (TaskTag t : tags){
+            allTagIds.add(t.getTag().getId());
+        }
+
+        return allTagIds.containsAll(tagIdList);
     }
 
     /**
