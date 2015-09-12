@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.habitrpg.android.habitica"
-    android:versionCode="2"
-    android:versionName="0.0.2">
+    android:versionCode="3"
+    android:versionName="0.0.3">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -73,7 +73,7 @@
 
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/AppThemeWithActionBar" />
+            android:theme="@style/AppThemeWithActionBarBlackText" />
         <activity
             android:name=".TaskFormActivity"
             android:label="@string/title_activity_task_form"

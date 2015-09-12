@@ -5,6 +5,18 @@
       {
         "type": "F",
         "title": "Tavern :)"
+      },
+      {
+        "type": "F",
+        "title": "Checklists in the task-overview"
+      },
+      {
+        "type": "F",
+        "title": "Tag-Filter"
+      },
+      {
+        "type": "N",
+        "title": "More work on the task edit page"
       }
     ]
   },
