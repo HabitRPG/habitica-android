@@ -50,14 +50,13 @@ dependencies {
         transitive = true
     }
 
-    compile('com.github.florent37:materialviewpager:1.1.0@aar') {
-        transitive = true
-    }
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:gridlayout-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
 
-    compile 'com.android.support:appcompat-v7:22.2.+'
-    compile 'com.android.support:design:22.2.+'
-    compile 'com.android.support:gridlayout-v7:22.2.+'
-    compile 'com.android.support:recyclerview-v7:22.2.+'
+    // Image Loading/Caching
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     // Icons
     compile 'com.mikepenz:iconics:1.1.0@aar'

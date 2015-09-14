@@ -346,7 +346,7 @@ public class LoginActivity extends AppCompatActivity
 				.make(this.findViewById(R.id.login_linear_layout), content, Snackbar.LENGTH_LONG);
 
 		View snackbarView = snackbar.getView();
-		snackbarView.setBackgroundColor(getResources().getColor(R.color.red));//change Snackbar's background color;
+		snackbarView.setBackgroundColor(Color.RED);//change Snackbar's background color;
 		snackbar.show(); // Don’t forget to show!
 	}
 

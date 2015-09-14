@@ -7,13 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
@@ -38,8 +35,7 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, Class<?> classType, boolean showFloatingButton) {
         this.classType = classType;
         this.showFloatingButton = showFloatingButton;
-        mAdapter = new RecyclerViewMaterialAdapter(adapter);
-        adapter.setParentAdapter(mAdapter);
+        mAdapter = adapter;
     }
 
     private View view;
@@ -59,8 +55,8 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (alreadyCreated)
-            return;
+        //if (alreadyCreated)
+        //    return;
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
@@ -86,11 +82,9 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        layoutManager.setSmoothScrollbarEnabled(true);
+        //layoutManager.setSmoothScrollbarEnabled(true);
 
         mRecyclerView.setAdapter(mAdapter);
-
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
         alreadyCreated = true;
     }

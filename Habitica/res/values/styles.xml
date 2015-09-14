@@ -7,9 +7,11 @@
 		<item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
         <item name="android:textColorPrimary">@android:color/white</item>
 
+        <item name="android:elevation" tools:targetApi="21">0dp</item>
+        <item name="elevation">0dp</item>
+
         <item name="android:windowContentOverlay">@null</item>
 
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
         <item name="windowActionBar">false</item>
@@ -56,7 +58,7 @@
 
 
     <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/accent_color</item>
+        <item name="android:popupBackground">@color/brand_500</item>
     </style>
 
 
@@ -107,7 +109,6 @@
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">@color/drawerArrowColor</item>
     </style>
 
     <style name="ChatMessageUserTextViewStyle">
@@ -115,5 +116,9 @@
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 </resources>

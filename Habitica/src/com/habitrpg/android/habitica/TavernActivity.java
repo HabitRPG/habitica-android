@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -119,7 +120,7 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
             View snackbarView = snackbar.getView();
 
             //change Snackbar's background color;
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+            snackbarView.setBackgroundColor(Color.RED);
         }
 
         snackbar.show();

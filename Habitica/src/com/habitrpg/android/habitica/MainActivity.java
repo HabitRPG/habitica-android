@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -16,7 +18,6 @@ import android.widget.CompoundButton;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
@@ -79,10 +80,18 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     static final int TASK_UPDATED_RESULT = 2;
 
     //region View Elements
-    @InjectView(R.id.materialViewPager)
-    MaterialViewPager materialViewPager;
+    @InjectView(R.id.viewpager)
+    ViewPager materialViewPager;
 
+    @InjectView(R.id.toolbar)
     Toolbar toolbar;
+
+    @InjectView(R.id.detail_tabs)
+    TabLayout detail_tabs;
+
+    @InjectView(R.id.avatar_with_bars)
+    View avatar_with_bars;
+
     Drawer drawer;
 
     Drawer filterDrawer;
@@ -94,8 +103,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private HostConfig hostConfig;
     APIHelper mAPIHelper;
-
-    android.support.v4.view.ViewPager viewPager;
 
     // just to test the view
     private HabitRPGUser User;
@@ -128,8 +135,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
         }
 
-        toolbar = materialViewPager.getToolbar();
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
 
@@ -150,9 +155,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         View mPagerRootView = materialViewPager.getRootView();
 
-        View avatarHeaderView = mPagerRootView.findViewById(R.id.avatar_with_bars_layout);
+        //View avatarHeaderView = mPagerRootView.findViewById(R.id.avatar_with_bars_layout);
 
-        avatarInHeader = new AvatarWithBarsViewModel(this, avatarHeaderView);
+        avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
 
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
                 .withSelectedItem(0)
@@ -166,10 +171,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .withCloseOnClick(false)
                 .append(drawer);
 
-        viewPager = materialViewPager.getViewPager();
-        viewPager.setOffscreenPageLimit(6);
+        materialViewPager.setOffscreenPageLimit(6);
 
-        materialViewPager.getViewPager().setCurrentItem(0);
+        materialViewPager.setCurrentItem(0);
 
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
         this.observer = new FlowContentObserver();
@@ -213,7 +217,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     private void showSnackbar(String content, boolean negative) {
-        Fragment f = ViewFragmentsDictionary.get(materialViewPager.getViewPager().getCurrentItem());
+        Fragment f = ViewFragmentsDictionary.get(materialViewPager.getCurrentItem());
 
         Snackbar snackbar = Snackbar.make(f.getView().findViewById(R.id.fab), content, Snackbar.LENGTH_LONG);
 
@@ -221,7 +225,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             View snackbarView = snackbar.getView();
 
             //change Snackbar's background color;
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+            snackbarView.setBackgroundColor(Color.RED);
         }
 
         snackbar.show();
@@ -392,7 +396,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+        materialViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
             int oldPosition = -1;
 
@@ -448,7 +452,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             }
         });
 
-        materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
+
+        detail_tabs.setupWithViewPager(materialViewPager);
+
     }
 
 
