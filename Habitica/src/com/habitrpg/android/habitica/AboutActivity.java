@@ -10,7 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.github.porokoro.paperboy.PaperboyFragmentBuilder;
+import com.github.porokoro.paperboy.ItemTypeBuilder;
+import com.github.porokoro.paperboy.PaperboyBuilder;
 import com.github.porokoro.paperboy.ViewTypes;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -115,18 +116,19 @@ public class AboutActivity extends AppCompatActivity {
 
                     return tab1;
                 case 1:
-                    PaperboyFragmentBuilder builder = new PaperboyFragmentBuilder(AboutActivity.this)
+                    PaperboyBuilder builder = new PaperboyBuilder(AboutActivity.this)
                             .setViewType(ViewTypes.HEADER)
                             .setFile("paperboy/changelog.json");
 
-                    builder.withDefinition(1000, "Note", "n")
+
+                    builder.addItemType(new ItemTypeBuilder(AboutActivity.this, 1000, "Note", "n")
                             .setColorRes(R.color.changelog_note)
                             .setTitleSingular("Note")
                             .setTitlePlural("Notes")
                             .setSortOrder(0)
-                            .add();
+                            .build());
 
-                    return builder.build();
+                    return builder.buildFragment();
                 default:
                     return null;
             }

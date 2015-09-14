@@ -70,8 +70,7 @@ dependencies {
     compile 'com.instabug.library:instabugsupport:+'
 
     // Changelog Fragment, minSDK 17
-    //compile 'com.github.porokoro.paperboy:paperboy:1.0.0'
-    compile 'com.github.porokoro:paperboy:364c77b49f'
+    compile 'com.github.porokoro.paperboy:paperboy:2.0.1'
 
     // About View for all dependent Libraries, where are using
     compile('com.mikepenz:aboutlibraries:5.0.5@aar') {
