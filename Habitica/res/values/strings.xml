@@ -147,5 +147,5 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="title_activity_tavern">Tavern</string>
-
+    <string name="title_activity_party">Party</string>
 </resources>

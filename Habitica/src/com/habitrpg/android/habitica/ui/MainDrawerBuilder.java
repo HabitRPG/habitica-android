@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 
 import com.habitrpg.android.habitica.AboutActivity;
 import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.PartyActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TavernActivity;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -27,6 +28,7 @@ public class MainDrawerBuilder {
 
     static final int SIDEBAR_TASKS = 1;
     static final int SIDEBAR_TAVERN = 2;
+    static final int SIDEBAR_PARTY = 3;
     static final int SIDEBAR_SETTINGS = 11;
     static final int SIDEBAR_ABOUT = 12;
 
@@ -45,8 +47,8 @@ public class MainDrawerBuilder {
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
-                        /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
+                        /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
@@ -75,6 +77,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_TAVERN: {
                                 selectedClass = TavernActivity.class;
+                                break;
+                            }
+                            case SIDEBAR_PARTY: {
+                                selectedClass = PartyActivity.class;
                                 break;
                             }
                             case SIDEBAR_SETTINGS: {

@@ -1,61 +1,36 @@
 package com.habitrpg.android.habitica;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
-import com.habitrpg.android.habitica.ui.adapter.TavernRecyclerViewAdapter;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
+import com.habitrpg.android.habitica.ui.fragments.ChatListFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.mikepenz.materialdrawer.Drawer;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class TavernActivity extends AppCompatActivity implements Callback<List<ChatMessage>>, SwipeRefreshLayout.OnRefreshListener {
+public class TavernActivity extends AppCompatActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
     @InjectView(R.id.avatar)
     LinearLayout avatarHeader;
-
-    @InjectView(R.id.tavern_list)
-    RecyclerView recyclerView;
-
-    @InjectView(R.id.tavern_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
 
     private AvatarWithBarsViewModel avatarInHeader;
     private APIHelper mAPIHelper;
@@ -68,13 +43,7 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
 
         ButterKnife.inject(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setSmoothScrollbarEnabled(true);
-
-        recyclerView.setLayoutManager(layoutManager);
-
         setSupportActionBar(toolbar);
-
 
         // Receive Events
         EventBus.getDefault().register(this);
@@ -108,105 +77,21 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        onRefresh();
+        setFragment(new ChatListFragment(this, "habitrpg", mAPIHelper, User, true));
     }
 
-    private void showSnackbar(String msg, boolean negative){
-        Snackbar snackbar = Snackbar.make(recyclerView, msg, Snackbar.LENGTH_LONG);
-
-        if (negative) {
-            View snackbarView = snackbar.getView();
-
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(Color.RED);
-        }
-
-        snackbar.show();
+    // This could be moved into an abstract BaseActivity
+    // class for being re-used by several instances
+    protected void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.tavern_framelayout, fragment);
+        fragmentTransaction.commit();
     }
 
-    public void onEvent(final FlagChatMessageCommand cmd){
-        mAPIHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                showSnackbar("Flagged message by " + cmd.chatMessage.user, false);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                showSnackbar("Failed to flag message by " + cmd.chatMessage.user, true);
-            }
-        });
-    }
-
-    public void onEvent(final ToggleLikeMessageCommand cmd){
-        mAPIHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id, new Callback<List<Void>>() {
-            @Override
-            public void success(List<Void> aVoid, Response response) {
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                showSnackbar("Failed to like message by " + cmd.chatMessage.user, true);
-            }
-        });
-    }
-
-    public void onEvent(final DeleteChatMessageCommand cmd) {
-        mAPIHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                if (currentChatMessages != null) {
-                    currentChatMessages.remove(cmd.chatMessage);
-
-                    TavernActivity.this.success(currentChatMessages, null);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-    }
-
-    public void onEvent(SendNewGroupMessageCommand cmd) {
-        mAPIHelper.apiService.postGroupChat(cmd.TargetGroupId, cmd.Message, new Callback<PostChatMessageResult>() {
-            @Override
-            public void success(PostChatMessageResult msg, Response response) {
-                if (currentChatMessages != null) {
-                    currentChatMessages.add(0, msg.message);
-
-                    TavernActivity.this.success(currentChatMessages, null);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-    }
-
-    public void onEvent(ToggleInnCommand event) {
-        mAPIHelper.toggleSleep(new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                ToggledInnStateEvent innState = new ToggledInnStateEvent();
-                innState.Inn = !User.getPreferences().getSleep();
-
-                User.getPreferences().setSleep(innState.Inn);
-
-                avatarInHeader.UpdateData(User);
-                EventBus.getDefault().post(innState);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+    public void onEvent(ToggledInnStateEvent evt){
+        avatarInHeader.UpdateData(User);
     }
 
     @Override
@@ -223,40 +108,5 @@ public class TavernActivity extends AppCompatActivity implements Callback<List<C
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private List<ChatMessage> currentChatMessages;
-
-    @Override
-    public void success(List<ChatMessage> chatMessages, Response response) {
-        currentChatMessages = chatMessages;
-
-        // filter flagged messages
-        for (int i = chatMessages.size() - 1; i >= 0; i--) {
-            ChatMessage msg = chatMessages.get(i);
-
-            if(msg.flagCount >= 2){
-                chatMessages.remove(msg);
-            }
-        }
-
-        TavernRecyclerViewAdapter tavernAdapter = new TavernRecyclerViewAdapter(chatMessages, this, User.getId());
-
-        //recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(tavernAdapter);
-
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        showSnackbar(error.getMessage(), true);
-    }
-
-    @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-
-        mAPIHelper.apiService.listGroupChat("habitrpg", this);
     }
 }

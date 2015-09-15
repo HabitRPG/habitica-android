@@ -4,20 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
@@ -33,13 +27,11 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
-import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -63,15 +55,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
+public class MainActivity extends AvatarActivityBase implements HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, FlowContentObserver.OnSpecificModelStateChangedListener,
         TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
         Callback<List<ItemData>>, OnCheckedChangeListener {
@@ -79,54 +68,22 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
 
-    //region View Elements
-    @InjectView(R.id.viewpager)
-    ViewPager materialViewPager;
-
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @InjectView(R.id.detail_tabs)
-    TabLayout detail_tabs;
-
-    @InjectView(R.id.avatar_with_bars)
-    View avatar_with_bars;
-
-    Drawer drawer;
-
     Drawer filterDrawer;
-    //endregion
 
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
-    List<Task> TaskList = new ArrayList<>();
-
-    private HostConfig hostConfig;
     APIHelper mAPIHelper;
-
-    // just to test the view
-    private HabitRPGUser User;
-
-    AvatarWithBarsViewModel avatarInHeader;
 
     FlowContentObserver observer;
 
     @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Inject Controls
-        ButterKnife.inject(this);
-
-        // Receive Events
-        EventBus.getDefault().register(this);
-
-        // Initialize Crashlytics
-        Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
@@ -135,35 +92,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             return;
         }
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-
-            ActionBar actionBar = getSupportActionBar();
-
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(false);
-                actionBar.setDisplayShowTitleEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-            }
-
-            toolbar.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tool_bar_top_padding), 0, 0);
-        }
-
-        materialViewPager.setBackgroundColor(getResources().getColor(R.color.white));
-
-        View mPagerRootView = materialViewPager.getRootView();
-
-        //View avatarHeaderView = mPagerRootView.findViewById(R.id.avatar_with_bars_layout);
-
-        avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
                 .withSelectedItem(0)
                 .build();
-
-        final android.content.Context context = getApplicationContext();
 
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -171,9 +102,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .withCloseOnClick(false)
                 .append(drawer);
 
-        materialViewPager.setOffscreenPageLimit(6);
-
-        materialViewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);
 
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
         this.observer = new FlowContentObserver();
@@ -181,15 +110,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         this.observer.addSpecificModelChangeListener(this);
 
-        try {
-            hasItemData = new Select().from(ItemData.class).querySingle() != null;
-        } catch (Exception e) {
-
-        }
         SetUserData();
     }
-
-    private boolean hasItemData = false;
 
     @Override
     protected void onResume() {
@@ -217,7 +139,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     private void showSnackbar(String content, boolean negative) {
-        Fragment f = ViewFragmentsDictionary.get(materialViewPager.getCurrentItem());
+        Fragment f = ViewFragmentsDictionary.get(viewPager.getCurrentItem());
 
         Snackbar snackbar = Snackbar.make(f.getView().findViewById(R.id.fab), content, Snackbar.LENGTH_LONG);
 
@@ -396,7 +318,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     public void loadTaskLists() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-        materialViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
             int oldPosition = -1;
 
@@ -404,8 +326,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             public Fragment getItem(int position) {
                 int layoutOfType;
                 TaskRecyclerViewFragment fragment;
-
-                String fragmentkey = "Recycler$" + position;
 
                 switch (position) {
                     case 0:
@@ -453,7 +373,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         });
 
 
-        detail_tabs.setupWithViewPager(materialViewPager);
+        detail_tabs.setupWithViewPager(viewPager);
 
     }
 
@@ -498,7 +418,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private void updateHeader() {
         updateUserAvatars();
-        toolbar.setTitle(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
+        setTitle(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
 
         android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
 
@@ -576,8 +496,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private boolean taskListAlreadyAdded;
 
-    private boolean getContentCalled = false;
-
     private void SetUserData() {
         if (User != null) {
             runOnUiThread(new Runnable() {
@@ -640,7 +558,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     private Debounce filterChangedHandler = new Debounce(1500, 1000) {
         @Override
         public void execute() {
-            ArrayList<String> tagList = new ArrayList<String>();
+            ArrayList<String> tagList = new ArrayList<>();
 
             for (Map.Entry<String, Boolean> f : tagFilterMap.entrySet()) {
                 if (f.getValue()) {
