@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="class_healer">#FFFF00</color>
+    <color name="class_warrior">#FF0000</color>
+    <color name="class_wizard">#0000FF</color>
+    <color name="class_rogue">#7736205D</color>
+</resources>

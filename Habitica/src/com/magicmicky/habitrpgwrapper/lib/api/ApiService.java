@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgwrapper.lib.api;
 
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
@@ -11,8 +12,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.squareup.okhttp.Call;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -86,6 +87,12 @@ public interface ApiService {
     void sleep(Callback<Void> voidCallback);
 
     /* Group API */
+
+    @GET("/groups")
+    void listGroups(@Query("type") String type, Callback<ArrayList<Group>> cb);
+
+    @GET("/groups/{gid}")
+    void getGroup(@Path("gid") String groupId, Callback<Group> cb);
 
     @GET("/groups/{gid}/chat")
     void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);

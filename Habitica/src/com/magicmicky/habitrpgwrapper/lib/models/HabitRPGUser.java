@@ -55,7 +55,7 @@ public class HabitRPGUser extends BaseModel {
     @ForeignKey(references = {@ForeignKeyReference(columnName = "party_id",
             columnType = String.class,
             foreignColumnName = "id")})
-    private Party party;
+    private UserParty party;
 
 
     @Column
@@ -116,11 +116,11 @@ public class HabitRPGUser extends BaseModel {
         this.profile = profile;
     }
 
-    public Party getParty() {
+    public UserParty getParty() {
         return party;
     }
 
-    public void setParty(Party party) {
+    public void setParty(UserParty party) {
         this.party = party;
     }
 
@@ -211,8 +211,10 @@ public class HabitRPGUser extends BaseModel {
         layerNames.add("head_0");
 
         if (outfit != null) {
-            if (outfit.getArmor() != null && !outfit.getArmor().equals("armor_base_0")) {
-                layerNames.add(prefs.getSize() + "_armor_" + outfit.getArmor());
+            String armor = outfit.getArmor();
+
+            if (armor != null && !armor.equals("armor_base_0")) {
+                layerNames.add(prefs.getSize() + "_" + armor);
             }
             if (outfit.getBody() != null && !outfit.getBody().equals("body_base_0")) {
                 layerNames.add(outfit.getBody());
@@ -221,10 +223,13 @@ public class HabitRPGUser extends BaseModel {
 
         Preferences.Hair hair = prefs.getHair();
         if (hair != null) {
-            if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() + hair.getColor());}
-            if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() + hair.getColor());}
-            if (hair.getMustache() > 0) {layerNames.add("hair_mustache_"+hair.getMustache() + hair.getColor());}
-            if (hair.getBeard() > 0) {layerNames.add("hair_beard_"+hair.getBeard() + hair.getColor());}
+            String hairColor = hair.getColor();
+
+
+            if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() +"_" + hairColor);}
+            if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() +"_" + hairColor);}
+            if (hair.getMustache() > 0) {layerNames.add("hair_mustache_"+hair.getMustache() +"_" + hairColor);}
+            if (hair.getBeard() > 0) {layerNames.add("hair_beard_"+hair.getBeard() +"_" + hairColor);}
         }
 
         if (outfit != null) {

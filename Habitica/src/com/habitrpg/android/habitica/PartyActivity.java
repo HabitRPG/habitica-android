@@ -9,13 +9,20 @@ import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.ChatListFragment;
+import com.habitrpg.android.habitica.ui.fragments.PartyInformationFragment;
+import com.habitrpg.android.habitica.ui.fragments.PartyMemberListFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.InjectView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class PartyActivity extends AvatarActivityBase implements AppBarLayout.OnOffsetChangedListener {
 
@@ -44,8 +51,9 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
-
         updateUserAvatars();
+
+
     }
 
     @Override
@@ -74,9 +82,18 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
                 Fragment fragment;
 
                 switch (position) {
-                    case 1:
+                    case 0: {
+                        fragment = new PartyInformationFragment();
+                        break;
+                    }
+                    case 1: {
                         fragment = new ChatListFragment(PartyActivity.this, "party", mAPIHelper, User, false);
                         break;
+                    }
+                    case 2: {
+                        fragment = new PartyMemberListFragment(PartyActivity.this, mAPIHelper.apiService);
+                        break;
+                    }
                     default:
                         fragment = new Fragment();
                 }
@@ -125,10 +142,10 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         Fragment fragment = fragmentDictionary.get(viewPager.getCurrentItem());
 
-        if(!(fragment instanceof ChatListFragment))
+        if (!(fragment instanceof ChatListFragment))
             return;
 
-        ChatListFragment chatFragment = (ChatListFragment)fragment ;
+        ChatListFragment chatFragment = (ChatListFragment) fragment;
 
         // Disable Refresh if Header is collapsed
 

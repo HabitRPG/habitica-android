@@ -1,5 +1,22 @@
 [
   {
+    "name": "Version 0.0.4",
+    "items":[
+      {
+        "type": "F",
+        "title": "Party :)"
+      },
+      {
+        "type": "B",
+        "title": "Avatar-Drawing: Position without a mount/met"
+      },
+      {
+        "type": "N",
+        "title": "Generated avatar images are now cached"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.3",
     "items":[
       {

@@ -56,17 +56,28 @@ public class AvatarWithBarsViewModel {
     public void UpdateData(HabitRPGUser user)
     {
         Stats stats = user.getStats();
-        
-        SetValueBar(hpBar, stats.getHp().floatValue(), stats.getMaxHealth(), context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor));
+
+        SetHpBarData(hpBar, stats, context);
         SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor));
         SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor));
 
         new UserPicture(user, this.context).setPictureOn(image);
     }
 
+    public static void SetHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
+    {
+        int maxHP = stats.getMaxHealth();
+        if(maxHP == 0)
+        {
+            maxHP = 50;
+        }
+
+        SetValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor));
+    }
+
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color)
+    private static void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color)
     {
         double percent = Math.min(1, value / valueMax);
 

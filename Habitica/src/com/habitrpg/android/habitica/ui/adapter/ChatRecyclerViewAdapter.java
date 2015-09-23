@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Negue on 20.08.2015.
  */
-public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecyclerViewAdapter.TavernRecyclerViewHolder> {
+public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
     static final int TYPE_DANIEL = 0;
     static final int TYPE_NEW_MESSAGE = 1;
     static final int TYPE_MESSAGE = 2;
@@ -48,15 +48,23 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
     private List<ChatMessage> messages;
     private Context viewContext;
     private String uuid;
+    private String groupId;
+    private boolean isTavern;
 
-    public TavernRecyclerViewAdapter(List<ChatMessage> messages, Context viewContext, String uuid) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, Context viewContext, String uuid, String groupId, boolean isTavern) {
         this.messages = messages;
         this.viewContext = viewContext;
         this.uuid = uuid;
+        this.groupId = groupId;
+        this.isTavern = isTavern;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if(!isTavern){
+            return TYPE_MESSAGE;
+        }
+
         switch (position) {
             case 0: {
                 return TYPE_DANIEL;
@@ -71,19 +79,17 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
     }
 
     @Override
-    public TavernRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int rLayout = R.layout.tavern_chat_item;
 
         switch (viewType) {
             case TYPE_DANIEL: {
                 rLayout = R.layout.tavern_daniel_item;
-
                 break;
             }
 
             case TYPE_NEW_MESSAGE: {
                 rLayout = R.layout.tavern_chat_new_entry_item;
-
                 break;
             }
         }
@@ -91,11 +97,16 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(rLayout, parent, false);
 
-        return new TavernRecyclerViewHolder(view, viewType, viewContext, uuid, "habitrpg");
+        return new ChatRecyclerViewHolder(view, viewType, viewContext, uuid, groupId);
     }
 
     @Override
-    public void onBindViewHolder(TavernRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
+        if(!isTavern){
+            holder.bind(messages.get(position));
+            return;
+        }
+
         if (position > 1) {
             holder.bind(messages.get(position - 2));
         }
@@ -103,10 +114,10 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
 
     @Override
     public int getItemCount() {
-        return messages.size() + 2;
+        return messages.size() + (isTavern ? 2 : 0);
     }
 
-    public class TavernRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
         private int layoutType;
         private String uuid;
@@ -157,7 +168,7 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
         Context context;
         Resources res;
 
-        public TavernRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
+        public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
             this.layoutType = layoutType;
             this.uuid = currentUserId;
@@ -207,6 +218,10 @@ public class TavernRecyclerViewAdapter extends RecyclerView.Adapter<TavernRecycl
                 setLikeProperties(msg);
 
                 DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+
+                if(msg.user == null || msg.user.equals("")){
+                    msg.user = "system";
+                }
 
                 userLabel.setText(msg.user);
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());

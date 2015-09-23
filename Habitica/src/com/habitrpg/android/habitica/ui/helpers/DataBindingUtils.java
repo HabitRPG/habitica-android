@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -73,8 +71,6 @@ public class DataBindingUtils {
     public static void setLayoutWeight(View view, float weight) {
         LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)view.getLayoutParams();
 
-        Log.d("setLayoutWeight", weight + "");
-
         layout.weight = weight;
 
         view.setLayoutParams(layout);
@@ -82,6 +78,11 @@ public class DataBindingUtils {
 
     @BindingAdapter("app:layout_weight_anim")
     public static void setLayoutWeightAnim(View view, float weight) {
+        if(weight == 0.0f || weight == 1.0f){
+            setLayoutWeight(view, weight);
+            return;
+        }
+
         LayoutWeightAnimation anim = new LayoutWeightAnimation(view, weight);
         anim.setDuration(1250);
 

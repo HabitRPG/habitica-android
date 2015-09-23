@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.adapter.TavernRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
@@ -127,7 +127,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         }
 
-        TavernRecyclerViewAdapter tavernAdapter = new TavernRecyclerViewAdapter(chatMessages, ctx, userId);
+        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
 
         mRecyclerView.setAdapter(tavernAdapter);
 
