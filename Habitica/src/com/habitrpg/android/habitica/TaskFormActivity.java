@@ -265,12 +265,14 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public boolean onSupportNavigateUp() {
         this.prepareSave();
+        finish();
         return super.onSupportNavigateUp();
     }
 
     @Override
     public void onBackPressed() {
         this.prepareSave();
+        finish();
         super.onBackPressed();
     }
 }

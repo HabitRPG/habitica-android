@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
@@ -27,19 +26,22 @@ import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
-import java.util.List;
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,12 +52,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         implements FlowContentObserver.OnModelStateChangedListener {
 
     int layoutResource;
-    private Class<ViewHolder<THabitItem>> viewHolderClass;
-    Class<THabitItem> taskClass;
+    private Class<ViewHolder<Task>> viewHolderClass;
     Integer displayedChecklist = null;
     String taskType;
-    private ObservableArrayList<THabitItem> filteredObservableContent;
-    private ObservableArrayList<THabitItem> observableContent;
+    private ObservableArrayList<Task> filteredObservableContent;
+    private ObservableArrayList<Task> observableContent;
     FlowContentObserver observer;
     Context context;
 
@@ -64,22 +65,21 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
 
-    public HabitItemRecyclerViewAdapter(String taskType, Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass, Context newContext) {
-        this(taskType, newTaskClass, layoutResource, viewHolderClass, newContext, null);
+    public HabitItemRecyclerViewAdapter(String taskType, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
+        this(taskType, layoutResource, viewHolderClass, newContext, null);
     }
 
-    public HabitItemRecyclerViewAdapter(String taskType, Class<THabitItem> newTaskClass, int layoutResource, Class<ViewHolder<THabitItem>> viewHolderClass,
-                                        Context newContext, final ObservableArrayList<THabitItem> content) {
+    public HabitItemRecyclerViewAdapter(String taskType, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
+                                        Context newContext, final ObservableArrayList<Task> content) {
         this.taskType = taskType;
         this.context = newContext;
-        this.taskClass = newTaskClass;
         observableContent = content;
 
         if (content == null) {
             this.loadContent();
 
             observer = new FlowContentObserver();
-            observer.registerForContentChanges(this.context, this.taskClass);
+            observer.registerForContentChanges(this.context, Task.class);
             observer.addModelChangeListener(this);
         } else {
             content.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
@@ -121,16 +121,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.viewHolderClass = viewHolderClass;
 
         EventBus.getDefault().register(this);
-        onEvent(null);
+        onEvent((FilterTasksByTagsCommand)null);
     }
 
     public void onEvent(FilterTasksByTagsCommand cmd) {
         if (cmd == null || cmd.tagList.size() == 0) {
             filteredObservableContent = observableContent;
         } else {
-            filteredObservableContent = new ObservableArrayList<THabitItem>();
+            filteredObservableContent = new ObservableArrayList<Task>();
 
-            for (THabitItem e : observableContent) {
+            for (Task e : observableContent) {
                 if (e.containsAllTagIds(cmd.tagList)) {
                     filteredObservableContent.add(e);
                 }
@@ -148,6 +148,18 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             }
         });
 
+    }
+
+    public void onEvent(TaskUpdatedEvent evnt){
+        // TODO Update Entry
+    }
+
+    public void onEvent(TaskCreatedEvent evnt){
+        if(!taskType.equals(evnt.task.getType()))
+            return;
+
+        observableContent.add(0, evnt.task);
+        notifyDataSetChanged();
     }
 
     public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
@@ -502,8 +514,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             this.observableContent = new ObservableArrayList<>();
 
-            this.observableContent.addAll(new Select().from(this.taskClass)
+            this.observableContent.addAll(new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
+                    .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
         }
 

@@ -3,8 +3,10 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -13,26 +15,19 @@ import retrofit.client.Response;
  * Created by magicmicky on 02/04/15.
  */
 public class TaskUpdateCallback implements Callback<Task> {
-    private OnHabitUpdated callback;
 
-    public TaskUpdateCallback(OnHabitUpdated cb) {
-        callback = cb;
-    }
     @Override
     public void success(Task task, Response response) {
         task.save();
-        callback.onTaskUpdated(task);
+
+        EventBus.getDefault().post(new TaskCreatedEvent(task));
     }
 
     @Override
     public void failure(RetrofitError error) {
         Crashlytics.logException(error);
 
-        callback.onTaskUpdateFail();
         Log.w("HabitUpdate", "Error " + error.getMessage());
     }
-    public interface OnHabitUpdated {
-        void onTaskUpdated(Task habit);
-        void onTaskUpdateFail();
-    }
+
 }

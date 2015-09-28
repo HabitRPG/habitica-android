@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -28,11 +28,11 @@ import de.greenrobot.event.EventBus;
 public class TaskRecyclerViewFragment extends Fragment implements View.OnClickListener {
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private Class<?> classType;
+    private String classType;
     private boolean showFloatingButton;
 
     // TODO needs a bit of cleanup
-    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, Class<?> classType, boolean showFloatingButton) {
+    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType, boolean showFloatingButton) {
         this.classType = classType;
         this.showFloatingButton = showFloatingButton;
         mAdapter = adapter;
@@ -89,11 +89,11 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
         alreadyCreated = true;
     }
 
-    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, Class<?> classType) {
+    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
        return newInstance(adapter, classType, true);
     }
 
-    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, Class<?> classType, boolean showFloatingButton) {
+    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType, boolean showFloatingButton) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
 
         fragment.SetInnerAdapter(adapter, classType,showFloatingButton);
@@ -103,7 +103,7 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        AddTaskTappedEvent event = new AddTaskTappedEvent();
+        AddNewTaskCommand event = new AddNewTaskCommand();
         event.ClassType = this.classType;
 
         EventBus.getDefault().post(event);

@@ -31,6 +31,7 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.util.List;
 
 import retrofit.Callback;
@@ -82,6 +83,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 				.registerTypeAdapter(taskTagClassListType, new TagsAdapter())
 				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
 				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)
+				.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 				.create();
 
 		Server server = new Server(cfg.getAddress());

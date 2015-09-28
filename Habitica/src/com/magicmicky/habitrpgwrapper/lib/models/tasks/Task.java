@@ -14,6 +14,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ import java.util.List;
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
 public class Task extends BaseModel {
+    public static String TYPE_HABIT = "habit";
+    public static String TYPE_TODO = "todo";
+    public static String TYPE_DAILY = "daily";
+    public static String TYPE_REWARD = "reward";
 
     @Column
     @PrimaryKey
@@ -36,6 +41,9 @@ public class Task extends BaseModel {
     public Double value;
 
     public List<TaskTag> tags;
+
+    @Column
+    public Date dateCreated;
 
     //Habits
     @Column

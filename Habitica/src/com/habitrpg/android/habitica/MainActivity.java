@@ -16,7 +16,8 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.events.AddTaskTappedEvent;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
@@ -62,7 +63,6 @@ import retrofit.client.Response;
 
 public class MainActivity extends AvatarActivityBase implements HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, FlowContentObserver.OnSpecificModelStateChangedListener,
-        TaskCreationCallback.OnHabitCreated, TaskUpdateCallback.OnHabitUpdated,
         Callback<List<ItemData>>, OnCheckedChangeListener {
 
     static final int TASK_CREATED_RESULT = 1;
@@ -199,12 +199,14 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this, event.Habit.getId()));
     }
 
-    public void onEvent(AddTaskTappedEvent event) {
+    public void onEvent(AddNewTaskCommand event) {
         Bundle bundle = new Bundle();
-        bundle.putString("type", event.ClassType.getSimpleName().toLowerCase());
+        bundle.putString("type", event.ClassType.toLowerCase());
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
         startActivityForResult(intent, TASK_CREATED_RESULT);
     }
 
@@ -261,9 +263,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
         if (event.created) {
-            this.mAPIHelper.createNewTask(task, new TaskCreationCallback(this));
+            this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
         } else {
-            this.mAPIHelper.updateTask(task, new TaskUpdateCallback(this));
+            this.mAPIHelper.updateTask(task, new TaskUpdateCallback());
         }
     }
 
@@ -330,20 +332,20 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("habit", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.TYPE_HABIT);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("daily", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("reward", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter("todo", Task.class, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.class);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -510,28 +512,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 }
             });
         }
-    }
-
-    // TaskCreationCallback
-    @Override
-    public void onTaskCreated(Task habit) {
-        habit.save();
-    }
-
-    @Override
-    public void onTaskCreationFail() {
-
-    }
-
-    // TaskUpdateCallback
-    @Override
-    public void onTaskUpdated(Task habit) {
-        habit.save();
-    }
-
-    @Override
-    public void onTaskUpdateFail() {
-
     }
 
     // Filter Tags
