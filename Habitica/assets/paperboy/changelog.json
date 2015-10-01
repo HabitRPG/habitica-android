@@ -11,6 +11,10 @@
         "title": "Avatar-Drawing: Position without a mount/met"
       },
       {
+        "type": "B",
+        "title": "Fixed #4, #5"
+      },
+      {
         "type": "N",
         "title": "Generated avatar images are now cached"
       }
