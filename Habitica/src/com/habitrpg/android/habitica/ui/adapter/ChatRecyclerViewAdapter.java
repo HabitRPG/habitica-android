@@ -61,16 +61,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public int getItemViewType(int position) {
-        if(!isTavern){
-            return TYPE_MESSAGE;
-        }
-
         switch (position) {
             case 0: {
-                return TYPE_DANIEL;
+                return isTavern ? TYPE_DANIEL : TYPE_NEW_MESSAGE;
             }
             case 1: {
-                return TYPE_NEW_MESSAGE;
+                return isTavern ? TYPE_NEW_MESSAGE : TYPE_MESSAGE;
             }
             default: {
                 return TYPE_MESSAGE;
@@ -102,8 +98,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
-        if(!isTavern){
-            holder.bind(messages.get(position));
+        if(!isTavern && position > 0){
+            holder.bind(messages.get(position - 1));
             return;
         }
 
@@ -114,7 +110,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public int getItemCount() {
-        return messages.size() + (isTavern ? 2 : 0);
+        return messages.size() + (isTavern ? 2 : 1);
     }
 
     public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {

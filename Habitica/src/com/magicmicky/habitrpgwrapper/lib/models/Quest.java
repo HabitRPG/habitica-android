@@ -8,6 +8,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.HashMap;
+
 /**
  * Created by viirus on 06/07/15.
  */
@@ -18,6 +20,13 @@ public class Quest extends BaseModel {
     public String key;
 
     @Column
+    public boolean active;
+
+    @Column
+    public String leader;
+
+    public HashMap<String, Boolean> members;
+
     @ForeignKey(references = {@ForeignKeyReference(columnName = "progress_id",
             columnType = Long.class,
             foreignColumnName = "id")})

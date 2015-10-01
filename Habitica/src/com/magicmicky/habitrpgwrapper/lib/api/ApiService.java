@@ -32,15 +32,16 @@ public interface ApiService {
     @GET("/status")
     void getStatus(Callback<Status> statusCallback);
 
+    @GET("/content")
+    void getContent(Callback<ContentResult> contentResultCallback);
+
+    /* User API */
 
     @GET("/user/")
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
 
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
-
-    @GET("/content")
-    void getContent(Callback<ContentResult> contentResultCallback);
 
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
@@ -114,8 +115,7 @@ public interface ApiService {
     void seenMessage(@Path("gid") String groupId, Callback<Void> cb);
 
 /*
-    @GET("/content")
-    void getContent();//Check Callback
+
 
 
 

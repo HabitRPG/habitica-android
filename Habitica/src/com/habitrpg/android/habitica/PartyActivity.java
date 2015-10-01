@@ -13,10 +13,10 @@ import com.habitrpg.android.habitica.ui.fragments.PartyInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyMemberListFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.InjectView;
@@ -30,6 +30,8 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
     AppBarLayout appBarLayout;
 
     private APIHelper mAPIHelper;
+
+    private Group group;
 
     @Override
     protected int getLayoutRes() {
@@ -53,6 +55,38 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
         updateUserAvatars();
 
+        final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
+
+
+        // Get the full group data
+        mAPIHelper.apiService.getGroup("party", new Callback<Group>() {
+            @Override
+            public void success(Group group, Response response) {
+                PartyActivity.this.group = group;
+
+                if (partyMemberListFragment != null) {
+                    partyMemberListFragment.setMemberList(group.members);
+                }
+
+                if (partyInformationFragment != null) {
+                    partyInformationFragment.setGroup(group);
+                }
+
+                if (group.quest != null && !group.quest.key.isEmpty()) {
+                    contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
+                        @Override
+                        public void GotQuest(QuestContent content) {
+                            partyInformationFragment.setQuestContent(content);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
 
     }
 
@@ -70,6 +104,9 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
     private HashMap<Integer, Fragment> fragmentDictionary = new HashMap<>();
 
+    private PartyMemberListFragment partyMemberListFragment;
+    private PartyInformationFragment partyInformationFragment;
+
 
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -83,7 +120,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
                 switch (position) {
                     case 0: {
-                        fragment = new PartyInformationFragment();
+                        fragment = partyInformationFragment = new PartyInformationFragment(group);
                         break;
                     }
                     case 1: {
@@ -91,7 +128,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
                         break;
                     }
                     case 2: {
-                        fragment = new PartyMemberListFragment(PartyActivity.this, mAPIHelper.apiService);
+                        fragment = partyMemberListFragment = new PartyMemberListFragment(PartyActivity.this, group);
                         break;
                     }
                     default:
