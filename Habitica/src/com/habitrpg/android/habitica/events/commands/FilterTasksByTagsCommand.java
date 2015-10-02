@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class FilterTasksByTagsCommand {
     public ArrayList<String> tagList;
 
-    public FilterTasksByTagsCommand(ArrayList<String> tagList) {
-        this.tagList = tagList;
+    public FilterTasksByTagsCommand() {
     }
 }

@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
@@ -63,18 +64,18 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
+    private TagsHelper tagsHelper;
 
-
-    public HabitItemRecyclerViewAdapter(String taskType, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
-        this(taskType, layoutResource, viewHolderClass, newContext, null);
+    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
+        this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, null);
     }
 
-    public HabitItemRecyclerViewAdapter(String taskType, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
+    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
                                         Context newContext, final ObservableArrayList<Task> content) {
         this.taskType = taskType;
         this.context = newContext;
         observableContent = content;
-
+        this.tagsHelper = tagsHelper;
         if (content == null) {
             this.loadContent();
 
@@ -82,6 +83,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             observer.registerForContentChanges(this.context, Task.class);
             observer.addModelChangeListener(this);
         } else {
+            this.filter();
             content.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
                 @Override
                 public void onChanged(ObservableList sender) {
@@ -121,21 +123,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.viewHolderClass = viewHolderClass;
 
         EventBus.getDefault().register(this);
-        onEvent((FilterTasksByTagsCommand)null);
+        onEvent((FilterTasksByTagsCommand) null);
     }
 
     public void onEvent(FilterTasksByTagsCommand cmd) {
-        if (cmd == null || cmd.tagList.size() == 0) {
-            filteredObservableContent = observableContent;
-        } else {
-            filteredObservableContent = new ObservableArrayList<Task>();
-
-            for (Task e : observableContent) {
-                if (e.containsAllTagIds(cmd.tagList)) {
-                    filteredObservableContent.add(e);
-                }
-            }
-        }
+        this.filter();
 
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
@@ -160,6 +152,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         observableContent.add(0, evnt.task);
         notifyDataSetChanged();
+    }
+
+    private void filter() {
+        if (this.tagsHelper.howMany() == 0) {
+            filteredObservableContent = observableContent;
+        } else {
+            filteredObservableContent = new ObservableArrayList<Task>();
+            filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
+        }
+
     }
 
     public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {

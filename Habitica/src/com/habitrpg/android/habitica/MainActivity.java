@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -83,6 +84,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     FlowContentObserver observer;
 
+    private TagsHelper tagsHelper;
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -117,6 +119,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
         this.observer.addSpecificModelChangeListener(this);
 
+        this.tagsHelper = new TagsHelper();
     }
 
     @Override
@@ -129,7 +132,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
         }
         SetUserData();
-
     }
 
     @Override
@@ -367,20 +369,20 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.TYPE_HABIT);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.TYPE_HABIT);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -581,8 +583,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                     tagList.add(f.getKey());
                 }
             }
-
-            EventBus.getDefault().post(new FilterTasksByTagsCommand(tagList));
+            tagsHelper.setTags(tagList);
+            EventBus.getDefault().post(new FilterTasksByTagsCommand());
         }
     };
 
@@ -596,7 +598,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         if (t != null) {
             tagFilterMap.put(t.getId(), b);
             filterChangedHandler.hit();
-
             showSnackbar(t.getName() + " : " + b);
         }
     }
