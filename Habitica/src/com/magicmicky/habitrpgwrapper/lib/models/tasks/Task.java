@@ -185,7 +185,7 @@ public class Task extends BaseModel {
         return false;
     }
 
-    public boolean containsAllTagIds(ArrayList<String> tagIdList){
+    public boolean containsAllTagIds(List<String> tagIdList){
         getTags();
 
         ArrayList<String> allTagIds = new ArrayList<String>();
