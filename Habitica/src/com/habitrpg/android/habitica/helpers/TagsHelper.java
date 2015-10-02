@@ -28,6 +28,10 @@ public class TagsHelper {
         return this.tagsId.size();
     }
 
+    public List<String> getTags() {
+        return this.tagsId;
+    }
+
     public List<Task> filter(List<Task> tasks) {
         List<Task> filtered = new ArrayList<Task>();
         for(Task t : tasks) {

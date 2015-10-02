@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
@@ -37,7 +41,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private List<CheckBox> weekdayCheckboxes = new ArrayList<CheckBox>();
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
-
+    private List<String> tags;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString("type");
         taskId = bundle.getString("taskId");
+        tags = bundle.getStringArrayList("tagsId");
         if (taskType == null) {
             return;
         }
@@ -256,7 +261,20 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task.setType(taskType);
         }
         this.saveTask(this.task);
-
+        this.task.save();
+        List<TaskTag> taskTags = new ArrayList<TaskTag>();
+        for(String tag : tags) {
+            Tag t = new Select()
+                    .from(Tag.class)
+                    .where(Condition.column("id").is(tag)).querySingle();
+            Log.d("Tags", "Adding tag " +tag + " - " + t.getName());
+            TaskTag tt = new TaskTag();
+            tt.setTag(t);
+            tt.setTask(task);
+            taskTags.add(tt);
+        }
+        this.task.setTags(taskTags);
+        this.task.save();
         event.task = this.task;
         EventBus.getDefault().post(event);
 

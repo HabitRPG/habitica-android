@@ -151,6 +151,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             return;
 
         observableContent.add(0, evnt.task);
+        this.filter();
         notifyDataSetChanged();
     }
 

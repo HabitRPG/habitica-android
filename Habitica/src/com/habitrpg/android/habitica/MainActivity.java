@@ -170,6 +170,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     private void openNewTaskActivity(String type) {
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
+        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -224,7 +225,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
-
+        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, TASK_UPDATED_RESULT);
