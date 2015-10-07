@@ -49,6 +49,8 @@ import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.OnCheckedChangeListener;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -113,7 +115,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
         viewPager.setCurrentItem(0);
 
-        User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
+        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
         this.observer = new FlowContentObserver();
         this.observer.registerForContentChanges(this.getApplicationContext(), HabitRPGUser.class);
 
@@ -529,9 +531,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
-
-        SetUserData();
+        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+        Log.d("db", "received notif");
+//        SetUserData();
     }
 
     private boolean taskListAlreadyAdded;
@@ -602,4 +604,21 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             showSnackbar(t.getName() + " : " + b);
         }
     }
+
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            Log.d("db", "Found result" + habitRPGUser.getProfile().getName());
+            User = habitRPGUser;
+            SetUserData();
+        }
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 }
