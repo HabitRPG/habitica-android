@@ -20,6 +20,8 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -254,30 +256,19 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void prepareSave() {
-        TaskSaveEvent event = new TaskSaveEvent();
         if (this.task == null) {
-            event.created = true;
             this.task = new Task();
             this.task.setType(taskType);
         }
         this.saveTask(this.task);
+        Log.d("db", "saving task 1st");
+
         this.task.save();
         List<TaskTag> taskTags = new ArrayList<TaskTag>();
-        for(String tag : tags) {
-            Tag t = new Select()
-                    .from(Tag.class)
-                    .where(Condition.column("id").is(tag)).querySingle();
-            Log.d("Tags", "Adding tag " +tag + " - " + t.getName());
-            TaskTag tt = new TaskTag();
-            tt.setTag(t);
-            tt.setTask(task);
-            taskTags.add(tt);
-        }
-        this.task.setTags(taskTags);
-        this.task.save();
-        event.task = this.task;
-        EventBus.getDefault().post(event);
-
+        Log.d("db", "saving task");
+        new Select()
+                .from(Tag.class)
+                .where(Condition.column("id").in(tags)).async().queryList(tagsSearchingListener);
     }
 
     @Override
@@ -293,4 +284,41 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         finish();
         super.onBackPressed();
     }
+    private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
+        @Override
+        public void onResultReceived(List<Tag> tags) {
+            //UI thread.
+            Log.d("db", "adding tags");
+            List<TaskTag> taskTags = new ArrayList<TaskTag>();
+            for (Tag tag : tags) {
+                TaskTag tt = new TaskTag();
+                tt.setTag(tag);
+                tt.setTask(task);
+                taskTags.add(tt);
+            }
+            //save
+            TaskFormActivity.this.task.setTags(taskTags);
+            TaskFormActivity.this.task.save();
+            //send back to other elements.
+            TaskSaveEvent event = new TaskSaveEvent();
+            if (TaskFormActivity.this.task.getId() == null) {
+                event.created = true;
+            }
+            Log.d("db", "sending back events " + TaskFormActivity.this.task.getId());
+
+            event.task = TaskFormActivity.this.task;
+            EventBus.getDefault().post(event);
+
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Tag>> baseTransaction, List<Tag> tags) {
+            return true;
+        }
+    };
 }
