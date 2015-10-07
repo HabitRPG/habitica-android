@@ -261,14 +261,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task.setType(taskType);
         }
         this.saveTask(this.task);
-        Log.d("db", "saving task 1st");
 
         this.task.save();
         List<TaskTag> taskTags = new ArrayList<TaskTag>();
-        Log.d("db", "saving task");
         new Select()
                 .from(Tag.class)
-                .where(Condition.column("id").in(tags)).async().queryList(tagsSearchingListener);
+                .where(Condition.column("id").in("", tags.toArray())).async().queryList(tagsSearchingListener);
     }
 
     @Override
@@ -288,7 +286,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         @Override
         public void onResultReceived(List<Tag> tags) {
             //UI thread.
-            Log.d("db", "adding tags");
             List<TaskTag> taskTags = new ArrayList<TaskTag>();
             for (Tag tag : tags) {
                 TaskTag tt = new TaskTag();
@@ -304,7 +301,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             if (TaskFormActivity.this.task.getId() == null) {
                 event.created = true;
             }
-            Log.d("db", "sending back events " + TaskFormActivity.this.task.getId());
 
             event.task = TaskFormActivity.this.task;
             EventBus.getDefault().post(event);
