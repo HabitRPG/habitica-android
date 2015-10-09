@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +12,6 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
-import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.iconics.typeface.FontAwesome;
 
 import de.greenrobot.event.EventBus;
 
@@ -29,12 +25,10 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private String classType;
-    private boolean showFloatingButton;
 
     // TODO needs a bit of cleanup
-    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType, boolean showFloatingButton) {
+    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType) {
         this.classType = classType;
-        this.showFloatingButton = showFloatingButton;
         mAdapter = adapter;
     }
 
@@ -48,31 +42,13 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
         return view;
     }
 
-    private boolean alreadyCreated;
-
-
     LinearLayoutManager layoutManager = null;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //if (alreadyCreated)
-        //    return;
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         android.support.v4.app.FragmentActivity context = getActivity();
-
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-
-        if (fab.getDrawable() == null) {
-            IconicsDrawable icon = new IconicsDrawable(context, FontAwesome.Icon.faw_plus).color(Color.WHITE).sizeDp(24);
-
-            fab.setImageDrawable(icon);
-            fab.setOnClickListener(this);
-            fab.setClickable(true);
-        }
-
-        fab.setVisibility(showFloatingButton ? View.VISIBLE : View.INVISIBLE);
 
         layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
 
@@ -82,21 +58,13 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        //layoutManager.setSmoothScrollbarEnabled(true);
-
         mRecyclerView.setAdapter(mAdapter);
-
-        alreadyCreated = true;
     }
 
     public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
-       return newInstance(adapter, classType, true);
-    }
-
-    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType, boolean showFloatingButton) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
 
-        fragment.SetInnerAdapter(adapter, classType,showFloatingButton);
+        fragment.SetInnerAdapter(adapter, classType);
 
         return fragment;
     }

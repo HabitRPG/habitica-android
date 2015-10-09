@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.Gravity;
@@ -12,12 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -56,6 +57,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.InjectView;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -73,6 +76,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
     APIHelper mAPIHelper;
+
+    @InjectView(R.id.fab_menu)
+    FloatingActionMenu floatingMenu;
 
     FlowContentObserver observer;
 
@@ -134,14 +140,48 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         super.onDestroy();
     }
 
+    // region onClick for the FAB Menu
+
+    @OnClick(R.id.fab_new_habit)
+    public void onNewHabit(View view) {
+        openNewTaskActivity("habit");
+    }
+
+    @OnClick(R.id.fab_new_daily)
+    public void onNewDaily(View view) {
+        openNewTaskActivity("daily");
+    }
+
+    @OnClick(R.id.fab_new_todo)
+    public void onNewTodo(View view) {
+        openNewTaskActivity("todo");
+    }
+
+    @OnClick(R.id.fab_new_reward)
+    public void onNewReward(View view) {
+        openNewTaskActivity("reward");
+    }
+
+
+    private void openNewTaskActivity(String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+
+        Intent intent = new Intent(this, TaskFormActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        startActivityForResult(intent, TASK_CREATED_RESULT);
+    }
+
+    // endregion
+
     private void showSnackbar(String content) {
         showSnackbar(content, false);
     }
 
     private void showSnackbar(String content, boolean negative) {
-        Fragment f = ViewFragmentsDictionary.get(viewPager.getCurrentItem());
-
-        Snackbar snackbar = Snackbar.make(f.getView().findViewById(R.id.fab), content, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(floatingMenu, content, Snackbar.LENGTH_LONG);
 
         if (negative) {
             View snackbarView = snackbar.getView();
@@ -200,14 +240,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     }
 
     public void onEvent(AddNewTaskCommand event) {
-        Bundle bundle = new Bundle();
-        bundle.putString("type", event.ClassType.toLowerCase());
-
-        Intent intent = new Intent(this, TaskFormActivity.class);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        startActivityForResult(intent, TASK_CREATED_RESULT);
+        openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
     public void onEvent(final BuyRewardTappedEvent event) {

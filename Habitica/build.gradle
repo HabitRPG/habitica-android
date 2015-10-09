@@ -72,11 +72,15 @@ dependencies {
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.0.1'
 
-    // About View for all dependent Libraries, where are using
+    // About View for all dependent Libraries, we are using
     compile('com.mikepenz:aboutlibraries:5.0.5@aar') {
         transitive = true
     }
 
+    // a better fab alternative
+    compile 'com.github.clans:fab:1.6.1'
+
+    // ORM
     provided 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
     compile "com.raizlabs.android:DBFlow-Core:2.2.1"
     compile "com.raizlabs.android:DBFlow:2.2.1"
