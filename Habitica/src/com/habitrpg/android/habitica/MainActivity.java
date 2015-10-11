@@ -403,7 +403,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                     case 2:
                         return "Todos";
                     case 3:
-                        return "Rewardsahahahah";
+                        return "Rewards";
                 }
                 return "";
             }
