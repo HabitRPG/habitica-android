@@ -608,7 +608,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
-            Log.d("db", "Found result" + habitRPGUser.getProfile().getName());
             User = habitRPGUser;
             SetUserData();
         }

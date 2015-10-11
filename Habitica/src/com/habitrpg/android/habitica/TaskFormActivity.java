@@ -295,7 +295,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             }
             //save
             TaskFormActivity.this.task.setTags(taskTags);
-            TaskFormActivity.this.task.save();
+            TaskFormActivity.this.task.update();
             //send back to other elements.
             TaskSaveEvent event = new TaskSaveEvent();
             if (TaskFormActivity.this.task.getId() == null) {

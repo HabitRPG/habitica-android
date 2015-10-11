@@ -44,7 +44,7 @@ public class Tag extends BaseModel{
         if(tasks == null) {
             tasks = new Select()
                     .from(TaskTag.class)
-                    .where(Condition.column("tag_id").eq(this.id))
+                    .where(Condition.column("tag_id").eq(this.id)).and(Condition.column("task_id").isNotNull())
                     .queryList();
         }
         return tasks;
