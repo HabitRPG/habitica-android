@@ -38,7 +38,7 @@ public class Task extends BaseModel {
     public String text, notes, attribute, type;
 
     @Column
-    public Double value;
+    public double value;
 
     public List<TaskTag> tags;
 
@@ -52,7 +52,7 @@ public class Task extends BaseModel {
 
     //todos/dailies
     @Column
-    public Boolean completed;
+    public boolean completed;
 
     public List<ChecklistItem> checklist;
 
