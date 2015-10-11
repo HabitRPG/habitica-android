@@ -93,13 +93,13 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
 
 
-        titleTextView = new TextView(this);
-        titleTextView.setTextAppearance(this, android.R.style.TextAppearance_Material_Widget_ActionBar_Title_Inverse);
-        titleTextView.setPadding(0,16,0,0);
-        toolbar.addView(titleTextView);
+//        titleTextView = new TextView(this);
+//        titleTextView.setTextAppearance(this, android.R.style.TextAppearance_Material_Widget_ActionBar_Title_Inverse);
+//        titleTextView.setPadding(0,16,0,0);
+//        toolbar.addView(titleTextView);
     }
 
     protected void setTitle(String text){
-        titleTextView.setText(text);
+        toolbar.setTitle(text);
     }
 }

@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,7 +117,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
         this.observer.addSpecificModelChangeListener(this);
 
-        SetUserData();
     }
 
     @Override
@@ -128,6 +128,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
             mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
         }
+        SetUserData();
+
     }
 
     @Override
@@ -401,7 +403,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                     case 2:
                         return "Todos";
                     case 3:
-                        return "Rewards";
+                        return "Rewardsahahahah";
                 }
                 return "";
             }
@@ -541,6 +543,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         loadTaskLists();
                         FillTagFilterDrawer(User.getTags());
                     }
+                    Log.w("header", "updating header");
                     updateHeader();
                 }
             });

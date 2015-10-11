@@ -61,6 +61,11 @@
         <item name="android:popupBackground">@color/brand_500</item>
     </style>
 
+    <style name="MyCustomTabLayout" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:singleLine">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 
 
     <style name="CardText">

@@ -50,10 +50,10 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:gridlayout-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:gridlayout-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
 
     // Image Loading/Caching
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -89,9 +89,9 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     //buildToolsVersion "23.0.0-rc2"
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.1"
 
     lintOptions {
         abortOnError false

@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
                 android:fitsSystemWindows="true"
-
+                app:titleEnabled="false"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
@@ -67,8 +67,7 @@
                 android:background="?attr/colorPrimary"
                 android:elevation="0dp"
                 android:fillViewport="false"
-
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:theme="@style/MyCustomTabLayout"
                 app:layout_anchor="@+id/collapsing_toolbar"
                 app:layout_anchorGravity="bottom"
 
