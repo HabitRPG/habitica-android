@@ -2,15 +2,10 @@ package com.habitrpg.android.habitica;
 
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
-import com.raizlabs.android.dbflow.sql.SqlUtils;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Insert;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

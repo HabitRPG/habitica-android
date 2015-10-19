@@ -100,7 +100,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         }
 
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .withSelectedItem(0)
                 .build();
 
         filterDrawer = new DrawerBuilder()

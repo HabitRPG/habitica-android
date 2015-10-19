@@ -129,7 +129,7 @@
                 fab:fab_shadowColor="#000"
                 fab:fab_elevationCompat="6dp"
 
-                android:src="@drawable/ic_menu_edit"
+                android:src="@drawable/fab_add"
                 fab:fab_size="mini"
                 fab:fab_label="New Daily" />
 
@@ -145,7 +145,7 @@
                 fab:fab_shadowColor="#000"
                 fab:fab_elevationCompat="6dp"
 
-                android:src="@drawable/ic_menu_edit"
+                android:src="@drawable/fab_add"
                 fab:fab_size="mini"
                 fab:fab_label="New Todo" />
 
@@ -161,7 +161,7 @@
                 fab:fab_shadowColor="#000"
                 fab:fab_elevationCompat="6dp"
 
-                android:src="@drawable/ic_menu_edit"
+                android:src="@drawable/fab_add"
                 fab:fab_size="mini"
                 fab:fab_label="New Reward" />
 

@@ -148,4 +148,7 @@
     <string name="sunday">Sunday</string>
     <string name="title_activity_tavern">Tavern</string>
     <string name="title_activity_party">Party</string>
+    <string name="title_activity_gem_purchase">Purchase Gems</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
