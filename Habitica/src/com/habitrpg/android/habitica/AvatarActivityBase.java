@@ -85,7 +85,7 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
                 actionBar.setHomeButtonEnabled(false);
             }
 
-            toolbar.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tool_bar_top_padding), 0, 0);
+//            toolbar.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tool_bar_top_padding), 0, 0);
         }
 
         viewPager.setBackgroundColor(getResources().getColor(R.color.white));
