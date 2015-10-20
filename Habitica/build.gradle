@@ -46,7 +46,7 @@ dependencies {
     // View Elements Injection :)
     compile 'com.jakewharton:butterknife:6.1.0'
 
-    compile('com.mikepenz:materialdrawer:3.0.8@aar') {
+    compile('com.mikepenz:materialdrawer:4.3.8@aar') {
         transitive = true
     }
 
@@ -59,8 +59,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     // Icons
-    compile 'com.mikepenz:iconics:1.1.0@aar'
-
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
     // Instant Layout Changing w/o recompile

@@ -41,7 +41,6 @@ public class MainDrawerBuilder {
         }
 
         builder.withHeaderDivider(false)
-                .withAnimateDrawerItems(true)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
 
@@ -65,7 +64,7 @@ public class MainDrawerBuilder {
                 .withStickyFooterDivider(false)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
 
                         Class selectedClass = null;

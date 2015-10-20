@@ -64,7 +64,6 @@ public class TavernActivity extends AppCompatActivity {
                 .withTranslucentNavigationBar(false)
                 .withTranslucentStatusBar(false)
                 .withDisplayBelowStatusBar(false)
-                .withDisplayBelowToolbar(false)
                 .withSelectedItem(2)
                 .build();
 

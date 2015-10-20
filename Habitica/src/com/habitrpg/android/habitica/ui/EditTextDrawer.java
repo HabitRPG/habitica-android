@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.materialdrawer.model.BaseDrawerItem;
+import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +22,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Negue on 18.06.2015.
  */
-public class EditTextDrawer extends BaseDrawerItem<EditTextDrawer> {
+public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
     @Override
     public String getType() {
         return "EDIT_TEXT_DRAWER";
@@ -31,6 +34,15 @@ public class EditTextDrawer extends BaseDrawerItem<EditTextDrawer> {
     }
 
     @Override
+    public void bindView(RecyclerView.ViewHolder viewHolder) {
+        final ViewHolder holder = (ViewHolder) viewHolder;
+//        ((ViewHolder) viewHolder).btnAdd
+
+        onPostBindView(this, holder.itemView);
+
+    }
+
+    /*@Override
     public View convertView(LayoutInflater inflater, View convertView, ViewGroup parent) {
         Context ctx = parent.getContext();
 
@@ -45,10 +57,21 @@ public class EditTextDrawer extends BaseDrawerItem<EditTextDrawer> {
         }
 
         return convertView;
+    }*/
+
+    @Override
+    public ViewHolderFactory getFactory() {
+        return new ItemFactory();
+    }
+
+    public static class ItemFactory implements ViewHolderFactory<ViewHolder> {
+        public ViewHolder factory(View v) {
+            return new ViewHolder(v);
+        }
     }
 
 
-    public static class ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         View view;
 
@@ -59,6 +82,7 @@ public class EditTextDrawer extends BaseDrawerItem<EditTextDrawer> {
         Button btnAdd;
 
         private ViewHolder(View view) {
+            super(view);
             this.view = view;
             ButterKnife.inject(this, view);
 

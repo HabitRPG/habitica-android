@@ -47,7 +47,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener ;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -597,7 +597,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     @Override
     public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
         Tag t = (Tag) iDrawerItem.getTag();
-
+        Log.w("Tags", "onCheckedChanged" + compoundButton.isChecked() + " : " + b);
         if (t != null) {
             tagFilterMap.put(t.getId(), b);
             filterChangedHandler.hit();
