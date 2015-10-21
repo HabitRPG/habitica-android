@@ -42,6 +42,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
@@ -60,6 +61,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -302,8 +304,10 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
+        Log.d("tags", "Task saving");
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
+            updateTags(event.task.getTags());
         } else {
             this.mAPIHelper.updateTask(task, new TaskUpdateCallback());
         }
@@ -572,6 +576,31 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                             .withOnCheckedChangeListener(this)
             );
         }
+    }
+    /*
+        Updates concerned tags.
+     */
+    public void updateTags(List<TaskTag> tags) {
+        Log.d("tags", "Updating tags");
+        List<IDrawerItem> filters = filterDrawer.getDrawerItems();
+        for (IDrawerItem filter : filters) {
+            if(filter instanceof SwitchDrawerItem) {
+                SwitchDrawerItem currentfilter = (SwitchDrawerItem) filter;
+                Log.v("tags", "Tag " + currentfilter.getName());
+                String tagId = ((Tag) currentfilter.getTag()).getId();
+                for(TaskTag tag : tags) {
+                    Tag currentTag = tag.getTag();
+
+
+
+                    if(tagId != null && currentTag!=null && tagId.equals(currentTag.getId())) {
+                        currentfilter.withDescription(""+(currentTag.getTasks().size()+1));
+                        filterDrawer.updateItem(currentfilter);
+                    }
+                }
+            }
+        }
+
     }
 
     // A Filter was checked
