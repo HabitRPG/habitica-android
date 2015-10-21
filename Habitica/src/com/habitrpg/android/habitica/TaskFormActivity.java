@@ -210,8 +210,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
-    private void saveTask(Task task) {
+    private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
+
+        if(task.text.isEmpty())
+            return false;
+
         task.notes = taskNotes.getText().toString();
 
         if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
@@ -244,6 +248,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 task.setEveryX(this.frequencyPicker.getValue());
             }
         }
+
+        return true;
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
@@ -260,13 +266,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task = new Task();
             this.task.setType(taskType);
         }
-        this.saveTask(this.task);
-
-        this.task.save();
-        List<TaskTag> taskTags = new ArrayList<TaskTag>();
-        new Select()
-                .from(Tag.class)
-                .where(Condition.column("id").in("", tags.toArray())).async().queryList(tagsSearchingListener);
+        if(this.saveTask(this.task)) {
+            this.task.save();
+            List<TaskTag> taskTags = new ArrayList<TaskTag>();
+            new Select()
+                    .from(Tag.class)
+                    .where(Condition.column("id").in("", tags.toArray())).async().queryList(tagsSearchingListener);
+        }
     }
 
     @Override

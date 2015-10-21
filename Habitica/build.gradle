@@ -85,6 +85,9 @@ dependencies {
     compile "com.raizlabs.android:DBFlow:2.2.1"
 
     compile 'de.greenrobot:eventbus:2.4.0'
+
+    // IAP Handling / Verification
+    compile 'org.solovyev.android:checkout:0.7.4@aar'
 }
 
 android {

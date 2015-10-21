@@ -43,7 +43,6 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
         super.onCreate(savedInstanceState);
 
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .withSelectedItem(0)
                 .build();
 
         setViewPagerAdapter();

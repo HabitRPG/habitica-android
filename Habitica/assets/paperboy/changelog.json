@@ -1,5 +1,26 @@
 [
   {
+    "name": "Version 0.0.5",
+    "items":[
+      {
+        "type": "F",
+        "title": "New Floating-Action-Button with sub buttons"
+      },
+      {
+        "type": "B",
+        "title": "Tag-Filter now fully working"
+      },
+      {
+        "type": "B",
+        "title": "Speed up loading+saving of data"
+      },
+      {
+        "type": "B",
+        "title": "Tasks were saved/added without a title"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.4",
     "items":[
       {
