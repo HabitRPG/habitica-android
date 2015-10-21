@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import de.greenrobot.event.EventBus;
@@ -20,7 +21,7 @@ public class TaskUpdateCallback implements Callback<Task> {
     public void success(Task task, Response response) {
         task.save();
 
-        EventBus.getDefault().post(new TaskCreatedEvent(task));
+        EventBus.getDefault().post(new TaskUpdatedEvent(task));
     }
 
     @Override

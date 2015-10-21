@@ -63,11 +63,10 @@
 		start the scanning mode, use the button in the menu.
 	</string>
     <string name="SP_acknowledge_qrcode">acknowledge_qrcode_omg</string>
-    <string name="create_todo_hint">New todo</string>
-    <string name="create_reward_hint">New reward</string>
-    <string name="create_daily_hint">New daily</string>
-    <string name="create_habit_hint">New habit</string>
-    <string name="create_task_hint">New task</string>
+    <string name="new_todo">New todo</string>
+    <string name="new_reward">New reward</string>
+    <string name="new_daily">New daily</string>
+    <string name="new_habit">New habit</string>
     <string name="task_deleted">The task %s was deleted successfully</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
@@ -149,6 +148,4 @@
     <string name="title_activity_tavern">Tavern</string>
     <string name="title_activity_party">Party</string>
     <string name="title_activity_gem_purchase">Purchase Gems</string>
-
-    <string name="hello_world">Hello world!</string>
 </resources>

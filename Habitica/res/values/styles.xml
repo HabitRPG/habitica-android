@@ -21,6 +21,9 @@
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand</item>
         <item name="colorAccent">@color/brand</item>
+        <item name="android:colorPrimaryDark" tools:targetApi="21">@color/brand</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/brand</item>
+
 
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/material_drawer_background</item>
@@ -52,6 +55,10 @@
     </style>
 
     <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
+        <item name="android:textColorPrimary">@android:color/black</item>
+    </style>
+
+    <style name="AppThemeWithBlackText" parent="AppTheme">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 

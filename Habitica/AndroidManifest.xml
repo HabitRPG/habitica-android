@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.habitrpg.android.habitica"
-    android:versionCode="4"
-    android:versionName="0.0.4"
+    android:versionCode="5"
+    android:versionName="0.0.5"
     android:screenOrientation="portrait" >
 
     <uses-sdk
@@ -34,8 +34,7 @@
         </activity>
         <activity
             android:name=".prefs.PrefsActivity"
-            android:label="@string/PS_param_title"
-            android:theme="@style/AppThemeWithActionBar" >
+            android:label="@string/PS_param_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -74,7 +73,6 @@
             android:theme="@style/AppThemeWithActionBarBlackText" />
         <activity
             android:name=".TaskFormActivity"
-            android:label="@string/title_activity_task_form"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppThemeWithActionBarBlackText" >
             <meta-data
@@ -101,8 +99,7 @@
         <activity
             android:name=".GemPurchaseActivity"
             android:label="@string/title_activity_gem_purchase"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeWithOwnActionBar" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />

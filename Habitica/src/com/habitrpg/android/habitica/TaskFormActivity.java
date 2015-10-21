@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -44,6 +45,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
     private List<String> tags;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             mainWrapper.removeView(actionsLayout);
         }
 
-        LinearLayout weekdayWrapper = (LinearLayout)findViewById(R.id.task_weekdays_wrapper);
+        LinearLayout weekdayWrapper = (LinearLayout) findViewById(R.id.task_weekdays_wrapper);
         if (taskType.equals("daily")) {
             this.dailyFrequencySpinner = (Spinner) weekdayWrapper.findViewById(R.id.task_frequency_spinner);
 
@@ -98,10 +100,44 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             mainWrapper.removeView(weekdayWrapper);
         }
 
+
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
             this.populate(task);
+            setTitle(task);
+        } else{
+          setTitle((Task)null);
+        }
+    }
+
+    private void setTitle(Task task) {
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+
+            String title = "";
+
+            if (task != null) {
+                title = getResources().getString(R.string.action_edit)+ " " + task.getText();
+            } else {
+                switch (taskType) {
+                    case "todo":
+                        title = getResources().getString(R.string.new_todo);
+                        break;
+                    case "daily":
+                        title = getResources().getString(R.string.new_daily);
+                        break;
+                    case "habit":
+                        title = getResources().getString(R.string.new_habit);
+                        break;
+                    case "reward":
+                        title = getResources().getString(R.string.new_reward);
+                        break;
+                }
+            }
+
+            actionBar.setTitle(title);
         }
     }
 
@@ -213,7 +249,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
 
-        if(task.text.isEmpty())
+        if (task.text.isEmpty())
             return false;
 
         task.notes = taskNotes.getText().toString();
@@ -236,13 +272,19 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (task.type.equals("daily")) {
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                 task.setFrequency("weekly");
-                task.getRepeat().setM(this.weekdayCheckboxes.get(0).isChecked());
-                task.getRepeat().setT(this.weekdayCheckboxes.get(1).isChecked());
-                task.getRepeat().setW(this.weekdayCheckboxes.get(2).isChecked());
-                task.getRepeat().setTh(this.weekdayCheckboxes.get(3).isChecked());
-                task.getRepeat().setF(this.weekdayCheckboxes.get(4).isChecked());
-                task.getRepeat().setS(this.weekdayCheckboxes.get(5).isChecked());
-                task.getRepeat().setSu(this.weekdayCheckboxes.get(6).isChecked());
+                Days repeat = task.getRepeat();
+                if(repeat == null){
+                    repeat = new Days();
+                    task.setRepeat(repeat);
+                }
+
+                repeat.setM(this.weekdayCheckboxes.get(0).isChecked());
+                repeat.setT(this.weekdayCheckboxes.get(1).isChecked());
+                repeat.setW(this.weekdayCheckboxes.get(2).isChecked());
+                repeat.setTh(this.weekdayCheckboxes.get(3).isChecked());
+                repeat.setF(this.weekdayCheckboxes.get(4).isChecked());
+                repeat.setS(this.weekdayCheckboxes.get(5).isChecked());
+                repeat.setSu(this.weekdayCheckboxes.get(6).isChecked());
             } else {
                 task.setFrequency("daily");
                 task.setEveryX(this.frequencyPicker.getValue());
@@ -266,7 +308,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task = new Task();
             this.task.setType(taskType);
         }
-        if(this.saveTask(this.task)) {
+        if (this.saveTask(this.task)) {
             this.task.save();
             List<TaskTag> taskTags = new ArrayList<TaskTag>();
             new Select()
@@ -288,6 +330,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         finish();
         super.onBackPressed();
     }
+
     private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
         @Override
         public void onResultReceived(List<Tag> tags) {

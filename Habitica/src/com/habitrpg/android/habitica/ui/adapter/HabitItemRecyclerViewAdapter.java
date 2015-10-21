@@ -143,7 +143,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     public void onEvent(TaskUpdatedEvent evnt){
-        // TODO Update Entry
+        if(!taskType.equals(evnt.task.getType()))
+            return;
+
+        this.filter();
+        notifyDataSetChanged();
     }
 
     public void onEvent(TaskCreatedEvent evnt){
