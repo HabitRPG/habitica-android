@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -41,13 +42,16 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener ;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -57,6 +61,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -83,6 +88,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     FlowContentObserver observer;
 
+    private TagsHelper tagsHelper;
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -111,12 +117,13 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
         viewPager.setCurrentItem(0);
 
-        User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
+        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
         this.observer = new FlowContentObserver();
         this.observer.registerForContentChanges(this.getApplicationContext(), HabitRPGUser.class);
 
         this.observer.addSpecificModelChangeListener(this);
 
+        this.tagsHelper = new TagsHelper();
     }
 
     @Override
@@ -129,7 +136,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
         }
         SetUserData();
-
     }
 
     @Override
@@ -168,6 +174,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     private void openNewTaskActivity(String type) {
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
+        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -222,7 +229,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
-
+        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, TASK_UPDATED_RESULT);
@@ -297,8 +304,10 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
+        Log.d("tags", "Task saving");
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
+            updateTags(event.task.getTags());
         } else {
             this.mAPIHelper.updateTask(task, new TaskUpdateCallback());
         }
@@ -367,20 +376,20 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.TYPE_HABIT);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, MainActivity.this), Task.TYPE_HABIT);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, MainActivity.this), Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -526,9 +535,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
-
-        SetUserData();
+        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+        Log.d("db", "received notif");
+//        SetUserData();
     }
 
     private boolean taskListAlreadyAdded;
@@ -568,6 +577,31 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             );
         }
     }
+    /*
+        Updates concerned tags.
+     */
+    public void updateTags(List<TaskTag> tags) {
+        Log.d("tags", "Updating tags");
+        List<IDrawerItem> filters = filterDrawer.getDrawerItems();
+        for (IDrawerItem filter : filters) {
+            if(filter instanceof SwitchDrawerItem) {
+                SwitchDrawerItem currentfilter = (SwitchDrawerItem) filter;
+                Log.v("tags", "Tag " + currentfilter.getName());
+                String tagId = ((Tag) currentfilter.getTag()).getId();
+                for(TaskTag tag : tags) {
+                    Tag currentTag = tag.getTag();
+
+
+
+                    if(tagId != null && currentTag!=null && tagId.equals(currentTag.getId())) {
+                        currentfilter.withDescription(""+(currentTag.getTasks().size()+1));
+                        filterDrawer.updateItem(currentfilter);
+                    }
+                }
+            }
+        }
+
+    }
 
     // A Filter was checked
 
@@ -581,8 +615,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                     tagList.add(f.getKey());
                 }
             }
-
-            EventBus.getDefault().post(new FilterTasksByTagsCommand(tagList));
+            tagsHelper.setTags(tagList);
+            EventBus.getDefault().post(new FilterTasksByTagsCommand());
         }
     };
 
@@ -592,12 +626,27 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     @Override
     public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
         Tag t = (Tag) iDrawerItem.getTag();
-
+        Log.w("Tags", "onCheckedChanged" + compoundButton.isChecked() + " : " + b);
         if (t != null) {
             tagFilterMap.put(t.getId(), b);
             filterChangedHandler.hit();
-
             showSnackbar(t.getName() + " : " + b);
         }
     }
+
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            User = habitRPGUser;
+            SetUserData();
+        }
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 }

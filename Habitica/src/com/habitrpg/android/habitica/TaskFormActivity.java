@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
@@ -37,7 +43,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private List<CheckBox> weekdayCheckboxes = new ArrayList<CheckBox>();
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
-
+    private List<String> tags;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString("type");
         taskId = bundle.getString("taskId");
+        tags = bundle.getStringArrayList("tagsId");
         if (taskType == null) {
             return;
         }
@@ -249,17 +256,17 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void prepareSave() {
-        TaskSaveEvent event = new TaskSaveEvent();
         if (this.task == null) {
-            event.created = true;
             this.task = new Task();
             this.task.setType(taskType);
         }
         this.saveTask(this.task);
 
-        event.task = this.task;
-        EventBus.getDefault().post(event);
-
+        this.task.save();
+        List<TaskTag> taskTags = new ArrayList<TaskTag>();
+        new Select()
+                .from(Tag.class)
+                .where(Condition.column("id").in("", tags.toArray())).async().queryList(tagsSearchingListener);
     }
 
     @Override
@@ -275,4 +282,39 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         finish();
         super.onBackPressed();
     }
+    private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
+        @Override
+        public void onResultReceived(List<Tag> tags) {
+            //UI thread.
+            List<TaskTag> taskTags = new ArrayList<TaskTag>();
+            for (Tag tag : tags) {
+                TaskTag tt = new TaskTag();
+                tt.setTag(tag);
+                tt.setTask(task);
+                taskTags.add(tt);
+            }
+            //save
+            TaskFormActivity.this.task.setTags(taskTags);
+            TaskFormActivity.this.task.update();
+            //send back to other elements.
+            TaskSaveEvent event = new TaskSaveEvent();
+            if (TaskFormActivity.this.task.getId() == null) {
+                event.created = true;
+            }
+
+            event.task = TaskFormActivity.this.task;
+            EventBus.getDefault().post(event);
+
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Tag>> baseTransaction, List<Tag> tags) {
+            return true;
+        }
+    };
 }
