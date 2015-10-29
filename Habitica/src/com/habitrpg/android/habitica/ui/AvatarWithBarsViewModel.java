@@ -48,9 +48,9 @@ public class AvatarWithBarsViewModel {
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
 
-        SetValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor);
-        SetValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor);
-        SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor);
+        SetValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor, R.drawable.ic_header_heart);
+        SetValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
+        SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
     }
 
     public void UpdateData(HabitRPGUser user)
@@ -58,8 +58,8 @@ public class AvatarWithBarsViewModel {
         Stats stats = user.getStats();
 
         SetHpBarData(hpBar, stats, context);
-        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor));
-        SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor));
+        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
+        SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
 
         new UserPicture(user, this.context).setPictureOn(image);
     }
@@ -72,12 +72,12 @@ public class AvatarWithBarsViewModel {
             maxHP = 50;
         }
 
-        SetValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor));
+        SetValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color)
+    private static void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon)
     {
         double percent = Math.min(1, value / valueMax);
 
@@ -95,5 +95,6 @@ public class AvatarWithBarsViewModel {
         valueBar.setText((int) value + "/" + (int) valueMax);
         valueBar.setDescription(description);
         valueBar.setBarForegroundColor(color);
+        valueBar.icHeader.setImageResource(icon);
     }
 }
