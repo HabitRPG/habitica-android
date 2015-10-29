@@ -18,7 +18,7 @@
 
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
-        <item name="colorPrimaryDark">@color/brand</item>
+        <item name="colorPrimaryDark">@color/brand_50</item>
         <item name="colorAccent">@color/brand</item>
 
 
