@@ -24,7 +24,11 @@ public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")
     public static void loadImage(ImageView view, String imageName) {
-        Picasso.with(view.getContext()).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/"+ imageName +".png").into(view);
+        if(view.getVisibility() == View.VISIBLE) {
+            Picasso.with(view.getContext())
+                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png")
+                    .into(view);
+        }
     }
 
     @BindingAdapter("bind:cardColor")

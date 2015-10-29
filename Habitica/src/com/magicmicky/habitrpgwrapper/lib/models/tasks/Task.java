@@ -76,6 +76,8 @@ public class Task extends BaseModel {
     @Column
     public String date;
 
+    // used for buyable items
+    public String specialTag;
 
     /**
      * @return the id
