@@ -76,7 +76,7 @@
                 app:tabIndicatorColor="@android:color/white"
                 app:tabMode="fixed" />
 
-        </android.support.design.widget.AppBarLayout>/
+        </android.support.design.widget.AppBarLayout>
 
 
         <com.github.clans.fab.FloatingActionMenu

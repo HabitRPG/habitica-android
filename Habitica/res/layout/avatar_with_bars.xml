@@ -63,10 +63,10 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_header_warrior"
             android:drawableStart="@drawable/ic_header_warrior"
-            android:drawablePadding="8dp"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="Lv 6 Warrior"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/textColorSecondaryDark"/>
     </LinearLayout>
     <LinearLayout
@@ -80,9 +80,9 @@
             android:drawableStart="@drawable/ic_header_gold"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:drawablePadding="8dp"
+            android:drawablePadding="6dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:text="24"
             android:textColor="@color/textColorSecondaryDark"
             />
@@ -91,13 +91,13 @@
             android:drawableStart="@drawable/ic_header_silver"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:drawablePadding="8dp"
+            android:drawablePadding="6dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:text="10"
             android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             />
         <TextView
             android:drawableLeft="@drawable/ic_header_gem"
@@ -106,11 +106,11 @@
             android:gravity="center"
             android:drawablePadding="8dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:text="8"
             android:textColor="@color/textColorSecondaryDark"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             />
     </LinearLayout>
 </RelativeLayout>
