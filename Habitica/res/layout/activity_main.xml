@@ -31,7 +31,7 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="false"
                 app:titleEnabled="false"
                 app:contentScrim="?attr/colorPrimary"
@@ -43,7 +43,7 @@
                     android:id="@+id/avatar_with_bars"
                     layout="@layout/avatar_with_bars"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="?attr/actionBarSize"
                     app:layout_collapseMode="parallax" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
-                android:background="@color/brand_200"
+                android:background="@color/brand_300"
                 android:elevation="0dp"
                 android:fillViewport="false"
                 android:theme="@style/MyCustomTabLayout"

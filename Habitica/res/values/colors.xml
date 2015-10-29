@@ -53,6 +53,13 @@
 
     <color name="changelog.note">#ffcf42</color>
 
+
+    <!-- text -->
+    <color name="textColorDark">#FFFFFF</color>
+    <color name="textColorSecondaryDark">@color/brand_500</color>
+    <color name="textColorLight">#212121</color>
+    <color name="textColorSecondaryLight">#727272</color>
+
     <!-- Cards -->
     <color name="stroke">#dddddd</color>
     <color name="text_light">#66000000</color>
