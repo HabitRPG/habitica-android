@@ -1,85 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
+        <import type="android.view.View"/>
 
         <variable
             name="reward"
             type="Task" />
     </data>
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
-
         <LinearLayout
-            android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/checkedTextView"
-                    style="@style/CardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imageView3"
-                    android:layout_toRightOf="@+id/imageView3"
-                    android:layout_toStartOf="@+id/btnReward"
-                    android:layout_toLeftOf="@+id/btnReward"
-                    android:padding="5dp"
-                    android:text="@{reward.text}" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    style="@style/CardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/checkedTextView"
-                    android:layout_alignStart="@+id/checkedTextView"
-                    android:layout_alignRight="@+id/checkedTextView"
-                    android:layout_alignEnd="@+id/checkedTextView"
-                    android:layout_below="@+id/checkedTextView"
-                    android:maxLines="3"
-                    android:minLines="2"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="@{reward.notes}" />
-
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/btnLayout">
                 <Button
                     android:id="@+id/btnReward"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
                     android:drawableLeft="@drawable/gold"
-                    android:maxHeight="10dp"
-                    android:text="@{String.valueOf(reward.value)}" />
+                    android:text='@{String.format("%.0f", reward.value)}'
+                    app:backgroundColor="@{reward.getLightTaskColor}" />
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="65dp"
+                    android:layout_width="60dp"
                     android:padding="5dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
-                    app:imageName="@{reward.id}"/>
+                    android:visibility='@{reward.specialTag == "item" ? View.VISIBLE : View.GONE}'
+                    bind:imageName='@{"shop_"+reward.id}'/>
 
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:id="@+id/checkedTextView"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@{reward.text}" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        style="@style/CardText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{reward.notes}"
+                        android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
+                </LinearLayout>
+                <View
+                    android:id="@+id/rightBorderView"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    app:backgroundColor="@{reward.getLightTaskColor}"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
-
+        <View
+            android:id="@+id/bottomBorderView"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/cell_separator"/>
     </LinearLayout>
-
 </layout>

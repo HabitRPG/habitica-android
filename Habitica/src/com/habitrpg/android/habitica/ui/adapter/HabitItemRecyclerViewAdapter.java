@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,15 +41,23 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
-import java.util.Objects;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
+
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements FlowContentObserver.OnModelStateChangedListener {
+        implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
+
+
+    public interface IAdditionalEntries
+    {
+        void GetAdditionalEntries(IReceiveNewEntries callBack);
+    }
+
 
     int layoutResource;
     private Class<ViewHolder<Task>> viewHolderClass;
@@ -65,59 +72,24 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     static final int TYPE_CELL = 1;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
+    private IAdditionalEntries additionalEntries;
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
         this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, null);
     }
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
-                                        Context newContext, final ObservableArrayList<Task> content) {
+                                        Context newContext, final IAdditionalEntries additionalEntries) {
         this.taskType = taskType;
         this.context = newContext;
-        observableContent = content;
         this.tagsHelper = tagsHelper;
-        if (content == null) {
-            this.loadContent();
+        this.additionalEntries = additionalEntries;
 
-            observer = new FlowContentObserver();
-            observer.registerForContentChanges(this.context, Task.class);
-            observer.addModelChangeListener(this);
-        } else {
-            this.filter();
-            content.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
-                @Override
-                public void onChanged(ObservableList sender) {
-                    handler.removeCallbacks(reloadContentRunable);
-                    handler.postDelayed(reloadContentRunable, 200);
-                }
+        this.loadContent();
 
-                @Override
-                public void onItemRangeChanged(ObservableList sender, int positionStart, int itemCount) {
-                    handler.removeCallbacks(reloadContentRunable);
-                    handler.postDelayed(reloadContentRunable, 200);
-                }
-
-                @Override
-                public void onItemRangeInserted(ObservableList sender, int positionStart, int itemCount) {
-                    handler.removeCallbacks(reloadContentRunable);
-                    handler.postDelayed(reloadContentRunable, 200);
-                }
-
-                @Override
-                public void onItemRangeMoved(ObservableList sender, int fromPosition, int toPosition, int itemCount) {
-                    handler.removeCallbacks(reloadContentRunable);
-                    handler.postDelayed(reloadContentRunable, 200);
-                }
-
-                @Override
-                public void onItemRangeRemoved(ObservableList sender, int positionStart, int itemCount) {
-                    handler.removeCallbacks(reloadContentRunable);
-                    handler.postDelayed(reloadContentRunable, 200);
-                }
-            });
-
-            loadContent();
-        }
+        observer = new FlowContentObserver();
+        observer.registerForContentChanges(this.context, Task.class);
+        observer.addModelChangeListener(this);
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
@@ -250,6 +222,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         handler.removeCallbacks(reloadContentRunable);
         handler.postDelayed(reloadContentRunable, 200);
     }
+
+    // region ViewHolders
 
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -515,6 +489,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
     }
 
+    // endregion
 
     public void loadContent() {
         if (this.observableContent == null) {
@@ -525,7 +500,23 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .where(Condition.column("type").eq(this.taskType))
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
+
+            if(additionalEntries != null){
+                additionalEntries.GetAdditionalEntries(this);
+            }
         }
+
+        if (parentAdapter != null) {
+            parentAdapter.notifyDataSetChanged();
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public void GotAdditionalItems(List<Task> items) {
+        this.observableContent.addAll(items);
 
         if (parentAdapter != null) {
             parentAdapter.notifyDataSetChanged();

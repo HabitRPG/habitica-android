@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
@@ -34,6 +33,7 @@ import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -48,7 +48,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener ;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -61,7 +61,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -72,7 +71,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends AvatarActivityBase implements HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, FlowContentObserver.OnSpecificModelStateChangedListener,
-        Callback<List<ItemData>>, OnCheckedChangeListener {
+        OnCheckedChangeListener {
 
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
@@ -89,6 +88,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     FlowContentObserver observer;
 
     private TagsHelper tagsHelper;
+
+    private ContentCache contentCache;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -133,6 +135,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             this.mAPIHelper = new APIHelper(this, hostConfig);
 
             mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+
+            contentCache = new ContentCache(mAPIHelper.apiService);
         }
         SetUserData();
     }
@@ -259,10 +263,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             return;
         }
 
-        mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
-
-        /*
-        if (event.Reward instanceof RewardItem) {
+        if (event.Reward.specialTag == "item") {
             if (rewardKey.equals("potion")) {
                 int currentHp = User.getStats().getHp().intValue();
                 int maxHp = User.getStats().getMaxHealth();
@@ -274,15 +275,20 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             }
 
             mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
+
                 @Override
                 public void success(Void aVoid, Response response) {
-
                     switch (rewardKey) {
                         case "potion":
                             double newHp = Math.min(User.getStats().getMaxHealth(), User.getStats().getHp() + 15);
                             User.getStats().setHp(newHp);
 
                             updateHeader();
+
+                            break;
+                        default:
+
+                            // TODO Add bought item to the avatar
 
                             break;
                     }
@@ -292,13 +298,14 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
                 @Override
                 public void failure(RetrofitError error) {
-
                     showSnackbar("Buy Reward Error " + event.Reward.getText(), true);
                 }
             });
         } else {
             // User created Rewards
-        }*/
+
+            mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
+        }
     }
 
     public void onEvent(final TaskSaveEvent event) {
@@ -384,7 +391,59 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this), Task.TYPE_REWARD);
+                        HabitItemRecyclerViewAdapter adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper,
+                                layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this,
+                                new HabitItemRecyclerViewAdapter.IAdditionalEntries() {
+                                    @Override
+                                    public void GetAdditionalEntries(final IReceiveNewEntries callBack) {
+
+                                        // request buyable gear
+                                        mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
+                                            @Override
+                                            public void success(List<ItemData> itemDatas, Response response) {
+
+                                                // get itemdata list
+                                                ArrayList<String> itemKeys = new ArrayList<String>();
+                                                for (ItemData item : itemDatas) {
+                                                    itemKeys.add(item.key);
+                                                }
+
+                                                contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
+                                                    @Override
+                                                    public void GotObject(List<ItemData> obj) {
+                                                        ArrayList<Task> buyableItems = new ArrayList<Task>();
+
+                                                        for (ItemData item : obj) {
+                                                            Task reward = new Task();
+                                                            reward.text = item.text;
+                                                            reward.notes = item.notes;
+                                                            reward.value = item.value;
+                                                            reward.setType("reward");
+                                                            reward.specialTag = "item";
+                                                            reward.setId(item.key);
+
+                                                            buyableItems.add(reward);
+                                                        }
+
+                                                        callBack.GotAdditionalItems(buyableItems);
+
+                                                    }
+                                                });
+
+
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+
+                                            }
+                                        });
+
+                                    }
+                                });
+
+
+                        fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
@@ -481,47 +540,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     }
 
-
-    @Override
-    public void success(List<ItemData> items, Response response) {
-
-        // TODO Order Rewards
-        // TODO add Gear Images
-
-        Condition.In keyCondition = Condition.column("key").in("potion");
-
-        for (ItemData item : items) {
-            keyCondition = keyCondition.and(item.key);
-        }
-
-/*
-        ConditionQueryBuilder<ItemData> queryBuilder = new ConditionQueryBuilder<ItemData>(ItemData.class,
-                keyCondition);
-
-        List<ItemData> itemsFromDb = new Select().from(ItemData.class).where(queryBuilder).queryList();
-
-        ArrayList<RewardItem> rewardList = new ArrayList<>();
-
-        for (ItemData item : itemsFromDb) {
-            RewardItem reward = new RewardItem();
-            reward.text = item.text;
-            reward.notes = item.notes;
-            reward.value = item.value;
-            reward.setId(item.key);
-
-            rewardList.add(reward);
-        }
-
-        GearRewards.clear();
-        GearRewards.addAll(rewardList);
-        */
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
-    }
-
     @Override
     public void onTaskDataReceived(TaskDirectionData data) {
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
@@ -534,6 +552,10 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
+        if(aClass != HabitRPGUser.class)
+            return;
+
+
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
         Log.d("db", "received notif");
 //        SetUserData();
@@ -576,6 +598,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             );
         }
     }
+
     /*
         Updates concerned tags.
      */
@@ -583,17 +606,16 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         Log.d("tags", "Updating tags");
         List<IDrawerItem> filters = filterDrawer.getDrawerItems();
         for (IDrawerItem filter : filters) {
-            if(filter instanceof SwitchDrawerItem) {
+            if (filter instanceof SwitchDrawerItem) {
                 SwitchDrawerItem currentfilter = (SwitchDrawerItem) filter;
                 Log.v("tags", "Tag " + currentfilter.getName());
                 String tagId = ((Tag) currentfilter.getTag()).getId();
-                for(TaskTag tag : tags) {
+                for (TaskTag tag : tags) {
                     Tag currentTag = tag.getTag();
 
 
-
-                    if(tagId != null && currentTag!=null && tagId.equals(currentTag.getId())) {
-                        currentfilter.withDescription(""+(currentTag.getTasks().size()+1));
+                    if (tagId != null && currentTag != null && tagId.equals(currentTag.getId())) {
+                        currentfilter.withDescription("" + (currentTag.getTasks().size() + 1));
                         filterDrawer.updateItem(currentfilter);
                     }
                 }
@@ -639,10 +661,12 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             User = habitRPGUser;
             SetUserData();
         }
+
         @Override
         public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
             return true;
         }
+
         @Override
         public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
             return true;
