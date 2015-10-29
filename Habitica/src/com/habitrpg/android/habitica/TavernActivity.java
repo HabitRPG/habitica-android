@@ -61,9 +61,6 @@ public class TavernActivity extends AppCompatActivity {
         }
 
         Drawer drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .withTranslucentNavigationBar(false)
-                .withTranslucentStatusBar(false)
-                .withDisplayBelowStatusBar(false)
                 .withSelectedItem(2)
                 .build();
 

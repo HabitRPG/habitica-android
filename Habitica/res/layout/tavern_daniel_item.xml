@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="Sleep"
             android:layout_gravity="center"
-
+            android:textColor="@color/white"
+            android:drawableTint="@color/white"
             android:backgroundTint="@color/brand"/>
     </LinearLayout>
 

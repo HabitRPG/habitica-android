@@ -30,7 +30,9 @@
         <Button
             android:id="@+id/btn.send.message"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:textColor="@color/white"
+            android:drawableTint="@color/white"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -19,6 +19,13 @@
         android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
         android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task"
+            android:id="@+id/task_text_textview" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="72dp"

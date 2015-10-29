@@ -70,11 +70,11 @@
 
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText" />
+            android:theme="@style/AppThemeWithActionBarBlackText"/>
         <activity
             android:name=".TaskFormActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText" >
+            android:theme="@style/AppThemeWithActionBarBlackText"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />
@@ -82,8 +82,7 @@
         <activity
             android:name=".TavernActivity"
             android:label="@string/title_activity_tavern"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppThemeWithOwnActionBar" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />
@@ -91,7 +90,7 @@
         <activity
             android:name=".PartyActivity"
             android:label="@string/title_activity_party"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />
@@ -99,7 +98,7 @@
         <activity
             android:name=".GemPurchaseActivity"
             android:label="@string/title_activity_gem_purchase"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.MainActivity" />
