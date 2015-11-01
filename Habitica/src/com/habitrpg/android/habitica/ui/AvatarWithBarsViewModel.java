@@ -1,16 +1,22 @@
 package com.habitrpg.android.habitica.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+
 
 /**
  * Created by Negue on 14.06.2015.
@@ -21,12 +27,12 @@ public class AvatarWithBarsViewModel {
     private ValueBarBinding mpBar;
 
     private ImageView image;
-    private UserPicture userPicture;
-    private ImageView classIcon;
 
     private android.content.res.Resources res;
 
     private Context context;
+
+    private TextView lvlText, goldText, silverText, gemsText;
 
     public AvatarWithBarsViewModel(Context context, View v){
         this.context = context;
@@ -39,8 +45,10 @@ public class AvatarWithBarsViewModel {
             return;
         }
 
-        //binding = DataBindingUtil.bind(v);
-
+        lvlText = (TextView) v.findViewById(R.id.lvl_tv);
+        goldText = (TextView) v.findViewById(R.id.gold_tv);
+        silverText = (TextView) v.findViewById(R.id.silver_tv);
+        gemsText = (TextView) v.findViewById(R.id.gems_tv);
         View hpBarView = v.findViewById(R.id.hpBar);
 
         image = (ImageView) v.findViewById(R.id.IMG_ProfilePicture);
@@ -54,16 +62,54 @@ public class AvatarWithBarsViewModel {
         setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void updateData(HabitRPGUser user)
     {
         Stats stats = user.getStats();
-
+        char classShort;
+        String userClass = "";
+        int gp = (stats.getGp().intValue());
+        int sp = (int) ((stats.getGp() - gp) * 100);
         setHpBarData(hpBar, stats, context);
         setValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
         setValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
         new UserPicture(user, this.context).setPictureOn(image);
 
+        if(user.getStats().get_class()!=null) {
+            userClass+=user.getStats().get_class().name();
+        }
+        lvlText.setText("Lv" + user.getStats().getLvl() + " " + userClass);
+        Drawable drawable;
+        switch(stats.get_class()) {
+            case warrior:
+                 drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
+                break;
+            case rogue:
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
+                break;
+            case wizard:
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+
+                break;
+            case healer:
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+
+                break;
+            case base:
+            default:
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+
+        }
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                drawable.getMinimumHeight());
+        lvlText.setCompoundDrawables(drawable, null, null, null);
+
+//        binding.setClassShort(classShort);
+
+        goldText.setText(gp+"");
+        silverText.setText(sp+"");
+        gemsText.setText("?");
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)

@@ -59,13 +59,13 @@
         android:layout_below="@id/LL_header"
         >
         <TextView
+            android:id="@+id/lvl_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_header_warrior"
             android:drawableStart="@drawable/ic_header_warrior"
             android:drawablePadding="6dp"
             android:gravity="center"
-            android:text="Lv 6 Warrior"
             android:textSize="14sp"
             android:textColor="@color/textColorSecondaryDark"/>
     </LinearLayout>
@@ -76,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/gold_tv"
             android:drawableLeft="@drawable/ic_header_gold"
             android:drawableStart="@drawable/ic_header_gold"
             android:layout_width="wrap_content"
@@ -83,10 +84,10 @@
             android:drawablePadding="6dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="24"
             android:textColor="@color/textColorSecondaryDark"
             />
         <TextView
+            android:id="@+id/silver_tv"
             android:drawableLeft="@drawable/ic_header_silver"
             android:drawableStart="@drawable/ic_header_silver"
             android:layout_width="wrap_content"
@@ -94,12 +95,12 @@
             android:drawablePadding="6dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="10"
             android:textColor="@color/textColorSecondaryDark"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             />
         <TextView
+            android:id="@+id/gems_tv"
             android:drawableLeft="@drawable/ic_header_gem"
             android:drawableStart="@drawable/ic_header_gem"
             android:layout_width="wrap_content"
@@ -107,7 +108,6 @@
             android:drawablePadding="8dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="8"
             android:textColor="@color/textColorSecondaryDark"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
