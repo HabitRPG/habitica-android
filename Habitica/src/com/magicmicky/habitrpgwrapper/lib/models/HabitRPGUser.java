@@ -31,7 +31,7 @@ public class HabitRPGUser extends BaseModel {
     List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
-
+    private int balance;
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "stats_id",
             columnType = Long.class,
@@ -130,6 +130,14 @@ public class HabitRPGUser extends BaseModel {
 
     public void setItems(Items items) {
         this.items = items;
+    }
+
+    public void setBalance(int balance) {
+        this.balance=balance;
+    }
+
+    public int getBalance() {
+        return this.balance;
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")

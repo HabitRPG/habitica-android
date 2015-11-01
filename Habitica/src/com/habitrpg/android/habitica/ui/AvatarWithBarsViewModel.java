@@ -109,7 +109,7 @@ public class AvatarWithBarsViewModel {
 
         goldText.setText(gp+"");
         silverText.setText(sp+"");
-        gemsText.setText("?");
+        gemsText.setText(user.getBalance()*4+"");
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
