@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -94,7 +93,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             UserPicture userPicture = new UserPicture(user, ctx);
             userPicture.setPictureOn(imageView);
 
-            AvatarWithBarsViewModel.SetHpBarData(hpBar, user.getStats(), ctx);
+            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
 
             lvl.setText("LVL " + user.getStats().getLvl());
 

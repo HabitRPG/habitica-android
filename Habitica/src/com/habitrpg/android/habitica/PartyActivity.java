@@ -164,7 +164,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
 
     private void updateUserAvatars() {
-        avatarInHeader.UpdateData(User);
+        avatarInHeader.updateData(User);
     }
 
     //region Events

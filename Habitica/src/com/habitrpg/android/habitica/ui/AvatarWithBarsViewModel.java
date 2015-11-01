@@ -16,14 +16,15 @@ import com.magicmicky.habitrpgwrapper.lib.models.Stats;
  * Created by Negue on 14.06.2015.
  */
 public class AvatarWithBarsViewModel {
-    ValueBarBinding hpBar;
-    ValueBarBinding xpBar;
-    ValueBarBinding mpBar;
+    private ValueBarBinding hpBar;
+    private ValueBarBinding xpBar;
+    private ValueBarBinding mpBar;
 
-    ImageView image;
-    UserPicture userPicture;
+    private ImageView image;
+    private UserPicture userPicture;
+    private ImageView classIcon;
 
-    android.content.res.Resources res;
+    private android.content.res.Resources res;
 
     private Context context;
 
@@ -48,23 +49,24 @@ public class AvatarWithBarsViewModel {
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
 
-        SetValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor, R.drawable.ic_header_heart);
-        SetValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
-        SetValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
+        setValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor, R.drawable.ic_header_heart);
+        setValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
+        setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
     }
 
-    public void UpdateData(HabitRPGUser user)
+    public void updateData(HabitRPGUser user)
     {
         Stats stats = user.getStats();
 
-        SetHpBarData(hpBar, stats, context);
-        SetValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
-        SetValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
-
+        setHpBarData(hpBar, stats, context);
+        setValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
+        setValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
         new UserPicture(user, this.context).setPictureOn(image);
+
+
     }
 
-    public static void SetHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
+    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
     {
         int maxHP = stats.getMaxHealth();
         if(maxHP == 0)
@@ -72,12 +74,12 @@ public class AvatarWithBarsViewModel {
             maxHP = 50;
         }
 
-        SetValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void SetValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon)
+    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon)
     {
         double percent = Math.min(1, value / valueMax);
 

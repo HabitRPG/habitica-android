@@ -517,7 +517,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     }
 
     private void updateUserAvatars() {
-        avatarInHeader.UpdateData(User);
+        avatarInHeader.updateData(User);
     }
 
     private void updateHeader() {

@@ -69,7 +69,7 @@ public class TavernActivity extends AppCompatActivity {
         HostConfig hostConfig = PrefsActivity.fromContext(this);
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
-        avatarInHeader.UpdateData(User);
+        avatarInHeader.updateData(User);
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
@@ -87,7 +87,7 @@ public class TavernActivity extends AppCompatActivity {
     }
 
     public void onEvent(ToggledInnStateEvent evt){
-        avatarInHeader.UpdateData(User);
+        avatarInHeader.updateData(User);
     }
 
     @Override
