@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -30,7 +30,7 @@ public class TavernActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @InjectView(R.id.avatar)
-    LinearLayout avatarHeader;
+    ViewGroup avatarHeader;
 
     private AvatarWithBarsViewModel avatarInHeader;
     private APIHelper mAPIHelper;

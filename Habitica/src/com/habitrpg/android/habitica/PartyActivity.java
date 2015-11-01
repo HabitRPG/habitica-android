@@ -71,7 +71,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
                     partyInformationFragment.setGroup(group);
                 }
 
-                if (group.quest != null && !group.quest.key.isEmpty()) {
+                if (group != null && group.quest != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
                         public void GotQuest(QuestContent content) {
