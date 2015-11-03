@@ -113,6 +113,7 @@
 	<!-- Network Errors -->
 	<string name="network_error_title">Connection Error</string>
 	<string name="network_error_no_network_body">You are not connected to the internet.</string>
+    <string name="network_up">Your internet connection just got back!</string>
 
     <string name="checklist.title.add">Add checklist</string>
     <string name="checklist.title.edit">Edit checklist</string>
