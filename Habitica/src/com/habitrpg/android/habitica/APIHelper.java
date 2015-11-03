@@ -188,7 +188,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 			retrofit.mime.TypedInput body = res.getBody();
 		}
 
-		if (cause.isNetworkError()) {
+		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             final Activity activity = (Activity) this.mContext;
             activity.runOnUiThread(new Runnable() {
                 public void run() {
