@@ -46,9 +46,6 @@ public interface ApiService {
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
 
-   // @POST("/user/revive")
-   // void revive(Callback<HabitRPGUser> habitRPGUserCallback);
-
 
     @GET("/user/tasks/{id}")
     void getTask(@Path("id") String id, Callback<Task> habitItemCallback);
@@ -114,29 +111,4 @@ public interface ApiService {
     @POST("/groups/{gid}/chat/seen")
     void seenMessage(@Path("gid") String groupId, Callback<Void> cb);
 
-/*
-
-
-
-
-
-
-    @POST("/user/inventory/sell/{type}/{key}")
-    void sellItem(@Path("type") String type, @Path("key") String key);//Check callback
-
-    @POST("/user/inventory/purchase/{type}/{key}")
-    void purchaseItem(@Path("type") String type, @Path("key") String key);//Check callback
-
-    @POST("/user/inventory/feed/{pet}/{food}")
-    void feedPet(@Path("pet") String pet, @Path("food") String food);//Check Callback
-
-    @POST("/user/inventory/equip/{type}/{key}")
-    void equip(@Path("type") String type, @Path("key") String key);
-
-    @POST("/user/inventory/hatch/{egg}/{hatchingPotion}")
-    void hatch(@Path("egg") String egg, @Path("hatchingPotion") String potion);//Check Callback
-
-
-
-*/
 }
