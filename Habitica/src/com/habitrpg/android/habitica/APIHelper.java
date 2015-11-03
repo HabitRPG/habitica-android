@@ -182,12 +182,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 	@Override
 	public Throwable handleError(RetrofitError cause) {
 
-		retrofit.client.Response res = cause.getResponse();
-
-		if (res != null) {
-			retrofit.mime.TypedInput body = res.getBody();
-		}
-
+        //It also handles timeouts
 		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             final Activity activity = (Activity) this.mContext;
             activity.runOnUiThread(new Runnable() {
@@ -227,7 +222,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 	private class ATaskGetUser extends AsyncTask<Void, Void, Void> {
     	private OnHabitsAPIResult callback;
     	private HostConfig config;
-    	
+
     	public ATaskGetUser(OnHabitsAPIResult callback, HostConfig config) {
     		this.callback = callback;
     		this.config=config;
