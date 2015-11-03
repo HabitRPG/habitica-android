@@ -183,17 +183,16 @@ public class ContentCache {
 
             if (quest.boss != null) {
                 quest.boss.key = quest.key;
-                quest.boss.save();
+                quest.boss.async().save();
             }
         }
 
-        contentResult.armoire.save();
-        contentResult.potion.save();
-
-        Collection<ItemData> itemList = contentResult.gear.flat.values();
+        Collection<ItemData> itemList = new ArrayList<>(contentResult.gear.flat.values());
+        itemList.add(contentResult.armoire);
+        itemList.add(contentResult.potion);
 
         for (ItemData item : itemList) {
-            item.save();
+            item.async().save();
         }
     }
 }
