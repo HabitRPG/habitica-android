@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.github.porokoro.paperboy.ItemTypeBuilder;
 import com.github.porokoro.paperboy.PaperboyBuilder;
 import com.github.porokoro.paperboy.ViewTypes;
+import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
@@ -48,7 +49,7 @@ public class AboutActivity extends AppCompatActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 2);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 3);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -101,6 +102,9 @@ public class AboutActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
+
+                    return new AboutFragment();
+                case 1:
                     Fragment tab1 = new LibsBuilder()
                             //Pass the fields of your application to the lib so it can find all external lib information
                             .withFields(R.string.class.getFields())
@@ -115,7 +119,7 @@ public class AboutActivity extends AppCompatActivity {
                             .fragment();
 
                     return tab1;
-                case 1:
+                case 2:
                     PaperboyBuilder builder = new PaperboyBuilder(AboutActivity.this)
                             .setViewType(ViewTypes.HEADER)
                             .setFile("paperboy/changelog.json");
@@ -136,8 +140,12 @@ public class AboutActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0)
+            if (position == 0){
                 return getString(R.string.about_title);
+            }else if(position == 1){
+                return getString(R.string.about_libraries);
+            }
+
 
             return getString(R.string.about_versionhistory);
         }

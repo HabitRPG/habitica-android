@@ -109,6 +109,7 @@
     <string name="update_btn">Update</string>
 
     <string name="about.title">About</string>
+    <string name="about.libraries">Libraries</string>
     <string name="about.versionhistory">Version history</string>
 	<!-- Network Errors -->
 	<string name="network_error_title">Connection Error</string>
