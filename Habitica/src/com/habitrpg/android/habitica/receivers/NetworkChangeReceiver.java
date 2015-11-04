@@ -16,13 +16,11 @@ import com.habitrpg.android.habitica.R;
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        if(hasInternetConnection(context))
-        {
+    public void onReceive(final Context context, Intent intent) {
+        if (hasInternetConnection(context)) {
             Toast.makeText(context, R.string.network_up, Toast.LENGTH_LONG).show();
-        }else{
+        } else {
             Toast.makeText(context, R.string.network_error_no_network_body, Toast.LENGTH_LONG).show();
-
         }
     }
 
