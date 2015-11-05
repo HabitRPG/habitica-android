@@ -67,7 +67,7 @@
                 android:id="@+id/sourceCodeLink"
                 android:layout_width="347dp"
                 android:layout_height="wrap_content"
-                android:text="Habitica is an open Source Code and you can find the code clicking here"
+                android:text="@string/about.habitica_open_source"
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
@@ -77,7 +77,7 @@
                 android:id="@+id/googlePlayStoreButton"
                 android:layout_width="248dp"
                 android:layout_height="wrap_content"
-                android:text="RATE OUR APP"
+                android:text="@string/about.rate_our_app"
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp" />
@@ -86,7 +86,7 @@
                 android:id="@+id/giveUsFeedback"
                 android:layout_width="253dp"
                 android:layout_height="wrap_content"
-                android:text="Give us Feedback! :-)"
+                android:text="@string/about.give_us_feedback"
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp" />
