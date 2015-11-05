@@ -23,7 +23,7 @@ public class AboutFragment extends Fragment {
     private String twitterLink = "https://twitter.com/habitica";
 
     @OnClick(R.id.sourceCodeLink)
-    public void openSourceCodePage(){
+    public void openSourceCodePageByLabel(){
         openBrowserLink(androidSourceCodeLink);
     }
 
@@ -32,16 +32,24 @@ public class AboutFragment extends Fragment {
         openBrowserLink(twitterLink);
     }
 
-    @OnClick(R.id.giveUsFeedback)
-    public void sendEmailAction(){
-        sendEmail();
+    @OnClick(R.id.sourceCodeButton)
+    public void openSourceCodePageByButton(){
+        openBrowserLink(androidSourceCodeLink);
+    }
+
+    @OnClick(R.id.reportBug)
+    public void sendBugReport(){ sendEmail("[Android] Bugreport"); }
+
+    @OnClick(R.id.sendFeedback)
+    public void sendFeedback(){
+        sendEmail("[Android] Feedback");
     }
 
 
     @OnClick(R.id.googlePlayStoreButton)
     public void openGooglePlay(){
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("market://details?id=com.example.android"));
+        intent.setData(Uri.parse("market://details?id=com.habitrpg.android.habitica"));
         startActivity(intent);
     }
 
@@ -70,12 +78,12 @@ public class AboutFragment extends Fragment {
         startActivity(launchBrowser);
     }
 
-    private void sendEmail() {
+    private void sendEmail(String subject) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mobile@habitica.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Habitica Feedback");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_TEXT, "MESSAGE");
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }

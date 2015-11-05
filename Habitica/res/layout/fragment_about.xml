@@ -63,6 +63,40 @@
                 android:background="@android:color/darker_gray"
                 android:layout_marginTop="20sp" />
 
+            <Button
+                android:id="@+id/googlePlayStoreButton"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about.rate_our_app"
+                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5sp" />
+
+            <Button
+                android:id="@+id/reportBug"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about.bugreport"
+                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20sp" />
+
+            <Button
+                android:id="@+id/sendFeedback"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about.give_us_feedback"
+                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_marginTop="20sp"
+                android:layout_gravity="center_horizontal" />
+
+            <View
+                android:id="@+id/lineDivider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="5sp" />
+
             <TextView
                 android:id="@+id/sourceCodeLink"
                 android:layout_width="347dp"
@@ -70,27 +104,17 @@
                 android:text="@string/about.habitica_open_source"
                 android:textSize="@dimen/abc_text_size_title_material"
                 android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30sp" />
+                android:layout_marginTop="20sp"
+                android:layout_gravity="center_horizontal" />
 
             <Button
-                android:id="@+id/googlePlayStoreButton"
-                android:layout_width="248dp"
+                android:id="@+id/sourceCodeButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/about.rate_our_app"
+                android:text="@string/about.source_code"
                 android:textSize="@dimen/abc_text_size_title_material"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp" />
-
-            <Button
-                android:id="@+id/giveUsFeedback"
-                android:layout_width="253dp"
-                android:layout_height="wrap_content"
-                android:text="@string/about.give_us_feedback"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp" />
-
+                android:layout_marginTop="2sp"
+                android:layout_gravity="center_horizontal" />
 
 
         </LinearLayout>

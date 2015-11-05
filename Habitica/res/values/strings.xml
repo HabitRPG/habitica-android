@@ -111,9 +111,11 @@
     <string name="about.title">About</string>
     <string name="about.libraries">Libraries</string>
     <string name="about.versionhistory">Version history</string>
-    <string name="about.habitica_open_source">Habitica is an Open Source code and you can find the code clicking here</string>
+    <string name="about.habitica_open_source">Habitica is available as open source software on Github</string>
     <string name="about.rate_our_app">RATE OUR APP</string>
-    <string name="about.give_us_feedback">Give us Feedback! :-)</string>
+    <string name="about.give_us_feedback">Send us Feedback!</string>
+    <string name="about.bugreport">Report a Bug</string>
+    <string name="about.source_code">Source Code</string>
 
 	<!-- Network Errors -->
 	<string name="network_error_title">Connection Error</string>
