@@ -90,7 +90,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         public void bind(HabitRPGUser user) {
             android.content.Context ctx = itemView.getContext();
 
-            UserPicture userPicture = new UserPicture(user, ctx);
+            UserPicture userPicture = new UserPicture(user, ctx, false, false, false);
             userPicture.setPictureOn(imageView);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
