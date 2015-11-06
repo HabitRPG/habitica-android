@@ -102,19 +102,19 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             switch (user.getStats()._class) {
                 case healer: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_healer));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_yellow_100));
                     break;
                 }
                 case warrior: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_warrior));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_blue_100));
                     break;
                 }
                 case rogue: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_rogue));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_purple_50));
                     break;
                 }
                 case wizard: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_wizard));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_red_100));
                     break;
                 }
             }
