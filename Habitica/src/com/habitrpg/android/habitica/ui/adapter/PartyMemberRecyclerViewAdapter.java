@@ -83,6 +83,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             View hpBarView = itemView.findViewById(R.id.hpBar);
 
             hpBar = DataBindingUtil.bind(hpBarView);
+            hpBar.setPartyMembers(true);
 
             resources = itemView.getResources();
         }
