@@ -109,7 +109,14 @@
     <string name="update_btn">Update</string>
 
     <string name="about.title">About</string>
+    <string name="about.libraries">Libraries</string>
     <string name="about.versionhistory">Version history</string>
+    <string name="about.habitica_open_source">Habitica is available as open source software on Github</string>
+    <string name="about.rate_our_app">RATE OUR APP</string>
+    <string name="about.give_us_feedback">Send us Feedback!</string>
+    <string name="about.bugreport">Report a Bug</string>
+    <string name="about.source_code">Source Code</string>
+
 	<!-- Network Errors -->
 	<string name="network_error_title">Connection Error</string>
 	<string name="network_error_no_network_body">You are not connected to the internet.</string>
