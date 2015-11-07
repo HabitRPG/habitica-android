@@ -111,8 +111,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="library-1.0.19" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.10" level="project" />
@@ -132,8 +132,8 @@
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="compilerCommon-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
-    <orderEntry type="library" exported="" name="mimecraft-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="mimecraft-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
     <orderEntry type="library" exported="" name="materialize-0.2.7" level="project" />
     <orderEntry type="library" exported="" name="gridlayout-v7-23.0.1" level="project" />
@@ -145,8 +145,8 @@
     <orderEntry type="library" exported="" name="iconics-core-1.7.9" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
     <orderEntry type="library" exported="" name="javawriter-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.3.2" level="project" />
+    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="fab-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="instabugcore-1.8-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.0" level="project" />

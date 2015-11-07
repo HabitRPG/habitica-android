@@ -52,6 +52,9 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
+        if(User == null)
+            return;
+
         updateUserAvatars();
 
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
