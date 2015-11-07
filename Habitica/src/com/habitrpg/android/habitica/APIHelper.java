@@ -92,7 +92,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 				.setEndpoint(server.toString())
 				.setErrorHandler(this)
 				.setProfiler(this)
-				.setLogLevel(RestAdapter.LogLevel.FULL)
+				.setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
 				.setRequestInterceptor(requestInterceptor)
 				.setConverter(new GsonConverter(gson))
 
