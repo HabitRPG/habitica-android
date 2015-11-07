@@ -101,5 +101,8 @@
 
     <color name="cell_separator">#c3c2c6</color>
     <color name="checklist_separator">#ededed</color>
-    <color name="task_gray">#b5b5b5</color>
+    <color name="task_gray">#b7b7b7</color>
+    <color name="checkbox_fill">#50ffffff</color>
+    <color name="checkbox_checked_fill">#c8ffffff</color>
+    <color name="checkbox_stroke">#32000000</color>
 </resources>

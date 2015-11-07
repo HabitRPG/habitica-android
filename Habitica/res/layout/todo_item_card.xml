@@ -21,14 +21,22 @@
         <LinearLayout
             android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="@dimen/button_width"
+                android:layout_height="match_parent"
+                app:backgroundColor="@{todo.completed ? @color/task_gray : todo.getLightTaskColor}">
             <CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="fill_parent"
-                android:checked="@{todo.getCompleted}"
-                app:backgroundColor="@{todo.getLightTaskColor}"
-                android:gravity="center"/>
+                android:layout_width="@dimen/checkbox_size"
+                android:layout_height="@dimen/checkbox_size"
+                android:layout_centerInParent="true"
+                android:checked="@{todo.completed}"
+                android:gravity="center"
+                android:button="@drawable/todo_checkbox"
+                android:layout_gravity="center_horizontal" />
+            </RelativeLayout>
             <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -89,7 +97,7 @@
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{todo.getLightTaskColor}"
+                    app:backgroundColor="@{todo.completed ? @color/task_gray : todo.getLightTaskColor}"
                     android:visibility="@{todo.checklist.size == 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
