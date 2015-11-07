@@ -43,8 +43,8 @@ public class HabitRPGUser extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "preferences_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "userId")})
     private Preferences preferences;
 
     @Column
@@ -196,6 +196,14 @@ public class HabitRPGUser extends BaseModel {
         return tags;
     }
 
+    @Override
+    public void save() {
+
+        preferences.userId = id;
+
+
+        super.save();
+    }
 
     public List<String> getAvatarLayerNames() {
         List<String> layerNames = new ArrayList<String>();
@@ -232,10 +240,9 @@ public class HabitRPGUser extends BaseModel {
             }
         }
 
-        Preferences.Hair hair = prefs.getHair();
+        Hair hair = prefs.getHair();
         if (hair != null) {
             String hairColor = hair.getColor();
-
 
             if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() +"_" + hairColor);}
             if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() +"_" + hairColor);}
