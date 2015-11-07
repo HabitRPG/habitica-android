@@ -31,7 +31,10 @@ public class HabitRPGUser extends BaseModel {
     List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
-    private int balance;
+
+    @Column
+    private double balance;
+
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "stats_id",
             columnType = Long.class,
@@ -132,11 +135,11 @@ public class HabitRPGUser extends BaseModel {
         this.items = items;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance=balance;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return this.balance;
     }
 
