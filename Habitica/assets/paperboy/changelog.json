@@ -1,5 +1,14 @@
 [
   {
+    "name": "Version 0.0.6",
+    "items":[
+      {
+        "type": "F",
+        "title": "Updated Avatar Header"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.5",
     "items":[
       {
