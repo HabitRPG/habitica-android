@@ -20,28 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:id="@+id/btnLayout">
                 <Button
                     android:id="@+id/btnPlus"
-                    android:layout_width="@dimen/button_width"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
                     android:text="+"
-                    android:textSize="15sp"
-                    app:backgroundColor="@{habit.getLightTaskColor}" />
+                    android:background="@{habit.down ? @drawable/btn_habit_background : @drawable/btn_habit_single_background}"
+                    app:backgroundColor="@{habit.getLightTaskColor}"
+                    style="@style/HabitButton" />
                 <Button
                     android:id="@+id/btnMinus"
-                    android:layout_width="@dimen/button_width"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:visibility="@{habit.down ? View.VISIBLE : View.GONE}"
-                    app:backgroundColor="@{habit.getLightTaskColor}"
+                    app:backgroundColor="@{habit.up ? habit.getMediumTaskColor : habit.getLightTaskColor}"
                     android:text="-"
-                    android:textSize="15sp"/>
+                    android:background="@{habit.up ? @drawable/btn_habit_background : @drawable/btn_habit_single_background}"
+                    style="@style/HabitButton"/>
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -50,17 +52,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp">
                     <TextView
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingTop="5dp"
                         android:text="@{habit.text}" />
 
                     <TextView
