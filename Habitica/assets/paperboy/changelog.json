@@ -1,5 +1,22 @@
 [
   {
+    "name": "Version 0.0.7",
+    "items":[
+      {
+        "type": "B",
+        "title": "Saving hair-preferences to database / now again visible in avatar <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/17\">#17</a>"
+      },
+      {
+        "type": "B",
+        "title": "loading the userdata"
+      },
+      {
+        "type": "B",
+        "title": "inverted values on health bar"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.6",
     "items":[
       {
