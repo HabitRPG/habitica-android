@@ -25,8 +25,8 @@ import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.mikepenz.iconics.Iconics;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.Iconics;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -98,7 +98,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
-        if(!isTavern && position > 0){
+        if (!isTavern && position > 0) {
             holder.bind(messages.get(position - 1));
             return;
         }
@@ -215,7 +215,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
 
-                if(msg.user == null || msg.user.equals("")){
+                if (msg.user == null || msg.user.equals("")) {
                     msg.user = "system";
                 }
 
@@ -341,7 +341,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             String text = textNewMessage.getText().toString();
 
-            if(!text.equals("")) {
+            if (!text.equals("")) {
                 EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
             }
 

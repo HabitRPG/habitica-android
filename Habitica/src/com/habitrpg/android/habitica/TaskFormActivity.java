@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -106,8 +105,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task = task;
             this.populate(task);
             setTitle(task);
-        } else{
-          setTitle((Task)null);
+        } else {
+            setTitle((Task) null);
         }
     }
 
@@ -119,7 +118,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             String title = "";
 
             if (task != null) {
-                title = getResources().getString(R.string.action_edit)+ " " + task.getText();
+                title = getResources().getString(R.string.action_edit) + " " + task.getText();
             } else {
                 switch (taskType) {
                     case "todo":
@@ -273,7 +272,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                 task.setFrequency("weekly");
                 Days repeat = task.getRepeat();
-                if(repeat == null){
+                if (repeat == null) {
                     repeat = new Days();
                     task.setRepeat(repeat);
                 }

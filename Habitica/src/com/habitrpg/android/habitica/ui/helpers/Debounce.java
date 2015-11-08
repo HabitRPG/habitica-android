@@ -18,9 +18,9 @@ public abstract class Debounce {
         this.checkDelay = checkDelay;
     }
 
-    public void hit(){
+    public void hit() {
         lastHit = System.currentTimeMillis();
-        if(this.timer != null){
+        if (this.timer != null) {
             this.timer.cancel();
             this.timer = null;
         }
@@ -28,8 +28,8 @@ public abstract class Debounce {
         this.timer.schedule(new DebounceTask(this), 0, checkDelay);
     }
 
-    private void checkExecute(){
-        if((System.currentTimeMillis() - lastHit) > debounceDelay){
+    private void checkExecute() {
+        if ((System.currentTimeMillis() - lastHit) > debounceDelay) {
             this.timer.cancel();
             this.timer = null;
             execute();

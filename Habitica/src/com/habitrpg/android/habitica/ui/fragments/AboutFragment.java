@@ -23,31 +23,33 @@ public class AboutFragment extends Fragment {
     private String twitterLink = "https://twitter.com/habitica";
 
     @OnClick(R.id.sourceCodeLink)
-    public void openSourceCodePageByLabel(){
+    public void openSourceCodePageByLabel() {
         openBrowserLink(androidSourceCodeLink);
     }
 
     @OnClick(R.id.twitter)
-    public void openTwitterPage(){
+    public void openTwitterPage() {
         openBrowserLink(twitterLink);
     }
 
     @OnClick(R.id.sourceCodeButton)
-    public void openSourceCodePageByButton(){
+    public void openSourceCodePageByButton() {
         openBrowserLink(androidSourceCodeLink);
     }
 
     @OnClick(R.id.reportBug)
-    public void sendBugReport(){ sendEmail("[Android] Bugreport"); }
+    public void sendBugReport() {
+        sendEmail("[Android] Bugreport");
+    }
 
     @OnClick(R.id.sendFeedback)
-    public void sendFeedback(){
+    public void sendFeedback() {
         sendEmail("[Android] Feedback");
     }
 
 
     @OnClick(R.id.googlePlayStoreButton)
-    public void openGooglePlay(){
+    public void openGooglePlay() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=com.habitrpg.android.habitica"));
         startActivity(intent);
@@ -72,7 +74,7 @@ public class AboutFragment extends Fragment {
         ButterKnife.inject(this, view);
     }
 
-    private void openBrowserLink(String url){
+    private void openBrowserLink(String url) {
         Uri uriUrl = Uri.parse(url);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);

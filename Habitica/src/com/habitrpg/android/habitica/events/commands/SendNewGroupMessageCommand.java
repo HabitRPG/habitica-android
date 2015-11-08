@@ -7,7 +7,7 @@ public class SendNewGroupMessageCommand {
     public String Message;
     public String TargetGroupId;
 
-    public SendNewGroupMessageCommand(String targetGroupId, String message){
+    public SendNewGroupMessageCommand(String targetGroupId, String message) {
         TargetGroupId = targetGroupId;
         Message = message;
     }

@@ -17,8 +17,9 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     private final OnUserReceived mCallback;
 
     public HabitRPGUserCallback(OnUserReceived callback) {
-        this.mCallback =  callback;
+        this.mCallback = callback;
     }
+
     @Override
     public void success(HabitRPGUser habitRPGUser, Response response) {
         Log.d("db", "saving");
@@ -38,6 +39,7 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
 
     public interface OnUserReceived {
         public void onUserReceived(HabitRPGUser user);
+
         public void onUserFail();
     }
 }

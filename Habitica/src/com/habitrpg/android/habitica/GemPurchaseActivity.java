@@ -13,7 +13,6 @@ import com.mikepenz.materialdrawer.Drawer;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;

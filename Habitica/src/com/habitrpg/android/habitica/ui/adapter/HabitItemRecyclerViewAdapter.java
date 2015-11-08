@@ -53,8 +53,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
 
 
-    public interface IAdditionalEntries
-    {
+    public interface IAdditionalEntries {
         void GetAdditionalEntries(IReceiveNewEntries callBack);
     }
 
@@ -114,16 +113,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     }
 
-    public void onEvent(TaskUpdatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskUpdatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         this.filter();
         notifyDataSetChanged();
     }
 
-    public void onEvent(TaskCreatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskCreatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         observableContent.add(0, evnt.task);
@@ -501,7 +500,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
 
-            if(additionalEntries != null){
+            if (additionalEntries != null) {
                 additionalEntries.GetAdditionalEntries(this);
             }
         }

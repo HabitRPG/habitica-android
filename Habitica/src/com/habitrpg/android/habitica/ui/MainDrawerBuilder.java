@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.habitrpg.android.habitica.AboutActivity;
 import com.habitrpg.android.habitica.GemPurchaseActivity;

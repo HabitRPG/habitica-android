@@ -45,10 +45,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -268,7 +268,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 int currentHp = User.getStats().getHp().intValue();
                 int maxHp = User.getStats().getMaxHealth();
 
-                if(currentHp == maxHp) {
+                if (currentHp == maxHp) {
                     showSnackbar("You don't need to buy an health potion", true);
                     return;
                 }
@@ -552,7 +552,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        if(aClass != HabitRPGUser.class)
+        if (aClass != HabitRPGUser.class)
             return;
 
 

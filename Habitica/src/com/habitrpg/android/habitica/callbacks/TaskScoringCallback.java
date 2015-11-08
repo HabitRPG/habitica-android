@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -19,10 +18,12 @@ import retrofit.client.Response;
 public class TaskScoringCallback implements Callback<TaskDirectionData> {
     private final OnTaskScored mCallback;
     private final String taskId;
+
     public TaskScoringCallback(OnTaskScored callback, String taskId) {
-        this.mCallback= callback;
+        this.mCallback = callback;
         this.taskId = taskId;
     }
+
     @Override
     public void success(TaskDirectionData taskDirectionData, Response response) {
         Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
@@ -34,13 +35,14 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     @Override
     public void failure(RetrofitError error) {
         Crashlytics.logException(error);
-        
+
         this.mCallback.onTaskScoringFailed();
         Log.w("TaskScoring", "Task scoring failed " + error.getMessage());
     }
 
     public interface OnTaskScored {
         public void onTaskDataReceived(TaskDirectionData data);
+
         public void onTaskScoringFailed();
     }
 }
