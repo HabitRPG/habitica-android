@@ -39,4 +39,6 @@
 	<dimen name="checklist_divider_width">14dp</dimen>
 	<dimen name="checklist_wrapper_width">36dp</dimen>
 	<dimen name="checklist_item_min_height">50dp</dimen>
+
+	<dimen name="login_field_width">350dp</dimen>
 </resources>

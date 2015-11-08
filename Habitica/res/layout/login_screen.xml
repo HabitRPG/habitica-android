@@ -1,170 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:gravity="center"
-    android:id="@+id/login.linear.layout">
-	<ImageView
-			android:layout_width="100dp"
-			android:layout_height="100dp"
-			android:id="@+id/login_barcode"
-			android:clickable="true"
-			android:scaleType="fitCenter"
-			android:background="@drawable/selectable_background_cardbank"
-			android:src="@drawable/ic_action_barcode_dark"/>
-	<LinearLayout
-			android:id="@+id/login_tokens_layout"
-			android:orientation="horizontal"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:visibility="gone">
-		<EditText
-            android:id="@+id/userId"
-			android:layout_width="150dip"
-			android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:hint="@string/userToken"
-			/>
-		<EditText
-            android:id="@+id/apiToken"
-              android:layout_width="150dip"
+			  android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login.linear.layout"
+        android:gravity="center"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:orientation="vertical"
+        android:shrinkColumns="0"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/gryphon"
+                android:src="@drawable/ic_gryphon"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_habitica"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/username_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView4"
+                android:src="@drawable/ic_username"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp" />
+
+            <EditText
+        android:id="@+id/username"
+                android:layout_width="@dimen/login_field_width"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:hint="@string/username"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/email_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView5"
+                android:src="@drawable/ic_email"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp" />
+
+            <EditText
+        android:id="@+id/email"
+                android:layout_width="@dimen/login_field_width"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        android:hint="@string/emailAddress" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/password_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView6"
+                android:src="@drawable/ic_password"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp" />
+
+            <EditText
+            android:id="@+id/password"
+                android:layout_width="@dimen/login_field_width"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:imeOptions="actionDone"
-            android:layout_height="wrap_content"
-              android:hint="@string/apiToken"
+            android:hint="@string/password"
             />
-    </LinearLayout>
-	    <LinearLayout
-			android:id="@+id/login_normal_layout"
-			android:orientation="vertical"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:visibility="gone">
-	    <TextView
-            android:id="@+id/fb_message"
-            android:text="@string/fb_login_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
-		<LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-			<EditText
-                android:id="@+id/username"
-                android:layout_width="150dip"
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/confirm_password_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:id="@+id/imageView7"
+                android:src="@drawable/ic_password"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp" />
+
+            <EditText
+        android:id="@+id/confirm_password"
+                android:layout_width="@dimen/login_field_width"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="@string/username"
-				/>
-			<EditText
-                android:id="@+id/password"
-				android:layout_width="150dip"
-				android:layout_height="wrap_content"
-				android:inputType="textPassword"
-                android:singleLine="true"
-                android:imeOptions="actionDone"
-                android:hint="@string/password"
-				/>
-        </LinearLayout>
-	</LinearLayout>
-	<LinearLayout
-        android:id="@+id/register_layout"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        >
-		<LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/login_btn_container">
-			<EditText
-                android:id="@+id/reg_username"
-                android:layout_width="150dip"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="@string/username"
-                />
-			<EditText
-                android:id="@+id/reg_email"
-                android:layout_width="150dip"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="@string/emailAddress"
-				/>
-		</LinearLayout>
-		<LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-			<EditText
-                android:id="@+id/reg_password"
-                android:layout_width="150dip"
-				android:layout_height="wrap_content"
-				android:inputType="textPassword"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="@string/password"
-			    />
-			<EditText
-                android:id="@+id/reg_confirm_password"
-				android:layout_width="150dip"
-				android:layout_height="wrap_content"
-				android:inputType="textPassword"
-                android:singleLine="true"
-                android:imeOptions="actionDone"
-                android:hint="@string/confirmpassword"
-				/>
-		</LinearLayout>
-	</LinearLayout>
-	<LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-		<LinearLayout
-			android:orientation="horizontal"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent">
-			<Button
-				android:id="@+id/login_normal_btn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/login_btn"
-                />
-			<Button
-                android:id="@+id/login_tokens_btn"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/login_tokens_btn"
-				/>
-		</LinearLayout>
-		<Button
-            android:id="@+id/register_btn"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/register_btn"
-            />
-	</LinearLayout>
-	<ProgressBar
-        android:id="@+id/PB_AsyncTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.ProgressBar.Horizontal"
-        android:indeterminate="true"
-        android:visibility="gone"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/PB_marginBottom"
-        />
-</LinearLayout>
+                android:inputType="textPassword"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:hint="@string/confirmpassword" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/login_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_btn"
+                    android:layout_gravity="center_horizontal" />
+
+                <ProgressBar
+                    android:id="@+id/PB_AsyncTask"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+</ScrollView>
