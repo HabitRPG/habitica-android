@@ -325,7 +325,7 @@ public class LoginActivity extends AppCompatActivity
                     .putString(getString(R.string.SP_APIToken), key)
                     .putString(getString(R.string.SP_userID), user)
                     .commit();
-            if (ans != true) {
+            if (!ans) {
                 throw new Exception("PB_string_commit");
             }
             startMainActivity();

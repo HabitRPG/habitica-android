@@ -38,8 +38,8 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     }
 
     public interface OnUserReceived {
-        public void onUserReceived(HabitRPGUser user);
+        void onUserReceived(HabitRPGUser user);
 
-        public void onUserFail();
+        void onUserFail();
     }
 }

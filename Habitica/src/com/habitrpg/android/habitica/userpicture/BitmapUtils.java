@@ -26,8 +26,7 @@ public class BitmapUtils {
             if (!f.exists()) {
                 return null;
             }
-            Bitmap tmp = BitmapFactory.decodeFile(filename);
-            return tmp;
+            return BitmapFactory.decodeFile(filename);
         } catch (Exception e) {
             return null;
         }

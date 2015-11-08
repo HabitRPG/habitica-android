@@ -41,8 +41,8 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     }
 
     public interface OnTaskScored {
-        public void onTaskDataReceived(TaskDirectionData data);
+        void onTaskDataReceived(TaskDirectionData data);
 
-        public void onTaskScoringFailed();
+        void onTaskScoringFailed();
     }
 }
