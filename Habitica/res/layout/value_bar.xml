@@ -28,6 +28,10 @@
         <variable
             name="icon"
             type="int"/>
+        <variable
+            name="partyMembers"
+            type="boolean"/>
+
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/bar_size"
             android:orientation="horizontal"
-            android:background="@drawable/layout_rounded_bg_brand"
+            android:background="@{partyMembers ? @drawable/layout_rounded_bg_light_gray : @drawable/layout_rounded_bg_brand}"
             android:weightSum="1">
 
             <View
@@ -80,7 +84,7 @@
                 android:id="@+id/TV_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/brand_500"
+                android:textColor="@{partyMembers ? @color/md_black_1000 : @color/brand_500}"
                 android:text="@{text}"
                 android:layout_weight="1"
                 />
@@ -89,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center|right"
-                android:textColor="@color/brand_500"
+                android:textColor="@{partyMembers ? @color/md_black_1000 : @color/brand_500}"
                 android:text="@{description}"
                 android:layout_weight="1" />
         </LinearLayout>

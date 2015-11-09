@@ -83,6 +83,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             View hpBarView = itemView.findViewById(R.id.hpBar);
 
             hpBar = DataBindingUtil.bind(hpBarView);
+            hpBar.setPartyMembers(true);
 
             resources = itemView.getResources();
         }
@@ -90,7 +91,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         public void bind(HabitRPGUser user) {
             android.content.Context ctx = itemView.getContext();
 
-            UserPicture userPicture = new UserPicture(user, ctx);
+            UserPicture userPicture = new UserPicture(user, ctx, false, false, false);
             userPicture.setPictureOn(imageView);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
@@ -102,19 +103,19 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             switch (user.getStats()._class) {
                 case healer: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_healer));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_yellow_100));
                     break;
                 }
                 case warrior: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_warrior));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_blue_100));
                     break;
                 }
                 case rogue: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_rogue));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_purple_50));
                     break;
                 }
                 case wizard: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.class_wizard));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.md_red_100));
                     break;
                 }
             }
