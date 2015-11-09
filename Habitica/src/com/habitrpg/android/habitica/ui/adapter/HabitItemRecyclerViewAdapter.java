@@ -392,6 +392,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     TaskCheckedEvent event = new TaskCheckedEvent();
                     event.Task = Item;
                     EventBus.getDefault().post(event);
+                    Item.completed = !Item.getCompleted();
+                    Item.save();
+                    bindHolder(Item, getAdapterPosition());
                 }
             } else {
                 Integer position = (Integer) ((ViewGroup) checkbox.getParent().getParent()).indexOfChild((View) checkbox.getParent());

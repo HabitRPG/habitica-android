@@ -27,6 +27,7 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     public void success(TaskDirectionData taskDirectionData, Response response) {
         Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
         task.value = task.value + taskDirectionData.getDelta();
+
         task.save();
         this.mCallback.onTaskDataReceived(taskDirectionData);
     }

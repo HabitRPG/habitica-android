@@ -239,11 +239,9 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     }
 
     public void onEvent(TaskLongPressedEvent event) {
-        showSnackbar("LongPress: " + event.Task.text);
     }
 
     public void onEvent(TaskCheckedEvent event) {
-        showSnackbar("ToDo Checked= " + event.Task.getText(), true);
         mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(this, event.Task.getId()));
     }
 

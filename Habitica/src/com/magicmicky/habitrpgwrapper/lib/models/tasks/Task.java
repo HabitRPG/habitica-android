@@ -409,4 +409,8 @@ public class Task extends BaseModel {
         //TODO: check if daily is due
         return !this.getCompleted();
     }
+
+    public Boolean isDisplayedActive() {
+        return this.isDue() && !this.completed;
+    }
 }
