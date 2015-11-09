@@ -63,6 +63,7 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
     public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
+        fragment.setRetainInstance(true);
 
         fragment.SetInnerAdapter(adapter, classType);
 
