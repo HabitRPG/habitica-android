@@ -92,7 +92,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 				.setEndpoint(server.toString())
 				.setErrorHandler(this)
 				.setProfiler(this)
-				.setLogLevel(RestAdapter.LogLevel.FULL)
+				.setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
 				.setRequestInterceptor(requestInterceptor)
 				.setConverter(new GsonConverter(gson))
 
@@ -181,33 +181,38 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 	@Override
 	public Throwable handleError(RetrofitError cause) {
+        final Activity activity = (Activity) this.mContext;
 
-		retrofit.client.Response res = cause.getResponse();
-
-		if (res != null) {
-			retrofit.mime.TypedInput body = res.getBody();
-		}
-
-		if (cause.isNetworkError()) {
-            final Activity activity = (Activity) this.mContext;
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    new AlertDialog.Builder(activity)
-                            .setTitle(R.string.network_error_title)
-                            .setMessage(R.string.network_error_no_network_body)
-                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
-            });
-
-		}
+		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
+            //It also handles timeouts
+            showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
+		}else{
+            /*
+             * CONVERSION An exception was thrown while (de)serializing a body.
+             * HTTP A non-200 HTTP status code was received from the server e.g. 502, 503, etc...
+             * UNEXPECTED An internal error occurred while attempting to execute a request.
+             */
+            showConnectionProblemDialog(activity,R.string.internal_error_api);
+        }
 
 		return cause;
 	}
+
+    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString){
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                new AlertDialog.Builder(activity)
+                        .setTitle(R.string.network_error_title)
+                        .setMessage(resourceMessageString)
+                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(R.drawable.ic_warning_black)
+                        .show();
+            }
+        });
+    }
 
 	@Override
 	public Object beforeCall() {
@@ -227,7 +232,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 	private class ATaskGetUser extends AsyncTask<Void, Void, Void> {
     	private OnHabitsAPIResult callback;
     	private HostConfig config;
-    	
+
     	public ATaskGetUser(OnHabitsAPIResult callback, HostConfig config) {
     		this.callback = callback;
     		this.config=config;

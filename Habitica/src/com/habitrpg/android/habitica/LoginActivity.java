@@ -24,11 +24,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -54,47 +56,36 @@ public class LoginActivity extends AppCompatActivity
 	private final static String TAG_USERID="user";
 	private final static String TAG_APIKEY="key";
 
-	private Button mRegisterBtn, mLoginNormalBtn, mLoginTokensBtn;
-	private ImageView mLoginBarcode;
-	private LinearLayout mLoginNormalLayout, mLoginTokensLayout, mRegisterLayout, mLoginBtnContainer;
-	private EditText mUserTokenET,mApiTokenET, mUsernameET, mPasswordET,mRegUsername,mRegEmail,mRegPassword,mRegConfirmPassword;
+	private Button mLoginNormalBtn;
+	private EditText mUsernameET, mPasswordET,mEmail,mConfirmPassword;
+    private TableRow mEmailRow, mConfirmPasswordRow;
 	private APIHelper mApiHelper;
-	private Handler mMainHandler;
 	private ProgressBar mProgressBar;
 	public String mTmpUserToken;
 	public String mTmpApiToken;
+	public Boolean isRegistering;
+    private Menu menu;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.login_screen);
 
-		mRegisterBtn = (Button) this.findViewById(R.id.register_btn);
-		mLoginNormalBtn = (Button) this.findViewById(R.id.login_normal_btn);
-		mLoginTokensBtn = (Button) this.findViewById(R.id.login_tokens_btn);
-		mLoginBarcode = (ImageView) this.findViewById(R.id.login_barcode);
-		mProgressBar = (ProgressBar) this.findViewById(R.id.PB_AsyncTask);
+		mLoginNormalBtn = (Button) this.findViewById(R.id.login_btn);
+        mProgressBar = (ProgressBar) this.findViewById(R.id.PB_AsyncTask);
 
-		mLoginNormalLayout = (LinearLayout) this.findViewById(R.id.login_normal_layout);
-		mLoginTokensLayout = (LinearLayout) this.findViewById(R.id.login_tokens_layout);
-		mRegisterLayout = (LinearLayout) this.findViewById(R.id.register_layout);
-		mLoginBtnContainer = (LinearLayout) this.findViewById(R.id.login_btn_container);
-
-		mUserTokenET = (EditText) this.findViewById(R.id.userId);
-		mApiTokenET = (EditText) this.findViewById(R.id.apiToken);
 
 		mUsernameET = (EditText) this.findViewById(R.id.username);
 		mPasswordET = (EditText) this.findViewById(R.id.password);
 
-		mRegUsername = (EditText) this.findViewById(R.id.reg_username);
-		mRegEmail = (EditText) this.findViewById(R.id.reg_email);
-		mRegPassword = (EditText) this.findViewById(R.id.reg_password);
-		mRegConfirmPassword = (EditText) this.findViewById(R.id.reg_confirm_password);
 
-		mRegisterBtn.setOnClickListener(mRegisterClick);
+		mEmail = (EditText) this.findViewById(R.id.email);
+		mConfirmPassword = (EditText) this.findViewById(R.id.confirm_password);
+
+        mEmailRow = (TableRow) this.findViewById(R.id.email_row);
+        mConfirmPasswordRow = (TableRow) this.findViewById(R.id.confirm_password_row);
+
 		mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
-		mLoginTokensBtn.setOnClickListener(mLoginTokensClick);
-		mLoginBarcode.setOnClickListener(mBarcodeClick);
 
 		HostConfig hc= PrefsActivity.fromContext(this);
         if(hc ==null) {
@@ -102,24 +93,26 @@ public class LoginActivity extends AppCompatActivity
         }
 		mApiHelper = new APIHelper(this,hc);
 
+        this.isRegistering = false;
+
 	}
 
 	private void resetLayout() {
-		//expand(mLoginBarcode);
-		if(mRegisterBtn.getVisibility() == View.GONE)
-			expand(mRegisterBtn);
-		if(mLoginTokensBtn.getVisibility() == View.GONE)
-			expand(mLoginTokensBtn);
-		if(mLoginNormalBtn.getVisibility() == View.GONE)
-			expand(mLoginNormalBtn);
-		if(mLoginBarcode.getVisibility()==View.GONE)
-			expand(mLoginBarcode);
-		if(mLoginBtnContainer.getVisibility()==View.GONE)
-			expand(mLoginBtnContainer);
-		collapse(mLoginNormalLayout);
-		collapse(mLoginTokensLayout);
-		collapse(mRegisterLayout);
-
+		if (this.isRegistering) {
+            if (this.mEmailRow.getVisibility() == View.GONE) {
+                expand(this.mEmailRow);
+            }
+            if (this.mConfirmPasswordRow.getVisibility() == View.GONE) {
+                expand(this.mConfirmPasswordRow);
+            }
+        } else {
+            if (this.mEmailRow.getVisibility() == View.VISIBLE) {
+                collapse(this.mEmailRow);
+            }
+            if (this.mConfirmPasswordRow.getVisibility() == View.VISIBLE) {
+                collapse(this.mConfirmPasswordRow);
+            }
+        }
 	}
 	private View.OnClickListener mBarcodeClick = new View.OnClickListener() {
 
@@ -132,134 +125,38 @@ public class LoginActivity extends AppCompatActivity
 	private View.OnClickListener mRegisterClick = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if(mLoginTokensBtn.getVisibility()==View.GONE && mLoginNormalBtn.getVisibility()==View.GONE) {
-				String username, email,password,cpassword;
-				username = String.valueOf(mRegUsername.getText());
-				email = String.valueOf(mRegEmail.getText());
-				password = String.valueOf(mRegPassword.getText());
-				cpassword = String.valueOf(mRegConfirmPassword.getText());
-				mApiHelper.registerUser(v,username,email,password,cpassword);
-			}else {
-				expand(mRegisterLayout);//.setVisibility(View.VISIBLE);
-				collapse(mLoginNormalBtn);//.setVisibility(View.GONE);
-				collapse(mLoginTokensBtn);//.setVisibility(View.GONE);
-			}
+
 		}
 	};
 	private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if(mRegisterBtn.getVisibility()==View.GONE && mLoginTokensBtn.getVisibility()==View.GONE) {
-				String username,password;
-				username = String.valueOf(mUsernameET.getText());
-				password = String.valueOf(mPasswordET.getText());
-				mApiHelper.connectUser(username,password, LoginActivity.this);
-			} else {
-				expand(mLoginNormalLayout);//.setVisibility(View.VISIBLE);
-				collapse(mRegisterBtn);//.setVisibility(View.GONE);
-				collapse(mLoginTokensBtn);//.setVisibility(View.GONE);
-			}
-		}
-	};
-	private View.OnClickListener mLoginTokensClick = new View.OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			if (mRegisterBtn.getVisibility() == View.GONE && mLoginNormalBtn.getVisibility() == View.GONE) {
-				mTmpUserToken = String.valueOf(mUserTokenET.getText());
-				mTmpApiToken = String.valueOf(mApiTokenET.getText());
-				HostConfig config = PrefsActivity.fromContext(LoginActivity.this);
-                if(config==null) {
-                    config = new HostConfig(getString(R.string.SP_address_default), "80", mTmpApiToken, mTmpUserToken);
-                } else {
-                    config.setApi(mTmpApiToken);
-                    config.setUser(mTmpUserToken);
-                }
-				APIHelper secApiHelper = new APIHelper(LoginActivity.this, config);
-				secApiHelper.retrieveUser(new HabitRPGUserCallback(LoginActivity.this));
-
-			} else {
-				expand(mLoginTokensLayout);
-				collapse(mLoginNormalBtn);
-				collapse(mRegisterBtn);
-			}
+            mProgressBar.setVisibility(View.VISIBLE);
+            if (isRegistering) {
+                String username, email,password,cpassword;
+                username = String.valueOf(mUsernameET.getText());
+                email = String.valueOf(mEmail.getText());
+                password = String.valueOf(mPasswordET.getText());
+                cpassword = String.valueOf(mConfirmPassword.getText());
+                mApiHelper.registerUser(v,username,email,password,cpassword);
+            } else {
+                String username,password;
+                username = String.valueOf(mUsernameET.getText());
+                password = String.valueOf(mPasswordET.getText());
+                mApiHelper.connectUser(username,password, LoginActivity.this);
+            }
 		}
 	};
 
 
-
-	private boolean layoutHasChanged() {
-		return mRegisterBtn.getVisibility() == View.GONE || mLoginNormalBtn.getVisibility() == View.GONE ||mLoginTokensBtn.getVisibility() == View.GONE;
-	}
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && layoutHasChanged()) {
-			resetLayout();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
 	public static void expand(final View v) {
-		v.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		final int targtetHeight = v.getMeasuredHeight();
-		final int targtetWidth = v.getMeasuredWidth();
-		Log.v("expanding ", "w:" + targtetWidth + " h:"+targtetHeight);
-		//v.getLayoutParams().height = 0;
-		//v.getLayoutParams().width=0;
-		v.setVisibility(View.VISIBLE);//works when the setVisibility is outside the animationlistener.
-
-		Animation a = new Animation()
-		{
-
-			@Override
-			protected void applyTransformation(float interpolatedTime, Transformation t) {
-				v.getLayoutParams().height = interpolatedTime == 1
-						? ViewGroup.LayoutParams.WRAP_CONTENT
-						: (int)(targtetHeight * interpolatedTime);
-				v.getLayoutParams().width = interpolatedTime == 1
-						? ViewGroup.LayoutParams.WRAP_CONTENT
-						: (int)(targtetWidth * interpolatedTime);
-				v.requestLayout();
-			}
-
-			@Override
-			public boolean willChangeBounds() {
-				return true;
-			}
-		};
-		// 1dp/ms
-		a.setDuration(500);
-		v.startAnimation(a);
+		v.setVisibility(View.VISIBLE);
 	}
  //
 
 	public static void collapse(final View v) {
-		final int initialHeight = v.getMeasuredHeight();
-		final int initialWidth = v.getMeasuredWidth();
-
-		Animation a = new Animation()
-		{
-			@Override
-			protected void applyTransformation(float interpolatedTime, Transformation t) {
-				if(interpolatedTime == 1){
-					v.setVisibility(View.GONE);
-				}else{
-					v.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
-					v.getLayoutParams().width = initialWidth - (int) (initialWidth*interpolatedTime);
-					v.requestLayout();
-				}
-			}
-
-			@Override
-			public boolean willChangeBounds() {
-				return true;
-			}
-		};
-
-		// 1dp/ms
-		a.setDuration(500);//targtetHeight / (v.getContext().getResources().getDisplayMetrics().density)));
-		v.startAnimation(a);
-	}
+        v.setVisibility(View.GONE);
+    }
 
 	private void startMainActivity() {
 		startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -269,7 +166,6 @@ public class LoginActivity extends AppCompatActivity
 	private void saveTokens(String api, String user) throws Exception {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
 		SharedPreferences.Editor editor = prefs.edit();
-        Log.v("login", "saving tokens");
 		boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
 				.putString(getString(R.string.SP_userID), user)
                 .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
@@ -279,23 +175,19 @@ public class LoginActivity extends AppCompatActivity
 			}
 
 	}
-	private void showHelpMMessage() {
-		final SpannableString mess = new SpannableString(getString(R.string.helpString));
-		Linkify.addLinks(mess, Linkify.ALL);
-		AlertDialog d =new AlertDialog.Builder(this)
-		.setTitle(R.string.pref_dialog_title)
-		.setMessage(mess).setCancelable(false)
-		.setPositiveButton(R.string.string_pref_dialog_positive, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-
-		}).create();
-		d.show();
-		((TextView)d.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-		((TextView)d.findViewById(android.R.id.message)).setTextSize(13);
-
+	private void toggleRegistering() {
+        this.isRegistering = !this.isRegistering;
+        MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
+        if (this.isRegistering) {
+            this.mLoginNormalBtn.setText(getString(R.string.register_btn));
+            menuItem.setTitle(getString(R.string.login_btn));
+            mPasswordET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        } else {
+            this.mLoginNormalBtn.setText(getString(R.string.login_btn));
+            menuItem.setTitle(getString(R.string.register_btn));
+            mPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        }
+        this.resetLayout();
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -353,104 +245,18 @@ public class LoginActivity extends AppCompatActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.login, menu);
+        this.menu = menu;
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
-			case R.id.action_info:
-				showHelpMMessage();
+			case R.id.action_toggleRegistering:
+				toggleRegistering();
 				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
-/*	@Override
-	public void onNewUser(String apiToken, String apiUser) {
-		final String api = apiToken;
-		final String user = apiUser;
-		mMainHandler = new Handler(getMainLooper());
-		Runnable myRunnable = new Runnable(){
-			public void run() {
-				afterResults();
-				try {
-					saveTokens(api,user);
-					startMainActivity();
-					finish();
-				} catch (Exception e) {
-					if("PB_string_commit".equals(e.getMessage()))
-						Crouton.makeText(LoginActivity.this, getString(R.string.ERR_pb_accountCreation), Style.ALERT).show();
-				}
-			}
-		};
-		mMainHandler.post(myRunnable);
-	}
-	@Override
-	public void onUserConnected(String api_t, String user_t) {
-		final String api = api_t;
-		final String user = user_t;
-		mMainHandler = new Handler(getMainLooper());
-        Log.v("user connected", "api:" +api_t+ " us" + user_t);
-		Runnable myRunnable = new Runnable(){
-			public void run() {
-				afterResults();
-				try {
-					saveTokens(api,user);
-					startMainActivity();
-				} catch (Exception e) {
-					if("PB_string_commit".equals(e.getMessage()))
-						Crouton.makeText(LoginActivity.this, getString(R.string.ERR_pb_connection), Style.ALERT).show();
-				}
-			}
-		};
-		mMainHandler.post(myRunnable);
-	}
-
-
-	@Override
-	public void onUserReceived(User user) {
-		try {
-			saveTokens(mTmpApiToken,mTmpUserToken);
-			startMainActivity();
-			finish();
-		} catch(Exception e) {
-			if("PB_string_commit".equals(e.getMessage()))
-				Crouton.makeText(LoginActivity.this, getString(R.string.ERR_pb_connection), Style.ALERT).show();
-		}
-	}
-
-	@Override
-	public void onUserItemsReceived(UserLook.UserItems userLook, Reward.SpecialReward itemBought) {
-
-	}
-
-	@Override
-	public void onPostResult(double xp, double hp, double gold, double lvl, double delta) {
-
-	}
-
-	@Override
-	public void onPreResult() {
-		mProgressBar.setVisibility(View.VISIBLE);
-
-	}
-
-	@Override
-	public void onError(HabitRPGException error) {
-		final HabitRPGException err = error;
-		mMainHandler = new Handler(getMainLooper());
-		Runnable myRunnable = new Runnable(){
-			public void run() {
-				afterResults();
-				String myMessage=err!=null ? err.getMessage() : null;
-				if(myMessage == null)
-					myMessage= getString(R.string.unknown_error);
-				Crouton.makeText(LoginActivity.this, myMessage, Style.ALERT).show();
-			}
-		};
-		mMainHandler.post(myRunnable);
-	}*/
 
 
 	private void afterResults() {
@@ -469,7 +275,7 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void failure(RetrofitError error) {
-        Log.d("OMG", "omg" + error.getMessage() + " " + error.getUrl());
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -484,6 +290,7 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onUserFail() {
-		showSnackbar(getString(R.string.unknown_error));
+        mProgressBar.setVisibility(View.GONE);
+        showSnackbar(getString(R.string.unknown_error));
     }
 }

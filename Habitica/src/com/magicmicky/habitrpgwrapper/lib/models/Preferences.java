@@ -2,6 +2,8 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -14,8 +16,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Preferences extends BaseModel {
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
+    @PrimaryKey()
+    String userId;
 
     @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
@@ -25,7 +27,13 @@ public class Preferences extends BaseModel {
 
     @Column
     private int dayStart, timezoneOffset;
-    private Hair hair;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "hair_user_id",
+            columnType = String.class,
+            foreignColumnName = "userId")})
+    public Hair hair;
+
     public Preferences() {
     }
 
@@ -181,58 +189,10 @@ public class Preferences extends BaseModel {
         this.hair = hair;
     }
 
-    public class Hair{
-        private int mustache,beard, bangs,base;
-        private String color;
-        private Hair() {
-        }
-        private Hair(int mustache, int beard, int bangs, int base, String color) {
-            this.mustache = mustache;
-            this.beard = beard;
-            this.bangs = bangs;
-            this.base = base;
-            this.color = color;
-        }
+    @Override
+    public void save() {
+        hair.userId = userId;
 
-        public int getMustache() {
-            return mustache;
-        }
-
-        public void setMustache(int mustache) {
-            this.mustache = mustache;
-        }
-
-        public int getBeard() {
-            return beard;
-        }
-
-        public void setBeard(int beard) {
-            this.beard = beard;
-        }
-
-        public int getBangs() {
-            return bangs;
-        }
-
-        public void setBangs(int bangs) {
-            this.bangs = bangs;
-        }
-
-        public int getBase() {
-            return base;
-        }
-
-        public void setBase(int base) {
-            this.base = base;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
+        super.save();
     }
-
 }

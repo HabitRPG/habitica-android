@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 
-
 /**
  * Created by Negue on 14.06.2015.
  */
@@ -109,7 +108,9 @@ public class AvatarWithBarsViewModel {
 
         goldText.setText(gp+"");
         silverText.setText(sp+"");
-        gemsText.setText(user.getBalance()*4+"");
+
+        Double gems = new Double(user.getBalance()*4);
+        gemsText.setText(gems.intValue()+"");
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
@@ -136,8 +137,8 @@ public class AvatarWithBarsViewModel {
         }
         else
         {
-            valueBar.setWeightToShow((float) (1 - percent));
-            valueBar.setWeightToHide((float) percent);
+            valueBar.setWeightToShow((float) percent);
+            valueBar.setWeightToHide((float) (1 - percent));
         }
 
         valueBar.setText((int) value + "/" + (int) valueMax);

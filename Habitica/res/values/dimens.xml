@@ -42,4 +42,6 @@
 
 	<dimen name="daily_checkbox_corner_radius">2dp</dimen>
 	<dimen name="checkbox_size">30dp</dimen>
+
+	<dimen name="login_field_width">350dp</dimen>
 </resources>

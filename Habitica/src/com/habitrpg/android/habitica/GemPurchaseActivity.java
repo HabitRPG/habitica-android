@@ -65,9 +65,7 @@ public class GemPurchaseActivity extends AppCompatActivity {
         }
 
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-
                 .build();
-
 
         checkout.start();
         // you only need this if this activity starts purchase process

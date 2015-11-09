@@ -31,7 +31,10 @@ public class HabitRPGUser extends BaseModel {
     List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
-    private int balance;
+
+    @Column
+    private double balance;
+
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "stats_id",
             columnType = Long.class,
@@ -40,8 +43,8 @@ public class HabitRPGUser extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "preferences_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "userId")})
     private Preferences preferences;
 
     @Column
@@ -132,11 +135,11 @@ public class HabitRPGUser extends BaseModel {
         this.items = items;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(double balance) {
         this.balance=balance;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return this.balance;
     }
 
@@ -193,6 +196,14 @@ public class HabitRPGUser extends BaseModel {
         return tags;
     }
 
+    @Override
+    public void save() {
+
+        preferences.userId = id;
+
+
+        super.save();
+    }
 
     public List<String> getAvatarLayerNames() {
         List<String> layerNames = new ArrayList<String>();
@@ -229,10 +240,9 @@ public class HabitRPGUser extends BaseModel {
             }
         }
 
-        Preferences.Hair hair = prefs.getHair();
+        Hair hair = prefs.getHair();
         if (hair != null) {
             String hairColor = hair.getColor();
-
 
             if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() +"_" + hairColor);}
             if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() +"_" + hairColor);}

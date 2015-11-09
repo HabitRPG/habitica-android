@@ -4,11 +4,10 @@
 	xmlns:abc="http://schemas.android.com/apk/res-auto"
 	xmlns:app="http://schemas.android.com/tools">
 	<item
-			android:id="@+id/action_info"
-			android:icon="@drawable/ic_menu_info"
+			android:id="@+id/action_toggleRegistering"
 			android:orderInCategory="1"
-			app:showAsAction="always"
-			android:title="@string/action_info"
-			abc:showAsAction="always"/>
+			app:showAsAction="ifRoom"
+			android:title="@string/register_btn"
+			abc:showAsAction="ifRoom"/>
 
 </menu>

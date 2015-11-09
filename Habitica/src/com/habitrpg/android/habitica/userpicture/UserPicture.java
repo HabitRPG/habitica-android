@@ -39,6 +39,17 @@ public class UserPicture {
     public UserPicture(HabitRPGUser user, Context context) {
         this.user = user;
         this.context = context;
+        this.hasBackground = true;
+        this.hasPet = true;
+        this.hasMount = true;
+    }
+
+    public UserPicture(HabitRPGUser user, Context context, boolean hasBackground, boolean hasPet, boolean hasMount) {
+        this.user = user;
+        this.context = context;
+        this.hasBackground = hasBackground;
+        this.hasPet = hasPet;
+        this.hasMount = hasMount;
     }
 
     public void removeTask(){
@@ -72,25 +83,25 @@ public class UserPicture {
 
         String mountName = this.user.getItems().getCurrentMount();
 
-        if (mountName != null && !mountName.isEmpty()) {
+        if (mountName != null && !mountName.isEmpty() && hasMount) {
             layerNames.add(0, "Mount_Body_" + mountName);
             layerNames.add("Mount_Head_" + mountName);
-            this.hasMount = true;
         }
 
         String petName = this.user.getItems().getCurrentPet();
 
-        if (petName != null && !petName.isEmpty()) {
+        if (petName != null && !petName.isEmpty() && hasPet) {
             layerNames.add("Pet-" + petName);
             this.hasPet = true;
         }
 
         String backgroundName = this.user.getPreferences().getBackground();
 
-        if (backgroundName != null && !backgroundName.isEmpty()) {
+        if (backgroundName != null && !backgroundName.isEmpty() && hasBackground) {
             layerNames.add(0, "background_" + backgroundName);
             this.hasBackground = true;
         }
+
 
         // get layer hash value
         String fullLayerString = "";
