@@ -26,7 +26,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView"
                 android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/gryphon"
                 android:src="@drawable/ic_gryphon"
                 android:layout_span="2" />
         </TableRow>
