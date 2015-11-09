@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
@@ -467,17 +469,43 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             binding.btnReward.setClickable(true);
             binding.btnReward.setOnClickListener(this);
+            binding.imageView3.setOnClickListener(this);
+            binding.gearElementsLayout.setOnClickListener(this);
             binding.imageView3.setVisibility(View.GONE);
+
         }
 
         @Override
         public void onClick(View v) {
-            BuyRewardTappedEvent event = new BuyRewardTappedEvent();
+            final BuyRewardTappedEvent event = new BuyRewardTappedEvent();
 
-            if (v == binding.btnReward) {
-                event.Reward = Item;
+            if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
 
-                EventBus.getDefault().post(event);
+                String content = binding.getReward().getNotes();
+                content += "\nPrice:" + String.format("%.0f", binding.getReward().value);
+
+                final MaterialDialog dialog = new MaterialDialog.Builder(context)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            event.Reward = Item;
+                            EventBus.getDefault().post(event);
+                        }
+                    })
+                  .positiveColor(context.getResources().getColor(R.color.brand_200))
+                    .positiveText("Buy")
+                  .title(binding.getReward().getText())
+                    .content(content)
+                    .negativeText("Dismiss")
+                  .onNegative(new MaterialDialog.SingleButtonCallback() {
+                      @Override
+                      public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                          materialDialog.dismiss();
+                      }
+                  }).build();
+
+                dialog.show();
+
             } else super.onClick(v);
         }
 

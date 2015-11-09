@@ -13,84 +13,95 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/gearElementsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        >
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/btnLayout">
-                <Button
-                    android:id="@+id/btnReward"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:drawableLeft="@drawable/gold"
-                    android:text='@{String.format("%.0f", reward.value)}'
-                    app:backgroundColor="@{reward.getLightTaskColor}" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="60dp"
-                    android:padding="5dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:visibility='@{reward.specialTag == "item" ? View.VISIBLE : View.GONE}'
-                    bind:imageName='@{"shop_"+reward.id}'/>
-
-            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true">
-                    <TextView
-                        android:id="@+id/checkedTextView"
-                        style="@style/CardTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@{reward.text}" />
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:weightSum="1">
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        style="@style/CardText"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="60dp"
+                        android:padding="5dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:visibility='@{reward.specialTag == "item" ? View.VISIBLE : View.VISIBLE}'
+                        bind:imageName='@{"shop_"+reward.id}'/>
+
+                    <LinearLayout
+                        android:id="@+id/textReward"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{reward.notes}"
-                        android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/checkedTextView"
+                            style="@style/CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="5dp"
+                            android:text="@{reward.text}" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            style="@style/CardText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="41dp"
+                            android:text="@{reward.notes}"
+                            android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnReward"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:padding="3dp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:drawableLeft="@drawable/ic_header_gold"
+                        android:text='@{String.format("%.0f", reward.value)}'
+                        android:background="@drawable/rounded_purple_square"
+                        android:layout_weight="2"
+                        android:layout_marginRight="10dp" />
+
+
                 </LinearLayout>
-                <View
-                    android:id="@+id/rightBorderView"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    app:backgroundColor="@{reward.getLightTaskColor}"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+
             </RelativeLayout>
+
         </LinearLayout>
         <View
             android:id="@+id/bottomBorderView"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/cell_separator"/>
+
     </LinearLayout>
 </layout>
