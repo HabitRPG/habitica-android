@@ -1,5 +1,26 @@
 [
   {
+    "name": "Version 0.0.8",
+    "items":[
+      {
+        "type": "N",
+        "title": "Updated the Party-Members Overview <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/35\">#35</a>"
+      },
+      {
+        "type": "F",
+        "title": "Redesign login screen"
+      },
+      {
+        "type": "B",
+        "title": "task list disappeared on rotate <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/12\">#12</a>"
+      },
+      {
+        "type": "B",
+        "title": "Fix class colors"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.7",
     "items":[
       {
