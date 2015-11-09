@@ -11,6 +11,10 @@
         "title": "Redesign login screen"
       },
       {
+        "type": "F",
+        "title": "Redesign task list"
+      },
+      {
         "type": "B",
         "title": "task list disappeared on rotate <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/12\">#12</a>"
       },
