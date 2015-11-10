@@ -5,14 +5,17 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
@@ -55,8 +59,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
 
 
-    public interface IAdditionalEntries
-    {
+    public interface IAdditionalEntries {
         void GetAdditionalEntries(IReceiveNewEntries callBack);
     }
 
@@ -116,16 +119,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     }
 
-    public void onEvent(TaskUpdatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskUpdatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         this.filter();
         notifyDataSetChanged();
     }
 
-    public void onEvent(TaskCreatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskCreatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         observableContent.add(0, evnt.task);
@@ -480,33 +483,69 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             final BuyRewardTappedEvent event = new BuyRewardTappedEvent();
 
             if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
-
-                String content = binding.getReward().getNotes();
-                content += "\nPrice:" + String.format("%.0f", binding.getReward().value);
+                LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 final MaterialDialog dialog = new MaterialDialog.Builder(context)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                            event.Reward = Item;
-                            EventBus.getDefault().post(event);
-                        }
-                    })
-                  .positiveColor(context.getResources().getColor(R.color.brand_200))
-                    .positiveText("Buy")
-                  .title(binding.getReward().getText())
-                    .content(content)
-                    .negativeText("Dismiss")
-                  .onNegative(new MaterialDialog.SingleButtonCallback() {
-                      @Override
-                      public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                          materialDialog.dismiss();
-                      }
-                  }).build();
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                event.Reward = Item;
+                                EventBus.getDefault().post(event);
+                            }
+                        })
+                        .positiveColor(context.getResources().getColor(R.color.brand_200))
+                        .positiveText("Buy")
+                        .title(binding.getReward().getText())
+                        .customView(contentViewForDialog, true)
+                        .negativeText("Dismiss")
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                materialDialog.dismiss();
+                            }
+                        }).build();
 
                 dialog.show();
 
             } else super.onClick(v);
+        }
+
+        @NonNull
+        private LinearLayout createContentViewForDialog() {
+            String price = String.format("%.0f", binding.getReward().value);
+            String content = binding.getReward().getNotes();
+
+            LinearLayout l = new LinearLayout(context);
+            l.setOrientation(LinearLayout.VERTICAL);
+
+            ImageView imageView = new ImageView(context);
+            imageView.setMinimumWidth(200);
+            imageView.setMinimumHeight(200);
+
+            DataBindingUtils.loadImage(imageView, "shop_" + binding.getReward().getId());
+
+            TextView t = new TextView(context);
+            t.setText(content);
+
+            LinearLayout bottomLayout = new LinearLayout(context);
+            bottomLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            TextView priceTextView = new TextView(context);
+            priceTextView.setText(price);
+
+            ImageView gold = new ImageView(context);
+            gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
+            gold.setMinimumHeight(50);
+            gold.setMinimumWidth(50);
+
+            bottomLayout.addView(gold);
+            bottomLayout.addView(priceTextView);
+            bottomLayout.setGravity(Gravity.RIGHT);
+
+            l.addView(imageView);
+            l.addView(t);
+            l.addView(bottomLayout);
+            return l;
         }
 
         @Override
@@ -529,7 +568,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
 
-            if(additionalEntries != null){
+            if (additionalEntries != null) {
                 additionalEntries.GetAdditionalEntries(this);
             }
         }
