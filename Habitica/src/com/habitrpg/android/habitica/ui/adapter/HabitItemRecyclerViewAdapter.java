@@ -537,13 +537,15 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
             gold.setMinimumHeight(50);
             gold.setMinimumWidth(50);
-            gold.setPadding(0,0,20,0);
+            gold.setPadding(0, 0, 20, 0);
 
             bottomLayout.addView(gold);
             bottomLayout.addView(priceTextView);
             bottomLayout.setGravity(Gravity.RIGHT);
 
-            l.addView(imageView);
+            if(imageView.getDrawable()!= null){
+                l.addView(imageView);
+            }
             l.addView(t);
             l.addView(bottomLayout);
             return l;
