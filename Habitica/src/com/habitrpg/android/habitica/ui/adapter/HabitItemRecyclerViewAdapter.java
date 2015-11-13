@@ -485,29 +485,32 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
-                final MaterialDialog dialog = new MaterialDialog.Builder(context)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                event.Reward = Item;
-                                EventBus.getDefault().post(event);
-                            }
-                        })
-                        .positiveColor(context.getResources().getColor(R.color.brand_200))
-                        .positiveText("Buy")
-                        .title(binding.getReward().getText())
-                        .customView(contentViewForDialog, true)
-                        .negativeText("Dismiss")
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                materialDialog.dismiss();
-                            }
-                        }).build();
-
+                MaterialDialog dialog = createGearDialog(event, contentViewForDialog);
                 dialog.show();
 
             } else super.onClick(v);
+        }
+
+        private MaterialDialog createGearDialog(final BuyRewardTappedEvent event, LinearLayout contentViewForDialog) {
+            return new MaterialDialog.Builder(context)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            event.Reward = Item;
+                            EventBus.getDefault().post(event);
+                        }
+                    })
+                    .positiveColor(context.getResources().getColor(R.color.brand_200))
+                    .positiveText("Buy")
+                    .title(binding.getReward().getText())
+                    .customView(contentViewForDialog, true)
+                    .negativeText("Dismiss")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            materialDialog.dismiss();
+                        }
+                    }).build();
         }
 
         @NonNull
@@ -515,8 +518,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             String price = String.format("%.0f", binding.getReward().value);
             String content = binding.getReward().getNotes();
 
-            LinearLayout l = new LinearLayout(context);
-            l.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout contentViewLayout = new LinearLayout(context);
+            contentViewLayout.setOrientation(LinearLayout.VERTICAL);
 
             ImageView imageView = new ImageView(context);
             imageView.setMinimumWidth(200);
@@ -524,11 +527,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             DataBindingUtils.loadImage(imageView, "shop_" + binding.getReward().getId());
 
-            TextView t = new TextView(context);
-            t.setText(content);
+            TextView contentTextView = new TextView(context, null);
+            contentTextView.setText(content);
 
-            LinearLayout bottomLayout = new LinearLayout(context);
-            bottomLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout goldPriceLayout = new LinearLayout(context);
+            goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
 
             TextView priceTextView = new TextView(context);
             priceTextView.setText(price);
@@ -539,16 +542,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             gold.setMinimumWidth(50);
             gold.setPadding(0, 0, 20, 0);
 
-            bottomLayout.addView(gold);
-            bottomLayout.addView(priceTextView);
-            bottomLayout.setGravity(Gravity.RIGHT);
+            goldPriceLayout.addView(gold);
+            goldPriceLayout.addView(priceTextView);
+            goldPriceLayout.setGravity(Gravity.CENTER);
 
             if(imageView.getDrawable()!= null){
-                l.addView(imageView);
+                contentViewLayout.addView(imageView);
             }
-            l.addView(t);
-            l.addView(bottomLayout);
-            return l;
+            contentViewLayout.addView(goldPriceLayout);
+            contentViewLayout.addView(contentTextView);
+            return contentViewLayout;
         }
 
         @Override
