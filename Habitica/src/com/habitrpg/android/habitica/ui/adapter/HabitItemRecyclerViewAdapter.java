@@ -548,7 +548,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
             gold.setMinimumHeight(50);
             gold.setMinimumWidth(50);
-            gold.setPadding(0, 0, 10, 0);
+            gold.setPadding(0, 0, 5, 0);
 
             goldPriceLayout.addView(gold);
             goldPriceLayout.addView(priceTextView);
