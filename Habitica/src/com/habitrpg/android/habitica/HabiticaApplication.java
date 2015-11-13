@@ -18,6 +18,7 @@ import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.PurchaseVerifier;
 import org.solovyev.android.checkout.RequestListener;
+import com.facebook.FacebookSdk;
 
 import java.io.File;
 import java.security.Security;
@@ -40,6 +41,8 @@ public class HabiticaApplication extends Application {
         Instance = this;
 
         FlowManager.init(this);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         Instabug.DEBUG = BuildConfig.DEBUG;
         Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");

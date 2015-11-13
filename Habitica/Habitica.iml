@@ -79,6 +79,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/beta/1.1.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics-core/2.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics/2.3.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.clans/fab/1.6.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.mmin18.layoutcast/library/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.porokoro.paperboy/paperboy/2.1.0/jars" />
@@ -126,6 +127,7 @@
     <orderEntry type="library" exported="" name="org.abego.treelayout.core-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="library-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="DBFlow-2.2.1" level="project" />
+    <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="materialdrawer-4.3.8" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="checkout-0.7.4" level="project" />
@@ -142,12 +144,13 @@
     <orderEntry type="library" exported="" name="design-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="fabric-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="beta-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="facebook-android-sdk-4.7.0" level="project" />
     <orderEntry type="library" exported="" name="iconics-core-1.7.9" level="project" />
     <orderEntry type="library" exported="" name="paperboy-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="javawriter-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.10" level="project" />
-    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.3.2" level="project" />
+    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="fab-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="instabugcore-1.8-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.0" level="project" />

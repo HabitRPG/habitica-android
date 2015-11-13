@@ -10,6 +10,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
@@ -80,6 +81,9 @@ public interface ApiService {
 
     @POST("/user/auth/local")
     void connectLocal(@Body UserAuth auth, Callback<UserAuthResponse> callback);
+
+    @POST("/user/auth/social")
+    void connectSocial(@Body UserAuthSocial auth, Callback<UserAuthResponse> callback);
 
     @POST("/user/sleep")
     void sleep(Callback<Void> voidCallback);

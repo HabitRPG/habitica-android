@@ -88,6 +88,8 @@ dependencies {
 
     // IAP Handling / Verification
     compile 'org.solovyev.android:checkout:0.7.4@aar'
+
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }
 
 android {

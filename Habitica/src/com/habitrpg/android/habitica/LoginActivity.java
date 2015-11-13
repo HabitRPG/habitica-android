@@ -33,6 +33,13 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
@@ -57,6 +64,7 @@ public class LoginActivity extends AppCompatActivity
 	private final static String TAG_APIKEY="key";
 
 	private Button mLoginNormalBtn;
+	private LoginButton mFacebookLoginBtn;
 	private EditText mUsernameET, mPasswordET,mEmail,mConfirmPassword;
     private TableRow mEmailRow, mConfirmPasswordRow;
 	private APIHelper mApiHelper;
@@ -65,6 +73,8 @@ public class LoginActivity extends AppCompatActivity
 	public String mTmpApiToken;
 	public Boolean isRegistering;
     private Menu menu;
+
+    private CallbackManager callbackManager;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,6 +96,30 @@ public class LoginActivity extends AppCompatActivity
         mConfirmPasswordRow = (TableRow) this.findViewById(R.id.confirm_password_row);
 
 		mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
+
+
+        mFacebookLoginBtn = (LoginButton) this.findViewById(R.id.login_button);
+		mFacebookLoginBtn.setReadPermissions("user_friends");
+
+        callbackManager = CallbackManager.Factory.create();
+
+        mFacebookLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+			@Override
+			public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                mApiHelper.connectSocial(accessToken.getUserId(), accessToken.getToken(), LoginActivity.this);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("FB Login", "Cancelled");
+            }
+
+			@Override
+			public void onError(FacebookException exception) {
+                Log.d("FB Login", "Error");
+			}
+		});
 
 		HostConfig hc= PrefsActivity.fromContext(this);
         if(hc ==null) {
@@ -114,20 +148,7 @@ public class LoginActivity extends AppCompatActivity
             }
         }
 	}
-	private View.OnClickListener mBarcodeClick = new View.OnClickListener() {
 
-		@Override
-		public void onClick(View view) {
-			IntentIntegrator integrator = new IntentIntegrator(LoginActivity.this);
-			integrator.initiateScan();
-		}
-	};
-	private View.OnClickListener mRegisterClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-
-		}
-	};
 	private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -191,7 +212,9 @@ public class LoginActivity extends AppCompatActivity
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        super.onActivityResult(requestCode, resultCode, intent);
+        callbackManager.onActivityResult(requestCode, resultCode, intent);
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 		if (scanResult != null) {
 			try {
 				Log.d("scanresult", scanResult.getContents());

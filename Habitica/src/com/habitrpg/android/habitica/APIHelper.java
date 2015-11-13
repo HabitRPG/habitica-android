@@ -25,6 +25,8 @@ import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
@@ -154,6 +156,16 @@ public class APIHelper implements ErrorHandler, Profiler {
         auth.setUsername(username);
         auth.setPassword(password);
         this.apiService.connectLocal(auth, callback);
+	}
+
+	public void connectSocial(String userId, String accessToken, Callback<UserAuthResponse> callback) {
+		UserAuthSocial auth = new UserAuthSocial();
+		auth.setNetwork("facebook");
+        UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
+        authResponse.setClient_id(userId);
+        authResponse.setAccess_token(accessToken);
+        auth.setAuthResponse(authResponse);
+		this.apiService.connectSocial(auth, callback);
 	}
 
 	public void deleteTask(Task item, TaskDeletionCallback cb) {
