@@ -530,8 +530,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             TextView contentTextView = new TextView(context, null);
             contentTextView.setText(content);
 
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.bottomMargin = 20;
+            layoutParams.gravity = Gravity.CENTER;
+
+
             LinearLayout goldPriceLayout = new LinearLayout(context);
             goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
+            goldPriceLayout.setLayoutParams(layoutParams);
+
 
             TextView priceTextView = new TextView(context);
             priceTextView.setText(price);
@@ -540,11 +548,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
             gold.setMinimumHeight(50);
             gold.setMinimumWidth(50);
-            gold.setPadding(0, 0, 20, 0);
+            gold.setPadding(0, 0, 10, 0);
 
             goldPriceLayout.addView(gold);
             goldPriceLayout.addView(priceTextView);
-            goldPriceLayout.setGravity(Gravity.CENTER);
 
             if(imageView.getDrawable()!= null){
                 contentViewLayout.addView(imageView);
