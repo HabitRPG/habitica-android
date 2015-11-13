@@ -11,8 +11,9 @@
 
     <item
         android:id="@+id/action_reload"
+        android:icon="@drawable/ic_refresh_white"
         android:orderInCategory="103"
-        android:title="@string/action_refresh"
+        app:showAsAction="ifRoom"
         />
 
 </menu>
