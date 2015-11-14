@@ -480,9 +480,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void onClick(View v) {
-            final BuyRewardTappedEvent event = new BuyRewardTappedEvent();
-
             if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
+                BuyRewardTappedEvent event = new BuyRewardTappedEvent();
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 MaterialDialog dialog = createGearDialog(event, contentViewForDialog);
