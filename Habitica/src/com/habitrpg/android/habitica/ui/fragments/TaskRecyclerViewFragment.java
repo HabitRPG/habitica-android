@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus;
  */
 public class TaskRecyclerViewFragment extends Fragment implements View.OnClickListener {
     public RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    public RecyclerView.Adapter mAdapter;
     private String classType;
 
     // TODO needs a bit of cleanup

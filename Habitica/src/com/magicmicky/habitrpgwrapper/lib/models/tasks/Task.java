@@ -14,8 +14,11 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by viirus on 10/08/15.
@@ -27,6 +30,9 @@ public class Task extends BaseModel {
     public static String TYPE_TODO = "todo";
     public static String TYPE_DAILY = "daily";
     public static String TYPE_REWARD = "reward";
+    public static String FREQUENCY_WEEKLY = "weekly";
+    public static String FREQUENCY_DAILY = "daily";
+
 
     @Column
     @PrimaryKey
@@ -63,6 +69,9 @@ public class Task extends BaseModel {
 
     @Column
     public Integer everyX, streak;
+
+    @Column
+    Date startDate;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
@@ -273,6 +282,9 @@ public class Task extends BaseModel {
     public Integer getEveryX() { return everyX; }
     public void setEveryX(Integer everyX) { this.everyX = everyX; }
 
+    public Date getStartDate() { return startDate; }
+    public void setStartDate(Date startDate) {this.startDate = startDate; }
+
     /**
      * @return the repeat array.<br/>
      * This array contains 7 values, one for each days, starting from monday.
@@ -405,12 +417,45 @@ public class Task extends BaseModel {
         return R.color.best_10;
     }
 
-    public Boolean isDue() {
-        //TODO: check if daily is due
-        return !this.getCompleted();
+    public Boolean isDue(int offset) {
+        if (this.getCompleted()) {
+            return true;
+        }
+
+        Calendar today = new GregorianCalendar();
+        today.add(Calendar.HOUR, -offset);
+
+        if (this.getStartDate() != null) {
+            Calendar startDate = new GregorianCalendar();
+            startDate.setTime(this.getStartDate());
+            Calendar startDateAtMidnight = new GregorianCalendar(startDate.get(Calendar.YEAR),
+                    startDate.get(Calendar.MONTH),
+                    startDate.get(Calendar.DAY_OF_MONTH));
+
+            if ( startDateAtMidnight.after(today) ) {
+                return false;
+            }
+        }
+
+        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+            Calendar startDate = new GregorianCalendar();
+            if (this.getStartDate() != null) {
+                startDate.setTime(this.getStartDate());
+            }
+            TimeUnit timeUnit = TimeUnit.DAYS;
+            long diffInMillies = startDate.getTimeInMillis() - today.getTimeInMillis();
+            long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            return (daySinceStart % this.getEveryX() == 0);
+        } else {
+            return this.getRepeat().getForDay(today.get(Calendar.DAY_OF_WEEK));
+        }
     }
 
-    public Boolean isDisplayedActive() {
-        return this.isDue() && !this.completed;
+    public Boolean isDisplayedActive(int offset) {
+        return this.isDue(offset) && !this.completed;
+    }
+
+    public Boolean isChecklistDisplayActive(int offset) {
+        return this.isDisplayedActive(offset) || (this.checklist.size() != this.getCompletedChecklistCount());
     }
 }

@@ -376,6 +376,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             public Fragment getItem(int position) {
                 int layoutOfType;
                 TaskRecyclerViewFragment fragment;
+                HabitItemRecyclerViewAdapter adapter;
 
                 switch (position) {
                     case 0:
@@ -385,11 +386,15 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this), Task.TYPE_DAILY);
+                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, MainActivity.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, MainActivity.this);
+                        if (User != null) {
+                            adapter.dailyResetOffset = User.getPreferences().getDayStart();
+                        }
+                        fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        HabitItemRecyclerViewAdapter adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper,
+                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, MainActivity.this.tagsHelper,
                                 layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, MainActivity.this,
                                 new HabitItemRecyclerViewAdapter.IAdditionalEntries() {
                                     @Override
@@ -520,7 +525,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     private void updateHeader() {
         updateUserAvatars();
-        setTitle(User.getProfile().getName() + " - Lv" + User.getStats().getLvl());
+        setTitle(User.getProfile().getName());
 
         android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
 
@@ -571,7 +576,11 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         loadTaskLists();
                         FillTagFilterDrawer(User.getTags());
                     }
-                    Log.w("header", "updating header");
+                    TaskRecyclerViewFragment fragment = ViewFragmentsDictionary.get(2);
+                    if (fragment != null) {
+                        HabitItemRecyclerViewAdapter adapter =(HabitItemRecyclerViewAdapter)fragment.mAdapter;
+                        adapter.dailyResetOffset = User.getPreferences().getDayStart();
+                    }
                     updateHeader();
                 }
             });

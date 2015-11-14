@@ -67,6 +67,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     private ObservableArrayList<Task> observableContent;
     FlowContentObserver observer;
     Context context;
+    public int dailyResetOffset;
 
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
@@ -418,6 +419,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             binding = DataBindingUtil.bind(itemView);
 
             checkbox.setOnCheckedChangeListener(this);
+            binding.setOffset(dailyResetOffset);
         }
 
 

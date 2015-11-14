@@ -83,4 +83,17 @@ public class Days extends BaseModel {
     public void setM(boolean m) {
         this.m = m;
     }
+
+    public boolean getForDay(int day) {
+        switch (day) {
+            case 2: return this.getM();
+            case 3: return this.getT();
+            case 4: return this.getW();
+            case 5: return this.getTh();
+            case 6: return this.getF();
+            case 7: return this.getS();
+            case 1: return this.getSu();
+        }
+        return false;
+    }
 }

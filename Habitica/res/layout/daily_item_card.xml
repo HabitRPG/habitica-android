@@ -11,6 +11,9 @@
         <variable
             name="displayChecklist"
             type="Boolean" />
+        <variable
+            name="offset"
+            type="int" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +28,7 @@
             <RelativeLayout
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent"
-                app:backgroundColor="@{daily.isDisplayedActive ? daily.getLightTaskColor : @color/task_gray}">
+                app:backgroundColor="@{daily.isDisplayedActive(offset) ? daily.getLightTaskColor : @color/task_gray}">
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="@dimen/checkbox_size"
@@ -72,7 +75,7 @@
                     android:id="@+id/checklistIndicatorWrapper"
                     android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.checklist.size != daily.getCompletedChecklistCount ? daily.getLightTaskColor : @color/task_gray}"
+                    app:backgroundColor="@{daily.isChecklistDisplayActive(offset) ? @color/task_gray : daily.getLightTaskColor}"
                     android:visibility="@{daily.checklist.size > 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
@@ -104,7 +107,7 @@
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.isDisplayedActive ?  daily.getLightTaskColor : @color/task_gray}"
+                    app:backgroundColor="@{daily.isDisplayedActive(offset) ?  daily.getLightTaskColor : @color/task_gray}"
                     android:visibility="@{daily.checklist.size == 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
