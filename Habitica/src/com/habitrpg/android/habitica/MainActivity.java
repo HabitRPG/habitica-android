@@ -546,6 +546,11 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     @Override
     public void onTaskDataReceived(TaskDirectionData data) {
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+        if (data.get_tmp() != null) {
+            if (data.get_tmp().getDrop() != null) {
+                showSnackbar(data.get_tmp().getDrop().getDialog());
+            }
+        }
     }
 
     @Override

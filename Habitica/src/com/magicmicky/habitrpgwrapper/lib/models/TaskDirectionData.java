@@ -8,6 +8,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
  */
 public class TaskDirectionData extends PlayerMinStats{
     private float delta;
+    private TaskDirectionDataTemp _tmp;
 
     public float getDelta() {
         return delta;
@@ -17,4 +18,6 @@ public class TaskDirectionData extends PlayerMinStats{
         this.delta = delta;
     }
 
+    public TaskDirectionDataTemp get_tmp() { return _tmp; }
+    public void set_tmp(TaskDirectionDataTemp tmp) { this._tmp = tmp; }
 }
