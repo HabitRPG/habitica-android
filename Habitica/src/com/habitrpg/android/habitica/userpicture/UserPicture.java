@@ -24,6 +24,8 @@ public class UserPicture {
 
     static Integer width = 140;
     static Integer height = 147;
+    static Integer compactWidth = 90;
+    static Integer compactHeight = 90;
 
     private HabitRPGUser user;
     private ImageView imageView;
@@ -71,7 +73,9 @@ public class UserPicture {
                 }
                 layerNumber++;
             }
-
+            if (!this.hasBackground && !this.hasPet) {
+                res = Bitmap.createBitmap(res, 25, 18, compactWidth, compactHeight);
+            }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             this.imageView.setImageBitmap(res);
         }

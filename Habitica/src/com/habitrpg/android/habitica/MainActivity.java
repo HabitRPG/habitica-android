@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,13 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
@@ -32,12 +37,14 @@ import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -98,6 +105,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     private TagsHelper tagsHelper;
 
     private ContentCache contentCache;
+
+    private MaterialDialog faintDialog;
 
     @Override
     protected int getLayoutRes() {
@@ -598,6 +607,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         adapter.dailyResetOffset = User.getPreferences().getDayStart();
                     }
                     updateHeader();
+
+                    displayDeathDialogIfNeeded();
                 }
             });
         }
@@ -695,4 +706,50 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             return true;
         }
     };
+
+    private void displayDeathDialogIfNeeded() {
+
+        if (User.getStats().getHp() > 0) {
+            return;
+        }
+
+        if (this.faintDialog == null) {
+            final MainActivity activity = this;
+            this.faintDialog = new MaterialDialog.Builder(this)
+                    .title(R.string.faint_header)
+                    .customView(R.layout.faint_dialog, true)
+                    .positiveText(R.string.faint_button)
+                    .positiveColorRes(R.color.worse_100)
+                    .dismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            faintDialog = null;
+                            mAPIHelper.reviveUser(new HabitRPGUserCallback(activity));
+                        }
+                    })
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            faintDialog = null;
+                        }
+                    })
+                    .build();
+
+            View customView = this.faintDialog.getCustomView();
+            if (customView != null) {
+                View hpBarView = customView.findViewById(R.id.hpBar);
+
+                ValueBarBinding hpBar = DataBindingUtil.bind(hpBarView);
+                hpBar.setPartyMembers(true);
+                AvatarWithBarsViewModel.setHpBarData(hpBar, User.getStats(), this);
+
+                ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
+                UserPicture userPicture = new UserPicture(User, this, false, false, false);
+                userPicture.setPictureOn(avatarView);
+            }
+
+            this.faintDialog.show();
+        }
+
+    }
 }
