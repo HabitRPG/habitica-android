@@ -77,7 +77,7 @@ public class AvatarWithBarsViewModel {
         if(user.getStats().get_class()!=null) {
             userClass+=user.getStats().get_class().name();
         }
-        lvlText.setText("Lv" + user.getStats().getLvl() + " " + userClass);
+        lvlText.setText("Lvl" + user.getStats().getLvl() + " " + userClass);
         Drawable drawable;
         switch(stats.get_class()) {
             case warrior:
@@ -92,7 +92,7 @@ public class AvatarWithBarsViewModel {
 
                 break;
             case healer:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
 
                 break;
             case base:
