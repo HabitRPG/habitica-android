@@ -16,10 +16,8 @@ public class SuppressedModals extends BaseModel {
     @PrimaryKey
     public String userId;
 
-    private Boolean streak;
-    private Boolean raisePet;
-    private Boolean hatchPet;
-    private Boolean levelUp;
+    @Column
+    private Boolean streak, raisePet, hatchPet, levelUp;
 
     public Boolean getStreak() {return streak; }
     public Boolean getRaisePet() {return raisePet; }
