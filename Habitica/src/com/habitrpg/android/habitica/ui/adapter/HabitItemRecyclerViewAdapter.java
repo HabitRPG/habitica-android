@@ -5,18 +5,23 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
@@ -32,6 +37,7 @@ import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
@@ -53,8 +59,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
 
 
-    public interface IAdditionalEntries
-    {
+    public interface IAdditionalEntries {
         void GetAdditionalEntries(IReceiveNewEntries callBack);
     }
 
@@ -115,16 +120,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     }
 
-    public void onEvent(TaskUpdatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskUpdatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         this.filter();
         notifyDataSetChanged();
     }
 
-    public void onEvent(TaskCreatedEvent evnt){
-        if(!taskType.equals(evnt.task.getType()))
+    public void onEvent(TaskCreatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
             return;
 
         observableContent.add(0, evnt.task);
@@ -472,18 +477,92 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             binding.btnReward.setClickable(true);
             binding.btnReward.setOnClickListener(this);
+            binding.imageView3.setOnClickListener(this);
+            binding.gearElementsLayout.setOnClickListener(this);
             binding.imageView3.setVisibility(View.GONE);
+
         }
 
         @Override
         public void onClick(View v) {
-            BuyRewardTappedEvent event = new BuyRewardTappedEvent();
+            if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
+                BuyRewardTappedEvent event = new BuyRewardTappedEvent();
+                LinearLayout contentViewForDialog = createContentViewForDialog();
 
-            if (v == binding.btnReward) {
-                event.Reward = Item;
+                MaterialDialog dialog = createGearDialog(event, contentViewForDialog);
+                dialog.show();
 
-                EventBus.getDefault().post(event);
             } else super.onClick(v);
+        }
+
+        private MaterialDialog createGearDialog(final BuyRewardTappedEvent event, LinearLayout contentViewForDialog) {
+            return new MaterialDialog.Builder(context)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            event.Reward = Item;
+                            EventBus.getDefault().post(event);
+                        }
+                    })
+                    .positiveColor(context.getResources().getColor(R.color.brand_200))
+                    .positiveText("Buy")
+                    .title(binding.getReward().getText())
+                    .customView(contentViewForDialog, true)
+                    .negativeText("Dismiss")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            materialDialog.dismiss();
+                        }
+                    }).build();
+        }
+
+        @NonNull
+        private LinearLayout createContentViewForDialog() {
+            String price = String.format("%.0f", binding.getReward().value);
+            String content = binding.getReward().getNotes();
+
+            LinearLayout contentViewLayout = new LinearLayout(context);
+            contentViewLayout.setOrientation(LinearLayout.VERTICAL);
+
+            ImageView imageView = new ImageView(context);
+            imageView.setMinimumWidth(200);
+            imageView.setMinimumHeight(200);
+
+            DataBindingUtils.loadImage(imageView, "shop_" + binding.getReward().getId());
+
+            TextView contentTextView = new TextView(context, null);
+            contentTextView.setText(content);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.bottomMargin = 20;
+            layoutParams.gravity = Gravity.CENTER;
+
+
+            LinearLayout goldPriceLayout = new LinearLayout(context);
+            goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
+            goldPriceLayout.setLayoutParams(layoutParams);
+
+
+            TextView priceTextView = new TextView(context);
+            priceTextView.setText(price);
+
+            ImageView gold = new ImageView(context);
+            gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
+            gold.setMinimumHeight(50);
+            gold.setMinimumWidth(50);
+            gold.setPadding(0, 0, 5, 0);
+
+            goldPriceLayout.addView(gold);
+            goldPriceLayout.addView(priceTextView);
+
+            if(imageView.getDrawable()!= null){
+                contentViewLayout.addView(imageView);
+            }
+            contentViewLayout.addView(goldPriceLayout);
+            contentViewLayout.addView(contentTextView);
+            return contentViewLayout;
         }
 
         @Override
@@ -506,7 +585,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
 
-            if(additionalEntries != null){
+            if (additionalEntries != null) {
                 additionalEntries.GetAdditionalEntries(this);
             }
         }

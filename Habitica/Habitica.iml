@@ -80,6 +80,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics-core/2.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics/2.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.clans/fab/1.6.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.mmin18.layoutcast/library/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.porokoro.paperboy/paperboy/2.1.0/jars" />
@@ -131,8 +132,8 @@
     <orderEntry type="library" exported="" name="materialdrawer-4.3.8" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="checkout-0.7.4" level="project" />
-    <orderEntry type="library" exported="" name="compilerCommon-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="compilerCommon-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="mimecraft-1.1.1" level="project" />
@@ -172,6 +173,7 @@
     <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.1.4" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="core-0.8.5.0" level="project" />
     <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
   </component>
 </module>
