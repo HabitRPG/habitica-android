@@ -172,6 +172,11 @@
             android:text="@string/checklist"
             android:id="@+id/textView9" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/checklist_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
     </LinearLayout>
 
     <LinearLayout

@@ -182,17 +182,9 @@ public class APIHelper implements ErrorHandler, Profiler {
         final Activity activity = (Activity) this.mContext;
 
 		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            //It also handles timeouts
-            showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
-		}else{
-            /*
-             * CONVERSION An exception was thrown while (de)serializing a body.
-             * HTTP A non-200 HTTP status code was received from the server e.g. 502, 503, etc...
-             * UNEXPECTED An internal error occurred while attempting to execute a request.
-             */
-            showConnectionProblemDialog(activity,R.string.internal_error_api);
-        }
-
+			//It also handles timeouts
+			showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
+		}
 		return cause;
 	}
 

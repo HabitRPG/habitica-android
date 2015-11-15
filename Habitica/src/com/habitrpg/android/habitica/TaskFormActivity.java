@@ -1,12 +1,15 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -17,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.ui.adapter.RecyclerListAdapter;
+import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -95,6 +100,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.dailyFrequencySpinner.setAdapter(frequencyAdapter);
             this.dailyFrequencySpinner.setOnItemSelectedListener(this);
 
+
             this.frequencyContainer = (LinearLayout) weekdayWrapper.findViewById(R.id.task_frequency_container);
         } else {
             mainWrapper.removeView(weekdayWrapper);
@@ -107,8 +113,26 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.populate(task);
             setTitle(task);
         } else{
-          setTitle((Task)null);
+          setTitle((Task) null);
         }
+
+        if(taskType.equals("todo") || taskType.equals("daily")){
+            createCheckListRecyclerView();
+        }
+    }
+
+    private void createCheckListRecyclerView() {
+        RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(checklistAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void setTitle(Task task) {
