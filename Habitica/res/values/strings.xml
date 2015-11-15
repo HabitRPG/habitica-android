@@ -157,4 +157,9 @@
     <string name="gryphon">Gryphon</string>
 
     <string name="facebook_app_id">128307497299777</string>
+    <string name="levelup_header">You gained a level!</string>
+    <string name="levelup_detail">By accomplishing your real-life goals, you\'ve grown to Level %1$d!</string>
+    <string name="levelup_health">You have been fully healed!</string>
+    <string name="levelup_button">Huzzah!</string>
+
 </resources>
