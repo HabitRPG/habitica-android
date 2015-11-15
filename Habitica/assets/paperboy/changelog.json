@@ -3,16 +3,48 @@
     "name": "Version 0.0.9",
     "items":[
       {
-        "type": "N",
+        "type": "F",
+        "title": "New buy reward dialog"
+      },
+      {
+        "type": "F",
+        "title": "Facebook login"
+      },
+      {
+        "type": "F",
+        "title": "Show drops"
+      },
+      {
+        "type": "F",
+        "title": "Display faint dialog and allow to revive"
+      },
+      {
+        "type": "F",
+        "title": "Display levelup dialog"
+      },
+      {
+        "type": "I",
         "title": "Redesign chat messages <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/34\">#34</a>"
       },
       {
-        "type": "N",
+        "type": "I",
         "title": "toggle sleep mode is now visible before the chat messages loaded"
+      },
+      {
+        "type": "I",
+        "title": "reload button now available in the toolbar (not in a three-dot-menu anymore)"
       },
       {
         "type": "B",
         "title": "the potion wasn't added to the rewards list"
+      },
+      {
+        "type": "B",
+        "title": "completed todos now hidden"
+      },
+      {
+        "type": "B",
+        "title": "correctly display dailies as due"
       }
     ]
   },
