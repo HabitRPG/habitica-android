@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -69,9 +71,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
+
 public class MainActivity extends AvatarActivityBase implements HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored, FlowContentObserver.OnSpecificModelStateChangedListener,
         OnCheckedChangeListener {
+
+    public enum SnackbarDisplayType {
+        NORMAL, FAILURE, DROP
+    }
 
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
@@ -189,19 +197,22 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     // endregion
 
     private void showSnackbar(String content) {
-        showSnackbar(content, false);
+        showSnackbar(content, SnackbarDisplayType.NORMAL);
     }
 
-    private void showSnackbar(String content, boolean negative) {
+    private void showSnackbar(String content, SnackbarDisplayType displayType) {
         Snackbar snackbar = Snackbar.make(floatingMenu, content, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
 
-        if (negative) {
-            View snackbarView = snackbar.getView();
+        if (displayType == SnackbarDisplayType.FAILURE) {
 
             //change Snackbar's background color;
-            snackbarView.setBackgroundColor(Color.RED);
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
+        } else if (displayType == SnackbarDisplayType.DROP) {
+            TextView tv = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            tv.setMaxLines(5);
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
         }
-
         snackbar.show();
     }
 
@@ -220,7 +231,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
             @Override
             public void failure(RetrofitError error) {
-                showSnackbar("Error: " + error.getMessage(), true);
+                showSnackbar("Error: " + error.getMessage(), SnackbarDisplayType.FAILURE);
             }
         });
     }
@@ -257,7 +268,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         final String rewardKey = event.Reward.getId();
 
         if (User.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar("Not enough Gold", true);
+            showSnackbar("Not enough Gold", SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -267,7 +278,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 int maxHp = User.getStats().getMaxHealth();
 
                 if(currentHp == maxHp) {
-                    showSnackbar("You don't need to buy an health potion", true);
+                    showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE);
                     return;
                 }
             }
@@ -296,7 +307,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
                 @Override
                 public void failure(RetrofitError error) {
-                    showSnackbar("Buy Reward Error " + event.Reward.getText(), true);
+                    showSnackbar("Buy Reward Error " + event.Reward.getText(), SnackbarDisplayType.FAILURE);
                 }
             });
         } else {
@@ -328,7 +339,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     private void notifyUser(double xp, double hp, double gold,
                             double lvl, double delta) {
         StringBuilder message = new StringBuilder();
-        boolean neg = false;
+        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
         if (lvl > User.getStats().getLvl()) {
             message.append(getString(R.string.lvlup));
             //If user lvl up, we need to fetch again the data from the server...
@@ -343,7 +354,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 User.getStats().setExp(xp);
             }
             if (hp != stats.getHp()) {
-                neg = true;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
                 User.getStats().setHp(hp);
             }
@@ -351,11 +362,11 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
                 stats.setGp(gold);
             } else if (gold < stats.getGp()) {
-                neg = true;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
                 stats.setGp(gold);
             }
-            showSnackbar(message.toString(), neg);
+            showSnackbar(message.toString(), displayType);
 
             updateUserAvatars();
         }
@@ -548,7 +559,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                showSnackbar(data.get_tmp().getDrop().getDialog());
+                showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
             }
         }
     }
