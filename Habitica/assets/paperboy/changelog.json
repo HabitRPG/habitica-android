@@ -9,6 +9,10 @@
       {
         "type": "N",
         "title": "toggle sleep mode is now visible before the chat messages loaded"
+      },
+      {
+        "type": "B",
+        "title": "the potion wasn't added to the rewards list"
       }
     ]
   },

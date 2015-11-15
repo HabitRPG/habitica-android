@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
@@ -65,8 +65,6 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,7 +218,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             //change Snackbar's background color;
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
         } else if (displayType == SnackbarDisplayType.DROP) {
-            TextView tv = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
             tv.setMaxLines(5);
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
         }
@@ -275,7 +273,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
-    public void onEvent(final BuyRewardTappedEvent event) {
+    public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
 
         if (User.getStats().getGp() < event.Reward.getValue()) {
@@ -432,6 +430,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                                                 for (ItemData item : itemDatas) {
                                                     itemKeys.add(item.key);
                                                 }
+                                                itemKeys.add("potion");
 
                                                 contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
                                                     @Override

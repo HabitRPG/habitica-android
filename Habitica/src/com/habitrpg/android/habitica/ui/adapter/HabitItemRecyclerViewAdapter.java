@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
-import com.habitrpg.android.habitica.events.BuyRewardTappedEvent;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCheckedEvent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
@@ -486,20 +486,20 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void onClick(View v) {
             if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
-                BuyRewardTappedEvent event = new BuyRewardTappedEvent();
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
-                MaterialDialog dialog = createGearDialog(event, contentViewForDialog);
+                MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
 
             } else super.onClick(v);
         }
 
-        private MaterialDialog createGearDialog(final BuyRewardTappedEvent event, LinearLayout contentViewForDialog) {
+        private MaterialDialog createGearDialog(LinearLayout contentViewForDialog) {
             return new MaterialDialog.Builder(context)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            BuyRewardCommand event = new BuyRewardCommand();
                             event.Reward = Item;
                             EventBus.getDefault().post(event);
                         }

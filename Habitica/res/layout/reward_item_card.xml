@@ -60,11 +60,6 @@
                             style="@style/CardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingEnd="5dp"
-                            android:paddingTop="5dp"
                             android:text="@{reward.text}" />
 
                         <TextView
@@ -72,6 +67,11 @@
                             style="@style/CardText"
                             android:layout_width="wrap_content"
                             android:layout_height="41dp"
+                            android:paddingBottom="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="5dp"
                             android:text="@{reward.notes}"
                             android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
 
