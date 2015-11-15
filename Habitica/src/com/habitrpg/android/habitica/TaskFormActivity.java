@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -155,6 +155,20 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         });
 
 
+    }
+
+    private void createCheckListRecyclerView() {
+        RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(checklistAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void setTitle(Task task) {
