@@ -98,7 +98,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public void onBindViewHolder(ChatRecyclerViewHolder holder, int position) {
-        if(!isTavern && position > 0){
+        if (!isTavern && position > 0) {
             holder.bind(messages.get(position - 1));
             return;
         }
@@ -110,7 +110,16 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public int getItemCount() {
-        return messages.size() + (isTavern ? 2 : 1);
+        int messageCount = messages.size();
+
+        if (isTavern) {
+            // if there are no entries, we just show the toggle inn button
+            messageCount += (messageCount == 0) ? 1 : 2;
+        } else {
+            messageCount += 1;
+        }
+
+        return messageCount;
     }
 
     public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -215,7 +224,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
 
-                if(msg.user == null || msg.user.equals("")){
+                if (msg.user == null || msg.user.equals("")) {
                     msg.user = "system";
                 }
 
@@ -341,7 +350,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             String text = textNewMessage.getText().toString();
 
-            if(!text.equals("")) {
+            if (!text.equals("")) {
                 EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
             }
 

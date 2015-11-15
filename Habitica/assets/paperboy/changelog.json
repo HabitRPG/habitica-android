@@ -1,5 +1,18 @@
 [
   {
+    "name": "Version 0.0.9",
+    "items":[
+      {
+        "type": "N",
+        "title": "Redesign chat messages <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/34\">#34</a>"
+      },
+      {
+        "type": "N",
+        "title": "toggle sleep mode is now visible before the chat messages loaded"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.8",
     "items":[
       {

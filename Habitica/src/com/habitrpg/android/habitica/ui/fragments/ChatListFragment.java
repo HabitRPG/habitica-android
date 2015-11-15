@@ -26,6 +26,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -95,6 +96,10 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             mRecyclerView.setLayoutManager(layoutManager);
         }
+
+        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(new ArrayList<ChatMessage>(), ctx, userId, groupId, isTavern);
+
+        mRecyclerView.setAdapter(tavernAdapter);
 
         onRefresh();
     }

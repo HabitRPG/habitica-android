@@ -6,109 +6,112 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1.0">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <LinearLayout
-                android:id="@+id/user_background_layout"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center"
-                android:layout_margin="10dp"
-                android:background="@drawable/layout_rounded_bg">
-
-                <TextView
-                    android:id="@+id/user_label"
-                    style="@style/ChatMessageUserTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:ellipsize="middle"
-                    android:lines="1"
-                    android:text="some user name" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="right">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:layout_margin="5dp">
-
-
-                <LinearLayout
-                    android:id="@+id/like_background_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/layout_rounded_bg">
-
-                    <TextView
-                        android:id="@+id/tvLikes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:clickable="true"
-                        android:gravity="center_vertical"
-                        android:text="+1" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/btn_options"
-                    android:layout_width="25dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.06"
-                    android:src="@drawable/ic_action_more_vert"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="5dp" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
         android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/message_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:lineSpacingMultiplier="1.0" />
+            android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1.0">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                    <LinearLayout
+                        android:id="@+id/user_background_layout"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/layout_rounded_bg">
+
+                        <TextView
+                            android:id="@+id/user_label"
+                            style="@style/ChatMessageUserTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:ellipsize="middle"
+                            android:lines="1"
+                            android:text="some user name" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="right">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:layout_margin="5dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/like_background_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|right"
+
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/layout_rounded_bg">
+
+                            <TextView
+                                android:id="@+id/tvLikes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:clickable="true"
+                                android:gravity="center_vertical"
+                                android:text="+1" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/btn_options"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="0.06"
+                            android:src="@drawable/ic_action_more_vert" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/message_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:lineSpacingMultiplier="1.0" />
+
+            <TextView
+                android:id="@+id/ago_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:text="5 hours ago" />
+        </LinearLayout>
     </android.support.v7.widget.CardView>
-
-    <TextView
-        android:id="@+id/ago_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|right"
-        android:text="5 hours ago"
-        android:layout_marginRight="8dp"
-        android:ellipsize="end" />
-
-
 </LinearLayout>
