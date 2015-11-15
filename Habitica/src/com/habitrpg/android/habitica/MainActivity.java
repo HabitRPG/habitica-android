@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.TaskCheckedEvent;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
@@ -261,7 +261,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     public void onEvent(TaskLongPressedEvent event) {
     }
 
-    public void onEvent(TaskCheckedEvent event) {
+    public void onEvent(TaskCheckedCommand event) {
         mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(this, event.Task.getId()));
     }
 

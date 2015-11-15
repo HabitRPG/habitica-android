@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.TaskCheckedEvent;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
@@ -101,11 +101,46 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.viewHolderClass = viewHolderClass;
 
         EventBus.getDefault().register(this);
-        onEvent((FilterTasksByTagsCommand) null);
+        filter();
     }
 
     public void onEvent(FilterTasksByTagsCommand cmd) {
-        this.filter();
+        filter();
+    }
+
+    public void onEvent(TaskCheckedCommand evnt){
+        if (!taskType.equals(evnt.Task.getType()))
+            return;
+
+        if(evnt.completed && evnt.Task.getType().equals("todo")){
+            // remove from the list
+            observableContent.remove(evnt.Task);
+            filter();
+        }
+    }
+
+    public void onEvent(TaskUpdatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
+            return;
+
+        filter();
+    }
+
+    public void onEvent(TaskCreatedEvent evnt) {
+        if (!taskType.equals(evnt.task.getType()))
+            return;
+
+        observableContent.add(0, evnt.task);
+        filter();
+    }
+
+    private void filter() {
+        if (this.tagsHelper.howMany() == 0) {
+            filteredObservableContent = observableContent;
+        } else {
+            filteredObservableContent = new ObservableArrayList<Task>();
+            filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
+        }
 
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
@@ -117,34 +152,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 }
             }
         });
-
-    }
-
-    public void onEvent(TaskUpdatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
-            return;
-
-        this.filter();
-        notifyDataSetChanged();
-    }
-
-    public void onEvent(TaskCreatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
-            return;
-
-        observableContent.add(0, evnt.task);
-        this.filter();
-        notifyDataSetChanged();
-    }
-
-    private void filter() {
-        if (this.tagsHelper.howMany() == 0) {
-            filteredObservableContent = observableContent;
-        } else {
-            filteredObservableContent = new ObservableArrayList<Task>();
-            filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
-        }
-
     }
 
     public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
@@ -395,12 +402,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (buttonView == checkbox) {
                 if (isChecked != Item.getCompleted()) {
-                    TaskCheckedEvent event = new TaskCheckedEvent();
+                    TaskCheckedCommand event = new TaskCheckedCommand();
                     event.Task = Item;
+                    event.completed =  !Item.getCompleted();
+
+                    // it needs to be changed after the event is send -> to the server
+                    // maybe a refactor is needed here
                     EventBus.getDefault().post(event);
-                    Item.completed = !Item.getCompleted();
+                    Item.completed =event.completed;
                     Item.save();
-                    bindHolder(Item, getAdapterPosition());
+
                 }
             } else {
                 Integer position = (Integer) ((ViewGroup) checkbox.getParent().getParent()).indexOfChild((View) checkbox.getParent());
@@ -582,6 +593,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             this.observableContent.addAll(new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
+                    .and(Condition.column("completed").eq(false))
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
 
