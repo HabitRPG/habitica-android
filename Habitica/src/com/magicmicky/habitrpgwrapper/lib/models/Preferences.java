@@ -34,6 +34,12 @@ public class Preferences extends BaseModel {
             foreignColumnName = "userId")})
     public Hair hair;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "suppressedModals_user_id",
+            columnType = String.class,
+            foreignColumnName = "userId")})
+    public SuppressedModals suppressModals;
+
     public Preferences() {
     }
 
@@ -187,6 +193,14 @@ public class Preferences extends BaseModel {
 
     public void setHair(Hair hair) {
         this.hair = hair;
+    }
+
+    public SuppressedModals getSuppressModals() {
+        return suppressModals;
+    }
+
+    public void setSuppressModals(SuppressedModals suppressModals) {
+        this.suppressModals = suppressModals;
     }
 
     @Override
