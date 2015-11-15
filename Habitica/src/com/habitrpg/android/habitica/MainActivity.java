@@ -108,6 +108,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     private ContentCache contentCache;
 
+    private MaterialDialog faintDialog;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
@@ -608,6 +610,8 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         adapter.dailyResetOffset = User.getPreferences().getDayStart();
                     }
                     updateHeader();
+
+                    displayDeathDialogIfNeeded();
                 }
             });
         }
@@ -728,5 +732,51 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         }
 
         dialog.show();
+    }
+
+    private void displayDeathDialogIfNeeded() {
+
+        if (User.getStats().getHp() > 0) {
+            return;
+        }
+
+        if (this.faintDialog == null) {
+            final MainActivity activity = this;
+            this.faintDialog = new MaterialDialog.Builder(this)
+                    .title(R.string.faint_header)
+                    .customView(R.layout.faint_dialog, true)
+                    .positiveText(R.string.faint_button)
+                    .positiveColorRes(R.color.worse_100)
+                    .dismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            faintDialog = null;
+                            mAPIHelper.reviveUser(new HabitRPGUserCallback(activity));
+                        }
+                    })
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            faintDialog = null;
+                        }
+                    })
+                    .build();
+
+            View customView = this.faintDialog.getCustomView();
+            if (customView != null) {
+                View hpBarView = customView.findViewById(R.id.hpBar);
+
+                ValueBarBinding hpBar = DataBindingUtil.bind(hpBarView);
+                hpBar.setPartyMembers(true);
+                AvatarWithBarsViewModel.setHpBarData(hpBar, User.getStats(), this);
+
+                ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
+                UserPicture userPicture = new UserPicture(User, this, false, false, false);
+                userPicture.setPictureOn(avatarView);
+            }
+
+            this.faintDialog.show();
+        }
+
     }
 }

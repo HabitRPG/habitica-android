@@ -88,6 +88,9 @@ public interface ApiService {
     @POST("/user/sleep")
     void sleep(Callback<Void> voidCallback);
 
+    @POST("/user/revive")
+    void revive(Callback<HabitRPGUser> habitRPGUserCallback);
+
     /* Group API */
 
     @GET("/groups")
