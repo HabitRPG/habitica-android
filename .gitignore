@@ -68,3 +68,4 @@ signingrelease.properties
 fabric.properties
 
 .DS_Store
+*.iml
