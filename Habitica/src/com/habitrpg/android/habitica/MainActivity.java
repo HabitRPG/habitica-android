@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,7 @@ import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -55,10 +57,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -125,8 +129,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             return;
         }
 
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .build();
 
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -610,7 +612,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         adapter.dailyResetOffset = User.getPreferences().getDayStart();
                     }
                     updateHeader();
-
+                    updateSidebar();
                     displayDeathDialogIfNeeded();
                 }
             });
@@ -731,7 +733,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             detailView.setText(this.getString(R.string.levelup_detail, level));
 
             ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
-            UserPicture userPicture = new UserPicture(User, this, false, false, false);
+            UserPicture userPicture = new UserPicture(User, this, false, false);
             userPicture.setPictureOn(avatarView);
         }
 
@@ -775,7 +777,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 AvatarWithBarsViewModel.setHpBarData(hpBar, User.getStats(), this);
 
                 ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
-                UserPicture userPicture = new UserPicture(User, this, false, false, false);
+                UserPicture userPicture = new UserPicture(User, this, false, false);
                 userPicture.setPictureOn(avatarView);
             }
 

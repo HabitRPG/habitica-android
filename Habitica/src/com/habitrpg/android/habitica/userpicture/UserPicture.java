@@ -29,10 +29,11 @@ public class UserPicture {
 
     private HabitRPGUser user;
     private ImageView imageView;
+    private UserPictureRunnable runnable;
     private Context context;
     private AtomicInteger numOfTasks = new AtomicInteger(0);
 
-    private boolean hasBackground, hasMount, hasPet;
+    private boolean hasBackground, hasPetMount;
 
     private String currentCacheFileName;
 
@@ -42,16 +43,14 @@ public class UserPicture {
         this.user = user;
         this.context = context;
         this.hasBackground = true;
-        this.hasPet = true;
-        this.hasMount = true;
+        this.hasPetMount = true;
     }
 
-    public UserPicture(HabitRPGUser user, Context context, boolean hasBackground, boolean hasPet, boolean hasMount) {
+    public UserPicture(HabitRPGUser user, Context context, boolean hasBackground, boolean hasPetMount) {
         this.user = user;
         this.context = context;
         this.hasBackground = hasBackground;
-        this.hasPet = hasPet;
-        this.hasMount = hasMount;
+        this.hasPetMount = hasPetMount;
     }
 
     public void removeTask(){
@@ -73,30 +72,65 @@ public class UserPicture {
                 }
                 layerNumber++;
             }
-            if (!this.hasBackground && !this.hasPet) {
+            if (!this.hasPetMount) {
                 res = Bitmap.createBitmap(res, 25, 18, compactWidth, compactHeight);
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
-            this.imageView.setImageBitmap(res);
+            if (this.imageView != null) {
+                this.imageView.setImageBitmap(res);
+            } else {
+                this.runnable.run(res);
+            }
         }
     }
 
     public void setPictureOn(ImageView imageView) {
         this.imageView = imageView;
+
+        List<String> layerNames = this.getLayerNames();
+
+        Bitmap cache = this.getCachedImage(layerNames);
+
+        // yes => load image to bitmap
+        if(cache != null){
+            imageView.setImageBitmap(cache);
+            return;
+        }
+
+        // no => generate it
+        generateImage(layerNames);
+    }
+
+    public void setPictureWithRunnable(UserPictureRunnable runnable) {
+        this.runnable = runnable;
+        List<String> layerNames = this.getLayerNames();
+
+        Bitmap cache = this.getCachedImage(layerNames);
+
+        // yes => load image to bitmap
+        if(cache != null){
+            runnable.run(cache);
+            return;
+        }
+
+        generateImage(layerNames);
+    }
+
+    private List<String> getLayerNames() {
         List<String> layerNames = this.user.getAvatarLayerNames();
 
         String mountName = this.user.getItems().getCurrentMount();
 
-        if (mountName != null && !mountName.isEmpty() && hasMount) {
+        if (mountName != null && !mountName.isEmpty() && hasPetMount) {
             layerNames.add(0, "Mount_Body_" + mountName);
             layerNames.add("Mount_Head_" + mountName);
         }
 
         String petName = this.user.getItems().getCurrentPet();
 
-        if (petName != null && !petName.isEmpty() && hasPet) {
+        if (petName != null && !petName.isEmpty() && hasPetMount) {
             layerNames.add("Pet-" + petName);
-            this.hasPet = true;
+            this.hasPetMount = true;
         }
 
         String backgroundName = this.user.getPreferences().getBackground();
@@ -106,7 +140,10 @@ public class UserPicture {
             this.hasBackground = true;
         }
 
+        return layerNames;
+    }
 
+    private Bitmap getCachedImage(List<String> layerNames) {
         // get layer hash value
         String fullLayerString = "";
 
@@ -118,15 +155,10 @@ public class UserPicture {
         currentCacheFileName = layersHash.concat(".png");
 
         // does it already exist?
-        Bitmap cache = BitmapUtils.loadFromFile(currentCacheFileName);
+        return BitmapUtils.loadFromFile(currentCacheFileName);
+    }
 
-        // yes => load image to bitmap
-        if(cache != null){
-            imageView.setImageBitmap(cache);
-            return;
-        }
-
-        // no => generate it
+    private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
         for (String layer : layerNames) {
@@ -176,15 +208,15 @@ public class UserPicture {
             yOffset = 0;
         }
 
-        if (this.hasMount && !((this.hasBackground && layerNumber == 1) ||
+        if (this.hasPetMount && !((this.hasBackground && layerNumber == 1) ||
                                 (!this.hasBackground && layerNumber == 0) ||
-                                (this.hasPet && layerNumber == this.layers.size()-2) ||
-                                (!this.hasPet && layerNumber == this.layers.size()-1)
+                                (this.hasPetMount && layerNumber == this.layers.size()-2) ||
+                                (!this.hasPetMount && layerNumber == this.layers.size()-1)
         )) {
             yOffset = 0;
         }
 
-        if (this.hasPet && layerNumber == this.layers.size()-1) {
+        if (this.hasPetMount && layerNumber == this.layers.size()-1) {
             xOffset = 0;
             yOffset = 43;
         }
