@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -18,8 +19,9 @@ import java.util.Date;
 public class Items extends BaseModel {
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
+    @PrimaryKey
+    @NotNull
+    String user_id;
 
     @Column
     private String currentMount, currentPet;
@@ -34,8 +36,8 @@ public class Items extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "gear_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Gear gear;
 
     public Items(String currentMount, String currentPet, int lastDrop_count, Date lastDrop_date) {
@@ -86,4 +88,11 @@ public class Items extends BaseModel {
     }
 
     public Items() {}
+
+    @Override
+    public void save() {
+        gear.user_id = user_id;
+
+        super.save();
+    }
 }

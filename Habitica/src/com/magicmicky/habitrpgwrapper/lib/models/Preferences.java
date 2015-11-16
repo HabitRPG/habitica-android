@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -16,8 +17,9 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Preferences extends BaseModel {
 
     @Column
-    @PrimaryKey()
-    String userId;
+    @PrimaryKey
+    @NotNull
+    String user_id;
 
     @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
@@ -43,7 +45,9 @@ public class Preferences extends BaseModel {
     public Preferences() {
     }
 
-    public Preferences(boolean costume, boolean toolbarCollapsed, boolean advancedCollapsed, boolean tagsCollapsed, boolean newTaskEdit, boolean disableClasses, boolean stickyHeader, boolean sleep, boolean hideHeader, String allocationMode, String shirt, String skin, String size, int dayStart, int timezoneOffset, Hair hair) {
+    public Preferences(boolean costume, boolean toolbarCollapsed, boolean advancedCollapsed, boolean tagsCollapsed,
+                       boolean newTaskEdit, boolean disableClasses, boolean stickyHeader, boolean sleep, boolean hideHeader,
+                       String allocationMode, String shirt, String skin, String size, int dayStart, int timezoneOffset, Hair hair) {
         this.costume = costume;
         this.toolbarCollapsed = toolbarCollapsed;
         this.advancedCollapsed = advancedCollapsed;
@@ -65,7 +69,9 @@ public class Preferences extends BaseModel {
         return background;
     }
 
-    public void setBackground(String background) {this.background = background;}
+    public void setBackground(String background) {
+        this.background = background;
+    }
 
     public int getDayStart() {
         return dayStart;
@@ -205,7 +211,10 @@ public class Preferences extends BaseModel {
 
     @Override
     public void save() {
-        hair.userId = userId;
+        hair.userId = user_id;
+
+        if (suppressModals != null)
+            suppressModals.userId = user_id;
 
         super.save();
     }
