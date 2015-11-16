@@ -61,7 +61,7 @@ public class GemPurchaseActivity extends AppCompatActivity {
                 actionBar.setHomeButtonEnabled(false);
             }
 
-            actionBar.setTitle("Purchase Gems 2");
+            actionBar.setTitle("Purchase Gems");
         }
 
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
