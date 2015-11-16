@@ -147,7 +147,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 String checklist = newCheckListEditText.getText().toString();
                 task.getChecklist().add(new ChecklistItem(checklist));
-//                EventBus.getDefault().post(task);
+                EventBus.getDefault().post(task);
             }
         });
 
