@@ -127,8 +127,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
+
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(checklistAdapter);
+        int i = checklistAdapter.getItemCount();
+
+        recyclerView.setMinimumHeight(i * 75);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
