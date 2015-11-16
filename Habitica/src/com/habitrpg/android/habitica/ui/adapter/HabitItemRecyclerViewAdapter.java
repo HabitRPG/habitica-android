@@ -496,12 +496,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void onClick(View v) {
-            if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
+            if (v == binding.btnReward) {
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
-
             } else super.onClick(v);
         }
 
