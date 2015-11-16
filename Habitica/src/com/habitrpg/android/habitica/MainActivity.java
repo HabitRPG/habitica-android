@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -710,9 +711,13 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     };
 
     private void displayLevelUpDialog(int level) {
-        if (User.getPreferences().getSuppressModals().getLevelUp()) {
-            return;
+        SuppressedModals suppressedModals = User.getPreferences().getSuppressModals();
+        if (suppressedModals != null) {
+            if (suppressedModals.getLevelUp()) {
+                return;
+            }
         }
+
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.levelup_header)
                 .customView(R.layout.levelup_dialog, true)
