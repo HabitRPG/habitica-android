@@ -9,9 +9,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.ui.adapter.RecyclerListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
@@ -50,6 +51,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
     private List<String> tags;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             mainWrapper.removeView(weekdayWrapper);
         }
 
-
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
@@ -137,6 +138,20 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+        final EditText newCheckListEditText = (EditText)findViewById(R.id.new_checklist);
+
+        Button button = (Button)findViewById(R.id.add_checklist_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String checklist = newCheckListEditText.getText().toString();
+                task.getChecklist().add(new ChecklistItem(checklist));
+//                EventBus.getDefault().post(task);
+            }
+        });
+
+
     }
 
     private void setTitle(Task task) {

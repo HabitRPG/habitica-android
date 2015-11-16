@@ -172,6 +172,26 @@
             android:text="@string/checklist"
             android:id="@+id/textView9" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_checklist"
+                android:editable="true"
+                android:hint="new checklist" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:id="@+id/add_checklist_button" />
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/checklist_recycler_view"
             android:layout_width="match_parent"
