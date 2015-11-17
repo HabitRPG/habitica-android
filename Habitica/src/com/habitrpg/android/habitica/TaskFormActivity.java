@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.ui.adapter.RecyclerListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -51,6 +51,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
     private List<String> tags;
+    private CheckListAdapter checklistAdapter;
 
 
     @Override
@@ -123,7 +124,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void createCheckListRecyclerView() {
-        final RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
+        checklistAdapter = new CheckListAdapter(task.getChecklist());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -147,11 +148,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 String checklist = newCheckListEditText.getText().toString();
                 ChecklistItem item = new ChecklistItem(checklist);
-                List<ChecklistItem> list = new ArrayList<ChecklistItem>(task.getChecklist());
-                list.add(item);
-                task.setChecklist(list);
                 checklistAdapter.addItem(item);
-                EventBus.getDefault().post(task);
+                newCheckListEditText.setText("");
             }
         });
 
@@ -295,6 +293,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
+
+        task.setChecklist(checklistAdapter.getCheckListItems());
 
         if (task.text.isEmpty())
             return false;

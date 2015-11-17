@@ -22,12 +22,12 @@ import butterknife.InjectView;
 /**
  * Created by franzejr on 15/11/15.
  */
-public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>
+public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>
     implements ItemTouchHelperAdapter{
 
     private final List<ChecklistItem> mItems = new ArrayList<>();
 
-    public RecyclerListAdapter(List<ChecklistItem> checklistItems) {
+    public CheckListAdapter(List<ChecklistItem> checklistItems) {
         mItems.addAll(checklistItems);
     }
 
@@ -47,6 +47,10 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         mItems.add(item);
     }
 
+    public List<ChecklistItem> getCheckListItems(){
+        return mItems;
+    }
+
     @Override
     public int getItemCount() {
         return mItems.size();
@@ -58,6 +62,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         mItems.remove(position);
         notifyItemRemoved(position);
     }
+
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
