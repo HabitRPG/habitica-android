@@ -123,7 +123,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void createCheckListRecyclerView() {
-        RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
+        final RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -146,7 +146,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onClick(View v) {
                 String checklist = newCheckListEditText.getText().toString();
-                task.getChecklist().add(new ChecklistItem(checklist));
+                ChecklistItem item = new ChecklistItem(checklist);
+                List<ChecklistItem> list = new ArrayList<ChecklistItem>(task.getChecklist());
+                list.add(item);
+                task.setChecklist(list);
+                checklistAdapter.addItem(item);
                 EventBus.getDefault().post(task);
             }
         });

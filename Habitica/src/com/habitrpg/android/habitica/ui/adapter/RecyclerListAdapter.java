@@ -43,6 +43,9 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         holder.checkListTextView.setText(mItems.get(position).getText());
     }
 
+    public void addItem(ChecklistItem item){
+        mItems.add(item);
+    }
 
     @Override
     public int getItemCount() {
