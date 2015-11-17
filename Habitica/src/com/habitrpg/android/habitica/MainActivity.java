@@ -260,6 +260,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
     }
 
     public void onEvent(TaskLongPressedEvent event) {
+        showSnackbar("LongPress: " + event.task.text);
     }
 
     public void onEvent(TaskCheckedCommand event) {
