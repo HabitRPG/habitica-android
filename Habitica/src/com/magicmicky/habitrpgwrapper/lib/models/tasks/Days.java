@@ -16,7 +16,7 @@ public class Days extends BaseModel {
     @Column
     @PrimaryKey
     @NotNull
-    String user_id;
+    String task_id;
 
     @Column
     private boolean m, t,w, th,f,s,su;
