@@ -42,9 +42,6 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .build();
-
         setViewPagerAdapter();
 
         this.hostConfig = PrefsActivity.fromContext(this);
@@ -56,7 +53,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
             return;
 
         updateUserAvatars();
-
+        updateSidebar();
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 
 

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,8 +16,13 @@ import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.ChatListFragment;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -35,6 +41,8 @@ public class TavernActivity extends AppCompatActivity {
     private AvatarWithBarsViewModel avatarInHeader;
     private APIHelper mAPIHelper;
     private HabitRPGUser User;
+
+    private AccountHeader accountHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,8 @@ public class TavernActivity extends AppCompatActivity {
             toolbar.setTitleTextColor(this.getResources().getColor(R.color.white));
         }
 
-        Drawer drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
+        accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
+        Drawer drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .withSelectedItem(2)
                 .build();
 
@@ -70,10 +79,27 @@ public class TavernActivity extends AppCompatActivity {
         User = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
         avatarInHeader.updateData(User);
+        updateSidebar();
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
         setFragment(new ChatListFragment(this, "habitrpg", mAPIHelper, User, true));
+    }
+
+    private void updateSidebar() {
+        final IProfile profile = accountHeader.getProfiles().get(0);
+        if (User.getAuthentication() != null) {
+            if (User.getAuthentication().getLocalAuthentication() != null) {
+                profile.withEmail(User.getAuthentication().getLocalAuthentication().getEmail());
+            }
+        }        profile.withName(User.getProfile().getName());
+        new UserPicture(User, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
+            public void run(Bitmap avatar) {
+                profile.withIcon(avatar);
+                accountHeader.updateProfile(profile);
+            }
+        });
+        accountHeader.updateProfile(profile);
     }
 
     // This could be moved into an abstract BaseActivity

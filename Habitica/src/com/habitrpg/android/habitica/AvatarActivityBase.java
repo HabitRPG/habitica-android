@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,9 +13,14 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,6 +50,7 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
 
     TextView titleTextView;
 
+    AccountHeader accountHeader;
     Drawer drawer;
     //endregion
 
@@ -91,10 +98,29 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
         viewPager.setBackgroundColor(getResources().getColor(R.color.white));
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-
+        accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
+        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
+                .build();
     }
 
     protected void setTitle(String text) {
         toolbar.setTitle(text);
+    }
+
+    public void updateSidebar() {
+        final IProfile profile = accountHeader.getProfiles().get(0);
+        if (User.getAuthentication() != null) {
+            if (User.getAuthentication().getLocalAuthentication() != null) {
+                profile.withEmail(User.getAuthentication().getLocalAuthentication().getEmail());
+            }
+        }
+        profile.withName(User.getProfile().getName());
+        new UserPicture(User, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
+            public void run(Bitmap avatar) {
+                profile.withIcon(avatar);
+                accountHeader.updateProfile(profile);
+            }
+        });
+        accountHeader.updateProfile(profile);
     }
 }
