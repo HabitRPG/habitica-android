@@ -41,9 +41,7 @@ public class ContentCache {
         final QuestContent quest = new Select().from(QuestContent.class).where(Condition.column("key").eq(key)).querySingle();
 
         if (quest != null) {
-            QuestBoss boss = new Select().from(QuestBoss.class).where(Condition.column("key").eq(key)).querySingle();
-            quest.boss = boss;
-
+            quest.boss = new Select().from(QuestBoss.class).where(Condition.column("key").eq(key)).querySingle();
             cb.GotQuest(quest);
         } else {
 

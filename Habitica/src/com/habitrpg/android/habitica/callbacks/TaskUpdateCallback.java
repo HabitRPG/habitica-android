@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 

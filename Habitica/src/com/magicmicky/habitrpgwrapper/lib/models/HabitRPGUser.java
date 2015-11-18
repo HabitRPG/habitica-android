@@ -37,22 +37,21 @@ public class HabitRPGUser extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "stats_id",
-            columnType = Long.class,
+            columnType = String.class,
             foreignColumnName = "id")})
     private Stats stats;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "preferences_id",
             columnType = String.class,
-            foreignColumnName = "userId")})
+            foreignColumnName = "user_id")})
     private Preferences preferences;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "profile_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_Id")})
     private Profile profile;
-
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "party_id",
@@ -60,11 +59,10 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "id")})
     private UserParty party;
 
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "items_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Items items;
 
     public Preferences getPreferences() {
@@ -149,6 +147,7 @@ public class HabitRPGUser extends BaseModel {
             habits = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("habit"))
+                    .and(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return habits;
@@ -160,6 +159,7 @@ public class HabitRPGUser extends BaseModel {
             dailys = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("daily"))
+                    .and(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return dailys;
@@ -171,6 +171,7 @@ public class HabitRPGUser extends BaseModel {
             todos = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("todo"))
+                    .and(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return todos;
@@ -181,6 +182,8 @@ public class HabitRPGUser extends BaseModel {
         if(rewards == null) {
             rewards = new Select()
                     .from(Task.class)
+                    .where(Condition.column("type").eq("reward"))
+                    .and(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return rewards;
@@ -191,6 +194,7 @@ public class HabitRPGUser extends BaseModel {
         if(tags == null) {
             tags = new Select()
                     .from(Tag.class)
+                    .where(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return tags;
@@ -198,9 +202,26 @@ public class HabitRPGUser extends BaseModel {
 
     @Override
     public void save() {
+        // We need to set the user_id to all other objects
+        preferences.user_id = id;
+        stats.id = id;
+        profile.user_Id = id;
+        items.user_id = id;
 
-        preferences.userId = id;
 
+        ArrayList<Task> allTasks = new ArrayList<Task>();
+        allTasks.addAll(dailys);
+        allTasks.addAll(todos);
+        allTasks.addAll(habits);
+        allTasks.addAll(rewards);
+
+        for (Task t : allTasks) {
+            t.user_id = id;
+        }
+
+        for (Tag t : tags) {
+            t.user_id = id;
+        }
 
         super.save();
     }

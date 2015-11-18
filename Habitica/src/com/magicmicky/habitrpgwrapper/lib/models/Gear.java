@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -16,19 +17,20 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Gear extends BaseModel {
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
+    @PrimaryKey
+    @NotNull
+    String user_id;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "equipped_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Outfit equipped;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "costume_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Outfit costume;
 
     public Outfit getCostume() {
@@ -47,5 +49,11 @@ public class Gear extends BaseModel {
         this.equipped = equipped;
     }
 
+    @Override
+    public void save() {
+        equipped.user_id = user_id+"_equipped";
+        costume.user_id = user_id+"_costume";
 
+        super.save();
+    }
 }

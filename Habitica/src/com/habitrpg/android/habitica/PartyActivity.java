@@ -49,7 +49,7 @@ public class PartyActivity extends AvatarActivityBase implements AppBarLayout.On
 
         mAPIHelper = new APIHelper(this, hostConfig);
 
-        if(User == null)
+        if (User == null)
             return;
 
         updateUserAvatars();

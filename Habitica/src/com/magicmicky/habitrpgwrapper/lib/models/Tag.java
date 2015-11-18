@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -24,7 +25,12 @@ public class Tag extends BaseModel{
 
     @Column
     @PrimaryKey
+    @NotNull
     public String id;
+
+    @Column
+    @NotNull
+    public String user_id;
 
     @Column
     String name;

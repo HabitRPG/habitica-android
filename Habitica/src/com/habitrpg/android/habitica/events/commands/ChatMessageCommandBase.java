@@ -9,7 +9,7 @@ public abstract class ChatMessageCommandBase {
     public String groupId;
     public ChatMessage chatMessage;
 
-    public ChatMessageCommandBase(String groupId, ChatMessage chatMessage){
+    public ChatMessageCommandBase(String groupId, ChatMessage chatMessage) {
         this.groupId = groupId;
         this.chatMessage = chatMessage;
     }

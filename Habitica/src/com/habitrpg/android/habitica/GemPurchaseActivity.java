@@ -23,7 +23,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
@@ -71,7 +70,7 @@ public class GemPurchaseActivity extends AppCompatActivity {
                 actionBar.setHomeButtonEnabled(false);
             }
 
-            actionBar.setTitle("Purchase Gems 2");
+            actionBar.setTitle("Purchase Gems");
         }
 
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();

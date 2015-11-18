@@ -6,7 +6,7 @@ package com.habitrpg.android.habitica.events.commands;
 public class CreateTagCommand {
     public String tagName;
 
-    public CreateTagCommand(String tagName){
+    public CreateTagCommand(String tagName) {
         this.tagName = tagName;
     }
 }

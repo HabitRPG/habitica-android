@@ -15,34 +15,36 @@ public class BitmapUtils {
         } else {
             path = Environment.getDownloadCacheDirectory().getAbsolutePath();
         }
-        return path+"/HabiticaImageCache";
+        return path + "/HabiticaImageCache";
     }
 
     public static Bitmap loadFromFile(String filename) {
         try {
-            filename = getSavePath() +"/"+ filename;
+            filename = getSavePath() + "/" + filename;
 
             File f = new File(filename);
-            if (!f.exists()) { return null; }
-            Bitmap tmp = BitmapFactory.decodeFile(filename);
-            return tmp;
+            if (!f.exists()) {
+                return null;
+            }
+            return BitmapFactory.decodeFile(filename);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public static void saveToFile(String filename,Bitmap bmp) {
+    public static void saveToFile(String filename, Bitmap bmp) {
         try {
             File myDir = new File(getSavePath());
             boolean res = myDir.mkdirs();
 
-            filename = getSavePath() +"/"+ filename;
+            filename = getSavePath() + "/" + filename;
 
             FileOutputStream out = new FileOutputStream(filename);
             bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
-        } catch(Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     public static boolean hasSDCard() {

@@ -11,18 +11,17 @@ import com.raizlabs.android.dbflow.annotation.Table;
  * Created by MagicMicky on 12/06/2014.
  */
 
-@Table(databaseName = HabitDatabase.NAME, allFields = true)
-public class PlayerMinStats extends BasicStats {
+public abstract class PlayerMinStats extends BasicStats {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "trainingstats_id",
-            columnType = Long.class,
+            columnType = String.class,
             foreignColumnName = "id")})
     public BasicStats training;//stats.training
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "buffs_id",
-            columnType = Long.class,
+            columnType = String.class,
             foreignColumnName = "id")})
     public Buffs buffs;//stats.buffs
 
@@ -110,4 +109,11 @@ public class PlayerMinStats extends BasicStats {
         this.hp = hp;
     }
 
+    @Override
+    public void save() {
+        training.id = id+"_training";
+        buffs.id = id;
+
+        super.save();
+    }
 }

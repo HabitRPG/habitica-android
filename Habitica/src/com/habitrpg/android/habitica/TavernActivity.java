@@ -108,7 +108,7 @@ public class TavernActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void onEvent(ToggledInnStateEvent evt){
+    public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(User);
     }
 

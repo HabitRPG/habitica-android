@@ -17,7 +17,7 @@ public class TagsHelper {
     }
 
     public void setTags(List<String> tagsId) {
-        this.tagsId= tagsId;
+        this.tagsId = tagsId;
     }
 
     public void addTags(String tags) {
@@ -34,7 +34,7 @@ public class TagsHelper {
 
     public List<Task> filter(List<Task> tasks) {
         List<Task> filtered = new ArrayList<Task>();
-        for(Task t : tasks) {
+        for (Task t : tasks) {
             if (t.containsAllTagIds(this.tagsId)) {
                 filtered.add(t);
             }

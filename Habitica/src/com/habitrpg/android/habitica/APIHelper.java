@@ -34,7 +34,6 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.util.List;
 
 import retrofit.Callback;
@@ -49,115 +48,122 @@ import retrofit.converter.GsonConverter;
 public class APIHelper implements ErrorHandler, Profiler {
 
     private static final String TAG = "ApiHelper";
-	// I think we don't need the APIHelper anymore we could just use ApiService
-	public final ApiService apiService;
-	private Context mContext;
-	//private OnHabitsAPIResult mResultListener;
-	//private HostConfig mConfig;
-	public APIHelper(Context c, final HostConfig cfg) {
-		this.mContext = c;
+    // I think we don't need the APIHelper anymore we could just use ApiService
+    public final ApiService apiService;
+    private Context mContext;
 
-		RequestInterceptor requestInterceptor = new RequestInterceptor() {
-			@Override
-			public void intercept(RequestInterceptor.RequestFacade request) {
-				request.addHeader("x-api-key", cfg.getApi());
-				request.addHeader("x-api-user", cfg.getUser());
+    //private OnHabitsAPIResult mResultListener;
+    //private HostConfig mConfig;
+    public APIHelper(Context c, final HostConfig cfg) {
+        this.mContext = c;
+
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestInterceptor.RequestFacade request) {
+                request.addHeader("x-api-key", cfg.getApi());
+                request.addHeader("x-api-user", cfg.getUser());
 
 
-			}
-		};
+            }
+        };
 
-        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {}.getType();
+        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {
+        }.getType();
 
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
-		Gson gson = new GsonBuilder()
-				.setExclusionStrategies(new ExclusionStrategy() {
-					@Override
-					public boolean shouldSkipField(FieldAttributes f) {
-						return f.getDeclaredClass().equals(ModelAdapter.class);
-					}
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getDeclaredClass().equals(ModelAdapter.class);
+                    }
 
-					@Override
-					public boolean shouldSkipClass(Class<?> clazz) {
-						return false;
-					}
-				})
-				.registerTypeAdapter(taskTagClassListType, new TagsAdapter())
-				.registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
-				.registerTypeAdapter(boolean.class, booleanAsIntAdapter)
-				.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-				.create();
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .registerTypeAdapter(taskTagClassListType, new TagsAdapter())
+                .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
+                .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                .create();
 
-		Server server = new Server(cfg.getAddress());
+        Server server = new Server(cfg.getAddress());
 
-		RestAdapter adapter = new RestAdapter.Builder()
-				.setEndpoint(server.toString())
-				.setErrorHandler(this)
-				.setProfiler(this)
-				.setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-				.setRequestInterceptor(requestInterceptor)
-				.setConverter(new GsonConverter(gson))
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint(server.toString())
+                .setErrorHandler(this)
+                .setProfiler(this)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setRequestInterceptor(requestInterceptor)
+                .setConverter(new GsonConverter(gson))
 
-				.build();
-		this.apiService  = adapter.create(ApiService.class);
+                .build();
+        this.apiService = adapter.create(ApiService.class);
 
     }
 
-	private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
-		@Override public void write(JsonWriter out, Boolean value) throws IOException {
-			if (value == null) {
-				out.nullValue();
-			} else {
-				out.value(value);
-			}
-		}
-		@Override public Boolean read(JsonReader in) throws IOException {
-			JsonToken peek = in.peek();
-			switch (peek) {
-				case BOOLEAN:
-					return in.nextBoolean();
-				case NULL:
-					in.nextNull();
-					return null;
-				case NUMBER:
-					return in.nextInt() != 0;
-				case STRING:
-					return Boolean.parseBoolean(in.nextString());
-				default:
-					throw new IllegalStateException("Expected BOOLEAN or NUMBER but was " + peek);
-			}
-		}
-	};
+    private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
+        @Override
+        public void write(JsonWriter out, Boolean value) throws IOException {
+            if (value == null) {
+                out.nullValue();
+            } else {
+                out.value(value);
+            }
+        }
+
+        @Override
+        public Boolean read(JsonReader in) throws IOException {
+            JsonToken peek = in.peek();
+            switch (peek) {
+                case BOOLEAN:
+                    return in.nextBoolean();
+                case NULL:
+                    in.nextNull();
+                    return null;
+                case NUMBER:
+                    return in.nextInt() != 0;
+                case STRING:
+                    return Boolean.parseBoolean(in.nextString());
+                default:
+                    throw new IllegalStateException("Expected BOOLEAN or NUMBER but was " + peek);
+            }
+        }
+    };
 
 
     public void createNewTask(Task item, Callback cb) {
-		this.apiService.createItem(item, cb);
+        this.apiService.createItem(item, cb);
     }
 
-	public void retrieveUser(HabitRPGUserCallback callback) {
-		this.apiService.getUser(callback);
-	}
+    public void retrieveUser(HabitRPGUserCallback callback) {
+        this.apiService.getUser(callback);
+    }
 
-	public void updateTaskDirection(String id, TaskDirection direction, TaskScoringCallback callback) {
+    public void updateTaskDirection(String id, TaskDirection direction, TaskScoringCallback callback) {
         this.apiService.postTaskDirection(id, direction.toString(), callback);
-	}
-	public void registerUser(View btnClicked, String username, String email, String password, String confirmPassword) {
+    }
 
-     //   ATAskRegisterUser reg = new ATAskRegisterUser(mResultListener,mConfig,btnClicked);
-	//	String[] params = {username,email,password,confirmPassword};
-	//	reg.execute(params);
+    public void registerUser(View btnClicked, String username, String email, String password, String confirmPassword) {
 
-	}
-	public void connectUser(String username, String password, Callback<UserAuthResponse> callback) {
-	//	ATaskConnectUser con = new ATaskConnectUser(mResultListener,mConfig,btnClicked);
-	//	String[] params = {username,password};
-	//	con.execute(params);
+        //   ATAskRegisterUser reg = new ATAskRegisterUser(mResultListener,mConfig,btnClicked);
+        //	String[] params = {username,email,password,confirmPassword};
+        //	reg.execute(params);
+
+    }
+
+    public void connectUser(String username, String password, Callback<UserAuthResponse> callback) {
+        //	ATaskConnectUser con = new ATaskConnectUser(mResultListener,mConfig,btnClicked);
+        //	String[] params = {username,password};
+        //	con.execute(params);
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);
         this.apiService.connectLocal(auth, callback);
-	}
+    }
 
 	public void connectSocial(String userId, String accessToken, Callback<UserAuthResponse> callback) {
 		UserAuthSocial auth = new UserAuthSocial();
@@ -170,37 +176,45 @@ public class APIHelper implements ErrorHandler, Profiler {
 	}
 
 	public void deleteTask(Task item, TaskDeletionCallback cb) {
-		this.apiService.deleteTask(item.getId(), cb);
+        this.apiService.deleteTask(item.getId(), cb);
     }
 
-	public void updateTask(Task item, Callback cb) {
-			this.apiService.updateTask(item.getId(), item, cb);
-	}
+    public void updateTask(Task item, Callback cb) {
+        this.apiService.updateTask(item.getId(), item, cb);
+    }
 
 	@Override
 	public Throwable handleError(RetrofitError cause) {
         final Activity activity = (Activity) this.mContext;
 
-		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
+        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             //It also handles timeouts
             showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
-		}else{
-            /*
-             * CONVERSION An exception was thrown while (de)serializing a body.
-             * HTTP A non-200 HTTP status code was received from the server e.g. 502, 503, etc...
-             * UNEXPECTED An internal error occurred while attempting to execute a request.
-             */
-            showConnectionProblemDialog(activity,R.string.internal_error_api);
-        }
+            return cause;
+        } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
+            int status = cause.getResponse().getStatus();
+            if (status == 401) {
+                showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+                return cause;
+            } else if (status >= 500 && status < 600) {
+                showConnectionProblemDialog(activity,R.string.internal_error_api);
+                return cause;
+            }
+		}
+        showConnectionProblemDialog(activity, R.string.internal_error_api);
 
-		return cause;
+        return cause;
 	}
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString){
+    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString) {
+        showConnectionProblemDialog(activity, R.string.network_error_title, resourceMessageString);
+    }
+
+    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString){
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 new AlertDialog.Builder(activity)
-                        .setTitle(R.string.network_error_title)
+                        .setTitle(resourceTitleString)
                         .setMessage(resourceMessageString)
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

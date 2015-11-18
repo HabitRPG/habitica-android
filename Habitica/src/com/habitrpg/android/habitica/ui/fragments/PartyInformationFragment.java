@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.FragmentPartyInfoBinding;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 
@@ -37,20 +36,20 @@ public class PartyInformationFragment extends Fragment {
 
         viewBinding = DataBindingUtil.bind(view);
 
-        if(group != null){
+        if (group != null) {
             setGroup(group);
         }
 
         return view;
     }
 
-    public void setGroup(Group group){
+    public void setGroup(Group group) {
         if (viewBinding != null) {
             viewBinding.setParty(group);
         }
     }
 
-    public void setQuestContent(QuestContent quest){
+    public void setQuestContent(QuestContent quest) {
         if (viewBinding != null) {
             viewBinding.setQuest(quest);
         }

@@ -3,6 +3,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -15,8 +16,9 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class BasicStats extends BaseModel {
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    long id;
+    @PrimaryKey
+    @NotNull
+    String id;
 
     @Column
     public float con, str, per;

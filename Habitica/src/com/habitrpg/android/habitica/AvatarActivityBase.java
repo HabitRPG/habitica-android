@@ -98,18 +98,12 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
         viewPager.setBackgroundColor(getResources().getColor(R.color.white));
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
-
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
-
-//        titleTextView = new TextView(this);
-//        titleTextView.setTextAppearance(this, android.R.style.TextAppearance_Material_Widget_ActionBar_Title_Inverse);
-//        titleTextView.setPadding(0,16,0,0);
-//        toolbar.addView(titleTextView);
     }
 
-    protected void setTitle(String text){
+    protected void setTitle(String text) {
         toolbar.setTitle(text);
     }
 

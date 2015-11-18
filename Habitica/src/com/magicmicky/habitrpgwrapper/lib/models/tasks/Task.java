@@ -6,6 +6,7 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -36,7 +37,12 @@ public class Task extends BaseModel {
 
     @Column
     @PrimaryKey
+    @NotNull
     String id;
+
+    @Column
+    public String user_id;
+
     @Column
     public Float priority;
 
@@ -75,8 +81,8 @@ public class Task extends BaseModel {
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
-            columnType = Long.class,
-            foreignColumnName = "id")})
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     public Days repeat;
     //TODO: private String lastCompleted;
 
@@ -344,18 +350,32 @@ public class Task extends BaseModel {
 
     @Override
     public void save() {
+        List<TaskTag> tmpTags = tags;
+        List<ChecklistItem> tmpChecklist = checklist;
+
+        // remove them, so that the database don't add empty entries
+
+        tags = null;
+        checklist = null;
+
+        if(repeat != null)
+            repeat.user_id = user_id;
+
         super.save();
+
+        tags = tmpTags;
+        checklist = tmpChecklist;
 
         if (this.tags != null) {
             for (TaskTag tag : this.tags) {
                 tag.setTask(this);
-                tag.save();
+                tag.async().save();
             }
         }
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
                 item.setTask(this);
-                item.save();
+                item.async().save();
             }
         }
     }
