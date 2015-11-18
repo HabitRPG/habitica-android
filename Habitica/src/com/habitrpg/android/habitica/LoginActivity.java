@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -20,8 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.EditorInfo;
@@ -312,7 +309,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onUserReceived(HabitRPGUser user) {
         try {
-            saveTokens(mTmpApiToken,mTmpUserToken);
+            saveTokens(mTmpApiToken, mTmpUserToken);
         } catch (Exception e) {
             e.printStackTrace();
         }

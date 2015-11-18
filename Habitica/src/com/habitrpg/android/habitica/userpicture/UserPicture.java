@@ -54,12 +54,12 @@ public class UserPicture {
         this.hasMount = hasMount;
     }
 
-    public void removeTask(){
+    public void removeTask() {
         numOfTasks.decrementAndGet();
     }
 
-    public void allTasksComplete(){
-        if(this.numOfTasks.get() == 0){
+    public void allTasksComplete() {
+        if (this.numOfTasks.get() == 0) {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inScaled = false;
 
@@ -110,7 +110,7 @@ public class UserPicture {
         // get layer hash value
         String fullLayerString = "";
 
-        for(String l : layerNames){
+        for (String l : layerNames) {
             fullLayerString = fullLayerString.concat(l);
         }
 
@@ -121,7 +121,7 @@ public class UserPicture {
         Bitmap cache = BitmapUtils.loadFromFile(currentCacheFileName);
 
         // yes => load image to bitmap
-        if(cache != null){
+        if (cache != null) {
             imageView.setImageBitmap(cache);
             return;
         }
@@ -132,19 +132,19 @@ public class UserPicture {
         for (String layer : layerNames) {
             layers.add(0);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
-            Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/"+ layer +".png").into(target);
+            Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
             layerNumber = layerNumber + 1;
         }
     }
 
-    private static String generateHashCode(String value){
+    private static String generateHashCode(String value) {
 
         MessageDigest md = null;
         byte[] digest = new byte[0];
         try {
             md = MessageDigest.getInstance("MD5");
 
-        md.update(value.getBytes());
+            md.update(value.getBytes());
             digest = md.digest();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -154,9 +154,10 @@ public class UserPicture {
     }
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -164,7 +165,7 @@ public class UserPicture {
         return new String(hexChars);
     }
 
-	private void modifyCanvas(Bitmap img, Canvas canvas, Integer layerNumber) {
+    private void modifyCanvas(Bitmap img, Canvas canvas, Integer layerNumber) {
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
 
@@ -177,21 +178,21 @@ public class UserPicture {
         }
 
         if (this.hasMount && !((this.hasBackground && layerNumber == 1) ||
-                                (!this.hasBackground && layerNumber == 0) ||
-                                (this.hasPet && layerNumber == this.layers.size()-2) ||
-                                (!this.hasPet && layerNumber == this.layers.size()-1)
+                (!this.hasBackground && layerNumber == 0) ||
+                (this.hasPet && layerNumber == this.layers.size() - 2) ||
+                (!this.hasPet && layerNumber == this.layers.size() - 1)
         )) {
             yOffset = 0;
         }
 
-        if (this.hasPet && layerNumber == this.layers.size()-1) {
+        if (this.hasPet && layerNumber == this.layers.size() - 1) {
             xOffset = 0;
             yOffset = 43;
         }
 
         canvas.drawBitmap(img, new Rect(0, 0, img.getWidth(), img.getHeight()),
-                new Rect(xOffset, yOffset, img.getWidth()+xOffset, img.getHeight()+yOffset), paint);
-	}
+                new Rect(xOffset, yOffset, img.getWidth() + xOffset, img.getHeight() + yOffset), paint);
+    }
 
     private class SpriteTarget implements Target {
 

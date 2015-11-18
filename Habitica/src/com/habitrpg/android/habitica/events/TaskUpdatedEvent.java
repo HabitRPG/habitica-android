@@ -8,7 +8,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 public class TaskUpdatedEvent {
     public Task task;
 
-    public TaskUpdatedEvent(Task t){
+    public TaskUpdatedEvent(Task t) {
         task = t;
     }
 }

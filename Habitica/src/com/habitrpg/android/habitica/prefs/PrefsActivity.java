@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.prefs;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
-
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -19,30 +12,39 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+
 public class PrefsActivity extends PreferenceActivity {
     protected Method mLoadHeaders = null;
     protected Method mHasHeaders = null;
-	/**
+
+    /**
      * Checks to see if using new v11+ way of handling PrefsFragments.
+     *
      * @return Returns false pre-v11, else checks to see if using headers.
      */
     public boolean isNewV11Prefs() {
-        if (mHasHeaders!=null && mLoadHeaders!=null) {
+        if (mHasHeaders != null && mLoadHeaders != null) {
             try {
-                return (Boolean)mHasHeaders.invoke(this);
+                return (Boolean) mHasHeaders.invoke(this);
             } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ignored) {
             }
         }
         return false;
     }
- 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	@SuppressWarnings("deprecation")
-	@Override
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @SuppressWarnings("deprecation")
+    @Override
     public void onCreate(Bundle aSavedState) {
         //onBuildHeaders() will be called during super.onCreate()
         try {
-            mLoadHeaders = getClass().getMethod("loadHeadersFromResource", int.class, List.class );
+            mLoadHeaders = getClass().getMethod("loadHeadersFromResource", int.class, List.class);
             mHasHeaders = getClass().getMethod("hasHeaders");
         } catch (NoSuchMethodException e) {
         }
@@ -59,11 +61,11 @@ public class PrefsActivity extends PreferenceActivity {
             });
 
 
-		} else {
-            if(this.getActionBar() != null) {
+        } else {
+            if (this.getActionBar() != null) {
                 this.getActionBar().setDisplayHomeAsUpEnabled(true);
             }
-		}
+        }
     }
 
     @Override
@@ -74,11 +76,11 @@ public class PrefsActivity extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> aTarget) {
         try {
-            mLoadHeaders.invoke(this,new Object[]{R.xml.pref_headers,aTarget});
+            mLoadHeaders.invoke(this, new Object[]{R.xml.pref_headers, aTarget});
         } catch (IllegalArgumentException e) {
         } catch (IllegalAccessException e) {
         } catch (InvocationTargetException e) {
-        }  
+        }
     }
 
     @Override
@@ -92,39 +94,39 @@ public class PrefsActivity extends PreferenceActivity {
     }
 
     @SuppressLint("NewApi")
-	static public class PrefsFragment extends PreferenceFragment {
+    static public class PrefsFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle aSavedState) {
             super.onCreate(aSavedState);
             Context anAct = getActivity().getApplicationContext();
             int thePrefRes = anAct.getResources().getIdentifier(getArguments().getString("pref-resource"),
-                    "xml",anAct.getPackageName());
+                    "xml", anAct.getPackageName());
             addPreferencesFromResource(thePrefRes);
         }
     }
-    public static HostConfig fromContext(Context ctx) {
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-			HostConfig config;
-			String httpPort = "80";
-			String address = prefs.getString(ctx.getString(R.string.SP_address), ctx.getString(R.string.SP_address_default));
-			if(address.contains("http://habitrpg.com")) {
-				address = "https://habitrpg.com";
-				prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
-			} else if (address.contains("http://beta.habitrpg.com")) {
-				address = "https://beta.habitrpg.com/";
-				prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
 
-			}
-			if(address==null || address=="" || address.length()<2) {
-				config=null;
-			}
-			else {
-				String api=prefs.getString(ctx.getString(R.string.SP_APIToken), null);
-				String userID=prefs.getString(ctx.getString(R.string.SP_userID), null);
-				config = new HostConfig(address, httpPort, api, userID);
-			}		
-			return config;
-	}
+    public static HostConfig fromContext(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        HostConfig config;
+        String httpPort = "80";
+        String address = prefs.getString(ctx.getString(R.string.SP_address), ctx.getString(R.string.SP_address_default));
+        if (address.contains("http://habitrpg.com")) {
+            address = "https://habitrpg.com";
+            prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
+        } else if (address.contains("http://beta.habitrpg.com")) {
+            address = "https://beta.habitrpg.com/";
+            prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
+
+        }
+        if (address == null || address == "" || address.length() < 2) {
+            config = null;
+        } else {
+            String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
+            String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
+            config = new HostConfig(address, httpPort, api, userID);
+        }
+        return config;
+    }
 
     @Override
     public void onBackPressed() {
