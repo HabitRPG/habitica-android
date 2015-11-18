@@ -82,7 +82,11 @@ public class GemPurchaseActivity extends AppCompatActivity {
         HabitRPGUser user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
         final IProfile profile = accountHeader.getProfiles().get(0);
-        profile.withName(user.getProfile().getName());
+        if (user.getAuthentication() != null) {
+            if (user.getAuthentication().getLocalAuthentication() != null) {
+                profile.withEmail(user.getAuthentication().getLocalAuthentication().getEmail());
+            }
+        }        profile.withName(user.getProfile().getName());
         new UserPicture(user, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
             public void run(Bitmap avatar) {
                 profile.withIcon(avatar);

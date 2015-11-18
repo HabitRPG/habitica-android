@@ -109,6 +109,11 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
 
     public void updateSidebar() {
         final IProfile profile = accountHeader.getProfiles().get(0);
+        if (User.getAuthentication() != null) {
+            if (User.getAuthentication().getLocalAuthentication() != null) {
+                profile.withEmail(User.getAuthentication().getLocalAuthentication().getEmail());
+            }
+        }
         profile.withName(User.getProfile().getName());
         new UserPicture(User, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
             public void run(Bitmap avatar) {

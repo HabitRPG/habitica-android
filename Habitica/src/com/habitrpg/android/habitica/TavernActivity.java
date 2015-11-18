@@ -88,7 +88,11 @@ public class TavernActivity extends AppCompatActivity {
 
     private void updateSidebar() {
         final IProfile profile = accountHeader.getProfiles().get(0);
-        profile.withName(User.getProfile().getName());
+        if (User.getAuthentication() != null) {
+            if (User.getAuthentication().getLocalAuthentication() != null) {
+                profile.withEmail(User.getAuthentication().getLocalAuthentication().getEmail());
+            }
+        }        profile.withName(User.getProfile().getName());
         new UserPicture(User, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
             public void run(Bitmap avatar) {
                 profile.withIcon(avatar);

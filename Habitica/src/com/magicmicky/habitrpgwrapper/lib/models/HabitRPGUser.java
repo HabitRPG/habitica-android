@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -64,6 +65,13 @@ public class HabitRPGUser extends BaseModel {
             columnType = String.class,
             foreignColumnName = "user_id")})
     private Items items;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "authentication_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
+    @SerializedName("auth")
+    private Authentication authentication;
 
     public Preferences getPreferences() {
         return preferences;
@@ -141,6 +149,10 @@ public class HabitRPGUser extends BaseModel {
         return this.balance;
     }
 
+    public Authentication getAuthentication() { return authentication; }
+
+    public void setAuthentication(Authentication authentication) {this.authentication = authentication; }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
     public List<Task> getHabits() {
         if(habits == null) {
@@ -207,6 +219,7 @@ public class HabitRPGUser extends BaseModel {
         stats.id = id;
         profile.user_Id = id;
         items.user_id = id;
+        authentication.user_id = id;
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();

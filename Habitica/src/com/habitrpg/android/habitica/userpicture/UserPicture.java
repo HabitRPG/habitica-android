@@ -155,18 +155,8 @@ public class UserPicture {
         currentCacheFileName = layersHash.concat(".png");
 
         // does it already exist?
-<<<<<<< HEAD
         return BitmapUtils.loadFromFile(currentCacheFileName);
     }
-=======
-        Bitmap cache = BitmapUtils.loadFromFile(currentCacheFileName);
-
-        // yes => load image to bitmap
-        if (cache != null) {
-            imageView.setImageBitmap(cache);
-            return;
-        }
->>>>>>> d0ae3a5b4a54a09409b3701d256c7715181ae781
 
     private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
@@ -219,26 +209,15 @@ public class UserPicture {
             yOffset = 0;
         }
 
-<<<<<<< HEAD
         if (this.hasPetMount && !((this.hasBackground && layerNumber == 1) ||
                                 (!this.hasBackground && layerNumber == 0) ||
                                 (this.hasPetMount && layerNumber == this.layers.size()-2) ||
                                 (!this.hasPetMount && layerNumber == this.layers.size()-1)
-=======
-        if (this.hasMount && !((this.hasBackground && layerNumber == 1) ||
-                (!this.hasBackground && layerNumber == 0) ||
-                (this.hasPet && layerNumber == this.layers.size() - 2) ||
-                (!this.hasPet && layerNumber == this.layers.size() - 1)
->>>>>>> d0ae3a5b4a54a09409b3701d256c7715181ae781
         )) {
             yOffset = 0;
         }
 
-<<<<<<< HEAD
         if (this.hasPetMount && layerNumber == this.layers.size()-1) {
-=======
-        if (this.hasPet && layerNumber == this.layers.size() - 1) {
->>>>>>> d0ae3a5b4a54a09409b3701d256c7715181ae781
             xOffset = 0;
             yOffset = 43;
         }
