@@ -159,11 +159,19 @@ public class LoginActivity extends AppCompatActivity
                 email = String.valueOf(mEmail.getText());
                 password = String.valueOf(mPasswordET.getText());
                 cpassword = String.valueOf(mConfirmPassword.getText());
+				if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
                 mApiHelper.registerUser(v,username,email,password,cpassword);
             } else {
                 String username,password;
                 username = String.valueOf(mUsernameET.getText());
                 password = String.valueOf(mPasswordET.getText());
+				if (username.length() == 0 || password.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
                 mApiHelper.connectUser(username,password, LoginActivity.this);
             }
 		}
@@ -316,4 +324,17 @@ public class LoginActivity extends AppCompatActivity
         mProgressBar.setVisibility(View.GONE);
         showSnackbar(getString(R.string.unknown_error));
     }
+
+	private void showValidationError(int resourceMessageString) {
+		mProgressBar.setVisibility(View.GONE);
+		new android.support.v7.app.AlertDialog.Builder(this)
+					.setTitle(R.string.login_validation_error_title)
+					.setMessage(resourceMessageString)
+					.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					})
+					.setIcon(R.drawable.ic_warning_black)
+					.show();
+	}
 }

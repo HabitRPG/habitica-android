@@ -184,23 +184,31 @@ public class APIHelper implements ErrorHandler, Profiler {
 		if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             //It also handles timeouts
             showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
-		}else{
-            /*
-             * CONVERSION An exception was thrown while (de)serializing a body.
-             * HTTP A non-200 HTTP status code was received from the server e.g. 502, 503, etc...
-             * UNEXPECTED An internal error occurred while attempting to execute a request.
-             */
-            showConnectionProblemDialog(activity,R.string.internal_error_api);
-        }
+            return cause;
+        } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
+            int status = cause.getResponse().getStatus();
+            if (status == 401) {
+                showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+                return cause;
+            } else if (status >= 500 && status < 600) {
+                showConnectionProblemDialog(activity,R.string.internal_error_api);
+                return cause;
+            }
+		}
+        showConnectionProblemDialog(activity, R.string.internal_error_api);
 
-		return cause;
+        return cause;
 	}
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString){
+    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString) {
+        showConnectionProblemDialog(activity, R.string.network_error_title, resourceMessageString);
+    }
+
+    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString){
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 new AlertDialog.Builder(activity)
-                        .setTitle(R.string.network_error_title)
+                        .setTitle(resourceTitleString)
                         .setMessage(resourceMessageString)
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
