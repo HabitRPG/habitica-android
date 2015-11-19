@@ -81,7 +81,7 @@
         <activity
             android:name=".TaskFormActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
-            android:parentActivityName=".TaskActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TaskActivity" />
@@ -89,7 +89,7 @@
         <activity
             android:name=".TavernActivity"
             android:label="@string/title_activity_tavern"
-            android:parentActivityName=".TaskActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TaskActivity" />
@@ -97,7 +97,7 @@
         <activity
             android:name=".PartyActivity"
             android:label="@string/title_activity_party"
-            android:parentActivityName=".TaskActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".TaskActivity" />
@@ -105,10 +105,10 @@
         <activity
             android:name=".GemPurchaseActivity"
             android:label="@string/title_activity_gem_purchase"
-            android:parentActivityName=".TaskActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TaskActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <activity android:name="com.facebook.FacebookActivity"

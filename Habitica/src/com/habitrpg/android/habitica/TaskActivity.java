@@ -681,7 +681,6 @@ public class TaskActivity extends AvatarActivityBase implements HabitRPGUserCall
     @Override
     public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
         Tag t = (Tag) iDrawerItem.getTag();
-        Log.w("Tags", "onCheckedChanged" + compoundButton.isChecked() + " : " + b);
         if (t != null) {
             tagFilterMap.put(t.getId(), b);
             filterChangedHandler.hit();

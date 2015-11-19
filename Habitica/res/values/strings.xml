@@ -173,4 +173,7 @@
     <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck--you\'ll do great.</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
+
+
+    <string name="filter">Filter</string>
 </resources>

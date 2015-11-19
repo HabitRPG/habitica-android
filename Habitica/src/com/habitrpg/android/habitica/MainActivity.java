@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -133,6 +134,11 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         super.onResume();
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
         SetUserData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     public void displayFragment(BaseFragment fragment) {

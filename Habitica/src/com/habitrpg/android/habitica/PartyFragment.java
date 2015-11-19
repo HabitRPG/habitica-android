@@ -31,7 +31,6 @@ import retrofit.client.Response;
  */
 public class PartyFragment extends BaseFragment {
 
-    public TabLayout tabLayout;
     public ViewPager viewPager;
     private Group group;
     private HashMap<Integer, Fragment> fragmentDictionary = new HashMap<>();
@@ -42,7 +41,8 @@ public class PartyFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        this.usesTabLayout = true;
+        super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_party, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
@@ -86,12 +86,6 @@ public class PartyFragment extends BaseFragment {
         setViewPagerAdapter();
 
         return v;
-    }
-
-    @Override
-    public void setTabLayout(TabLayout tabLayout) {
-        this.tabLayout = tabLayout;
-        this.tabLayout.removeAllTabs();
     }
 
     public void setViewPagerAdapter() {

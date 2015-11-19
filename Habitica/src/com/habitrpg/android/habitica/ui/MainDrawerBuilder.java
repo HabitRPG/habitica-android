@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.PartyActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TasksFragment;
 import com.habitrpg.android.habitica.TavernActivity;
+import com.habitrpg.android.habitica.TavernFragment;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -110,6 +111,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_PARTY: {
                                 fragment = new PartyFragment();
+                                break;
+                            }
+                            case SIDEBAR_TAVERN: {
+                                fragment = new TavernFragment();
                                 break;
                             }
                         }
