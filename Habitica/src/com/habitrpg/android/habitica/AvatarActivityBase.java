@@ -99,8 +99,7 @@ public abstract class AvatarActivityBase extends InstabugAppCompatActivity {
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
-                .build();
+
     }
 
     protected void setTitle(String text) {

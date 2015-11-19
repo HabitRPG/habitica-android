@@ -36,7 +36,7 @@ public interface ApiService {
     @GET("/content")
     void getContent(Callback<ContentResult> contentResultCallback);
 
-    /* User API */
+    /* user API */
 
     @GET("/user/")
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);

@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.TaskActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -64,7 +64,7 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
                 PendingIntent updateIntent = PendingIntent.getBroadcast(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
 
-                Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+                Intent openAppIntent = new Intent(this.getApplicationContext(), TaskActivity.class);
                 PendingIntent openApp = PendingIntent.getActivity(this, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp);
                 appWidgetManager.updateAppWidget(widgetId, remoteViews);
@@ -95,7 +95,7 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
             remoteViews.setOnClickPendingIntent(R.id.BT_refresh, updateIntent);
 
             //If user click on life and xp: open the app
-            Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
+            Intent openAppIntent = new Intent(this.getApplicationContext(), TaskActivity.class);
             PendingIntent openApp = PendingIntent.getActivity(this, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.LL_header, openApp);
             remoteViews.setOnClickPendingIntent(R.id.IMG_ProfilePicture, openApp);

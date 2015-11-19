@@ -69,9 +69,7 @@ public class TavernActivity extends AppCompatActivity {
         }
 
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
-        Drawer drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
-                .withSelectedItem(2)
-                .build();
+
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatarHeader);
 

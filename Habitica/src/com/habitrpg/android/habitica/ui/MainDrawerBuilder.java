@@ -6,10 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.habitrpg.android.habitica.AboutActivity;
+import com.habitrpg.android.habitica.BaseFragment;
 import com.habitrpg.android.habitica.GemPurchaseActivity;
 import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.PartyFragment;
+import com.habitrpg.android.habitica.TaskActivity;
 import com.habitrpg.android.habitica.PartyActivity;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.TasksFragment;
 import com.habitrpg.android.habitica.TavernActivity;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -19,11 +23,11 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
 
@@ -40,16 +44,7 @@ public class MainDrawerBuilder {
     static final int SIDEBAR_SETTINGS = 6;
     static final int SIDEBAR_ABOUT = 7;
 
-    private static HashMap<Integer, Class> ClassMap = new HashMap<>();
 
-    static {
-        ClassMap.put(SIDEBAR_TASKS, MainActivity.class);
-        ClassMap.put(SIDEBAR_TAVERN, TavernActivity.class);
-        ClassMap.put(SIDEBAR_PARTY, PartyActivity.class);
-        ClassMap.put(SIDEBAR_PURCHASE, GemPurchaseActivity.class);
-        ClassMap.put(SIDEBAR_SETTINGS, PrefsActivity.class);
-        ClassMap.put(SIDEBAR_ABOUT, AboutActivity.class);
-    }
 
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         AccountHeaderBuilder builder = new AccountHeaderBuilder()
@@ -69,7 +64,7 @@ public class MainDrawerBuilder {
     }
 
 
-    public static DrawerBuilder CreateDefaultBuilderSettings(final Activity activity, Toolbar toolbar, AccountHeader accountHeader) {
+    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, Toolbar toolbar, AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(activity);
 
@@ -106,13 +101,21 @@ public class MainDrawerBuilder {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         // do something with the clicked item :D
 
-                        Class selectedClass = ClassMap.get(drawerItem.getIdentifier());
+                        BaseFragment fragment = null;
 
-                        if (selectedClass != null && activity.getClass() != selectedClass) {
-                            activity.startActivity(new Intent(activity, selectedClass));
-                            return false;
-                        } else if (selectedClass != null) {
-                            //same item was clicked again
+                        switch (drawerItem.getIdentifier()) {
+                            case SIDEBAR_TASKS: {
+                                fragment = new TasksFragment();
+                                break;
+                            }
+                            case SIDEBAR_PARTY: {
+                                fragment = new PartyFragment();
+                                break;
+                            }
+                        }
+
+                        if (fragment != null) {
+                            activity.displayFragment(fragment);
                             return false;
                         }
 
@@ -120,14 +123,6 @@ public class MainDrawerBuilder {
                         return true;
                     }
                 });
-
-        Class activityClass = activity.getClass();
-        for (java.util.Map.Entry<Integer,Class> entry: ClassMap.entrySet()) {
-            if(entry.getValue() == activityClass){
-                builder.withSelectedItem(entry.getKey());
-            }
-        }
-
 
         return builder;
     }

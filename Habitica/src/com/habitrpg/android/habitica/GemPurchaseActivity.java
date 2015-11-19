@@ -74,9 +74,6 @@ public class GemPurchaseActivity extends AppCompatActivity {
         }
 
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
-        Drawer drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
-                .withSelectedItem(2)
-                .build();
 
         HostConfig hostConfig = PrefsActivity.fromContext(this);
         HabitRPGUser user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
