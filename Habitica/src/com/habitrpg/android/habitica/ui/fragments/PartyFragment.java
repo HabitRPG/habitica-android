@@ -1,24 +1,18 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.ui.fragments.ChatListFragment;
-import com.habitrpg.android.habitica.ui.fragments.PartyInformationFragment;
-import com.habitrpg.android.habitica.ui.fragments.PartyMemberListFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
-import com.mikepenz.materialdrawer.DrawerBuilder;
 
 import java.util.HashMap;
 

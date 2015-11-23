@@ -9,8 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -18,6 +16,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
@@ -57,7 +56,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     AccountHeader accountHeader;
-    Drawer drawer;
+    public Drawer drawer;
 
     protected HostConfig hostConfig;
     protected HabitRPGUser user;

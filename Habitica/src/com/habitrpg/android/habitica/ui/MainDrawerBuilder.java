@@ -6,13 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.habitrpg.android.habitica.AboutActivity;
-import com.habitrpg.android.habitica.BaseFragment;
-import com.habitrpg.android.habitica.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.MainActivity;
-import com.habitrpg.android.habitica.PartyFragment;
+import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.TasksFragment;
-import com.habitrpg.android.habitica.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
+import com.habitrpg.android.habitica.ui.fragments.TavernFragment;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -24,9 +23,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
 
 
 /**

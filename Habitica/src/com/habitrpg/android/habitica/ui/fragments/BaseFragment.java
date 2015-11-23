@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ public abstract class BaseFragment extends Fragment {
 
     public MainActivity activity;
     public TabLayout tabLayout;
-    APIHelper mAPIHelper;
+    public APIHelper mAPIHelper;
     protected HabitRPGUser user;
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +25,10 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.TaskFormActivity;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
@@ -45,7 +49,6 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
-import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
