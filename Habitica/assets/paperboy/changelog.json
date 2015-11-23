@@ -1,5 +1,22 @@
 [
   {
+    "name": "Version 0.0.10",
+    "items":[
+      {
+        "type": "F",
+        "title": "Moved from activities to fragments (header scrolls up on each :))"
+      },
+      {
+        "type": "I",
+        "title": "better feedback on user login"
+      },
+      {
+        "type": "B",
+        "title": "fix crash when saving dailies"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.9",
     "items":[
       {
