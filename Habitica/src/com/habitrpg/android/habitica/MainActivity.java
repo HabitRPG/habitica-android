@@ -237,4 +237,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         this.activeFragment = fragment;
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
+
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
