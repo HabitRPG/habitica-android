@@ -42,9 +42,6 @@ import io.fabric.sdk.android.Fabric;
  */
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived, FlowContentObserver.OnSpecificModelStateChangedListener {
 
-    @InjectView(R.id.fragment_container)
-    FrameLayout fragment_container;
-
     BaseFragment activeFragment;
 
     @InjectView(R.id.toolbar)
@@ -58,8 +55,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @InjectView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
-
-    TextView titleTextView;
 
     AccountHeader accountHeader;
     Drawer drawer;
@@ -123,7 +118,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         // Create a new Fragment to be placed in the activity layout
         TasksFragment tasksFragment = new TasksFragment();
-
+        tasksFragment.fragmentSidebarPosition = 0;
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
         this.displayFragment(tasksFragment);
@@ -153,7 +148,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
         }
-        activeFragment = fragment;
     }
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
@@ -237,5 +231,10 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onUserFail() {
 
+    }
+
+    public void setActiveFragment(BaseFragment fragment) {
+        this.activeFragment = fragment;
+        this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 }

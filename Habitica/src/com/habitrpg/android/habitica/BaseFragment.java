@@ -25,6 +25,7 @@ public abstract class BaseFragment extends Fragment {
     APIHelper mAPIHelper;
     protected HabitRPGUser user;
     public boolean usesTabLayout;
+    public int fragmentSidebarPosition;
 
     public void setUser(HabitRPGUser user) { this.user = user; }
     public void updateUserData(HabitRPGUser user) { this.user = user; }
@@ -52,14 +53,16 @@ public abstract class BaseFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        activity.setActiveFragment(this);
+
         return null;
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         EventBus.getDefault().unregister(this);
 
-        super.onDestroy();
+        super.onDestroyView();
     }
 
     @Override

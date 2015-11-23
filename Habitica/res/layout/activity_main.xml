@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:gravity="center"
-    tools:context=".PartyActivity">
+    tools:context=".MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"

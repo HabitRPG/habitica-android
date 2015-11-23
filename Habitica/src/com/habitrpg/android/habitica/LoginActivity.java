@@ -172,9 +172,8 @@ public class LoginActivity extends AppCompatActivity
     }
 
 	private void startMainActivity() {
-		startActivity(new Intent(LoginActivity.this, TaskActivity.class));
+		startActivity(new Intent(LoginActivity.this, MainActivity.class));
 		finish();
-
 	}
 	private void saveTokens(String api, String user) throws Exception {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);

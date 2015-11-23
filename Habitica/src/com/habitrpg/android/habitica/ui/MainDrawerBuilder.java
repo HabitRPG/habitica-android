@@ -10,11 +10,8 @@ import com.habitrpg.android.habitica.BaseFragment;
 import com.habitrpg.android.habitica.GemPurchaseActivity;
 import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.PartyFragment;
-import com.habitrpg.android.habitica.TaskActivity;
-import com.habitrpg.android.habitica.PartyActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TasksFragment;
-import com.habitrpg.android.habitica.TavernActivity;
 import com.habitrpg.android.habitica.TavernFragment;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -100,9 +97,8 @@ public class MainDrawerBuilder {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-
                         BaseFragment fragment = null;
+                        Class newActivityClass = null;
 
                         switch (drawerItem.getIdentifier()) {
                             case SIDEBAR_TASKS: {
@@ -117,10 +113,23 @@ public class MainDrawerBuilder {
                                 fragment = new TavernFragment();
                                 break;
                             }
+                            case SIDEBAR_SETTINGS: {
+                                newActivityClass = PrefsActivity.class;
+                                break;
+                            }
+                            case SIDEBAR_ABOUT: {
+                                newActivityClass = AboutActivity.class;
+                                break;
+                            }
                         }
 
                         if (fragment != null) {
+                            fragment.fragmentSidebarPosition = position;
                             activity.displayFragment(fragment);
+                            return false;
+                        }
+                        if (newActivityClass != null) {
+                            activity.startActivity(new Intent(activity, newActivityClass));
                             return false;
                         }
 
