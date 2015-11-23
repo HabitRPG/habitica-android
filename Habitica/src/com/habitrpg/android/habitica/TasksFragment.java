@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -107,7 +108,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-        floatingMenu = (FloatingActionMenu)v.findViewById(R.id.fab_menu);
+        floatingMenu = (FloatingActionMenu) v.findViewById(R.id.fab_menu);
         FloatingActionButton habit_fab = (FloatingActionButton) v.findViewById(R.id.fab_new_habit);
         habit_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +144,16 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 .withCloseOnClick(false)
                 .append(activity.drawer);
 
+        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         viewPager.setCurrentItem(0);
         this.tagsHelper = new TagsHelper();
 
         loadTaskLists();
+
+        if (user != null) {
+            FillTagFilterDrawer(user.getTags());
+        }
 
         return v;
     }
@@ -301,7 +308,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             FillTagFilterDrawer(user.getTags());
             TaskRecyclerViewFragment fragment = ViewFragmentsDictionary.get(2);
             if (fragment != null) {
-                HabitItemRecyclerViewAdapter adapter =(HabitItemRecyclerViewAdapter)fragment.mAdapter;
+                HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragment.mAdapter;
                 adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
             }
         }
@@ -418,7 +425,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 int currentHp = user.getStats().getHp().intValue();
                 int maxHp = user.getStats().getMaxHealth();
 
-                if(currentHp == maxHp) {
+                if (currentHp == maxHp) {
                     showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE);
                     return;
                 }
@@ -548,7 +555,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 hpBar.setPartyMembers(true);
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), activity);
 
-                ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
+                ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
                 UserPicture userPicture = new UserPicture(user, activity, false, false);
                 userPicture.setPictureOn(avatarView);
             }
@@ -574,10 +581,10 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
         View customView = dialog.getCustomView();
         if (customView != null) {
-            TextView detailView = (TextView)customView.findViewById(R.id.levelupDetail);
+            TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
 
-            ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
+            ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
             UserPicture userPicture = new UserPicture(user, activity, false, false);
             userPicture.setPictureOn(avatarView);
         }
@@ -653,5 +660,13 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             filterChangedHandler.hit();
             showSnackbar(t.getName() + " : " + b);
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        super.onDestroyView();
     }
 }
