@@ -116,12 +116,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
 
-        // Create a new Fragment to be placed in the activity layout
-        TasksFragment tasksFragment = new TasksFragment();
-        tasksFragment.fragmentSidebarPosition = 0;
-        // In case this activity was started with special instructions from an
-        // Intent, pass the Intent's extras to the fragment as arguments
-        this.displayFragment(tasksFragment);
+        drawer.setSelectionAtPosition(1);
     }
 
     @Override
