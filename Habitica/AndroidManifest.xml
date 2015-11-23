@@ -84,23 +84,7 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.habitrpg.android.habitica.MainActivity" />
-        </activity>
-        <activity
-            android:name=".TavernActivity"
-            android:label="@string/title_activity_tavern"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.habitrpg.android.habitica.MainActivity" />
-        </activity>
-        <activity
-            android:name=".PartyActivity"
-            android:label="@string/title_activity_party"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.habitrpg.android.habitica.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".GemPurchaseActivity"
@@ -108,7 +92,7 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.habitrpg.android.habitica.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <activity android:name="com.facebook.FacebookActivity"
