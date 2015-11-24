@@ -604,7 +604,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .where(Condition.column("type").eq(this.taskType))
                     .and(Condition.CombinedCondition
                                     .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("todo"))
+                            .or(Condition.column("type").eq("daily"))
                     )
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
