@@ -176,9 +176,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @Override
     public long getItemId(int position) {
         Task task = filteredObservableContent.get(position);
-        UUID uuid = new UUID(0, 0).fromString(task.getId());
-
-        return uuid.getMostSignificantBits();
+        if (task.getId() != null && task.getId().length() == 36) {
+            return UUID.fromString(task.getId()).getMostSignificantBits();
+        }
+        return UUID.randomUUID().getMostSignificantBits();
     }
 
     @Override
@@ -248,6 +249,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public THabitItem Item;
 
+        @InjectView(R.id.notesTextView)
+        TextView notesTextView;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -265,6 +269,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public void bindHolder(THabitItem habitItem, int position) {
             double itemvalue = habitItem.getValue();
             Item = habitItem;
+            if (habitItem.notes.length() == 0) {
+                notesTextView.setHeight(0);
+            } else {
+                notesTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
         }
 
         @Override

@@ -54,7 +54,7 @@
                         android:text="@{todo.text}" />
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
