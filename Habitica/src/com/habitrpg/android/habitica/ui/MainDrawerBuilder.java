@@ -8,6 +8,7 @@ import android.view.View;
 import com.habitrpg.android.habitica.AboutActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
@@ -107,6 +108,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_TAVERN: {
                                 fragment = new TavernFragment();
+                                break;
+                            }
+                            case SIDEBAR_PURCHASE:{
+                                fragment = new GemsPurchaseFragment();
                                 break;
                             }
                             case SIDEBAR_SETTINGS: {

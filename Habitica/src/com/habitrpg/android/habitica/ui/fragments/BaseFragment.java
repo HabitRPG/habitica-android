@@ -16,11 +16,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.EventBusException;
 
 /**
  * Created by admin on 18/11/15.
  */
 public abstract class BaseFragment extends Fragment {
+
+    private boolean registerEventBus = false;
 
     public MainActivity activity;
     public TabLayout tabLayout;
@@ -29,12 +32,22 @@ public abstract class BaseFragment extends Fragment {
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;
 
-    public void setUser(HabitRPGUser user) { this.user = user; }
-    public void updateUserData(HabitRPGUser user) { this.user = user; }
+    public void setUser(HabitRPGUser user) {
+        this.user = user;
+    }
+
+    public void updateUserData(HabitRPGUser user) {
+        this.user = user;
+    }
+
     public void setTabLayout(TabLayout tabLayout) {
         this.tabLayout = tabLayout;
     }
-    public void setActivity(MainActivity activity) {this.activity = activity; }
+
+    public void setActivity(MainActivity activity) {
+        this.activity = activity;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -44,14 +57,22 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (this.usesTabLayout) {
-            tabLayout.setVisibility(View.VISIBLE);
-        } else {
-            tabLayout.setVisibility(View.GONE);
+
+        if (tabLayout != null) {
+            if (this.usesTabLayout) {
+                tabLayout.setVisibility(View.VISIBLE);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
         }
 
         // Receive Events
-        EventBus.getDefault().register(this);
+        try {
+            EventBus.getDefault().register(this);
+            registerEventBus = true;
+        } catch (EventBusException ignored) {
+
+        }
 
         setHasOptionsMenu(true);
 
@@ -62,7 +83,9 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
+        if (registerEventBus) {
+            EventBus.getDefault().unregister(this);
+        }
 
         super.onDestroyView();
     }

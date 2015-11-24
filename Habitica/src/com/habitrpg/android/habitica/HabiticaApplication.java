@@ -124,7 +124,7 @@ public class HabiticaApplication extends Application {
         }
     });
 
-    public static String Purchase20Gems = "com.habitrpg.android.habitica.buy20gems";
+    public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
 
     /**
      * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used anywhere in the app).
