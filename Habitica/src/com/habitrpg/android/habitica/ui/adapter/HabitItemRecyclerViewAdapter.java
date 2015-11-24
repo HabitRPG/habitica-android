@@ -269,7 +269,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public void bindHolder(THabitItem habitItem, int position) {
             double itemvalue = habitItem.getValue();
             Item = habitItem;
-            if (habitItem.notes.length() == 0) {
+            if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);
             } else {
                 notesTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
