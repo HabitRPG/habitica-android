@@ -48,6 +48,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -86,6 +87,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
                                         Context newContext, final IAdditionalEntries additionalEntries) {
+        this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext;
         this.tagsHelper = tagsHelper;
@@ -101,7 +103,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.viewHolderClass = viewHolderClass;
 
         EventBus.getDefault().register(this);
-        filter();
     }
 
     public void onEvent(FilterTasksByTagsCommand cmd) {
@@ -174,7 +175,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @Override
     public long getItemId(int position) {
-        return position;
+        Task task = filteredObservableContent.get(position);
+        UUID uuid = new UUID(0, 0).fromString(task.getId());
+
+        return uuid.getMostSignificantBits();
     }
 
     @Override
@@ -225,7 +229,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void run() {
             Log.d("Reload Content", "");
-            loadContent();
+            loadContent(true);
         }
     };
 
@@ -587,19 +591,28 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     // endregion
 
     public void loadContent() {
-        if (this.observableContent == null) {
+        this.loadContent(false);
+    }
+
+    public void loadContent(boolean forced) {
+
+        if (this.observableContent == null || forced) {
 
             this.observableContent = new ObservableArrayList<>();
 
             this.observableContent.addAll(new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.column("completed").eq(false))
+                    .and(Condition.CombinedCondition
+                                    .begin(Condition.column("completed").eq(false))
+                            .or(Condition.column("type").eq("todo"))
+                    )
                     .orderBy(OrderBy.columns("dateCreated").descending())
                     .queryList());
 
             if (additionalEntries != null) {
                 additionalEntries.GetAdditionalEntries(this);
             }
+            filter();
         }
 
         if (parentAdapter != null) {

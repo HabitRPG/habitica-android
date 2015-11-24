@@ -39,7 +39,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by admin on 18/11/15.
  */
-public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived, FlowContentObserver.OnSpecificModelStateChangedListener {
+public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
 
     BaseFragment activeFragment;
 
@@ -63,7 +63,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     AvatarWithBarsViewModel avatarInHeader;
 
-    FlowContentObserver observer;
     APIHelper mAPIHelper;
 
     @Override
@@ -89,10 +88,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         this.mAPIHelper = new APIHelper(this, hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
-        this.observer = new FlowContentObserver();
-        this.observer.registerForContentChanges(this.getApplicationContext(), HabitRPGUser.class);
-
-        this.observer.addSpecificModelChangeListener(this);
 
 
         if (toolbar != null) {
@@ -122,7 +117,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     protected void onResume() {
         super.onResume();
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
-        SetUserData();
+        setUserData();
     }
 
     @Override
@@ -148,7 +143,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
             user = habitRPGUser;
-            SetUserData();
+            setUserData();
         }
 
         @Override
@@ -162,16 +157,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }
     };
 
-    @Override
-    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        if (aClass != HabitRPGUser.class)
-            return;
-
-
-        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
-    }
-
-    private void SetUserData() {
+    private void setUserData() {
         if (user != null) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -220,6 +206,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @Override
     public void onUserReceived(HabitRPGUser user) {
+        this.user = user;
+        this.setUserData();
     }
 
     @Override

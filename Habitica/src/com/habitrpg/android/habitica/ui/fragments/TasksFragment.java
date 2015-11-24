@@ -314,6 +314,12 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragment.mAdapter;
                 adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
             }
+            for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
+                if (fragm != null) {
+                    HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
+                    adapter.loadContent(true);
+                }
+            }
         }
     }
 
