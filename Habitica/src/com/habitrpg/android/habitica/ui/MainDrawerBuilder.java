@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
 import com.habitrpg.android.habitica.ui.fragments.TavernFragment;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -33,11 +34,12 @@ public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
     static final int SIDEBAR_TASKS = 0;
-    static final int SIDEBAR_TAVERN = 2;
-    static final int SIDEBAR_PARTY = 3;
-    static final int SIDEBAR_PURCHASE = 4;
-    static final int SIDEBAR_SETTINGS = 6;
-    static final int SIDEBAR_ABOUT = 7;
+    static final int SIDEBAR_SKILLS = 1;
+    static final int SIDEBAR_TAVERN = 3;
+    static final int SIDEBAR_PARTY = 4;
+    static final int SIDEBAR_PURCHASE = 5;
+    static final int SIDEBAR_SETTINGS = 7;
+    static final int SIDEBAR_ABOUT = 8;
 
 
 
@@ -71,11 +73,11 @@ public class MainDrawerBuilder {
                 .withAccountHeader(accountHeader)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS),
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
                         /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
@@ -83,6 +85,7 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)),*/
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
                         new DividerDrawerItem(),
                         //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
@@ -100,6 +103,10 @@ public class MainDrawerBuilder {
                         switch (drawerItem.getIdentifier()) {
                             case SIDEBAR_TASKS: {
                                 fragment = new TasksFragment();
+                                break;
+                            }
+                            case SIDEBAR_SKILLS: {
+                                fragment = new SkillsFragment();
                                 break;
                             }
                             case SIDEBAR_PARTY: {

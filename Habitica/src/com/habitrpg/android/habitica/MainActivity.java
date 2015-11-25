@@ -20,7 +20,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
@@ -32,9 +35,14 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
+import java.util.Collection;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.fabric.sdk.android.Fabric;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by admin on 18/11/15.
@@ -111,6 +119,19 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
+
+        mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
+            @Override
+            public void success(ContentResult contentResult, Response response) {
+
+            }
+
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 
     @Override

@@ -17,9 +17,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by Negue on 29.09.2015.
- */
+
 public class ContentCache {
     public interface GotContentEntryCallback<T extends Object> {
         void GotObject(T obj);
