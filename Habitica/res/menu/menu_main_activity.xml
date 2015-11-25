@@ -15,6 +15,7 @@
         android:title="@string/action_refresh"
         android:orderInCategory="103"
         app:showAsAction="ifRoom"
+        android:actionViewClass="android.widget.ImageButton"
         />
 
 </menu>

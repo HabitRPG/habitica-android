@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -18,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,6 +90,8 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     public ViewPager viewPager;
     Drawer filterDrawer;
+
+    MenuItem refreshItem;
 
     private MaterialDialog faintDialog;
 
@@ -178,11 +183,26 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 filterDrawer.openDrawer();
                 return true;
             case R.id.action_reload:
-                mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
+                refreshItem = item;
+                refresh();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void refresh() {
+     /* Attach a rotating ImageView to the refresh item as an ActionView */
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_actionview, null);
+
+        Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.clockwise_rotate);
+        rotation.setRepeatCount(Animation.INFINITE);
+        iv.startAnimation(rotation);
+
+        refreshItem.setActionView(iv);
+
+        mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
     }
 
     public void loadTaskLists() {
@@ -307,6 +327,10 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
+        if (refreshItem != null) {
+            refreshItem.getActionView().clearAnimation();
+            refreshItem.setActionView(null);
+        }
         if (this.user != null) {
             FillTagFilterDrawer(user.getTags());
             TaskRecyclerViewFragment fragment = ViewFragmentsDictionary.get(2);
