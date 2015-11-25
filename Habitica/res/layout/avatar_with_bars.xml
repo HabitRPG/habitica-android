@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/avatar_with_bars_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:adjustViewBounds="true"
     android:fitsSystemWindows="true"
@@ -12,8 +12,7 @@
     android:orientation="horizontal"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+
     android:background="@color/brand">
 
     <ImageView
@@ -26,7 +25,8 @@
         android:paddingRight="24dp"
         android:paddingEnd="24dp"
         android:scaleType="fitStart"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/profile_image" />
 
     <LinearLayout
         android:id="@+id/LL_header"
@@ -50,31 +50,26 @@
             layout="@layout/value_bar" />
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/class_name"
+    <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/LL_header"
-        >
-        <TextView
-            android:id="@+id/lvl_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_header_warrior"
-            android:drawableStart="@drawable/ic_header_warrior"
-            android:drawablePadding="6dp"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"/>
-    </LinearLayout>
+        android:id="@+id/lvl_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:drawableLeft="@drawable/ic_header_warrior"
+        android:drawableStart="@drawable/ic_header_warrior"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/textColorSecondaryDark"/>
     <LinearLayout
         android:layout_below="@id/LL_header"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="36dp"
+        android:gravity="center_vertical">
         <TextView
             android:id="@+id/gold_tv"
             android:drawableLeft="@drawable/ic_header_gold"
