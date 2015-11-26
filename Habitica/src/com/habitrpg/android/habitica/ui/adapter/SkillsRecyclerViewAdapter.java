@@ -52,6 +52,8 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
     private List<Skill> skillList;
 
+    public Double mana;
+
     public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;
         this.notifyDataSetChanged();
@@ -102,6 +104,18 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
             priceButton.setText(String.format(resources.getString(R.string.mana_price_button), skill.mana));
+
+            if (skill.mana > mana) {
+                priceButton.setEnabled(false);
+                priceButton.setBackgroundResource(R.color.task_gray);
+                skillNameTextView.setTextColor(resources.getColor(R.color.task_gray));
+                skillNotesTextView.setTextColor(resources.getColor(R.color.task_gray));
+            } else {
+                skillNameTextView.setTextColor(resources.getColor(android.R.color.black));
+                skillNotesTextView.setTextColor(resources.getColor(android.R.color.black));
+                priceButton.setEnabled(true);
+            }
+
         }
     }
 }

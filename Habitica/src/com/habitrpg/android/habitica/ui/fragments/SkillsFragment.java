@@ -53,7 +53,7 @@ public class SkillsFragment extends BaseFragment {
             view = inflater.inflate(R.layout.fragment_skills, container, false);
 
         adapter = new SkillsRecyclerViewAdapter();
-
+        adapter.mana = this.user.getStats().getMp();
         loadSkills();
 
         return view;
