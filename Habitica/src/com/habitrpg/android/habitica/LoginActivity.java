@@ -1,40 +1,27 @@
 package com.habitrpg.android.habitica;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -125,7 +112,6 @@ public class LoginActivity extends AppCompatActivity
 		mApiHelper = new APIHelper(this,hc);
 
         this.isRegistering = false;
-
 	}
 
 	private void resetLayout() {
@@ -178,7 +164,6 @@ public class LoginActivity extends AppCompatActivity
 	public static void expand(final View v) {
 		v.setVisibility(View.VISIBLE);
 	}
- //
 
 	public static void collapse(final View v) {
         v.setVisibility(View.GONE);
@@ -189,18 +174,7 @@ public class LoginActivity extends AppCompatActivity
 		finish();
 
 	}
-	private void saveTokens(String api, String user) throws Exception {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-		SharedPreferences.Editor editor = prefs.edit();
-		boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
-				.putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
-				.commit();
-			if(!ans) {
-				throw new Exception("PB_string_commit");
-			}
 
-	}
 	private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
         MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
@@ -299,6 +273,18 @@ public class LoginActivity extends AppCompatActivity
             e.printStackTrace();
         }
         this.startMainActivity();
+    }
+
+    private void saveTokens(String api, String user) throws Exception {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
+                .putString(getString(R.string.SP_userID), user)
+                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
+                .commit();
+        if(!ans) {
+            throw new Exception("PB_string_commit");
+        }
     }
 
     @Override

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+android:title="@string/PS_contact_title" >
+
+    <PreferenceCategory android:title="Account Details">
+
+        <EditTextPreference
+            android:key="@string/SP_username"
+            android:title="Login Name"
+            android:summary="Login Name" />
+
+        <EditTextPreference
+            android:key="@string/SP_email"
+            android:title="E-mail"
+            android:summary="E-mail" />
+
+        <EditTextPreference
+            android:key="@string/SP_userID"
+            android:title="@string/SP_userID_title"
+            android:summary="@string/SP_userID_summary"/>
+
+        <EditTextPreference
+            android:key="@string/SP_APIToken"
+            android:title="@string/SP_APIToken_title"
+            android:summary="@string/SP_APIToken_summary"/>
+
+    </PreferenceCategory>
+
+    <Preference android:title="LOGOUT"
+        android:key="logout"
+        android:summary="Logout your account"/>
+
+</PreferenceScreen>
