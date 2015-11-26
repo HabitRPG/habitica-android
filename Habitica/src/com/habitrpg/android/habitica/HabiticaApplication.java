@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -69,6 +73,21 @@ public class HabiticaApplication extends Application {
     @Override
     public File getDatabasePath(String name) {
         return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+    }
+
+    public static void logout(Context context){
+        Instance.deleteDatabase(HabitDatabase.NAME);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        context.startActivity(new Intent(context, LoginActivity.class));
+    }
+
+    public static void checkUserAuthentication(Context context, HostConfig hostConfig){
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        }
     }
 
     // endregion

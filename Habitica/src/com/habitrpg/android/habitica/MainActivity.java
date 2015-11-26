@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,27 +27,25 @@ import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
-import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -59,10 +56,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -123,12 +120,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         super.onCreate(savedInstanceState);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
-        }
-
+        HabiticaApplication.checkUserAuthentication(this, hostConfig);
 
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -141,11 +133,10 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
         this.observer = new FlowContentObserver();
         this.observer.registerForContentChanges(this.getApplicationContext(), HabitRPGUser.class);
-
         this.observer.addSpecificModelChangeListener(this);
-
         this.tagsHelper = new TagsHelper();
     }
+
 
     private void saveLoginInformation(){
 
@@ -161,7 +152,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
         }catch (Exception e){
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
-
     }
 
     @Override
