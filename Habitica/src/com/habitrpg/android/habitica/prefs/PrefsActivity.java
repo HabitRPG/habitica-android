@@ -3,43 +3,29 @@ package com.habitrpg.android.habitica.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
 
 public class PrefsActivity extends AppCompatActivity {
-
-
-    public static class SettingsFragment extends PreferenceFragment {
-        private Context context;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            context = this.getActivity();
-            addPreferencesFromResource(R.xml.activity_preferences);
-        }
-
-        @Override
-        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-            if (preference.getKey().equals("logout")) {
-                HabiticaApplication.logout(context);
-            }
-            return super.onPreferenceTreeClick(preferenceScreen, preference);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setupActionBar();
+
+        // Display the fragment as the main content
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new AccountDetailsFragment())
+                .commit();
+    }
+
+    private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -48,17 +34,6 @@ public class PrefsActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayUseLogoEnabled(false);
         }
-
-        // Display the fragment as the main content
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
-                .commit();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     // TODO:

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.instabug.library.Instabug;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.solovyev.android.checkout.Billing;
@@ -36,6 +37,7 @@ import java.util.concurrent.Executor;
 public class HabiticaApplication extends Application {
 
     public static HabiticaApplication Instance;
+    public static HabitRPGUser User;
 
     @Override
     public void onCreate() {

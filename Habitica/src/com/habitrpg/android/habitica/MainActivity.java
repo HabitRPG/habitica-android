@@ -139,6 +139,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
 
     private void saveLoginInformation(){
+        HabiticaApplication.User = User;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
