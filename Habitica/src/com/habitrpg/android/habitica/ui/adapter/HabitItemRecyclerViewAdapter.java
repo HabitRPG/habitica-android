@@ -38,9 +38,12 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -48,6 +51,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.Model;
 
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -86,10 +90,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
                                         Context newContext, final IAdditionalEntries additionalEntries) {
+        this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext;
         this.tagsHelper = tagsHelper;
         this.additionalEntries = additionalEntries;
+        filteredObservableContent = new ObservableArrayList<Task>();
 
         this.loadContent();
 
@@ -101,7 +107,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.viewHolderClass = viewHolderClass;
 
         EventBus.getDefault().register(this);
-        filter();
     }
 
     public void onEvent(FilterTasksByTagsCommand cmd) {
@@ -174,7 +179,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @Override
     public long getItemId(int position) {
-        return position;
+        Task task = filteredObservableContent.get(position);
+        if (task.getId() != null && task.getId().length() == 36) {
+            return UUID.fromString(task.getId()).getMostSignificantBits();
+        }
+        return UUID.randomUUID().getMostSignificantBits();
     }
 
     @Override
@@ -225,7 +234,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void run() {
             Log.d("Reload Content", "");
-            loadContent();
+            loadContent(true);
         }
     };
 
@@ -244,6 +253,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public THabitItem Item;
 
+        @InjectView(R.id.notesTextView)
+        TextView notesTextView;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -261,6 +273,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public void bindHolder(THabitItem habitItem, int position) {
             double itemvalue = habitItem.getValue();
             Item = habitItem;
+            if (habitItem.notes == null || habitItem.notes.length() == 0) {
+                notesTextView.setHeight(0);
+            } else {
+                notesTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
         }
 
         @Override
@@ -495,12 +512,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void onClick(View v) {
-            if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
+            if (v == binding.btnReward) {
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
-
             } else super.onClick(v);
         }
 
@@ -586,28 +602,46 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     // endregion
 
     public void loadContent() {
-        if (this.observableContent == null) {
+        this.loadContent(false);
+    }
+
+    public void loadContent(boolean forced) {
+
+        if (this.observableContent == null || forced) {
 
             this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
+            new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.column("completed").eq(false))
-                    .orderBy(OrderBy.columns("dateCreated").descending())
-                    .queryList());
+                    .and(Condition.CombinedCondition
+                                    .begin(Condition.column("completed").eq(false))
+                                    .or(Condition.column("type").eq("daily"))
+                    )
+                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
 
-            if (additionalEntries != null) {
-                additionalEntries.GetAdditionalEntries(this);
-            }
-        }
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
         }
     }
 
+    private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
+        @Override
+        public void onResultReceived(List<Task> tasks) {
+            observableContent.addAll(tasks);
+            if (additionalEntries != null) {
+                additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+            }
+            filter();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Task>> transaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Task>> transaction, List<Task> result) {
+            return true;
+        }
+    };
 
     @Override
     public void GotAdditionalItems(List<Task> items) {

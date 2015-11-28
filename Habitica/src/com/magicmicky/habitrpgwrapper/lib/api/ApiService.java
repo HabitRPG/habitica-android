@@ -36,7 +36,7 @@ public interface ApiService {
     @GET("/content")
     void getContent(Callback<ContentResult> contentResultCallback);
 
-    /* User API */
+    /* user API */
 
     @GET("/user/")
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
@@ -90,6 +90,12 @@ public interface ApiService {
 
     @POST("/user/revive")
     void revive(Callback<HabitRPGUser> habitRPGUserCallback);
+
+    @POST("/user/class/cast/{skill}")
+    void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId, Callback<HabitRPGUser> habitRPGUserCallback);
+
+    @POST("/user/class/cast/{skill}")
+    void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, Callback<HabitRPGUser> habitRPGUserCallback);
 
     /* Group API */
 

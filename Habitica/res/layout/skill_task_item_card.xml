@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="habit"
+            name="task"
             type="Task" />
     </data>
 
@@ -19,32 +19,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/btnLayout">
-                <Button
-                    android:id="@+id/btnPlus"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
-                    android:text="+"
-                    android:background="@{habit.down ? @drawable/btn_habit_background : @drawable/btn_habit_single_background}"
-                    app:backgroundColor="@{habit.getLightTaskColor}"
-                    style="@style/HabitButton" />
-                <Button
-                    android:id="@+id/btnMinus"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="@{habit.down ? View.VISIBLE : View.GONE}"
-                    app:backgroundColor="@{habit.up ? habit.getMediumTaskColor : habit.getLightTaskColor}"
-                    android:text="-"
-                    android:background="@{habit.up ? @drawable/btn_habit_background : @drawable/btn_habit_single_background}"
-                    style="@style/HabitButton"/>
-            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -63,21 +37,21 @@
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{habit.text}" />
+                        android:text="@{task.text}" />
 
                     <TextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{habit.notes}"
-                        android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"/>
+                        android:text="@{task.notes}"
+                        android:visibility="@{task.notes != null ? View.VISIBLE : View.GONE}"/>
                 </LinearLayout>
                 <View
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{habit.getLightTaskColor}"
+                    app:backgroundColor="@{task.getLightTaskColor}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"

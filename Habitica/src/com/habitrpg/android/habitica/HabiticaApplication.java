@@ -1,12 +1,17 @@
 package com.habitrpg.android.habitica;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.instabug.library.Instabug;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.solovyev.android.checkout.Billing;
@@ -32,6 +37,7 @@ import java.util.concurrent.Executor;
 public class HabiticaApplication extends Application {
 
     public static HabiticaApplication Instance;
+    public static HabitRPGUser User;
 
     @Override
     public void onCreate() {
@@ -69,6 +75,21 @@ public class HabiticaApplication extends Application {
     @Override
     public File getDatabasePath(String name) {
         return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+    }
+
+    public static void logout(Context context){
+        Instance.deleteDatabase(HabitDatabase.NAME);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        context.startActivity(new Intent(context, LoginActivity.class));
+    }
+
+    public static void checkUserAuthentication(Context context, HostConfig hostConfig){
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        }
     }
 
     // endregion
@@ -124,7 +145,7 @@ public class HabiticaApplication extends Application {
         }
     });
 
-    public static String Purchase20Gems = "com.habitrpg.android.habitica.buy20gems";
+    public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
 
     /**
      * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used anywhere in the app).

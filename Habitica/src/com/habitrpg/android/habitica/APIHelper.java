@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Debug;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 
 import com.google.gson.ExclusionStrategy;
@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
@@ -30,6 +30,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
@@ -87,6 +88,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(taskTagClassListType, new TagsAdapter())
                 .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
                 .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
+                .registerTypeAdapter(SkillList.class, new SkillDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
@@ -139,8 +141,12 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.createItem(item, cb);
     }
 
-    public void retrieveUser(HabitRPGUserCallback callback) {
-        this.apiService.getUser(callback);
+    public void retrieveUser(final HabitRPGUserCallback callback) {
+        new Thread(new Runnable() {
+            public void run() {
+                apiService.getUser(callback);
+            }
+        }).start();
     }
 
     public void updateTaskDirection(String id, TaskDirection direction, TaskScoringCallback callback) {

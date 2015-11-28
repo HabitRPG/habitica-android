@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="sidebar.tasks">Tasks</string>
+    <string name="sidebar.skills">Skills</string>
     <string name="sidebar.section.social">Social</string>
     <string name="sidebar.tavern">Tavern</string>
     <string name="sidebar.party">Party</string>

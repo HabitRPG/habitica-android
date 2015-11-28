@@ -6,11 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.habitrpg.android.habitica.AboutActivity;
-import com.habitrpg.android.habitica.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.MainActivity;
-import com.habitrpg.android.habitica.PartyActivity;
+import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.TavernActivity;
+import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
+import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
+import com.habitrpg.android.habitica.ui.fragments.TavernFragment;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -19,12 +22,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-
-import java.util.HashMap;
 
 
 /**
@@ -34,22 +34,14 @@ public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
     static final int SIDEBAR_TASKS = 0;
-    static final int SIDEBAR_TAVERN = 2;
-    static final int SIDEBAR_PARTY = 3;
-    static final int SIDEBAR_PURCHASE = 4;
-    static final int SIDEBAR_SETTINGS = 6;
-    static final int SIDEBAR_ABOUT = 7;
+    static final int SIDEBAR_SKILLS = 1;
+    static final int SIDEBAR_TAVERN = 3;
+    static final int SIDEBAR_PARTY = 4;
+    static final int SIDEBAR_PURCHASE = 5;
+    static final int SIDEBAR_SETTINGS = 7;
+    static final int SIDEBAR_ABOUT = 8;
 
-    private static HashMap<Integer, Class> ClassMap = new HashMap<>();
 
-    static {
-        ClassMap.put(SIDEBAR_TASKS, MainActivity.class);
-        ClassMap.put(SIDEBAR_TAVERN, TavernActivity.class);
-        ClassMap.put(SIDEBAR_PARTY, PartyActivity.class);
-        ClassMap.put(SIDEBAR_PURCHASE, GemPurchaseActivity.class);
-        ClassMap.put(SIDEBAR_SETTINGS, PrefsActivity.class);
-        ClassMap.put(SIDEBAR_ABOUT, AboutActivity.class);
-    }
 
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         AccountHeaderBuilder builder = new AccountHeaderBuilder()
@@ -69,7 +61,7 @@ public class MainDrawerBuilder {
     }
 
 
-    public static DrawerBuilder CreateDefaultBuilderSettings(final Activity activity, Toolbar toolbar, AccountHeader accountHeader) {
+    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, Toolbar toolbar, AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(activity);
 
@@ -81,11 +73,11 @@ public class MainDrawerBuilder {
                 .withAccountHeader(accountHeader)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS),
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
                         /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
@@ -93,6 +85,7 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)),*/
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
                         new DividerDrawerItem(),
                         //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
@@ -104,15 +97,47 @@ public class MainDrawerBuilder {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
+                        BaseFragment fragment = null;
+                        Class newActivityClass = null;
 
-                        Class selectedClass = ClassMap.get(drawerItem.getIdentifier());
+                        switch (drawerItem.getIdentifier()) {
+                            case SIDEBAR_TASKS: {
+                                fragment = new TasksFragment();
+                                break;
+                            }
+                            case SIDEBAR_SKILLS: {
+                                fragment = new SkillsFragment();
+                                break;
+                            }
+                            case SIDEBAR_PARTY: {
+                                fragment = new PartyFragment();
+                                break;
+                            }
+                            case SIDEBAR_TAVERN: {
+                                fragment = new TavernFragment();
+                                break;
+                            }
+                            case SIDEBAR_PURCHASE:{
+                                fragment = new GemsPurchaseFragment();
+                                break;
+                            }
+                            case SIDEBAR_SETTINGS: {
+                                newActivityClass = PrefsActivity.class;
+                                break;
+                            }
+                            case SIDEBAR_ABOUT: {
+                                newActivityClass = AboutActivity.class;
+                                break;
+                            }
+                        }
 
-                        if (selectedClass != null && activity.getClass() != selectedClass) {
-                            activity.startActivity(new Intent(activity, selectedClass));
+                        if (fragment != null) {
+                            fragment.fragmentSidebarPosition = position;
+                            activity.displayFragment(fragment);
                             return false;
-                        } else if (selectedClass != null) {
-                            //same item was clicked again
+                        }
+                        if (newActivityClass != null) {
+                            activity.startActivity(new Intent(activity, newActivityClass));
                             return false;
                         }
 
@@ -120,14 +145,6 @@ public class MainDrawerBuilder {
                         return true;
                     }
                 });
-
-        Class activityClass = activity.getClass();
-        for (java.util.Map.Entry<Integer,Class> entry: ClassMap.entrySet()) {
-            if(entry.getValue() == activityClass){
-                builder.withSelectedItem(entry.getKey());
-            }
-        }
-
 
         return builder;
     }

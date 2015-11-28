@@ -388,8 +388,10 @@ public class Task extends BaseModel {
             return R.color.worse_100;
         if (this.value < -1)
             return R.color.bad_100;
-        if (this.value < 5)
+        if (this.value < 1)
             return R.color.neutral_100;
+        if (this.value < 5)
+            return R.color.good_100;
         if (this.value < 10)
             return R.color.better_100;
         return R.color.best_100;
@@ -408,8 +410,10 @@ public class Task extends BaseModel {
             return R.color.worse_50;
         if (this.value < -1)
             return R.color.bad_50;
-        if (this.value < 5)
+        if (this.value < 1)
             return R.color.neutral_50;
+        if (this.value < 5)
+            return R.color.good_50;
         if (this.value < 10)
             return R.color.better_50;
 
@@ -429,8 +433,10 @@ public class Task extends BaseModel {
             return R.color.worse_10;
         if (this.value < -1)
             return R.color.bad_10;
-        if (this.value < 5)
+        if (this.value < 1)
             return R.color.neutral_10;
+        if (this.value < 5)
+            return R.color.good_10;
         if (this.value < 10)
             return R.color.better_10;
 

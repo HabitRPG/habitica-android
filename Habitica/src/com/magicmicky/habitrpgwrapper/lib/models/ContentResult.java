@@ -15,7 +15,8 @@ public class ContentResult {
 
     public ContentGear gear;
 
-
     public HashMap<String, QuestContent> quests;
+
+    public SkillList spells;
 }
 
