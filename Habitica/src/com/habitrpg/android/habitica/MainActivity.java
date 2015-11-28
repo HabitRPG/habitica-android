@@ -1,14 +1,16 @@
 package com.habitrpg.android.habitica;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,33 +26,19 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.Model;
-
-import java.util.Collection;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.fabric.sdk.android.Fabric;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-/**
- * Created by admin on 18/11/15.
- */
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
 
     public enum SnackbarDisplayType {
@@ -99,11 +87,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
-        }
+        HabiticaApplication.checkUserAuthentication(this, hostConfig);
         this.mAPIHelper = new APIHelper(this, hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
@@ -130,19 +114,24 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
+    }
 
-        mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
-            @Override
-            public void success(ContentResult contentResult, Response response) {
 
+    private void saveLoginInformation(){
+        HabiticaApplication.User = user;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
+                .putString(getString(R.string.SP_email), user.getAuthentication().getLocalAuthentication().getEmail())
+                .commit();
+        try{
+            if(!ans) {
+                throw new Exception("Shared Preferences Username and Email error");
             }
-
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        }catch (Exception e){
+            Log.e("SHARED PREFERENCES", e.getMessage());
+        }
     }
 
     @Override
@@ -197,6 +186,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 public void run() {
                     updateHeader();
                     updateSidebar();
+                    saveLoginInformation();
                     if (activeFragment != null) {
                         activeFragment.updateUserData(user);
                     }
@@ -245,7 +235,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @Override
     public void onUserFail() {
-
     }
 
     public void setActiveFragment(BaseFragment fragment) {

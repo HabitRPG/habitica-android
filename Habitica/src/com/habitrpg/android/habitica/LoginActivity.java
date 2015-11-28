@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity
 		mApiHelper = new APIHelper(this,hc);
 
         this.isRegistering = false;
-
 	}
 
 	private void resetLayout() {
@@ -165,7 +164,6 @@ public class LoginActivity extends AppCompatActivity
 	public static void expand(final View v) {
 		v.setVisibility(View.VISIBLE);
 	}
- //
 
 	public static void collapse(final View v) {
         v.setVisibility(View.GONE);
@@ -175,18 +173,7 @@ public class LoginActivity extends AppCompatActivity
 		startActivity(new Intent(LoginActivity.this, MainActivity.class));
 		finish();
 	}
-	private void saveTokens(String api, String user) throws Exception {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-		SharedPreferences.Editor editor = prefs.edit();
-		boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
-				.putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
-				.commit();
-			if(!ans) {
-				throw new Exception("PB_string_commit");
-			}
 
-	}
 	private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
         MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
@@ -285,6 +272,18 @@ public class LoginActivity extends AppCompatActivity
             e.printStackTrace();
         }
         this.startMainActivity();
+    }
+
+    private void saveTokens(String api, String user) throws Exception {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
+                .putString(getString(R.string.SP_userID), user)
+                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
+                .commit();
+        if(!ans) {
+            throw new Exception("PB_string_commit");
+        }
     }
 
     @Override
