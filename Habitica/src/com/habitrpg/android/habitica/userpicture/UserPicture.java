@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -34,6 +35,7 @@ public class UserPicture {
     private AtomicInteger numOfTasks = new AtomicInteger(0);
 
     private boolean hasBackground, hasPetMount;
+    private boolean userHasBackground, userHasPet, userHasMount;
 
     private String currentCacheFileName;
 
@@ -77,28 +79,35 @@ public class UserPicture {
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {
-                this.imageView.setImageBitmap(res);
+                final Bitmap image = res;
+                imageView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.setImageBitmap(image);
+                    }
+                });
             } else {
                 this.runnable.run(res);
             }
         }
     }
 
-    public void setPictureOn(ImageView imageView) {
-        this.imageView = imageView;
+    public void setPictureOn(final ImageView imageView) {
+        UserPicture.this.imageView = imageView;
 
-        List<String> layerNames = this.getLayerNames();
+        List<String> layerNames = UserPicture.this.getLayerNames();
 
-        Bitmap cache = this.getCachedImage(layerNames);
+        final Bitmap cache = UserPicture.this.getCachedImage(layerNames);
 
         // yes => load image to bitmap
-        if(cache != null){
+        if (cache != null) {
             imageView.setImageBitmap(cache);
             return;
         }
 
         // no => generate it
         generateImage(layerNames);
+
     }
 
     public void setPictureWithRunnable(UserPictureRunnable runnable) {
@@ -124,28 +133,34 @@ public class UserPicture {
         if (mountName != null && !mountName.isEmpty() && hasPetMount) {
             layerNames.add(0, "Mount_Body_" + mountName);
             layerNames.add("Mount_Head_" + mountName);
+            this.userHasMount = true;
+        } else {
+            this.userHasMount = false;
         }
 
         String petName = this.user.getItems().getCurrentPet();
 
         if (petName != null && !petName.isEmpty() && hasPetMount) {
             layerNames.add("Pet-" + petName);
-            this.hasPetMount = true;
+            this.userHasPet = true;
+        } else {
+            this.userHasPet = false;
         }
 
         String backgroundName = this.user.getPreferences().getBackground();
 
         if (backgroundName != null && !backgroundName.isEmpty() && hasBackground) {
             layerNames.add(0, "background_" + backgroundName);
-            this.hasBackground = true;
+            this.userHasBackground = true;
+        } else {
+            this.userHasBackground = false;
         }
-
         return layerNames;
     }
 
     private Bitmap getCachedImage(List<String> layerNames) {
         // get layer hash value
-        String fullLayerString = "";
+        String fullLayerString = String.valueOf(hasBackground).concat(String.valueOf(hasPetMount));
 
         for (String l : layerNames) {
             fullLayerString = fullLayerString.concat(l);
@@ -204,20 +219,23 @@ public class UserPicture {
         Integer xOffset = 25;
         Integer yOffset = 18;
 
-        if (this.hasBackground && layerNumber == 0) {
+        if (this.hasBackground && this.userHasBackground && layerNumber == 0) {
             xOffset = 0;
             yOffset = 0;
         }
 
-        if (this.hasPetMount && !((this.hasBackground && layerNumber == 1) ||
-                                (!this.hasBackground && layerNumber == 0) ||
-                                (this.hasPetMount && layerNumber == this.layers.size()-2) ||
-                                (!this.hasPetMount && layerNumber == this.layers.size()-1)
-        )) {
-            yOffset = 0;
+        if (this.hasPetMount) {
+            if (this.userHasMount) {
+                if (((this.userHasBackground && layerNumber > 1) ||
+                        (!this.userHasBackground && layerNumber > 0)) &&
+                        ((this.userHasPet && layerNumber < (this.layers.size()-2)) ||
+                        (!this.userHasPet && layerNumber < this.layers.size()-1))) {
+                    yOffset = 0;
+                }
+            }
         }
 
-        if (this.hasPetMount && layerNumber == this.layers.size()-1) {
+        if (this.hasPetMount && this.userHasPet && layerNumber == this.layers.size()-1) {
             xOffset = 0;
             yOffset = 43;
         }
