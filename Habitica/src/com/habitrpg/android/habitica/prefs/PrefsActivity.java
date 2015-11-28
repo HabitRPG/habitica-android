@@ -9,19 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
+import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
 
 public class PrefsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setupActionBar();
 
-        // Display the fragment as the main content
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new AccountDetailsFragment())
+                .replace(android.R.id.content, new PreferencesFragment())
                 .commit();
     }
 

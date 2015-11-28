@@ -41,9 +41,4 @@ android:title="@string/PS_contact_title" >
             android:summary="@string/SP_APIToken_summary"/>
 
     </PreferenceCategory>
-
-    <Preference android:title="LOGOUT"
-        android:key="logout"
-        android:summary="Logout your account"/>
-
 </PreferenceScreen>

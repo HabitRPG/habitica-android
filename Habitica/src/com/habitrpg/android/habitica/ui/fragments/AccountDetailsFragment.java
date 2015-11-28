@@ -45,14 +45,4 @@ public class AccountDetailsFragment extends PreferenceFragment {
             }
         }
     }
-
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
-        if (preference.getKey().equals("logout")) {
-            HabiticaApplication.logout(context);
-        }
-        return false;
-    }
 }
