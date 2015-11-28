@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,10 +82,6 @@ import retrofit.client.Response;
 
 public class TasksFragment extends BaseFragment implements TaskScoringCallback.OnTaskScored, OnCheckedChangeListener {
 
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, DROP
-    }
-
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
 
@@ -116,29 +113,30 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-        floatingMenu = (FloatingActionMenu) v.findViewById(R.id.fab_menu);
-        FloatingActionButton habit_fab = (FloatingActionButton) v.findViewById(R.id.fab_new_habit);
+        FrameLayout frame = (FrameLayout) inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
+        floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
+        FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
         habit_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewTaskActivity("habit");
             }
         });
-        FloatingActionButton daily_fab = (FloatingActionButton) v.findViewById(R.id.fab_new_daily);
+        FloatingActionButton daily_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_daily);
         daily_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewTaskActivity("daily");
             }
         });
-        FloatingActionButton todo_fab = (FloatingActionButton) v.findViewById(R.id.fab_new_todo);
+        FloatingActionButton todo_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_todo);
         todo_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewTaskActivity("todo");
             }
         });
-        FloatingActionButton reward_fab = (FloatingActionButton) v.findViewById(R.id.fab_new_reward);
+        FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
         reward_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -352,7 +350,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                activity.showSnackbar(data.get_tmp().getDrop().getDialog(), MainActivity.SnackbarDisplayType.DROP);
             }
         }
     }
@@ -377,32 +375,14 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     // endregion
 
-    private void showSnackbar(String content) {
-        showSnackbar(content, SnackbarDisplayType.NORMAL);
-    }
 
-    private void showSnackbar(String content, SnackbarDisplayType displayType) {
-        Snackbar snackbar = Snackbar.make(floatingMenu, content, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-
-        if (displayType == SnackbarDisplayType.FAILURE) {
-
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.worse_10));
-        } else if (displayType == SnackbarDisplayType.DROP) {
-            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            tv.setMaxLines(5);
-            snackbarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.best_10));
-        }
-        snackbar.show();
-    }
 
     //region Events
 
     public void onEvent(CreateTagCommand event) {
         Tag t = new Tag();
         t.setName(event.tagName);
-        t.save();
+        t.async().save();
 
         mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
             @Override
@@ -412,7 +392,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
             @Override
             public void failure(RetrofitError error) {
-                showSnackbar("Error: " + error.getMessage(), SnackbarDisplayType.FAILURE);
+                activity.showSnackbar("Error: " + error.getMessage(), MainActivity.SnackbarDisplayType.FAILURE);
             }
         });
     }
@@ -449,7 +429,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar("Not enough Gold", SnackbarDisplayType.FAILURE);
+            activity.showSnackbar("Not enough Gold", MainActivity.SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -459,7 +439,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 int maxHp = user.getStats().getMaxHealth();
 
                 if (currentHp == maxHp) {
-                    showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE);
+                    activity.showSnackbar("You don't need to buy an health potion", MainActivity.SnackbarDisplayType.FAILURE);
                     return;
                 }
             }
@@ -482,12 +462,12 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                             break;
                     }
 
-                    showSnackbar("Buy Reward Successful " + event.Reward.getText());
+                    activity.showSnackbar("Buy Reward Successful " + event.Reward.getText());
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    showSnackbar("Buy Reward Error " + event.Reward.getText(), SnackbarDisplayType.FAILURE);
+                    activity.showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
                 }
             });
         } else {
@@ -517,13 +497,13 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     private void notifyUser(double xp, double hp, double gold,
                             int lvl, double delta) {
         StringBuilder message = new StringBuilder();
-        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
+        MainActivity.SnackbarDisplayType displayType = MainActivity.SnackbarDisplayType.NORMAL;
         if (lvl > user.getStats().getLvl()) {
             displayLevelUpDialog(lvl);
 
             this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
             user.getStats().setLvl((int) lvl);
-            showSnackbar(message.toString());
+            activity.showSnackbar(message.toString());
         } else {
             com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
 
@@ -532,7 +512,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 user.getStats().setExp(xp);
             }
             if (hp != stats.getHp()) {
-                displayType = SnackbarDisplayType.FAILURE;
+                displayType = MainActivity.SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
                 user.getStats().setHp(hp);
             }
@@ -540,11 +520,11 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
                 stats.setGp(gold);
             } else if (gold < stats.getGp()) {
-                displayType = SnackbarDisplayType.FAILURE;
+                displayType = MainActivity.SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
                 stats.setGp(gold);
             }
-            showSnackbar(message.toString(), displayType);
+            activity.showSnackbar(message.toString(), displayType);
 
         }
     }
@@ -691,7 +671,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         if (t != null) {
             tagFilterMap.put(t.getId(), b);
             filterChangedHandler.hit();
-            showSnackbar(t.getName() + " : " + b);
         }
     }
 

@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -49,7 +53,14 @@ import retrofit.client.Response;
  */
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
 
+    public enum SnackbarDisplayType {
+        NORMAL, FAILURE, DROP
+    }
+
     BaseFragment activeFragment;
+
+    @InjectView(R.id.floating_menu_wrapper)
+    FrameLayout floatingMenuWrapper;
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -152,6 +163,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
+        fragment.setFloatingMenuWrapper(floatingMenuWrapper);
 
         if (getSupportFragmentManager().getFragments() == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
@@ -247,5 +259,25 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void showSnackbar(String content) {
+        showSnackbar(content, SnackbarDisplayType.NORMAL);
+    }
+
+    public void showSnackbar(String content, SnackbarDisplayType displayType) {
+        Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+
+        if (displayType == SnackbarDisplayType.FAILURE) {
+
+            //change Snackbar's background color;
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
+        } else if (displayType == SnackbarDisplayType.DROP) {
+            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setMaxLines(5);
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
+        }
+        snackbar.show();
     }
 }
