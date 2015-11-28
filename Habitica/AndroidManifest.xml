@@ -48,7 +48,10 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".SkillTasksActivity"
+            android:label="@string/app_name">
+        </activity>
         <receiver
             android:name=".widget.SimpleWidget"
             android:icon="@mipmap/ic_launcher"

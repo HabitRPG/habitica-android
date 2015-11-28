@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +16,17 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.SkillTasksActivity;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.SkillCallback;
+import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -44,11 +51,15 @@ import retrofit.client.Response;
  */
 public class SkillsFragment extends BaseFragment {
 
+    private final int TASK_SELECTION_ACTIVITY = 10;
+
     private View view;
+    private Skill selectedSkill;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         if (view == null)
             view = inflater.inflate(R.layout.fragment_skills, container, false);
 
@@ -83,4 +94,33 @@ public class SkillsFragment extends BaseFragment {
         adapter.setSkillList(skills);
     }
 
+    public void onEvent(UseSkillCommand command) {
+        Skill skill = command.skill;
+        if (skill.target.equals("task")) {
+            selectedSkill = skill;
+            Intent intent = new Intent(activity, SkillTasksActivity.class);
+            startActivityForResult(intent, TASK_SELECTION_ACTIVITY);
+        } else {
+            mAPIHelper.apiService.useSkill(skill.key, skill.target, new SkillCallback(activity, skill));
+        }
+    }
+
+    public void onEvent(SkillUsedEvent event) {
+        Skill skill = event.usedSkill;
+        adapter.setMana(event.newMana);
+        activity.showSnackbar(activity.getString(R.string.used_skill, skill.text, skill.mana));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (TASK_SELECTION_ACTIVITY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    mAPIHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"), new SkillCallback(activity, selectedSkill));
+                }
+                break;
+            }
+        }
+    }
 }

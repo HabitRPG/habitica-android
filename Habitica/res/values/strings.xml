@@ -179,4 +179,5 @@
     <string name="profile_image">Profile Image</string>
 
     <string name="mana_price_button" formatted="false">%d MP</string>
+    <string name="used_skill" formatted="false">You used %1$s for %2$d mana.</string>
 </resources>

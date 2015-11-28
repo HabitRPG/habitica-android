@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -59,6 +61,11 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
         this.notifyDataSetChanged();
     }
 
+    public void setMana(Double mana) {
+        this.mana = mana;
+        this.notifyDataSetChanged();
+    }
+
 
     @Override
     public SkillViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,7 +86,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
         return skillList == null ? 0 : skillList.size();
     }
 
-    class SkillViewHolder extends RecyclerView.ViewHolder {
+    class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @InjectView(R.id.skill_text)
         TextView skillNameTextView;
@@ -90,6 +97,8 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
         @InjectView(R.id.price_button)
         Button priceButton;
 
+        Skill skill;
+
         Resources resources;
 
         public SkillViewHolder(View itemView) {
@@ -98,9 +107,12 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             ButterKnife.inject(this, itemView);
 
             resources = itemView.getResources();
+
+            priceButton.setOnClickListener(this);
         }
 
         public void bind(Skill skill) {
+            this.skill = skill;
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
             priceButton.setText(String.format(resources.getString(R.string.mana_price_button), skill.mana));
@@ -115,7 +127,14 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
                 skillNotesTextView.setTextColor(resources.getColor(android.R.color.black));
                 priceButton.setEnabled(true);
             }
+        }
 
+        @Override
+        public void onClick(View v) {
+            UseSkillCommand event = new UseSkillCommand();
+            event.skill = this.skill;
+
+            EventBus.getDefault().post(event);
         }
     }
 }
