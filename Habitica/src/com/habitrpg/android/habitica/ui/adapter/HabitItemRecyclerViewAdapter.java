@@ -38,9 +38,12 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -92,6 +95,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.context = newContext;
         this.tagsHelper = tagsHelper;
         this.additionalEntries = additionalEntries;
+        filteredObservableContent = new ObservableArrayList<Task>();
 
         this.loadContent();
 
@@ -607,29 +611,38 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         if (this.observableContent == null || forced) {
 
             this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
+            new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
                     .and(Condition.CombinedCondition
                                     .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
+                                    .or(Condition.column("type").eq("daily"))
                     )
-                    .orderBy(OrderBy.columns("dateCreated").descending())
-                    .queryList());
+                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
 
-            if (additionalEntries != null) {
-                additionalEntries.GetAdditionalEntries(this);
-            }
-            filter();
-        }
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
         }
     }
 
+    private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
+        @Override
+        public void onResultReceived(List<Task> tasks) {
+            observableContent.addAll(tasks);
+            if (additionalEntries != null) {
+                additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+            }
+            filter();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Task>> transaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Task>> transaction, List<Task> result) {
+            return true;
+        }
+    };
 
     @Override
     public void GotAdditionalItems(List<Task> items) {

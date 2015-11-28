@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -338,8 +339,13 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             }
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
-                    HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
-                    adapter.loadContent(true);
+                    final HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.loadContent(true);
+                        }
+                    });
                 }
             }
         }

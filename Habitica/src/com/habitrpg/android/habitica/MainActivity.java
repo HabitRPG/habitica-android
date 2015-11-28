@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -58,9 +59,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @InjectView(R.id.avatar_with_bars)
     View avatar_with_bars;
-
-    @InjectView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
 
     AccountHeader accountHeader;
     public Drawer drawer;
@@ -230,7 +228,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
-        this.setUserData();
+        MainActivity.this.setUserData();
     }
 
     @Override

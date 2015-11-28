@@ -25,6 +25,7 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
         Log.d("db", "saving");
         habitRPGUser.async().save();
 
+        
         mCallback.onUserReceived(habitRPGUser);
     }
 
