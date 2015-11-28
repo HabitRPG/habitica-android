@@ -12,7 +12,7 @@ import retrofit.client.Response;
 /**
  * Created by magicmicky on 02/04/15.
  */
-public class TaskDeletionCallback  implements Callback<Void> {
+public class TaskDeletionCallback implements Callback<Void> {
     private final OnTaskDeleted callback;
     private final Task taskToDelete;
 
@@ -20,6 +20,7 @@ public class TaskDeletionCallback  implements Callback<Void> {
         this.callback = cb;
         this.taskToDelete = taskToDelete;
     }
+
     @Override
     public void success(Void aVoid, Response response) {
         callback.onTaskDeleted(taskToDelete);
@@ -36,5 +37,7 @@ public class TaskDeletionCallback  implements Callback<Void> {
 
     public interface OnTaskDeleted {
         public void onTaskDeleted(Task deleted);
+
         public void onTaskDeletionFail();
-    }}
+    }
+}

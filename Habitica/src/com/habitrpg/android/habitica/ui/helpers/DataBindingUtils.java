@@ -24,7 +24,7 @@ public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")
     public static void loadImage(ImageView view, String imageName) {
-        if(view.getVisibility() == View.VISIBLE) {
+        if (view.getVisibility() == View.VISIBLE) {
             Picasso.with(view.getContext())
                     .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png")
                     .into(view);
@@ -73,7 +73,7 @@ public class DataBindingUtils {
 
     @BindingAdapter("app:layout_weight")
     public static void setLayoutWeight(View view, float weight) {
-        LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)view.getLayoutParams();
+        LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
 
         layout.weight = weight;
 
@@ -82,7 +82,7 @@ public class DataBindingUtils {
 
     @BindingAdapter("app:layout_weight_anim")
     public static void setLayoutWeightAnim(View view, float weight) {
-        if(weight == 0.0f || weight == 1.0f){
+        if (weight == 0.0f || weight == 1.0f) {
             setLayoutWeight(view, weight);
             return;
         }
@@ -97,7 +97,7 @@ public class DataBindingUtils {
     public static void setRoundedBackground(View view, int color) {
         Drawable drawable = view.getResources().getDrawable(R.drawable.layout_rounded_bg);
         drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        if(Build.VERSION.SDK_INT < 16) {
+        if (Build.VERSION.SDK_INT < 16) {
             view.setBackgroundDrawable(drawable);
         } else {
             view.setBackground(drawable);
@@ -106,7 +106,7 @@ public class DataBindingUtils {
 
     @BindingAdapter("app:rounded_background_int")
     public static void setRoundedBackgroundInt(View view, int color) {
-        if(color != 0){
+        if (color != 0) {
             setRoundedBackground(view, view.getResources().getColor(color));
         }
     }
@@ -122,7 +122,7 @@ public class DataBindingUtils {
             this.view = view;
             this.targetWeight = targetWeight;
 
-            layoutParams = (LinearLayout.LayoutParams)view.getLayoutParams();
+            layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
             initializeWeight = layoutParams.weight;
         }
 

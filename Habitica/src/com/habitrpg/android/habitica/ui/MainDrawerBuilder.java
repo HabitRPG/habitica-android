@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.habitrpg.android.habitica.AboutActivity;
 import com.habitrpg.android.habitica.GemPurchaseActivity;
@@ -13,13 +12,17 @@ import com.habitrpg.android.habitica.PartyActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TavernActivity;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.HashMap;
 
@@ -48,7 +51,25 @@ public class MainDrawerBuilder {
         ClassMap.put(SIDEBAR_ABOUT, AboutActivity.class);
     }
 
-    public static DrawerBuilder CreateDefaultBuilderSettings(final Activity activity, Toolbar toolbar) {
+    public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
+        AccountHeaderBuilder builder = new AccountHeaderBuilder()
+                .withActivity(activity)
+                .withHeaderBackground(R.drawable.sidebar_background)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .withSelectionListEnabledForSingleProfile(false);
+        return builder;
+    }
+
+
+    public static DrawerBuilder CreateDefaultBuilderSettings(final Activity activity, Toolbar toolbar, AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(activity);
 
@@ -57,6 +78,7 @@ public class MainDrawerBuilder {
         }
 
         builder.withHeaderDivider(false)
+                .withAccountHeader(accountHeader)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
 
@@ -74,8 +96,8 @@ public class MainDrawerBuilder {
 
                         new DividerDrawerItem(),
                         //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
-                        new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS),
-                        new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT)
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT)
 
                 )
                 .withStickyFooterDivider(false)

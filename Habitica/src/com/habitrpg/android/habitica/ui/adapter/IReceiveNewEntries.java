@@ -4,6 +4,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.List;
 
-public interface IReceiveNewEntries{
+public interface IReceiveNewEntries {
     void GotAdditionalItems(List<Task> items);
 }

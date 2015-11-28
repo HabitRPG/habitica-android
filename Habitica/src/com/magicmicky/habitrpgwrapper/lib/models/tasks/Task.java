@@ -82,7 +82,7 @@ public class Task extends BaseModel {
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
             columnType = String.class,
-            foreignColumnName = "user_id")})
+            foreignColumnName = "task_id")})
     public Days repeat;
     //TODO: private String lastCompleted;
 
@@ -359,7 +359,7 @@ public class Task extends BaseModel {
         checklist = null;
 
         if(repeat != null)
-            repeat.user_id = user_id;
+            repeat.task_id = this.id;
 
         super.save();
 

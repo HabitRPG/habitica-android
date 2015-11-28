@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -20,8 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.EditorInfo;
@@ -159,11 +156,19 @@ public class LoginActivity extends AppCompatActivity
                 email = String.valueOf(mEmail.getText());
                 password = String.valueOf(mPasswordET.getText());
                 cpassword = String.valueOf(mConfirmPassword.getText());
+				if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
                 mApiHelper.registerUser(v,username,email,password,cpassword);
             } else {
                 String username,password;
                 username = String.valueOf(mUsernameET.getText());
                 password = String.valueOf(mPasswordET.getText());
+				if (username.length() == 0 || password.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
                 mApiHelper.connectUser(username,password, LoginActivity.this);
             }
 		}
@@ -304,7 +309,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onUserReceived(HabitRPGUser user) {
         try {
-            saveTokens(mTmpApiToken,mTmpUserToken);
+            saveTokens(mTmpApiToken, mTmpUserToken);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -316,4 +321,17 @@ public class LoginActivity extends AppCompatActivity
         mProgressBar.setVisibility(View.GONE);
         showSnackbar(getString(R.string.unknown_error));
     }
+
+	private void showValidationError(int resourceMessageString) {
+		mProgressBar.setVisibility(View.GONE);
+		new android.support.v7.app.AlertDialog.Builder(this)
+					.setTitle(R.string.login_validation_error_title)
+					.setMessage(resourceMessageString)
+					.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					})
+					.setIcon(R.drawable.ic_warning_black)
+					.show();
+	}
 }

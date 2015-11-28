@@ -30,7 +30,7 @@ public class PartyMemberListFragment extends Fragment {
 
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
-    public PartyMemberListFragment(Context ctx, Group group){
+    public PartyMemberListFragment(Context ctx, Group group) {
         this.ctx = ctx;
         this.group = group;
 
@@ -60,12 +60,12 @@ public class PartyMemberListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
         mRecyclerView.setAdapter(viewAdapter);
 
-        if(group != null){
+        if (group != null) {
             setMemberList(group.members);
         }
     }
 
-    public void setMemberList(ArrayList<HabitRPGUser> members){
+    public void setMemberList(ArrayList<HabitRPGUser> members) {
         viewAdapter.setMemberList(members);
     }
 }

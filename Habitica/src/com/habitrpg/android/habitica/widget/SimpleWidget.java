@@ -39,7 +39,7 @@ public class SimpleWidget extends AppWidgetProvider {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onAppWidgetOptionsChanged (Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         Log.v(LOG, "onAppWidgetOptionChanged call");
         Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
 
@@ -59,6 +59,7 @@ public class SimpleWidget extends AppWidgetProvider {
     /**
      * Determine appropriate view based on width provided.<br/>
      * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
+     *
      * @param minWidth
      * @param minHeight
      * @return
@@ -95,9 +96,6 @@ public class SimpleWidget extends AppWidgetProvider {
         }
         return n - 1;
     }
-
-
-
 
 
 }

@@ -21,7 +21,6 @@ import org.solovyev.android.checkout.RequestListener;
 import com.facebook.FacebookSdk;
 
 import java.io.File;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,11 +68,10 @@ public class HabiticaApplication extends Application {
 
     @Override
     public File getDatabasePath(String name) {
-        return new File(getExternalFilesDir(null), "HabiticaDatabase/"+name);
+        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
     }
 
     // endregion
-
 
 
     /**

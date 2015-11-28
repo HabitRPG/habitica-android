@@ -33,13 +33,12 @@ public class AvatarWithBarsViewModel {
 
     private TextView lvlText, goldText, silverText, gemsText;
 
-    public AvatarWithBarsViewModel(Context context, View v){
+    public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
 
         res = context.getResources();
 
-        if(v == null)
-        {
+        if (v == null) {
             Log.w("AvatarWithBarsViewModel", "View is null");
             return;
         }
@@ -62,8 +61,7 @@ public class AvatarWithBarsViewModel {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void updateData(HabitRPGUser user)
-    {
+    public void updateData(HabitRPGUser user) {
         Stats stats = user.getStats();
         char classShort;
         String userClass = "";
@@ -74,14 +72,14 @@ public class AvatarWithBarsViewModel {
         setValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
         new UserPicture(user, this.context).setPictureOn(image);
 
-        if(user.getStats().get_class()!=null) {
-            userClass+=user.getStats().get_class().name();
+        if (user.getStats().get_class() != null) {
+            userClass += user.getStats().get_class().name();
         }
         lvlText.setText("Lvl" + user.getStats().getLvl() + " " + userClass);
         Drawable drawable;
-        switch(stats.get_class()) {
+        switch (stats.get_class()) {
             case warrior:
-                 drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
                 break;
             case rogue:
@@ -106,18 +104,16 @@ public class AvatarWithBarsViewModel {
 
 //        binding.setClassShort(classShort);
 
-        goldText.setText(gp+"");
-        silverText.setText(sp+"");
+        goldText.setText(gp + "");
+        silverText.setText(sp + "");
 
-        Double gems = new Double(user.getBalance()*4);
-        gemsText.setText(gems.intValue()+"");
+        Double gems = new Double(user.getBalance() * 4);
+        gemsText.setText(gems.intValue() + "");
     }
 
-    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx)
-    {
+    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
         int maxHP = stats.getMaxHealth();
-        if(maxHP == 0)
-        {
+        if (maxHP == 0) {
             maxHP = 50;
         }
 
@@ -126,17 +122,13 @@ public class AvatarWithBarsViewModel {
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon)
-    {
+    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
         double percent = Math.min(1, value / valueMax);
 
-        if(percent == 1)
-        {
+        if (percent == 1) {
             valueBar.setWeightToShow(1);
             valueBar.setWeightToHide(0);
-        }
-        else
-        {
+        } else {
             valueBar.setWeightToShow((float) percent);
             valueBar.setWeightToHide((float) (1 - percent));
         }

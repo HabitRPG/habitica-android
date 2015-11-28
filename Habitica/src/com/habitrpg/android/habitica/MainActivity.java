@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,7 @@ import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.fragments.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -125,8 +127,6 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             return;
         }
 
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar)
-                .build();
 
         filterDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -584,7 +584,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
 
     @Override
     public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action, String s, String s1) {
-        if(aClass != HabitRPGUser.class)
+        if (aClass != HabitRPGUser.class)
             return;
 
 
@@ -611,7 +611,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                         adapter.dailyResetOffset = User.getPreferences().getDayStart();
                     }
                     updateHeader();
-
+                    updateSidebar();
                     displayDeathDialogIfNeeded();
                 }
             });
@@ -732,7 +732,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
             detailView.setText(this.getString(R.string.levelup_detail, level));
 
             ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
-            UserPicture userPicture = new UserPicture(User, this, false, false, false);
+            UserPicture userPicture = new UserPicture(User, this, false, false);
             userPicture.setPictureOn(avatarView);
         }
 
@@ -776,7 +776,7 @@ public class MainActivity extends AvatarActivityBase implements HabitRPGUserCall
                 AvatarWithBarsViewModel.setHpBarData(hpBar, User.getStats(), this);
 
                 ImageView avatarView = (ImageView)customView.findViewById(R.id.avatarView);
-                UserPicture userPicture = new UserPicture(User, this, false, false, false);
+                UserPicture userPicture = new UserPicture(User, this, false, false);
                 userPicture.setPictureOn(avatarView);
             }
 

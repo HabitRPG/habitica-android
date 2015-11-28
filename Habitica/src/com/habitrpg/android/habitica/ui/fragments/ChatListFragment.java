@@ -48,7 +48,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private String userId;
     private boolean isTavern;
 
-    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, boolean isTavern){
+    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, boolean isTavern) {
 
         this.ctx = ctx;
         this.groupId = groupId;
@@ -105,7 +105,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void setRefreshEnabled(boolean enable) {
-        if(swipeRefreshLayout != null){
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setEnabled(enable);
         }
     }
@@ -127,7 +127,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         for (int i = chatMessages.size() - 1; i >= 0; i--) {
             ChatMessage msg = chatMessages.get(i);
 
-            if(msg.flagCount >= 2){
+            if (msg.flagCount >= 2) {
                 chatMessages.remove(msg);
             }
         }
@@ -145,7 +145,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
 
-    private void showSnackbar(String msg, boolean negative){
+    private void showSnackbar(String msg, boolean negative) {
         Snackbar snackbar = Snackbar.make(mRecyclerView, msg, Snackbar.LENGTH_LONG);
 
         if (negative) {
@@ -158,7 +158,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         snackbar.show();
     }
 
-    public void onEvent(final FlagChatMessageCommand cmd){
+    public void onEvent(final FlagChatMessageCommand cmd) {
         apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
@@ -172,7 +172,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
-    public void onEvent(final ToggleLikeMessageCommand cmd){
+    public void onEvent(final ToggleLikeMessageCommand cmd) {
         apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id, new Callback<List<Void>>() {
             @Override
             public void success(List<Void> aVoid, Response response) {

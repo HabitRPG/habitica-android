@@ -1,17 +1,13 @@
 package com.habitrpg.android.habitica.ui;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.mikepenz.materialdrawer.model.BaseDrawerItem;
 import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
 
@@ -42,22 +38,6 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
 
     }
 
-    /*@Override
-    public View convertView(LayoutInflater inflater, View convertView, ViewGroup parent) {
-        Context ctx = parent.getContext();
-
-        //get the viewHolder
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = inflater.inflate(getLayoutRes(), parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        return convertView;
-    }*/
 
     @Override
     public ViewHolderFactory getFactory() {
@@ -93,7 +73,7 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
 
         @Override
         public void onClick(View v) {
-            if(editText.getText().equals(""))
+            if (editText.getText().equals(""))
                 return;
 
             EventBus.getDefault().post(new CreateTagCommand(editText.getText().toString()));

@@ -120,6 +120,13 @@
     <string name="internal_error_api">There seems to be a problem with the server. Try again later.</string>
     <string name="network_up">Your internet connection just got back!</string>
 
+    <string name="authentication_error_title">Authentication Error</string>
+    <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
+
+    <string name="login_validation_error_title">Validation Error</string>
+    <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
+    <string name="login_validation_error_invalid_email">Invalid email address.</string>
+
     <string name="checklist.title.add">Add checklist</string>
     <string name="checklist.title.edit">Edit checklist</string>
     <string name="checklist.item.hint">Add item…</string>

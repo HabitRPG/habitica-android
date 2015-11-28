@@ -105,7 +105,7 @@ public class AboutActivity extends AppCompatActivity {
 
                     return new AboutFragment();
                 case 1:
-                    Fragment tab1 = new LibsBuilder()
+                    return new LibsBuilder()
                             //Pass the fields of your application to the lib so it can find all external lib information
                             .withFields(R.string.class.getFields())
                             .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
@@ -117,8 +117,6 @@ public class AboutActivity extends AppCompatActivity {
                             .withAboutVersionShownName(true)
                             .withAnimations(true)
                             .fragment();
-
-                    return tab1;
                 case 2:
                     PaperboyBuilder builder = new PaperboyBuilder(AboutActivity.this)
                             .setViewType(ViewTypes.HEADER)
@@ -140,9 +138,9 @@ public class AboutActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return getString(R.string.about_title);
-            }else if(position == 1){
+            } else if (position == 1) {
                 return getString(R.string.about_libraries);
             }
 
