@@ -20,6 +20,7 @@
 
     <!--  Prefs -->
     <string name="PS_param_title">Params</string>
+    <string name="PS_settings_title">Settings</string>
     <string name="PS_param_summary">Server config</string>
     <string name="SP_address">ServerAdress</string>
     <string name="SP_address_title">Server Address</string>
@@ -30,6 +31,8 @@
     <string name="SP_userID_title">User ID</string>
     <string name="SP_userID_summary">Your User ID</string>
     <string name="SP_APIToken">APIToken</string>
+    <string name="SP_username">Username</string>
+    <string name="SP_email">E-mail</string>
     <string name="SP_APIToken_title">API Token</string>
     <string name="SP_APIToken_summary">Your API Token</string>
     <string name="PS_contact_title">Contact me</string>
@@ -179,4 +182,5 @@
     <string name="profile_image">Profile Image</string>
 
     <string name="mana_price_button" formatted="false">%d MP</string>
+    <string name="used_skill" formatted="false">You used %1$s for %2$d mana.</string>
 </resources>

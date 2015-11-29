@@ -38,9 +38,12 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -57,7 +60,7 @@ import de.greenrobot.event.EventBus;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
+        implements IReceiveNewEntries {
 
 
     public interface IAdditionalEntries {
@@ -71,7 +74,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     String taskType;
     private ObservableArrayList<Task> filteredObservableContent;
     private ObservableArrayList<Task> observableContent;
-    FlowContentObserver observer;
     Context context;
     public int dailyResetOffset;
 
@@ -92,12 +94,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.context = newContext;
         this.tagsHelper = tagsHelper;
         this.additionalEntries = additionalEntries;
+        filteredObservableContent = new ObservableArrayList<Task>();
 
         this.loadContent();
-
-        observer = new FlowContentObserver();
-        observer.registerForContentChanges(this.context, Task.class);
-        observer.addModelChangeListener(this);
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
@@ -116,14 +115,15 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         if(evnt.completed && evnt.Task.getType().equals("todo")){
             // remove from the list
             observableContent.remove(evnt.Task);
-            filter();
         }
+        this.updateTask(evnt.Task);
+        filter();
     }
 
     public void onEvent(TaskUpdatedEvent evnt) {
         if (!taskType.equals(evnt.task.getType()))
             return;
-
+        this.updateTask(evnt.task);
         filter();
     }
 
@@ -133,6 +133,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         observableContent.add(0, evnt.task);
         filter();
+    }
+
+    private void updateTask(Task task) {
+        int i;
+        for(i = 0; i < this.observableContent.size(); ++i) {
+            if (observableContent.get(i).getId().equals(task.getId())) {
+                break;
+            }
+        }
+        observableContent.set(i, task);
     }
 
     private void filter() {
@@ -157,12 +167,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
         this.parentAdapter = parentAdapter;
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(ViewHolder holder) {
-        this.observer.unregisterForContentChanges(this.context);
-        super.onViewDetachedFromWindow(holder);
     }
 
     @Override
@@ -224,22 +228,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     // todo use debounce
-
-    private Handler handler = new Handler();
-    private Runnable reloadContentRunable = new Runnable() {
-        @Override
-        public void run() {
-            Log.d("Reload Content", "");
-            loadContent(true);
-        }
-    };
-
-
-    @Override
-    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action) {
-        handler.removeCallbacks(reloadContentRunable);
-        handler.postDelayed(reloadContentRunable, 200);
-    }
 
     // region ViewHolders
 
@@ -509,12 +497,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void onClick(View v) {
-            if (v == binding.btnReward || v == binding.imageView3 || v == binding.gearElementsLayout) {
+            if (v == binding.btnReward) {
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
-
             } else super.onClick(v);
         }
 
@@ -599,6 +586,25 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     // endregion
 
+    public void loadContent(HabitRPGUser user) {
+        Log.d("setting content", this.taskType);
+        this.observableContent = new ObservableArrayList<>();
+        if (this.taskType.equals(Task.TYPE_HABIT)) {
+            this.observableContent.addAll(user.getHabits());
+        } else if (this.taskType.equals(Task.TYPE_DAILY)) {
+            this.observableContent.addAll(user.getDailys());
+        } else if (this.taskType.equals(Task.TYPE_TODO)) {
+            this.observableContent.addAll(user.getTodos());
+        } else if (this.taskType.equals(Task.TYPE_REWARD)) {
+            this.observableContent.addAll(user.getRewards());
+        }
+        if (additionalEntries != null) {
+            additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+        }
+        filter();
+        notifyDataSetChanged();
+    }
+
     public void loadContent() {
         this.loadContent(false);
     }
@@ -606,31 +612,39 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public void loadContent(boolean forced) {
 
         if (this.observableContent == null || forced) {
-
+            Log.d("Loading content", this.taskType);
             this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
+            new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
                     .and(Condition.CombinedCondition
                                     .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
+                                    .or(Condition.column("type").eq("daily"))
                     )
-                    .orderBy(OrderBy.columns("dateCreated").descending())
-                    .queryList());
+                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
 
+        }
+    }
+
+    private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
+        @Override
+        public void onResultReceived(List<Task> tasks) {
+            observableContent.addAll(tasks);
             if (additionalEntries != null) {
-                additionalEntries.GetAdditionalEntries(this);
+                additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
             }
             filter();
         }
 
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
+        @Override
+        public boolean onReady(BaseTransaction<List<Task>> transaction) {
+            return true;
         }
-    }
 
+        @Override
+        public boolean hasResult(BaseTransaction<List<Task>> transaction, List<Task> result) {
+            return true;
+        }
+    };
 
     @Override
     public void GotAdditionalItems(List<Task> items) {

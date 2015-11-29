@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Debug;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
@@ -157,8 +158,12 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.createItem(item, cb);
     }
 
-    public void retrieveUser(HabitRPGUserCallback callback) {
-        this.apiService.getUser(callback);
+    public void retrieveUser(final HabitRPGUserCallback callback) {
+        new Thread(new Runnable() {
+            public void run() {
+                apiService.getUser(callback);
+            }
+        }).start();
     }
 
     public void updateTaskDirection(String id, TaskDirection direction, TaskScoringCallback callback) {

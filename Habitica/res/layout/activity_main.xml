@@ -75,5 +75,17 @@
                 app:tabIndicatorColor="@android:color/white"
                 app:tabMode="fixed" />
         </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/floating_menu_wrapper"
+            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="8dp" />
+
     </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>
