@@ -22,7 +22,6 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
 
     @Override
     public void success(HabitRPGUser habitRPGUser, Response response) {
-        Log.d("db", "saving");
         habitRPGUser.async().save();
 
         
@@ -32,8 +31,6 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     @Override
     public void failure(RetrofitError error) {
         Crashlytics.getInstance().core.logException(error);
-
-        Log.w("OMG", "user failed!" + error.getMessage());
 
         mCallback.onUserFail();
     }
