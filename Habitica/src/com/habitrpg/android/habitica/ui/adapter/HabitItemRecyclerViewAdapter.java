@@ -60,7 +60,7 @@ import de.greenrobot.event.EventBus;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements FlowContentObserver.OnModelStateChangedListener, IReceiveNewEntries {
+        implements IReceiveNewEntries {
 
 
     public interface IAdditionalEntries {
@@ -74,7 +74,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     String taskType;
     private ObservableArrayList<Task> filteredObservableContent;
     private ObservableArrayList<Task> observableContent;
-    FlowContentObserver observer;
     Context context;
     public int dailyResetOffset;
 
@@ -98,10 +97,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filteredObservableContent = new ObservableArrayList<Task>();
 
         this.loadContent();
-
-        observer = new FlowContentObserver();
-        observer.registerForContentChanges(this.context, Task.class);
-        observer.addModelChangeListener(this);
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
@@ -164,12 +159,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     @Override
-    public void onViewDetachedFromWindow(ViewHolder holder) {
-        this.observer.unregisterForContentChanges(this.context);
-        super.onViewDetachedFromWindow(holder);
-    }
-
-    @Override
     public int getItemViewType(int position) {
         switch (position) {
             default:
@@ -228,22 +217,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     // todo use debounce
-
-    private Handler handler = new Handler();
-    private Runnable reloadContentRunable = new Runnable() {
-        @Override
-        public void run() {
-            Log.d("Reload Content", "");
-            loadContent(true);
-        }
-    };
-
-
-    @Override
-    public void onModelStateChanged(Class<? extends Model> aClass, BaseModel.Action action) {
-        handler.removeCallbacks(reloadContentRunable);
-        handler.postDelayed(reloadContentRunable, 200);
-    }
 
     // region ViewHolders
 
@@ -602,6 +575,25 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     // endregion
 
+    public void loadContent(HabitRPGUser user) {
+        Log.d("setting content", this.taskType);
+        this.observableContent = new ObservableArrayList<>();
+        if (this.taskType.equals(Task.TYPE_HABIT)) {
+            this.observableContent.addAll(user.getHabits());
+        } else if (this.taskType.equals(Task.TYPE_DAILY)) {
+            this.observableContent.addAll(user.getDailys());
+        } else if (this.taskType.equals(Task.TYPE_TODO)) {
+            this.observableContent.addAll(user.getTodos());
+        } else if (this.taskType.equals(Task.TYPE_REWARD)) {
+            this.observableContent.addAll(user.getRewards());
+        }
+        if (additionalEntries != null) {
+            additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+        }
+        filter();
+        notifyDataSetChanged();
+    }
+
     public void loadContent() {
         this.loadContent(false);
     }
@@ -609,7 +601,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public void loadContent(boolean forced) {
 
         if (this.observableContent == null || forced) {
-
+            Log.d("Loading content", this.taskType);
             this.observableContent = new ObservableArrayList<>();
             new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
@@ -630,7 +622,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
             }
             filter();
-            notifyDataSetChanged();
         }
 
         @Override
