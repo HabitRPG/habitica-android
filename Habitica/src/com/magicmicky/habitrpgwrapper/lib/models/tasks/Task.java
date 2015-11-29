@@ -374,8 +374,11 @@ public class Task extends BaseModel {
         }
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
-                item.setTask(this);
-                item.async().save();
+                if(item.getId() == null){
+                    item.setTask(this);
+                    item.async().save();
+                }
+
             }
         }
     }

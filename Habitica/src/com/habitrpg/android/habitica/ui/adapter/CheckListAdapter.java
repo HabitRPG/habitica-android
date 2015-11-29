@@ -45,6 +45,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     public void addItem(ChecklistItem item){
         mItems.add(item);
+        notifyDataSetChanged();
     }
 
     public List<ChecklistItem> getCheckListItems(){
