@@ -148,6 +148,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, null);
                 TextView tv = (TextView) weekdayRow.findViewById(R.id.label);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
+                checkbox.setChecked(true);
                 this.weekdayCheckboxes.add(checkbox);
                 tv.setText(weekdays[i]);
                 this.frequencyContainer.addView(weekdayRow);
@@ -327,7 +328,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     public void onBackPressed() {
         this.prepareSave();
         finish();
-        super.onBackPressed();
     }
 
     private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
