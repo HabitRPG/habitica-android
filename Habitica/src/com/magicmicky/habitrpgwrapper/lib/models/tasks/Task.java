@@ -485,6 +485,6 @@ public class Task extends BaseModel {
     }
 
     public Boolean isChecklistDisplayActive(int offset) {
-        return this.isDisplayedActive(offset) || (this.checklist.size() != this.getCompletedChecklistCount());
+        return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
     }
 }
