@@ -159,7 +159,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         loadTaskLists();
 
         if (user != null) {
-            FillTagFilterDrawer(user.getTags());
+            fillTagFilterDrawer(user.getTags());
         }
 
         return v;
@@ -327,11 +327,14 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
         if (refreshItem != null) {
-            refreshItem.getActionView().clearAnimation();
+            View actionView = refreshItem.getActionView();
+            if (actionView != null) {
+                actionView.clearAnimation();
+            }
             refreshItem.setActionView(null);
         }
         if (this.user != null) {
-            FillTagFilterDrawer(user.getTags());
+            fillTagFilterDrawer(user.getTags());
             TaskRecyclerViewFragment fragment = ViewFragmentsDictionary.get(2);
             if (fragment != null) {
                 HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragment.mAdapter;
@@ -393,7 +396,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
             @Override
             public void success(List<Tag> tags, Response response) {
-                FillTagFilterDrawer(tags);
+                fillTagFilterDrawer(tags);
             }
 
             @Override
@@ -612,7 +615,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
 
-    public void FillTagFilterDrawer(List<Tag> tagList) {
+    public void fillTagFilterDrawer(List<Tag> tagList) {
         filterDrawer.removeAllItems();
         filterDrawer.addItems(
                 new SectionDrawerItem().withName("Filter by Tag"),
@@ -623,7 +626,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             filterDrawer.addItem(new SwitchDrawerItem()
                             .withName(t.getName())
                             .withTag(t)
-                            .withDescription("" + t.getTasks().size())
                             .withOnCheckedChangeListener(this)
             );
         }

@@ -86,7 +86,6 @@ public class AboutFragment extends Fragment {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mobile@habitica.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "MESSAGE");
         startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }
 }
