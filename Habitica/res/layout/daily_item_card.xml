@@ -75,7 +75,7 @@
                     android:id="@+id/checklistIndicatorWrapper"
                     android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.isChecklistDisplayActive(offset) ? @color/task_gray : daily.getLightTaskColor}"
+                    app:backgroundColor="@{daily.isChecklistDisplayActive(offset) ? daily.getLightTaskColor : @color/task_gray}"
                     android:visibility="@{daily.checklist.size > 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
