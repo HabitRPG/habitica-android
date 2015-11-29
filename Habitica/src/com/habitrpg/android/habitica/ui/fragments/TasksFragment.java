@@ -488,7 +488,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
-        Log.d("tags", "Task saving");
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
             updateTags(event.task.getTags());

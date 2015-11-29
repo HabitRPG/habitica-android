@@ -115,14 +115,15 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         if(evnt.completed && evnt.Task.getType().equals("todo")){
             // remove from the list
             observableContent.remove(evnt.Task);
-            filter();
         }
+        this.updateTask(evnt.Task);
+        filter();
     }
 
     public void onEvent(TaskUpdatedEvent evnt) {
         if (!taskType.equals(evnt.task.getType()))
             return;
-
+        this.updateTask(evnt.task);
         filter();
     }
 
@@ -132,6 +133,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         observableContent.add(0, evnt.task);
         filter();
+    }
+
+    private void updateTask(Task task) {
+        int i;
+        for(i = 0; i < this.observableContent.size(); ++i) {
+            if (observableContent.get(i).getId().equals(task.getId())) {
+                break;
+            }
+        }
+        observableContent.set(i, task);
     }
 
     private void filter() {
