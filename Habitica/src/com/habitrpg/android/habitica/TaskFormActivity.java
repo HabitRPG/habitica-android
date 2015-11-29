@@ -151,6 +151,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 ChecklistItem item = new ChecklistItem(checklist);
                 checklistAdapter.addItem(item);
                 newCheckListEditText.setText("");
+                checklistAdapter.notifyDataSetChanged();
             }
         });
 
