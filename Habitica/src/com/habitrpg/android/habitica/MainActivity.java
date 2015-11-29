@@ -13,6 +13,7 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -22,23 +23,20 @@ import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.raizlabs.android.dbflow.runtime.FlowContentObserver;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.Model;
 
-import java.util.Collection;
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.Checkout;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -73,6 +71,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     APIHelper mAPIHelper;
 
+    // Checkout needs to be in the Activity..
+    public static ActivityCheckout checkout = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             finish();
             return;
         }
-        this.mAPIHelper = new APIHelper(this, hostConfig);
+        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(this, hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -132,6 +133,18 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
             }
         });
+
+        // Create Checkout
+
+        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
+
+        checkout.start();
+
+        EventBus.getDefault().register(this);
+    }
+
+    public void onEvent(OpenGemPurchaseFragmentCommand cmd){
+        drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
     @Override
@@ -247,5 +260,20 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(checkout != null)
+            checkout.stop();
+
+        super.onDestroy();
     }
 }

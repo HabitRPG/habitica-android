@@ -58,6 +58,9 @@ public class LoginActivity extends AppCompatActivity
 	public Boolean isRegistering;
     private Menu menu;
 
+	private String apiAddress = getString(R.string.SP_address_default);
+	//private String apiAddress = "http://192.168.2.155:8080/"; // local testing
+
     private CallbackManager callbackManager;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,7 @@ public class LoginActivity extends AppCompatActivity
 
 		HostConfig hc= PrefsActivity.fromContext(this);
         if(hc ==null) {
-            hc =  new HostConfig(getString(R.string.SP_address_default), "80", "", "");
+            hc =  new HostConfig(apiAddress, "80", "", "");
         }
 		mApiHelper = new APIHelper(this,hc);
 
@@ -165,7 +168,6 @@ public class LoginActivity extends AppCompatActivity
 	public static void expand(final View v) {
 		v.setVisibility(View.VISIBLE);
 	}
- //
 
 	public static void collapse(final View v) {
         v.setVisibility(View.GONE);
@@ -180,7 +182,7 @@ public class LoginActivity extends AppCompatActivity
 		SharedPreferences.Editor editor = prefs.edit();
 		boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
 				.putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
+                .putString(getString(R.string.SP_address), apiAddress)
 				.commit();
 			if(!ans) {
 				throw new Exception("PB_string_commit");

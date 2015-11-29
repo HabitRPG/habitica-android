@@ -88,7 +88,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
 
     // IAP Handling / Verification
-    compile 'org.solovyev.android:checkout:0.7.4@aar'
+    compile 'org.solovyev.android:checkout:0.7.5@aar'
 
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     //Material Dialogs
