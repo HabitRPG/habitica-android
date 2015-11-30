@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.facebook.FacebookSdk;
 import com.instabug.library.Instabug;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -23,7 +24,6 @@ import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.PurchaseVerifier;
 import org.solovyev.android.checkout.RequestListener;
-import com.facebook.FacebookSdk;
 
 import java.io.File;
 import java.util.ArrayList;

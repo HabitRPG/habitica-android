@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
-import java.lang.String; /**
+
+/**
  * The configuration of the host<br />
  * Currently, the Port isn't used at all.
  * @author MagicMicky

@@ -2,11 +2,8 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 
 import java.util.Map;
