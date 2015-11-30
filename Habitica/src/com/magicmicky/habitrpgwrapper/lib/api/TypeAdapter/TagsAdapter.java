@@ -8,7 +8,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

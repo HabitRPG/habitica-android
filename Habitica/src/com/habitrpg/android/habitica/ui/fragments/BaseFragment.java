@@ -2,26 +2,19 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.MainActivity;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.EventBusException;
 
