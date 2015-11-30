@@ -7,12 +7,24 @@
         "title": "Moved from activities to fragments (header scrolls up on each :))"
       },
       {
+        "type": "F",
+        "title": "Ability to Change/See/Add checklists"
+      },
+      {
+        "type": "F",
+        "title": "Settings Screen with logout options and account details."
+      },
+      {
         "type": "I",
         "title": "better feedback on user login"
       },
       {
         "type": "B",
         "title": "fix crash when saving dailies"
+      },
+      {
+        "type": "B",
+        "title": "fix clear database"
       }
     ]
   },
