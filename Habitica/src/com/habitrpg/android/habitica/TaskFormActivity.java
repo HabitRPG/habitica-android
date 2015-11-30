@@ -245,6 +245,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_discard_changes) {
             finish();
+            dismissKeyboard();
             return true;
         }
 
@@ -381,8 +382,15 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private void finishActivitySuccessfuly() {
         this.prepareSave();
         finish();
+        dismissKeyboard();
+    }
+
+    private void dismissKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        View currentFocus = getCurrentFocus();
+        if (currentFocus != null) {
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 
     private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
