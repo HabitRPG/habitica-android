@@ -74,12 +74,24 @@ public class ChecklistItem extends BaseModel {
     }
 
     public Task getTask() {
-        return task.toModel();
+        if (task != null) {
+            return task.toModel();
+        } else {
+            return null;
+        }
     }
 
     public void setTask(Task task) {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
         this.task.put("id", task.id);
+    }
+
+    @Override
+    public void save() {
+        if (this.getId() == null || this.getId().isEmpty()) {
+            return;
+        }
+        super.save();
     }
 }

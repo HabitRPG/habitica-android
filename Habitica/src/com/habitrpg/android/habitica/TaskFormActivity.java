@@ -153,8 +153,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 newCheckListEditText.setText("");
             }
         });
-
-
     }
 
     private void createCheckListRecyclerView() {

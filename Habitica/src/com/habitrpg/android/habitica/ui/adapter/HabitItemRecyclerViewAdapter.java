@@ -138,7 +138,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 break;
             }
         }
-        observableContent.set(i, task);
+        if (i < observableContent.size()) {
+            observableContent.set(i, task);
+        }
     }
 
     private void filter() {
@@ -581,7 +583,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     // endregion
 
     public void loadContent(HabitRPGUser user) {
-        Log.d("setting content", this.taskType);
         this.observableContent = new ObservableArrayList<>();
         if (this.taskType.equals(Task.TYPE_HABIT)) {
             this.observableContent.addAll(user.getHabits());
@@ -606,7 +607,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public void loadContent(boolean forced) {
 
         if (this.observableContent == null || forced) {
-            Log.d("Loading content", this.taskType);
             this.observableContent = new ObservableArrayList<>();
             new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
