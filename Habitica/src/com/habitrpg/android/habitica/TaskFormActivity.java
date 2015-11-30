@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -135,7 +136,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.setAdapter(checklistAdapter);
         int i = checklistAdapter.getItemCount();
 
-        recyclerView.setMinimumHeight(i * 75);
+        recyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
@@ -153,20 +154,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 newCheckListEditText.setText("");
             }
         });
-    }
-
-    private void createCheckListRecyclerView() {
-        RecyclerListAdapter checklistAdapter = new RecyclerListAdapter(task.getChecklist());
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(checklistAdapter);
-
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
-        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void setTitle(Task task) {

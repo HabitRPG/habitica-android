@@ -2,9 +2,13 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
@@ -45,7 +49,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     public void addItem(ChecklistItem item){
         mItems.add(item);
-        notifyDataSetChanged();
+        notifyItemInserted(mItems.size() - 1);
     }
 
     public List<ChecklistItem> getCheckListItems(){
@@ -71,15 +75,33 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder implements
-            ItemTouchHelperViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements
+            ItemTouchHelperViewHolder, Button.OnClickListener {
 
-        @InjectView(R.id.checkListTextView)
-        TextView checkListTextView;
+        @InjectView(R.id.item_edittext)
+        EditText checkListTextView;
+
+        @InjectView(R.id.delete_item_button)
+        Button deleteButton;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+            deleteButton.setOnClickListener(this);
+
+            checkListTextView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    mItems.get(getAdapterPosition()).setText(checkListTextView.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
         }
 
         @Override
@@ -90,6 +112,13 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         @Override
         public void onItemClear() {
             itemView.setBackgroundColor(0);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v == deleteButton) {
+                 CheckListAdapter.this.onItemDismiss(getAdapterPosition());
+            }
         }
     }
 }

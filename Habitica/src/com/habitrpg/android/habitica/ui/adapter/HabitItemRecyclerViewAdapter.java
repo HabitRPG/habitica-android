@@ -264,13 +264,13 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void onClick(View v) {
-//            if (v != itemView)
-//                return;
-//
-//            TaskTappedEvent event = new TaskTappedEvent();
-//            event.Task = Item;
-//
-//            EventBus.getDefault().post(event);
+            if (v != itemView)
+                return;
+
+            TaskTappedEvent event = new TaskTappedEvent();
+            event.Task = Item;
+
+            EventBus.getDefault().post(event);
         }
 
         @Override
