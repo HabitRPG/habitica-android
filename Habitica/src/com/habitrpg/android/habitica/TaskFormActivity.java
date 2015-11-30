@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -367,15 +369,20 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public boolean onSupportNavigateUp() {
-        this.prepareSave();
-        finish();
-        return super.onSupportNavigateUp();
+        this.finishActivitySuccessfuly();
+        return true;
     }
 
     @Override
     public void onBackPressed() {
+        this.finishActivitySuccessfuly();
+    }
+
+    private void finishActivitySuccessfuly() {
         this.prepareSave();
         finish();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {

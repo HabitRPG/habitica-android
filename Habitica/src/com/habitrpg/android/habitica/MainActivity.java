@@ -110,6 +110,8 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
+
+        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
     }
 
 
@@ -128,13 +130,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }catch (Exception e){
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
-        setUserData();
     }
 
     @Override
