@@ -371,6 +371,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 isClickable = true;
             }
             checklistIndicatorWrapper.setClickable(isClickable);
+            displayChecklist = false;
         }
 
         public void setDisplayChecklist(Boolean displayChecklist) {
@@ -382,11 +383,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     for (ChecklistItem item : this.Item.checklist) {
                         LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                        checkbox.setOnCheckedChangeListener(this);
                         TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
                         textView.setText(item.getText());
                         checkbox.setChecked(item.getCompleted());
+                        checkbox.setOnCheckedChangeListener(this);
                         this.checklistView.addView(itemView);
                     }
                 } else {
@@ -411,7 +412,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
                 }
             } else {
-                Integer position = (Integer) ((ViewGroup) checkbox.getParent().getParent()).indexOfChild((View) checkbox.getParent());
+                View v = (View) buttonView.getParent();
+                while (v.getParent() != this.checklistView) {
+                    v = (View) v.getParent();
+                }
+                Integer position = (Integer) ((ViewGroup) v.getParent()).indexOfChild(v);
                 if (isChecked != Item.checklist.get(position).getCompleted()) {
                     TaskSaveEvent event = new TaskSaveEvent();
                     Item.checklist.get(position).setCompleted(isChecked);
