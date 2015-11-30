@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.habitrpg.android.habitica"
+    android:screenOrientation="portrait"
     android:versionCode="10"
-    android:versionName="0.0.10"
-    android:screenOrientation="portrait" >
+    android:versionName="0.0.10">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -21,11 +21,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,9 +34,9 @@
         </activity>
         <activity
             android:name=".prefs.PrefsActivity"
-            android:theme="@style/AppThemeWithActionBar"
+            android:label="@string/PS_settings_title"
             android:parentActivityName=".MainActivity"
-            android:label="@string/PS_settings_title">
+            android:theme="@style/AppThemeWithActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -45,19 +45,19 @@
             android:name=".LoginActivity"
             android:label="@string/LoginActivityName"
             android:theme="@style/AppThemeWithActionBarBlackText"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SkillTasksActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
+
         <receiver
             android:name=".widget.SimpleWidget"
             android:icon="@mipmap/ic_launcher"
-            android:label="Habitica Simple Widget" >
+            android:label="Habitica Simple Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,7 +67,7 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <receiver android:name="com.habitrpg.android.habitica.receivers.NetworkChangeReceiver" >
+        <receiver android:name="com.habitrpg.android.habitica.receivers.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -78,25 +78,27 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="2eb3b3edb3b0f4722d37d649a5af366656e46ddd" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"/>
+            android:theme="@style/AppThemeWithActionBarBlackText" />
         <activity
             android:name=".TaskFormActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppThemeWithActionBarBlackText">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

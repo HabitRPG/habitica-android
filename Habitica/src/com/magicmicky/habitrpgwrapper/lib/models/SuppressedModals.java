@@ -21,13 +21,35 @@ public class SuppressedModals extends BaseModel {
     @Column
     private Boolean streak, raisePet, hatchPet, levelUp;
 
-    public Boolean getStreak() {return streak; }
-    public Boolean getRaisePet() {return raisePet; }
-    public Boolean getHatchPet() {return hatchPet; }
-    public Boolean getLevelUp() {return levelUp; }
+    public Boolean getStreak() {
+        return streak;
+    }
 
-    public void setStreak(Boolean streak) {this.streak = streak; }
-    public void setRaisePet(Boolean raisePet) {this.raisePet = raisePet; }
-    public void setHatchPet(Boolean hatchPet) {this.hatchPet = hatchPet; }
-    public void setLevelUp(Boolean levelUp) {this.levelUp = levelUp; }
+    public void setStreak(Boolean streak) {
+        this.streak = streak;
+    }
+
+    public Boolean getRaisePet() {
+        return raisePet;
+    }
+
+    public void setRaisePet(Boolean raisePet) {
+        this.raisePet = raisePet;
+    }
+
+    public Boolean getHatchPet() {
+        return hatchPet;
+    }
+
+    public void setHatchPet(Boolean hatchPet) {
+        this.hatchPet = hatchPet;
+    }
+
+    public Boolean getLevelUp() {
+        return levelUp;
+    }
+
+    public void setLevelUp(Boolean levelUp) {
+        this.levelUp = levelUp;
+    }
 }

@@ -109,17 +109,11 @@ import java.util.Map;
 public class IntentIntegrator {
 
     public static final int REQUEST_CODE = 0x0000c0de; // Only use bottom 16 bits
-    private static final String TAG = IntentIntegrator.class.getSimpleName();
-
     public static final String DEFAULT_TITLE = "Install Barcode Scanner?";
     public static final String DEFAULT_MESSAGE =
             "This application requires Barcode Scanner. Would you like to install it?";
     public static final String DEFAULT_YES = "Yes";
     public static final String DEFAULT_NO = "No";
-
-    private static final String BS_PACKAGE = "com.google.zxing.client.android";
-    private static final String BSPLUS_PACKAGE = "com.srowen.bs.android";
-
     // supported barcode formats
     public static final Collection<String> PRODUCT_CODE_TYPES = list("UPC_A", "UPC_E", "EAN_8", "EAN_13", "RSS_14");
     public static final Collection<String> ONE_D_CODE_TYPES =
@@ -127,10 +121,11 @@ public class IntentIntegrator {
                     "ITF", "RSS_14", "RSS_EXPANDED");
     public static final Collection<String> QR_CODE_TYPES = Collections.singleton("QR_CODE");
     public static final Collection<String> DATA_MATRIX_TYPES = Collections.singleton("DATA_MATRIX");
-
     public static final Collection<String> ALL_CODE_TYPES = null;
-
+    private static final String TAG = IntentIntegrator.class.getSimpleName();
+    private static final String BS_PACKAGE = "com.google.zxing.client.android";
     public static final List<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singletonList(BS_PACKAGE);
+    private static final String BSPLUS_PACKAGE = "com.srowen.bs.android";
     public static final List<String> TARGET_ALL_KNOWN = list(
             BS_PACKAGE, // Barcode Scanner
             BSPLUS_PACKAGE, // Barcode Scanner+
@@ -139,12 +134,12 @@ public class IntentIntegrator {
     );
 
     private final Activity activity;
+    private final Map<String, Object> moreExtras;
     private String title;
     private String message;
     private String buttonYes;
     private String buttonNo;
     private List<String> targetApplications;
-    private final Map<String, Object> moreExtras;
 
     public IntentIntegrator(Activity activity) {
         this.activity = activity;
@@ -154,6 +149,38 @@ public class IntentIntegrator {
         buttonNo = DEFAULT_NO;
         targetApplications = TARGET_ALL_KNOWN;
         moreExtras = new HashMap<String, Object>(3);
+    }
+
+    /**
+     * <p>Call this from your {@link Activity}'s
+     * {@link Activity#onActivityResult(int, int, Intent)} method.</p>
+     *
+     * @return null if the event handled here was not related to this class, or
+     * else an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
+     * the fields will be null.
+     */
+    public static IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String formatName = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                byte[] rawBytes = intent.getByteArrayExtra("SCAN_RESULT_BYTES");
+                int intentOrientation = intent.getIntExtra("SCAN_RESULT_ORIENTATION", Integer.MIN_VALUE);
+                Integer orientation = intentOrientation == Integer.MIN_VALUE ? null : intentOrientation;
+                String errorCorrectionLevel = intent.getStringExtra("SCAN_RESULT_ERROR_CORRECTION_LEVEL");
+                return new IntentResult(contents,
+                        formatName,
+                        rawBytes,
+                        orientation,
+                        errorCorrectionLevel);
+            }
+            return new IntentResult();
+        }
+        return null;
+    }
+
+    private static List<String> list(String... values) {
+        return Collections.unmodifiableList(Arrays.asList(values));
     }
 
     public String getTitle() {
@@ -325,36 +352,6 @@ public class IntentIntegrator {
         return downloadDialog.show();
     }
 
-
-    /**
-     * <p>Call this from your {@link Activity}'s
-     * {@link Activity#onActivityResult(int, int, Intent)} method.</p>
-     *
-     * @return null if the event handled here was not related to this class, or
-     * else an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
-     * the fields will be null.
-     */
-    public static IntentResult parseActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                String formatName = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                byte[] rawBytes = intent.getByteArrayExtra("SCAN_RESULT_BYTES");
-                int intentOrientation = intent.getIntExtra("SCAN_RESULT_ORIENTATION", Integer.MIN_VALUE);
-                Integer orientation = intentOrientation == Integer.MIN_VALUE ? null : intentOrientation;
-                String errorCorrectionLevel = intent.getStringExtra("SCAN_RESULT_ERROR_CORRECTION_LEVEL");
-                return new IntentResult(contents,
-                        formatName,
-                        rawBytes,
-                        orientation,
-                        errorCorrectionLevel);
-            }
-            return new IntentResult();
-        }
-        return null;
-    }
-
-
     /**
      * Defaults to type "TEXT_TYPE".
      *
@@ -389,10 +386,6 @@ public class IntentIntegrator {
         attachMoreExtras(intent);
         activity.startActivity(intent);
         return null;
-    }
-
-    private static List<String> list(String... values) {
-        return Collections.unmodifiableList(Arrays.asList(values));
     }
 
     private void attachMoreExtras(Intent intent) {

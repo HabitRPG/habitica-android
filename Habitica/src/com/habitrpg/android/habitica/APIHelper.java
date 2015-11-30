@@ -49,6 +49,34 @@ import retrofit.converter.GsonConverter;
 public class APIHelper implements ErrorHandler, Profiler {
 
     private static final String TAG = "ApiHelper";
+    private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
+        @Override
+        public void write(JsonWriter out, Boolean value) throws IOException {
+            if (value == null) {
+                out.nullValue();
+            } else {
+                out.value(value);
+            }
+        }
+
+        @Override
+        public Boolean read(JsonReader in) throws IOException {
+            JsonToken peek = in.peek();
+            switch (peek) {
+                case BOOLEAN:
+                    return in.nextBoolean();
+                case NULL:
+                    in.nextNull();
+                    return null;
+                case NUMBER:
+                    return in.nextInt() != 0;
+                case STRING:
+                    return Boolean.parseBoolean(in.nextString());
+                default:
+                    throw new IllegalStateException("Expected BOOLEAN or NUMBER but was " + peek);
+            }
+        }
+    };
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     private Context mContext;
@@ -107,36 +135,6 @@ public class APIHelper implements ErrorHandler, Profiler {
 
     }
 
-    private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
-        @Override
-        public void write(JsonWriter out, Boolean value) throws IOException {
-            if (value == null) {
-                out.nullValue();
-            } else {
-                out.value(value);
-            }
-        }
-
-        @Override
-        public Boolean read(JsonReader in) throws IOException {
-            JsonToken peek = in.peek();
-            switch (peek) {
-                case BOOLEAN:
-                    return in.nextBoolean();
-                case NULL:
-                    in.nextNull();
-                    return null;
-                case NUMBER:
-                    return in.nextInt() != 0;
-                case STRING:
-                    return Boolean.parseBoolean(in.nextString());
-                default:
-                    throw new IllegalStateException("Expected BOOLEAN or NUMBER but was " + peek);
-            }
-        }
-    };
-
-
     public void createNewTask(Task item, Callback cb) {
         this.apiService.createItem(item, cb);
     }
@@ -171,17 +169,17 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.connectLocal(auth, callback);
     }
 
-	public void connectSocial(String userId, String accessToken, Callback<UserAuthResponse> callback) {
-		UserAuthSocial auth = new UserAuthSocial();
-		auth.setNetwork("facebook");
+    public void connectSocial(String userId, String accessToken, Callback<UserAuthResponse> callback) {
+        UserAuthSocial auth = new UserAuthSocial();
+        auth.setNetwork("facebook");
         UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
         authResponse.setClient_id(userId);
         authResponse.setAccess_token(accessToken);
         auth.setAuthResponse(authResponse);
-		this.apiService.connectSocial(auth, callback);
-	}
+        this.apiService.connectSocial(auth, callback);
+    }
 
-	public void deleteTask(Task item, TaskDeletionCallback cb) {
+    public void deleteTask(Task item, TaskDeletionCallback cb) {
         this.apiService.deleteTask(item.getId(), cb);
     }
 
@@ -189,8 +187,8 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.updateTask(item.getId(), item, cb);
     }
 
-	@Override
-	public Throwable handleError(RetrofitError cause) {
+    @Override
+    public Throwable handleError(RetrofitError cause) {
         final Activity activity = (Activity) this.mContext;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
@@ -203,20 +201,20 @@ public class APIHelper implements ErrorHandler, Profiler {
                 showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
                 return cause;
             } else if (status >= 500 && status < 600) {
-                showConnectionProblemDialog(activity,R.string.internal_error_api);
+                showConnectionProblemDialog(activity, R.string.internal_error_api);
                 return cause;
             }
-		}
+        }
         showConnectionProblemDialog(activity, R.string.internal_error_api);
 
         return cause;
-	}
+    }
 
     private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString) {
         showConnectionProblemDialog(activity, R.string.network_error_title, resourceMessageString);
     }
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString){
+    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString) {
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 new AlertDialog.Builder(activity)
@@ -232,21 +230,21 @@ public class APIHelper implements ErrorHandler, Profiler {
         });
     }
 
-	@Override
-	public Object beforeCall() {
-		return null;
-	}
+    @Override
+    public Object beforeCall() {
+        return null;
+    }
 
-	@Override
-	public void afterCall(RequestInformation requestInfo, long elapsedTime, int statusCode, Object beforeCallData) {
+    @Override
+    public void afterCall(RequestInformation requestInfo, long elapsedTime, int statusCode, Object beforeCallData) {
 
-	}
+    }
 
-	public void toggleSleep(Callback<Void> cb){
-		apiService.sleep(cb);
-	}
+    public void toggleSleep(Callback<Void> cb) {
+        apiService.sleep(cb);
+    }
 
-	public void reviveUser(HabitRPGUserCallback cb) {
+    public void reviveUser(HabitRPGUserCallback cb) {
         apiService.revive(cb);
     }
 }

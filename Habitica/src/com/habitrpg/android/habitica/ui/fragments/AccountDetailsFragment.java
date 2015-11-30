@@ -27,20 +27,20 @@ public class AccountDetailsFragment extends PreferenceFragment {
     }
 
     private void setupPreferences() {
-        for(Map.Entry<String, ?> preference : getPreferenceScreen().getSharedPreferences().getAll().entrySet() ){
+        for (Map.Entry<String, ?> preference : getPreferenceScreen().getSharedPreferences().getAll().entrySet()) {
 
             String usernamePreference = context.getResources().getString(R.string.SP_username);
             String emailPreference = context.getResources().getString(R.string.SP_email);
             String apiTokenPreference = context.getResources().getString(R.string.SP_APIToken);
             String userIdPreference = context.getResources().getString(R.string.SP_userID);
 
-            if(preference.getKey().equals(usernamePreference)){
+            if (preference.getKey().equals(usernamePreference)) {
                 findPreference(usernamePreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(emailPreference)){
+            } else if (preference.getKey().equals(emailPreference)) {
                 findPreference(emailPreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(apiTokenPreference)){
+            } else if (preference.getKey().equals(apiTokenPreference)) {
                 findPreference(apiTokenPreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(userIdPreference)){
+            } else if (preference.getKey().equals(userIdPreference)) {
                 findPreference(userIdPreference).setSummary(preference.getValue().toString());
             }
         }

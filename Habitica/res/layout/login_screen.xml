@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TableLayout
+        android:id="@+id/login.linear.layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/login.linear.layout"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
         android:orientation="vertical"
-        android:shrinkColumns="0"
-        android:layout_gravity="center_horizontal">
+        android:paddingBottom="40dp"
+        android:paddingTop="40dp"
+        android:shrinkColumns="0">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_gryphon"
-                android:layout_span="2" />
+                android:layout_span="2"
+                android:src="@drawable/ic_gryphon" />
         </TableRow>
 
         <TableRow
@@ -36,11 +36,11 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_habitica"
-                android:layout_span="2" />
+                android:layout_span="2"
+                android:src="@drawable/ic_habitica" />
         </TableRow>
 
         <TableRow
@@ -50,21 +50,20 @@
             android:layout_gravity="center">
 
             <ImageView
+                android:id="@+id/imageView4"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:id="@+id/imageView4"
-                android:src="@drawable/ic_username"
                 android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_username" />
 
             <EditText
-        android:id="@+id/username"
+                android:id="@+id/username"
                 android:layout_width="@dimen/login_field_width"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:hint="@string/username"
-                />
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:imeOptions="actionNext"
+                android:singleLine="true" />
 
         </TableRow>
 
@@ -75,21 +74,21 @@
             android:visibility="gone">
 
             <ImageView
+                android:id="@+id/imageView5"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:id="@+id/imageView5"
-                android:src="@drawable/ic_email"
                 android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_email" />
 
             <EditText
-        android:id="@+id/email"
+                android:id="@+id/email"
                 android:layout_width="@dimen/login_field_width"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:hint="@string/emailAddress" />
+                android:layout_height="wrap_content"
+                android:hint="@string/emailAddress"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
         </TableRow>
 
         <TableRow
@@ -98,22 +97,21 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/imageView6"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:id="@+id/imageView6"
-                android:src="@drawable/ic_password"
                 android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_password" />
 
             <EditText
-            android:id="@+id/password"
+                android:id="@+id/password"
                 android:layout_width="@dimen/login_field_width"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:imeOptions="actionDone"
-            android:hint="@string/password"
-            />
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:singleLine="true" />
         </TableRow>
 
         <TableRow
@@ -123,62 +121,63 @@
             android:visibility="gone">
 
             <ImageView
+                android:id="@+id/imageView7"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:id="@+id/imageView7"
-                android:src="@drawable/ic_password"
                 android:layout_gravity="center"
-                android:layout_marginRight="4dp" />
+                android:layout_marginRight="4dp"
+                android:src="@drawable/ic_password" />
 
             <EditText
-        android:id="@+id/confirm_password"
+                android:id="@+id/confirm_password"
                 android:layout_width="@dimen/login_field_width"
                 android:layout_height="wrap_content"
+                android:hint="@string/confirmpassword"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
-        android:singleLine="true"
-        android:imeOptions="actionDone"
-        android:hint="@string/confirmpassword" />
+                android:singleLine="true" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:layout_span="2"
-                android:layout_gravity="center" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/login_btn"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_btn"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/login_btn" />
 
                 <ProgressBar
                     android:id="@+id/PB_AsyncTask"
-                    android:indeterminate="true"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
             </LinearLayout>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp">
+
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
 
-                android:layout_span="2"/>
+                android:layout_span="2" />
         </TableRow>
 
     </TableLayout>

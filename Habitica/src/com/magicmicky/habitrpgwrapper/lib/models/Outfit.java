@@ -16,35 +16,75 @@ public class Outfit extends BaseModel {
 
     @Column
     @PrimaryKey
-            @NotNull
+    @NotNull
     String user_id;
 
     @Column
     String armor, back, body, eyeWear, head, headAccessory, shield, weapon;
 
 
-    public String getArmor() {return armor;}
-    public void setArmor(String armor) {this.armor = armor;}
+    public String getArmor() {
+        return armor;
+    }
 
-    public String getBack() {return back;}
-    public void setBack(String back) {this.back = back;}
+    public void setArmor(String armor) {
+        this.armor = armor;
+    }
 
-    public String getBody() {return body;}
-    public void setBody(String body) {this.body = body;}
+    public String getBack() {
+        return back;
+    }
 
-    public String getEyeWear() {return eyeWear;}
-    public void setEyeWear(String eyeWear) {this.eyeWear = eyeWear;}
+    public void setBack(String back) {
+        this.back = back;
+    }
 
-    public String getHead() {return head;}
-    public void setHead(String head) {this.head = head;}
+    public String getBody() {
+        return body;
+    }
 
-    public String getHeadAccessory() {return headAccessory;}
-    public void setHeadAccessory(String headAccessory) {this.headAccessory = headAccessory;}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-    public String getShield() {return shield;}
-    public void setShield(String shield) {this.shield = shield;}
+    public String getEyeWear() {
+        return eyeWear;
+    }
 
-    public String getWeapon() {return weapon;}
-    public void setWeapon(String weapon) {this.weapon = weapon;}
+    public void setEyeWear(String eyeWear) {
+        this.eyeWear = eyeWear;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getHeadAccessory() {
+        return headAccessory;
+    }
+
+    public void setHeadAccessory(String headAccessory) {
+        this.headAccessory = headAccessory;
+    }
+
+    public String getShield() {
+        return shield;
+    }
+
+    public void setShield(String shield) {
+        this.shield = shield;
+    }
+
+    public String getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(String weapon) {
+        this.weapon = weapon;
+    }
 
 }

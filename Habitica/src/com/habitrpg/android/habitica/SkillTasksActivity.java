@@ -38,9 +38,8 @@ public class SkillTasksActivity extends AppCompatActivity {
 
     @InjectView(R.id.tab_layout)
     public TabLayout tabLayout;
-
-    Map<Integer, SkillTasksRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
     protected HabitRPGUser user;
+    Map<Integer, SkillTasksRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,89 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_main_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    >
+    android:gravity="center"
+    android:orientation="horizontal">
+
     <ImageView
         android:id="@+id/IMG_ProfilePicture"
         android:layout_width="@dimen/avatar_width"
         android:layout_height="@dimen/avatar_height"
         android:layout_gravity="center"
         android:scaleType="fitStart"
-        android:src="@mipmap/ic_launcher"
-        />
+        android:src="@mipmap/ic_launcher" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    <LinearLayout
-        android:id="@+id/LL_header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/avatar_height"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:paddingRight="@dimen/widget_bar_horizontal_margin"
-        >
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/LL_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/avatar_height"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/widget_bar_horizontal_margin">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bar_size"
-                android:background="@drawable/border"
                 android:layout_marginBottom="@dimen/bar_padding"
-                >
-                <ProgressBar android:id="@+id/V_HPBar"
+                android:background="@drawable/border">
+
+                <ProgressBar
+                    android:id="@+id/V_HPBar"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bar_size"
-                    style="?android:attr/progressBarStyleHorizontal"
                     android:progressDrawable="@drawable/progressbar_red"
                     android:visibility="visible" />
+
                 <TextView
                     android:id="@+id/TV_HP"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bar_size"
-                    android:gravity="center|right"
                     android:background="@drawable/border"
+                    android:gravity="center|right"
                     android:paddingRight="5dp"
                     android:text="HP" />
 
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bar_size"
-                android:background="@drawable/border"
-                >
-                <ProgressBar android:id="@+id/V_XPBar"
+                android:background="@drawable/border">
+
+                <ProgressBar
+                    android:id="@+id/V_XPBar"
                     style="?android:attr/progressBarStyleHorizontal"
 
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bar_size"
-                    android:progressDrawable="@drawable/progressbar_yellow"
-                    />
+                    android:progressDrawable="@drawable/progressbar_yellow" />
+
                 <TextView
                     android:id="@+id/TV_XP"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bar_size"
-                    android:gravity="center|right"
                     android:background="@drawable/border"
+                    android:gravity="center|right"
                     android:paddingRight="5dp"
                     android:text="XP" />
             </FrameLayout>
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/BT_refresh"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:scaleType="fitStart"
-            android:src="@drawable/ic_menu_refresh"
             android:layout_gravity="top|right"
             android:layout_marginTop="5dp"
             android:background="@color/transparent"
-            />
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_menu_refresh" />
     </FrameLayout>
 
 </LinearLayout>

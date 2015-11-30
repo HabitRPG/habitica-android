@@ -6,7 +6,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
  * It also holds a delta, which represent the task value modification.
  * Created by MagicMicky on 12/06/2014.
  */
-public class TaskDirectionData extends PlayerMinStats{
+public class TaskDirectionData extends PlayerMinStats {
     private float delta;
     private TaskDirectionDataTemp _tmp;
 
@@ -18,6 +18,11 @@ public class TaskDirectionData extends PlayerMinStats{
         this.delta = delta;
     }
 
-    public TaskDirectionDataTemp get_tmp() { return _tmp; }
-    public void set_tmp(TaskDirectionDataTemp tmp) { this._tmp = tmp; }
+    public TaskDirectionDataTemp get_tmp() {
+        return _tmp;
+    }
+
+    public void set_tmp(TaskDirectionDataTemp tmp) {
+        this._tmp = tmp;
+    }
 }

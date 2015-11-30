@@ -52,7 +52,9 @@ import retrofit.client.Response;
 public class SkillsFragment extends BaseFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
-
+    @InjectView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    SkillsRecyclerViewAdapter adapter;
     private View view;
     private Skill selectedSkill;
 
@@ -69,11 +71,6 @@ public class SkillsFragment extends BaseFragment {
 
         return view;
     }
-
-    @InjectView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-
-    SkillsRecyclerViewAdapter adapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -114,8 +111,8 @@ public class SkillsFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (TASK_SELECTION_ACTIVITY) : {
+        switch (requestCode) {
+            case (TASK_SELECTION_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     mAPIHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"), new SkillCallback(activity, selectedSkill));
                 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2008 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2008 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,14 +14,14 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_activated="true" android:drawable="@drawable/list_pressed_holo_light" />
-	<item android:state_selected="true" android:drawable="@drawable/list_pressed_holo_light" />
-	<item android:state_checked="true" android:drawable="@drawable/list_pressed_holo_light" />
-	<item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/list_selector_disabled_holo_light" />
-	<item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/list_selector_disabled_holo_light" />
-	<item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/list_selector_background_transition_holo_light" />
-	<item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/list_selector_background_transition_holo_light" />
-	<item android:state_focused="true"                                                             android:drawable="@drawable/list_focused_holo" />
-	<item                                                                                          android:drawable="@color/transparent" />
-	<item android:drawable="@color/transparent" />
+    <item android:drawable="@drawable/list_pressed_holo_light" android:state_activated="true" />
+    <item android:drawable="@drawable/list_pressed_holo_light" android:state_selected="true" />
+    <item android:drawable="@drawable/list_pressed_holo_light" android:state_checked="true" />
+    <item android:drawable="@drawable/list_selector_disabled_holo_light" android:state_enabled="false" android:state_focused="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/list_selector_disabled_holo_light" android:state_enabled="false" android:state_focused="true" />
+    <item android:drawable="@drawable/list_selector_background_transition_holo_light" android:state_focused="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true" />
+    <item android:drawable="@drawable/list_focused_holo" android:state_focused="true" />
+    <item android:drawable="@color/transparent" />
+    <item android:drawable="@color/transparent" />
 </selector>

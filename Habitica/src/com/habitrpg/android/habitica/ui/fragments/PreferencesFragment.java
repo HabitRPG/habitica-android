@@ -28,7 +28,7 @@ public class PreferencesFragment extends PreferenceFragment {
 
         if (preference.getKey().equals("logout")) {
             HabiticaApplication.logout(context);
-        }else if(preference.getKey().equals("accountDetails")) {
+        } else if (preference.getKey().equals("accountDetails")) {
             openAccountDetailsFragment();
         }
         return false;

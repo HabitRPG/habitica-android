@@ -15,13 +15,13 @@ import java.util.List;
 /**
  * Created by magicmicky on 15/05/15.
  */
-public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
+public class TagsAdapter extends TypeAdapter<List<TaskTag>> {
 
     @Override
     public void write(JsonWriter out, List<TaskTag> value) throws IOException {
         out.beginObject();
         if (value != null) {
-            for(TaskTag tag : value) {
+            for (TaskTag tag : value) {
                 out.name(tag.getTag().getId());
                 out.value(true);
             }
@@ -29,11 +29,9 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
         out.endObject();
     }
 
-    private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck)
-    {
-        for(TaskTag t : list)
-        {
-            if(t.getTag().getId().equals(idToCheck)) {
+    private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck) {
+        for (TaskTag t : list) {
+            if (t.getTag().getId().equals(idToCheck)) {
                 return true;
             }
         }
@@ -47,23 +45,22 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
         List<Tag> allTags = new Select()
                 .from(Tag.class)
                 .queryList();
-        boolean isClosed=false;
+        boolean isClosed = false;
         do {
-            switch(in.peek()) {
+            switch (in.peek()) {
                 case BEGIN_OBJECT:
                     in.beginObject();
                     break;
                 case NAME:
                     String tagId = in.nextName();
 
-                    if(in.nextBoolean()) {
+                    if (in.nextBoolean()) {
                         TaskTag taskTag = new TaskTag();
                         for (Tag tag : allTags) {
                             if (tag.getId().equals(tagId)) {
                                 taskTag.setTag(tag);
 
-                                if(!alreadyContainsTag(tags, tagId))
-                                {
+                                if (!alreadyContainsTag(tags, tagId)) {
                                     tags.add(taskTag);
                                 }
 
@@ -74,7 +71,7 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
                     break;
                 case END_OBJECT:
                     in.endObject();
-                    isClosed=true;
+                    isClosed = true;
                     break;
                 case BEGIN_ARRAY:
                     in.beginArray();
@@ -86,7 +83,7 @@ public class TagsAdapter extends TypeAdapter<List<TaskTag>>{
                     break;
                 default:
             }
-        } while(!isClosed);
+        } while (!isClosed);
         return tags;
     }
 }

@@ -51,8 +51,8 @@ public class Gear extends BaseModel {
 
     @Override
     public void save() {
-        equipped.user_id = user_id+"_equipped";
-        costume.user_id = user_id+"_costume";
+        equipped.user_id = user_id + "_equipped";
+        costume.user_id = user_id + "_costume";
 
         super.save();
     }

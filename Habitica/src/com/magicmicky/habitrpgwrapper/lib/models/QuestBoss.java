@@ -44,6 +44,23 @@ public class QuestBoss extends BaseModel {
 
     @Column
     public String rage_market;
+    public QuestBossRage rage;
+
+    @Override
+    public void save() {
+        // Just to save the Json-Object as DB-Columns
+
+        if (rage != null && rage.title != null && !rage.title.isEmpty()) {
+            rage_title = rage.title;
+            rage_description = rage.description;
+            rage_value = rage.value;
+            rage_tavern = rage.tavern;
+            rage_stables = rage.stables;
+            rage_market = rage.market;
+        }
+
+        super.save();
+    }
 
     public class QuestBossRage {
         public String title;
@@ -57,23 +74,5 @@ public class QuestBoss extends BaseModel {
         public String stables;
 
         public String market;
-    }
-
-    public QuestBossRage rage;
-
-    @Override
-    public void save() {
-        // Just to save the Json-Object as DB-Columns
-
-        if(rage != null && rage.title != null && !rage.title.isEmpty()){
-            rage_title = rage.title;
-            rage_description = rage.description;
-            rage_value = rage.value;
-            rage_tavern = rage.tavern;
-            rage_stables = rage.stables;
-            rage_market = rage.market;
-        }
-
-        super.save();
     }
 }

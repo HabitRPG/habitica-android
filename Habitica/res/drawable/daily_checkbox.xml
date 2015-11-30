@@ -2,7 +2,7 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_checked="true" android:drawable="@drawable/daily_checked" />
-    <item android:state_checked="false" android:drawable="@drawable/daily_unchecked" />
+    <item android:drawable="@drawable/daily_checked" android:state_checked="true" />
+    <item android:drawable="@drawable/daily_unchecked" android:state_checked="false" />
 
 </selector>

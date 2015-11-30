@@ -42,33 +42,38 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
 
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, DROP
-    }
-
-    BaseFragment activeFragment;
-
-    @InjectView(R.id.floating_menu_wrapper)
-    FrameLayout floatingMenuWrapper;
-
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @InjectView(R.id.detail_tabs)
-    TabLayout detail_tabs;
-
-    @InjectView(R.id.avatar_with_bars)
-    View avatar_with_bars;
-
-    AccountHeader accountHeader;
     public Drawer drawer;
-
     protected HostConfig hostConfig;
     protected HabitRPGUser user;
-
+    BaseFragment activeFragment;
+    @InjectView(R.id.floating_menu_wrapper)
+    FrameLayout floatingMenuWrapper;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.detail_tabs)
+    TabLayout detail_tabs;
+    @InjectView(R.id.avatar_with_bars)
+    View avatar_with_bars;
+    AccountHeader accountHeader;
     AvatarWithBarsViewModel avatarInHeader;
-
     APIHelper mAPIHelper;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            user = habitRPGUser;
+            setUserData();
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +120,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
 
-    private void saveLoginInformation(){
+    private void saveLoginInformation() {
         HabiticaApplication.User = user;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -123,11 +128,11 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
                 .putString(getString(R.string.SP_email), user.getAuthentication().getLocalAuthentication().getEmail())
                 .commit();
-        try{
-            if(!ans) {
+        try {
+            if (!ans) {
                 throw new Exception("Shared Preferences Username and Email error");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
     }
@@ -158,24 +163,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
         }
     }
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            user = habitRPGUser;
-            setUserData();
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
     private void setUserData() {
         if (user != null) {
@@ -266,5 +253,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
         }
         snackbar.show();
+    }
+
+    public enum SnackbarDisplayType {
+        NORMAL, FAILURE, DROP
     }
 }

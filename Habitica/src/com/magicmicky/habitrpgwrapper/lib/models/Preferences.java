@@ -17,30 +17,25 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Preferences extends BaseModel {
 
     @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-
-    @Column
-    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
-
-    @Column
-    private String allocationMode, shirt, skin, size, background;
-
-    @Column
-    private int dayStart, timezoneOffset;
-
-    @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "hair_user_id",
             columnType = String.class,
             foreignColumnName = "userId")})
     public Hair hair;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "suppressedModals_user_id",
             columnType = String.class,
             foreignColumnName = "userId")})
     public SuppressedModals suppressModals;
+    @Column
+    @PrimaryKey
+    @NotNull
+    String user_id;
+    @Column
+    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
+    @Column
+    private String allocationMode, shirt, skin, size, background;
+    @Column
+    private int dayStart, timezoneOffset;
 
     public Preferences() {
     }

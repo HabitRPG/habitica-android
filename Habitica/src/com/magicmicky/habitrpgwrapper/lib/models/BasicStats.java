@@ -16,20 +16,19 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class BasicStats extends BaseModel {
 
     @Column
+    public float con, str, per;
+    @Column
+    @SerializedName("int")
+    public float _int;
+    @Column
     @PrimaryKey
     @NotNull
     String id;
 
-    @Column
-    public float con, str, per;
-
-    @Column
-    @SerializedName("int")
-    public float _int;
-
     public BasicStats() {
-        this(0,0,0,0);
+        this(0, 0, 0, 0);
     }
+
     public BasicStats(int con, int str, int per, int _int) {
         this.con = con;
         this.str = str;

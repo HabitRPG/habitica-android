@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-android:title="@string/PS_contact_title" >
+    android:title="@string/PS_contact_title">
 
     <PreferenceCategory android:title="Account Details">
 
         <EditTextPreference
+            android:enabled="false"
             android:key="@string/SP_username"
-            android:title="Login Name"
-            android:enabled="false"
-            android:selectable="false"
             android:persistent="false"
+            android:selectable="false"
             android:shouldDisableView="false"
-            android:summary="Login Name" />
+            android:summary="Login Name"
+            android:title="Login Name" />
 
         <EditTextPreference
+            android:enabled="false"
             android:key="@string/SP_email"
-            android:title="E-mail"
-            android:enabled="false"
-            android:selectable="false"
             android:persistent="false"
+            android:selectable="false"
             android:shouldDisableView="false"
-            android:summary="E-mail" />
+            android:summary="E-mail"
+            android:title="E-mail" />
 
         <EditTextPreference
+            android:enabled="false"
             android:key="@string/SP_userID"
-            android:title="@string/SP_userID_title"
-            android:enabled="false"
-            android:selectable="false"
             android:persistent="false"
+            android:selectable="false"
             android:shouldDisableView="false"
-            android:summary="@string/SP_userID_summary"/>
+            android:summary="@string/SP_userID_summary"
+            android:title="@string/SP_userID_title" />
 
         <EditTextPreference
-            android:key="@string/SP_APIToken"
-            android:title="@string/SP_APIToken_title"
             android:enabled="false"
-            android:selectable="false"
+            android:key="@string/SP_APIToken"
             android:persistent="false"
+            android:selectable="false"
             android:shouldDisableView="false"
-            android:summary="@string/SP_APIToken_summary"/>
+            android:summary="@string/SP_APIToken_summary"
+            android:title="@string/SP_APIToken_title" />
 
     </PreferenceCategory>
 </PreferenceScreen>

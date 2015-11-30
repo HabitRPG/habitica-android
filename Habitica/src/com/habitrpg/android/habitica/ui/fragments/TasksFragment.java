@@ -90,15 +90,30 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     Drawer filterDrawer;
 
     MenuItem refreshItem;
-
-    private MaterialDialog faintDialog;
-
     FloatingActionMenu floatingMenu;
-
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
-
+    private MaterialDialog faintDialog;
     private TagsHelper tagsHelper;
     private ContentCache contentCache;
+    private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
+    private Debounce filterChangedHandler = new Debounce(1500, 1000) {
+        @Override
+        public void execute() {
+            ArrayList<String> tagList = new ArrayList<>();
+
+            for (Map.Entry<String, Boolean> f : tagFilterMap.entrySet()) {
+                if (f.getValue()) {
+                    tagList.add(f.getKey());
+                }
+            }
+            tagsHelper.setTags(tagList);
+            EventBus.getDefault().post(new FilterTasksByTagsCommand());
+        }
+    };
+
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
+    }
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
@@ -354,6 +369,11 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         }
     }
 
+    // endregion
+
+
+    //region Events
+
     @Override
     public void onTaskDataReceived(TaskDirectionData data) {
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
@@ -369,7 +389,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     }
 
-
     private void openNewTaskActivity(String type) {
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
@@ -381,12 +400,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
         startActivityForResult(intent, TASK_CREATED_RESULT);
     }
-
-    // endregion
-
-
-
-    //region Events
 
     public void onEvent(CreateTagCommand event) {
         Tag t = new Tag();
@@ -433,6 +446,8 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
+
+    //endregion Events
 
     public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
@@ -500,8 +515,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         user.getPreferences().setSleep(event.Inn);
     }
 
-    //endregion Events
-
     private void notifyUser(double xp, double hp, double gold,
                             int lvl, double delta) {
         StringBuilder message = new StringBuilder();
@@ -535,10 +548,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             activity.showSnackbar(message.toString(), displayType);
 
         }
-    }
-
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
     private void displayDeathDialogIfNeeded() {
@@ -613,7 +622,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         dialog.show();
     }
 
-
     public void fillTagFilterDrawer(List<Tag> tagList) {
         filterDrawer.removeAllItems();
         filterDrawer.addItems(
@@ -629,23 +637,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             );
         }
     }
-
-    private Debounce filterChangedHandler = new Debounce(1500, 1000) {
-        @Override
-        public void execute() {
-            ArrayList<String> tagList = new ArrayList<>();
-
-            for (Map.Entry<String, Boolean> f : tagFilterMap.entrySet()) {
-                if (f.getValue()) {
-                    tagList.add(f.getKey());
-                }
-            }
-            tagsHelper.setTags(tagList);
-            EventBus.getDefault().post(new FilterTasksByTagsCommand());
-        }
-    };
-
-    private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
 
     /*
         Updates concerned tags.

@@ -24,7 +24,7 @@ public class HabitItemCallback<T extends Task> implements Callback<T> {
     }
 
     @Override
-    public void failure(RetrofitError retrofitError){
+    public void failure(RetrofitError retrofitError) {
         Log.w(TAG, "Failure ! ");
         Log.e(TAG, retrofitError.getUrl() + ":" + retrofitError.getMessage());
         Log.e(TAG, "Network?" + retrofitError.isNetworkError());

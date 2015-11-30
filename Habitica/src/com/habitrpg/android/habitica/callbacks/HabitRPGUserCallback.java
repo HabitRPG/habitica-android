@@ -24,7 +24,7 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     public void success(HabitRPGUser habitRPGUser, Response response) {
         habitRPGUser.async().save();
 
-        
+
         mCallback.onUserReceived(habitRPGUser);
     }
 

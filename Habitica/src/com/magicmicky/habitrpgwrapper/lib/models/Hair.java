@@ -16,13 +16,14 @@ public class Hair extends BaseModel {
     public String userId;
 
     @Column
-    private int mustache,beard, bangs,base;
+    private int mustache, beard, bangs, base;
 
     @Column
     private String color;
 
     public Hair() {
     }
+
     public Hair(int mustache, int beard, int bangs, int base, String color) {
         this.mustache = mustache;
         this.beard = beard;

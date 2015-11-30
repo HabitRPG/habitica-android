@@ -21,7 +21,7 @@ import java.util.List;
 
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
-public class Tag extends BaseModel{
+public class Tag extends BaseModel {
 
     @Column
     @PrimaryKey
@@ -31,14 +31,12 @@ public class Tag extends BaseModel{
     @Column
     @NotNull
     public String user_id;
-
+    public List<TaskTag> tasks;
     @Column
     String name;
 
-    public List<TaskTag> tasks;
-
     public Tag() {
-        this(null,null);
+        this(null, null);
     }
 
     public Tag(String id, String name) {
@@ -47,7 +45,7 @@ public class Tag extends BaseModel{
     }
 
     public List<TaskTag> getTasks() {
-        if(tasks == null) {
+        if (tasks == null) {
             tasks = new Select()
                     .from(TaskTag.class)
                     .where(Condition.column("tag_id").eq(this.id)).and(Condition.column("task_id").isNotNull())

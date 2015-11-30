@@ -2,15 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true">
-        <shape android:shape="rectangle">
-        </shape>
+        <shape android:shape="rectangle"></shape>
     </item>
-    <item android:state_focused="true" >
-        <shape android:shape="rectangle">
-        </shape>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle"></shape>
     </item>
     <item>
-        <shape android:shape="rectangle">
-        </shape>
+        <shape android:shape="rectangle"></shape>
     </item>
 </selector>

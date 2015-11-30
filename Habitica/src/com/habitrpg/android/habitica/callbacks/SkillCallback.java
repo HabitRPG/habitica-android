@@ -19,8 +19,8 @@ import retrofit.client.Response;
  */
 public class SkillCallback implements Callback<HabitRPGUser> {
 
-    private Skill usedSkill;
     private final HabitRPGUserCallback.OnUserReceived callback;
+    private Skill usedSkill;
 
     public SkillCallback(HabitRPGUserCallback.OnUserReceived callback, Skill usedSkill) {
         this.callback = callback;

@@ -16,57 +16,64 @@ import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 public class ChecklistItem extends BaseModel {
 
     @Column
-    @PrimaryKey
-    private String id;
-
-    @Column
-    private String text;
-
-    @Column
-    private boolean completed;
-
-    @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
                     foreignColumnName = "id")},
             saveForeignKeyModel = false)
     ForeignKeyContainer<Task> task;
+    @Column
+    @PrimaryKey
+    private String id;
+    @Column
+    private String text;
+    @Column
+    private boolean completed;
 
     public ChecklistItem() {
-        this(null,null);
+        this(null, null);
     }
+
     public ChecklistItem(String id, String text) {
-        this(id,text,false);
+        this(id, text, false);
     }
-    public ChecklistItem(String id,String text, boolean completed) {
+
+    public ChecklistItem(String id, String text, boolean completed) {
         this.setText(text);
         this.setId(id);
         this.setCompleted(completed);
     }
+
     public ChecklistItem(String s) {
-        this(null,s);
+        this(null, s);
     }
+
     public ChecklistItem(ChecklistItem item) {
         this.text = item.getText();
-        this.id= item.getId();
-        this.completed=item.getCompleted();
+        this.id = item.getId();
+        this.completed = item.getCompleted();
     }
+
     public String getText() {
         return text;
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
+
     public boolean getCompleted() {
         return completed;
     }
+
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }

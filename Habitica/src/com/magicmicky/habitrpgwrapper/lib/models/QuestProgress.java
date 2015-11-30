@@ -24,6 +24,9 @@ public class QuestProgress extends BaseModel {
         this.up = up;
     }
 
+    public QuestProgress() {
+    }
+
     public float getDown() {
         return down;
     }
@@ -39,6 +42,4 @@ public class QuestProgress extends BaseModel {
     public void setUp(float up) {
         this.up = up;
     }
-
-    public QuestProgress() {}
 }

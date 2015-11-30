@@ -23,16 +23,14 @@ import java.util.List;
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
 
-    @Column
-    @PrimaryKey
-    private String id;
-
     List<Task> dailys;
     List<Task> todos;
     List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
-
+    @Column
+    @PrimaryKey
+    private String id;
     @Column
     private double balance;
 
@@ -89,26 +87,6 @@ public class HabitRPGUser extends BaseModel {
         this.id = id;
     }
 
-    public void setDailys(List<Task> dailys) {
-        this.dailys = dailys;
-    }
-
-    public void setTodos(List<Task> todos) {
-        this.todos = todos;
-    }
-
-    public void setRewards(List<Task> rewards) {
-        this.rewards = rewards;
-    }
-
-    public void setHabits(List<Task> habits) {
-        this.habits = habits;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
     public Stats getStats() {
         return stats;
     }
@@ -141,21 +119,25 @@ public class HabitRPGUser extends BaseModel {
         this.items = items;
     }
 
-    public void setBalance(double balance) {
-        this.balance=balance;
-    }
-
     public double getBalance() {
         return this.balance;
     }
 
-    public Authentication getAuthentication() { return authentication; }
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
-    public void setAuthentication(Authentication authentication) {this.authentication = authentication; }
+    public Authentication getAuthentication() {
+        return authentication;
+    }
+
+    public void setAuthentication(Authentication authentication) {
+        this.authentication = authentication;
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
     public List<Task> getHabits() {
-        if(habits == null) {
+        if (habits == null) {
             habits = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("habit"))
@@ -165,9 +147,13 @@ public class HabitRPGUser extends BaseModel {
         return habits;
     }
 
+    public void setHabits(List<Task> habits) {
+        this.habits = habits;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "dailys")
     public List<Task> getDailys() {
-        if(dailys == null) {
+        if (dailys == null) {
             dailys = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("daily"))
@@ -177,9 +163,13 @@ public class HabitRPGUser extends BaseModel {
         return dailys;
     }
 
+    public void setDailys(List<Task> dailys) {
+        this.dailys = dailys;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
     public List<Task> getTodos() {
-        if(todos == null) {
+        if (todos == null) {
             todos = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("todo"))
@@ -189,9 +179,13 @@ public class HabitRPGUser extends BaseModel {
         return todos;
     }
 
+    public void setTodos(List<Task> todos) {
+        this.todos = todos;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
     public List<Task> getRewards() {
-        if(rewards == null) {
+        if (rewards == null) {
             rewards = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("reward"))
@@ -201,15 +195,23 @@ public class HabitRPGUser extends BaseModel {
         return rewards;
     }
 
+    public void setRewards(List<Task> rewards) {
+        this.rewards = rewards;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<Tag> getTags() {
-        if(tags == null) {
+        if (tags == null) {
             tags = new Select()
                     .from(Tag.class)
                     .where(Condition.column("user_id").eq(this.id))
                     .queryList();
         }
         return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override
@@ -252,7 +254,9 @@ public class HabitRPGUser extends BaseModel {
         }
 
         if (outfit != null) {
-            if (outfit.getBack() != null) {layerNames.add(outfit.getBack());}
+            if (outfit.getBack() != null) {
+                layerNames.add(outfit.getBack());
+            }
         }
 
         if (prefs.getSleep()) {
@@ -278,10 +282,18 @@ public class HabitRPGUser extends BaseModel {
         if (hair != null) {
             String hairColor = hair.getColor();
 
-            if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() +"_" + hairColor);}
-            if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() +"_" + hairColor);}
-            if (hair.getMustache() > 0) {layerNames.add("hair_mustache_"+hair.getMustache() +"_" + hairColor);}
-            if (hair.getBeard() > 0) {layerNames.add("hair_beard_"+hair.getBeard() +"_" + hairColor);}
+            if (hair.getBase() > 0) {
+                layerNames.add("hair_base_" + hair.getBase() + "_" + hairColor);
+            }
+            if (hair.getBangs() > 0) {
+                layerNames.add("hair_bangs_" + hair.getBangs() + "_" + hairColor);
+            }
+            if (hair.getMustache() > 0) {
+                layerNames.add("hair_mustache_" + hair.getMustache() + "_" + hairColor);
+            }
+            if (hair.getBeard() > 0) {
+                layerNames.add("hair_beard_" + hair.getBeard() + "_" + hairColor);
+            }
         }
 
         if (outfit != null) {

@@ -60,6 +60,34 @@ public class AvatarWithBarsViewModel {
         setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
     }
 
+    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
+        int maxHP = stats.getMaxHealth();
+        if (maxHP == 0) {
+            maxHP = 50;
+        }
+
+        setValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+    }
+
+    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
+    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
+    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
+        double percent = Math.min(1, value / valueMax);
+
+        if (percent == 1) {
+            valueBar.setWeightToShow(1);
+            valueBar.setWeightToHide(0);
+        } else {
+            valueBar.setWeightToShow((float) percent);
+            valueBar.setWeightToHide((float) (1 - percent));
+        }
+
+        valueBar.setText((int) value + "/" + (int) valueMax);
+        valueBar.setDescription(description);
+        valueBar.setBarForegroundColor(color);
+        valueBar.icHeader.setImageResource(icon);
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void updateData(HabitRPGUser user) {
         Stats stats = user.getStats();
@@ -109,33 +137,5 @@ public class AvatarWithBarsViewModel {
 
         Double gems = new Double(user.getBalance() * 4);
         gemsText.setText(gems.intValue() + "");
-    }
-
-    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
-        int maxHP = stats.getMaxHealth();
-        if (maxHP == 0) {
-            maxHP = 50;
-        }
-
-        setValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
-    }
-
-    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
-    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
-        double percent = Math.min(1, value / valueMax);
-
-        if (percent == 1) {
-            valueBar.setWeightToShow(1);
-            valueBar.setWeightToHide(0);
-        } else {
-            valueBar.setWeightToShow((float) percent);
-            valueBar.setWeightToHide((float) (1 - percent));
-        }
-
-        valueBar.setText((int) value + "/" + (int) valueMax);
-        valueBar.setDescription(description);
-        valueBar.setBarForegroundColor(color);
-        valueBar.icHeader.setImageResource(icon);
     }
 }

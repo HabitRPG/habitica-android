@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:minHeight="@dimen/checklist_item_min_height">
+        android:minHeight="@dimen/checklist_item_min_height"
+        android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="@dimen/button_width"
             android:layout_height="match_parent">
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="@dimen/checkbox_size"
-            android:layout_height="@dimen/checkbox_size"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:button="@drawable/daily_checkbox"
-            android:layout_gravity="center_horizontal" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="@dimen/checkbox_size"
+                android:layout_height="@dimen/checkbox_size"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:button="@drawable/daily_checkbox"
+                android:gravity="center" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/checkedTextView"
             style="@style/CardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            />
+            android:padding="5dp" />
     </LinearLayout>
+
     <View
         android:id="@+id/bottomBorderView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hairline_height"
-        android:background="@color/cell_separator"/>
+        android:background="@color/cell_separator" />
 </LinearLayout>

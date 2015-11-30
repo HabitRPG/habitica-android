@@ -19,9 +19,9 @@ public class MultiTagsCallback implements Callback<List<Tag>> {
 
     @Override
     public void success(List<Tag> tags, Response response) {
-        StringBuilder s=new StringBuilder();
+        StringBuilder s = new StringBuilder();
         s.append("Success with tags : ");
-        for(Tag t : tags) {
+        for (Tag t : tags) {
             s.append(t.getName() + ", ");
         }
         Log.d(TAG, s.toString());

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/PS_contact_title" >
+    android:title="@string/PS_contact_title">
 
     <EditTextPreference
         android:key="accountDetails"
-        android:title="AccountDetails"
-        android:summary="Check your account details" />
+        android:summary="Check your account details"
+        android:title="AccountDetails" />
 
 
-    <Preference android:title="LOGOUT"
+    <Preference
         android:key="logout"
-        android:summary="Logout your account"/>
+        android:summary="Logout your account"
+        android:title="LOGOUT" />
 
 </PreferenceScreen>
