@@ -21,14 +21,11 @@ import org.solovyev.android.checkout.Checkout;
 import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Products;
-import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.PurchaseVerifier;
 import org.solovyev.android.checkout.RequestListener;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -39,11 +36,15 @@ public class HabiticaApplication extends Application {
     public static HabiticaApplication Instance;
     public static HabitRPGUser User;
 
+    public static APIHelper ApiHelper;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         Instance = this;
+
+        billing.connect();
 
         FlowManager.init(this);
 
@@ -94,6 +95,7 @@ public class HabiticaApplication extends Application {
 
     // endregion
 
+    // region IAP - Specific
 
     /**
      * For better performance billing class should be used as singleton
@@ -103,7 +105,7 @@ public class HabiticaApplication extends Application {
         @NonNull
         @Override
         public String getPublicKey() {
-            return "sdfsdfdfsd";
+            return "DONT-NEED-IT";
         }
 
         @Nullable
@@ -114,24 +116,7 @@ public class HabiticaApplication extends Application {
 
         @Override
         public PurchaseVerifier getPurchaseVerifier() {
-            return new PurchaseVerifier() {
-                @Override
-                public void verify(List<Purchase> purchases, RequestListener<List<Purchase>> requestListener) {
-                    final List<Purchase> verifiedPurchases = new ArrayList<Purchase>(purchases.size());
-                   /* for (Purchase purchase : purchases) {
-                        if (Security.verifyPurchase(publicKey, purchase.data, purchase.signature)) {
-                            verifiedPurchases.add(purchase);
-                        } else {
-                            if (isEmpty(purchase.signature)) {
-                                Billing.error("Cannot verify purchase: " + purchase + ". Signature is empty");
-                            } else {
-                                Billing.error("Cannot verify purchase: " + purchase + ". Wrong signature");
-                            }
-                        }
-                    }*/
-                    //requestListener.onSuccess(verifiedPurchases);
-                }
-            };
+            return new HabiticaPurchaseVerifier();
         }
 
         @Override
@@ -160,4 +145,5 @@ public class HabiticaApplication extends Application {
         return checkout;
     }
 
+    // endregion
 }

@@ -13,14 +13,18 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Negue on 14.06.2015.
  */
-public class AvatarWithBarsViewModel {
+public class AvatarWithBarsViewModel implements View.OnClickListener {
     private ValueBarBinding hpBar;
     private ValueBarBinding xpBar;
     private ValueBarBinding mpBar;
@@ -32,6 +36,7 @@ public class AvatarWithBarsViewModel {
     private Context context;
 
     private TextView lvlText, goldText, silverText, gemsText;
+    private HabitRPGUser userObject;
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
@@ -58,10 +63,17 @@ public class AvatarWithBarsViewModel {
         setValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor, R.drawable.ic_header_heart);
         setValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
         setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
+
+        EventBus.getDefault().register(this);
+
+        gemsText.setClickable(true);
+        gemsText.setOnClickListener(this);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void updateData(HabitRPGUser user) {
+        userObject = user;
+
         Stats stats = user.getStats();
         char classShort;
         String userClass = "";
@@ -137,5 +149,18 @@ public class AvatarWithBarsViewModel {
         valueBar.setDescription(description);
         valueBar.setBarForegroundColor(color);
         valueBar.icHeader.setImageResource(icon);
+    }
+
+    public void onEvent(BoughtGemsEvent gemsEvent){
+        Double gems = new Double(userObject.getBalance() * 4);
+        gems += gemsEvent.NewGemsToAdd;
+        gemsText.setText(gems.intValue() + "");
+    }
+
+    @Override
+    public void onClick(View view) {
+        // Gems Clicked
+
+        EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }
 }

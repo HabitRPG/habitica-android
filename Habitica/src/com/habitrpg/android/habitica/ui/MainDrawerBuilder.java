@@ -33,13 +33,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
-    static final int SIDEBAR_TASKS = 0;
-    static final int SIDEBAR_SKILLS = 1;
-    static final int SIDEBAR_TAVERN = 3;
-    static final int SIDEBAR_PARTY = 4;
-    static final int SIDEBAR_PURCHASE = 5;
-    static final int SIDEBAR_SETTINGS = 7;
-    static final int SIDEBAR_ABOUT = 8;
+    public static final int SIDEBAR_TASKS = 0;
+    public static final int SIDEBAR_SKILLS = 1;
+    public static final int SIDEBAR_TAVERN = 3;
+    public static final int SIDEBAR_PARTY = 4;
+    public static final int SIDEBAR_PURCHASE = 5;
+    public static final int SIDEBAR_SETTINGS = 7;
+    public static final int SIDEBAR_ABOUT = 8;
 
 
 

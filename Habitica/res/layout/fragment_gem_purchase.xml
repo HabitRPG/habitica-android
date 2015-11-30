@@ -3,10 +3,22 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:text="Help support Habitica"
+        android:layout_gravity="center_horizontal">
+
+    </TextView>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buy"
+        android:text="+ 20"
         android:id="@+id/btn.purchase.gems"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:drawableRight="@drawable/ic_header_gem"
+        android:drawablePadding="5dp"
+        android:textColor="@color/white"/>
 </LinearLayout>
