@@ -16,21 +16,24 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(databaseName = HabitDatabase.NAME)
 public class Authentication extends BaseModel {
 
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-
     @SerializedName("local")
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "localauthentication_user_id",
             columnType = String.class,
             foreignColumnName = "user_id")})
     public LocalAuthentication localAuthentication;
+    @Column
+    @PrimaryKey
+    @NotNull
+    String user_id;
 
-    public LocalAuthentication getLocalAuthentication() { return localAuthentication; }
+    public LocalAuthentication getLocalAuthentication() {
+        return localAuthentication;
+    }
 
-    public void setLocalAuthentication(LocalAuthentication LocalAuthentication) {this.localAuthentication = LocalAuthentication; }
+    public void setLocalAuthentication(LocalAuthentication LocalAuthentication) {
+        this.localAuthentication = LocalAuthentication;
+    }
 
     @Override
     public void save() {

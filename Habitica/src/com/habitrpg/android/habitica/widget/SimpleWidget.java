@@ -21,6 +21,21 @@ import com.habitrpg.android.habitica.R;
 public class SimpleWidget extends AppWidgetProvider {
     private static final String LOG = "simplewidgetprovider";
 
+    /**
+     * Returns number of cells needed for given size of the widget.<br/>
+     * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
+     *
+     * @param size Widget size in dp.
+     * @return Size in number of cells.
+     */
+    private static int getCellsForSize(int size) {
+        int n = 2;
+        while (70 * n - 30 < size) {
+            ++n;
+        }
+        return n - 1;
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.w(LOG, "onUpdate method called");
@@ -55,7 +70,6 @@ public class SimpleWidget extends AppWidgetProvider {
 
     }
 
-
     /**
      * Determine appropriate view based on width provided.<br/>
      * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
@@ -80,21 +94,6 @@ public class SimpleWidget extends AppWidgetProvider {
         }
         return remoteViews;
 
-    }
-
-    /**
-     * Returns number of cells needed for given size of the widget.<br/>
-     * see http://stackoverflow.com/questions/14270138/dynamically-adjusting-widgets-content-and-layout-to-the-size-the-user-defined-t
-     *
-     * @param size Widget size in dp.
-     * @return Size in number of cells.
-     */
-    private static int getCellsForSize(int size) {
-        int n = 2;
-        while (70 * n - 30 < size) {
-            ++n;
-        }
-        return n - 1;
     }
 
 

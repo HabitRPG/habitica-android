@@ -52,9 +52,9 @@ public class ChatMessage {
 
 
         if (contributor != null) {
-                if (contributorColorDict.containsKey(contributor.level)) {
-                    rColor = contributorColorDict.get(contributor.level);
-                }
+            if (contributorColorDict.containsKey(contributor.level)) {
+                rColor = contributorColorDict.get(contributor.level);
+            }
         }
 
         if (backer != null) {

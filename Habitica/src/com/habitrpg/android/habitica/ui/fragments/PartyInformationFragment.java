@@ -19,8 +19,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 public class PartyInformationFragment extends Fragment {
 
 
-    private View view;
     FragmentPartyInfoBinding viewBinding;
+    private View view;
     private Group group;
 
     public PartyInformationFragment(Group group) {

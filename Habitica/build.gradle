@@ -107,7 +107,7 @@ android {
         release
     }
 
-    dexOptions{
+    dexOptions {
         preDexLibraries = false
     }
 

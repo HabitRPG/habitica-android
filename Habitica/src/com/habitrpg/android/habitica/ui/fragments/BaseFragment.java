@@ -30,15 +30,14 @@ import de.greenrobot.event.EventBusException;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private boolean registerEventBus = false;
-
     public MainActivity activity;
     public TabLayout tabLayout;
     public FrameLayout floatingMenuWrapper;
     public APIHelper mAPIHelper;
-    protected HabitRPGUser user;
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;
+    protected HabitRPGUser user;
+    private boolean registerEventBus = false;
 
     public void setUser(HabitRPGUser user) {
         this.user = user;

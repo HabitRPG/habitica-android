@@ -18,10 +18,10 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+    android:background="@drawable/drawer_activated_background"
     android:gravity="center_vertical"
+    android:minHeight="@dimen/list_preferred_item_height"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:textColor="#fff"
-    android:background="@drawable/drawer_activated_background"
-    android:minHeight="@dimen/list_preferred_item_height"/>
+    android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+    android:textColor="#fff" />

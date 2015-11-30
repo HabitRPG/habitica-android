@@ -25,10 +25,12 @@ import butterknife.InjectView;
  */
 public class PartyMemberListFragment extends Fragment {
 
+    @InjectView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
     private Context ctx;
     private Group group;
-
     private PartyMemberRecyclerViewAdapter viewAdapter;
+    private View view;
 
     public PartyMemberListFragment(Context ctx, Group group) {
         this.ctx = ctx;
@@ -36,11 +38,6 @@ public class PartyMemberListFragment extends Fragment {
 
         viewAdapter = new PartyMemberRecyclerViewAdapter();
     }
-
-    private View view;
-
-    @InjectView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
 
     @Nullable
     @Override

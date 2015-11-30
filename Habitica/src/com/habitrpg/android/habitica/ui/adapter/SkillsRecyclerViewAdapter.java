@@ -52,9 +52,8 @@ import de.greenrobot.event.EventBus;
 public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder> {
 
 
-    private List<Skill> skillList;
-
     public Double mana;
+    private List<Skill> skillList;
 
     public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;

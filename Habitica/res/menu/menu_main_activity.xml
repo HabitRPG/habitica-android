@@ -4,18 +4,18 @@
     tools:context="com.habitrpg.android.habitica.TaskActivity">
 
     <!-- Search, should appear as action button -->
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_action_filter_list"
         android:title="@string/filter"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_reload"
-        android:icon="@drawable/ic_refresh_white"
-        android:title="@string/action_refresh"
-        android:orderInCategory="103"
-        app:showAsAction="ifRoom"
         android:actionViewClass="android.widget.ImageButton"
-        />
+        android:icon="@drawable/ic_refresh_white"
+        android:orderInCategory="103"
+        android:title="@string/action_refresh"
+        app:showAsAction="ifRoom" />
 
 </menu>

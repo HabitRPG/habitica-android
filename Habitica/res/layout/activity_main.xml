@@ -33,11 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="false"
-                app:titleEnabled="false"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="?attr/actionBarSize"
                 app:expandedTitleMarginStart="0dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
                 <include
                     android:id="@+id/avatar_with_bars"
@@ -78,14 +78,14 @@
 
         <FrameLayout
             android:id="@+id/floating_menu_wrapper"
-            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|right"
             android:layout_marginBottom="16dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="8dp"
+            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior" />
 
     </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>

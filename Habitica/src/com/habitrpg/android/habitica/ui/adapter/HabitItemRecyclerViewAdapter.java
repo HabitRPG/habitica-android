@@ -63,25 +63,39 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         implements IReceiveNewEntries {
 
 
-    public interface IAdditionalEntries {
-        void GetAdditionalEntries(IReceiveNewEntries callBack);
-    }
-
-
-    int layoutResource;
-    private Class<ViewHolder<Task>> viewHolderClass;
-    Integer displayedChecklist = null;
-    String taskType;
-    private ObservableArrayList<Task> filteredObservableContent;
-    private ObservableArrayList<Task> observableContent;
-    Context context;
-    public int dailyResetOffset;
-
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
+    public int dailyResetOffset;
+    int layoutResource;
+    Integer displayedChecklist = null;
+    String taskType;
+    Context context;
+    private Class<ViewHolder<Task>> viewHolderClass;
+    private ObservableArrayList<Task> filteredObservableContent;
+    private ObservableArrayList<Task> observableContent;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
     private IAdditionalEntries additionalEntries;
+    private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
+        @Override
+        public void onResultReceived(List<Task> tasks) {
+            observableContent.addAll(tasks);
+            if (additionalEntries != null) {
+                additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+            }
+            filter();
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Task>> transaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Task>> transaction, List<Task> result) {
+            return true;
+        }
+    };
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
         this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, null);
@@ -108,11 +122,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filter();
     }
 
-    public void onEvent(TaskCheckedCommand evnt){
+    public void onEvent(TaskCheckedCommand evnt) {
         if (!taskType.equals(evnt.Task.getType()))
             return;
 
-        if(evnt.completed && evnt.Task.getType().equals("todo")){
+        if (evnt.completed && evnt.Task.getType().equals("todo")) {
             // remove from the list
             observableContent.remove(evnt.Task);
         }
@@ -137,7 +151,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     private void updateTask(Task task) {
         int i;
-        for(i = 0; i < this.observableContent.size(); ++i) {
+        for (i = 0; i < this.observableContent.size(); ++i) {
             if (observableContent.get(i).getId().equals(task.getId())) {
                 break;
             }
@@ -231,12 +245,64 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     // region ViewHolders
 
+    public void loadContent(HabitRPGUser user) {
+        Log.d("setting content", this.taskType);
+        this.observableContent = new ObservableArrayList<>();
+        if (this.taskType.equals(Task.TYPE_HABIT)) {
+            this.observableContent.addAll(user.getHabits());
+        } else if (this.taskType.equals(Task.TYPE_DAILY)) {
+            this.observableContent.addAll(user.getDailys());
+        } else if (this.taskType.equals(Task.TYPE_TODO)) {
+            this.observableContent.addAll(user.getTodos());
+        } else if (this.taskType.equals(Task.TYPE_REWARD)) {
+            this.observableContent.addAll(user.getRewards());
+        }
+        if (additionalEntries != null) {
+            additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
+        }
+        filter();
+        notifyDataSetChanged();
+    }
+
+    public void loadContent() {
+        this.loadContent(false);
+    }
+
+    public void loadContent(boolean forced) {
+
+        if (this.observableContent == null || forced) {
+            Log.d("Loading content", this.taskType);
+            this.observableContent = new ObservableArrayList<>();
+            new Select().from(Task.class)
+                    .where(Condition.column("type").eq(this.taskType))
+                    .and(Condition.CombinedCondition
+                                    .begin(Condition.column("completed").eq(false))
+                                    .or(Condition.column("type").eq("daily"))
+                    )
+                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
+
+        }
+    }
+
+    @Override
+    public void GotAdditionalItems(List<Task> items) {
+        this.observableContent.addAll(items);
+
+        if (parentAdapter != null) {
+            parentAdapter.notifyDataSetChanged();
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
+    public interface IAdditionalEntries {
+        void GetAdditionalEntries(IReceiveNewEntries callBack);
+    }
+
     public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        protected android.content.res.Resources resources;
-
         public THabitItem Item;
-
+        protected android.content.res.Resources resources;
         @InjectView(R.id.notesTextView)
         TextView notesTextView;
 
@@ -287,6 +353,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     }
 
+    // endregion
+
     public class HabitViewHolder extends ViewHolder<Task> {
 
         @InjectView(R.id.btnPlus)
@@ -335,16 +403,13 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
+        public Boolean displayChecklist;
         @InjectView(R.id.checkBox)
         CheckBox checkbox;
-
         @InjectView(R.id.checklistView)
         LinearLayout checklistView;
-
         @InjectView(R.id.checklistIndicatorWrapper)
         RelativeLayout checklistIndicatorWrapper;
-
-        public Boolean displayChecklist;
 
         public ChecklistedViewHolder(View itemView) {
             super(itemView);
@@ -405,12 +470,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 if (isChecked != Item.getCompleted()) {
                     TaskCheckedCommand event = new TaskCheckedCommand();
                     event.Task = Item;
-                    event.completed =  !Item.getCompleted();
+                    event.completed = !Item.getCompleted();
 
                     // it needs to be changed after the event is send -> to the server
                     // maybe a refactor is needed here
                     EventBus.getDefault().post(event);
-                    Item.completed =event.completed;
+                    Item.completed = event.completed;
                     Item.save();
 
                 }
@@ -568,7 +633,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             goldPriceLayout.addView(gold);
             goldPriceLayout.addView(priceTextView);
 
-            if(imageView.getDrawable()!= null){
+            if (imageView.getDrawable() != null) {
                 contentViewLayout.addView(imageView);
             }
             contentViewLayout.addView(goldPriceLayout);
@@ -581,79 +646,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super.bindHolder(reward, position);
 
             binding.setReward(reward);
-        }
-    }
-
-    // endregion
-
-    public void loadContent(HabitRPGUser user) {
-        Log.d("setting content", this.taskType);
-        this.observableContent = new ObservableArrayList<>();
-        if (this.taskType.equals(Task.TYPE_HABIT)) {
-            this.observableContent.addAll(user.getHabits());
-        } else if (this.taskType.equals(Task.TYPE_DAILY)) {
-            this.observableContent.addAll(user.getDailys());
-        } else if (this.taskType.equals(Task.TYPE_TODO)) {
-            this.observableContent.addAll(user.getTodos());
-        } else if (this.taskType.equals(Task.TYPE_REWARD)) {
-            this.observableContent.addAll(user.getRewards());
-        }
-        if (additionalEntries != null) {
-            additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
-        }
-        filter();
-        notifyDataSetChanged();
-    }
-
-    public void loadContent() {
-        this.loadContent(false);
-    }
-
-    public void loadContent(boolean forced) {
-
-        if (this.observableContent == null || forced) {
-            Log.d("Loading content", this.taskType);
-            this.observableContent = new ObservableArrayList<>();
-            new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                                    .begin(Condition.column("completed").eq(false))
-                                    .or(Condition.column("type").eq("daily"))
-                    )
-                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
-
-        }
-    }
-
-    private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
-        @Override
-        public void onResultReceived(List<Task> tasks) {
-            observableContent.addAll(tasks);
-            if (additionalEntries != null) {
-                additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
-            }
-            filter();
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<List<Task>> transaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<List<Task>> transaction, List<Task> result) {
-            return true;
-        }
-    };
-
-    @Override
-    public void GotAdditionalItems(List<Task> items) {
-        this.observableContent.addAll(items);
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
         }
     }
 }

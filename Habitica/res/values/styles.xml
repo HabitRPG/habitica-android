@@ -1,10 +1,10 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
+        <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle
+        </item>
 
         <item name="android:elevation" tools:targetApi="21">0dp</item>
         <item name="elevation">0dp</item>
@@ -31,15 +31,16 @@
         <item name="material_drawer_divider">@color/material_drawer_divider</item>
         <item name="material_drawer_selected">@color/material_drawer_selected</item>
         <item name="material_drawer_selected_text">@color/brand_200</item>
-        <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_header_selection_text
+        </item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
     </style>
 
-    <style name="AppThemeWithOwnActionBar" parent="AppTheme">
-    </style>
+    <style name="AppThemeWithOwnActionBar" parent="AppTheme"></style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
@@ -84,31 +85,31 @@
         <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:textColor">@color/card_title_text</item>
     </style>
-    
-   <style name="body">
+
+    <style name="body">
         <item name="android:textSize">18sp</item>
-       <!-- <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>-->
+        <!-- <item name="android:textAllCaps">true</item>
+         <item name="android:fontFamily">sans-serif-condensed</item>-->
     </style>
 
-	<style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar">
-		<item name="android:maxHeight">1.0dip</item>
-		<item name="android:indeterminateOnly">false</item>
-		<item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal</item>
-		<item name="android:progressDrawable">@drawable/progress_indeterminate_horizontal</item>
-		<item name="android:minHeight">16.0dip</item>
+    <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar">
+        <item name="android:maxHeight">1.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/progress_indeterminate_horizontal</item>
+        <item name="android:minHeight">16.0dip</item>
 
-	</style>
+    </style>
 
-	<style name="MyOwnListSeperatorTextViewStyle">
-		<item name="android:background">@drawable/border_lightgray</item>
-		<item name="android:drawablePadding">4dp</item>
-		<item name="android:layout_marginTop">8dp</item>
-		<item name="android:paddingLeft">4dp</item>
-		<item name="android:textAllCaps"
-            tools:targetApi="14">true</item>
-		<item name="android:textSize">14sp</item>
-	</style>
+    <style name="MyOwnListSeperatorTextViewStyle">
+        <item name="android:background">@drawable/border_lightgray</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textAllCaps" tools:targetApi="14">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>

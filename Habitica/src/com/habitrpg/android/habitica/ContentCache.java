@@ -19,15 +19,6 @@ import retrofit.client.Response;
 
 
 public class ContentCache {
-    public interface GotContentEntryCallback<T extends Object> {
-        void GotObject(T obj);
-    }
-
-    public interface QuestContentCallback {
-        void GotQuest(QuestContent content);
-    }
-
-
     private ApiService apiService;
 
     public ContentCache(ApiService apiService) {
@@ -170,7 +161,6 @@ public class ContentCache {
         });
     }
 
-
     private void saveContentResultToDb(ContentResult contentResult) {
         Collection<QuestContent> questList = contentResult.quests.values();
 
@@ -190,5 +180,14 @@ public class ContentCache {
         for (ItemData item : itemList) {
             item.async().save();
         }
+    }
+
+    public interface GotContentEntryCallback<T extends Object> {
+        void GotObject(T obj);
+    }
+
+
+    public interface QuestContentCallback {
+        void GotQuest(QuestContent content);
     }
 }

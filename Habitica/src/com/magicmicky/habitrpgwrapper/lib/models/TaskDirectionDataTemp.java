@@ -7,7 +7,12 @@ public class TaskDirectionDataTemp {
 
     private TaskDirectionDataDrop drop;
 
-    public TaskDirectionDataDrop getDrop() { return this.drop; }
-    public void setDrop(TaskDirectionDataDrop drop) { this.drop = drop; }
+    public TaskDirectionDataDrop getDrop() {
+        return this.drop;
+    }
+
+    public void setDrop(TaskDirectionDataDrop drop) {
+        this.drop = drop;
+    }
 
 }

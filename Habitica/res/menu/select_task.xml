@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
-	<item
-			android:id="@+id/action_edit"
-			android:icon="@drawable/ic_menu_edit"
-			android:orderInCategory="1"
-			android:title="@string/action_edit"/>
-	<item android:id="@+id/deleteMenu"
-		  android:title="@string/action_delete"
-		  android:icon="@drawable/ic_menu_delete"
-		  android:orderInCategory="50"
-		  app:showAsAction="ifRoom">
-		<menu>
-			<item android:id="@+id/deleteConfirmMenuBT"
-				  android:title="@string/action_delete"
-				  android:icon="@drawable/ic_menu_delete"
-				  android:orderInCategory="1"
-				  app:showAsAction="never">
-			</item>
-			<item android:id="@+id/deleteCancelMenuBT"
-				  android:title="@string/action_cancel"
-				  android:icon="@drawable/ic_navigation_cancel"
-				  android:orderInCategory="2"
-				  app:showAsAction="never">
-			</item>
-		</menu>
-	</item>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/ic_menu_edit"
+        android:orderInCategory="1"
+        android:title="@string/action_edit" />
+    <item
+        android:id="@+id/deleteMenu"
+        android:icon="@drawable/ic_menu_delete"
+        android:orderInCategory="50"
+        android:title="@string/action_delete"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/deleteConfirmMenuBT"
+                android:icon="@drawable/ic_menu_delete"
+                android:orderInCategory="1"
+                android:title="@string/action_delete"
+                app:showAsAction="never"></item>
+            <item
+                android:id="@+id/deleteCancelMenuBT"
+                android:icon="@drawable/ic_navigation_cancel"
+                android:orderInCategory="2"
+                android:title="@string/action_cancel"
+                app:showAsAction="never"></item>
+        </menu>
+    </item>
 
 
 </menu>

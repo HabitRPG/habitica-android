@@ -47,6 +47,9 @@ public class Items extends BaseModel {
         this.lastDrop_date = lastDrop_date;
     }
 
+    public Items() {
+    }
+
     public String getCurrentMount() {
         return currentMount;
     }
@@ -86,8 +89,6 @@ public class Items extends BaseModel {
     public void setGear(Gear gear) {
         this.gear = gear;
     }
-
-    public Items() {}
 
     @Override
     public void save() {

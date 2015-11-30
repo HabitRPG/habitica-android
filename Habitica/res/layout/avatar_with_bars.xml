@@ -6,33 +6,33 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:adjustViewBounds="true"
+    android:background="@color/brand"
     android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="horizontal"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingEnd="@dimen/activity_horizontal_margin"
 
-    android:background="@color/brand">
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <ImageView
         android:id="@+id/IMG_ProfilePicture"
         android:layout_width="@dimen/avatar_width"
         android:layout_height="@dimen/avatar_height"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:paddingRight="24dp"
+        android:contentDescription="@string/profile_image"
         android:paddingEnd="24dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="24dp"
+        android:paddingStart="16dp"
         android:scaleType="fitStart"
-        android:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/profile_image" />
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:id="@+id/LL_header"
-        android:layout_toRightOf="@id/IMG_ProfilePicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/IMG_ProfilePicture"
         android:orientation="vertical"
         android:paddingBottom="@dimen/bar_padding"
         android:paddingTop="@dimen/bar_padding">
@@ -50,62 +50,64 @@
             layout="@layout/value_bar" />
 
     </LinearLayout>
+
     <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_below="@id/LL_header"
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:drawableLeft="@drawable/ic_header_warrior"
-        android:drawableStart="@drawable/ic_header_warrior"
-        android:drawablePadding="6dp"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:textColor="@color/textColorSecondaryDark"/>
-    <LinearLayout
         android:layout_below="@id/LL_header"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:drawableLeft="@drawable/ic_header_warrior"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/ic_header_warrior"
+        android:gravity="center"
+        android:textColor="@color/textColorSecondaryDark"
+        android:textSize="14sp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/LL_header"
         android:gravity="center_vertical">
+
         <TextView
             android:id="@+id/gold_tv"
-            android:drawableLeft="@drawable/ic_header_gold"
-            android:drawableStart="@drawable/ic_header_gold"
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:drawableLeft="@drawable/ic_header_gold"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_header_gold"
+            android:gravity="center"
             android:textColor="@color/textColorSecondaryDark"
-            />
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/silver_tv"
-            android:drawableLeft="@drawable/ic_header_silver"
-            android:drawableStart="@drawable/ic_header_silver"
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="6dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            />
+            android:drawableLeft="@drawable/ic_header_silver"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_header_silver"
+            android:gravity="center"
+            android:textColor="@color/textColorSecondaryDark"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/gems_tv"
-            android:drawableLeft="@drawable/ic_header_gem"
-            android:drawableStart="@drawable/ic_header_gem"
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:drawablePadding="8dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/textColorSecondaryDark"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            />
+            android:drawableLeft="@drawable/ic_header_gem"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_header_gem"
+            android:gravity="center"
+            android:textColor="@color/textColorSecondaryDark"
+            android:textSize="14sp" />
     </LinearLayout>
 </RelativeLayout>

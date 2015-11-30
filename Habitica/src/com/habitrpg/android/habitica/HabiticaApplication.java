@@ -23,6 +23,7 @@ import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.PurchaseVerifier;
 import org.solovyev.android.checkout.RequestListener;
+
 import com.facebook.FacebookSdk;
 
 import java.io.File;
@@ -38,63 +39,9 @@ public class HabiticaApplication extends Application {
 
     public static HabiticaApplication Instance;
     public static HabitRPGUser User;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        Instance = this;
-
-        FlowManager.init(this);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
-        Instabug.DEBUG = BuildConfig.DEBUG;
-        Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");
-    }
+    public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
 
     // region SQLite overrides
-
-    @Override
-    public SQLiteDatabase openOrCreateDatabase(String name,
-                                               int mode, SQLiteDatabase.CursorFactory factory) {
-        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory);
-    }
-
-    @Override
-    public SQLiteDatabase openOrCreateDatabase(String name,
-                                               int mode, SQLiteDatabase.CursorFactory factory, DatabaseErrorHandler errorHandler) {
-        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
-    }
-
-    @Override
-    public boolean deleteDatabase(String name) {
-        return super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
-    }
-
-    @Override
-    public File getDatabasePath(String name) {
-        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
-    }
-
-    public static void logout(Context context){
-        Instance.deleteDatabase(HabitDatabase.NAME);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
-        context.startActivity(new Intent(context, LoginActivity.class));
-    }
-
-    public static void checkUserAuthentication(Context context, HostConfig hostConfig){
-        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            context.startActivity(new Intent(context, LoginActivity.class));
-        }
-    }
-
-    // endregion
-
-
     /**
      * For better performance billing class should be used as singleton
      */
@@ -144,9 +91,6 @@ public class HabiticaApplication extends Application {
             return false;
         }
     });
-
-    public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
-
     /**
      * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used anywhere in the app).
      * This instance contains all available products in the app.
@@ -154,6 +98,58 @@ public class HabiticaApplication extends Application {
     @NonNull
     private final Checkout checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, Arrays.asList(Purchase20Gems)));
 
+    public static void logout(Context context) {
+        Instance.deleteDatabase(HabitDatabase.NAME);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        context.startActivity(new Intent(context, LoginActivity.class));
+    }
+
+    public static void checkUserAuthentication(Context context, HostConfig hostConfig) {
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Instance = this;
+
+        FlowManager.init(this);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        Instabug.DEBUG = BuildConfig.DEBUG;
+        Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");
+    }
+
+    @Override
+    public SQLiteDatabase openOrCreateDatabase(String name,
+                                               int mode, SQLiteDatabase.CursorFactory factory) {
+        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory);
+    }
+
+    // endregion
+
+    @Override
+    public SQLiteDatabase openOrCreateDatabase(String name,
+                                               int mode, SQLiteDatabase.CursorFactory factory, DatabaseErrorHandler errorHandler) {
+        return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
+    }
+
+    @Override
+    public boolean deleteDatabase(String name) {
+        return super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
+    }
+
+    @Override
+    public File getDatabasePath(String name) {
+        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+    }
 
     @NonNull
     public Checkout getCheckout() {

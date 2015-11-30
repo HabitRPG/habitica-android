@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
  */
 
 @Table(databaseName = HabitDatabase.NAME, allFields = true)
-public class Stats extends PlayerMinStats{
+public class Stats extends PlayerMinStats {
 
     @Column
     private int toNextLevel;//xp needed to be earned

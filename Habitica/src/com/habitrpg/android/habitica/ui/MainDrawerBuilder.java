@@ -42,7 +42,6 @@ public class MainDrawerBuilder {
     static final int SIDEBAR_ABOUT = 8;
 
 
-
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         AccountHeaderBuilder builder = new AccountHeaderBuilder()
                 .withActivity(activity)
@@ -117,7 +116,7 @@ public class MainDrawerBuilder {
                                 fragment = new TavernFragment();
                                 break;
                             }
-                            case SIDEBAR_PURCHASE:{
+                            case SIDEBAR_PURCHASE: {
                                 fragment = new GemsPurchaseFragment();
                                 break;
                             }

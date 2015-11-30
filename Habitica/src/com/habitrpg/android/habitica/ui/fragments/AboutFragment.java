@@ -21,6 +21,7 @@ public class AboutFragment extends Fragment {
 
     private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
     private String twitterLink = "https://twitter.com/habitica";
+    private View view;
 
     @OnClick(R.id.sourceCodeLink)
     public void openSourceCodePageByLabel() {
@@ -47,15 +48,12 @@ public class AboutFragment extends Fragment {
         sendEmail("[Android] Feedback");
     }
 
-
     @OnClick(R.id.googlePlayStoreButton)
     public void openGooglePlay() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=com.habitrpg.android.habitica"));
         startActivity(intent);
     }
-
-    private View view;
 
     @Nullable
     @Override

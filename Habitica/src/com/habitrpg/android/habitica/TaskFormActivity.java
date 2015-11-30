@@ -44,6 +44,41 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
     private List<String> tags;
+    private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
+        @Override
+        public void onResultReceived(List<Tag> tags) {
+            //UI thread.
+            List<TaskTag> taskTags = new ArrayList<TaskTag>();
+            for (Tag tag : tags) {
+                TaskTag tt = new TaskTag();
+                tt.setTag(tag);
+                tt.setTask(task);
+                taskTags.add(tt);
+            }
+            //save
+            TaskFormActivity.this.task.setTags(taskTags);
+            TaskFormActivity.this.task.update();
+            //send back to other elements.
+            TaskSaveEvent event = new TaskSaveEvent();
+            if (TaskFormActivity.this.task.getId() == null) {
+                event.created = true;
+            }
+
+            event.task = TaskFormActivity.this.task;
+            EventBus.getDefault().post(event);
+
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<List<Tag>> baseTransaction, List<Tag> tags) {
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +238,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         return super.onOptionsItemSelected(item);
     }
 
-
     private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
@@ -244,7 +278,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
 
     }
-
 
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
@@ -329,40 +362,4 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         this.prepareSave();
         finish();
     }
-
-    private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {
-        @Override
-        public void onResultReceived(List<Tag> tags) {
-            //UI thread.
-            List<TaskTag> taskTags = new ArrayList<TaskTag>();
-            for (Tag tag : tags) {
-                TaskTag tt = new TaskTag();
-                tt.setTag(tag);
-                tt.setTask(task);
-                taskTags.add(tt);
-            }
-            //save
-            TaskFormActivity.this.task.setTags(taskTags);
-            TaskFormActivity.this.task.update();
-            //send back to other elements.
-            TaskSaveEvent event = new TaskSaveEvent();
-            if (TaskFormActivity.this.task.getId() == null) {
-                event.created = true;
-            }
-
-            event.task = TaskFormActivity.this.task;
-            EventBus.getDefault().post(event);
-
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<List<Tag>> baseTransaction, List<Tag> tags) {
-            return true;
-        }
-    };
 }

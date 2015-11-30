@@ -10,13 +10,14 @@ public class Server {
     private String addr;
 
     public Server(String addr) {
-        if(addr.endsWith("/api/v2") || addr.endsWith("/api/v2/"))
-            this.addr=addr;
-        else if(addr.endsWith("/"))
-            this.addr=addr + "api/v2";
+        if (addr.endsWith("/api/v2") || addr.endsWith("/api/v2/"))
+            this.addr = addr;
+        else if (addr.endsWith("/"))
+            this.addr = addr + "api/v2";
         else
             this.addr = addr + "/api/v2";
     }
+
     public Server(Server s) {
         this.addr = s.toString();
     }

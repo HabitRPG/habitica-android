@@ -13,27 +13,6 @@ import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
 
 public class PrefsActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setupActionBar();
-
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new PreferencesFragment())
-                .commit();
-    }
-
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setDisplayUseLogoEnabled(false);
-        }
-    }
-
     // TODO:
     // This method should be moved to HabiticaApplication
     public static HostConfig fromContext(Context ctx) {
@@ -57,6 +36,27 @@ public class PrefsActivity extends AppCompatActivity {
             config = new HostConfig(address, httpPort, api, userID);
         }
         return config;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupActionBar();
+
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new PreferencesFragment())
+                .commit();
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+        }
     }
 }
 

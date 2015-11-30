@@ -60,8 +60,6 @@ public class GemsPurchaseFragment extends BaseFragment {
         });
 
 
-
-
         checkout.whenReady(new Checkout.Listener() {
             @Override
             public void onReady(BillingRequests billingRequests) {

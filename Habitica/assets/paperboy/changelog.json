@@ -1,7 +1,7 @@
 [
   {
     "name": "Version 0.0.10",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "Moved from activities to fragments (header scrolls up on each :))"
@@ -18,7 +18,7 @@
   },
   {
     "name": "Version 0.0.9",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "New buy reward dialog"
@@ -67,7 +67,7 @@
   },
   {
     "name": "Version 0.0.8",
-    "items":[
+    "items": [
       {
         "type": "N",
         "title": "Updated the Party-Members Overview <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/35\">#35</a>"
@@ -92,7 +92,7 @@
   },
   {
     "name": "Version 0.0.7",
-    "items":[
+    "items": [
       {
         "type": "B",
         "title": "Saving hair-preferences to database / now again visible in avatar <a href=\"https://github.com/HabitRPG/habitrpg-android/issues/17\">#17</a>"
@@ -109,7 +109,7 @@
   },
   {
     "name": "Version 0.0.6",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "Updated Avatar Header"
@@ -118,7 +118,7 @@
   },
   {
     "name": "Version 0.0.5",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "New Floating-Action-Button with sub buttons"
@@ -139,7 +139,7 @@
   },
   {
     "name": "Version 0.0.4",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "Party Information / Chat / Members"
@@ -160,7 +160,7 @@
   },
   {
     "name": "Version 0.0.3",
-    "items":[
+    "items": [
       {
         "type": "F",
         "title": "Tavern :)"
@@ -182,7 +182,7 @@
   {
     "name": "Version 0.0.2",
     "items": [
-       {
+      {
         "type": "F",
         "title": "You can toggle the sleep-state!"
       },

@@ -15,10 +15,11 @@ import retrofit.client.Response;
  */
 public class TaskDirectionCallback implements Callback<TaskDirectionData> {
     private static final String TAG = "TaskDirection";
+
     @Override
     public void success(TaskDirectionData taskDirectionData, Response response) {
         Log.d(TAG, "Task value modified:" + taskDirectionData.getDelta());
-        Log.d(TAG +"_ans", new Gson().toJson(taskDirectionData));
+        Log.d(TAG + "_ans", new Gson().toJson(taskDirectionData));
 
     }
 

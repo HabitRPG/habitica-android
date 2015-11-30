@@ -36,7 +36,6 @@ public abstract class PlayerMinStats extends BasicStats {
     public Double gp, exp, mp, hp;
 
 
-
     public BasicStats getTraining() {
         return training;
     }
@@ -111,7 +110,7 @@ public abstract class PlayerMinStats extends BasicStats {
 
     @Override
     public void save() {
-        training.id = id+"_training";
+        training.id = id + "_training";
         buffs.id = id;
 
         super.save();

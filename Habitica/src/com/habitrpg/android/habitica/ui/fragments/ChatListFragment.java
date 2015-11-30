@@ -41,12 +41,19 @@ import retrofit.client.Response;
  */
 public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Callback<List<ChatMessage>> {
 
+    @InjectView(R.id.chat_list)
+    RecyclerView mRecyclerView;
+    @InjectView(R.id.chat_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayoutManager layoutManager;
     private Context ctx;
     private String groupId;
     private APIHelper apiHelper;
     private HabitRPGUser user;
     private String userId;
     private boolean isTavern;
+    private View view;
+    private List<ChatMessage> currentChatMessages;
 
     public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, boolean isTavern) {
 
@@ -61,8 +68,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         EventBus.getDefault().register(this);
     }
 
-    private View view;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,14 +76,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         return view;
     }
-
-    @InjectView(R.id.chat_list)
-    RecyclerView mRecyclerView;
-
-    @InjectView(R.id.chat_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
-    LinearLayoutManager layoutManager;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -116,8 +113,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         apiHelper.apiService.listGroupChat(groupId, this);
     }
-
-    private List<ChatMessage> currentChatMessages;
 
     @Override
     public void success(List<ChatMessage> chatMessages, Response response) {

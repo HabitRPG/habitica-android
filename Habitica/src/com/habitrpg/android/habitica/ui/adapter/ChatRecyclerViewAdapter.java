@@ -124,54 +124,46 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-        private int layoutType;
-        private String uuid;
-        private String groupId;
-
         // Toggle Inn State
         @InjectView(R.id.btn_toggle_inn)
         @Optional
         Button btnToggleInn;
-
         // New Msg
         @InjectView(R.id.edit_new_message_text)
         @Optional
         AppCompatEditText textNewMessage;
-
         @InjectView(R.id.btn_send_message)
         @Optional
         Button btnSendNewMessage;
-
         @InjectView(R.id.btn_options)
         @Optional
         ImageView btnOptions;
-
         @InjectView(R.id.user_background_layout)
         @Optional
         LinearLayout userBackground;
-
         @InjectView(R.id.like_background_layout)
         @Optional
         LinearLayout likeBackground;
-
         @InjectView(R.id.user_label)
         @Optional
         TextView userLabel;
-
         @InjectView(R.id.message_text)
         @Optional
         TextView messageText;
-
         @InjectView(R.id.ago_label)
         @Optional
         TextView agoLabel;
-
         @InjectView(R.id.tvLikes)
         @Optional
         TextView tvLikes;
-
         Context context;
         Resources res;
+        int likeCount = 0;
+        boolean currentUserLikedPost = false;
+        private int layoutType;
+        private String uuid;
+        private String groupId;
+        private ChatMessage currentMsg;
 
         public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
@@ -214,8 +206,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             }
         }
 
-        private ChatMessage currentMsg;
-
         public void bind(final ChatMessage msg) {
             currentMsg = msg;
 
@@ -235,9 +225,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 agoLabel.setText(msg.getAgoString());
             }
         }
-
-        int likeCount = 0;
-        boolean currentUserLikedPost = false;
 
         private void setLikeProperties(ChatMessage msg) {
             likeCount = 0;

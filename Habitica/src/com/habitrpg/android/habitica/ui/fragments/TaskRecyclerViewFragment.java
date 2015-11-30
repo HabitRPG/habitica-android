@@ -24,15 +24,24 @@ import de.greenrobot.event.EventBus;
 public class TaskRecyclerViewFragment extends Fragment implements View.OnClickListener {
     public RecyclerView mRecyclerView;
     public RecyclerView.Adapter mAdapter;
+    LinearLayoutManager layoutManager = null;
     private String classType;
+    private View view;
+
+    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
+        TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
+        fragment.setRetainInstance(true);
+
+        fragment.SetInnerAdapter(adapter, classType);
+
+        return fragment;
+    }
 
     // TODO needs a bit of cleanup
     public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType) {
         this.classType = classType;
         mAdapter = adapter;
     }
-
-    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,8 +50,6 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
         return view;
     }
-
-    LinearLayoutManager layoutManager = null;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -59,15 +66,6 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
         }
 
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
-        TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
-        fragment.setRetainInstance(true);
-
-        fragment.SetInnerAdapter(adapter, classType);
-
-        return fragment;
     }
 
     @Override

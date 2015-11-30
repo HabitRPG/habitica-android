@@ -26,12 +26,17 @@ public class Profile extends BaseModel {
     private String blurb, imageUrl;
 
     public Profile(String name) {
-        this(name, "","");
+        this(name, "", "");
     }
+
     public Profile(String name, String blurb, String imageUrl) {
         this.name = name;
         this.blurb = blurb;
         this.imageUrl = imageUrl;
+    }
+
+    public Profile() {
+
     }
 
     public String getName() {
@@ -56,9 +61,5 @@ public class Profile extends BaseModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Profile() {
-
     }
 }

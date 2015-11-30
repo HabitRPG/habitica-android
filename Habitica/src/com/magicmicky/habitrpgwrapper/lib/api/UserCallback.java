@@ -14,8 +14,16 @@ import retrofit.client.Response;
  * Created by MagicMicky on 10/06/2014.
  */
 public class UserCallback implements Callback<HabitRPGUser> {
-    private final String TAG = "HabitRPGDataCallback";
     private static final int BUFFER_SIZE = 0x1000;
+    private final String TAG = "HabitRPGDataCallback";
+
+    public static void longInfo(String str) {
+        if (str.length() > 4000) {
+            System.out.println(str.substring(0, 4000));
+            longInfo(str.substring(4000));
+        } else
+            System.out.println(str);
+    }
 
     @Override
     public void success(HabitRPGUser habitRPGUserCallback, Response response) {
@@ -28,14 +36,6 @@ public class UserCallback implements Callback<HabitRPGUser> {
         Log.w(TAG, "Failure ! " + retrofitError.getUrl());
         Log.e(TAG, retrofitError.getMessage());
         Log.e(TAG, "Network?" + retrofitError.isNetworkError());
-    }
-
-    public static void longInfo(String str) {
-        if(str.length() > 4000) {
-            System.out.println(str.substring(0, 4000));
-            longInfo(str.substring(4000));
-        } else
-            System.out.println(str);
     }
 
 }

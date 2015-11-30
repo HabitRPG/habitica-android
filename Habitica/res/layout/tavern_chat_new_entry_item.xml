@@ -23,16 +23,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
 
+            android:layout_weight="1"
             android:hint="Write Message"
-            app:met_floatingLabel="normal"
-            android:layout_weight="1" />
+            app:met_floatingLabel="normal" />
 
         <Button
             android:id="@+id/btn.send.message"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:textColor="@color/white"
-            android:drawableTint="@color/white"/>
+            android:drawableTint="@color/white"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>
