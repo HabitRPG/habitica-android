@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Debug;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 

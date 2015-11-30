@@ -3,7 +3,6 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 import com.habitrpg.android.habitica.R;
 
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 

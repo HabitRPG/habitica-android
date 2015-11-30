@@ -6,15 +6,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.habitrpg.android.habitica.AboutActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.prefs.PrefsActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
-import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
 import com.habitrpg.android.habitica.ui.fragments.TavernFragment;
-import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;

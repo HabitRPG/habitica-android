@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
