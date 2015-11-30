@@ -70,6 +70,9 @@ public class HabiticaApplication extends Application {
 
     @Override
     public boolean deleteDatabase(String name) {
+        if(!name.endsWith(".db")){
+            name += ".db";
+        }
         return super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
     }
 
