@@ -1,11 +1,9 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.Table;
 
 /**
  * Created by MagicMicky on 12/06/2014.

@@ -22,6 +22,7 @@ import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.PurchaseVerifier;
+import org.solovyev.android.checkout.RequestListener;
 
 import java.io.File;
 import java.util.Arrays;

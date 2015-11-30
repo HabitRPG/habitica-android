@@ -1,13 +1,9 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;

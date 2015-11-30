@@ -1,11 +1,10 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Debug;
 import android.preference.PreferenceManager;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -120,6 +119,14 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
+        
+        // Create Checkout
+
+        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
+
+        checkout.start();
+
+        EventBus.getDefault().register(this);
     }
 
 
@@ -138,14 +145,6 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }catch (Exception e){
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
-
-        // Create Checkout
-
-        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
-
-        checkout.start();
-
-        EventBus.getDefault().register(this);
     }
 
     public void onEvent(OpenGemPurchaseFragmentCommand cmd){
