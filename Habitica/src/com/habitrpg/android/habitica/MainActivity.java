@@ -39,6 +39,13 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
@@ -198,6 +205,14 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private void setUserData() {
         if (user != null) {
+            Calendar mCalendar = new GregorianCalendar();
+            TimeZone mTimeZone = mCalendar.getTimeZone();
+            long offset = -TimeUnit.MINUTES.convert(mTimeZone.getRawOffset(), TimeUnit.MILLISECONDS);
+            if (offset != user.getPreferences().getTimezoneOffset()) {
+                Map<String, String> updateData = new HashMap<String, String>();
+                updateData.put("preferences.timezoneOffset", String.valueOf(offset));
+                mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
