@@ -128,7 +128,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void createCheckListRecyclerView() {
-        checklistAdapter = new CheckListAdapter(task.getChecklist());
+        List<ChecklistItem> checklistItems = new ArrayList<>();
+        if (task.getChecklist() != null) {
+            checklistItems = task.getChecklist();
+        }
+        checklistAdapter = new CheckListAdapter(checklistItems);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
