@@ -20,8 +20,11 @@ import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
+import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
@@ -53,20 +56,21 @@ public class APIHelper implements ErrorHandler, Profiler {
     private static final String TAG = "ApiHelper";
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
+    private final InAppPurchasesApiService inAppPurchasesService;
     private Context mContext;
+    private HostConfig cfg;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
     public APIHelper(Context c, final HostConfig cfg) {
         this.mContext = c;
+        this.cfg = cfg;
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestInterceptor.RequestFacade request) {
                 request.addHeader("x-api-key", cfg.getApi());
                 request.addHeader("x-api-user", cfg.getUser());
-
-
             }
         };
 
@@ -108,6 +112,19 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .build();
         this.apiService = adapter.create(ApiService.class);
 
+        server = new Server(cfg.getAddress(), false);
+
+        adapter = new RestAdapter.Builder()
+                .setEndpoint(server.toString())
+                .setErrorHandler(this)
+                .setProfiler(this)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setRequestInterceptor(requestInterceptor)
+                .setConverter(new GsonConverter(gson))
+
+                .build();
+
+        this.inAppPurchasesService = adapter.create(InAppPurchasesApiService.class);
     }
 
     private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
@@ -251,5 +268,10 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 	public void reviveUser(HabitRPGUserCallback cb) {
         apiService.revive(cb);
+    }
+
+    public PurchaseValidationResult validatePurchase(PurchaseValidationRequest request)
+    {
+       return inAppPurchasesService.validatePurchase(cfg.getUser(), cfg.getApi(), request);
     }
 }

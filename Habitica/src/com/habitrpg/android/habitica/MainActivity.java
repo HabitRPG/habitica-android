@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -34,8 +36,19 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.Checkout;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
@@ -68,6 +81,9 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     APIHelper mAPIHelper;
 
+    // Checkout needs to be in the Activity..
+    public static ActivityCheckout checkout = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +100,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
         this.hostConfig = PrefsActivity.fromContext(this);
         HabiticaApplication.checkUserAuthentication(this, hostConfig);
-        this.mAPIHelper = new APIHelper(this, hostConfig);
+        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(this, hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -110,8 +126,14 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
+        
+        // Create Checkout
 
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
+
+        checkout.start();
+
+        EventBus.getDefault().register(this);
     }
 
 
@@ -130,6 +152,10 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }catch (Exception e){
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
+    }
+
+    public void onEvent(OpenGemPurchaseFragmentCommand cmd){
+        drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
     @Override
@@ -172,6 +198,14 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     private void setUserData() {
         if (user != null) {
+            Calendar mCalendar = new GregorianCalendar();
+            TimeZone mTimeZone = mCalendar.getTimeZone();
+            long offset = -TimeUnit.MINUTES.convert(mTimeZone.getRawOffset(), TimeUnit.MILLISECONDS);
+            if (offset != user.getPreferences().getTimezoneOffset()) {
+                Map<String, String> updateData = new HashMap<String, String>();
+                updateData.put("preferences.timezoneOffset", String.valueOf(offset));
+                mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -239,6 +273,21 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        if(checkout != null)
+            checkout.stop();
+
+        super.onDestroy();
     }
 
     public void showSnackbar(String content) {

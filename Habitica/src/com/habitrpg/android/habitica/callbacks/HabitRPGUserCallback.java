@@ -3,6 +3,11 @@ package com.habitrpg.android.habitica.callbacks;
 import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -22,7 +27,6 @@ public class HabitRPGUserCallback implements Callback<HabitRPGUser> {
     public void success(HabitRPGUser habitRPGUser, Response response) {
         habitRPGUser.async().save();
 
-        
         mCallback.onUserReceived(habitRPGUser);
     }
 
