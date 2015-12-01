@@ -32,11 +32,12 @@ import io.fabric.sdk.android.Fabric;
  */
 public class GemsPurchaseFragment extends BaseFragment {
 
+    static final int GEMS_TO_ADD = 21;
+
     private BillingRequests billingRequests;
 
     @InjectView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +61,7 @@ public class GemsPurchaseFragment extends BaseFragment {
                     billingRequests.consume(purchase.token, new RequestListener<Object>() {
                         @Override
                         public void onSuccess(Object o) {
-                            EventBus.getDefault().post(new BoughtGemsEvent(20));
+                            EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
                         }
 
                         @Override
@@ -106,7 +107,7 @@ public class GemsPurchaseFragment extends BaseFragment {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(Object o) {
-                                EventBus.getDefault().post(new BoughtGemsEvent(20));
+                                EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
                             }
 
                             @Override

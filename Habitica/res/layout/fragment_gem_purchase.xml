@@ -15,7 +15,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ 20"
+        android:text="+ 21"
         android:id="@+id/btn.purchase.gems"
         android:layout_gravity="center_horizontal"
         android:drawableRight="@drawable/ic_header_gem"
