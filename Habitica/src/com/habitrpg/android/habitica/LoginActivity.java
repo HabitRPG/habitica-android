@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity
 	public Boolean isRegistering;
     private Menu menu;
 
-	private String apiAddress = getString(R.string.SP_address_default);
+	private String apiAddress;
 	//private String apiAddress = "http://192.168.2.155:8080/"; // local testing
 
     private CallbackManager callbackManager;
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.login_screen);
-
+		apiAddress = getString(R.string.SP_address_default);
 		mLoginNormalBtn = (Button) this.findViewById(R.id.login_btn);
         mProgressBar = (ProgressBar) this.findViewById(R.id.PB_AsyncTask);
 
