@@ -129,7 +129,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     private void createCheckListRecyclerView() {
         List<ChecklistItem> checklistItems = new ArrayList<>();
-        if (task.getChecklist() != null) {
+        if (task != null && task.getChecklist() != null) {
             checklistItems = task.getChecklist();
         }
         checklistAdapter = new CheckListAdapter(checklistItems);
