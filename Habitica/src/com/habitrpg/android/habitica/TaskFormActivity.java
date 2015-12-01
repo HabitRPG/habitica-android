@@ -302,7 +302,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
 
-        task.setChecklist(checklistAdapter.getCheckListItems());
+        if (checklistAdapter != null) {
+            if (checklistAdapter.getCheckListItems() != null) {
+                task.setChecklist(checklistAdapter.getCheckListItems());
+            }
+        }
+
 
         if (task.text.isEmpty())
             return false;
