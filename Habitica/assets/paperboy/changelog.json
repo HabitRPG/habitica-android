@@ -8,11 +8,19 @@
       },
       {
         "type": "F",
+        "title": "Purchase Gems"
+      },
+      {
+        "type": "F",
         "title": "Settings Screen with logout options and account details."
       },
       {
+        "type": "F",
+        "title": "Skills!"
+      },
+      {
         "type": "B",
-        "title": "fix clear database"
+        "title": "A LOT fixes"
       }
     ]
   },
