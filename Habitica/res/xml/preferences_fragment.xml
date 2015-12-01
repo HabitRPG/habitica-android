@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/PS_contact_title" >
-
+    <PreferenceCategory
+        android:title="@string/pref_account_header">
     <EditTextPreference
         android:key="accountDetails"
         android:title="AccountDetails"
@@ -11,5 +12,15 @@
     <Preference android:title="LOGOUT"
         android:key="logout"
         android:summary="Logout your account"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_reminder_header">
+        <CheckBoxPreference
+            android:key="use_reminder"
+            android:title="@string/pref_reminder_checkbox"/>
+        <com.habitrpg.android.habitica.prefs.TimePreference
+            android:key="reminder_time"
+            android:title="@string/pref_reminder_picker" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

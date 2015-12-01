@@ -97,6 +97,7 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
+        <receiver  android:process=":remote" android:name=".NotificationPublisher"></receiver>
     </application>
 
 </manifest>
