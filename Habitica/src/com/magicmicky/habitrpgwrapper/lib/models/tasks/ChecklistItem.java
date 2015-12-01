@@ -1,6 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 import com.habitrpg.android.habitica.HabitDatabase;
+import com.habitrpg.android.habitica.database.ExcludeCheckListItem;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -31,13 +32,14 @@ public class ChecklistItem extends BaseModel {
                     columnType = String.class,
                     foreignColumnName = "id")},
             saveForeignKeyModel = false)
+    @ExcludeCheckListItem
     ForeignKeyContainer<Task> task;
 
     public ChecklistItem() {
         this(null,null);
     }
     public ChecklistItem(String id, String text) {
-        this(id,text,false);
+        this(id, text, false);
     }
     public ChecklistItem(String id,String text, boolean completed) {
         this.setText(text);
@@ -72,12 +74,24 @@ public class ChecklistItem extends BaseModel {
     }
 
     public Task getTask() {
-        return task.toModel();
+        if (task != null) {
+            return task.toModel();
+        } else {
+            return null;
+        }
     }
 
     public void setTask(Task task) {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
         this.task.put("id", task.id);
+    }
+
+    @Override
+    public void save() {
+        if (this.getId() == null || this.getId().isEmpty()) {
+            return;
+        }
+        super.save();
     }
 }

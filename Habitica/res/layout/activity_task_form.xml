@@ -68,9 +68,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
             android:id="@+id/task_startdate_layout">
 
@@ -82,12 +82,12 @@
                 android:id="@+id/textView"
                 android:layout_gravity="center_vertical" />
 
-            <TextView
-                android:layout_width="match_parent"
+            <DatePicker
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/task_startdate_textview"
-                android:textAlignment="gravity"
-                android:layout_gravity="center_vertical|right" />
+                android:id="@+id/task_startdate_picker"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false" />
 
         </LinearLayout>
     </LinearLayout>
@@ -120,7 +120,8 @@
                 android:id="@+id/textView7"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="11dp" />
+                android:layout_marginTop="11dp"
+                android:layout_toLeftOf="@+id/task_positive_checkbox"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -144,7 +145,8 @@
                 android:id="@+id/textView8"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="11dp" />
+                android:layout_marginTop="11dp"
+                android:layout_toLeftOf="@+id/task_negative_checkbox"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -170,7 +172,33 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/checklist"
-            android:id="@+id/textView9" />
+            android:id="@+id/textView9"
+            android:layout_marginBottom="8dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/checklist_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_checklist"
+                android:hint="@string/new_checklist_item"
+                android:layout_weight="1" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_checklist_item"
+                android:id="@+id/add_checklist_button" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -203,6 +231,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>
 </ScrollView>

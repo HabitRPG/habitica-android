@@ -1,13 +1,20 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,7 +23,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
+import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
@@ -44,6 +55,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private LinearLayout frequencyContainer;
     private List<String> tags;
+    private CheckListAdapter checklistAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +107,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.dailyFrequencySpinner.setAdapter(frequencyAdapter);
             this.dailyFrequencySpinner.setOnItemSelectedListener(this);
 
+
             this.frequencyContainer = (LinearLayout) weekdayWrapper.findViewById(R.id.task_frequency_container);
         } else {
             mainWrapper.removeView(weekdayWrapper);
         }
-
 
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
@@ -108,6 +121,41 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         } else {
             setTitle((Task) null);
         }
+
+        if(taskType.equals("todo") || taskType.equals("daily")){
+            createCheckListRecyclerView();
+        }
+    }
+
+    private void createCheckListRecyclerView() {
+        checklistAdapter = new CheckListAdapter(task.getChecklist());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(checklistAdapter);
+        int i = checklistAdapter.getItemCount();
+
+        recyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+
+        final EditText newCheckListEditText = (EditText)findViewById(R.id.new_checklist);
+
+        Button button = (Button)findViewById(R.id.add_checklist_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String checklist = newCheckListEditText.getText().toString();
+                ChecklistItem item = new ChecklistItem(checklist);
+                checklistAdapter.addItem(item);
+                newCheckListEditText.setText("");
+            }
+        });
     }
 
     private void setTitle(Task task) {
@@ -197,6 +245,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_discard_changes) {
             finish();
+            dismissKeyboard();
             return true;
         }
 
@@ -248,6 +297,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
+
+        task.setChecklist(checklistAdapter.getCheckListItems());
 
         if (task.text.isEmpty())
             return false;
@@ -319,15 +370,27 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public boolean onSupportNavigateUp() {
-        this.prepareSave();
-        finish();
-        return super.onSupportNavigateUp();
+        this.finishActivitySuccessfuly();
+        return true;
     }
 
     @Override
     public void onBackPressed() {
+        this.finishActivitySuccessfuly();
+    }
+
+    private void finishActivitySuccessfuly() {
         this.prepareSave();
         finish();
+        dismissKeyboard();
+    }
+
+    private void dismissKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        View currentFocus = getCurrentFocus();
+        if (currentFocus != null) {
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 
     private TransactionListener<List<Tag>> tagsSearchingListener = new TransactionListener<List<Tag>>() {

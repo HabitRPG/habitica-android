@@ -18,6 +18,7 @@ import com.google.gson.stream.JsonWriter;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskDeletionCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
@@ -30,10 +31,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
+import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -77,6 +80,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new CheckListItemExcludeStrategy())
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
                     public boolean shouldSkipField(FieldAttributes f) {
