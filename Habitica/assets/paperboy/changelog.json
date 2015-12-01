@@ -1,5 +1,22 @@
 [
   {
+    "name": "Version 0.0.11",
+    "items":[
+      {
+        "type": "F",
+        "title": "Ability to Change/See/Add checklists"
+      },
+      {
+        "type": "F",
+        "title": "Settings Screen with logout options and account details."
+      },
+      {
+        "type": "B",
+        "title": "fix clear database"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.10",
     "items":[
       {

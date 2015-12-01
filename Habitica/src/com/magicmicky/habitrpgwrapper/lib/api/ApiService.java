@@ -15,7 +15,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -40,6 +42,9 @@ public interface ApiService {
 
     @GET("/user/")
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
+
+    @PUT("/user/")
+    void updateUser(@Body Map<String, String> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
 
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
