@@ -149,7 +149,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
                 .withCloseOnClick(false)
                 .append(activity.drawer);
 
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
 
         viewPager.setCurrentItem(0);
         this.tagsHelper = new TagsHelper();
@@ -682,8 +682,8 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     @Override
     public void onDestroyView() {
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
+        DrawerLayout layout =  filterDrawer.getDrawerLayout();
+        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
         super.onDestroyView();
     }
 }
