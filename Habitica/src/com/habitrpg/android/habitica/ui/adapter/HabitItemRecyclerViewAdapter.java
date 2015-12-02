@@ -599,24 +599,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     // endregion
 
-    public void loadContent(HabitRPGUser user) {
-        this.observableContent = new ObservableArrayList<>();
-        if (this.taskType.equals(Task.TYPE_HABIT)) {
-            this.observableContent.addAll(user.getHabits());
-        } else if (this.taskType.equals(Task.TYPE_DAILY)) {
-            this.observableContent.addAll(user.getDailys());
-        } else if (this.taskType.equals(Task.TYPE_TODO)) {
-            this.observableContent.addAll(user.getTodos());
-        } else if (this.taskType.equals(Task.TYPE_REWARD)) {
-            this.observableContent.addAll(user.getRewards());
-        }
-        if (additionalEntries != null) {
-            additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
-        }
-        filter();
-        notifyDataSetChanged();
-    }
-
     public void loadContent() {
         this.loadContent(false);
     }
@@ -631,7 +613,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                                     .begin(Condition.column("completed").eq(false))
                                     .or(Condition.column("type").eq("daily"))
                     )
-                    .orderBy(OrderBy.columns("dateCreated").descending()).async().queryList(taskTransactionListener);
+                    .orderBy(OrderBy.columns("dateCreated").descending())
+                    .async()
+                    .queryList(taskTransactionListener);
 
         }
     }
