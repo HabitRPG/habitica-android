@@ -91,7 +91,9 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             mainWrapper.removeView(checklistLayout);
 
             positiveCheckBox = (CheckBox) findViewById(R.id.task_positive_checkbox);
+            positiveCheckBox.setChecked(true);
             negativeCheckBox = (CheckBox) findViewById(R.id.task_negative_checkbox);
+            negativeCheckBox.setChecked(true);
         } else {
             LinearLayout actionsLayout = (LinearLayout) findViewById(R.id.task_actions_wrapper);
             mainWrapper.removeView(actionsLayout);
