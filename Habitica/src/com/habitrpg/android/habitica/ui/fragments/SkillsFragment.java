@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,6 +35,8 @@ public class SkillsFragment extends BaseFragment {
 
     private View view;
     private Skill selectedSkill;
+
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -80,11 +83,13 @@ public class SkillsFragment extends BaseFragment {
             Intent intent = new Intent(activity, SkillTasksActivity.class);
             startActivityForResult(intent, TASK_SELECTION_ACTIVITY);
         } else {
+            displayProgressDialog();
             mAPIHelper.apiService.useSkill(skill.key, skill.target, new SkillCallback(activity, skill));
         }
     }
 
     public void onEvent(SkillUsedEvent event) {
+        removeProgressDialog();
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
         activity.showSnackbar(activity.getString(R.string.used_skill, skill.text, skill.mana));
@@ -96,10 +101,24 @@ public class SkillsFragment extends BaseFragment {
         switch(requestCode) {
             case (TASK_SELECTION_ACTIVITY) : {
                 if (resultCode == Activity.RESULT_OK) {
+                    displayProgressDialog();
                     mAPIHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"), new SkillCallback(activity, selectedSkill));
                 }
                 break;
             }
+        }
+    }
+
+    private void displayProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+        progressDialog = ProgressDialog.show(activity, activity.getString(R.string.skill_progress_title), null, true);
+    }
+
+    private void removeProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
     }
 }
