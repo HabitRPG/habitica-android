@@ -167,6 +167,12 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
