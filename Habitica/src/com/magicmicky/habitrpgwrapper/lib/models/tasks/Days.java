@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -10,6 +11,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 /**
  * Created by viirus on 06/07/15.
  */
+@ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
 public class Days extends BaseModel {
 
