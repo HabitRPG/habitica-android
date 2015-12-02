@@ -350,6 +350,9 @@ public class Task extends BaseModel {
 
     @Override
     public void save() {
+        if (this.getId() == null || this.getId().length() == 0) {
+            return;
+        }
         List<TaskTag> tmpTags = tags;
         List<ChecklistItem> tmpChecklist = checklist;
 
@@ -380,6 +383,14 @@ public class Task extends BaseModel {
                 item.async().save();
             }
         }
+    }
+
+    @Override
+    public void update() {
+        if (this.getId() == null || this.getId().length() == 0) {
+            return;
+        }
+        super.update();
     }
 
     public int getLightTaskColor()
