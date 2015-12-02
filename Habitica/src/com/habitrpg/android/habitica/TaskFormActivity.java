@@ -10,7 +10,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,9 +22,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
@@ -56,6 +57,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private LinearLayout frequencyContainer;
     private List<String> tags;
     private CheckListAdapter checklistAdapter;
+    private Button btnDelete;
 
 
     @Override
@@ -76,6 +78,20 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         taskText = (EditText) findViewById(R.id.task_text_edittext);
         taskNotes = (EditText) findViewById(R.id.task_notes_edittext);
         taskDifficultySpinner = (Spinner) findViewById(R.id.task_difficulty_spinner);
+        btnDelete = (Button)findViewById(R.id.btn_delete_task);
+        btnDelete.setEnabled(false);
+        ViewHelper.SetBackgroundTint(btnDelete, getResources().getColor(R.color.worse_10));
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                task.delete();
+
+                finish();
+                dismissKeyboard();
+
+                EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+            }
+        });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
@@ -120,6 +136,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.task = task;
             this.populate(task);
             setTitle(task);
+
+            btnDelete.setEnabled(true);
         } else {
             setTitle((Task) null);
         }
@@ -372,7 +390,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
         if (this.saveTask(this.task)) {
             this.task.save();
-            List<TaskTag> taskTags = new ArrayList<TaskTag>();
             new Select()
                     .from(Tag.class)
                     .where(Condition.column("id").in("", tags.toArray())).async().queryList(tagsSearchingListener);
@@ -408,7 +425,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         @Override
         public void onResultReceived(List<Tag> tags) {
             //UI thread.
-            List<TaskTag> taskTags = new ArrayList<TaskTag>();
+            List<TaskTag> taskTags = new ArrayList<>();
             for (Tag tag : tags) {
                 TaskTag tt = new TaskTag();
                 tt.setTag(tag);

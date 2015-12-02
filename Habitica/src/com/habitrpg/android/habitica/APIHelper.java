@@ -201,8 +201,8 @@ public class APIHelper implements ErrorHandler, Profiler {
 		this.apiService.connectSocial(auth, callback);
 	}
 
-	public void deleteTask(Task item, TaskDeletionCallback cb) {
-        this.apiService.deleteTask(item.getId(), cb);
+	public void deleteTask(String taskId, TaskDeletionCallback cb) {
+        this.apiService.deleteTask(taskId, cb);
     }
 
     public void updateTask(Task item, Callback cb) {

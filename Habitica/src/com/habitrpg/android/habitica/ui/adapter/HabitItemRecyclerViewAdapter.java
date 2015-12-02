@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.OldTaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
@@ -130,7 +129,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filter();
     }
 
-    public void onEvent(OldTaskRemovedEvent evnt) {
+    public void onEvent(TaskRemovedEvent evnt) {
         Task taskToDelete = null;
 
         for(Task t : observableContent) {
