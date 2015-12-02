@@ -3,5 +3,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.habitrpg.android.habitica.TaskFormActivity">
     <item android:id="@+id/action_discard_changes" android:title="@string/discard_changes"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="100" app:showAsAction="always" />
 </menu>

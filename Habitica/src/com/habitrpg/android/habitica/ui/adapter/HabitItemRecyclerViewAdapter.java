@@ -497,22 +497,21 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public class RewardViewHolder extends ViewHolder<Task> {
         RewardItemCardBinding binding;
 
+        @InjectView(R.id.btnReward)
+        Button btnReward;
+
         public RewardViewHolder(View itemView) {
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
 
-            binding.btnReward.setClickable(true);
-            binding.btnReward.setOnClickListener(this);
-            binding.imageView3.setOnClickListener(this);
-            binding.gearElementsLayout.setOnClickListener(this);
-            binding.imageView3.setVisibility(View.GONE);
-
+            btnReward.setClickable(true);
+            btnReward.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (v == binding.btnReward) {
+            if (v == btnReward) {
                 LinearLayout contentViewForDialog = createContentViewForDialog();
 
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
@@ -602,7 +601,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     // endregion
 
     public void loadContent(HabitRPGUser user) {
-        Log.d("setting content", this.taskType);
         this.observableContent = new ObservableArrayList<>();
         if (this.taskType.equals(Task.TYPE_HABIT)) {
             this.observableContent.addAll(user.getHabits());
@@ -627,7 +625,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public void loadContent(boolean forced) {
 
         if (this.observableContent == null || forced) {
-            Log.d("Loading content", this.taskType);
             this.observableContent = new ObservableArrayList<>();
             new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
