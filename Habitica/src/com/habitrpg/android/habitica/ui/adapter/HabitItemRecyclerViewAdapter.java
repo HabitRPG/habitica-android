@@ -639,6 +639,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     private TransactionListener<List<Task>> taskTransactionListener = new TransactionListener<List<Task>>() {
         @Override
         public void onResultReceived(List<Task> tasks) {
+            observableContent.clear();
             observableContent.addAll(tasks);
             if (additionalEntries != null) {
                 additionalEntries.GetAdditionalEntries(HabitItemRecyclerViewAdapter.this);
