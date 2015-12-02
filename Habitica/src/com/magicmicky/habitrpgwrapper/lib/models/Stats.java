@@ -23,7 +23,10 @@ public class Stats extends PlayerMinStats{
     }
 
     public void setToNextLevel(int toNextLevel) {
-        this.toNextLevel = toNextLevel;
+        if (toNextLevel != 0) {
+            this.toNextLevel = toNextLevel;
+
+        }
     }
 
     public int getMaxHealth() {
@@ -39,7 +42,9 @@ public class Stats extends PlayerMinStats{
     }
 
     public void setMaxMP(int maxMP) {
-        this.maxMP = maxMP;
+        if (maxMP != 0) {
+            this.maxMP = maxMP;
+        }
     }
 
 
