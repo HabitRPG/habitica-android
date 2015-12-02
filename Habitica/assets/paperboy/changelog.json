@@ -1,5 +1,22 @@
 [
   {
+    "name": "Version 0.0.12",
+    "items":[
+      {
+        "type": "F",
+        "title": "Delete local-tasks if those were deleted online"
+      },
+      {
+        "type": "F",
+        "title": "add setting for daily reminder"
+      },
+      {
+        "type": "B",
+        "title": "A LOT fixes"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.11",
     "items":[
       {
