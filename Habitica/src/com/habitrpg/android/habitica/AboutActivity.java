@@ -52,6 +52,7 @@ public class AboutActivity extends AppCompatActivity {
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 3);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        pager.setOffscreenPageLimit(1);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
