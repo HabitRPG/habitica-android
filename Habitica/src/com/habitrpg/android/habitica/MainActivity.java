@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.events.OldTaskRemovedEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -28,20 +29,27 @@ import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -126,7 +134,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                 .build();
 
         drawer.setSelectionAtPosition(1);
-        
+
         // Create Checkout
 
         checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
@@ -137,7 +145,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     }
 
 
-    private void saveLoginInformation(){
+    private void saveLoginInformation() {
         HabiticaApplication.User = user;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -145,16 +153,16 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
                 .putString(getString(R.string.SP_email), user.getAuthentication().getLocalAuthentication().getEmail())
                 .commit();
-        try{
-            if(!ans) {
+        try {
+            if (!ans) {
                 throw new Exception("Shared Preferences Username and Email error");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("SHARED PREFERENCES", e.getMessage());
         }
     }
 
-    public void onEvent(OpenGemPurchaseFragmentCommand cmd){
+    public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
@@ -182,7 +190,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
             user = habitRPGUser;
-            setUserData();
+            setUserData(true);
         }
 
         @Override
@@ -196,7 +204,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }
     };
 
-    private void setUserData() {
+    private void setUserData(boolean fromLocalDb) {
         if (user != null) {
             Calendar mCalendar = new GregorianCalendar();
             TimeZone mTimeZone = mCalendar.getTimeZone();
@@ -217,7 +225,119 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
                     }
                 }
             });
+
+            if (!fromLocalDb) {
+                // Update the oldEntries
+                new Thread(new Runnable() {
+                    public void run() {
+
+                        ArrayList<Task> allTasks = new ArrayList<>();
+                        allTasks.addAll(user.getDailys());
+                        allTasks.addAll(user.getTodos());
+                        allTasks.addAll(user.getHabits());
+                        allTasks.addAll(user.getRewards());
+
+                        loadAndRemoveOldTasks(user.getId(), allTasks);
+
+                        ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
+
+                        for(Task t : allTasks){
+                            if(t.checklist != null) {
+                                allChecklistItems.addAll(t.checklist);
+                            }
+                        }
+
+                        loadAndRemoveOldChecklists(allChecklistItems);
+                    }
+                }).start();
+            }
         }
+    }
+
+    private void loadAndRemoveOldTasks(String userId, final List<Task> onlineEntries) {
+        final ArrayList<String> onlineTaskIdList = new ArrayList<>();
+
+        for (Task oTask : onlineEntries) {
+            onlineTaskIdList.add(oTask.getId());
+        }
+
+        // Load Database Tasks
+        new Select().from(Task.class).where(Condition.column("user_id").eq(userId)).async().queryList(new TransactionListener<List<Task>>() {
+            @Override
+            public void onResultReceived(List<Task> tasks) {
+
+                ArrayList<Task> tasksToDelete = new ArrayList<Task>();
+
+                for (Task dbTask : tasks) {
+                    if (!onlineTaskIdList.contains(dbTask.getId())) {
+                        tasksToDelete.add(dbTask);
+                    }
+                }
+
+                for (Task delTask : tasksToDelete) {
+                    // TaskTag
+                    new Delete().from(TaskTag.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                    // ChecklistItem
+                    new Delete().from(ChecklistItem.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                    // Days
+                    new Delete().from(Days.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                    // TASK
+                    delTask.async().delete();
+
+                    EventBus.getDefault().post(new OldTaskRemovedEvent(delTask.getId()));
+                }
+            }
+
+            @Override
+            public boolean onReady(BaseTransaction<List<Task>> baseTransaction) {
+                return false;
+            }
+
+            @Override
+            public boolean hasResult(BaseTransaction<List<Task>> baseTransaction, List<Task> tasks) {
+                return tasks != null && tasks.size() > 0;
+            }
+        });
+    }
+
+    private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries){
+        final ArrayList<String> onlineChecklistItemIdList = new ArrayList<>();
+
+        for (ChecklistItem item : onlineEntries) {
+            onlineChecklistItemIdList.add(item.getId());
+        }
+
+        // Load Database Tasks
+        new Select().from(ChecklistItem.class).async().queryList(new TransactionListener<List<ChecklistItem>>() {
+            @Override
+            public void onResultReceived(List<ChecklistItem> items) {
+
+                ArrayList<ChecklistItem> checkListItemsToDelete = new ArrayList<>();
+
+                for (ChecklistItem chItem : items) {
+                    if (!onlineChecklistItemIdList.contains(chItem.getId())) {
+                        checkListItemsToDelete.add(chItem);
+                    }
+                }
+
+                for (ChecklistItem chItem : checkListItemsToDelete) {
+                   chItem.async().delete();
+                }
+            }
+
+            @Override
+            public boolean onReady(BaseTransaction<List<ChecklistItem>> baseTransaction) {
+                return false;
+            }
+
+            @Override
+            public boolean hasResult(BaseTransaction<List<ChecklistItem>> baseTransaction, List<ChecklistItem> items) {
+                return items != null && items.size() > 0;
+            }
+        });
     }
 
     private void updateUserAvatars() {
@@ -255,7 +375,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
-        MainActivity.this.setUserData();
+        MainActivity.this.setUserData(false);
     }
 
     @Override
@@ -284,7 +404,7 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
 
     @Override
     public void onDestroy() {
-        if(checkout != null)
+        if (checkout != null)
             checkout.stop();
 
         super.onDestroy();

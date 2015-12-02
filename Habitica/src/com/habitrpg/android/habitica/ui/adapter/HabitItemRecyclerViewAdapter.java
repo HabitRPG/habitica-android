@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.OldTaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
@@ -58,11 +59,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
         implements IReceiveNewEntries {
 
-
     public interface IAdditionalEntries {
         void GetAdditionalEntries(IReceiveNewEntries callBack);
     }
-
 
     int layoutResource;
     private Class<ViewHolder<Task>> viewHolderClass;
@@ -129,6 +128,21 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         observableContent.add(0, evnt.task);
         filter();
+    }
+
+    public void onEvent(OldTaskRemovedEvent evnt) {
+        Task taskToDelete = null;
+
+        for(Task t : observableContent) {
+            if(t.getId().equals(evnt.deletedTaskId)){
+                taskToDelete = t;
+            }
+        }
+
+        if(taskToDelete != null) {
+            observableContent.remove(taskToDelete);
+            filter();
+        }
     }
 
     private void updateTask(Task task) {
