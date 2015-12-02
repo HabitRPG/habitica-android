@@ -112,8 +112,13 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-        FrameLayout frame = (FrameLayout) inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
-        floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
+        View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
+        if (view.getClass() == FrameLayout.class) {
+            FrameLayout frame = (FrameLayout) view;
+            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
+        } else {
+            floatingMenu = (FloatingActionMenu) view;
+        }
         FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
         habit_fab.setOnClickListener(new View.OnClickListener() {
             @Override
