@@ -16,7 +16,6 @@
             android:id="@+id/task_task_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material"
             android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
             android:orientation="vertical">
 
@@ -31,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/text"
-                    android:textColor="@color/text_light" />
+                    android:textColor="@android:color/black" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -45,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/notes"
-                    android:textColor="@color/text_light" />
+                    android:textColor="@android:color/black" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -70,29 +69,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/task_startdate_layout"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_gravity="center_horizontal"
-                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/start_date"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <DatePicker
-                    android:id="@+id/task_startdate_picker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginTop="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -112,7 +89,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -137,7 +114,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -167,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginTop="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -210,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+            android:layout_marginTop="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -236,6 +213,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/task_startdate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/start_date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <DatePicker
+                android:id="@+id/task_startdate_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/task_delete_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -251,5 +252,6 @@
                 android:id="@+id/btn.delete.task"/>
 
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

@@ -5,13 +5,13 @@
         android:title="@string/pref_account_header">
     <EditTextPreference
         android:key="accountDetails"
-        android:title="AccountDetails"
+        android:title="@string/account_details"
         android:summary="Check your account details" />
 
 
-    <Preference android:title="LOGOUT"
+    <Preference android:title="@string/logout"
         android:key="logout"
-        android:summary="Logout your account"/>
+        android:summary="Log out of your account"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_reminder_header">
