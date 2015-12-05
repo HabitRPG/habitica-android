@@ -322,9 +322,9 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             }
         });
 
-
-        tabLayout.setupWithViewPager(viewPager);
-
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 
     public void updateUserData(HabitRPGUser user) {

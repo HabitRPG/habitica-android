@@ -511,11 +511,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void onClick(View v) {
             if (v == btnReward) {
+                BuyRewardCommand event = new BuyRewardCommand();
+                event.Reward = Item;
+                EventBus.getDefault().post(event);
+            } else {
                 LinearLayout contentViewForDialog = createContentViewForGearDialog();
-
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
-            } else super.onClick(v);
+            };
         }
 
         private MaterialDialog createGearDialog(LinearLayout contentViewForDialog) {
