@@ -410,9 +410,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
     public void onEvent(TaskTappedEvent event) {
-        if (event.Task.type.equals("reward"))
-            return;
-
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());

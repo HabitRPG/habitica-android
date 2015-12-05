@@ -515,9 +515,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 event.Reward = Item;
                 EventBus.getDefault().post(event);
             } else {
-                LinearLayout contentViewForDialog = createContentViewForGearDialog();
-                MaterialDialog dialog = createGearDialog(contentViewForDialog);
-                dialog.show();
+                if(Item.specialTag != null && Item.specialTag.equals("item")) {
+                    LinearLayout contentViewForDialog = createContentViewForGearDialog();
+                    MaterialDialog dialog = createGearDialog(contentViewForDialog);
+                    dialog.show();
+                } else {
+                    TaskTappedEvent event = new TaskTappedEvent();
+                    event.Task = Item;
+
+                    EventBus.getDefault().post(event);
+                }
             };
         }
 

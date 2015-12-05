@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,8 +41,12 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
+
+// TODO refactor all to use butterknife
 public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String taskType;
@@ -59,11 +64,18 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private CheckListAdapter checklistAdapter;
     private Button btnDelete;
 
+    @InjectView(R.id.task_value_edittext)
+    EditText taskValue;
+
+    @InjectView(R.id.task_value_layout)
+    TextInputLayout taskValueLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_form);
+
+        ButterKnife.inject(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -78,7 +90,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         taskText = (EditText) findViewById(R.id.task_text_edittext);
         taskNotes = (EditText) findViewById(R.id.task_notes_edittext);
         taskDifficultySpinner = (Spinner) findViewById(R.id.task_difficulty_spinner);
-        btnDelete = (Button)findViewById(R.id.btn_delete_task);
+        btnDelete = (Button) findViewById(R.id.btn_delete_task);
         btnDelete.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnDelete, getResources().getColor(R.color.worse_10));
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -131,10 +143,14 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             mainWrapper.removeView(weekdayWrapper);
         }
 
+        if (!taskType.equals("reward")) {
+            taskValueLayout.setVisibility(View.GONE);
+        }
+
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
-            this.populate(task);
+            populate(task);
             setTitle(task);
 
             btnDelete.setEnabled(true);
@@ -142,7 +158,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             setTitle((Task) null);
         }
 
-        if(taskType.equals("todo") || taskType.equals("daily")){
+        if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
         }
     }
@@ -168,9 +184,9 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
-        final EditText newCheckListEditText = (EditText)findViewById(R.id.new_checklist);
+        final EditText newCheckListEditText = (EditText) findViewById(R.id.new_checklist);
 
-        Button button = (Button)findViewById(R.id.add_checklist_button);
+        Button button = (Button) findViewById(R.id.add_checklist_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,10 +292,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         return super.onOptionsItemSelected(item);
     }
 
-
     private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
+        taskValue.setText(String.format("%.0f", task.value));
+
         float priority = task.getPriority();
         if (priority == 0.1) {
             this.taskDifficultySpinner.setSelection(0);
@@ -318,7 +335,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-
     private boolean saveTask(Task task) {
         task.text = taskText.getText().toString();
 
@@ -327,7 +343,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 task.setChecklist(checklistAdapter.getCheckListItems());
             }
         }
-
 
         if (task.text.isEmpty())
             return false;
@@ -344,31 +359,40 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             task.setPriority((float) 2.0);
         }
 
-        if (task.type.equals("habit")) {
-            task.setUp(positiveCheckBox.isChecked());
-            task.setDown(negativeCheckBox.isChecked());
-        }
-
-        if (task.type.equals("daily")) {
-            if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                task.setFrequency("weekly");
-                Days repeat = task.getRepeat();
-                if (repeat == null) {
-                    repeat = new Days();
-                    task.setRepeat(repeat);
-                }
-
-                repeat.setM(this.weekdayCheckboxes.get(0).isChecked());
-                repeat.setT(this.weekdayCheckboxes.get(1).isChecked());
-                repeat.setW(this.weekdayCheckboxes.get(2).isChecked());
-                repeat.setTh(this.weekdayCheckboxes.get(3).isChecked());
-                repeat.setF(this.weekdayCheckboxes.get(4).isChecked());
-                repeat.setS(this.weekdayCheckboxes.get(5).isChecked());
-                repeat.setSu(this.weekdayCheckboxes.get(6).isChecked());
-            } else {
-                task.setFrequency("daily");
-                task.setEveryX(this.frequencyPicker.getValue());
+        switch (task.type) {
+            case "habit": {
+                task.setUp(positiveCheckBox.isChecked());
+                task.setDown(negativeCheckBox.isChecked());
             }
+            break;
+
+            case "daily": {
+                if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
+                    task.setFrequency("weekly");
+                    Days repeat = task.getRepeat();
+                    if (repeat == null) {
+                        repeat = new Days();
+                        task.setRepeat(repeat);
+                    }
+
+                    repeat.setM(this.weekdayCheckboxes.get(0).isChecked());
+                    repeat.setT(this.weekdayCheckboxes.get(1).isChecked());
+                    repeat.setW(this.weekdayCheckboxes.get(2).isChecked());
+                    repeat.setTh(this.weekdayCheckboxes.get(3).isChecked());
+                    repeat.setF(this.weekdayCheckboxes.get(4).isChecked());
+                    repeat.setS(this.weekdayCheckboxes.get(5).isChecked());
+                    repeat.setSu(this.weekdayCheckboxes.get(6).isChecked());
+                } else {
+                    task.setFrequency("daily");
+                    task.setEveryX(this.frequencyPicker.getValue());
+                }
+            }
+            break;
+
+            case "reward": {
+                task.setValue(Double.parseDouble(taskValue.getText().toString()));
+            }
+            break;
         }
 
         return true;
@@ -414,7 +438,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocus = getCurrentFocus();
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);

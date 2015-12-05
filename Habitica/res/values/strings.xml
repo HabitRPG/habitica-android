@@ -54,7 +54,7 @@
     <string name="task_text">Task:</string>
     <string name="task_note">Note:</string>
     <string name="task_duedate">Due date:</string>
-    <string name="task_value">Value:</string>
+    <string name="task_value">Value</string>
     <string name="task_up">Up</string>
     <string name="task_down">Down</string>
     <string name="dialog_confirm_button">OK</string>

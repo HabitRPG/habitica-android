@@ -47,11 +47,26 @@
                     android:textColor="@android:color/black" />
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/task_value_layout"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                <EditText
+                    android:id="@+id/task_value_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="@string/task_value"
+                    android:textColor="@android:color/black"
+                    android:numeric="decimal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView2"
@@ -59,13 +74,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/difficulty"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <Spinner
                     android:id="@+id/task_difficulty_spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|right" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -76,8 +90,8 @@
             android:id="@+id/task_actions_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -216,8 +230,8 @@
             android:id="@+id/task_startdate_layout"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -245,12 +259,13 @@
             android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
             android:orientation="vertical">
 
-            <Button android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/btn.delete.task"
                 android:layout_width="match_parent"
-                android:text="@string/action_delete"
+                android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_action_delete_white_24"
-                android:textColor="@color/white"
-                android:id="@+id/btn.delete.task"/>
+                android:text="@string/action_delete"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
