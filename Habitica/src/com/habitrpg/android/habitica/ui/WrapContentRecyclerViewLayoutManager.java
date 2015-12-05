@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.raizlabs.android.dbflow.sql.index.Index;
 
 /**
  * http://stackoverflow.com/a/29945693/1315039

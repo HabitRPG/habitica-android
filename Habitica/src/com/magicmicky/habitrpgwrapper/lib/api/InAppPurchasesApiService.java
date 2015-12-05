@@ -3,7 +3,6 @@ package com.magicmicky.habitrpgwrapper.lib.api;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.POST;
 import retrofit.http.Query;

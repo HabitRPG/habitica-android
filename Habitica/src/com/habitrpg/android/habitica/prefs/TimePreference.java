@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.prefs;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
