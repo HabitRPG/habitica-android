@@ -79,12 +79,12 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
                         /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),*/
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)),*/
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withEnabled(false).withBadge(R.string.coming_soon),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withEnabled(false).withBadge(R.string.coming_soon),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withEnabled(false).withBadge(R.string.coming_soon),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
                         new DividerDrawerItem(),
@@ -117,7 +117,7 @@ public class MainDrawerBuilder {
                                 fragment = new TavernFragment();
                                 break;
                             }
-                            case SIDEBAR_PURCHASE:{
+                            case SIDEBAR_PURCHASE: {
                                 fragment = new GemsPurchaseFragment();
                                 break;
                             }
