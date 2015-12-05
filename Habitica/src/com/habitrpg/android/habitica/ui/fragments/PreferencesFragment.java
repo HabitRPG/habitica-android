@@ -74,7 +74,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
 
     private void scheduleNotifications() {
 
-        String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", null);
+        String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
 
         if (timeval != null) {
             String[] pieces = timeval.split(":");
