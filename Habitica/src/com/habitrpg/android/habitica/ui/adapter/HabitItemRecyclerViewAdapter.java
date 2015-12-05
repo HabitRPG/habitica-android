@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
@@ -37,7 +38,6 @@ import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -511,7 +511,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void onClick(View v) {
             if (v == btnReward) {
-                LinearLayout contentViewForDialog = createContentViewForDialog();
+                LinearLayout contentViewForDialog = createContentViewForGearDialog();
 
                 MaterialDialog dialog = createGearDialog(contentViewForDialog);
                 dialog.show();
@@ -528,6 +528,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                             EventBus.getDefault().post(event);
                         }
                     })
+                    .contentGravity(GravityEnum.CENTER)
                     .positiveColor(context.getResources().getColor(R.color.brand_200))
                     .positiveText("Buy")
                     .title(binding.getReward().getText())
@@ -542,35 +543,48 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
 
         @NonNull
-        private LinearLayout createContentViewForDialog() {
+        private LinearLayout createContentViewForGearDialog() {
             String price = String.format("%.0f", binding.getReward().value);
             String content = binding.getReward().getNotes();
 
+            // External ContentView
             LinearLayout contentViewLayout = new LinearLayout(context);
             contentViewLayout.setOrientation(LinearLayout.VERTICAL);
 
-            ImageView imageView = new ImageView(context);
-            imageView.setMinimumWidth(200);
-            imageView.setMinimumHeight(200);
-
-            DataBindingUtils.loadImage(imageView, "shop_" + binding.getReward().getId());
-
-            TextView contentTextView = new TextView(context, null);
-            contentTextView.setText(content);
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+            // Gear Image
+            ImageView gearImageView = new ImageView(context);
+            LinearLayout.LayoutParams gearImageLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.bottomMargin = 20;
-            layoutParams.gravity = Gravity.CENTER;
 
+            gearImageLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+            gearImageLayoutParams.setMargins(0,0,0,20);
+            gearImageView.setMinimumWidth(200);
+            gearImageView.setMinimumHeight(200);
+            gearImageView.setLayoutParams(gearImageLayoutParams);
+            DataBindingUtils.loadImage(gearImageView, "shop_" + binding.getReward().getId());
 
+            // Gear Description
+            TextView contentTextView = new TextView(context, null);
+            if(!content.isEmpty()){
+                contentTextView.setText(content);
+            }
+
+            // GoldPrice View
             LinearLayout goldPriceLayout = new LinearLayout(context);
+            goldPriceLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+            LinearLayout.LayoutParams goldPriceLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            goldPriceLayoutParams.setMargins(0, 40, 0, 0);
+            goldPriceLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+
             goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
-            goldPriceLayout.setLayoutParams(layoutParams);
+            goldPriceLayout.setLayoutParams(goldPriceLayoutParams);
+            goldPriceLayout.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 
-
+            // Price View
             TextView priceTextView = new TextView(context);
             priceTextView.setText(price);
+            priceTextView.setPadding(10, 0, 0, 0);
 
             ImageView gold = new ImageView(context);
             gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
@@ -581,11 +595,17 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             goldPriceLayout.addView(gold);
             goldPriceLayout.addView(priceTextView);
 
-            if(imageView.getDrawable()!= null){
-                contentViewLayout.addView(imageView);
+            if(gearImageView.getDrawable()!= null){
+                contentViewLayout.addView(gearImageView);
             }
+            contentViewLayout.setGravity(Gravity.CENTER_VERTICAL);
+
             contentViewLayout.addView(goldPriceLayout);
-            contentViewLayout.addView(contentTextView);
+
+            if(!content.isEmpty()){
+                contentViewLayout.addView(contentTextView);
+            }
+
             return contentViewLayout;
         }
 
