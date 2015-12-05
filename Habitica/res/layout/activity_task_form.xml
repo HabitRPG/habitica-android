@@ -76,6 +76,7 @@
             android:id="@+id/task_actions_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -215,6 +216,7 @@
             android:id="@+id/task_startdate_layout"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -224,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/start_date"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <DatePicker
                 android:id="@+id/task_startdate_picker"
