@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDoneException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -284,50 +285,51 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }
 
         Where<Task> query = new Select().from(Task.class).where(Condition.column("user_id").eq(userId));
+        try {
+            if (query.count() != onlineEntries.size()) {
 
-        if (query.count() != onlineEntries.size()) {
+                // Load Database Tasks
+                query.async().queryList(new TransactionListener<List<Task>>() {
+                    @Override
+                    public void onResultReceived(List<Task> tasks) {
 
-            // Load Database Tasks
-            query.async().queryList(new TransactionListener<List<Task>>() {
-                @Override
-                public void onResultReceived(List<Task> tasks) {
+                        ArrayList<Task> tasksToDelete = new ArrayList<Task>();
 
-                    ArrayList<Task> tasksToDelete = new ArrayList<Task>();
+                        for (Task dbTask : tasks) {
+                            if (!onlineTaskIdList.contains(dbTask.getId())) {
+                                tasksToDelete.add(dbTask);
+                            }
+                        }
 
-                    for (Task dbTask : tasks) {
-                        if (!onlineTaskIdList.contains(dbTask.getId())) {
-                            tasksToDelete.add(dbTask);
+                        for (Task delTask : tasksToDelete) {
+                            // TaskTag
+                            new Delete().from(TaskTag.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                            // ChecklistItem
+                            new Delete().from(ChecklistItem.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                            // Days
+                            new Delete().from(Days.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
+
+                            // TASK
+                            delTask.async().delete();
+
+                            EventBus.getDefault().post(new TaskRemovedEvent(delTask.getId()));
                         }
                     }
 
-                    for (Task delTask : tasksToDelete) {
-                        // TaskTag
-                        new Delete().from(TaskTag.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                        // ChecklistItem
-                        new Delete().from(ChecklistItem.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                        // Days
-                        new Delete().from(Days.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                        // TASK
-                        delTask.async().delete();
-
-                        EventBus.getDefault().post(new TaskRemovedEvent(delTask.getId()));
+                    @Override
+                    public boolean onReady(BaseTransaction<List<Task>> baseTransaction) {
+                        return false;
                     }
-                }
 
-                @Override
-                public boolean onReady(BaseTransaction<List<Task>> baseTransaction) {
-                    return false;
-                }
-
-                @Override
-                public boolean hasResult(BaseTransaction<List<Task>> baseTransaction, List<Task> tasks) {
-                    return tasks != null && tasks.size() > 0;
-                }
-            });
-        }
+                    @Override
+                    public boolean hasResult(BaseTransaction<List<Task>> baseTransaction, List<Task> tasks) {
+                        return tasks != null && tasks.size() > 0;
+                    }
+                });
+            }
+        } catch (SQLiteDoneException e) {}
     }
 
     private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries) {
@@ -338,38 +340,40 @@ public class MainActivity extends InstabugAppCompatActivity implements HabitRPGU
         }
 
         From<ChecklistItem> query = new Select().from(ChecklistItem.class);
+        try {
+            if (query.count() != onlineEntries.size()) {
 
-        if (query.count() != onlineEntries.size()) {
+                // Load Database Checklist items
+                query.async().queryList(new TransactionListener<List<ChecklistItem>>() {
+                    @Override
+                    public void onResultReceived(List<ChecklistItem> items) {
 
-            // Load Database Checklist items
-            query.async().queryList(new TransactionListener<List<ChecklistItem>>() {
-                @Override
-                public void onResultReceived(List<ChecklistItem> items) {
+                        ArrayList<ChecklistItem> checkListItemsToDelete = new ArrayList<>();
 
-                    ArrayList<ChecklistItem> checkListItemsToDelete = new ArrayList<>();
+                        for (ChecklistItem chItem : items) {
+                            if (!onlineChecklistItemIdList.contains(chItem.getId())) {
+                                checkListItemsToDelete.add(chItem);
+                            }
+                        }
 
-                    for (ChecklistItem chItem : items) {
-                        if (!onlineChecklistItemIdList.contains(chItem.getId())) {
-                            checkListItemsToDelete.add(chItem);
+                        for (ChecklistItem chItem : checkListItemsToDelete) {
+                            chItem.async().delete();
                         }
                     }
 
-                    for (ChecklistItem chItem : checkListItemsToDelete) {
-                        chItem.async().delete();
+                    @Override
+                    public boolean onReady(BaseTransaction<List<ChecklistItem>> baseTransaction) {
+                        return false;
                     }
-                }
 
-                @Override
-                public boolean onReady(BaseTransaction<List<ChecklistItem>> baseTransaction) {
-                    return false;
-                }
+                    @Override
+                    public boolean hasResult(BaseTransaction<List<ChecklistItem>> baseTransaction, List<ChecklistItem> items) {
+                        return items != null && items.size() > 0;
+                    }
+                });
+            }
+        } catch (SQLiteDoneException e) {}
 
-                @Override
-                public boolean hasResult(BaseTransaction<List<ChecklistItem>> baseTransaction, List<ChecklistItem> items) {
-                    return items != null && items.size() > 0;
-                }
-            });
-        }
     }
 
     private void updateUserAvatars() {
