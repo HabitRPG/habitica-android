@@ -60,7 +60,7 @@ public class PartyFragment extends BaseFragment {
                     partyInformationFragment.setGroup(group);
                 }
 
-                if (group != null && group.quest != null && !group.quest.key.isEmpty()) {
+                if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
                         public void GotQuest(QuestContent content) {

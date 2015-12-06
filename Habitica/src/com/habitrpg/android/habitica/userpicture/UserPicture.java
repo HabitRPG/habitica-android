@@ -24,7 +24,7 @@ public class UserPicture {
 
     static Integer width = 140;
     static Integer height = 147;
-    static Integer compactWidth = 90;
+    static Integer compactWidth = 103;
     static Integer compactHeight = 90;
 
     private HabitRPGUser user;
