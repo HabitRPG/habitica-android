@@ -384,7 +384,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 isClickable = true;
             }
             checklistIndicatorWrapper.setClickable(isClickable);
-            displayChecklist = false;
+            this.setDisplayChecklist(false);
         }
 
         public void setDisplayChecklist(Boolean displayChecklist) {
