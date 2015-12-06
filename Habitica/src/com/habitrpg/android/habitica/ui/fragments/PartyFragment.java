@@ -133,16 +133,6 @@ public class PartyFragment extends BaseFragment {
             }
         });
 
-
         tabLayout.setupWithViewPager(viewPager);
     }
-
-
-    //region Events
-
-    // until there is a party event
-    public void onEvent(CreateTagCommand event) {
-
-    }
-
 }

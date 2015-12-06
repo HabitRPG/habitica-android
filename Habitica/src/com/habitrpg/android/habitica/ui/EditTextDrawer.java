@@ -73,7 +73,9 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
 
         @Override
         public void onClick(View v) {
-            if (editText.getText().equals(""))
+            String text = editText.getText().toString();
+
+            if (text.equals(""))
                 return;
 
             EventBus.getDefault().post(new CreateTagCommand(editText.getText().toString()));

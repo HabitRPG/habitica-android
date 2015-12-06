@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 
 /**
  * Created by viirus on 19/11/15.
@@ -33,10 +32,5 @@ public class TavernFragment extends BaseFragment {
                 fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.tavern_framelayout, fragment);
         fragmentTransaction.commit();
-    }
-
-    //we don't have custom tavern events right now.
-    public void onEvent(CreateTagCommand event) {
-
     }
 }

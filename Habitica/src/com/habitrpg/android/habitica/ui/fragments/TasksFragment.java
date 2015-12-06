@@ -391,14 +391,19 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     //region Events
 
-    public void onEvent(CreateTagCommand event) {
-        Tag t = new Tag();
+    public void onEvent(final CreateTagCommand event) {
+        final Tag t = new Tag();
         t.setName(event.tagName);
-        t.async().save();
 
         mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
             @Override
             public void success(List<Tag> tags, Response response) {
+                // Since we get a list of all tags, we just save them all
+                for(Tag onlineTag : tags){
+                    onlineTag.user_id = user.getId();
+                    onlineTag.async().save();
+                }
+
                 fillTagFilterDrawer(tags);
             }
 
