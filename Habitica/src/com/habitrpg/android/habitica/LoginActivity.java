@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity
 					showValidationError(R.string.login_validation_error_fieldsmissing);
 					return;
 				}
-                mApiHelper.registerUser(v,username,email,password,cpassword);
+                mApiHelper.registerUser(username,email,password, cpassword, LoginActivity.this);
             } else {
                 String username,password;
                 username = String.valueOf(mUsernameET.getText());

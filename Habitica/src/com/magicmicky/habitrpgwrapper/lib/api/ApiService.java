@@ -83,6 +83,9 @@ public interface ApiService {
     @DELETE("/user/tags/{id}")
     void deleteTag(@Path("id") String id, Callback<Void> voidCallback);
 
+    @POST("/register")
+    void registerUser(@Body UserAuth auth, Callback<UserAuthResponse> callback);
+
     @POST("/user/auth/local")
     void connectLocal(@Body UserAuth auth, Callback<UserAuthResponse> callback);
 

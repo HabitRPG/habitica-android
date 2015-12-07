@@ -171,18 +171,16 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.postTaskDirection(id, direction.toString(), callback);
     }
 
-    public void registerUser(View btnClicked, String username, String email, String password, String confirmPassword) {
-
-        //   ATAskRegisterUser reg = new ATAskRegisterUser(mResultListener,mConfig,btnClicked);
-        //	String[] params = {username,email,password,confirmPassword};
-        //	reg.execute(params);
-
+    public void registerUser(String username, String email, String password, String confirmPassword, Callback<UserAuthResponse> callback) {
+        UserAuth auth = new UserAuth();
+        auth.setUsername(username);
+        auth.setPassword(password);
+        auth.setConfirmPassword(confirmPassword);
+        auth.setEmail(email);
+        this.apiService.registerUser(auth, callback);
     }
 
     public void connectUser(String username, String password, Callback<UserAuthResponse> callback) {
-        //	ATaskConnectUser con = new ATaskConnectUser(mResultListener,mConfig,btnClicked);
-        //	String[] params = {username,password};
-        //	con.execute(params);
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);

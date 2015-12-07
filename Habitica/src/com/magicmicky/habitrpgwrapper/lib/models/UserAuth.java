@@ -6,6 +6,8 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 public class UserAuth {
     private String username;
     private String password;
+    private String confirmPassword;
+    private String email;
 
     public String getUsername() {
         return username;
@@ -22,4 +24,16 @@ public class UserAuth {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 }
