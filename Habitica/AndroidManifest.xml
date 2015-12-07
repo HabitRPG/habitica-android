@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".prefs.PrefsActivity"
-            android:theme="@style/AppThemeWithActionBar"
+            android:theme="@style/PreferencesTheme"
             android:parentActivityName=".MainActivity"
             android:label="@string/PS_settings_title">
             <intent-filter>

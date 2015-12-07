@@ -47,6 +47,12 @@
 
     </style>
 
+    <style name="PreferencesTheme" parent="AppThemeWithActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
