@@ -183,10 +183,12 @@ public class LoginActivity extends AppCompatActivity
         if (this.isRegistering) {
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
             menuItem.setTitle(getString(R.string.login_btn));
+			mUsernameET.setHint(R.string.username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         } else {
             this.mLoginNormalBtn.setText(getString(R.string.login_btn));
             menuItem.setTitle(getString(R.string.register_btn));
+			mUsernameET.setHint(R.string.email_username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
         this.resetLayout();
