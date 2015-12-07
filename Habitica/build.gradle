@@ -66,9 +66,6 @@ dependencies {
     // Instant Layout Changing w/o recompile
     compile 'com.github.mmin18.layoutcast:library:1.+@aar'
 
-    // Instabug / In-App-Feedback
-    compile 'com.instabug.library:instabugsupport:+'
-
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
 

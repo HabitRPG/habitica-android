@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.facebook.FacebookSdk;
-import com.instabug.library.Instabug;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -48,9 +47,6 @@ public class HabiticaApplication extends Application {
         FlowManager.init(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-
-        Instabug.DEBUG = BuildConfig.DEBUG;
-        Instabug.initialize(this, "a5aa5f471a9cd8a958c0c55181172655");
     }
 
     // region SQLite overrides

@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +30,6 @@ import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
-import com.instabug.wrapper.support.activity.InstabugAppCompatActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
@@ -66,7 +66,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends InstabugAppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
+public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
 
     public enum SnackbarDisplayType {
         NORMAL, FAILURE, DROP

@@ -37,18 +37,12 @@
             android:theme="@style/PreferencesTheme"
             android:parentActivityName=".MainActivity"
             android:label="@string/PS_settings_title">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/LoginActivityName"
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:windowSoftInputMode="adjustResize" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SkillTasksActivity"
