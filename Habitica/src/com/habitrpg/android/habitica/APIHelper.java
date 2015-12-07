@@ -235,15 +235,17 @@ public class APIHelper implements ErrorHandler, Profiler {
     private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString){
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                new AlertDialog.Builder(activity)
-                        .setTitle(resourceTitleString)
-                        .setMessage(resourceMessageString)
-                        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(R.drawable.ic_warning_black)
-                        .show();
+                if (!(activity).isFinishing()) {
+                    new AlertDialog.Builder(activity)
+                            .setTitle(resourceTitleString)
+                            .setMessage(resourceMessageString)
+                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setIcon(R.drawable.ic_warning_black)
+                            .show();
+                }
             }
         });
     }
