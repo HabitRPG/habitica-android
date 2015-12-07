@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -96,12 +98,25 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                task.delete();
 
-                finish();
-                dismissKeyboard();
+                new AlertDialog.Builder(view.getContext())
+                .setTitle("Are you sure?")
+                .setMessage("Do you really want to delete?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        task.delete();
 
-                EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+                        finish();
+                        dismissKeyboard();
+
+                        EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
             }
         });
 
