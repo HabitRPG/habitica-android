@@ -18,102 +18,100 @@
             <ImageView
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:src="@mipmap/ic_launcher"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10sp"
                 android:autoLink="web"
                 android:text="\@habitica"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp" />
+                android:textSize="@dimen/abc_text_size_title_material" />
 
             <TextView
                 android:id="@+id/webSite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="www.habitica.com"
-                android:autoLink="web"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="10sp"
+                android:autoLink="web"
+                android:text="www.habitica.com"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <TextView
                 android:id="@+id/wiki"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="http://habitica.wikia.com/"
-                android:autoLink="web"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp" />
-
-            <View
-                android:id="@+id/lineDivider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="20sp" />
+                android:layout_marginTop="10sp"
+                android:autoLink="web"
+                android:text="http://habitica.wikia.com/"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <Button
                 android:id="@+id/googlePlayStoreButton"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="@string/about.rate_our_app"
-                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5sp" />
+
+                android:layout_marginTop="35sp"
+                android:background="@drawable/rounded_purple_square"
+                android:capitalize="none"
+                android:text="@string/about.rate_our_app"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <Button
                 android:id="@+id/reportBug"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="@string/about.bugreport"
-                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20sp" />
+                android:layout_marginTop="20sp"
+
+                android:background="@drawable/rounded_purple_square"
+                android:text="@string/about.bugreport"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <Button
                 android:id="@+id/sendFeedback"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="@string/about.give_us_feedback"
-                android:textSize="@dimen/abc_text_size_title_material"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp"
-                android:layout_gravity="center_horizontal" />
-
-            <View
-                android:id="@+id/lineDivider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="5sp" />
+                android:background="@drawable/rounded_purple_square"
+                android:text="@string/about.give_us_feedback"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
             <TextView
                 android:id="@+id/sourceCodeLink"
                 android:layout_width="347dp"
                 android:layout_height="wrap_content"
-                android:text="@string/about.habitica_open_source"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/about.habitica_open_source"
+                android:textSize="@dimen/abc_text_size_small_material" />
 
             <Button
                 android:id="@+id/sourceCodeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10sp"
+                android:background="@drawable/rounded_purple_square"
+
                 android:text="@string/about.source_code"
-                android:textSize="@dimen/abc_text_size_title_material"
-                android:layout_marginTop="2sp"
-                android:layout_gravity="center_horizontal" />
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/abc_text_size_medium_material" />
 
 
         </LinearLayout>
