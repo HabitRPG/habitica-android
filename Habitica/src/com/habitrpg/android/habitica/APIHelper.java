@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -205,6 +204,11 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService.updateTask(item.getId(), item, cb);
     }
 
+    public class ErrorResponse{
+        public String err;
+
+    }
+
 	@Override
 	public Throwable handleError(RetrofitError cause) {
         final Activity activity = (Activity) this.mContext;
@@ -214,9 +218,22 @@ public class APIHelper implements ErrorHandler, Profiler {
             showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
             return cause;
         } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
-            int status = cause.getResponse().getStatus();
+            retrofit.client.Response response = cause.getResponse();
+
+           ErrorResponse res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+
+            int status = response.getStatus();
             if (status == 401) {
-                showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+
+                if(res.err != null && !res.err.isEmpty())
+                {
+                    showConnectionProblemDialog(activity, "", res.err);
+                }
+                else
+                {
+                    showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+                }
+
                 return cause;
             } else if (status >= 500 && status < 600) {
                 showConnectionProblemDialog(activity,R.string.internal_error_api);
@@ -232,19 +249,27 @@ public class APIHelper implements ErrorHandler, Profiler {
         showConnectionProblemDialog(activity, R.string.network_error_title, resourceMessageString);
     }
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString){
+    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString) {
+        showConnectionProblemDialog(activity, activity.getString(resourceTitleString), activity.getString(resourceMessageString));
+    }
+
+    private void showConnectionProblemDialog(final Activity activity, final String resourceTitleString, final String resourceMessageString){
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 if (!(activity).isFinishing()) {
-                    new AlertDialog.Builder(activity)
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                             .setTitle(resourceTitleString)
                             .setMessage(resourceMessageString)
                             .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
-                            })
-                            .setIcon(R.drawable.ic_warning_black)
-                            .show();
+                            });
+
+                    if (!resourceTitleString.isEmpty()) {
+                        builder.setIcon(R.drawable.ic_warning_black);
+                    }
+
+                    builder.show();
                 }
             }
         });

@@ -180,7 +180,8 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void failure(RetrofitError error) {
-                showSnackbar("Failed to like message by " + cmd.chatMessage.user, true);
+
+                //showSnackbar("Failed to like message by " + cmd.chatMessage.user, true);
             }
         });
     }
