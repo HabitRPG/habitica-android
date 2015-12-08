@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
@@ -190,6 +191,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     btnToggleInn.setOnClickListener(this);
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
+                    changeSleepButton(true);
 
                     break;
                 }
@@ -345,6 +347,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
+                changeSleepButton(false);
                 return;
             }
 
@@ -355,6 +358,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             }
 
             textNewMessage.setText("");
+        }
+
+        public void changeSleepButton(boolean startupButton){
+            if(HabiticaApplication.User.getPreferences().getSleep() && startupButton){
+                btnToggleInn.setText("Leave the Inn");
+            }else{
+                btnToggleInn.setText("Rest in the Inn");
+            }
         }
 
         private void toggleLike() {
