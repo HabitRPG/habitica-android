@@ -72,6 +72,15 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     @InjectView(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
 
+    @InjectView(R.id.task_checklist_wrapper)
+    LinearLayout checklistWrapper;
+
+    @InjectView(R.id.task_startdate_layout)
+    LinearLayout startDateWrapper;
+
+    @InjectView(R.id.task_difficulty_wrapper)
+    LinearLayout difficultyWrapper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +169,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         if (!taskType.equals("reward")) {
             taskValueLayout.setVisibility(View.GONE);
+        } else {
+
+            mainWrapper.removeView(checklistWrapper);
+            mainWrapper.removeView(startDateWrapper);
+
+            difficultyWrapper.setVisibility(View.GONE);
         }
 
         if (taskId != null) {
