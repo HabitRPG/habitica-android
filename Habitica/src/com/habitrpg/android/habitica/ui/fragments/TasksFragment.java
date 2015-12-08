@@ -358,7 +358,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
     @Override
-    public void onTaskDataReceived(TaskDirectionData data) {
+    public void onTaskDataReceived(TaskDirectionData data, Task task) {
         notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
@@ -437,58 +437,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
-    }
-
-    public void onEvent(final BuyRewardCommand event) {
-        final String rewardKey = event.Reward.getId();
-
-        if (user.getStats().getGp() < event.Reward.getValue()) {
-            activity.showSnackbar("Not enough Gold", MainActivity.SnackbarDisplayType.FAILURE);
-            return;
-        }
-
-        if (event.Reward.specialTag == "item") {
-            if (rewardKey.equals("potion")) {
-                int currentHp = user.getStats().getHp().intValue();
-                int maxHp = user.getStats().getMaxHealth();
-
-                if (currentHp == maxHp) {
-                    activity.showSnackbar("You don't need to buy an health potion", MainActivity.SnackbarDisplayType.FAILURE);
-                    return;
-                }
-            }
-
-            mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
-
-                @Override
-                public void success(Void aVoid, Response response) {
-                    switch (rewardKey) {
-                        case "potion":
-                            double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
-                            user.getStats().setHp(newHp);
-
-
-                            break;
-                        default:
-
-                            // TODO Add bought item to the avatar
-
-                            break;
-                    }
-
-                    activity.showSnackbar("Buy Reward Successful " + event.Reward.getText());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    activity.showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
-                }
-            });
-        } else {
-            // user created Rewards
-
-            mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
-        }
     }
 
     public void onEvent(final TaskSaveEvent event) {

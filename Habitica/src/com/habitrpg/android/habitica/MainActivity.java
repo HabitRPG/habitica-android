@@ -21,7 +21,9 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.prefs.PrefsActivity;
@@ -31,6 +33,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -66,7 +70,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived {
+public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived, TaskScoringCallback.OnTaskScored {
 
     public enum SnackbarDisplayType {
         NORMAL, FAILURE, DROP
@@ -465,4 +469,87 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         }
         snackbar.show();
     }
+
+    public void onEvent(final BuyRewardCommand event) {
+        final String rewardKey = event.Reward.getId();
+
+        if (user.getStats().getGp() < event.Reward.getValue()) {
+            this.showSnackbar("Not enough Gold", MainActivity.SnackbarDisplayType.FAILURE);
+            return;
+        }
+
+        switch (rewardKey) {
+            case "potion":
+                double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
+                user.getStats().setHp(newHp);
+
+
+                break;
+            default:
+                double newGp = user.getStats().getGp() - event.Reward.getValue();
+                user.getStats().setGp(newGp);
+
+                break;
+        }
+
+        if (event.Reward.specialTag == "item") {
+            if (rewardKey.equals("potion")) {
+                int currentHp = user.getStats().getHp().intValue();
+                int maxHp = user.getStats().getMaxHealth();
+
+                if (currentHp == maxHp) {
+                    this.showSnackbar("You don't need to buy an health potion", MainActivity.SnackbarDisplayType.FAILURE);
+                    return;
+                } else {
+                    double newHp = Math.max(0, user.getStats().getHp() - 15);
+                    user.getStats().setHp(newHp);
+                }
+            }
+
+            mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
+
+                @Override
+                public void success(Void aVoid, Response response) {
+                    showSnackbar(event.Reward.getText() + " successfully purchased!");
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    double newGp = user.getStats().getGp() + event.Reward.getValue();
+                    user.getStats().setGp(newGp);
+                    switch (rewardKey) {
+                        case "potion":
+                            double newHp = Math.max(0, user.getStats().getHp() - 15);
+                            user.getStats().setHp(newHp);
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                    user.async().save();
+                    setUserData(true);
+                    showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
+                }
+            });
+        } else {
+            // user created Rewards
+            mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
+        }
+        user.async().save();
+        setUserData(true);
+    }
+
+    @Override
+    public void onTaskDataReceived(TaskDirectionData data, Task task) {
+        if (task.type.equals("reward")) {
+            showSnackbar(task.getText() + " successfully purchased!");
+        }
+    }
+
+    @Override
+    public void onTaskScoringFailed() {
+
+    }
+
 }

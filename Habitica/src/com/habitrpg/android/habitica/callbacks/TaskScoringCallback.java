@@ -27,10 +27,12 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     @Override
     public void success(TaskDirectionData taskDirectionData, Response response) {
         Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
-        task.value = task.value + taskDirectionData.getDelta();
+        if (!task.type.equals("reward")) {
+            task.value = task.value + taskDirectionData.getDelta();
 
-        task.save();
-        this.mCallback.onTaskDataReceived(taskDirectionData);
+            task.save();
+        }
+        this.mCallback.onTaskDataReceived(taskDirectionData, task);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     }
 
     public interface OnTaskScored {
-        void onTaskDataReceived(TaskDirectionData data);
+        void onTaskDataReceived(TaskDirectionData data, Task task);
 
         void onTaskScoringFailed();
     }
