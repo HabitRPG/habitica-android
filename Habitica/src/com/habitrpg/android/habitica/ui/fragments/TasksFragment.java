@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.TaskFormActivity;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
@@ -98,6 +100,8 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     private TagsHelper tagsHelper;
     private ContentCache contentCache;
 
+    private boolean displayingTaskForm;
+
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
         contentCache = new ContentCache(mAPIHelper.apiService);
@@ -107,6 +111,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
+        this.displayingTaskForm = false;
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_tasks, container, false);
 
@@ -374,6 +379,9 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
 
     private void openNewTaskActivity(String type) {
+        if (this.displayingTaskForm) {
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
@@ -381,7 +389,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
+        this.displayingTaskForm = true;
         startActivityForResult(intent, TASK_CREATED_RESULT);
     }
 
@@ -399,7 +407,7 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
             @Override
             public void success(List<Tag> tags, Response response) {
                 // Since we get a list of all tags, we just save them all
-                for(Tag onlineTag : tags){
+                for (Tag onlineTag : tags) {
                     onlineTag.user_id = user.getId();
                     onlineTag.async().save();
                 }
@@ -415,12 +423,16 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
     public void onEvent(TaskTappedEvent event) {
+        if (this.displayingTaskForm) {
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
         bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
+        this.displayingTaskForm = true;
         startActivityForResult(intent, TASK_UPDATED_RESULT);
     }
 
@@ -640,5 +652,16 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         DrawerLayout layout =  filterDrawer.getDrawerLayout();
         layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (TASK_CREATED_RESULT) :
+            case (TASK_UPDATED_RESULT) :
+                this.displayingTaskForm = false;
+                break;
+        }
     }
 }
