@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:imeOptions="actionNext"
-        android:hint="@string/email_username"
+        android:hint="@string/username"
                 />
 
         </TableRow>
@@ -71,8 +71,7 @@
         <TableRow
             android:id="@+id/email_row"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:layout_width="17dp"
@@ -111,7 +110,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionNext"
             android:hint="@string/password"
             />
         </TableRow>
@@ -119,8 +118,7 @@
         <TableRow
             android:id="@+id/confirm_password_row"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:layout_width="17dp"
@@ -155,7 +153,7 @@
                     android:id="@+id/login_btn"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_btn"
+                    android:text="@string/register_btn"
                     android:layout_gravity="center_horizontal" />
 
                 <ProgressBar

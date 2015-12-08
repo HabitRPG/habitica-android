@@ -141,7 +141,7 @@
     <string name="checklist.item.hint">Add item…</string>
     <string name="title_activity_task_form">Add Task</string>
 
-    <string name="discard_changes">Cancel</string>
+    <string name="save_changes">Save</string>
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
@@ -195,4 +195,6 @@
     <string name="reminder_title">Remember to check off your Dailies!</string>
     <string name="skill_progress_title">Using Skill</string>
     <string name="coming_soon">Coming Soon</string>
+    <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
+    <string name="flag_confirm">Flag Message</string>
 </resources>

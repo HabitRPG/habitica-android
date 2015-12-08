@@ -7,7 +7,7 @@
 			android:id="@+id/action_toggleRegistering"
 			android:orderInCategory="1"
 			app:showAsAction="ifRoom"
-			android:title="@string/register_btn"
+			android:title="@string/login_btn"
 			abc:showAsAction="ifRoom"/>
 
 </menu>

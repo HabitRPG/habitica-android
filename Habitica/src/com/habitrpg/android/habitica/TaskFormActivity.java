@@ -313,9 +313,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_discard_changes) {
-            finish();
-            dismissKeyboard();
+        if (id == R.id.action_save_changes) {
+            finishActivitySuccessfuly();
             return true;
         }
 
@@ -452,13 +451,15 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public boolean onSupportNavigateUp() {
-        this.finishActivitySuccessfuly();
+        finish();
+        dismissKeyboard();
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        this.finishActivitySuccessfuly();
+        finish();
+        dismissKeyboard();
     }
 
     private void finishActivitySuccessfuly() {

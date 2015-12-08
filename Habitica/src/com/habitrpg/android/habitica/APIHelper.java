@@ -68,6 +68,7 @@ public class APIHelper implements ErrorHandler, Profiler {
             public void intercept(RequestInterceptor.RequestFacade request) {
                 request.addHeader("x-api-key", cfg.getApi());
                 request.addHeader("x-api-user", cfg.getUser());
+                request.addHeader("x-client", "habitica-android");
             }
         };
 
