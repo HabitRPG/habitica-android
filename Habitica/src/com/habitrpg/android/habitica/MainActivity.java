@@ -455,7 +455,10 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     }
 
     public void showSnackbar(String content, SnackbarDisplayType displayType) {
-        Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
+        if (this.isFinishing()) {
+            return;
+        }
+            Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
 
         if (displayType == SnackbarDisplayType.FAILURE) {
