@@ -115,7 +115,6 @@ public class LoginActivity extends AppCompatActivity
 		mApiHelper = new APIHelper(this,hc);
 
         this.isRegistering = true;
-        this.setRegistering(this.isRegistering);
     }
 
 	private void resetLayout() {
