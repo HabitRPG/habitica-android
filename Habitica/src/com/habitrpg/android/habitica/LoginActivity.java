@@ -114,8 +114,9 @@ public class LoginActivity extends AppCompatActivity
         }
 		mApiHelper = new APIHelper(this,hc);
 
-        this.isRegistering = false;
-	}
+        this.isRegistering = true;
+        this.setRegistering(this.isRegistering);
+    }
 
 	private void resetLayout() {
 		if (this.isRegistering) {
@@ -181,16 +182,20 @@ public class LoginActivity extends AppCompatActivity
 
 	private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
+        this.setRegistering(this.isRegistering);
+	}
+
+	private void setRegistering(boolean registering) {
         MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
         if (this.isRegistering) {
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
             menuItem.setTitle(getString(R.string.login_btn));
-			mUsernameET.setHint(R.string.username);
+            mUsernameET.setHint(R.string.username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         } else {
             this.mLoginNormalBtn.setText(getString(R.string.login_btn));
             menuItem.setTitle(getString(R.string.register_btn));
-			mUsernameET.setHint(R.string.email_username);
+            mUsernameET.setHint(R.string.email_username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
         this.resetLayout();
