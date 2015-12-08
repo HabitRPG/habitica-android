@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.facebook.FacebookSdk;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -22,6 +23,8 @@ import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 /**
@@ -68,7 +71,65 @@ public class HabiticaApplication extends Application {
         if(!name.endsWith(".db")){
             name += ".db";
         }
-        return super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
+
+        FlowManager.destroy();
+        reflectionHack(getApplicationContext());
+
+        boolean deleted = super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
+
+        if (deleted) {
+            Log.i("hack","Database deleted");
+        } else {
+            Log.e("hack", "Database not deleted");
+        }
+
+        if (exists(getApplicationContext())) {
+            Log.i("hack", "Database exists before FlowManager.init");
+        } else {
+            Log.i("hack", "Database does not exist before FlowManager.init");
+        }
+
+        return deleted;
+    }
+
+    // Hack for DBFlow - Not deleting Database
+    // https://github.com/kaeawc/dbflow-sample-app/blob/master/app/src/main/java/io/kaeawc/flow/app/ui/MainActivityFragment.java#L201
+    private void reflectionHack(@NonNull Context context) {
+
+        try {
+            Field field = FlowManager.class.getDeclaredField("mDatabaseHolder");
+            setFinalStatic(field, null);
+        } catch (NoSuchFieldException noSuchField) {
+            Log.e("nosuchfield", "No such field exists in FlowManager");
+        } catch (IllegalAccessException illegalAccess) {
+            Log.e("illegalaccess", "Illegal access of FlowManager");
+        }
+
+        FlowManager.init(context);
+
+        if (exists(context)) {
+            Log.i("Database", "Database exists after FlowManager.init with reflection hack");
+        } else {
+            Log.i("Database", "Database does not exist after FlowManager.init with reflection hack");
+        }
+    }
+
+    public static boolean exists(@NonNull Context context) {
+
+        String databaseName =  "HabiticaDatabase/" + HabitDatabase.NAME;
+
+        try {
+            File dbFile = context.getDatabasePath(databaseName);
+            return dbFile.exists();
+        } catch (Exception exception) {
+            Log.e(exception.toString(), "Database %s doesn't exist.");
+            return false;
+        }
+    }
+
+    private static void setFinalStatic(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
+        field.setAccessible(true);
+        field.set(null, newValue);
     }
 
     @Override
