@@ -55,6 +55,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
 
         if (preference.getKey().equals("logout")) {
             HabiticaApplication.logout(context);
+            getActivity().finish();
         }else if(preference.getKey().equals("accountDetails")) {
             openAccountDetailsFragment();
         }

@@ -143,7 +143,9 @@ public class HabiticaApplication extends Application {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
-        context.startActivity(new Intent(context, LoginActivity.class));
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     public static void checkUserAuthentication(Context context, HostConfig hostConfig) {
