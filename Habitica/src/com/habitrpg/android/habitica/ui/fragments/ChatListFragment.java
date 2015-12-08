@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
@@ -47,8 +50,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private HabitRPGUser user;
     private String userId;
     private boolean isTavern;
+    private MainActivity activity;
 
-    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, boolean isTavern) {
+    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
 
         this.ctx = ctx;
         this.groupId = groupId;
@@ -56,6 +60,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         this.user = user;
         this.userId = user.getId();
         this.isTavern = isTavern;
+        this.activity = activity;
 
         // Receive Events
         EventBus.getDefault().register(this);
@@ -144,32 +149,27 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     }
 
-
-    private void showSnackbar(String msg, boolean negative) {
-        Snackbar snackbar = Snackbar.make(mRecyclerView, msg, Snackbar.LENGTH_LONG);
-
-        if (negative) {
-            View snackbarView = snackbar.getView();
-
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(Color.RED);
-        }
-
-        snackbar.show();
-    }
-
     public void onEvent(final FlagChatMessageCommand cmd) {
-        apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                showSnackbar("Flagged message by " + cmd.chatMessage.user, false);
-            }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.chat_flag_confirmation)
+                .setPositiveButton(R.string.flag_confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
+                            @Override
+                            public void success(Void aVoid, Response response) {
+                                activity.showSnackbar("Flagged message by " + cmd.chatMessage.user);
+                            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                showSnackbar("Failed to flag message by " + cmd.chatMessage.user, true);
-            }
-        });
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });                    }
+                })
+                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        builder.show();
     }
 
     public void onEvent(final ToggleLikeMessageCommand cmd) {
@@ -180,7 +180,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void failure(RetrofitError error) {
-                showSnackbar("Failed to like message by " + cmd.chatMessage.user, true);
             }
         });
     }

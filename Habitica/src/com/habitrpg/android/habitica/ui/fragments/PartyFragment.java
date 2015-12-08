@@ -98,7 +98,7 @@ public class PartyFragment extends BaseFragment {
                         break;
                     }
                     case 1: {
-                        fragment = new ChatListFragment(activity, "party", mAPIHelper, user, false);
+                        fragment = new ChatListFragment(activity, "party", mAPIHelper, user, activity, false);
                         break;
                     }
                     case 2: {
