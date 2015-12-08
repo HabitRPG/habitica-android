@@ -362,7 +362,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
         public void changeSleepButton(boolean startupButton){
             if(HabiticaApplication.User.getPreferences().getSleep() && startupButton){
-                btnToggleInn.setText("Leave the Inn");
+                btnToggleInn.setText("Check Out of Inn");
             }else{
                 btnToggleInn.setText("Rest in the Inn");
             }
