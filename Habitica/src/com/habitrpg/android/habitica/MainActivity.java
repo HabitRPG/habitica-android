@@ -287,6 +287,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                         loadAndRemoveOldChecklists(allChecklistItems);
                     }
                 }).start();
+            }else{
+                displayDeathDialogIfNeeded();
             }
         }
     }
