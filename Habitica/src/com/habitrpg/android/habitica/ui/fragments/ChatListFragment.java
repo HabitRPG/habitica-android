@@ -35,6 +35,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.EventBusException;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -51,6 +52,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private String userId;
     private boolean isTavern;
     private MainActivity activity;
+    private boolean registerEventBus = false;
 
     public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
 
@@ -61,9 +63,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         this.userId = user.getId();
         this.isTavern = isTavern;
         this.activity = activity;
-
-        // Receive Events
-        EventBus.getDefault().register(this);
     }
 
     private View view;
@@ -73,6 +72,14 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_chatlist, container, false);
+
+        // Receive Events
+        try {
+            EventBus.getDefault().register(this);
+            registerEventBus = true;
+        } catch (EventBusException ignored) {
+
+        }
 
         return view;
     }
@@ -242,4 +249,11 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        if (registerEventBus) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyView();
+    }
 }
