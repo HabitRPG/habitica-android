@@ -140,8 +140,12 @@ public class HabiticaApplication extends Application {
     public static void logout(Context context) {
         Instance.deleteDatabase(HabitDatabase.NAME);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean use_reminder = preferences.getBoolean("use_reminder", false);
+        String reminder_time = preferences.getString("reminder_time", "");
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
+        editor.putBoolean("use_reminder", use_reminder);
+        editor.putString("reminder_time", reminder_time);
         editor.commit();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
