@@ -141,7 +141,7 @@ public class HabiticaApplication extends Application {
         Instance.deleteDatabase(HabitDatabase.NAME);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean use_reminder = preferences.getBoolean("use_reminder", false);
-        String reminder_time = preferences.getString("reminder_time", "");
+        String reminder_time = preferences.getString("reminder_time", "19:00");
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.putBoolean("use_reminder", use_reminder);
