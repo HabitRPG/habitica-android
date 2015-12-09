@@ -32,6 +32,10 @@ public class TagsHelper {
         return this.tagsId;
     }
 
+    public boolean isTagChecked(String tagID) {
+        return this.tagsId.contains(tagID);
+    }
+
     public List<Task> filter(List<Task> tasks) {
         List<Task> filtered = new ArrayList<Task>();
         for (Task t : tasks) {

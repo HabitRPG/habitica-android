@@ -161,7 +161,9 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
 
         viewPager.setCurrentItem(0);
-        this.tagsHelper = new TagsHelper();
+        if (this.tagsHelper == null) {
+            this.tagsHelper = new TagsHelper();
+        }
 
         loadTaskLists();
 
@@ -462,6 +464,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
             filterDrawer.addItem(new SwitchDrawerItem()
                             .withName(t.getName())
                             .withTag(t)
+                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
                             .withOnCheckedChangeListener(this)
             );
         }
