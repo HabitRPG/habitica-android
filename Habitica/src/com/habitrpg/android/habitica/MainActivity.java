@@ -47,6 +47,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -418,6 +420,21 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
             }
         });
         accountHeader.updateProfile(profile);
+
+        IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+        if (user.getStats().getLvl() < 11 && item.isEnabled()) {
+            IDrawerItem newItem = new PrimaryDrawerItem()
+                    .withName(this.getString(R.string.sidebar_skills))
+                    .withEnabled(false)
+                    .withBadge(this.getString(R.string.unlock_lvl_10))
+                    .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+            drawer.updateItem(newItem);
+        } else if (user.getStats().getLvl() >= 11 && !item.isEnabled()) {
+            IDrawerItem newItem = new PrimaryDrawerItem()
+                    .withName(this.getString(R.string.sidebar_skills))
+                    .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+            drawer.updateItem(newItem);
+        }
     }
 
     @Override
