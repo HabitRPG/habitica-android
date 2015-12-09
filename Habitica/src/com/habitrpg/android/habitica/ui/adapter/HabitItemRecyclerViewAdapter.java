@@ -584,7 +584,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             goldPriceLayout.setGravity(Gravity.CENTER_HORIZONTAL);
             LinearLayout.LayoutParams goldPriceLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            goldPriceLayoutParams.setMargins(0, 40, 0, 0);
+            goldPriceLayoutParams.setMargins(0, 0, 0, 16);
             goldPriceLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
 
             goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
