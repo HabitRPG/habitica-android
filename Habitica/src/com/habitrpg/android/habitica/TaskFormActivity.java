@@ -133,6 +133,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskDifficultySpinner.setAdapter(adapter);
+        taskDifficultySpinner.setSelection(1);
 
         if (taskType.equals("habit")) {
             LinearLayout startDateLayout = (LinearLayout) findViewById(R.id.task_startdate_layout);
