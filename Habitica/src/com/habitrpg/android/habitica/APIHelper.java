@@ -30,8 +30,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
@@ -94,6 +96,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
                 .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
                 .registerTypeAdapter(SkillList.class, new SkillDeserializer())
+                .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
