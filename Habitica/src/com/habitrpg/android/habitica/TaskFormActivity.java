@@ -109,8 +109,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View view) {
 
                 new AlertDialog.Builder(view.getContext())
-                .setTitle("Are you sure?")
-                .setMessage("Do you really want to delete?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you really want to delete?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         task.delete();
@@ -166,6 +166,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             this.frequencyContainer = (LinearLayout) weekdayWrapper.findViewById(R.id.task_frequency_container);
         } else {
             mainWrapper.removeView(weekdayWrapper);
+            mainWrapper.removeView(startDateWrapper);
         }
 
         if (!taskType.equals("reward")) {
@@ -173,7 +174,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         } else {
 
             mainWrapper.removeView(checklistWrapper);
-            mainWrapper.removeView(startDateWrapper);
 
             difficultyWrapper.setVisibility(View.GONE);
         }
