@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -41,6 +42,9 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -77,6 +81,9 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @InjectView(R.id.task_startdate_layout)
     LinearLayout startDateWrapper;
+
+    @InjectView(R.id.task_startdate_picker)
+    DatePicker startDatePicker;
 
     @InjectView(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
@@ -161,7 +168,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             this.dailyFrequencySpinner.setAdapter(frequencyAdapter);
             this.dailyFrequencySpinner.setOnItemSelectedListener(this);
-
 
             this.frequencyContainer = (LinearLayout) weekdayWrapper.findViewById(R.id.task_frequency_container);
         } else {
@@ -344,6 +350,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
 
         if (task.type.equals("daily")) {
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(task.getStartDate());
+            startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
             if (task.getFrequency().equals("weekly")) {
                 this.dailyFrequencySpinner.setSelection(0);
                 if (weekdayCheckboxes.size() == 7) {
@@ -397,6 +408,11 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             break;
 
             case "daily": {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getStartDate());
+                calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
+
+                task.setStartDate(new Date(calendar.getTimeInMillis()));
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
                     Days repeat = task.getRepeat();
