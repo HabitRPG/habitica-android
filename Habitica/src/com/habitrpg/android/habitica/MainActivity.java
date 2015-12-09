@@ -81,7 +81,7 @@ import retrofit.client.Response;
 public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived, TaskScoringCallback.OnTaskScored {
 
     public enum SnackbarDisplayType {
-        NORMAL, FAILURE, DROP
+        NORMAL, FAILURE, FAILURE_BLUE, DROP
     }
 
     BaseFragment activeFragment;
@@ -487,9 +487,10 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         View snackbarView = snackbar.getView();
 
         if (displayType == SnackbarDisplayType.FAILURE) {
-
             //change Snackbar's background color;
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
+        } else if(displayType == SnackbarDisplayType.FAILURE_BLUE) {
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_100));
         } else if (displayType == SnackbarDisplayType.DROP) {
             TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
             tv.setMaxLines(5);
@@ -510,15 +511,15 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         user.getStats().setGp(newGp);
 
         if (rewardKey.equals("potion")) {
-                int currentHp = user.getStats().getHp().intValue();
-                int maxHp = user.getStats().getMaxHealth();
+            int currentHp = user.getStats().getHp().intValue();
+            int maxHp = user.getStats().getMaxHealth();
 
-                if (currentHp == maxHp) {
-                    this.showSnackbar("You don't need to buy an health potion", MainActivity.SnackbarDisplayType.FAILURE);
-                    return;
-                }
-                double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
-                user.getStats().setHp(newHp);
+            if (currentHp == maxHp) {
+                this.showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
+                return;
+            }
+            double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
+            user.getStats().setHp(newHp);
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
@@ -526,6 +527,15 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
                 @Override
                 public void success(Void aVoid, Response response) {
+                    if (!event.Reward.getId().equals("potion")) {
+                        EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
+                    } else {
+                        // TODO Update gears in avatar
+                    }
+
+                    user.async().save();
+                    MainActivity.this.setUserData(true);
+
                     showSnackbar(event.Reward.getText() + " successfully purchased!");
                 }
 
@@ -543,8 +553,9 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                             break;
                     }
 
+                    avatarInHeader.updateData(user);
                     user.async().save();
-                    setUserData(true);
+
                     showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
                 }
             });
@@ -552,8 +563,9 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
             // user created Rewards
             mAPIHelper.updateTaskDirection(rewardKey, TaskDirection.down, new TaskScoringCallback(this, rewardKey));
         }
+
+        avatarInHeader.updateData(user);
         user.async().save();
-        setUserData(true);
     }
 
     @Override

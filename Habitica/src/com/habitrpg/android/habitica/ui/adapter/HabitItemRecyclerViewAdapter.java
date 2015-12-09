@@ -135,6 +135,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         for(Task t : observableContent) {
             if(t.getId().equals(evnt.deletedTaskId)){
                 taskToDelete = t;
+                break;
             }
         }
 
