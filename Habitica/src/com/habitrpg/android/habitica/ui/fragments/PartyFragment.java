@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,25 @@ public class PartyFragment extends BaseFragment {
 
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 
+        if (this.user.getParty() == null ) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                    .setMessage(activity.getString(R.string.no_party_message))
+                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            builder.show();
+            return v;
+        } else if (this.user.getParty().id == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                    .setMessage(activity.getString(R.string.no_party_message))
+                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            builder.show();
+            return v;
+        }
 
         // Get the full group data
         mAPIHelper.apiService.getGroup("party", new Callback<Group>() {

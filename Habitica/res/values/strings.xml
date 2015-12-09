@@ -198,4 +198,5 @@
     <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
     <string name="flag_confirm">Flag Message</string>
     <string name="unlock_lvl_10">Unlock at lvl 10</string>
+    <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
 </resources>
