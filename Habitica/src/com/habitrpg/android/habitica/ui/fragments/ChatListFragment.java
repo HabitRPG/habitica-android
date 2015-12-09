@@ -116,12 +116,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         onRefresh();
     }
 
-    public void setRefreshEnabled(boolean enable) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setEnabled(enable);
-        }
-    }
-
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
@@ -134,15 +128,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
-
-        // filter flagged messages
-        for (int i = chatMessages.size() - 1; i >= 0; i--) {
-            ChatMessage msg = chatMessages.get(i);
-
-            if (msg.flagCount >= 2) {
-                chatMessages.remove(msg);
-            }
-        }
 
         ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
 
