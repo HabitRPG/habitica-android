@@ -191,7 +191,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     btnToggleInn.setOnClickListener(this);
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
-                    changeSleepButton(true);
+                    if(HabiticaApplication.User.getPreferences().getSleep()){
+                        btnToggleInn.setText("Check Out of Inn");
+                    }else{
+                        btnToggleInn.setText("Rest in the Inn");
+                    }
 
                     break;
                 }
@@ -347,7 +351,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
-                changeSleepButton(false);
+                if(!HabiticaApplication.User.getPreferences().getSleep()){
+                    btnToggleInn.setText("Check Out of Inn");
+                }else{
+                    btnToggleInn.setText("Rest in the Inn");
+                }
                 return;
             }
 
@@ -358,14 +366,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             }
 
             textNewMessage.setText("");
-        }
-
-        public void changeSleepButton(boolean startupButton){
-            if(HabiticaApplication.User.getPreferences().getSleep() && startupButton){
-                btnToggleInn.setText("Check Out of Inn");
-            }else{
-                btnToggleInn.setText("Rest in the Inn");
-            }
         }
 
         private void toggleLike() {
