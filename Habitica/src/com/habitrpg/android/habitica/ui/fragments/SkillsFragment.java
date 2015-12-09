@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.SkillTasksActivity;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
@@ -93,6 +94,7 @@ public class SkillsFragment extends BaseFragment {
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
         activity.showSnackbar(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
     }
 
     @Override
