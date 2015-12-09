@@ -409,7 +409,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
             case "daily": {
                 Calendar calendar = new GregorianCalendar();
-                calendar.setTime(task.getStartDate());
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
 
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
