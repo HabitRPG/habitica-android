@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.habitrpg.android.habitica"
-    android:versionCode="17"
-    android:versionName="0.0.17"
+    android:versionCode="18"
+    android:versionName="0.0.18"
     android:screenOrientation="portrait" >
 
     <uses-sdk
