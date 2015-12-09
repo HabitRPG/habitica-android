@@ -154,7 +154,10 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="@string/register_btn"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_purple_square"
+                    />
 
                 <ProgressBar
                     android:id="@+id/PB_AsyncTask"
