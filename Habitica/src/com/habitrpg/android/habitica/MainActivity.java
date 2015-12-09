@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
@@ -185,23 +186,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         }
     }
 
-    public void onEvent(final DeleteTaskCommand cmd){
-        mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-    }
-
-    public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
-        drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -501,6 +485,12 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         snackbar.show();
     }
 
+    // region Events
+
+    public void onEvent(ToggledInnStateEvent evt) {
+        avatarInHeader.updateData(user);
+    }
+
     public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
 
@@ -569,6 +559,27 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         avatarInHeader.updateData(user);
         user.async().save();
     }
+
+
+    public void onEvent(final DeleteTaskCommand cmd){
+        mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
+        drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
+    }
+
+    // endregion
 
     @Override
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
