@@ -57,6 +57,9 @@ public class Task extends BaseModel {
     @Column
     public Date dateCreated;
 
+    @Column
+    public int position;
+
     //Habits
     @Column
     public Boolean up, down;

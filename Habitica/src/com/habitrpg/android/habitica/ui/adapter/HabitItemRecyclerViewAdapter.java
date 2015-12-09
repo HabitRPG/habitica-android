@@ -644,7 +644,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                                     .begin(Condition.column("completed").eq(false))
                                     .or(Condition.column("type").eq("daily"))
                     )
-                    .orderBy(OrderBy.columns("dateCreated").descending())
+                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
                     .async()
                     .queryList(taskTransactionListener);
 
