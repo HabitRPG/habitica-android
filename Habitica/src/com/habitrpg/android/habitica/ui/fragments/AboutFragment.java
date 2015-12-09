@@ -81,11 +81,9 @@ public class AboutFragment extends Fragment {
     }
 
     private void sendEmail(String subject) {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mobile@habitica.com"});
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto","mobile@habitica.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 }
