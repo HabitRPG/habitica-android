@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDoneException;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,12 +18,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
@@ -33,6 +38,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -99,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     AvatarWithBarsViewModel avatarInHeader;
 
     APIHelper mAPIHelper;
+
+    private MaterialDialog faintDialog;
 
     // Checkout needs to be in the Activity..
     public static ActivityCheckout checkout = null;
@@ -481,34 +489,22 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
             return;
         }
 
-        switch (rewardKey) {
-            case "potion":
-                double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
-                user.getStats().setHp(newHp);
+        double newGp = user.getStats().getGp() - event.Reward.getValue();
+        user.getStats().setGp(newGp);
 
-
-                break;
-            default:
-                double newGp = user.getStats().getGp() - event.Reward.getValue();
-                user.getStats().setGp(newGp);
-
-                break;
-        }
-
-        if (event.Reward.specialTag == "item") {
-            if (rewardKey.equals("potion")) {
+        if (rewardKey.equals("potion")) {
                 int currentHp = user.getStats().getHp().intValue();
                 int maxHp = user.getStats().getMaxHealth();
 
                 if (currentHp == maxHp) {
                     this.showSnackbar("You don't need to buy an health potion", MainActivity.SnackbarDisplayType.FAILURE);
                     return;
-                } else {
-                    double newHp = Math.max(0, user.getStats().getHp() - 15);
-                    user.getStats().setHp(newHp);
                 }
-            }
+                double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
+                user.getStats().setHp(newHp);
+        }
 
+        if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
             mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
 
                 @Override
@@ -547,12 +543,130 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
             showSnackbar(task.getText() + " successfully purchased!");
+        } else {
+            notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+            if (data.get_tmp() != null) {
+                if (data.get_tmp().getDrop() != null) {
+                    this.showSnackbar(data.get_tmp().getDrop().getDialog(), MainActivity.SnackbarDisplayType.DROP);
+                }
+            }
         }
+    }
+
+    private void notifyUser(double xp, double hp, double gold,
+                            int lvl, double delta) {
+        StringBuilder message = new StringBuilder();
+        MainActivity.SnackbarDisplayType displayType = MainActivity.SnackbarDisplayType.NORMAL;
+        if (lvl > user.getStats().getLvl()) {
+            displayLevelUpDialog(lvl);
+
+            this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            user.getStats().setLvl((int) lvl);
+            this.showSnackbar(message.toString());
+        } else {
+            com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
+
+            if (xp > stats.getExp()) {
+                message.append(" + ").append(round(xp - stats.getExp(), 2)).append(" XP");
+                user.getStats().setExp(xp);
+            }
+            if (hp != stats.getHp()) {
+                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
+                user.getStats().setHp(hp);
+            }
+            if (gold > stats.getGp()) {
+                message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
+                stats.setGp(gold);
+            } else if (gold < stats.getGp()) {
+                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
+                stats.setGp(gold);
+            }
+            this.showSnackbar(message.toString(), displayType);
+        }
+        setUserData(true);
     }
 
     @Override
     public void onTaskScoringFailed() {
 
+    }
+
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
+    }
+
+    private void displayDeathDialogIfNeeded() {
+
+        if (user.getStats().getHp() > 0) {
+            return;
+        }
+
+        if (this.faintDialog == null) {
+            this.faintDialog = new MaterialDialog.Builder(this)
+                    .title(R.string.faint_header)
+                    .customView(R.layout.faint_dialog, true)
+                    .positiveText(R.string.faint_button)
+                    .positiveColorRes(R.color.worse_100)
+                    .dismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            faintDialog = null;
+                            mAPIHelper.reviveUser(new HabitRPGUserCallback(MainActivity.this));
+                        }
+                    })
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            faintDialog = null;
+                        }
+                    })
+                    .build();
+
+            View customView = this.faintDialog.getCustomView();
+            if (customView != null) {
+                View hpBarView = customView.findViewById(R.id.hpBar);
+
+                ValueBarBinding hpBar = DataBindingUtil.bind(hpBarView);
+                hpBar.setPartyMembers(true);
+                AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
+
+                ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
+                UserPicture userPicture = new UserPicture(user, this, false, false);
+                userPicture.setPictureOn(avatarView);
+            }
+
+            this.faintDialog.show();
+        }
+    }
+
+    private void displayLevelUpDialog(int level) {
+        SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
+        if (suppressedModals != null) {
+            if (suppressedModals.getLevelUp()) {
+                return;
+            }
+        }
+
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.levelup_header)
+                .customView(R.layout.levelup_dialog, true)
+                .positiveText(R.string.levelup_button)
+                .positiveColorRes(R.color.brand_100)
+                .build();
+
+        View customView = dialog.getCustomView();
+        if (customView != null) {
+            TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
+            detailView.setText(this.getString(R.string.levelup_detail, level));
+
+            ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
+            UserPicture userPicture = new UserPicture(user, this, false, false);
+            userPicture.setPictureOn(avatarView);
+        }
+
+        dialog.show();
     }
 
 }

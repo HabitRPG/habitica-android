@@ -81,7 +81,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TasksFragment extends BaseFragment implements TaskScoringCallback.OnTaskScored, OnCheckedChangeListener {
+public class TasksFragment extends BaseFragment implements OnCheckedChangeListener {
 
     static final int TASK_CREATED_RESULT = 1;
     static final int TASK_UPDATED_RESULT = 2;
@@ -91,7 +91,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
 
     MenuItem refreshItem;
 
-    private MaterialDialog faintDialog;
 
     FloatingActionMenu floatingMenu;
 
@@ -362,22 +361,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
         }
     }
 
-    @Override
-    public void onTaskDataReceived(TaskDirectionData data, Task task) {
-        notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
-        if (data.get_tmp() != null) {
-            if (data.get_tmp().getDrop() != null) {
-                activity.showSnackbar(data.get_tmp().getDrop().getDialog(), MainActivity.SnackbarDisplayType.DROP);
-            }
-        }
-    }
-
-    @Override
-    public void onTaskScoringFailed() {
-
-    }
-
-
     private void openNewTaskActivity(String type) {
         if (this.displayingTaskForm) {
             return;
@@ -440,11 +423,11 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
     public void onEvent(TaskCheckedCommand event) {
-        mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(this, event.Task.getId()));
+        mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(activity, event.Task.getId()));
     }
 
     public void onEvent(HabitScoreEvent event) {
-        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(this, event.Habit.getId()));
+        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(activity, event.Habit.getId()));
     }
 
     public void onEvent(AddNewTaskCommand event) {
@@ -466,117 +449,6 @@ public class TasksFragment extends BaseFragment implements TaskScoringCallback.O
     }
 
     //endregion Events
-
-    private void notifyUser(double xp, double hp, double gold,
-                            int lvl, double delta) {
-        StringBuilder message = new StringBuilder();
-        MainActivity.SnackbarDisplayType displayType = MainActivity.SnackbarDisplayType.NORMAL;
-        if (lvl > user.getStats().getLvl()) {
-            displayLevelUpDialog(lvl);
-
-            this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
-            user.getStats().setLvl((int) lvl);
-            activity.showSnackbar(message.toString());
-        } else {
-            com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
-
-            if (xp > stats.getExp()) {
-                message.append(" + ").append(round(xp - stats.getExp(), 2)).append(" XP");
-                user.getStats().setExp(xp);
-            }
-            if (hp != stats.getHp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
-                message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
-                user.getStats().setHp(hp);
-            }
-            if (gold > stats.getGp()) {
-                message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
-                stats.setGp(gold);
-            } else if (gold < stats.getGp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
-                message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
-                stats.setGp(gold);
-            }
-            activity.showSnackbar(message.toString(), displayType);
-
-        }
-    }
-
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
-    }
-
-    private void displayDeathDialogIfNeeded() {
-
-        if (user.getStats().getHp() > 0) {
-            return;
-        }
-
-        if (this.faintDialog == null) {
-            this.faintDialog = new MaterialDialog.Builder(activity)
-                    .title(R.string.faint_header)
-                    .customView(R.layout.faint_dialog, true)
-                    .positiveText(R.string.faint_button)
-                    .positiveColorRes(R.color.worse_100)
-                    .dismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            faintDialog = null;
-                            mAPIHelper.reviveUser(new HabitRPGUserCallback(activity));
-                        }
-                    })
-                    .cancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            faintDialog = null;
-                        }
-                    })
-                    .build();
-
-            View customView = this.faintDialog.getCustomView();
-            if (customView != null) {
-                View hpBarView = customView.findViewById(R.id.hpBar);
-
-                ValueBarBinding hpBar = DataBindingUtil.bind(hpBarView);
-                hpBar.setPartyMembers(true);
-                AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), activity);
-
-                ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-                UserPicture userPicture = new UserPicture(user, activity, false, false);
-                userPicture.setPictureOn(avatarView);
-            }
-
-            this.faintDialog.show();
-        }
-    }
-
-    private void displayLevelUpDialog(int level) {
-        SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
-        if (suppressedModals != null) {
-            if (suppressedModals.getLevelUp()) {
-                return;
-            }
-        }
-
-        MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                .title(R.string.levelup_header)
-                .customView(R.layout.levelup_dialog, true)
-                .positiveText(R.string.levelup_button)
-                .positiveColorRes(R.color.brand_100)
-                .build();
-
-        View customView = dialog.getCustomView();
-        if (customView != null) {
-            TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
-            detailView.setText(this.getString(R.string.levelup_detail, level));
-
-            ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-            UserPicture userPicture = new UserPicture(user, activity, false, false);
-            userPicture.setPictureOn(avatarView);
-        }
-
-        dialog.show();
-    }
 
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
