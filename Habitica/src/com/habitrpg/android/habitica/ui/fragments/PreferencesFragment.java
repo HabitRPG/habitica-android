@@ -78,7 +78,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
             int hour = Integer.parseInt(pieces[0]);
             int minute = Integer.parseInt(pieces[1]);
             Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR, hour);
+            cal.set(Calendar.HOUR_OF_DAY, hour);
             cal.set(Calendar.MINUTE, minute);
             long trigger_time = cal.getTimeInMillis();
 
