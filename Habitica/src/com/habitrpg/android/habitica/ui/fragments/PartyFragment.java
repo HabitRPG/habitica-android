@@ -47,30 +47,21 @@ public class PartyFragment extends BaseFragment {
 
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 
-        if (this.user.getParty() == null ) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                    .setMessage(activity.getString(R.string.no_party_message))
-                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-            builder.show();
-            return v;
-        } else if (this.user.getParty().id == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                    .setMessage(activity.getString(R.string.no_party_message))
-                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-            builder.show();
-            return v;
-        }
-
         // Get the full group data
         mAPIHelper.apiService.getGroup("party", new Callback<Group>() {
             @Override
             public void success(Group group, Response response) {
+                if (group == null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                            .setMessage(activity.getString(R.string.no_party_message))
+                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                    builder.show();
+                    tabLayout.removeAllTabs();
+                    return;
+                }
                 PartyFragment.this.group = group;
 
                 if (partyMemberListFragment != null) {
@@ -81,7 +72,7 @@ public class PartyFragment extends BaseFragment {
                     partyInformationFragment.setGroup(group);
                 }
 
-                if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
+                if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
                         public void GotQuest(QuestContent content) {
@@ -95,7 +86,6 @@ public class PartyFragment extends BaseFragment {
 
             @Override
             public void failure(RetrofitError error) {
-
             }
         });
         setViewPagerAdapter();

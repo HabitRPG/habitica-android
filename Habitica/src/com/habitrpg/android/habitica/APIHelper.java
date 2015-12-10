@@ -246,6 +246,8 @@ public class APIHelper implements ErrorHandler, Profiler {
             } else if (status >= 500 && status < 600) {
                 showConnectionProblemDialog(activity,R.string.internal_error_api);
                 return cause;
+            } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
+                return cause;
             }
 		}
         showConnectionProblemDialog(activity, R.string.internal_error_api);
