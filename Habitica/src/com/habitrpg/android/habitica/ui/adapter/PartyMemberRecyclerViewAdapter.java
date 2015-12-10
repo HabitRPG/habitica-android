@@ -107,7 +107,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
                     break;
                 }
                 case warrior: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.best_100));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.worse_100));
                     break;
                 }
                 case rogue: {
@@ -115,7 +115,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
                     break;
                 }
                 case wizard: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.worse_100));
+                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.best_100));
                     break;
                 }
             }
