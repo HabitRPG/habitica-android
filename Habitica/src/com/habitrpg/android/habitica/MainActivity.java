@@ -458,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         if (checkout != null)
             checkout.stop();
 
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
