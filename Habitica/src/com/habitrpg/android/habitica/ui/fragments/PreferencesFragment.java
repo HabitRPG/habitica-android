@@ -14,6 +14,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.prefs.TimePreference;
@@ -85,7 +86,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
             Intent notificationIntent = new Intent(context, NotificationPublisher.class);
             notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
             notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, getNotification());
-            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, true);
+            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -109,15 +110,28 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(this.getString(R.string.reminder_title));
         builder.setSmallIcon(R.drawable.ic_gryphon);
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent intent = PendingIntent.getActivity(context, 0,
+                notificationIntent, 0);
+        builder.setContentIntent(intent);
+
         if (currentapiVersion >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setColor(context.getResources().getColor(R.color.brand_300));
         }
 
         if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN){
-            return builder.build();
+            notification = builder.build();
         } else{
-            return builder.getNotification();
+            notification = builder.getNotification();
         }
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+        return notification;
     }
 
     @Override
