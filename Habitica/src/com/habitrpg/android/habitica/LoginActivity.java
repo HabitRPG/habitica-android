@@ -4,10 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -48,6 +53,7 @@ public class LoginActivity extends AppCompatActivity
 	private final static String TAG_APIKEY="key";
 
 	private Button mLoginNormalBtn;
+    private TextView mForgotPWTV;
 	private LoginButton mFacebookLoginBtn;
 	private EditText mUsernameET, mPasswordET,mEmail,mConfirmPassword;
     private TableRow mEmailRow, mConfirmPasswordRow;
@@ -87,6 +93,12 @@ public class LoginActivity extends AppCompatActivity
 
         mFacebookLoginBtn = (LoginButton) this.findViewById(R.id.login_button);
 		mFacebookLoginBtn.setReadPermissions("user_friends");
+
+		mForgotPWTV = (TextView) this.findViewById(R.id.forgot_pw_tv);
+        mForgotPWTV.setOnClickListener(mForgotPWClick);
+        SpannableString content = new SpannableString(mForgotPWTV.getText());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        mForgotPWTV.setText(content);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -163,6 +175,16 @@ public class LoginActivity extends AppCompatActivity
 		}
 	};
 
+	private View.OnClickListener mForgotPWClick = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+            String url = "https://habitica.com";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+		}
+	};
+
 
 	public static void expand(final View v) {
 		v.setVisibility(View.VISIBLE);
@@ -177,9 +199,9 @@ public class LoginActivity extends AppCompatActivity
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		finish();
-	}
+    }
 
-	private void toggleRegistering() {
+    private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
         this.setRegistering(this.isRegistering);
 	}

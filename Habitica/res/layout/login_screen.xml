@@ -140,39 +140,41 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_span="2"
-                android:layout_gravity="center" >
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp">
 
                 <Button
                     android:id="@+id/login_btn"
-                    android:layout_width="150dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:text="@string/register_btn"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_purple_square"
+                    android:layout_span="2"
+                    android:layout_marginBottom="8dp"
                     />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
                 <ProgressBar
                     android:id="@+id/PB_AsyncTask"
                     android:indeterminate="true"
                     android:visibility="gone"
+                    android:layout_span="2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
@@ -181,7 +183,20 @@
 
                 android:layout_span="2"/>
         </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
+            <TextView
+                android:id="@+id/forgot_pw_tv"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_pw_tv"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/best_10"
+                android:layout_span="2"
+                />
+        </TableRow>
     </TableLayout>
 
 </ScrollView>
