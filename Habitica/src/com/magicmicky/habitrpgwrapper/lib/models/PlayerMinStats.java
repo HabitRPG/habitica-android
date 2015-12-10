@@ -71,6 +71,13 @@ public abstract class PlayerMinStats extends BasicStats {
         return _class;
     }
 
+    public String getCleanedClassName() {
+        if (_class.toString().equals("wizard")) {
+            return "mage";
+        }
+        return _class.toString();
+    }
+
     public void set_class(HabitRpgClass _class) {
         this._class = _class;
     }

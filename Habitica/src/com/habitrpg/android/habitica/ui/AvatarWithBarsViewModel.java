@@ -85,7 +85,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         new UserPicture(user, this.context).setPictureOn(image);
 
         if (user.getStats().get_class() != null) {
-            userClass += user.getStats().get_class().name();
+            userClass += user.getStats().getCleanedClassName();
         }
         lvlText.setText("Lvl" + user.getStats().getLvl() + " " + userClass);
         Drawable drawable;

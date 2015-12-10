@@ -98,7 +98,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             lvl.setText("LVL " + user.getStats().getLvl());
 
-            classLabel.setText(user.getStats()._class.toString());
+            classLabel.setText(user.getStats().getCleanedClassName());
 
 
             switch (user.getStats()._class) {
