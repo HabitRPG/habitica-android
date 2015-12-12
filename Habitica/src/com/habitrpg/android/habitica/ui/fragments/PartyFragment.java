@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 
@@ -105,7 +104,7 @@ public class PartyFragment extends BaseFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = partyInformationFragment = new PartyInformationFragment(group);
+                        fragment = partyInformationFragment = PartyInformationFragment.newInstance(group);
                         break;
                     }
                     case 1: {
