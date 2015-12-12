@@ -11,14 +11,19 @@
         android:layout_marginRight="10dip"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-
-            android:hint="Add Tag" />
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:textColor="@android:color/black"
+                android:hint="Add Tag" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnAdd"
