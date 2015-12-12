@@ -9,8 +9,8 @@ It's also on Google Play:
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-Having the sample project installed is a good way to be notified of new releases. Although Watching this 
-repository will allow GitHub to email you whenever I publish a release.
+Having the application installed is a good way to be notified of new releases. Although Watching this 
+repository will allow GitHub to email you whenever we publish a release.
 
 
 # What's New
