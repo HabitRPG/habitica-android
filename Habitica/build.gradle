@@ -70,7 +70,7 @@ dependencies {
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
 
     // About View for all dependent Libraries, we are using
-    compile('com.mikepenz:aboutlibraries:5.0.5@aar') {
+    compile('com.mikepenz:aboutlibraries:5.3.3@aar') {
         transitive = true
     }
 

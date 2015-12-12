@@ -116,8 +116,8 @@ public class AboutActivity extends AppCompatActivity {
                             .withAboutVersionShown(true)
                             .withAboutVersionShownCode(true)
                             .withAboutVersionShownName(true)
-                            .withAnimations(true)
-                            .fragment();
+                            .withSlideInAnimation(true)
+                            .supportFragment();
                 case 2:
                     PaperboyBuilder builder = new PaperboyBuilder(AboutActivity.this)
                             .setViewType(ViewTypes.HEADER)
