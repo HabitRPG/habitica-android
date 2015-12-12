@@ -42,10 +42,6 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     }
 
-    public void setParentAdapter(RecyclerView.Adapter<SkillTasksRecyclerViewAdapter.ViewHolder> parentAdapter) {
-        this.parentAdapter = parentAdapter;
-    }
-
     @Override
     public int getItemViewType(int position) {
         switch (position) {
@@ -109,7 +105,6 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
         }
 
         public void bindHolder(Task habitItem, int position) {
-            double itemvalue = habitItem.getValue();
             task = habitItem;
             if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);

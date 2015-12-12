@@ -116,8 +116,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View view) {
 
                 new AlertDialog.Builder(view.getContext())
-                        .setTitle("Are you sure?")
-                        .setMessage("Do you really want to delete?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(getString(R.string.taskform_delete_title))
+                        .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         task.delete();
@@ -127,7 +127,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
                         EventBus.getDefault().post(new DeleteTaskCommand(taskId));
                     }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

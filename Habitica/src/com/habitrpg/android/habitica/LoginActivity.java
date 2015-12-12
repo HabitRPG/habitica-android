@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity
 	private View.OnClickListener mForgotPWClick = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-            String url = "https://habitica.com";
+            String url = getString(R.string.SP_address_default);
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);

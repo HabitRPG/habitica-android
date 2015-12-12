@@ -267,7 +267,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
 
         public void bindHolder(THabitItem habitItem, int position) {
-            double itemvalue = habitItem.getValue();
             Item = habitItem;
             if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);
@@ -541,10 +540,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     })
                     .contentGravity(GravityEnum.CENTER)
                     .positiveColor(context.getResources().getColor(R.color.brand_200))
-                    .positiveText("Buy")
+                    .positiveText(R.string.reward_dialog_buy)
                     .title(binding.getReward().getText())
                     .customView(contentViewForDialog, true)
-                    .negativeText("Dismiss")
+                    .negativeText(R.string.reward_dialog_dismiss)
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {

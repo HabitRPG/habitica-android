@@ -77,11 +77,11 @@ public class SkillTasksActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "Habits";
+                        return getString(R.string.habits);
                     case 1:
-                        return "Dailies";
+                        return getString(R.string.dailies);
                     case 2:
-                        return "Todos";
+                        return getString(R.string.todos);
                 }
                 return "";
             }

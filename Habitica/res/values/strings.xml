@@ -2,29 +2,15 @@
 <resources>
 
     <string name="app_name">Habitica</string>
-    <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
-    <string name="plus_sign">+</string>
-    <string name="minus_sign">-</string>
     <string name="XP_default">Experience</string>
     <string name="HP_default">Health</string>
     <string name="MP_default">Mana</string>
-    <string name="format_todo_date">%1$d-%2$d-%3$d</string>
-    <string name="new_task_added_message">Task added</string>
-    <string name="lvlup">LVL UP!</string>
-    <string name="action_barcode">Scan a barcode</string>
     <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
-    <string name="settings_changed">Settings were successfully updated!</string>
-    <string name="pref_dialog_title">Habitica settings</string>
-    <string name="string_pref_dialog_positive">OK</string>
 
     <!--  Prefs -->
-    <string name="PS_param_title">Params</string>
     <string name="PS_settings_title">Settings</string>
-    <string name="PS_param_summary">Server config</string>
-    <string name="SP_address">ServerAdress</string>
-    <string name="SP_address_title">Server Address</string>
-    <string name="SP_address_summary">Enter the address of the server</string>
+    <string name="SP_address">ServerAddress</string>
     <string name="SP_address_default">https://habitica.com/</string>
     <string name="SP_address_hint">Your custom server</string>
     <string name="SP_userID">UserID</string>
@@ -36,12 +22,6 @@
     <string name="SP_APIToken_title">API Token</string>
     <string name="SP_APIToken_summary">Your API Token</string>
     <string name="PS_contact_title">Contact me</string>
-    <string name="SP_open_twitter">\@MagicMicky</string>
-    <string name="SP_open_twitter_summary">Contact me via Twitter</string>
-    <string name="SP_licences">Licence notices</string>
-    <string name="SP_licences_summary">Information about softwares that helped me develop this software</string>
-    <string name="pb_settings">There was a problem with the settings</string>
-    <string name="go_to_preferences">Please fill the settings.</string>
     <string name="unknown_error">An error happened…</string>
     <string name="pref_account_header">Account</string>
     <string name="pref_reminder_header">Daily Reminder</string>
@@ -49,40 +29,14 @@
     <string name="pref_reminder_picker">Set Reminder Time</string>
 
     <!-- Adding tasks -->
-    <string name="task_note_hint">Add a note</string>
-    <string name="new_task">Add new %s</string>
-    <string name="task_text">Task:</string>
-    <string name="task_note">Note:</string>
-    <string name="task_duedate">Due date:</string>
     <string name="task_value">Value</string>
-    <string name="task_up">Up</string>
-    <string name="task_down">Down</string>
-    <string name="dialog_confirm_button">OK</string>
-    <string name="dialog_cancel_button">Cancel</string>
-    <string name="task_value_hint">20</string>
-    <string name="task_creation_fail">Task creation has failed: you need to provide a title</string>
-
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">close drawer</string>
-    <string name="missing_tags">…</string>
-    <string name="tags_section_title">Tags</string>
-	<string name="QRCode">To simplify everything you can scan the QRCode to connect to Habitica. To
-		start the scanning mode, use the button in the menu.
-	</string>
     <string name="new_todo">New todo</string>
-    <string name="SP_acknowledge_qrcode">acknowledge_qrcode_omg</string>
     <string name="new_reward">New reward</string>
     <string name="new_daily">New daily</string>
     <string name="new_habit">New habit</string>
-    <string name="task_deleted">The task %s was deleted successfully</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
-    <string name="cab_selected">%d tasks selected</string>
     <string name="action_cancel">Cancel</string>
-    <string name="task_edited">A task were successfully updated</string>
-    <string name="item_bought">You just bought a shinny new %s!</string>
-    <string name="userToken">User Token</string>
-    <string name="apiToken">API Token</string>
     <string name="login_btn">Login</string>
     <string name="register_btn">Register</string>
     <string name="username">Username</string>
@@ -91,29 +45,18 @@
     <string name="emailAddress">Email address</string>
     <string name="confirmpassword">Confirm password</string>
 
-    <string name="ERR_pb_accountCreation">An error happened. Please try to connect</string>
-    <string name="ERR_pb_connection">Error: your credentials couldn\'t be saved!</string>
     <string name="logout">Logout</string>
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
-	<string name="helpString">To use this application, you need to have an account on http://habitrpg.com. You can register using the register button in this application.\n\n
-	If you already have an account, use the connect buttons, or the QRCode scanner. If you created your account using Facebook on the website, you will need to use the QRcode scanner or connect using your API and User token that you can find on http://habitrpg.com.</string>
-    <string name="action_info">Help</string>
-    <string name="user_dead_title">You\'re dead!</string>
+	<string name="user_dead_title">You\'re dead!</string>
 	<string name="user_dead_mess">You weren\'t vigilant enough, and get lost between some bad habits and some difficult dailies.
 		You are going to revive, but will loose a level, your gold and a random piece of equipment.
 		Try to be more careful with your dailies, and manage those bad habits!
 	</string>
 
-
     <string name="string_revive">Revive</string>
-    <string name="refreshing_widget">Refreshing widget…</string>
     <string name="please_connect">Please connect through the application before using a widget</string>
         
-    <string name="close">Close</string>
-    <string name="SP_last_seen_version">SP_last_version</string>
-    <string name="update_btn">Update</string>
-
     <string name="about.title">About</string>
     <string name="about.libraries">Libraries</string>
     <string name="about.versionhistory">Version history</string>
@@ -127,19 +70,12 @@
 	<string name="network_error_title">Connection Error</string>
 	<string name="network_error_no_network_body">You are not connected to the internet.</string>
     <string name="internal_error_api">There seems to be a problem with the server. Try again later.</string>
-    <string name="network_up">Your internet connection just got back!</string>
 
     <string name="authentication_error_title">Authentication Error</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
 
     <string name="login_validation_error_title">Validation Error</string>
     <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
-    <string name="login_validation_error_invalid_email">Invalid email address.</string>
-
-    <string name="checklist.title.add">Add checklist</string>
-    <string name="checklist.title.edit">Edit checklist</string>
-    <string name="checklist.item.hint">Add item…</string>
-    <string name="title_activity_task_form">Add Task</string>
 
     <string name="save_changes">Save</string>
     <string name="notes">Notes</string>
@@ -154,7 +90,6 @@
     <string name="negative_habit_form">Negative ( - )</string>
     <string name="checklist">Checklist</string>
     <string name="actions">Actions</string>
-    <string name="task">Task</string>
 
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
@@ -167,10 +102,6 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
-    <string name="title_activity_tavern">Tavern</string>
-    <string name="title_activity_party">Party</string>
-    <string name="title_activity_gem_purchase">Purchase Gems</string>
-    <string name="gryphon">Gryphon</string>
 
     <string name="facebook_app_id">128307497299777</string>
     <string name="levelup_header">You gained a level!</string>
@@ -182,7 +113,6 @@
     <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck--you\'ll do great.</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
-
 
     <string name="filter">Filter</string>
     <string name="profile_image">Profile Image</string>
@@ -201,4 +131,19 @@
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
+    <string name="tavern.inn.checkOut">Check Out of Inn</string>
+    <string name="tavern.inn.rest">Rest in the Inn</string>
+    <string name="reward.dialog.buy">Buy</string>
+    <string name="reward.dialog.dismiss">Dismiss</string>
+    <string name="party">Party</string>
+    <string name="chat">Chat</string>
+    <string name="members">Members</string>
+    <string name="habits">Habits</string>
+    <string name="dailies">Dailies</string>
+    <string name="todos">Todos</string>
+    <string name="rewards">Rewards</string>
+    <string name="taskform.delete.title">Are you sure?</string>
+    <string name="taskform.delete.message">Do you really want to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

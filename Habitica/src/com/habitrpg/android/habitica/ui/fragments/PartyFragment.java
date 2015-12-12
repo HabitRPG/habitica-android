@@ -133,11 +133,11 @@ public class PartyFragment extends BaseFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "Party";
+                        return activity.getString(R.string.party);
                     case 1:
-                        return "Chat";
+                        return activity.getString(R.string.chat);
                     case 2:
-                        return "Members";
+                        return activity.getString(R.string.members);
                 }
                 return "";
             }
