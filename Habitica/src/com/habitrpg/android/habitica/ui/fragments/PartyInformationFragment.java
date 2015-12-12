@@ -23,9 +23,19 @@ public class PartyInformationFragment extends Fragment {
     FragmentPartyInfoBinding viewBinding;
     private Group group;
 
-    public PartyInformationFragment(Group group) {
 
-        this.group = group;
+    public static PartyInformationFragment newInstance(Group group) {
+
+        Bundle args = new Bundle();
+
+        PartyInformationFragment fragment = new PartyInformationFragment();
+        fragment.setArguments(args);
+        fragment.group = group;
+        return fragment;
+    }
+
+    public PartyInformationFragment(){
+
     }
 
     @Nullable
