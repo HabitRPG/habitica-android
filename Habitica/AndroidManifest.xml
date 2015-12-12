@@ -61,12 +61,6 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <receiver android:name="com.habitrpg.android.habitica.receivers.NetworkChangeReceiver" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <service android:name=".widget.UpdateWidgetService" />
 
         <meta-data
