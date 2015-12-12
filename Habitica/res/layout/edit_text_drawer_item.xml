@@ -11,15 +11,14 @@
         android:layout_marginRight="10dip"
         android:orientation="horizontal">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+        <EditText
             android:id="@+id/editText"
             android:layout_width="0dp"
 
             android:layout_height="wrap_content"
             android:layout_weight="8"
 
-            android:hint="Add Tag"
-            app:met_floatingLabel="normal" />
+            android:hint="Add Tag" />
 
         <Button
             android:id="@+id/btnAdd"
