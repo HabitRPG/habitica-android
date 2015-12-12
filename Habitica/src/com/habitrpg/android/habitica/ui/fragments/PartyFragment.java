@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
@@ -55,6 +57,7 @@ public class PartyFragment extends BaseFragment {
                             .setMessage(activity.getString(R.string.no_party_message))
                             .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getContext(),MainActivity.class));
                                 }
                             });
                     builder.show();
