@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="define_paperboy"></string>
+    <!-- Author section -->
+    <string name="library_paperboy_author">porokoro</string>
+    <string name="library_paperboy_authorWebsite">https://github.com/porokoro</string>
+    <!-- Library section -->
+    <string name="library_paperboy_libraryName">Paperboy</string>
+    <string name="library_paperboy_libraryDescription">A changelog library for Android</string>
+    <string name="library_paperboy_libraryWebsite">https://github.com/porokoro</string>
+    <string name="library_paperboy_libraryVersion">2.1.0</string>
+    <!-- OpenSource section -->
+    <string name="library_paperboy_isOpenSource">true</string>
+    <string name="library_paperboy_repositoryLink">https://github.com/porokoro</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_paperboy_classPath">com.github.porokoro.paperboy</string>
+    <!-- License section -->
+    <string name="library_paperboy_licenseId">apache_2_0</string>
+    <!-- Custom variables section -->
+</resources>
