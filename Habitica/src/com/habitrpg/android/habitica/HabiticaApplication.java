@@ -151,10 +151,17 @@ public class HabiticaApplication extends Application {
         context.startActivity(intent);
     }
 
-    public static void checkUserAuthentication(Context context, HostConfig hostConfig) {
+    public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            context.startActivity(new Intent(context, LoginActivity.class));
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            context.startActivity(intent);
+
+            return false;
         }
+
+        return true;
     }
 
     // endregion

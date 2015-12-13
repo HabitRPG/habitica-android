@@ -129,10 +129,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        HabiticaApplication.checkUserAuthentication(this, hostConfig);
-
-        // Add uuid to crashes
-        crashlytics.core.setString("uuid", hostConfig.getUser());
+        if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
+            return;
 
         HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(this, hostConfig);
 
