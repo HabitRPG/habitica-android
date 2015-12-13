@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -221,38 +222,40 @@ public class APIHelper implements ErrorHandler, Profiler {
 	public Throwable handleError(RetrofitError cause) {
         final Activity activity = (Activity) this.mContext;
 
-        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-            //It also handles timeouts
-            showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
-            return cause;
-        } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
-            retrofit.client.Response response = cause.getResponse();
+        try {
 
-           ErrorResponse res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+            if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
+                //It also handles timeouts
+                showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
+                return cause;
+            } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
+                retrofit.client.Response response = cause.getResponse();
 
-            int status = response.getStatus();
-            if (status == 401) {
+                ErrorResponse res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class);
 
-                if(res.err != null && !res.err.isEmpty())
-                {
-                    showConnectionProblemDialog(activity, "", res.err);
+                int status = response.getStatus();
+                if (status == 401) {
+
+                    if (res.err != null && !res.err.isEmpty()) {
+                        showConnectionProblemDialog(activity, "", res.err);
+                    } else {
+                        showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+                    }
+
+                    return cause;
+                } else if (status >= 500 && status < 600) {
+                    showConnectionProblemDialog(activity, R.string.internal_error_api);
+                    return cause;
+                } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
+                    return cause;
                 }
-                else
-                {
-                    showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
-                }
-
-                return cause;
-            } else if (status >= 500 && status < 600) {
-                showConnectionProblemDialog(activity,R.string.internal_error_api);
-                return cause;
-            } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
-                return cause;
             }
-		}
-        showConnectionProblemDialog(activity, R.string.internal_error_api);
-
-        return cause;
+            showConnectionProblemDialog(activity, R.string.internal_error_api);
+        }catch (Exception e){
+            Log.e("retrofitError", e.getMessage());
+        }finally {
+            return cause;
+        }
 	}
 
     private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString) {
