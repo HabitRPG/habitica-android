@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
@@ -13,15 +14,21 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(databaseName = HabitDatabase.NAME)
 public class Outfit extends BaseModel {
 
-
     @Column
     @PrimaryKey
-            @NotNull
+    @NotNull
     String user_id;
 
     @Column
-    String armor, back, body, eyeWear, head, headAccessory, shield, weapon;
+    String armor, back, body, head, shield, weapon;
 
+    @Column
+    @SerializedName("eyewear")
+    String eyeWear;
+
+    @Column
+    @SerializedName("headaccessory")
+    String headAccessory;
 
     public String getArmor() {return armor;}
     public void setArmor(String armor) {this.armor = armor;}
