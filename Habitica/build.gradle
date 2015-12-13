@@ -61,10 +61,6 @@ dependencies {
 
     // Icons
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
-    compile 'com.rengwuxian.materialedittext:library:2.1.4'
-
-    // Instant Layout Changing w/o recompile
-    compile 'com.github.mmin18.layoutcast:library:1.+@aar'
 
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
@@ -94,7 +90,6 @@ dependencies {
 
 android {
     compileSdkVersion 23
-    //buildToolsVersion "23.0.0-rc2"
     buildToolsVersion "23.0.1"
 
     lintOptions {
