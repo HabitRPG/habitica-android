@@ -480,6 +480,10 @@ public class Task extends BaseModel {
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+            if(getEveryX() == 0){
+                return false;
+            }
+
             Calendar startDate = new GregorianCalendar();
             if (this.getStartDate() != null) {
                 startDate.setTime(this.getStartDate());
