@@ -32,7 +32,6 @@ public class SkillCallback implements Callback<HabitRPGUser> {
 
     @Override
     public void failure(RetrofitError error) {
-        Crashlytics.logException(error);
         callback.onUserFail();
     }
 }

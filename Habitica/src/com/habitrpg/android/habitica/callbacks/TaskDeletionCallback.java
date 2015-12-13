@@ -28,8 +28,6 @@ public class TaskDeletionCallback implements Callback<Void> {
 
     @Override
     public void failure(RetrofitError error) {
-        Crashlytics.logException(error);
-
         callback.onTaskDeletionFail();
         Log.w("HabitDeletion", "Error " + error.getMessage());
     }
