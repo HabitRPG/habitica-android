@@ -55,6 +55,7 @@ public class PartyFragment extends BaseFragment {
                             .setMessage(activity.getString(R.string.no_party_message))
                             .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    activity.getSupportFragmentManager().popBackStackImmediate();
                                 }
                             });
                     builder.show();
