@@ -63,7 +63,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     @Override
     public void onItemDismiss(int position) {
-        if(position != -1 && position > 0 && !mItems.isEmpty()){
+        if(position >= 0 && position < mItems.size()){
             mItems.remove(position);
             notifyItemRemoved(position);
         }
