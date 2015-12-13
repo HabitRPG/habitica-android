@@ -152,8 +152,8 @@ public class LoginActivity extends AppCompatActivity
             mProgressBar.setVisibility(View.VISIBLE);
             if (isRegistering) {
                 String username, email,password,cpassword;
-                username = String.valueOf(mUsernameET.getText());
-                email = String.valueOf(mEmail.getText());
+                username = String.valueOf(mUsernameET.getText()).trim();
+                email = String.valueOf(mEmail.getText()).trim();
                 password = String.valueOf(mPasswordET.getText());
                 cpassword = String.valueOf(mConfirmPassword.getText());
 				if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity
                 mApiHelper.registerUser(username,email,password, cpassword, LoginActivity.this);
             } else {
                 String username,password;
-                username = String.valueOf(mUsernameET.getText());
+                username = String.valueOf(mUsernameET.getText()).trim();
                 password = String.valueOf(mPasswordET.getText());
 				if (username.length() == 0 || password.length() == 0) {
 					showValidationError(R.string.login_validation_error_fieldsmissing);
