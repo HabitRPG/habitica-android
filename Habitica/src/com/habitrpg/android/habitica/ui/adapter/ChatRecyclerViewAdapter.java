@@ -192,9 +192,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
                     if(HabiticaApplication.User.getPreferences().getSleep()){
-                        btnToggleInn.setText("Check Out of Inn");
+                        btnToggleInn.setText(R.string.tavern_inn_checkOut);
                     }else{
-                        btnToggleInn.setText("Rest in the Inn");
+                        btnToggleInn.setText(R.string.tavern_inn_rest);
                     }
 
                     break;
@@ -352,9 +352,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
                 if(!HabiticaApplication.User.getPreferences().getSleep()){
-                    btnToggleInn.setText("Check Out of Inn");
+                    btnToggleInn.setText(R.string.tavern_inn_checkOut);
                 }else{
-                    btnToggleInn.setText("Rest in the Inn");
+                    btnToggleInn.setText(R.string.tavern_inn_rest);
                 }
                 return;
             }

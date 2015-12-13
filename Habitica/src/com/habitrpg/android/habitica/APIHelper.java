@@ -204,17 +204,12 @@ public class APIHelper implements ErrorHandler, Profiler {
 		this.apiService.connectSocial(auth, callback);
 	}
 
-	public void deleteTask(String taskId, TaskDeletionCallback cb) {
-        this.apiService.deleteTask(taskId, cb);
-    }
-
     public void updateTask(Task item, Callback cb) {
         this.apiService.updateTask(item.getId(), item, cb);
     }
 
     public class ErrorResponse{
         public String err;
-
     }
 
 	@Override

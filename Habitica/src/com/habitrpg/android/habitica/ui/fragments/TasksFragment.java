@@ -304,13 +304,13 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "Habits";
+                        return activity.getString(R.string.habits);
                     case 1:
-                        return "Dailies";
+                        return activity.getString(R.string.dailies);
                     case 2:
-                        return "Todos";
+                        return activity.getString(R.string.todos);
                     case 3:
-                        return "Rewards";
+                        return activity.getString(R.string.rewards);
                 }
                 return "";
             }
