@@ -198,7 +198,9 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
 
         refreshItem.setActionView(iv);
 
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
+        if(mAPIHelper != null) {
+            mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
+        }
     }
 
     public void loadTaskLists() {
