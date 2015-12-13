@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -47,8 +48,7 @@ public class SkillsFragment extends BaseFragment {
             view = inflater.inflate(R.layout.fragment_skills, container, false);
 
         adapter = new SkillsRecyclerViewAdapter();
-        adapter.mana = this.user.getStats().getMp();
-        loadSkills();
+        checkUserLoadSkills();
 
         return view;
     }
@@ -68,13 +68,26 @@ public class SkillsFragment extends BaseFragment {
         mRecyclerView.setAdapter(adapter);
     }
 
-    public void loadSkills() {
+    private void checkUserLoadSkills(){
+        if(user == null || adapter == null){
+            return;
+        }
+
+        adapter.mana = this.user.getStats().getMp();
+
         List<Skill> skills = new Select()
                 .from(Skill.class)
                 .where(Condition.column("habitClass").eq(user.getStats().get_class()))
                 .and(Condition.column("lvl").lessThanOrEq(user.getStats().getLvl()))
                 .queryList();
         adapter.setSkillList(skills);
+    }
+
+    @Override
+    public void setUser(HabitRPGUser user) {
+        super.setUser(user);
+
+        checkUserLoadSkills();
     }
 
     public void onEvent(UseSkillCommand command) {
