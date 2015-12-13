@@ -109,31 +109,10 @@
                             android:layout_height="wrap_content"
                             android:text="@{quest.notes}" />
                     </LinearLayout>
-
-                    <!--<TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Reward List"
-                        android:layout_column="0"
-                        android:layout_columnSpan="2"
-                        android:layout_row="2" /> -->
                 </GridLayout>
 
 
             </android.support.v7.widget.CardView>
-<!--
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{party.memberCount+" Members"}'
-                app:backgroundColor="@{@color/brand}"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Chat"
-                app:backgroundColor="@{@color/brand}"/>
--->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
