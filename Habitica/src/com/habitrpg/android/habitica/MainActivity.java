@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
 
