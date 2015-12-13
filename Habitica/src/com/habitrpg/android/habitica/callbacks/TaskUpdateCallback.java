@@ -25,8 +25,6 @@ public class TaskUpdateCallback implements Callback<Task> {
 
     @Override
     public void failure(RetrofitError error) {
-        Crashlytics.logException(error);
-
         Log.w("HabitUpdate", "Error " + error.getMessage());
     }
 

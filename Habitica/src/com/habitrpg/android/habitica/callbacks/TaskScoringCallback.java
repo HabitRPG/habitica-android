@@ -56,8 +56,6 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
 
     @Override
     public void failure(RetrofitError error) {
-        Crashlytics.logException(error);
-
         this.mCallback.onTaskScoringFailed();
         Log.w("TaskScoring", "Task scoring failed " + error.getMessage());
     }
