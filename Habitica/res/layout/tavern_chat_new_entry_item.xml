@@ -19,18 +19,19 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="72dp"
+            android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
             <EditText
                 android:id="@+id/edit.new.message.text"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Write Message"
                 android:textColor="@android:color/black"
-                android:layout_weight="1" />
+                />
 
         </android.support.design.widget.TextInputLayout>
 
