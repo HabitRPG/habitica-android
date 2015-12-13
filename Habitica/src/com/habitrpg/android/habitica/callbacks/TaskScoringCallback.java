@@ -5,6 +5,8 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -25,14 +27,31 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     }
 
     @Override
-    public void success(TaskDirectionData taskDirectionData, Response response) {
-        Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
-        if (!task.type.equals("reward")) {
-            task.value = task.value + taskDirectionData.getDelta();
+    public void success(final TaskDirectionData taskDirectionData, Response response) {
+        new Select().from(Task.class).where(Condition.column("id").eq(taskId))
+                .async()
+                .querySingle(new TransactionListener<Task>() {
+                    @Override
+                    public void onResultReceived(Task task) {
+                        if(task != null && task.type != null && !task.type.equals("reward")) {
+                            task.value = task.value + taskDirectionData.getDelta();
 
-            task.save();
-        }
-        this.mCallback.onTaskDataReceived(taskDirectionData, task);
+                            task.save();
+                        }
+
+                        mCallback.onTaskDataReceived(taskDirectionData, task);
+                    }
+
+                    @Override
+                    public boolean onReady(BaseTransaction<Task> baseTransaction) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean hasResult(BaseTransaction<Task> baseTransaction, Task task) {
+                        return task != null;
+                    }
+                });
     }
 
     @Override
