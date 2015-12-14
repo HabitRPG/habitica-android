@@ -5,6 +5,30 @@
       {
         "type": "B",
         "title": "ticking one checklist item closes the checklist"
+      },
+      {
+        "type": "B",
+        "title": "fixed crash in party list when you aren’t in a party"
+      },
+      {
+        "type": "F",
+        "title": "eyewear and headaccessories are now displayed in the avatar"
+      },
+      {
+        "type": "B",
+        "title": "fixed issue where login failed when username contained space at the end"
+      },
+      {
+        "type": "B",
+        "title": "fixed issue where users could end up in an empty app without logging in"
+      },
+      {
+        "type": "B",
+        "title": "fixed various crashes"
+      },
+      {
+        "type": "N",
+        "title": "removed toast for internet connection status"
       }
     ]
   },
