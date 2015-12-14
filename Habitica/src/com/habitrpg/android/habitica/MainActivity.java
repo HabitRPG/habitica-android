@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -713,4 +714,14 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         dialog.show();
     }
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_MENU){
+            drawer.openDrawer();
+
+            return true;
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
 }
