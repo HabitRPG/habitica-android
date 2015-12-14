@@ -21,11 +21,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,28 +37,33 @@
             android:name=".prefs.PrefsActivity"
             android:theme="@style/PreferencesTheme"
             android:parentActivityName=".MainActivity"
-            android:label="@string/PS_settings_title">
+            android:label="@string/PS_settings_title"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/LoginActivityName"
             android:theme="@style/AppThemeWithActionBarBlackText"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".SkillTasksActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/AppThemeWithActionBarBlackText"/>
+            android:theme="@style/AppThemeWithActionBarBlackText"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TaskFormActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -66,6 +72,7 @@
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher"></receiver>
