@@ -378,13 +378,18 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @Override
         public void bindHolder(Task habitItem, int position) {
+            boolean itemChanged = Item != null && !Item.getId().equals(habitItem.getId());
+
             super.bindHolder(habitItem, position);
             Boolean isClickable = false;
             if (habitItem.getChecklist() != null && habitItem.getChecklist().size() > 0) {
                 isClickable = true;
             }
             checklistIndicatorWrapper.setClickable(isClickable);
-            this.setDisplayChecklist(false);
+
+            if(itemChanged) {
+                this.setDisplayChecklist(false);
+            }
         }
 
         public void setDisplayChecklist(Boolean displayChecklist) {
