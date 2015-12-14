@@ -1,5 +1,14 @@
 [
   {
+    "name": "Version 0.0.23",
+    "items":[
+      {
+        "type": "B",
+        "title": "ticking one checklist item closes the checklist"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.22",
     "items":[
       {
