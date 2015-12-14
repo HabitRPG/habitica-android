@@ -107,7 +107,8 @@ android {
         debug {
             applicationIdSuffix ".debug"
             debuggable true
-
+            // Disable fabric build ID generation for debug builds
+            ext.enableCrashlytics = false
         }
         release {
             signingConfig signingConfigs.release
