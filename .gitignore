@@ -51,3 +51,4 @@ fabric.properties
 
 .DS_Store
 *.iml
+Habitica/res/values/secret_strings.xml
