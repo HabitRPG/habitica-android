@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
@@ -195,6 +196,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void onEvent(SendNewGroupMessageCommand cmd) {
+
         apiHelper.apiService.postGroupChat(cmd.TargetGroupId, cmd.Message, new Callback<PostChatMessageResult>() {
             @Override
             public void success(PostChatMessageResult msg, Response response) {
@@ -210,6 +212,8 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             }
         });
+
+        HabiticaApplication.dismissKeyboard();
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
