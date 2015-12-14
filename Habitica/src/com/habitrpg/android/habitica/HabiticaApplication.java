@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +51,49 @@ public class HabiticaApplication extends Application {
         FlowManager.init(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
+        registerActivityLifecycleCallbacks();
     }
+
+    private void registerActivityLifecycleCallbacks() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                HabiticaApplication.currentActivity = activity;
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                HabiticaApplication.currentActivity = activity;
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+    }
+
+    public static Activity currentActivity = null;
 
     // region SQLite overrides
 

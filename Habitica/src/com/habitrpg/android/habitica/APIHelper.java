@@ -213,11 +213,10 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 	@Override
 	public Throwable handleError(RetrofitError cause) {
-        final Activity activity = (Activity) this.mContext;
 
         if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
             //It also handles timeouts
-            showConnectionProblemDialog(activity, R.string.network_error_no_network_body);
+            showConnectionProblemDialog(R.string.network_error_no_network_body);
             return cause;
         } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
             retrofit.client.Response response = cause.getResponse();
@@ -229,39 +228,39 @@ public class APIHelper implements ErrorHandler, Profiler {
 
                 if(res.err != null && !res.err.isEmpty())
                 {
-                    showConnectionProblemDialog(activity, "", res.err);
+                    showConnectionProblemDialog("", res.err);
                 }
                 else
                 {
-                    showConnectionProblemDialog(activity, R.string.authentication_error_title, R.string.authentication_error_body);
+                    showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
 
                 return cause;
             } else if (status >= 500 && status < 600) {
-                showConnectionProblemDialog(activity,R.string.internal_error_api);
+                showConnectionProblemDialog(R.string.internal_error_api);
                 return cause;
             } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
                 return cause;
             }
 		}
-        showConnectionProblemDialog(activity, R.string.internal_error_api);
+        showConnectionProblemDialog(R.string.internal_error_api);
 
         return cause;
 	}
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceMessageString) {
-        showConnectionProblemDialog(activity, R.string.network_error_title, resourceMessageString);
+    private void showConnectionProblemDialog(final int resourceMessageString) {
+        showConnectionProblemDialog(R.string.network_error_title, resourceMessageString);
     }
 
-    private void showConnectionProblemDialog(final Activity activity, final int resourceTitleString, final int resourceMessageString) {
-        showConnectionProblemDialog(activity, activity.getString(resourceTitleString), activity.getString(resourceMessageString));
+    private void showConnectionProblemDialog(final int resourceTitleString, final int resourceMessageString) {
+        showConnectionProblemDialog(HabiticaApplication.currentActivity.getString(resourceTitleString), HabiticaApplication.currentActivity.getString(resourceMessageString));
     }
 
-    private void showConnectionProblemDialog(final Activity activity, final String resourceTitleString, final String resourceMessageString){
-        activity.runOnUiThread(new Runnable() {
+    private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString){
+        HabiticaApplication.currentActivity.runOnUiThread(new Runnable() {
             public void run() {
-                if (!(activity).isFinishing()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                if (!(HabiticaApplication.currentActivity).isFinishing()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
                             .setTitle(resourceTitleString)
                             .setMessage(resourceMessageString)
                             .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
