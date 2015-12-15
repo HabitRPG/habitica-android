@@ -71,8 +71,8 @@ import retrofit.client.Response;
 
 public class TasksFragment extends BaseFragment implements OnCheckedChangeListener {
 
-    static final int TASK_CREATED_RESULT = 1;
-    static final int TASK_UPDATED_RESULT = 2;
+    private static final int TASK_CREATED_RESULT = 1;
+    private static final int TASK_UPDATED_RESULT = 2;
 
     public ViewPager viewPager;
     Drawer filterDrawer;

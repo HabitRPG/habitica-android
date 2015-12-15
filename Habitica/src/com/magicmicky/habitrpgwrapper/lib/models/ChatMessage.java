@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class ChatMessage {
 
-    static HashMap<Integer, Integer> contributorColorDict;
+    private static final HashMap<Integer, Integer> contributorColorDict;
 
     static {
         contributorColorDict = new HashMap<>();

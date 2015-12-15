@@ -42,9 +42,9 @@ import de.greenrobot.event.EventBus;
  * Created by Negue on 20.08.2015.
  */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
-    static final int TYPE_DANIEL = 0;
-    static final int TYPE_NEW_MESSAGE = 1;
-    static final int TYPE_MESSAGE = 2;
+    private static final int TYPE_DANIEL = 0;
+    private static final int TYPE_NEW_MESSAGE = 1;
+    private static final int TYPE_MESSAGE = 2;
 
     private List<ChatMessage> messages;
     private Context viewContext;
