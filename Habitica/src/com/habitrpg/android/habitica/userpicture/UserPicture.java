@@ -22,10 +22,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPicture {
 
-    private static final Integer WIDTH = 140;
-    private static final Integer HEIGHT = 147;
-    private static final Integer COMPACT_WIDTH = 103;
-    private static final Integer COMPACT_HEIGHT = 90;
+    private static final int WIDTH = 140;
+    private static final int HEIGHT = 147;
+    private static final int COMPACT_WIDTH = 103;
+    private static final int COMPACT_HEIGHT = 90;
 
     private HabitRPGUser user;
     private ImageView imageView;
