@@ -38,7 +38,7 @@ public class UserPicture {
 
     private String currentCacheFileName;
 
-    List layers = new ArrayList();
+    final List<Bitmap> layers = new ArrayList<>();
 
     public UserPicture(HabitRPGUser user, Context context) {
         this.user = user;
@@ -176,7 +176,7 @@ public class UserPicture {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
         for (String layer : layerNames) {
-            layers.add(0);
+            layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
             Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
             layerNumber = layerNumber + 1;
