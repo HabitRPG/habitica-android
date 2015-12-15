@@ -9,7 +9,7 @@ It's also on Google Play:
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-Having the application installed is a good way to be notified of new releases. Although Watching this 
+Having the application installed is a good way to be notified of new releases. However, watching this 
 repository will allow GitHub to email you whenever we publish a release.
 
 
