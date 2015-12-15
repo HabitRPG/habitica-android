@@ -92,8 +92,7 @@ public class UserPicture {
     }
 
     public void setPictureOn(final ImageView imageView) {
-        UserPicture.this.imageView = imageView;
-
+        this.imageView = imageView;
         List<String> layerNames = UserPicture.this.getLayerNames();
 
         final Bitmap cache = UserPicture.this.getCachedImage(layerNames);
@@ -104,9 +103,12 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        imageView.setImageBitmap(null);
+        Picasso.with(context).cancelRequest(imageView);
+
         // no => generate it
         generateImage(layerNames);
-
     }
 
     public void setPictureWithRunnable(UserPictureRunnable runnable) {
@@ -121,6 +123,10 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        runnable.run(null);
+
+        // no => generate it
         generateImage(layerNames);
     }
 
