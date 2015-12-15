@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
 
-        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(this, hostConfig);
+        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
