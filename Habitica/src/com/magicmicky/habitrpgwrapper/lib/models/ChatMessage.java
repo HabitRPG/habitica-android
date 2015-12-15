@@ -11,20 +11,20 @@ import java.util.HashMap;
  */
 public class ChatMessage {
 
-    private static final HashMap<Integer, Integer> contributorColorDict;
+    private static final HashMap<Integer, Integer> CONTRIBUTOR_COLOR_DICT;
 
     static {
-        contributorColorDict = new HashMap<>();
-        contributorColorDict.put(0, R.color.contributor_0);
-        contributorColorDict.put(1, R.color.contributor_1);
-        contributorColorDict.put(2, R.color.contributor_2);
-        contributorColorDict.put(3, R.color.contributor_3);
-        contributorColorDict.put(4, R.color.contributor_4);
-        contributorColorDict.put(5, R.color.contributor_5);
-        contributorColorDict.put(6, R.color.contributor_6);
-        contributorColorDict.put(7, R.color.contributor_7);
-        contributorColorDict.put(8, R.color.contributor_mod);
-        contributorColorDict.put(9, R.color.contributor_staff);
+        CONTRIBUTOR_COLOR_DICT = new HashMap<>();
+        CONTRIBUTOR_COLOR_DICT.put(0, R.color.contributor_0);
+        CONTRIBUTOR_COLOR_DICT.put(1, R.color.contributor_1);
+        CONTRIBUTOR_COLOR_DICT.put(2, R.color.contributor_2);
+        CONTRIBUTOR_COLOR_DICT.put(3, R.color.contributor_3);
+        CONTRIBUTOR_COLOR_DICT.put(4, R.color.contributor_4);
+        CONTRIBUTOR_COLOR_DICT.put(5, R.color.contributor_5);
+        CONTRIBUTOR_COLOR_DICT.put(6, R.color.contributor_6);
+        CONTRIBUTOR_COLOR_DICT.put(7, R.color.contributor_7);
+        CONTRIBUTOR_COLOR_DICT.put(8, R.color.contributor_mod);
+        CONTRIBUTOR_COLOR_DICT.put(9, R.color.contributor_staff);
     }
 
 
@@ -51,8 +51,8 @@ public class ChatMessage {
 
 
         if (contributor != null) {
-                if (contributorColorDict.containsKey(contributor.level)) {
-                    rColor = contributorColorDict.get(contributor.level);
+                if (CONTRIBUTOR_COLOR_DICT.containsKey(contributor.level)) {
+                    rColor = CONTRIBUTOR_COLOR_DICT.get(contributor.level);
                 }
         }
 
