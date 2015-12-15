@@ -175,6 +175,7 @@ public class UserPicture {
     private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
+        layers.clear();
         for (String layer : layerNames) {
             layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
