@@ -730,9 +730,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_MENU){
+        if(keyCode == KeyEvent.KEYCODE_MENU && drawer != null){
             drawer.openDrawer();
-
             return true;
         }
 
