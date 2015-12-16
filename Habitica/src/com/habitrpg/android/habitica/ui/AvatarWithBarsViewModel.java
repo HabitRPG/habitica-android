@@ -64,8 +64,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
         setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
 
-        EventBus.getDefault().register(this);
-
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
     }

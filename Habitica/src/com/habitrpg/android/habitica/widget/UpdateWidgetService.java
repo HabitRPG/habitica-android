@@ -42,7 +42,7 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
 
         HostConfig hc = PrefsActivity.fromContext(this);
         if (hc != null && hc.getApi() != null && !hc.getApi().equals("") && hc.getUser() != null && !hc.getUser().equals("")) {
-            this.apiHelper = new APIHelper(this, hc);
+            this.apiHelper = new APIHelper(hc);
             apiHelper.retrieveUser(new HabitRPGUserCallback(this));
             for (int widgetId : allWidgetIds) {
                 RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);

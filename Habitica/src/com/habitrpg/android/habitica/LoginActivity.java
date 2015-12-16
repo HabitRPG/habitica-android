@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity
         if(hc ==null) {
             hc =  new HostConfig(apiAddress, "80", "", "");
         }
-		mApiHelper = new APIHelper(this,hc);
+		mApiHelper = new APIHelper(hc);
 
         this.isRegistering = true;
     }

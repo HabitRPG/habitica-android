@@ -1,29 +1,27 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-
+import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
+import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
 import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Negue on 24.11.2015.
@@ -32,10 +30,19 @@ public class GemsPurchaseFragment extends BaseFragment {
 
     private static final int GEMS_TO_ADD = 21;
 
+    private Listener listener;
+
     private BillingRequests billingRequests;
 
     @InjectView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        listener = (Listener) context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +57,11 @@ public class GemsPurchaseFragment extends BaseFragment {
         btnPurchaseGems.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnPurchaseGems, container.getResources().getColor(R.color.brand));
 
-        MainActivity.checkout.destroyPurchaseFlow();
+        final ActivityCheckout checkout = listener.getActivityCheckout();
 
-        MainActivity.checkout.createPurchaseFlow(new RequestListener<Purchase>() {
+        checkout.destroyPurchaseFlow();
+
+        checkout.createPurchaseFlow(new RequestListener<Purchase>() {
             @Override
             public void onSuccess(Purchase purchase) {
                 if(purchase.sku.equals(HabiticaApplication.Purchase20Gems)){
@@ -77,7 +86,7 @@ public class GemsPurchaseFragment extends BaseFragment {
         });
 
 
-        MainActivity.checkout.whenReady(new Checkout.Listener() {
+        checkout.whenReady(new Checkout.Listener() {
             @Override
             public void onReady(final BillingRequests billingRequests) {
                 GemsPurchaseFragment.this.billingRequests = billingRequests;
@@ -132,7 +141,8 @@ public class GemsPurchaseFragment extends BaseFragment {
             public void onSuccess(Boolean aBoolean) {
                 if (!aBoolean) {
                     // no current product exist
-                    billingRequests.purchase(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, null, MainActivity.checkout.getPurchaseFlow());
+                    final ActivityCheckout checkout = listener.getActivityCheckout();
+                    billingRequests.purchase(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, null, checkout.getPurchaseFlow());
                 }
                 else{
                     checkIfPendingPurchases();
@@ -147,4 +157,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
     }
 
+    public interface Listener {
+        ActivityCheckout getActivityCheckout();
+    }
 }

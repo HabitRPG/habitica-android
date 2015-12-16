@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -14,11 +15,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
 import com.facebook.FacebookSdk;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
-
+import com.squareup.leakcanary.LeakCanary;
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
@@ -47,6 +47,11 @@ public class HabiticaApplication extends Application {
         super.onCreate();
 
         Instance = this;
+
+        // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            LeakCanary.install(this);
+        }
 
         createBillingAndCheckout();
 
@@ -90,7 +95,7 @@ public class HabiticaApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                currentActivity = null;
             }
         });
     }
