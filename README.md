@@ -1,4 +1,5 @@
 # Habitica for Android
+[![Build Status](https://travis-ci.org/HabitRPG/habitrpg-android.svg?branch=develop)](https://travis-ci.org/HabitRPG/habitrpg-android)
 
 [Habitica](https://habitica.com) is an open source habit building program which treats your life like a Role Playing Game. Level up as you succeed, lose HP as you fail, earn money to buy weapons and armor. This repository is related to the Android Native Application.
 
