@@ -14,6 +14,8 @@ android:
 
     # Additional components
     - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
