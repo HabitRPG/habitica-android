@@ -438,7 +438,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             break;
 
             case "reward": {
-                task.setValue(Double.parseDouble(taskValue.getText().toString()));
+                String value = taskValue.getText().toString();
+                if(!value.isEmpty()){
+                    task.setValue(Double.parseDouble(value));
+                }else{
+                    task.setValue(0.0d);
+                }
+
             }
             break;
         }
