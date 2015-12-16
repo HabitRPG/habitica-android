@@ -43,8 +43,8 @@ dependencies {
         transitive = true;
     }
 
-    // View Elements Injection :)
-    compile 'com.jakewharton:butterknife:6.1.0'
+    // View Elements Binding :)
+    compile 'com.jakewharton:butterknife:7.0.1'
 
     compile('com.mikepenz:materialdrawer:4.3.8@aar') {
         transitive = true

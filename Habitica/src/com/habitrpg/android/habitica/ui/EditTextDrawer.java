@@ -11,8 +11,8 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -55,16 +55,16 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
 
         View view;
 
-        @InjectView(R.id.editText)
+        @Bind(R.id.editText)
         EditText editText;
 
-        @InjectView(R.id.btnAdd)
+        @Bind(R.id.btnAdd)
         Button btnAdd;
 
         private ViewHolder(View view) {
             super(view);
             this.view = view;
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
 
             ViewHelper.SetBackgroundTint(btnAdd, view.getResources().getColor(R.color.brand));
 

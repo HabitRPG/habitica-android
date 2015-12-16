@@ -14,8 +14,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -60,13 +60,13 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
     class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @InjectView(R.id.skill_text)
+        @Bind(R.id.skill_text)
         TextView skillNameTextView;
 
-        @InjectView(R.id.skill_notes)
+        @Bind(R.id.skill_notes)
         TextView skillNotesTextView;
 
-        @InjectView(R.id.price_button)
+        @Bind(R.id.price_button)
         Button priceButton;
 
         Skill skill;
@@ -76,7 +76,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
         public SkillViewHolder(View itemView) {
             super(itemView);
 
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
 
             resources = itemView.getResources();
 

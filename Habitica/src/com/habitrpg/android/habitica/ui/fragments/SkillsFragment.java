@@ -25,8 +25,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by viirus on 25/11/15.
@@ -53,7 +53,7 @@ public class SkillsFragment extends BaseFragment {
         return view;
     }
 
-    @InjectView(R.id.recyclerView)
+    @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
     SkillsRecyclerViewAdapter adapter;
@@ -62,7 +62,7 @@ public class SkillsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         mRecyclerView.setAdapter(adapter);

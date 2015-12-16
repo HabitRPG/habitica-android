@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by franzejr on 15/11/15.
@@ -79,15 +79,15 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
     public class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
-        @InjectView(R.id.item_edittext)
+        @Bind(R.id.item_edittext)
         EditText checkListTextView;
 
-        @InjectView(R.id.delete_item_button)
+        @Bind(R.id.delete_item_button)
         Button deleteButton;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             deleteButton.setOnClickListener(this);
 
             checkListTextView.addTextChangedListener(new TextWatcher() {

@@ -72,8 +72,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
@@ -88,16 +88,16 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
     BaseFragment activeFragment;
 
-    @InjectView(R.id.floating_menu_wrapper)
+    @Bind(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @InjectView(R.id.detail_tabs)
+    @Bind(R.id.detail_tabs)
     TabLayout detail_tabs;
 
-    @InjectView(R.id.avatar_with_bars)
+    @Bind(R.id.avatar_with_bars)
     View avatar_with_bars;
 
     AccountHeader accountHeader;
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         setContentView(R.layout.activity_main);
 
         // Inject Controls
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         // Initialize Crashlytics
         Crashlytics crashlytics = new Crashlytics.Builder()
@@ -607,6 +607,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
             this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
             user.getStats().setLvl((int) lvl);
+
             this.showSnackbar(message.toString());
         } else {
             com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
@@ -705,7 +706,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         if (customView != null) {
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
-
             ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
             UserPicture userPicture = new UserPicture(user, this, false, false);
             userPicture.setPictureOn(avatarView);

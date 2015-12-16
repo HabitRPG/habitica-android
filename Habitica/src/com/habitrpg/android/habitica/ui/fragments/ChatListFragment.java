@@ -31,8 +31,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.EventBusException;
 import retrofit.Callback;
@@ -83,10 +83,10 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         return view;
     }
 
-    @InjectView(R.id.chat_list)
+    @Bind(R.id.chat_list)
     RecyclerView mRecyclerView;
 
-    @InjectView(R.id.chat_refresh_layout)
+    @Bind(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     LinearLayoutManager layoutManager;
@@ -95,7 +95,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 

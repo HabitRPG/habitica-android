@@ -18,8 +18,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by Negue on 22.09.2015.
@@ -56,19 +56,19 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.avatar)
+        @Bind(R.id.avatar)
         ImageView imageView;
 
-        @InjectView(R.id.username)
+        @Bind(R.id.username)
         TextView userName;
 
-        @InjectView(R.id.user_lvl)
+        @Bind(R.id.user_lvl)
         TextView lvl;
 
-        @InjectView(R.id.class_label)
+        @Bind(R.id.class_label)
         TextView classLabel;
 
-        @InjectView(R.id.class_background_layout)
+        @Bind(R.id.class_background_layout)
         View classBackground;
 
         ValueBarBinding hpBar;
@@ -78,7 +78,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         public MemberViewHolder(View itemView) {
             super(itemView);
 
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
 
             View hpBarView = itemView.findViewById(R.id.hpBar);
 

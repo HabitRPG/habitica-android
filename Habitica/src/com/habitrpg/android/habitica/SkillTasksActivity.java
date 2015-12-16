@@ -17,17 +17,17 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by viirus on 28/11/15.
  */
 public class SkillTasksActivity extends AppCompatActivity {
-    @InjectView(R.id.viewpager)
+    @Bind(R.id.viewpager)
     public ViewPager viewPager;
 
-    @InjectView(R.id.tab_layout)
+    @Bind(R.id.tab_layout)
     public TabLayout tabLayout;
 
     Map<Integer, SkillTasksRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
@@ -37,7 +37,7 @@ public class SkillTasksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_tasks);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         loadTaskLists();
     }

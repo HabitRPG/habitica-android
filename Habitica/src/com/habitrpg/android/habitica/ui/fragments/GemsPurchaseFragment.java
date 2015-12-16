@@ -19,8 +19,8 @@ import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
@@ -34,7 +34,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
     private BillingRequests billingRequests;
 
-    @InjectView(R.id.btn_purchase_gems)
+    @Bind(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
 
     @Override
@@ -45,7 +45,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
         View v = inflater.inflate(R.layout.fragment_gem_purchase, container, false);
 
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         btnPurchaseGems.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnPurchaseGems, container.getResources().getColor(R.color.brand));

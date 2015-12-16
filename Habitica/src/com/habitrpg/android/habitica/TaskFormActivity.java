@@ -47,8 +47,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 
@@ -70,22 +70,22 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private CheckListAdapter checklistAdapter;
     private Button btnDelete;
 
-    @InjectView(R.id.task_value_edittext)
+    @Bind(R.id.task_value_edittext)
     EditText taskValue;
 
-    @InjectView(R.id.task_value_layout)
+    @Bind(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
 
-    @InjectView(R.id.task_checklist_wrapper)
+    @Bind(R.id.task_checklist_wrapper)
     LinearLayout checklistWrapper;
 
-    @InjectView(R.id.task_startdate_layout)
+    @Bind(R.id.task_startdate_layout)
     LinearLayout startDateWrapper;
 
-    @InjectView(R.id.task_startdate_picker)
+    @Bind(R.id.task_startdate_picker)
     DatePicker startDatePicker;
 
-    @InjectView(R.id.task_difficulty_wrapper)
+    @Bind(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
 
     @Override
@@ -93,7 +93,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_form);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
