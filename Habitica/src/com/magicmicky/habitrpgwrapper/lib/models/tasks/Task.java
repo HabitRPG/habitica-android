@@ -27,12 +27,12 @@ import java.util.concurrent.TimeUnit;
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
 public class Task extends BaseModel {
-    public static String TYPE_HABIT = "habit";
-    public static String TYPE_TODO = "todo";
-    public static String TYPE_DAILY = "daily";
-    public static String TYPE_REWARD = "reward";
-    public static String FREQUENCY_WEEKLY = "weekly";
-    public static String FREQUENCY_DAILY = "daily";
+    public static final String TYPE_HABIT = "habit";
+    public static final String TYPE_TODO = "todo";
+    public static final String TYPE_DAILY = "daily";
+    public static final String TYPE_REWARD = "reward";
+    public static final String FREQUENCY_WEEKLY = "weekly";
+    public static final String FREQUENCY_DAILY = "daily";
 
 
     @Column

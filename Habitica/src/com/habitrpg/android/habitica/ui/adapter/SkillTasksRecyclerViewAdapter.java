@@ -30,7 +30,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
     private ObservableArrayList<Task> observableContent;
     SkillTasksActivity activity;
 
-    static final int TYPE_CELL = 1;
+    private static final int TYPE_CELL = 1;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
     public SkillTasksRecyclerViewAdapter(String taskType, SkillTasksActivity activity) {

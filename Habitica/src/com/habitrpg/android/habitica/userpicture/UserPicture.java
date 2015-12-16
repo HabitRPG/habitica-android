@@ -22,10 +22,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPicture {
 
-    static Integer width = 140;
-    static Integer height = 147;
-    static Integer compactWidth = 103;
-    static Integer compactHeight = 90;
+    private static final int WIDTH = 140;
+    private static final int HEIGHT = 147;
+    private static final int COMPACT_WIDTH = 103;
+    private static final int COMPACT_HEIGHT = 90;
 
     private HabitRPGUser user;
     private ImageView imageView;
@@ -63,7 +63,7 @@ public class UserPicture {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inScaled = false;
 
-            Bitmap res = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Bitmap res = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
             Canvas myCanvas = new Canvas(res);
             Integer layerNumber = 0;
             for (Object layer : this.layers) {
@@ -74,7 +74,7 @@ public class UserPicture {
                 layerNumber++;
             }
             if (!this.hasPetMount) {
-                res = Bitmap.createBitmap(res, 25, 18, compactWidth, compactHeight);
+                res = Bitmap.createBitmap(res, 25, 18, COMPACT_WIDTH, COMPACT_HEIGHT);
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {

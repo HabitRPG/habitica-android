@@ -71,8 +71,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     Context context;
     public int dailyResetOffset;
 
-    static final int TYPE_HEADER = 0;
-    static final int TYPE_CELL = 1;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_CELL = 1;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
     private IAdditionalEntries additionalEntries;

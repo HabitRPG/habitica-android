@@ -30,7 +30,7 @@ import io.fabric.sdk.android.Fabric;
  */
 public class GemsPurchaseFragment extends BaseFragment {
 
-    static final int GEMS_TO_ADD = 21;
+    private static final int GEMS_TO_ADD = 21;
 
     private BillingRequests billingRequests;
 
