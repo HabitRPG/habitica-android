@@ -38,7 +38,7 @@ public class UserPicture {
 
     private String currentCacheFileName;
 
-    List layers = new ArrayList();
+    final List<Bitmap> layers = new ArrayList<>();
 
     public UserPicture(HabitRPGUser user, Context context) {
         this.user = user;
@@ -92,8 +92,7 @@ public class UserPicture {
     }
 
     public void setPictureOn(final ImageView imageView) {
-        UserPicture.this.imageView = imageView;
-
+        this.imageView = imageView;
         List<String> layerNames = UserPicture.this.getLayerNames();
 
         final Bitmap cache = UserPicture.this.getCachedImage(layerNames);
@@ -104,9 +103,12 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        imageView.setImageBitmap(null);
+        Picasso.with(context).cancelRequest(imageView);
+
         // no => generate it
         generateImage(layerNames);
-
     }
 
     public void setPictureWithRunnable(UserPictureRunnable runnable) {
@@ -121,6 +123,10 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        runnable.run(null);
+
+        // no => generate it
         generateImage(layerNames);
     }
 
@@ -175,8 +181,9 @@ public class UserPicture {
     private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
+        layers.clear();
         for (String layer : layerNames) {
-            layers.add(0);
+            layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
             Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
             layerNumber = layerNumber + 1;
