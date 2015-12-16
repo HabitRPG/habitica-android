@@ -591,13 +591,23 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     @Override
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
+
             showSnackbar(task.getText() + " successfully purchased!");
+
         } else {
-            notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
-            if (data.get_tmp() != null) {
-                if (data.get_tmp().getDrop() != null) {
-                    this.showSnackbar(data.get_tmp().getDrop().getDialog(), MainActivity.SnackbarDisplayType.DROP);
-                }
+
+            if(user != null){
+                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+            }
+
+            showSnackBarForDataReceived(data);
+        }
+    }
+
+    private void showSnackBarForDataReceived(TaskDirectionData data) {
+        if (data.get_tmp() != null) {
+            if (data.get_tmp().getDrop() != null) {
+                this.showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
             }
         }
     }
