@@ -9,7 +9,7 @@ It's also on Google Play:
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
 
-Having the application installed is a good way to be notified of new releases. Although Watching this 
+Having the application installed is a good way to be notified of new releases. However, clicking "Watch" on this 
 repository will allow GitHub to email you whenever we publish a release.
 
 
@@ -25,7 +25,7 @@ If you Watch this repository, GitHub will send you an email every time we publis
 
 For an introduction to the technologies used and how the software is organized, refer to [Contributing to Habitica](http://habitica.wikia.com/wiki/Contributing_to_Habitica#Coders_.28Web_.26_Mobile.29) - "Coders (Web & Mobile)" section.
 
-Thank you very much [for all contributors](https://github.com/HabitRPG/habitrpg-android/graphs/contributors)
+Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-android/graphs/contributors).
 
 #### Steps for contributing to this repository:
 
@@ -34,5 +34,5 @@ Thank you very much [for all contributors](https://github.com/HabitRPG/habitrpg-
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Create new Pull Request
-  Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
+   * Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
 
