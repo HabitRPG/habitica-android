@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.android.databinding'
-apply plugin: 'aar-link-sources'
 apply plugin: 'io.fabric'
 
 buildscript {
