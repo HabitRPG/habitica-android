@@ -68,4 +68,12 @@ public class PartyMemberListFragment extends Fragment {
     public void setMemberList(ArrayList<HabitRPGUser> members) {
         viewAdapter.setMemberList(members);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+
+    }
+
 }

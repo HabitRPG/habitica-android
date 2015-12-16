@@ -136,4 +136,12 @@ public class SkillsFragment extends BaseFragment {
             progressDialog.dismiss();
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+
+    }
+
 }

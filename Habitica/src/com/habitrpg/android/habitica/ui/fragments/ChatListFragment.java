@@ -241,6 +241,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (registerEventBus) {
             EventBus.getDefault().unregister(this);
         }
+        ButterKnife.unbind(this);
         super.onDestroyView();
     }
+
+
 }
