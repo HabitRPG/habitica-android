@@ -86,9 +86,8 @@
                         android:layout_columnWeight="1"
                         android:layout_row="1"
                         bind:imageName='@{"quest_"+ quest.key}'
-                        android:src="@drawable/ic_action_chat"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_column="1"

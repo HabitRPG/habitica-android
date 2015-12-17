@@ -30,6 +30,9 @@
 	<dimen name="row_size">58dp</dimen>
     <dimen name="btn_height_reward">50dp</dimen>
 
+    <dimen name="quest_image_width">128dp</dimen>
+    <dimen name="quest_image_height">128dp</dimen>
+
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
 
