@@ -66,10 +66,9 @@ public class UserPicture {
             Bitmap res = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
             Canvas myCanvas = new Canvas(res);
             Integer layerNumber = 0;
-            for (Object layer : this.layers) {
-                if (layer.getClass() == Bitmap.class) {
-                    Bitmap layerBitmap = (Bitmap) layer;
-                    this.modifyCanvas(layerBitmap, myCanvas, layerNumber);
+            for (Bitmap layerBitmap : this.layers) {
+                if (layerBitmap != null) {
+                    modifyCanvas(layerBitmap, myCanvas, layerNumber);
                 }
                 layerNumber++;
             }
