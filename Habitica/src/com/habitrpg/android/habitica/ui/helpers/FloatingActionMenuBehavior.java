@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.github.clans.fab.FloatingActionMenu;
@@ -67,4 +68,21 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 
         return minOffset;
     }
+
+	@Override
+	public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+		return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
+				super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+	}
+
+	@Override
+	public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+		super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+
+		if (dyConsumed > 20 && child.getVisibility() == View.VISIBLE) {
+			child.setVisibility(View.INVISIBLE);
+		} else if (dyConsumed < -20 && child.getVisibility() != View.VISIBLE) {
+			child.setVisibility(View.VISIBLE);
+		}
+	}
 }
