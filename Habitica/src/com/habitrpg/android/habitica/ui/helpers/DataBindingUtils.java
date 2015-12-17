@@ -27,6 +27,7 @@ public class DataBindingUtils {
         if (view.getVisibility() == View.VISIBLE) {
             Picasso.with(view.getContext())
                     .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png")
+                    .resizeDimen(R.dimen.quest_image_width, R.dimen.quest_image_height)
                     .into(view);
         }
     }
