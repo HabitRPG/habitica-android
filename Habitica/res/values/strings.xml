@@ -145,4 +145,5 @@
     <string name="taskform.delete.message">Do you really want to delete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="quest">Quest</string>
 </resources>
