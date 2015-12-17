@@ -64,53 +64,35 @@
                 android:layout_margin="5dp"
                 android:visibility="@{quest != null ? View.VISIBLE : View.GONE}">
 
-                <GridLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alignmentMode="alignBounds"
-                    android:columnCount="2"
-                    android:columnOrderPreserved="false"
-                    android:padding="5dp"
-                    android:rowCount="3">
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    >
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_columnSpan="2"
                         android:layout_marginBottom="8dp"
-                        android:text="@{quest.text}" />
+                        android:text="@{quest.text}"
+                        android:textStyle="bold"
+                        />
 
                     <ImageView
-                        android:layout_column="0"
-                        android:layout_columnWeight="1"
-                        android:layout_row="1"
-                        bind:imageName='@{"quest_"+ quest.key}'
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:layout_column="1"
-                        android:layout_columnWeight="4"
-                        android:layout_row="1"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout   android:layout_column="0"
-                        android:layout_columnSpan="2"
-                        android:layout_row="2"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginBottom="8dp"
+                        bind:imageName='@{"quest_"+ quest.key}'
+                        />
 
-                        <TextView android:layout_margin="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}" />
-                    </LinearLayout>
-                </GridLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}"
+                        />
 
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
         </LinearLayout>
