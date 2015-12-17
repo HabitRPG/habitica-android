@@ -22,10 +22,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPicture {
 
-    static Integer width = 140;
-    static Integer height = 147;
-    static Integer compactWidth = 103;
-    static Integer compactHeight = 90;
+    private static final int WIDTH = 140;
+    private static final int HEIGHT = 147;
+    private static final int COMPACT_WIDTH = 103;
+    private static final int COMPACT_HEIGHT = 90;
 
     private HabitRPGUser user;
     private ImageView imageView;
@@ -38,7 +38,7 @@ public class UserPicture {
 
     private String currentCacheFileName;
 
-    List layers = new ArrayList();
+    final List<Bitmap> layers = new ArrayList<>();
 
     public UserPicture(HabitRPGUser user, Context context) {
         this.user = user;
@@ -63,7 +63,7 @@ public class UserPicture {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inScaled = false;
 
-            Bitmap res = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Bitmap res = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
             Canvas myCanvas = new Canvas(res);
             Integer layerNumber = 0;
             for (Object layer : this.layers) {
@@ -74,7 +74,7 @@ public class UserPicture {
                 layerNumber++;
             }
             if (!this.hasPetMount) {
-                res = Bitmap.createBitmap(res, 25, 18, compactWidth, compactHeight);
+                res = Bitmap.createBitmap(res, 25, 18, COMPACT_WIDTH, COMPACT_HEIGHT);
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {
@@ -92,8 +92,7 @@ public class UserPicture {
     }
 
     public void setPictureOn(final ImageView imageView) {
-        UserPicture.this.imageView = imageView;
-
+        this.imageView = imageView;
         List<String> layerNames = UserPicture.this.getLayerNames();
 
         final Bitmap cache = UserPicture.this.getCachedImage(layerNames);
@@ -104,9 +103,12 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        imageView.setImageBitmap(null);
+        Picasso.with(context).cancelRequest(imageView);
+
         // no => generate it
         generateImage(layerNames);
-
     }
 
     public void setPictureWithRunnable(UserPictureRunnable runnable) {
@@ -121,6 +123,10 @@ public class UserPicture {
             return;
         }
 
+        // Clear out current image while loading the new one
+        runnable.run(null);
+
+        // no => generate it
         generateImage(layerNames);
     }
 
@@ -175,8 +181,9 @@ public class UserPicture {
     private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
+        layers.clear();
         for (String layer : layerNames) {
-            layers.add(0);
+            layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
             Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
             layerNumber = layerNumber + 1;

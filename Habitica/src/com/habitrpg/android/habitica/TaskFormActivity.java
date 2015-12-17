@@ -187,7 +187,10 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
-            populate(task);
+            if(task != null){
+                populate(task);
+            }
+
             setTitle(task);
 
             btnDelete.setEnabled(true);
@@ -435,7 +438,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             break;
 
             case "reward": {
-                task.setValue(Double.parseDouble(taskValue.getText().toString()));
+                String value = taskValue.getText().toString();
+                if(!value.isEmpty()){
+                    task.setValue(Double.parseDouble(value));
+                }else{
+                    task.setValue(0.0d);
+                }
+
             }
             break;
         }

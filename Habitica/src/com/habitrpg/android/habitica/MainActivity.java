@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -59,9 +60,13 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
-
+import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -80,7 +85,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived, TaskScoringCallback.OnTaskScored {
+public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
+                                                               TaskScoringCallback.OnTaskScored,
+                                                               GemsPurchaseFragment.Listener {
 
     public enum SnackbarDisplayType {
         NORMAL, FAILURE, FAILURE_BLUE, DROP
@@ -113,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     private MaterialDialog faintDialog;
 
     // Checkout needs to be in the Activity..
-    public static ActivityCheckout checkout = null;
+    public ActivityCheckout checkout = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
 
-        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(this, hostConfig);
+        HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -170,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
     }
 
+    @Override
+    public ActivityCheckout getActivityCheckout() {
+        return checkout;
+    }
 
     private void saveLoginInformation() {
         HabiticaApplication.User = user;
@@ -587,13 +598,23 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     @Override
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
+
             showSnackbar(task.getText() + " successfully purchased!");
+
         } else {
-            notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
-            if (data.get_tmp() != null) {
-                if (data.get_tmp().getDrop() != null) {
-                    this.showSnackbar(data.get_tmp().getDrop().getDialog(), MainActivity.SnackbarDisplayType.DROP);
-                }
+
+            if(user != null){
+                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+            }
+
+            showSnackBarForDataReceived(data);
+        }
+    }
+
+    private void showSnackBarForDataReceived(TaskDirectionData data) {
+        if (data.get_tmp() != null) {
+            if (data.get_tmp().getDrop() != null) {
+                this.showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
             }
         }
     }
@@ -716,9 +737,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_MENU){
+        if(keyCode == KeyEvent.KEYCODE_MENU && drawer != null){
             drawer.openDrawer();
-
             return true;
         }
 

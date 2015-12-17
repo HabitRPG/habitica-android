@@ -56,13 +56,11 @@ public class APIHelper implements ErrorHandler, Profiler {
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     private final InAppPurchasesApiService inAppPurchasesService;
-    private Context mContext;
     private HostConfig cfg;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
-    public APIHelper(Context c, final HostConfig cfg) {
-        this.mContext = c;
+    public APIHelper(final HostConfig cfg) {
         this.cfg = cfg;
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {

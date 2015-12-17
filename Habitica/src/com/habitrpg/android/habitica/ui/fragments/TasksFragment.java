@@ -71,8 +71,8 @@ import retrofit.client.Response;
 
 public class TasksFragment extends BaseFragment implements OnCheckedChangeListener {
 
-    static final int TASK_CREATED_RESULT = 1;
-    static final int TASK_UPDATED_RESULT = 2;
+    private static final int TASK_CREATED_RESULT = 1;
+    private static final int TASK_UPDATED_RESULT = 2;
 
     public ViewPager viewPager;
     Drawer filterDrawer;
@@ -239,51 +239,51 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
                                     public void GetAdditionalEntries(final IReceiveNewEntries callBack) {
 
                                         // request buyable gear
-                                        mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
-                                            @Override
-                                            public void success(List<ItemData> itemDatas, Response response) {
+                                        if(mAPIHelper != null){
+                                            mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
+                                                @Override
+                                                public void success(List<ItemData> itemDatas, Response response) {
 
-                                                // get itemdata list
-                                                ArrayList<String> itemKeys = new ArrayList<String>();
-                                                for (ItemData item : itemDatas) {
-                                                    itemKeys.add(item.key);
-                                                }
-                                                itemKeys.add("potion");
-
-                                                contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
-                                                    @Override
-                                                    public void GotObject(List<ItemData> obj) {
-                                                        ArrayList<Task> buyableItems = new ArrayList<Task>();
-
-                                                        for (ItemData item : obj) {
-                                                            Task reward = new Task();
-                                                            reward.text = item.text;
-                                                            reward.notes = item.notes;
-                                                            reward.value = item.value;
-                                                            reward.setType("reward");
-                                                            reward.specialTag = "item";
-                                                            reward.setId(item.key);
-
-                                                            buyableItems.add(reward);
-                                                        }
-
-                                                        callBack.GotAdditionalItems(buyableItems);
-
+                                                    // get itemdata list
+                                                    ArrayList<String> itemKeys = new ArrayList<String>();
+                                                    for (ItemData item : itemDatas) {
+                                                        itemKeys.add(item.key);
                                                     }
-                                                });
+                                                    itemKeys.add("potion");
+
+                                                    contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
+                                                        @Override
+                                                        public void GotObject(List<ItemData> obj) {
+                                                            ArrayList<Task> buyableItems = new ArrayList<Task>();
+
+                                                            for (ItemData item : obj) {
+                                                                Task reward = new Task();
+                                                                reward.text = item.text;
+                                                                reward.notes = item.notes;
+                                                                reward.value = item.value;
+                                                                reward.setType("reward");
+                                                                reward.specialTag = "item";
+                                                                reward.setId(item.key);
+
+                                                                buyableItems.add(reward);
+                                                            }
+
+                                                            callBack.GotAdditionalItems(buyableItems);
+
+                                                        }
+                                                    });
 
 
-                                            }
+                                                }
 
-                                            @Override
-                                            public void failure(RetrofitError error) {
+                                                @Override
+                                                public void failure(RetrofitError error) {
 
-                                            }
-                                        });
-
+                                                }
+                                            });
+                                        }
                                     }
                                 });
-
 
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_REWARD);
                         break;
@@ -370,31 +370,31 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
 
     // endregion
 
-
-
     //region Events
 
     public void onEvent(final CreateTagCommand event) {
         final Tag t = new Tag();
         t.setName(event.tagName);
 
-        mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
-            @Override
-            public void success(List<Tag> tags, Response response) {
-                // Since we get a list of all tags, we just save them all
-                for (Tag onlineTag : tags) {
-                    onlineTag.user_id = user.getId();
-                    onlineTag.async().save();
+        if (mAPIHelper != null){
+            mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
+                @Override
+                public void success(List<Tag> tags, Response response) {
+                    // Since we get a list of all tags, we just save them all
+                    for (Tag onlineTag : tags) {
+                        onlineTag.user_id = user.getId();
+                        onlineTag.async().save();
+                    }
+
+                    fillTagFilterDrawer(tags);
                 }
 
-                fillTagFilterDrawer(tags);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                activity.showSnackbar("Error: " + error.getMessage(), MainActivity.SnackbarDisplayType.FAILURE);
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    activity.showSnackbar("Error: " + error.getMessage(), MainActivity.SnackbarDisplayType.FAILURE);
+                }
+            });
+        }
     }
 
     public void onEvent(TaskTappedEvent event) {
@@ -441,8 +441,6 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
     }
 
     //endregion Events
-
-
     public void fillTagFilterDrawer(List<Tag> tagList) {
         filterDrawer.removeAllItems();
         filterDrawer.addItems(
