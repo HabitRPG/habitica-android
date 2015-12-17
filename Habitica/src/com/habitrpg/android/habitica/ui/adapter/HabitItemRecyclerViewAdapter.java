@@ -49,8 +49,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import java.util.List;
 import java.util.UUID;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 
@@ -249,7 +249,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public THabitItem Item;
 
-        @InjectView(R.id.notesTextView)
+        @Bind(R.id.notesTextView)
         TextView notesTextView;
 
         public ViewHolder(View itemView) {
@@ -261,7 +261,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             itemView.setOnLongClickListener(this);
             itemView.setLongClickable(true);
 
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
 
             resources = itemView.getResources();
         }
@@ -298,10 +298,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class HabitViewHolder extends ViewHolder<Task> {
 
-        @InjectView(R.id.btnPlus)
+        @Bind(R.id.btnPlus)
         Button btnPlus;
 
-        @InjectView(R.id.btnMinus)
+        @Bind(R.id.btnMinus)
         Button btnMinus;
 
         HabitItemCardBinding binding;
@@ -344,13 +344,13 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
-        @InjectView(R.id.checkBox)
+        @Bind(R.id.checkBox)
         CheckBox checkbox;
 
-        @InjectView(R.id.checklistView)
+        @Bind(R.id.checklistView)
         LinearLayout checklistView;
 
-        @InjectView(R.id.checklistIndicatorWrapper)
+        @Bind(R.id.checklistIndicatorWrapper)
         RelativeLayout checklistIndicatorWrapper;
 
         public Boolean displayChecklist;
@@ -501,7 +501,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public class RewardViewHolder extends ViewHolder<Task> {
         RewardItemCardBinding binding;
 
-        @InjectView(R.id.btnReward)
+        @Bind(R.id.btnReward)
         Button btnReward;
 
         public RewardViewHolder(View itemView) {

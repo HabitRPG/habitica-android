@@ -19,8 +19,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.UUID;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 
 public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTasksRecyclerViewAdapter.ViewHolder> {
@@ -89,7 +89,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
         SkillTaskItemCardBinding binding;
 
-        @InjectView(R.id.notesTextView)
+        @Bind(R.id.notesTextView)
         TextView notesTextView;
 
         public ViewHolder(View itemView) {
@@ -98,7 +98,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
             itemView.setOnClickListener(this);
             itemView.setClickable(true);
 
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             binding = DataBindingUtil.bind(itemView);
 
             resources = itemView.getResources();

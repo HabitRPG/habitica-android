@@ -17,15 +17,15 @@ import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class AboutActivity extends AppCompatActivity {
 
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager pager;
 
-    @InjectView(R.id.tab_layout)
+    @Bind(R.id.tab_layout)
     TabLayout tabLayout;
 
     @Override
@@ -33,7 +33,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
 

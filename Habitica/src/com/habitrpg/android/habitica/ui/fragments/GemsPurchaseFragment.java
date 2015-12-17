@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -23,6 +22,12 @@ import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by Negue on 24.11.2015.
  */
@@ -34,7 +39,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
     private BillingRequests billingRequests;
 
-    @InjectView(R.id.btn_purchase_gems)
+    @Bind(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
 
     @Override
@@ -52,7 +57,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
         View v = inflater.inflate(R.layout.fragment_gem_purchase, container, false);
 
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         btnPurchaseGems.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnPurchaseGems, container.getResources().getColor(R.color.brand));
@@ -156,6 +161,16 @@ public class GemsPurchaseFragment extends BaseFragment {
         });
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+
+    }
+
+
+
 
     public interface Listener {
         ActivityCheckout getActivityCheckout();

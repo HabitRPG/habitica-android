@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -33,9 +34,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.Optional;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -130,45 +130,45 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         private String groupId;
 
         // Toggle Inn State
-        @InjectView(R.id.btn_toggle_inn)
-        @Optional
+        @Bind(R.id.btn_toggle_inn)
+        @Nullable
         Button btnToggleInn;
 
         // New Msg
-        @InjectView(R.id.edit_new_message_text)
-        @Optional
+        @Bind(R.id.edit_new_message_text)
+        @Nullable
         AppCompatEditText textNewMessage;
 
-        @InjectView(R.id.btn_send_message)
-        @Optional
+        @Bind(R.id.btn_send_message)
+        @Nullable
         Button btnSendNewMessage;
 
-        @InjectView(R.id.btn_options)
-        @Optional
+        @Bind(R.id.btn_options)
+        @Nullable
         ImageView btnOptions;
 
-        @InjectView(R.id.user_background_layout)
-        @Optional
+        @Bind(R.id.user_background_layout)
+        @Nullable
         LinearLayout userBackground;
 
-        @InjectView(R.id.like_background_layout)
-        @Optional
+        @Bind(R.id.like_background_layout)
+        @Nullable
         LinearLayout likeBackground;
 
-        @InjectView(R.id.user_label)
-        @Optional
+        @Bind(R.id.user_label)
+        @Nullable
         TextView userLabel;
 
-        @InjectView(R.id.message_text)
-        @Optional
+        @Bind(R.id.message_text)
+        @Nullable
         TextView messageText;
 
-        @InjectView(R.id.ago_label)
-        @Optional
+        @Bind(R.id.ago_label)
+        @Nullable
         TextView agoLabel;
 
-        @InjectView(R.id.tvLikes)
-        @Optional
+        @Bind(R.id.tvLikes)
+        @Nullable
         TextView tvLikes;
 
         Context context;
@@ -180,7 +180,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             this.uuid = currentUserId;
             this.groupId = groupId;
 
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
 
             context = viewContext;
 

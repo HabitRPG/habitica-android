@@ -71,7 +71,7 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     private void openBrowserLink(String url) {
@@ -85,5 +85,12 @@ public class AboutFragment extends Fragment {
                 "mailto","mobile@habitica.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+
     }
 }
