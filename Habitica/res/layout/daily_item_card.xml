@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <RelativeLayout
+                android:id="@+id/checkBoxHolder"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent"
                 app:backgroundColor="@{daily.isDisplayedActive(offset) ? daily.getLightTaskColor : @color/task_gray}">

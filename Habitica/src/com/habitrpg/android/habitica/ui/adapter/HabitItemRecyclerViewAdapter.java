@@ -344,6 +344,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
+        @InjectView(R.id.checkBoxHolder)
+        RelativeLayout checkboxHolder;
+
         @InjectView(R.id.checkBox)
         CheckBox checkbox;
 
@@ -443,6 +446,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 }
             }
         }
+
+        @NonNull
+        protected View.OnClickListener checkboxHolderClickListener() {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkbox.setChecked(!checkbox.isChecked());
+                }
+            };
+        }
     }
 
     public class DailyViewHolder extends ChecklistedViewHolder {
@@ -453,11 +466,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
-
+            checkboxHolder.setOnClickListener(checkboxHolderClickListener());
             checkbox.setOnCheckedChangeListener(this);
             binding.setOffset(dailyResetOffset);
         }
-
 
         @Override
         public void bindHolder(Task habitItem, int position) {
@@ -481,6 +493,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public TodoViewHolder(View itemView) {
             super(itemView);
 
+            checkboxHolder.setOnClickListener(checkboxHolderClickListener());
             binding = DataBindingUtil.bind(itemView);
         }
 
