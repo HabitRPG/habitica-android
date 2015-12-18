@@ -76,6 +76,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher"></receiver>
+        <receiver android:name="com.habitrpg.android.habitica.widget.SimpleWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/widget_info" />
+        </receiver>
     </application>
 
 </manifest>
