@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -25,7 +22,7 @@ public class TaskUpdateCallback implements Callback<Task> {
 
     @Override
     public void failure(RetrofitError error) {
-        Log.w("HabitUpdate", "Error " + error.getMessage());
+        Log.w("HabitUpdate", "Error", error);
     }
 
 }

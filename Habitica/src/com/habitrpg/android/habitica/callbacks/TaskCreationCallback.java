@@ -1,11 +1,8 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -23,6 +20,6 @@ public class TaskCreationCallback implements Callback<Task> {
 
     @Override
     public void failure(RetrofitError error) {
-        Log.w("HabitCreation", "Error " + error.getMessage());
+        Log.w("HabitCreation", "Error", error);
     }
 }
