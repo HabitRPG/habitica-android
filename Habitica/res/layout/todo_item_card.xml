@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <RelativeLayout
-				android:id="@+id/checkBoxHolder"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent"
                 app:backgroundColor="@{todo.completed ? @color/task_gray : todo.getLightTaskColor}">

@@ -446,16 +446,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 }
             }
         }
-
-        @NonNull
-        protected View.OnClickListener checkboxHolderClickListener() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkbox.setChecked(!checkbox.isChecked());
-                }
-            };
-        }
     }
 
     public class DailyViewHolder extends ChecklistedViewHolder {
@@ -466,7 +456,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
-            checkboxHolder.setOnClickListener(checkboxHolderClickListener());
             checkbox.setOnCheckedChangeListener(this);
             binding.setOffset(dailyResetOffset);
         }
@@ -493,7 +482,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public TodoViewHolder(View itemView) {
             super(itemView);
 
-            checkboxHolder.setOnClickListener(checkboxHolderClickListener());
             binding = DataBindingUtil.bind(itemView);
         }
 
