@@ -190,15 +190,11 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
                 .putString(getString(R.string.SP_email), user.getAuthentication().getLocalAuthentication().getEmail())
                 .commit();
-        try {
-            if (!ans) {
-                throw new Exception("Shared Preferences Username and Email error");
-            }
-        } catch (Exception e) {
-            Log.e("SHARED PREFERENCES", e.getMessage());
+
+        if (!ans) {
+            Log.e("SHARED PREFERENCES", "Shared Preferences Username and Email error");
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
