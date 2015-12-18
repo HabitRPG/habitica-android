@@ -9,16 +9,29 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.github.clans.fab.FloatingActionMenu;
+import com.habitrpg.android.habitica.R;
 
 import java.util.List;
 
 public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
+
+    private final int FAB_ANIMATION_DURATION = 500;
+
     private float mTranslationY;
+
+    private Context context;
+    private boolean isAnimating;
+    private boolean isOffScreen;
 
     public FloatingActionMenuBehavior(Context context, AttributeSet attrs) {
         super();
+        this.context = context;
+        isAnimating = false;
+        isOffScreen = false;
     }
 
     @Override
@@ -75,13 +88,53 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 	}
 
 	@Override
-	public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+	public void onNestedScroll(CoordinatorLayout coordinatorLayout, final View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
 		super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
-		if (dyConsumed > 20 && child.getVisibility() == View.VISIBLE) {
-			child.setVisibility(View.INVISIBLE);
-		} else if (dyConsumed < -20 && child.getVisibility() != View.VISIBLE) {
-			child.setVisibility(View.VISIBLE);
+        /*
+        Logic:
+            - If we're scrolling downwards or we're at the bottom of the screen
+            AND if we're not animating and not on screen > HIDE
+         */
+        if ((dyConsumed > 20 || (dyConsumed == 0 && dyUnconsumed > 0)) && !isAnimating && !isOffScreen) {
+            isAnimating = true;
+            slideFabOffScreen(child);
+            resetAnimatingStatusWithDelay(child);
+            isOffScreen = true;
+
+        /*
+         Logic:
+            - If we're not on screen
+            AND we're scrolling upwards and not animating OR we're at the top of the screen > SHOW
+         */
+		} else if (isOffScreen && ((dyConsumed < -10 && !isAnimating) || dyUnconsumed < 0)) {
+            isAnimating = true;
+            slideFabOnScreen(child);
+            resetAnimatingStatusWithDelay(child);
+            isOffScreen = false;
 		}
 	}
+
+    private void resetAnimatingStatusWithDelay(View child) {
+        child.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				isAnimating = false;
+			}
+		}, FAB_ANIMATION_DURATION);
+    }
+
+    private void slideFabOffScreen(View view){
+        Animation slideOff = AnimationUtils.loadAnimation(context, R.anim.fab_slide_out);
+        slideOff.setDuration(FAB_ANIMATION_DURATION);
+        slideOff.setFillAfter(true);
+        view.startAnimation(slideOff);
+    }
+
+    private void slideFabOnScreen(View view){
+        Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.fab_slide_in);
+        slideIn.setDuration(FAB_ANIMATION_DURATION);
+        slideIn.setFillAfter(true);
+        view.startAnimation(slideIn);
+    }
 }
