@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class BitmapUtils {
     public static String getSavePath() {
@@ -34,6 +35,7 @@ public class BitmapUtils {
 
     public static void saveToFile(String filename, Bitmap bmp) {
         try {
+            createNomedia();
             File myDir = new File(getSavePath());
             boolean res = myDir.mkdirs();
 
@@ -50,5 +52,17 @@ public class BitmapUtils {
     public static boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
         return status.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    private static boolean createNomedia() {
+        //Returns true if .nomedia was created/already existed and false if not
+        try {
+            File cacheDir = new File (getSavePath());
+            cacheDir.mkdirs();
+            File nomediaFile = new File (getSavePath() + "/.nomedia");
+            if (!nomediaFile.isFile()) return nomediaFile.createNewFile();
+        } catch (IOException e) {
+        }
+        return false;
     }
 }
