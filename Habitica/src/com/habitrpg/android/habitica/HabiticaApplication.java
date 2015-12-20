@@ -150,9 +150,9 @@ public class HabiticaApplication extends Application {
             Field field = FlowManager.class.getDeclaredField("mDatabaseHolder");
             setFinalStatic(field, null);
         } catch (NoSuchFieldException noSuchField) {
-            Log.e("nosuchfield", "No such field exists in FlowManager");
+            Log.e("nosuchfield", "No such field exists in FlowManager", noSuchField);
         } catch (IllegalAccessException illegalAccess) {
-            Log.e("illegalaccess", "Illegal access of FlowManager");
+            Log.e("illegalaccess", "Illegal access of FlowManager", illegalAccess);
         }
 
         FlowManager.init(context);
@@ -172,7 +172,7 @@ public class HabiticaApplication extends Application {
             File dbFile = context.getDatabasePath(databaseName);
             return dbFile.exists();
         } catch (Exception exception) {
-            Log.e(exception.toString(), "Database %s doesn't exist.");
+            Log.e("DbExists", "Database %s doesn't exist.", exception);
             return false;
         }
     }

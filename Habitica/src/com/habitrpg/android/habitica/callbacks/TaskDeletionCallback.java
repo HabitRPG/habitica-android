@@ -1,10 +1,7 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,7 +26,7 @@ public class TaskDeletionCallback implements Callback<Void> {
     @Override
     public void failure(RetrofitError error) {
         callback.onTaskDeletionFail();
-        Log.w("HabitDeletion", "Error " + error.getMessage());
+        Log.w("HabitDeletion", "Error", error);
     }
 
 

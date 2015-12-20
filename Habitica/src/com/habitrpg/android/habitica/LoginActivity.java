@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity
 
 			@Override
 			public void onError(FacebookException exception) {
-                Log.d("FB Login", "Error");
+                Log.e("FB Login", "Error", exception);
 			}
 		});
 
@@ -230,7 +230,7 @@ public class LoginActivity extends AppCompatActivity
 				Log.d("scanresult", scanResult.getContents());
 				this.parse(scanResult.getContents());
 			} catch(Exception e) {
-
+				Log.e("scanresult", "Could not parse scanResult", e);
 			}
 		}
 	}
