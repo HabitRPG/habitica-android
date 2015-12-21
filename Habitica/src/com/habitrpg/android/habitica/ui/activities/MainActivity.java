@@ -8,9 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,6 +34,7 @@ import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
@@ -79,13 +78,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.habitrpg.android.habitica.ui.UiUtils.*;
+
 public class MainActivity extends BaseActivity implements HabitRPGUserCallback.OnUserReceived,
                                                                TaskScoringCallback.OnTaskScored,
                                                                GemsPurchaseFragment.Listener {
-
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP
-    }
 
     BaseFragment activeFragment;
 
@@ -460,30 +457,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         super.onDestroy();
     }
 
-    public void showSnackbar(String content) {
-        showSnackbar(content, SnackbarDisplayType.NORMAL);
-    }
-
-    public void showSnackbar(String content, SnackbarDisplayType displayType) {
-        if (this.isFinishing()) {
-            return;
-        }
-            Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-
-        if (displayType == SnackbarDisplayType.FAILURE) {
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
-        } else if(displayType == SnackbarDisplayType.FAILURE_BLUE) {
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_100));
-        } else if (displayType == SnackbarDisplayType.DROP) {
-            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            tv.setMaxLines(5);
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
-        }
-        snackbar.show();
-    }
-
     // region Events
 
     public void onEvent(ToggledInnStateEvent evt) {
@@ -494,7 +467,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            this.showSnackbar("Not enough Gold", MainActivity.SnackbarDisplayType.FAILURE);
+            showSnackbar(this, floatingMenuWrapper, "Not enough Gold", SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -506,7 +479,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                this.showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
+                UiUtils.showSnackbar(this, floatingMenuWrapper, "You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
             double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
@@ -527,7 +500,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     user.async().save();
                     MainActivity.this.setUserData(true);
 
-                    showSnackbar(event.Reward.getText() + " successfully purchased!");
+                    showSnackbar(MainActivity.this, floatingMenuWrapper ,event.Reward.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
                 }
 
                 @Override
@@ -547,7 +520,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     avatarInHeader.updateData(user);
                     user.async().save();
 
-                    showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, "Buy Reward Error " + event.Reward.getText(), SnackbarDisplayType.FAILURE);
                 }
             });
         } else {
@@ -584,12 +557,12 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
 
-            showSnackbar(task.getText() + " successfully purchased!");
+            showSnackbar(this, floatingMenuWrapper, task.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
 
         } else {
 
             if(user != null){
-                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl());
             }
 
             showSnackBarForDataReceived(data);
@@ -599,22 +572,22 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private void showSnackBarForDataReceived(TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                this.showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                showSnackbar(this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
             }
         }
     }
 
     private void notifyUser(double xp, double hp, double gold,
-                            int lvl, double delta) {
+                            int lvl) {
         StringBuilder message = new StringBuilder();
-        MainActivity.SnackbarDisplayType displayType = MainActivity.SnackbarDisplayType.NORMAL;
+        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
         if (lvl > user.getStats().getLvl()) {
             displayLevelUpDialog(lvl);
 
             this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
-            user.getStats().setLvl((int) lvl);
+            user.getStats().setLvl(lvl);
 
-            this.showSnackbar(message.toString());
+            showSnackbar(this, floatingMenuWrapper, message.toString(), SnackbarDisplayType.NORMAL);
         } else {
             com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
 
@@ -623,7 +596,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 user.getStats().setExp(xp);
             }
             if (hp != stats.getHp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
                 user.getStats().setHp(hp);
             }
@@ -631,11 +604,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
                 stats.setGp(gold);
             } else if (gold < stats.getGp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
                 stats.setGp(gold);
             }
-            this.showSnackbar(message.toString(), displayType);
+            showSnackbar(this, floatingMenuWrapper, message.toString(), displayType);
         }
         setUserData(true);
     }
@@ -728,5 +701,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
 
         return super.onKeyUp(keyCode, event);
+    }
+
+    public FrameLayout getFloatingMenuWrapper() {
+        return floatingMenuWrapper;
     }
 }

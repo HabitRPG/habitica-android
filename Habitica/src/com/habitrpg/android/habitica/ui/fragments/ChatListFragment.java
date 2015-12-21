@@ -149,7 +149,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
                         apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
                             @Override
                             public void success(Void aVoid, Response response) {
-                                activity.showSnackbar("Flagged message by " + cmd.chatMessage.user);
+                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
                             }
 
                             @Override

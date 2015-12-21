@@ -25,9 +25,7 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
@@ -43,6 +41,9 @@ import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.EditTextDrawer;
+import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
@@ -391,7 +392,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
 
                 @Override
                 public void failure(RetrofitError error) {
-                    activity.showSnackbar("Error: " + error.getMessage(), MainActivity.SnackbarDisplayType.FAILURE);
+                    UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + error.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
                 }
             });
         }
