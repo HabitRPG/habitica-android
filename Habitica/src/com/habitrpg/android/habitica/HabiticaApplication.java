@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;

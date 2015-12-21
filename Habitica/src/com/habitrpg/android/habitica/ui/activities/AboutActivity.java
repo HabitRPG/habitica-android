@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.github.porokoro.paperboy.ItemTypeBuilder;
 import com.github.porokoro.paperboy.PaperboyBuilder;
 import com.github.porokoro.paperboy.ViewTypes;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
