@@ -1,20 +1,16 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.MainActivity;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.prefs.TimePreference;
@@ -74,24 +70,23 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
 
         String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
 
-        if (timeval != null) {
-            String[] pieces = timeval.split(":");
-            int hour = Integer.parseInt(pieces[0]);
-            int minute = Integer.parseInt(pieces[1]);
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-            cal.set(Calendar.MINUTE, minute);
-            long trigger_time = cal.getTimeInMillis();
+        String[] pieces = timeval.split(":");
+        int hour = Integer.parseInt(pieces[0]);
+        int minute = Integer.parseInt(pieces[1]);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        long trigger_time = cal.getTimeInMillis();
 
-            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, getNotification());
-            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
 
-            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 
     private void removeNotifications() {
@@ -99,39 +94,6 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
         alarmManager.cancel(displayIntent);
-    }
-
-    @TargetApi(21)
-    private Notification getNotification() {
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-
-        Notification notification;
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle(context.getString(R.string.app_name));
-        builder.setContentText(this.getString(R.string.reminder_title));
-        builder.setSmallIcon(R.drawable.ic_gryphon);
-        Intent notificationIntent = new Intent(context, MainActivity.class);
-
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent intent = PendingIntent.getActivity(context, 0,
-                notificationIntent, 0);
-        builder.setContentIntent(intent);
-
-        if (currentapiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setColor(context.getResources().getColor(R.color.brand_300));
-        }
-
-        if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN){
-            notification = builder.build();
-        } else{
-            notification = builder.getNotification();
-        }
-        notification.defaults |= Notification.DEFAULT_LIGHTS;
-
-        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        return notification;
     }
 
     @Override
