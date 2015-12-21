@@ -23,6 +23,10 @@
         "title": "FAB now hides on scroll"
       },
       {
+        "type": "N",
+        "title": "dailies & todos are now easier to tap"
+      },
+      {
         "type": "F",
         "title": "Quest-Text can now display the HTML correctly"
       }
