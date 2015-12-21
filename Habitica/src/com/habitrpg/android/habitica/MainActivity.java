@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -60,13 +60,9 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
-import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
+
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -168,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
         // Create Checkout
 
-        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
+        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
 
         checkout.start();
 

@@ -36,18 +36,16 @@ import java.util.Arrays;
 public class HabiticaApplication extends Application {
 
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
-
-    public static HabiticaApplication Instance;
     public static HabitRPGUser User;
-
     public static APIHelper ApiHelper;
+
+    public static HabiticaApplication getInstance(Context context) {
+        return (HabiticaApplication) context.getApplicationContext();
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        Instance = this;
-
         // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             LeakCanary.install(this);
@@ -188,7 +186,7 @@ public class HabiticaApplication extends Application {
     }
 
     public static void logout(Context context) {
-        Instance.deleteDatabase(HabitDatabase.NAME);
+        getInstance(context).deleteDatabase(HabitDatabase.NAME);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean use_reminder = preferences.getBoolean("use_reminder", false);
         String reminder_time = preferences.getString("reminder_time", "19:00");
