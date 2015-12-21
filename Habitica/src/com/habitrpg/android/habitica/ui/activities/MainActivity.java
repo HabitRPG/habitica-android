@@ -22,10 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
@@ -78,7 +75,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -128,12 +124,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize Crashlytics
-        Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
         if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))

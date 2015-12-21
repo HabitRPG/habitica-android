@@ -14,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -30,6 +32,8 @@ import org.solovyev.android.checkout.PurchaseVerifier;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Negue on 14.06.2015.
@@ -51,6 +55,7 @@ public class HabiticaApplication extends Application {
         setupLeakCanary();
         setupFlowManager();
         setupFacebookSdk();
+        setupCrashlytics();
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
     }
@@ -68,6 +73,13 @@ public class HabiticaApplication extends Application {
 
     private void setupFacebookSdk() {
         FacebookSdk.sdkInitialize(getApplicationContext());
+    }
+
+    private void setupCrashlytics() {
+        Crashlytics crashlytics = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlytics);
     }
 
     private void registerActivityLifecycleCallbacks() {
@@ -125,7 +137,7 @@ public class HabiticaApplication extends Application {
 
     @Override
     public boolean deleteDatabase(String name) {
-        if(!name.endsWith(".db")){
+        if (!name.endsWith(".db")) {
             name += ".db";
         }
 
@@ -135,7 +147,7 @@ public class HabiticaApplication extends Application {
         boolean deleted = super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
 
         if (deleted) {
-            Log.i("hack","Database deleted");
+            Log.i("hack", "Database deleted");
         } else {
             Log.e("hack", "Database not deleted");
         }
@@ -173,7 +185,7 @@ public class HabiticaApplication extends Application {
 
     public static boolean exists(@NonNull Context context) {
 
-        String databaseName =  "HabiticaDatabase/" + HabitDatabase.NAME;
+        String databaseName = "HabiticaDatabase/" + HabitDatabase.NAME;
 
         try {
             File dbFile = context.getDatabasePath(databaseName);
