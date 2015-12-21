@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -78,40 +77,32 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.habitrpg.android.habitica.ui.UiUtils.*;
+import static com.habitrpg.android.habitica.ui.UiUtils.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.UiUtils.showSnackbar;
 
 public class MainActivity extends BaseActivity implements HabitRPGUserCallback.OnUserReceived,
-                                                               TaskScoringCallback.OnTaskScored,
-                                                               GemsPurchaseFragment.Listener {
-
-    BaseFragment activeFragment;
+        TaskScoringCallback.OnTaskScored,
+        GemsPurchaseFragment.Listener {
 
     @Bind(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.detail_tabs)
     TabLayout detail_tabs;
-
     @Bind(R.id.avatar_with_bars)
     View avatar_with_bars;
 
-    AccountHeader accountHeader;
-    public Drawer drawer;
-
-    protected HostConfig hostConfig;
-    protected HabitRPGUser user;
-
-    AvatarWithBarsViewModel avatarInHeader;
-
-    APIHelper mAPIHelper;
-
-    private MaterialDialog faintDialog;
-
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
+    public Drawer drawer;
+    protected HostConfig hostConfig;
+    protected HabitRPGUser user;
+    private AccountHeader accountHeader;
+    private BaseFragment activeFragment;
+    private AvatarWithBarsViewModel avatarInHeader;
+    private APIHelper mAPIHelper;
+    private MaterialDialog faintDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -123,7 +114,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         super.onCreate(savedInstanceState);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
+        if (!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
 
         HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
@@ -134,7 +125,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             setSupportActionBar(toolbar);
 
             ActionBar actionBar = getSupportActionBar();
-
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(false);
@@ -142,25 +132,22 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 actionBar.setDisplayUseLogoEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
             }
-
         }
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
-
         drawer.setSelectionAtPosition(1);
 
-        // Create Checkout
-
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
-
-        checkout.start();
-
+        setupCheckout();
         EventBus.getDefault().register(this);
-
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    private void setupCheckout() {
+        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
+        checkout.start();
     }
 
     @Override
@@ -180,11 +167,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (!ans) {
             Log.e("SHARED PREFERENCES", "Shared Preferences Username and Email error");
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     public void displayFragment(BaseFragment fragment) {
@@ -266,7 +248,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         loadAndRemoveOldChecklists(allChecklistItems);
                     }
                 }).start();
-            }else{
+            } else {
                 displayDeathDialogIfNeeded();
             }
         }
@@ -324,7 +306,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     }
                 });
             }
-        } catch (SQLiteDoneException e) {}
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
     }
 
     private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries) {
@@ -367,7 +351,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     }
                 });
             }
-        } catch (SQLiteDoneException e) {}
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
 
     }
 
@@ -433,30 +419,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen()) {
-            drawer.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onDestroy() {
-        if (checkout != null)
-            checkout.stop();
-
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
     // region Events
 
     public void onEvent(ToggledInnStateEvent evt) {
@@ -500,7 +462,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     user.async().save();
                     MainActivity.this.setUserData(true);
 
-                    showSnackbar(MainActivity.this, floatingMenuWrapper ,event.Reward.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, event.Reward.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
                 }
 
                 @Override
@@ -533,7 +495,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     }
 
 
-    public void onEvent(final DeleteTaskCommand cmd){
+    public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
@@ -561,7 +523,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         } else {
 
-            if(user != null){
+            if (user != null) {
                 notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl());
             }
 
@@ -577,8 +539,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
     }
 
-    private void notifyUser(double xp, double hp, double gold,
-                            int lvl) {
+    private void notifyUser(double xp, double hp, double gold, int lvl) {
         StringBuilder message = new StringBuilder();
         SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
         if (lvl > user.getStats().getLvl()) {
@@ -615,7 +576,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     @Override
     public void onTaskScoringFailed() {
-
+        //Do nothing
     }
 
     static public Double round(Double value, int n) {
@@ -695,7 +656,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_MENU && drawer != null){
+        if (keyCode == KeyEvent.KEYCODE_MENU && drawer != null) {
             drawer.openDrawer();
             return true;
         }
@@ -706,4 +667,28 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public FrameLayout getFloatingMenuWrapper() {
         return floatingMenuWrapper;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (checkout != null) {
+            checkout.stop();
+        }
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
 }
