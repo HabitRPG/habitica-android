@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -49,12 +48,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
 // TODO refactor all to use butterknife
-public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private String taskType;
     private String taskId;
@@ -90,11 +88,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     LinearLayout difficultyWrapper;
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_task_form;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_form);
-
-        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

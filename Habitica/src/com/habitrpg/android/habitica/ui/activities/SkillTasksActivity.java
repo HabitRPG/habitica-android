@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
@@ -19,27 +18,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by viirus on 28/11/15.
  */
-public class SkillTasksActivity extends AppCompatActivity {
+public class SkillTasksActivity extends BaseActivity {
+
     @Bind(R.id.viewpager)
     public ViewPager viewPager;
 
     @Bind(R.id.tab_layout)
     public TabLayout tabLayout;
 
-    Map<Integer, SkillTasksRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
+    Map<Integer, SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new HashMap<>();
     protected HabitRPGUser user;
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_skill_tasks;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skill_tasks);
-
-        ButterKnife.bind(this);
-
         loadTaskLists();
     }
 
@@ -58,13 +58,12 @@ public class SkillTasksActivity extends AppCompatActivity {
                         break;
                     case 1:
                         fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(Task.TYPE_DAILY, SkillTasksActivity.this), Task.TYPE_DAILY);
-
                         break;
                     default:
                         fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(Task.TYPE_TODO, SkillTasksActivity.this), Task.TYPE_TODO);
                 }
 
-                ViewFragmentsDictionary.put(position, fragment);
+                viewFragmentsDictionary.put(position, fragment);
 
                 return fragment;
             }

@@ -12,7 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -78,14 +77,13 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
+public class MainActivity extends BaseActivity implements HabitRPGUserCallback.OnUserReceived,
                                                                TaskScoringCallback.OnTaskScored,
                                                                GemsPurchaseFragment.Listener {
 
@@ -123,12 +121,13 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     public ActivityCheckout checkout = null;
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Inject Controls
-        ButterKnife.bind(this);
 
         // Initialize Crashlytics
         Crashlytics crashlytics = new Crashlytics.Builder()
