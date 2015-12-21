@@ -38,6 +38,7 @@ public class HabiticaApplication extends Application {
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
     public static HabitRPGUser User;
     public static APIHelper ApiHelper;
+    public static Activity currentActivity = null;
 
     public static HabiticaApplication getInstance(Context context) {
         return (HabiticaApplication) context.getApplicationContext();
@@ -46,17 +47,26 @@ public class HabiticaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        setupLeakCanary();
+        setupFlowManager();
+        setupFacebookSdk();
+        createBillingAndCheckout();
+        registerActivityLifecycleCallbacks();
+    }
+
+    private void setupLeakCanary() {
         // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             LeakCanary.install(this);
         }
+    }
 
-        createBillingAndCheckout();
-
+    private void setupFlowManager() {
         FlowManager.init(this);
+    }
 
+    private void setupFacebookSdk() {
         FacebookSdk.sdkInitialize(getApplicationContext());
-        registerActivityLifecycleCallbacks();
     }
 
     private void registerActivityLifecycleCallbacks() {
@@ -97,8 +107,6 @@ public class HabiticaApplication extends Application {
             }
         });
     }
-
-    public static Activity currentActivity = null;
 
     // region SQLite overrides
 
