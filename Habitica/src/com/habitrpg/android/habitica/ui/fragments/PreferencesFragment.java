@@ -70,6 +70,8 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
 
         String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
 
+        if (timeval == null) timeval = "19:00";
+
         String[] pieces = timeval.split(":");
         int hour = Integer.parseInt(pieces[0]);
         int minute = Integer.parseInt(pieces[1]);

@@ -751,6 +751,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String timeval = prefs.getString("reminder_time", "19:00");
 
+        if (timeval == null) timeval = "19:00";
+
         String[] pieces = timeval.split(":");
         int hour = Integer.parseInt(pieces[0]);
         int minute = Integer.parseInt(pieces[1]);
