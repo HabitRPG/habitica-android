@@ -21,7 +21,6 @@ import java.util.List;
 public class NotificationPublisher extends BroadcastReceiver {
 
     public static String NOTIFICATION_ID = "notification-id";
-    public static String NOTIFICATION = "notification";
     public static String CHECK_DAILIES = "check-dailies";
     private Context context;
 
