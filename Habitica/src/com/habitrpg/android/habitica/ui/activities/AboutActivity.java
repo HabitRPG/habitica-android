@@ -128,7 +128,7 @@ public class AboutActivity extends BaseActivity {
                             .setColorRes(R.color.changelog_note)
                             .setTitleSingular("Note")
                             .setTitlePlural("Notes")
-                            .setSortOrder(0)
+                            .setSortOrder(3)
                             .build());
 
                     return builder.buildFragment();

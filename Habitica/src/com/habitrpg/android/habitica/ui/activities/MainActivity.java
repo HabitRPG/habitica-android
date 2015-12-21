@@ -229,23 +229,26 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 new Thread(new Runnable() {
                     public void run() {
 
-                        ArrayList<Task> allTasks = new ArrayList<>();
-                        allTasks.addAll(user.getDailys());
-                        allTasks.addAll(user.getTodos());
-                        allTasks.addAll(user.getHabits());
-                        allTasks.addAll(user.getRewards());
+                        // multiple crashes because user is null
+                        if(user != null) {
+                            ArrayList<Task> allTasks = new ArrayList<>();
+                            allTasks.addAll(user.getDailys());
+                            allTasks.addAll(user.getTodos());
+                            allTasks.addAll(user.getHabits());
+                            allTasks.addAll(user.getRewards());
 
-                        loadAndRemoveOldTasks(user.getId(), allTasks);
+                            loadAndRemoveOldTasks(user.getId(), allTasks);
 
-                        ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
+                            ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
 
-                        for (Task t : allTasks) {
-                            if (t.checklist != null) {
-                                allChecklistItems.addAll(t.checklist);
+                            for (Task t : allTasks) {
+                                if (t.checklist != null) {
+                                    allChecklistItems.addAll(t.checklist);
+                                }
                             }
-                        }
 
-                        loadAndRemoveOldChecklists(allChecklistItems);
+                            loadAndRemoveOldChecklists(allChecklistItems);
+                        }
                     }
                 }).start();
             } else {

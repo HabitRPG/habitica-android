@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -344,6 +346,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
+        @Bind(R.id.checkBoxHolder)
+        RelativeLayout checkboxHolder;
+
         @Bind(R.id.checkBox)
         CheckBox checkbox;
 
@@ -359,6 +364,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
             checklistIndicatorWrapper.setOnClickListener(this);
             checkbox.setOnCheckedChangeListener(this);
+			expandCheckboxTouchArea(checkboxHolder, checkbox);
+
         }
 
         @Override
@@ -443,6 +450,17 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 }
             }
         }
+
+		public void expandCheckboxTouchArea(final View expandedView, final View checkboxView){
+			expandedView.post(new Runnable() {
+				@Override
+				public void run() {
+					Rect rect = new Rect();
+					expandedView.getHitRect(rect);
+					expandedView.setTouchDelegate(new TouchDelegate(rect, checkboxView));
+				}
+			});
+		}
     }
 
     public class DailyViewHolder extends ChecklistedViewHolder {
@@ -453,11 +471,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
-
             checkbox.setOnCheckedChangeListener(this);
             binding.setOffset(dailyResetOffset);
         }
-
 
         @Override
         public void bindHolder(Task habitItem, int position) {

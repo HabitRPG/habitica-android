@@ -116,7 +116,8 @@ public class HabiticaApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                currentActivity = null;
+                if(currentActivity == activity)
+                    currentActivity = null;
             }
         });
     }
@@ -184,11 +185,8 @@ public class HabiticaApplication extends Application {
     }
 
     public static boolean exists(@NonNull Context context) {
-
-        String databaseName = "HabiticaDatabase/" + HabitDatabase.NAME;
-
         try {
-            File dbFile = context.getDatabasePath(databaseName);
+            File dbFile = context.getDatabasePath(String.format("%s.db", HabitDatabase.NAME));
             return dbFile.exists();
         } catch (Exception exception) {
             Log.e("DbExists", "Database %s doesn't exist.", exception);

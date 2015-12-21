@@ -131,7 +131,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
 
-        mRecyclerView.setAdapter(tavernAdapter);
+        if(mRecyclerView != null) {
+            mRecyclerView.setAdapter(tavernAdapter);
+        }
 
         swipeRefreshLayout.setRefreshing(false);
     }

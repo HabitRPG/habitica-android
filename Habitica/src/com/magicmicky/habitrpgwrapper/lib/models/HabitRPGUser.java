@@ -142,20 +142,24 @@ public class HabitRPGUser extends BaseModel {
     }
 
     public void setBalance(double balance) {
-        this.balance=balance;
+        this.balance = balance;
     }
 
     public double getBalance() {
         return this.balance;
     }
 
-    public Authentication getAuthentication() { return authentication; }
+    public Authentication getAuthentication() {
+        return authentication;
+    }
 
-    public void setAuthentication(Authentication authentication) {this.authentication = authentication; }
+    public void setAuthentication(Authentication authentication) {
+        this.authentication = authentication;
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
     public List<Task> getHabits() {
-        if(habits == null) {
+        if (habits == null) {
             habits = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("habit"))
@@ -167,7 +171,7 @@ public class HabitRPGUser extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "dailys")
     public List<Task> getDailys() {
-        if(dailys == null) {
+        if (dailys == null) {
             dailys = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("daily"))
@@ -179,7 +183,7 @@ public class HabitRPGUser extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
     public List<Task> getTodos() {
-        if(todos == null) {
+        if (todos == null) {
             todos = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("todo"))
@@ -191,7 +195,7 @@ public class HabitRPGUser extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
     public List<Task> getRewards() {
-        if(rewards == null) {
+        if (rewards == null) {
             rewards = new Select()
                     .from(Task.class)
                     .where(Condition.column("type").eq("reward"))
@@ -203,7 +207,7 @@ public class HabitRPGUser extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<Tag> getTags() {
-        if(tags == null) {
+        if (tags == null) {
             tags = new Select()
                     .from(Tag.class)
                     .where(Condition.column("user_id").eq(this.id))
@@ -223,10 +227,18 @@ public class HabitRPGUser extends BaseModel {
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
-        allTasks.addAll(dailys);
-        allTasks.addAll(todos);
-        allTasks.addAll(habits);
-        allTasks.addAll(rewards);
+        if (dailys != null) {
+            allTasks.addAll(dailys);
+        }
+        if (todos != null) {
+            allTasks.addAll(todos);
+        }
+        if (habits != null) {
+            allTasks.addAll(habits);
+        }
+        if (rewards != null) {
+            allTasks.addAll(rewards);
+        }
 
         for (Task t : allTasks) {
             t.user_id = id;
@@ -252,7 +264,9 @@ public class HabitRPGUser extends BaseModel {
         }
 
         if (outfit != null) {
-            if (outfit.getBack() != null) {layerNames.add(outfit.getBack());}
+            if (outfit.getBack() != null) {
+                layerNames.add(outfit.getBack());
+            }
         }
 
         if (prefs.getSleep()) {
@@ -278,10 +292,18 @@ public class HabitRPGUser extends BaseModel {
         if (hair != null) {
             String hairColor = hair.getColor();
 
-            if (hair.getBase() > 0) {layerNames.add("hair_base_"+hair.getBase() +"_" + hairColor);}
-            if (hair.getBangs() > 0) {layerNames.add("hair_bangs_"+hair.getBangs() +"_" + hairColor);}
-            if (hair.getMustache() > 0) {layerNames.add("hair_mustache_"+hair.getMustache() +"_" + hairColor);}
-            if (hair.getBeard() > 0) {layerNames.add("hair_beard_"+hair.getBeard() +"_" + hairColor);}
+            if (hair.getBase() > 0) {
+                layerNames.add("hair_base_" + hair.getBase() + "_" + hairColor);
+            }
+            if (hair.getBangs() > 0) {
+                layerNames.add("hair_bangs_" + hair.getBangs() + "_" + hairColor);
+            }
+            if (hair.getMustache() > 0) {
+                layerNames.add("hair_mustache_" + hair.getMustache() + "_" + hairColor);
+            }
+            if (hair.getBeard() > 0) {
+                layerNames.add("hair_beard_" + hair.getBeard() + "_" + hairColor);
+            }
         }
 
         if (outfit != null) {

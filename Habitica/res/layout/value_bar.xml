@@ -39,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/bar_padding"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/value_bar_layout">
         <ImageView
             android:id="@+id/ic_header"
             android:layout_width="wrap_content"
