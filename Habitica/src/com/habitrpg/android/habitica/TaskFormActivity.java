@@ -59,16 +59,10 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private String taskId;
     private Task task;
 
-    private EditText taskText, taskNotes;
-    private Spinner taskDifficultySpinner, dailyFrequencySpinner;
-    private CheckBox positiveCheckBox, negativeCheckBox;
-
-    private List<CheckBox> weekdayCheckboxes = new ArrayList<CheckBox>();
+    private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
-    private LinearLayout frequencyContainer;
     private List<String> tags;
     private CheckListAdapter checklistAdapter;
-    private Button btnDelete;
 
     @Bind(R.id.task_value_edittext)
     EditText taskValue;
@@ -79,14 +73,59 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     @Bind(R.id.task_checklist_wrapper)
     LinearLayout checklistWrapper;
 
-    @Bind(R.id.task_startdate_layout)
-    LinearLayout startDateWrapper;
-
     @Bind(R.id.task_startdate_picker)
     DatePicker startDatePicker;
 
     @Bind(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
+
+    @Bind(R.id.task_main_wrapper)
+    LinearLayout mainWrapper;
+
+    @Bind(R.id.task_text_edittext)
+    EditText taskText;
+
+    @Bind(R.id.task_notes_edittext)
+    EditText taskNotes;
+
+    @Bind(R.id.task_difficulty_spinner)
+    Spinner taskDifficultySpinner;
+
+    @Bind(R.id.btn_delete_task)
+    Button btnDelete;
+
+    @Bind(R.id.task_startdate_layout)
+    LinearLayout startDateLayout;
+
+    @Bind(R.id.task_task_wrapper)
+    LinearLayout taskWrapper;
+
+    @Bind(R.id.task_positive_checkbox)
+    CheckBox positiveCheckBox;
+
+    @Bind(R.id.task_negative_checkbox)
+    CheckBox negativeCheckBox;
+
+    @Bind(R.id.task_actions_wrapper)
+    LinearLayout actionsLayout;
+
+    @Bind(R.id.task_weekdays_wrapper)
+    LinearLayout weekdayWrapper;
+
+    @Bind(R.id.task_frequency_spinner)
+    Spinner dailyFrequencySpinner;
+
+    @Bind(R.id.task_frequency_container)
+    LinearLayout frequencyContainer;
+
+    @Bind(R.id.checklist_recycler_view)
+    RecyclerView recyclerView;
+
+    @Bind(R.id.new_checklist)
+    EditText newCheckListEditText;
+
+    @Bind(R.id.add_checklist_button)
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +143,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             return;
         }
 
-        LinearLayout mainWrapper = (LinearLayout) findViewById(R.id.task_main_wrapper);
-        taskText = (EditText) findViewById(R.id.task_text_edittext);
-        taskNotes = (EditText) findViewById(R.id.task_notes_edittext);
-        taskDifficultySpinner = (Spinner) findViewById(R.id.task_difficulty_spinner);
-        btnDelete = (Button) findViewById(R.id.btn_delete_task);
         btnDelete.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnDelete, getResources().getColor(R.color.worse_10));
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -143,36 +177,25 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         taskDifficultySpinner.setSelection(1);
 
         if (taskType.equals("habit")) {
-            LinearLayout startDateLayout = (LinearLayout) findViewById(R.id.task_startdate_layout);
-            LinearLayout taskWrapper = (LinearLayout) findViewById(R.id.task_task_wrapper);
             taskWrapper.removeView(startDateLayout);
 
-            LinearLayout checklistLayout = (LinearLayout) findViewById(R.id.task_checklist_wrapper);
-            mainWrapper.removeView(checklistLayout);
+            mainWrapper.removeView(checklistWrapper);
 
-            positiveCheckBox = (CheckBox) findViewById(R.id.task_positive_checkbox);
             positiveCheckBox.setChecked(true);
-            negativeCheckBox = (CheckBox) findViewById(R.id.task_negative_checkbox);
             negativeCheckBox.setChecked(true);
         } else {
-            LinearLayout actionsLayout = (LinearLayout) findViewById(R.id.task_actions_wrapper);
             mainWrapper.removeView(actionsLayout);
         }
 
-        LinearLayout weekdayWrapper = (LinearLayout) findViewById(R.id.task_weekdays_wrapper);
         if (taskType.equals("daily")) {
-            this.dailyFrequencySpinner = (Spinner) weekdayWrapper.findViewById(R.id.task_frequency_spinner);
-
             ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(this,
                     R.array.daily_frequencies, android.R.layout.simple_spinner_item);
             frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             this.dailyFrequencySpinner.setAdapter(frequencyAdapter);
             this.dailyFrequencySpinner.setOnItemSelectedListener(this);
-
-            this.frequencyContainer = (LinearLayout) weekdayWrapper.findViewById(R.id.task_frequency_container);
         } else {
             mainWrapper.removeView(weekdayWrapper);
-            mainWrapper.removeView(startDateWrapper);
+            mainWrapper.removeView(startDateLayout);
         }
 
         if (!taskType.equals("reward")) {
@@ -209,7 +232,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             checklistItems = task.getChecklist();
         }
         checklistAdapter = new CheckListAdapter(checklistItems);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.checklist_recycler_view);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -224,9 +246,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
-        final EditText newCheckListEditText = (EditText) findViewById(R.id.new_checklist);
-
-        Button button = (Button) findViewById(R.id.add_checklist_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
