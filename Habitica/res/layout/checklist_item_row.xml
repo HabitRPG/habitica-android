@@ -7,6 +7,7 @@
         android:layout_height="fill_parent"
         android:minHeight="@dimen/checklist_item_min_height">
         <RelativeLayout
+            android:id="@+id/checkBoxHolder"
             android:layout_width="@dimen/button_width"
             android:layout_height="match_parent">
         <CheckBox

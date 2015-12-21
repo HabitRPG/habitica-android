@@ -413,6 +413,8 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                         textView.setText(item.getText());
                         checkbox.setChecked(item.getCompleted());
                         checkbox.setOnCheckedChangeListener(this);
+                        RelativeLayout checkboxHolder = (RelativeLayout) itemView.findViewById(R.id.checkBoxHolder);
+                        expandCheckboxTouchArea(checkboxHolder, checkbox);
                         this.checklistView.addView(itemView);
                     }
                 } else {
