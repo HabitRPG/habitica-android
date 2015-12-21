@@ -38,6 +38,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -51,49 +54,60 @@ public class LoginActivity extends AppCompatActivity
 	private final static String TAG_USERID="user";
 	private final static String TAG_APIKEY="key";
 
-	private Button mLoginNormalBtn;
-    private TextView mForgotPWTV;
-	private LoginButton mFacebookLoginBtn;
-	private EditText mUsernameET, mPasswordET,mEmail,mConfirmPassword;
-    private TableRow mEmailRow, mConfirmPasswordRow;
 	private APIHelper mApiHelper;
-	private ProgressBar mProgressBar;
 	public String mTmpUserToken;
 	public String mTmpApiToken;
 	public Boolean isRegistering;
     private Menu menu;
 
-	private String apiAddress;
+    @BindString(R.string.SP_address_default)
+    String apiAddress;
+
+	//private String apiAddress;
 	//private String apiAddress = "http://192.168.2.155:8080/"; // local testing
 
     private CallbackManager callbackManager;
 
+	@Bind(R.id.login_btn)
+	Button mLoginNormalBtn;
+
+	@Bind(R.id.PB_AsyncTask)
+	ProgressBar mProgressBar;
+
+    @Bind(R.id.username)
+    EditText mUsernameET;
+
+    @Bind(R.id.password)
+    EditText mPasswordET;
+
+    @Bind(R.id.email)
+    EditText mEmail;
+
+    @Bind(R.id.confirm_password)
+    EditText mConfirmPassword;
+
+    @Bind(R.id.email_row)
+    TableRow mEmailRow;
+
+    @Bind(R.id.confirm_password_row)
+    TableRow mConfirmPasswordRow;
+
+    @Bind(R.id.login_button)
+    LoginButton mFacebookLoginBtn;
+
+    @Bind(R.id.forgot_pw_tv)
+    TextView mForgotPWTV;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.login_screen);
-		apiAddress = getString(R.string.SP_address_default);
-		mLoginNormalBtn = (Button) this.findViewById(R.id.login_btn);
-        mProgressBar = (ProgressBar) this.findViewById(R.id.PB_AsyncTask);
 
-
-		mUsernameET = (EditText) this.findViewById(R.id.username);
-		mPasswordET = (EditText) this.findViewById(R.id.password);
-
-
-		mEmail = (EditText) this.findViewById(R.id.email);
-		mConfirmPassword = (EditText) this.findViewById(R.id.confirm_password);
-
-        mEmailRow = (TableRow) this.findViewById(R.id.email_row);
-        mConfirmPasswordRow = (TableRow) this.findViewById(R.id.confirm_password_row);
+        ButterKnife.bind(this);
 
 		mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
 
-
-        mFacebookLoginBtn = (LoginButton) this.findViewById(R.id.login_button);
 		mFacebookLoginBtn.setReadPermissions("user_friends");
 
-		mForgotPWTV = (TextView) this.findViewById(R.id.forgot_pw_tv);
         mForgotPWTV.setOnClickListener(mForgotPWClick);
         SpannableString content = new SpannableString(mForgotPWTV.getText());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -251,7 +265,7 @@ public class LoginActivity extends AppCompatActivity
 					.putString(getString(R.string.SP_APIToken), key)
 					.putString(getString(R.string.SP_userID), user)
 					.commit();
-			if(ans != true) {
+			if(!ans) {
 				throw new Exception("PB_string_commit");
 			}
 			startMainActivity();
