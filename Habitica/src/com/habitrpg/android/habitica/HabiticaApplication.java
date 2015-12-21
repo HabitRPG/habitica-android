@@ -95,7 +95,8 @@ public class HabiticaApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                currentActivity = null;
+                if(currentActivity == activity)
+                    currentActivity = null;
             }
         });
     }
