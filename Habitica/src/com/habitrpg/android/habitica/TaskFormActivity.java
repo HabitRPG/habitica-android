@@ -52,7 +52,6 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
-// TODO refactor all to use butterknife
 public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String taskType;
