@@ -1,5 +1,34 @@
 [
   {
+    "name": "Version 0.0.24",
+    "items":[
+      {
+        "type": "B",
+        "title": "headaccessories are now displayed in the avatar"
+      },
+      {
+        "type": "B",
+        "title": "member list avatars : some avatars displayed the wrong image for an user"
+      },
+      {
+        "type": "B",
+        "title": "a lot of other fixes too"
+      },
+      {
+        "type": "N",
+        "title": "dailies buttons have now optical feedback"
+      },
+      {
+        "type": "N",
+        "title": "FAB now hides on scroll"
+      },
+      {
+        "type": "F",
+        "title": "Quest-Text can now display the HTML correctly"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.23",
     "items":[
       {
