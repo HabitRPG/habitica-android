@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -60,13 +60,9 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
-import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
+
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,23 +257,26 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                 new Thread(new Runnable() {
                     public void run() {
 
-                        ArrayList<Task> allTasks = new ArrayList<>();
-                        allTasks.addAll(user.getDailys());
-                        allTasks.addAll(user.getTodos());
-                        allTasks.addAll(user.getHabits());
-                        allTasks.addAll(user.getRewards());
+                        // multiple crashes because user is null
+                        if(user != null) {
+                            ArrayList<Task> allTasks = new ArrayList<>();
+                            allTasks.addAll(user.getDailys());
+                            allTasks.addAll(user.getTodos());
+                            allTasks.addAll(user.getHabits());
+                            allTasks.addAll(user.getRewards());
 
-                        loadAndRemoveOldTasks(user.getId(), allTasks);
+                            loadAndRemoveOldTasks(user.getId(), allTasks);
 
-                        ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
+                            ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
 
-                        for (Task t : allTasks) {
-                            if (t.checklist != null) {
-                                allChecklistItems.addAll(t.checklist);
+                            for (Task t : allTasks) {
+                                if (t.checklist != null) {
+                                    allChecklistItems.addAll(t.checklist);
+                                }
                             }
-                        }
 
-                        loadAndRemoveOldChecklists(allChecklistItems);
+                            loadAndRemoveOldChecklists(allChecklistItems);
+                        }
                     }
                 }).start();
             }else{
