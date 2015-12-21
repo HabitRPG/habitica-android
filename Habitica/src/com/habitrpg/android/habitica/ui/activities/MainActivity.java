@@ -84,14 +84,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         TaskScoringCallback.OnTaskScored,
         GemsPurchaseFragment.Listener {
 
-    @Bind(R.id.floating_menu_wrapper)
-    FrameLayout floatingMenuWrapper;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.detail_tabs)
-    TabLayout detail_tabs;
-    @Bind(R.id.avatar_with_bars)
-    View avatar_with_bars;
+    @Bind(R.id.floating_menu_wrapper) FrameLayout floatingMenuWrapper;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.detail_tabs) TabLayout detail_tabs;
+    @Bind(R.id.avatar_with_bars) View avatar_with_bars;
 
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
@@ -230,7 +226,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     public void run() {
 
                         // multiple crashes because user is null
-                        if(user != null) {
+                        if (user != null) {
                             ArrayList<Task> allTasks = new ArrayList<>();
                             allTasks.addAll(user.getDailys());
                             allTasks.addAll(user.getTodos());
@@ -496,7 +492,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         avatarInHeader.updateData(user);
         user.async().save();
     }
-
 
     public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {

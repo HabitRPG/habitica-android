@@ -19,7 +19,6 @@ public class UiUtils {
         NORMAL, FAILURE, FAILURE_BLUE, DROP
     }
 
-
     /**
      * Hides soft keyboard if it's opened.
      *
