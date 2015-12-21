@@ -13,12 +13,12 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+
 import com.facebook.FacebookSdk;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
+
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
@@ -268,12 +268,4 @@ public class HabiticaApplication extends Application {
     }
 
     // endregion
-
-    public static void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager) currentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View currentFocus = currentActivity.getCurrentFocus();
-        if (currentFocus != null) {
-            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-        }
-    }
 }

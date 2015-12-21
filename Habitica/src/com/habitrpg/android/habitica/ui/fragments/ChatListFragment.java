@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -213,7 +214,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        HabiticaApplication.dismissKeyboard();
+        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
