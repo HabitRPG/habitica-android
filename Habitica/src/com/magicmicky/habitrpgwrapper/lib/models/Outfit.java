@@ -27,7 +27,6 @@ public class Outfit extends BaseModel {
     String eyeWear;
 
     @Column
-    @SerializedName("headaccessory")
     String headAccessory;
 
     public String getArmor() {return armor;}

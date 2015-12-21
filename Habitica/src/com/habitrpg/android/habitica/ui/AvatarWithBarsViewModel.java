@@ -59,10 +59,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
-
-        setValueBar(hpBar, 50, 50, context.getString(R.string.HP_default), R.color.hpColor, R.drawable.ic_header_heart);
-        setValueBar(xpBar, 1, 1, context.getString(R.string.XP_default), R.color.xpColor, R.drawable.ic_header_exp);
-        setValueBar(mpBar, 100, 100, context.getString(R.string.MP_default), R.color.mpColor, R.drawable.ic_header_magic);
+        setHpBarData(0, 50);
+        setXpBarData(0, 1);
+        setMpBarData(0, 1);
 
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
@@ -73,18 +72,23 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         userObject = user;
 
         Stats stats = user.getStats();
-        char classShort;
+
         String userClass = "";
         int gp = (stats.getGp().intValue());
         int sp = (int) ((stats.getGp() - gp) * 100);
-        setHpBarData(hpBar, stats, context);
-        setValueBar(xpBar, stats.getExp().floatValue(), stats.getToNextLevel(), context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
-        setValueBar(mpBar, stats.getMp().floatValue(), stats.getMaxMP(), context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
+
+        setHpBarData(stats);
+        setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
+        setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
+
         new UserPicture(user, this.context).setPictureOn(image);
 
-        if (user.getStats().get_class() != null) {
-            userClass += user.getStats().getCleanedClassName();
+        if (stats.get_class() != null) {
+            userClass += stats.getCleanedClassName();
         }
+
+        mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10) ? View.GONE : View.VISIBLE);
+
         lvlText.setText("Lvl" + user.getStats().getLvl() + " " + userClass);
         Drawable drawable;
         switch (stats.get_class()) {
@@ -128,6 +132,22 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         }
 
         setValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+    }
+
+    public void setHpBarData(Stats stats) {
+        setHpBarData(hpBar, stats, context);
+    }
+
+    public void setHpBarData(float value, int valueMax){
+        setValueBar(hpBar, value, valueMax, context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+    }
+
+    public void setXpBarData(float value, int valueMax){
+        setValueBar(xpBar, value, valueMax, context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
+    }
+
+    public void setMpBarData(float value, int valueMax){
+        setValueBar(mpBar, value, valueMax, context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
