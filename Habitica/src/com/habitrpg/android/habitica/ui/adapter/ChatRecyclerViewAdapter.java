@@ -249,13 +249,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             likeCount = 0;
             currentUserLikedPost = false;
 
-            for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
-                if (e.getValue()) {
-                    likeCount++;
-                }
+            if(msg != null && msg.likes != null) {
+                for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
+                    if (e.getValue()) {
+                        likeCount++;
+                    }
 
-                if (e.getKey().equals(uuid)) {
-                    currentUserLikedPost = true;
+                    if (e.getKey().equals(uuid)) {
+                        currentUserLikedPost = true;
+                    }
                 }
             }
 
