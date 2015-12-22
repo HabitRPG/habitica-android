@@ -24,7 +24,7 @@
                 android:layout_height="72dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <EditText
+                <com.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/task_text_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:layout_height="72dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <EditText
+                <com.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/task_notes_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:layout_height="72dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <EditText
+                <com.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/task_value_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
+                <com.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/new_checklist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

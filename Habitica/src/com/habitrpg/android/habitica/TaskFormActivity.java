@@ -40,6 +40,7 @@ import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.rockerhieu.emojicon.EmojiconEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,7 +65,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private CheckListAdapter checklistAdapter;
 
     @Bind(R.id.task_value_edittext)
-    EditText taskValue;
+    EmojiconEditText taskValue;
 
     @Bind(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
@@ -82,10 +83,10 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     LinearLayout mainWrapper;
 
     @Bind(R.id.task_text_edittext)
-    EditText taskText;
+    EmojiconEditText taskText;
 
     @Bind(R.id.task_notes_edittext)
-    EditText taskNotes;
+    EmojiconEditText taskNotes;
 
     @Bind(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
@@ -121,7 +122,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     RecyclerView recyclerView;
 
     @Bind(R.id.new_checklist)
-    EditText newCheckListEditText;
+    EmojiconEditText newCheckListEditText;
 
     @Bind(R.id.add_checklist_button)
     Button button;

@@ -47,6 +47,7 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.rockerhieu.emojicon.EmojiconTextView;
 
 import java.util.List;
 import java.util.UUID;
@@ -408,7 +409,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     for (ChecklistItem item : this.Item.checklist) {
                         LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                        TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
+                        EmojiconTextView textView = (EmojiconTextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
                         textView.setText(item.getText());
                         checkbox.setChecked(item.getCompleted());

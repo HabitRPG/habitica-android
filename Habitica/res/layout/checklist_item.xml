@@ -17,7 +17,7 @@
         android:id="@+id/delete_item_button"
         android:text="x" />
 
-    <EditText
+    <com.rockerhieu.emojicon.EmojiconEditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/item_edittext"

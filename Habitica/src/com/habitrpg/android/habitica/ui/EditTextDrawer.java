@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
+import com.rockerhieu.emojicon.EmojiconEditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,7 +57,7 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
         View view;
 
         @Bind(R.id.editText)
-        EditText editText;
+        EmojiconEditText editText;
 
         @Bind(R.id.btnAdd)
         Button btnAdd;
