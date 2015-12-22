@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -449,6 +450,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     public void onBackPressed() {
         if (drawer.isDrawerOpen()) {
             drawer.closeDrawer();
+        } else if (drawer.getDrawerLayout().isDrawerOpen(Gravity.RIGHT)) {
+            drawer.getDrawerLayout().closeDrawer(Gravity.RIGHT);
         } else {
             super.onBackPressed();
         }
@@ -570,7 +573,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     }
 
 
-    public void onEvent(final DeleteTaskCommand cmd){
+    public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
