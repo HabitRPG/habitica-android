@@ -129,6 +129,6 @@ public interface ApiService {
     void flagMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<Void> cb);
 
     @POST("/groups/{gid}/chat/seen")
-    void seenMessage(@Path("gid") String groupId, Callback<Void> cb);
+    void seenMessages(@Path("gid") String groupId, Callback<String> cb);
 
 }

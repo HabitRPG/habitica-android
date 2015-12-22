@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 
 import java.util.HashMap;
 
@@ -96,6 +97,12 @@ public class PartyFragment extends BaseFragment {
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
 
+        UserParty party = user.getParty();
+
+        if(party == null) {
+            return;
+        }
+
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
             @Override
@@ -109,7 +116,7 @@ public class PartyFragment extends BaseFragment {
                         break;
                     }
                     case 1: {
-                        fragment = new ChatListFragment(activity, "party", mAPIHelper, user, activity, false);
+                        fragment = new ChatListFragment(activity, "party", user.getParty().id, mAPIHelper, user, activity, false);
                         break;
                     }
                     case 2: {

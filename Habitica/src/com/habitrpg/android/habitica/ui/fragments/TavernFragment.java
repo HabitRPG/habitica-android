@@ -21,7 +21,7 @@ public class TavernFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_tavern, container, false);
 
-        setFragment(new ChatListFragment(activity, "habitrpg", mAPIHelper, user, activity, true));
+        setFragment(new ChatListFragment(activity, "habitrpg", "", mAPIHelper, user, activity, true));
 
         return v;
     }
