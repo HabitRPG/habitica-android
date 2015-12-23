@@ -579,7 +579,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @NonNull
         private LinearLayout createContentViewForGearDialog() {
             String price = String.format("%.0f", binding.getReward().value);
-            String content = binding.getReward().getNotes();
+            String content = binding.getReward().getNotes().toString();
 
             // External ContentView
             LinearLayout contentViewLayout = new LinearLayout(context);

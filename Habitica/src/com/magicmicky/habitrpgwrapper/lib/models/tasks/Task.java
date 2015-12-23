@@ -1,5 +1,9 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import android.text.Html;
+import android.text.Spanned;
+
+import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -34,6 +38,7 @@ public class Task extends BaseModel {
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
 
+    AndDown processor = new AndDown();
 
     @Column
     @PrimaryKey
@@ -47,7 +52,8 @@ public class Task extends BaseModel {
     public Float priority;
 
     @Column
-    public String text, notes, attribute, type;
+    public Spanned text, notes;
+    public String attribute, type;
 
     @Column
     public double value;
@@ -112,14 +118,14 @@ public class Task extends BaseModel {
     /**
      * @return the notes
      */
-    public String getNotes() {
+    public Spanned getNotes() {
         return notes;
     }
     /**
      * @param notes the notes to set
      */
     public void setNotes(String notes) {
-        this.notes = notes;
+        this.notes = Html.fromHtml(processor.markdownToHtml(notes));
     }
     /**
      * @return the priority
@@ -136,14 +142,14 @@ public class Task extends BaseModel {
     /**
      * @return the text
      */
-    public String getText() {
+    public Spanned getText() {
         return text;
     }
     /**
      * @param text the text to set
      */
     public void setText(String text) {
-        this.text = text;
+        this.text = Html.fromHtml(processor.markdownToHtml(text));
     }
     /**
      * @return the value
