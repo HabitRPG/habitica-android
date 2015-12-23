@@ -402,7 +402,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
             return;
         }
         Bundle bundle = new Bundle();
-        bundle.putString("type", event.Task.getType());
+        bundle.putString("type", event.Task.getType().toString());
         bundle.putString("taskId", event.Task.getId());
         bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
         Intent intent = new Intent(activity, TaskFormActivity.class);

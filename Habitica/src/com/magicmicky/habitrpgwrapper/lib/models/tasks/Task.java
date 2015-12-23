@@ -52,8 +52,7 @@ public class Task extends BaseModel {
     public Float priority;
 
     @Column
-    public Spanned text, notes;
-    public String attribute, type;
+    public String text, notes, attribute, type;
 
     @Column
     public double value;
@@ -118,14 +117,14 @@ public class Task extends BaseModel {
     /**
      * @return the notes
      */
-    public Spanned getNotes() {
-        return notes;
+    public CharSequence getNotes() {
+        return Html.fromHtml(processor.markdownToHtml(notes));
     }
     /**
      * @param notes the notes to set
      */
     public void setNotes(String notes) {
-        this.notes = Html.fromHtml(processor.markdownToHtml(notes));
+        this.notes = notes;
     }
     /**
      * @return the priority
@@ -142,14 +141,14 @@ public class Task extends BaseModel {
     /**
      * @return the text
      */
-    public Spanned getText() {
-        return text;
+    public CharSequence getText() {
+        return Html.fromHtml(processor.markdownToHtml(text));
     }
     /**
      * @param text the text to set
      */
     public void setText(String text) {
-        this.text = Html.fromHtml(processor.markdownToHtml(text));
+        this.text = text;
     }
     /**
      * @return the value
@@ -177,7 +176,7 @@ public class Task extends BaseModel {
      * Returns a string of the type of the Task
      * @return the string of the Item type
      */
-    public String getType() {return this.type;}
+    public CharSequence getType() {return this.type;}
 
     public void setType(String type) {this.type = type;}
 
@@ -346,7 +345,7 @@ public class Task extends BaseModel {
     /**
      * @return the attribute
      */
-    public String getAttribute() {
+    public CharSequence getAttribute() {
         return attribute;
     }
     /**

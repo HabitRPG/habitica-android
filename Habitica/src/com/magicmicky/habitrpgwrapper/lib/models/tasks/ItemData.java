@@ -1,7 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
-import android.text.Spanned;
-
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -33,10 +31,10 @@ public class ItemData extends BaseModel {
     public String index;
 
     @Column
-    public Spanned text;
+    public String text;
 
     @Column
-    public Spanned notes;
+    public String notes;
 
     @Column
     public float con, str, per;
