@@ -118,7 +118,9 @@ public class Task extends BaseModel {
      * @return the notes
      */
     public CharSequence getNotes() {
-        return Html.fromHtml(processor.markdownToHtml(notes));
+        CharSequence processed = Html.fromHtml(processor.markdownToHtml(notes));
+        if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
+        return processed;
     }
     /**
      * @param notes the notes to set
@@ -142,7 +144,9 @@ public class Task extends BaseModel {
      * @return the text
      */
     public CharSequence getText() {
-        return Html.fromHtml(processor.markdownToHtml(text));
+        CharSequence processed = Html.fromHtml(processor.markdownToHtml(text));
+        if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
+        return processed;
     }
     /**
      * @param text the text to set
