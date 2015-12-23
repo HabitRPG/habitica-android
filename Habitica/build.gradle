@@ -73,6 +73,7 @@ dependencies {
 
     // Emojis
     compile 'com.rockerhieu.emojicon:library:1.0'
+    compile 'com.github.Data5tream:EmojiParser:v0.0.1'
 
     // Markdown
     compile 'com.commonsware.cwac:anddown:0.2.4'

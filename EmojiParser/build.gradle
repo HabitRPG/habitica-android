@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('mockable-android-23.jar'))

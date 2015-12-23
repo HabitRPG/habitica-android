@@ -5,7 +5,6 @@ import android.text.Html;
 import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.EmojiParser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -17,6 +16,8 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import net.sevenbase.emojicheatsheet.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
