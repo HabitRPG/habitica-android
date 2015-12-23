@@ -31,6 +31,11 @@ repositories {
         url 'https://github.com/rockerhieu/mvn-repo/raw/master/'
     }
 
+    // Markdown
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+
     maven {
         url "https://jitpack.io"
     }
@@ -68,6 +73,9 @@ dependencies {
 
     // Emojis
     compile 'com.rockerhieu.emojicon:library:1.0'
+
+    // Markdown
+    compile 'com.commonsware.cwac:anddown:0.2.4'
 
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
