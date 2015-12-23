@@ -1,11 +1,11 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 import android.text.Html;
-import android.text.Spanned;
 
 import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.EmojiParser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -118,7 +118,7 @@ public class Task extends BaseModel {
      * @return the notes
      */
     public CharSequence getNotes() {
-        CharSequence processed = Html.fromHtml(processor.markdownToHtml(notes));
+        CharSequence processed = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(notes)));
         if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
         return processed;
     }
@@ -144,7 +144,7 @@ public class Task extends BaseModel {
      * @return the text
      */
     public CharSequence getText() {
-        CharSequence processed = Html.fromHtml(processor.markdownToHtml(text));
+        CharSequence processed = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(text)));
         if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
         return processed;
     }
