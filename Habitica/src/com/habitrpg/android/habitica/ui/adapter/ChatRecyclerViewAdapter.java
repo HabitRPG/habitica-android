@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
@@ -176,6 +178,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Context context;
         Resources res;
 
+        AndDown processor = new AndDown();
+
         public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
             this.layoutType = layoutType;
@@ -239,7 +243,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 userLabel.setText(msg.user);
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
-                messageText.setText(msg.text.trim());
+                CharSequence msgtxt = Html.fromHtml(processor.markdownToHtml(msg.text.trim()));
+
+                messageText.setText(msgtxt);
                 agoLabel.setText(msg.getAgoString());
             }
         }
