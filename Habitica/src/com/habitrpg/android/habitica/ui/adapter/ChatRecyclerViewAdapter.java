@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.helpers.EmojiParser;
+import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -178,7 +178,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Context context;
         Resources res;
 
-        AndDown processor = new AndDown();
+        MarkdownParser markdownParser = new MarkdownParser();
 
         public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
@@ -243,9 +243,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 userLabel.setText(msg.user);
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
-                CharSequence msgtxt = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(msg.text.trim())));
-
-                messageText.setText(msgtxt.subSequence(0, msgtxt.length()-2));
+                messageText.setText(markdownParser.parseMarkdown(msg.text));
                 agoLabel.setText(msg.getAgoString());
             }
         }

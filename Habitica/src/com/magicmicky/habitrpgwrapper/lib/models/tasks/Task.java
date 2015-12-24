@@ -5,6 +5,7 @@ import android.text.Html;
 import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -39,7 +40,7 @@ public class Task extends BaseModel {
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
 
-    AndDown processor = new AndDown();
+    MarkdownParser markdownParser = new MarkdownParser();
 
     @Column
     @PrimaryKey
@@ -119,9 +120,7 @@ public class Task extends BaseModel {
      * @return the notes
      */
     public CharSequence getNotes() {
-        CharSequence processed = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(notes)));
-        if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
-        return processed;
+        return markdownParser.parseMarkdown(notes);
     }
     /**
      * @param notes the notes to set
@@ -145,9 +144,7 @@ public class Task extends BaseModel {
      * @return the text
      */
     public CharSequence getText() {
-        CharSequence processed = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(text)));
-        if (processed.length() >= 2) processed = processed.subSequence(0, processed.length() - 2);
-        return processed;
+        return markdownParser.parseMarkdown(text);
     }
     /**
      * @param text the text to set

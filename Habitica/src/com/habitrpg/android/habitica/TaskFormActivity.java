@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
@@ -126,6 +127,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @Bind(R.id.add_checklist_button)
     Button button;
+
+    MarkdownParser markdownParser = new MarkdownParser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -399,7 +402,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private boolean saveTask(Task task) {
-        task.text = taskText.getText().toString();
+        task.text = markdownParser.parseCompiled(taskText.getText());
 
         if (checklistAdapter != null) {
             if (checklistAdapter.getCheckListItems() != null) {
@@ -410,7 +413,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (task.text.isEmpty())
             return false;
 
-        task.notes = taskNotes.getText().toString();
+        task.notes = markdownParser.parseCompiled(taskNotes.getText());
 
         if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
             task.setPriority((float) 0.1);
