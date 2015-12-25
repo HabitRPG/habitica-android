@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -78,14 +79,14 @@
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{habit.text}" />
+                        bind:parsemarkdown="@{habit.text}" />
 
                     <com.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{habit.notes}"
+                        bind:parsemarkdown="@{habit.notes}"
                         android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"/>
                 </LinearLayout>
                 <View

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
         <import type="android.view.View"/>
@@ -63,13 +64,13 @@
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{daily.text}" />
+                        bind:parsemarkdown="@{daily.text}" />
                     <com.rockerhieu.emojicon.EmojiconTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{daily.notes}"
+                        bind:parsemarkdown="@{daily.notes}"
                         android:visibility="@{daily.notes != null ? View.VISIBLE : View.GONE}"/>
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"

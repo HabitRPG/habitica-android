@@ -56,14 +56,14 @@
                             style="@style/CardTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{reward.text}"/>
+                            bind:parsemarkdown="@{reward.text}"/>
 
                         <com.rockerhieu.emojicon.EmojiconTextView
                             android:id="@+id/notesTextView"
                             style="@style/CardText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{reward.notes}"
+                            bind:parsemarkdown="@{reward.notes}"
                             android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
 
                     </LinearLayout>
