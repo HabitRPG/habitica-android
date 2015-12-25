@@ -11,7 +11,7 @@ import net.sevenbase.emojicheatsheet.EmojiParser;
  */
 public class MarkdownParser {
 
-    AndDown processor = new AndDown();
+    static AndDown processor = new AndDown();
 
     /**
      * Parses formatted markdown and returns it as styled CharSequence
@@ -19,7 +19,7 @@ public class MarkdownParser {
      * @param input Markdown formatted String
      * @return Stylized CharSequence
      */
-    public CharSequence parseMarkdown(String input) {
+    public static CharSequence parseMarkdown(String input) {
         CharSequence output = Html.fromHtml(processor.markdownToHtml(EmojiParser.parseEmojis(input.trim())));
         if (output.length() >= 2) output = output.subSequence(0, output.length() - 2);
         return output;
@@ -31,7 +31,7 @@ public class MarkdownParser {
      * @param input Stylized CharSequence
      * @return Markdown formatted String
      */
-    public String parseCompiled(CharSequence input) {
+    public static String parseCompiled(CharSequence input) {
         String output = EmojiParser.convertToCheatCode(input.toString());
         return output;
     }
