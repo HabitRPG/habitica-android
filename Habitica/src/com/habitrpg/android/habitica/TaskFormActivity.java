@@ -19,8 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -43,9 +41,8 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.rockerhieu.emojicon.EmojiconEditText;
-import com.rockerhieu.emojicon.EmojiconGridFragment;
-import com.rockerhieu.emojicon.EmojiconsFragment;
-import com.rockerhieu.emojicon.emoji.Emojicon;
+
+import net.sevenbase.emojicheatsheet.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +55,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
-public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
+public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String taskType;
     private String taskId;
@@ -68,8 +65,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private NumberPicker frequencyPicker;
     private List<String> tags;
     private CheckListAdapter checklistAdapter;
-
-    private boolean showEmojis;
 
     @Bind(R.id.task_value_edittext)
     EmojiconEditText taskValue;
@@ -134,20 +129,12 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     @Bind(R.id.add_checklist_button)
     Button button;
 
-    @Bind(R.id.toggle_emojis_button)
-    ImageButton toggleEmojisButton;
-
-    @Bind(R.id.emojikeyboard)
-    FrameLayout emojiKeyboard;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_form);
 
         ButterKnife.bind(this);
-
-        showEmojis = false;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -182,25 +169,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
                         dialog.dismiss();
                     }
                 }).show();
-            }
-        });
-
-        toggleEmojisButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (showEmojis) {
-                    inputMethodManager.showSoftInput(taskText, 0);
-                    emojiKeyboard.setVisibility(View.GONE);
-                    showEmojis = false;
-                } else {
-                    emojiKeyboard.setVisibility(View.VISIBLE);
-                    View view = getCurrentFocus();
-                    if (view != null) {
-                        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    }
-                    showEmojis = true;
-                }
             }
         });
 
@@ -258,25 +226,6 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
         }
-
-        setEmojiconFragment();
-    }
-
-    private void setEmojiconFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.emojikeyboard, EmojiconsFragment.newInstance(false))
-                .commit();
-    }
-
-    @Override
-    public void onEmojiconClicked(Emojicon emojicon) {
-        EmojiconsFragment.input(taskText, emojicon);
-    }
-
-    @Override
-    public void onEmojiconBackspaceClicked(View v) {
-        EmojiconsFragment.backspace(taskText);
     }
 
     private void createCheckListRecyclerView() {
@@ -555,13 +504,8 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        if (showEmojis) {
-            emojiKeyboard.setVisibility(View.GONE);
-            showEmojis = false;
-        } else {
-            finish();
-            dismissKeyboard();
-        }
+        finish();
+        dismissKeyboard();
     }
 
     private void finishActivitySuccessfuly() {
