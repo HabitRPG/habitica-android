@@ -12,6 +12,8 @@ public class BindingAdapters {
 
     @BindingAdapter("parsemarkdown")
     public static void bindEmojiconTextView(EmojiconTextView textView, CharSequence value) {
-        textView.setText(MarkdownParser.parseMarkdown(value.toString()));
+        if (value != null) {
+            textView.setText(MarkdownParser.parseMarkdown(value.toString()));
+        }
     }
 }
