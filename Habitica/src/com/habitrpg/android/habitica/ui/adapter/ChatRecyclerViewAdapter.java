@@ -242,7 +242,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
                 if (messageText != null) {
-                    messageText.setText(markdownParser.parseMarkdown(msg.text));
+                    messageText.setText(MarkdownParser.parseMarkdown(msg.text));
                 }
                 agoLabel.setText(msg.getAgoString());
             }

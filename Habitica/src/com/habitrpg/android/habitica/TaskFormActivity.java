@@ -402,7 +402,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private boolean saveTask(Task task) {
-        task.text = markdownParser.parseCompiled(taskText.getText());
+        task.text = MarkdownParser.parseCompiled(taskText.getText());
 
         if (checklistAdapter != null) {
             if (checklistAdapter.getCheckListItems() != null) {
@@ -413,7 +413,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         if (task.text.isEmpty())
             return false;
 
-        task.notes = markdownParser.parseCompiled(taskNotes.getText());
+        task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
         if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
             task.setPriority((float) 0.1);

@@ -1,11 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
-import android.text.Html;
-
-import com.commonsware.cwac.anddown.AndDown;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -17,8 +13,6 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import net.sevenbase.emojicheatsheet.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,8 +33,6 @@ public class Task extends BaseModel {
     public static final String TYPE_REWARD = "reward";
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
-
-    MarkdownParser markdownParser = new MarkdownParser();
 
     @Column
     @PrimaryKey
@@ -119,8 +111,8 @@ public class Task extends BaseModel {
     /**
      * @return the notes
      */
-    public CharSequence getNotes() {
-        return markdownParser.parseMarkdown(notes);
+    public String getNotes() {
+        return notes;
     }
     /**
      * @param notes the notes to set
@@ -143,8 +135,8 @@ public class Task extends BaseModel {
     /**
      * @return the text
      */
-    public CharSequence getText() {
-        return markdownParser.parseMarkdown(text);
+    public String getText() {
+        return text;
     }
     /**
      * @param text the text to set
