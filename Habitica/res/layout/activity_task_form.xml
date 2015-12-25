@@ -1,274 +1,289 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/task_main_wrapper"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/abc_action_bar_content_inset_material">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/task_task_wrapper"
+            android:id="@+id/task_main_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/abc_action_bar_content_inset_material">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-                <com.rockerhieu.emojicon.EmojiconEditText
-                    android:id="@+id/task_text_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/text"
-                    android:textColor="@android:color/black" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-                <com.rockerhieu.emojicon.EmojiconEditText
-                    android:id="@+id/task_notes_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/notes"
-                    android:textColor="@android:color/black" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/task_value_layout"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-                <com.rockerhieu.emojicon.EmojiconEditText
-                    android:id="@+id/task_value_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/task_value"
-                    android:textColor="@android:color/black"
-                    android:numeric="decimal" />
-            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/task_task_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/task_difficulty_wrapper">
+                android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                    <include layout="@layout/emoji_edittext" />
+
+                    <!--<com.rockerhieu.emojicon.EmojiconEditText
+                        android:id="@+id/task_text_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="@string/text"
+                        android:textColor="@android:color/black" /> -->
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                    <com.rockerhieu.emojicon.EmojiconEditText
+                        android:id="@+id/task_notes_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="@string/notes"
+                        android:textColor="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/task_value_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                    <com.rockerhieu.emojicon.EmojiconEditText
+                        android:id="@+id/task_value_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="@string/task_value"
+                        android:textColor="@android:color/black"
+                        android:numeric="decimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/task_difficulty_wrapper">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/difficulty"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <Spinner
+                        android:id="@+id/task_difficulty_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/task_actions_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/difficulty"
+                    android:text="@string/actions"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_toLeftOf="@+id/task_positive_checkbox"
+                        android:text="@string/positive_habit_form"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <CheckBox
+                        android:id="@+id/task_positive_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="0dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_toLeftOf="@+id/task_negative_checkbox"
+                        android:text="@string/negative_habit_form"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <CheckBox
+                        android:id="@+id/task_negative_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="0dp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/task_checklist_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/checklist"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/checklist_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.rockerhieu.emojicon.EmojiconEditText
+                        android:id="@+id/new_checklist"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/new_checklist_item" />
+
+                    <Button
+                        android:id="@+id/add_checklist_button"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_checklist_item" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/task_weekdays_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frequency"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <Spinner
-                    android:id="@+id/task_difficulty_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:id="@+id/task_frequency_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp" />
+
+                <LinearLayout
+                    android:id="@+id/task_frequency_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/task_actions_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/actions"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="11dp"
-                    android:layout_toLeftOf="@+id/task_positive_checkbox"
-                    android:text="@string/positive_habit_form"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <CheckBox
-                    android:id="@+id/task_positive_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="0dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="11dp"
-                    android:layout_toLeftOf="@+id/task_negative_checkbox"
-                    android:text="@string/negative_habit_form"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <CheckBox
-                    android:id="@+id/task_negative_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="0dp" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/task_checklist_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/checklist"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/checklist_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <LinearLayout
+                android:id="@+id/task_startdate_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <com.rockerhieu.emojicon.EmojiconEditText
-                    android:id="@+id/new_checklist"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/new_checklist_item" />
-
-                <Button
-                    android:id="@+id/add_checklist_button"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_checklist_item" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/task_weekdays_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequency"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Spinner
-                android:id="@+id/task_frequency_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="72dp" />
-
-            <LinearLayout
-                android:id="@+id/task_frequency_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/start_date"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <DatePicker
+                    android:id="@+id/task_startdate_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/task_delete_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn.delete.task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_action_delete_white_24"
+                    android:text="@string/action_delete"
+                    android:textColor="@color/white" />
+
             </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/task_startdate_layout"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/emojikeyboard"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/start_date"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <DatePicker
-                android:id="@+id/task_startdate_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/task_delete_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn.delete.task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_action_delete_white_24"
-                android:text="@string/action_delete"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

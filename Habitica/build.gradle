@@ -72,7 +72,8 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
 
     // Emojis
-    compile 'com.rockerhieu.emojicon:library:1.0'
+    //compile 'com.rockerhieu.emojicon:library:1.0' Use rocboronat's fork until it gets merged so we have the newer layout
+    compile 'com.github.rocboronat:emojicon:40fa2ef'
     compile 'com.github.Data5tream:EmojiParser:v0.1.0'
 
     // Markdown
