@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.MarkdownParser;
+import com.rockerhieu.emojicon.EmojiconTextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -109,6 +111,13 @@ public class DataBindingUtils {
     public static void setRoundedBackgroundInt(View view, int color) {
         if (color != 0) {
             setRoundedBackground(view, view.getResources().getColor(color));
+        }
+    }
+
+    @BindingAdapter("parsemarkdown")
+    public static void bindEmojiconTextView(EmojiconTextView textView, CharSequence value) {
+        if (value != null) {
+            textView.setText(MarkdownParser.parseMarkdown(value.toString()));
         }
     }
 
