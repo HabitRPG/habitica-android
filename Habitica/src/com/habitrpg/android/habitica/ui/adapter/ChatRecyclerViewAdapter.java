@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -176,8 +177,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Context context;
         Resources res;
 
-        MarkdownParser markdownParser = new MarkdownParser();
-
         public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
             super(itemView);
             this.layoutType = layoutType;
@@ -194,7 +193,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 case TYPE_DANIEL: {
                     btnToggleInn.setOnClickListener(this);
 
-                    ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
+                    ViewHelper.SetBackgroundTint(btnToggleInn, ContextCompat.getColor(context, R.color.brand));
                     if(HabiticaApplication.User.getPreferences().getSleep()){
                         btnToggleInn.setText(R.string.tavern_inn_checkOut);
                     }else{
@@ -206,7 +205,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 case TYPE_NEW_MESSAGE: {
                     btnSendNewMessage.setOnClickListener(this);
-                    int color = res.getColor(R.color.brand);
+                    int color = ContextCompat.getColor(context, R.color.brand);
 
                     // Using the Iconics buttons, it is unable to tint the background
                     btnSendNewMessage.setTypeface(Iconics.findFont(FontAwesome.Icon.faw_comment).getTypeface(context));
@@ -289,8 +288,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 foregroundColorRes = R.color.tavern_nolikes_foreground;
             }
 
-            DataBindingUtils.setRoundedBackground(likeBackground, res.getColor(backgroundColorRes));
-            tvLikes.setTextColor(res.getColor(foregroundColorRes));
+            DataBindingUtils.setRoundedBackground(likeBackground, ContextCompat.getColor(context, backgroundColorRes));
+            tvLikes.setTextColor( ContextCompat.getColor(context, foregroundColorRes));
         }
 
         @Override

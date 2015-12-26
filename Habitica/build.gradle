@@ -26,11 +26,6 @@ repositories {
         url "http://dl.bintray.com/florent37/maven"
     }
 
-    // Emojis
-    maven {
-        url 'https://github.com/rockerhieu/mvn-repo/raw/master/'
-    }
-
     // Markdown
     maven {
         url "https://s3.amazonaws.com/repo.commonsware.com"
@@ -72,7 +67,6 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
 
     // Emojis
-    //compile 'com.rockerhieu.emojicon:library:1.0' Use Data5tream's fork because of the new layout and popup window
     compile 'com.github.Data5tream:emojicon:6648572'
     compile 'com.github.Data5tream:EmojiParser:v0.1.0'
 

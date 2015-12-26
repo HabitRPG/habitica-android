@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -549,7 +550,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
                     EventBus.getDefault().post(event);
                 }
-            };
+            }
         }
 
         private MaterialDialog createGearDialog(LinearLayout contentViewForDialog) {
@@ -563,7 +564,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                         }
                     })
                     .contentGravity(GravityEnum.CENTER)
-                    .positiveColor(context.getResources().getColor(R.color.brand_200))
+                    .positiveColor(ContextCompat.getColor(context, R.color.brand_200))
                     .positiveText(R.string.reward_dialog_buy)
                     .title(binding.getReward().getText())
                     .customView(contentViewForDialog, true)
@@ -579,7 +580,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @NonNull
         private LinearLayout createContentViewForGearDialog() {
             String price = String.format("%.0f", binding.getReward().value);
-            String content = binding.getReward().getNotes().toString();
+            String content = binding.getReward().getNotes();
 
             // External ContentView
             LinearLayout contentViewLayout = new LinearLayout(context);
@@ -621,7 +622,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             priceTextView.setPadding(10, 0, 0, 0);
 
             ImageView gold = new ImageView(context);
-            gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
+            gold.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_header_gold));
             gold.setMinimumHeight(50);
             gold.setMinimumWidth(50);
             gold.setPadding(0, 0, 5, 0);

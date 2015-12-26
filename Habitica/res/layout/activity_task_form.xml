@@ -24,8 +24,6 @@
                 android:layout_height="72dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <!--<include layout="@layout/emoji_edittext" />-->
-
                 <com.rockerhieu.emojicon.EmojiconEditText
                     android:id="@+id/task_text_edittext"
                     android:layout_width="match_parent"

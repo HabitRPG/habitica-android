@@ -170,7 +170,7 @@ public class Task extends BaseModel {
      * Returns a string of the type of the Task
      * @return the string of the Item type
      */
-    public CharSequence getType() {return this.type;}
+    public String getType() {return this.type;}
 
     public void setType(String type) {this.type = type;}
 
@@ -339,7 +339,7 @@ public class Task extends BaseModel {
     /**
      * @return the attribute
      */
-    public CharSequence getAttribute() {
+    public String getAttribute() {
         return attribute;
     }
     /**

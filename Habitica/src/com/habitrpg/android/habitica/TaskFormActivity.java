@@ -42,8 +42,6 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.rockerhieu.emojicon.EmojiconEditText;
 
-import net.sevenbase.emojicheatsheet.EmojiParser;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
