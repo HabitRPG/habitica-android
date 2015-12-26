@@ -19,7 +19,7 @@
             android:button="@drawable/daily_checkbox"
             android:layout_gravity="center_horizontal" />
         </RelativeLayout>
-        <com.rockerhieu.emojicon.EmojiconTextView
+        <com.github.data5tream.emojilib.EmojiTextView
             android:id="@+id/checkedTextView"
             style="@style/CardTitle"
             android:layout_width="match_parent"

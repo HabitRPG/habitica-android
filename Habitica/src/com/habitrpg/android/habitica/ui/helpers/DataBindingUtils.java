@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.MarkdownParser;
-import com.rockerhieu.emojicon.EmojiconTextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -115,7 +115,7 @@ public class DataBindingUtils {
     }
 
     @BindingAdapter("parsemarkdown")
-    public static void bindEmojiconTextView(EmojiconTextView textView, CharSequence value) {
+    public static void bindEmojiconTextView(EmojiTextView textView, CharSequence value) {
         if (value != null) {
             textView.setText(MarkdownParser.parseMarkdown(value.toString()));
         }

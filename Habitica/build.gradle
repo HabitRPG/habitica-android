@@ -67,8 +67,7 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
 
     // Emojis
-    compile 'com.github.Data5tream:emojicon:6648572'
-    compile 'com.github.Data5tream:EmojiParser:v0.1.0'
+    compile 'com.github.data5tream:emoji-lib:0.0.1'
 
     // Markdown
     compile 'com.commonsware.cwac:anddown:0.2.4'

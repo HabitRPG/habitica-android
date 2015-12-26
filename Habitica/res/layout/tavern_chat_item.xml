@@ -97,7 +97,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.rockerhieu.emojicon.EmojiconTextView
+            <com.github.data5tream.emojilib.EmojiTextView
                 android:id="@+id/message_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

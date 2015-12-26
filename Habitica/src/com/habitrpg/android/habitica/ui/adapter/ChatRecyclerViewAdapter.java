@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
@@ -30,8 +32,6 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.Iconics;
-import com.rockerhieu.emojicon.EmojiconEditText;
-import com.rockerhieu.emojicon.EmojiconTextView;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -140,7 +140,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         // New Msg
         @Bind(R.id.edit_new_message_text)
         @Nullable
-        EmojiconEditText textNewMessage;
+        EmojiEditText textNewMessage;
 
         @Bind(R.id.btn_send_message)
         @Nullable
@@ -164,7 +164,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
         @Bind(R.id.message_text)
         @Nullable
-        EmojiconTextView messageText;
+        EmojiTextView messageText;
 
         @Bind(R.id.ago_label)
         @Nullable

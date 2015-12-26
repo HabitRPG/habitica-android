@@ -24,6 +24,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.MarkdownParser;
@@ -40,7 +41,6 @@ import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.rockerhieu.emojicon.EmojiconEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,7 +65,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     private CheckListAdapter checklistAdapter;
 
     @Bind(R.id.task_value_edittext)
-    EmojiconEditText taskValue;
+    EmojiEditText taskValue;
 
     @Bind(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
@@ -83,10 +83,10 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     LinearLayout mainWrapper;
 
     @Bind(R.id.task_text_edittext)
-    EmojiconEditText taskText;
+    EmojiEditText taskText;
 
     @Bind(R.id.task_notes_edittext)
-    EmojiconEditText taskNotes;
+    EmojiEditText taskNotes;
 
     @Bind(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
@@ -122,7 +122,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     RecyclerView recyclerView;
 
     @Bind(R.id.new_checklist)
-    EmojiconEditText newCheckListEditText;
+    EmojiEditText newCheckListEditText;
 
     @Bind(R.id.add_checklist_button)
     Button button;

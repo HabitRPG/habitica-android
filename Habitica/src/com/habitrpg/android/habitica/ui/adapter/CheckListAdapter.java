@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.rockerhieu.emojicon.EmojiconEditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +80,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
         @Bind(R.id.item_edittext)
-        EmojiconEditText checkListTextView;
+        EmojiEditText checkListTextView;
 
         @Bind(R.id.delete_item_button)
         Button deleteButton;

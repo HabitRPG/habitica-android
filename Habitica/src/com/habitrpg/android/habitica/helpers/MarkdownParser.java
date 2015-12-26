@@ -3,8 +3,7 @@ package com.habitrpg.android.habitica.helpers;
 import android.text.Html;
 
 import com.commonsware.cwac.anddown.AndDown;
-
-import net.sevenbase.emojicheatsheet.EmojiParser;
+import com.github.data5tream.emojilib.EmojiParser;
 
 /**
  * Created by void on 12/24/15.

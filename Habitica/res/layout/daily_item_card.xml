@@ -59,13 +59,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_toLeftOf="@+id/checklistIndicatorWrapper"
                     android:layout_toStartOf="@+id/checklistIndicatorWrapper">
-                    <com.rockerhieu.emojicon.EmojiconTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{daily.text}" />
-                    <com.rockerhieu.emojicon.EmojiconTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"

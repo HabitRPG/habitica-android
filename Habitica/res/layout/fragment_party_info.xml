@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.rockerhieu.emojicon.EmojiconTextView
+            <com.github.data5tream.emojilib.EmojiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">
 
-                <com.rockerhieu.emojicon.EmojiconTextView
+                <com.github.data5tream.emojilib.EmojiTextView
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

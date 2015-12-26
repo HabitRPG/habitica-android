@@ -4,12 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
-import com.rockerhieu.emojicon.EmojiconEditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,7 +56,7 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
         View view;
 
         @Bind(R.id.editText)
-        EmojiconEditText editText;
+        EmojiEditText editText;
 
         @Bind(R.id.btnAdd)
         Button btnAdd;

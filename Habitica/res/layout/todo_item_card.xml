@@ -53,14 +53,14 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="@dimen/task_top_bottom_padding"
                     android:paddingTop="@dimen/task_top_bottom_padding">
-                    <com.rockerhieu.emojicon.EmojiconTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{todo.text}" />
 
-                    <com.rockerhieu.emojicon.EmojiconTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
