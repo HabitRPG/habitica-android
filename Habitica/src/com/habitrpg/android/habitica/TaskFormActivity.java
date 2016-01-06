@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -144,7 +145,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
         }
 
         btnDelete.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnDelete, getResources().getColor(R.color.worse_10));
+        ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -373,7 +374,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         if (task.type.equals("daily")) {
 
-            Calendar calendar = new GregorianCalendar();
+            GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTime(task.getStartDate());
             startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -430,7 +431,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             break;
 
             case "daily": {
-                Calendar calendar = new GregorianCalendar();
+                GregorianCalendar calendar = new GregorianCalendar();
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
 
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
