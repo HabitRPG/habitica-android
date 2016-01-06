@@ -20,7 +20,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="72dp"
+            android:layout_height="wrap_content"
+            android:minHeight="72dp"
             android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
