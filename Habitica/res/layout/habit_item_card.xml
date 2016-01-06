@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <FrameLayout
-                    android:layout_width="40dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:id="@+id/btnLayoutLeft"
                     app:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
@@ -82,7 +82,7 @@
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
                 <FrameLayout
-                    android:layout_width="40dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:id="@+id/btnLayoutRight"
                     app:visibility="@{habit.down ? View.VISIBLE : View.INVISIBLE}"
