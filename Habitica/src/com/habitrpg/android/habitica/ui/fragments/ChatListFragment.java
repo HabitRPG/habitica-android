@@ -134,7 +134,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             mRecyclerView.setAdapter(tavernAdapter);
         }
 
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
