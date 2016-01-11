@@ -33,6 +33,7 @@ public class PartyFragment extends BaseFragment {
 
     private PartyMemberListFragment partyMemberListFragment;
     private PartyInformationFragment partyInformationFragment;
+    private ChatListFragment chatListFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +74,10 @@ public class PartyFragment extends BaseFragment {
                     partyInformationFragment.setGroup(group);
                 }
 
+                if(chatListFragment != null){
+                    chatListFragment.seenGroupId = group.id;
+                }
+
                 if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
@@ -89,8 +94,8 @@ public class PartyFragment extends BaseFragment {
             public void failure(RetrofitError error) {
             }
         });
-        setViewPagerAdapter();
 
+        setViewPagerAdapter();
         return v;
     }
 
@@ -116,7 +121,7 @@ public class PartyFragment extends BaseFragment {
                         break;
                     }
                     case 1: {
-                        fragment = new ChatListFragment(activity, "party", user.getParty().id, mAPIHelper, user, activity, false);
+                        fragment = chatListFragment = new ChatListFragment(activity, "party", mAPIHelper, user, activity, false);
                         break;
                     }
                     case 2: {
@@ -148,6 +153,27 @@ public class PartyFragment extends BaseFragment {
                         return activity.getString(R.string.members);
                 }
                 return "";
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 1 && group != null) {
+                    chatListFragment.setNavigatedToFragment(group.id);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 && group != null) {
+                    chatListFragment.setNavigatedToFragment(group.id);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 

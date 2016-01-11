@@ -47,7 +47,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private Context ctx;
     private String groupId;
-    private String seenGroupId;
+    public String seenGroupId;
     private APIHelper apiHelper;
     private HabitRPGUser user;
     private String userId;
@@ -55,11 +55,10 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private MainActivity activity;
     private boolean registerEventBus = false;
 
-    public ChatListFragment(Context ctx, String groupId, String seenGroupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
+    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
 
         this.ctx = ctx;
         this.groupId = groupId;
-        this.seenGroupId = seenGroupId;
         this.apiHelper = apiHelper;
         this.user = user;
         this.userId = user.getId();
@@ -127,6 +126,13 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private List<ChatMessage> currentChatMessages;
 
+    public void setNavigatedToFragment(String groupId){
+        seenGroupId = groupId;
+        navigatedOnceToFragment = true;
+
+        markMessagesAsSeen();
+    }
+
     @Override
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
@@ -139,7 +145,20 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout.setRefreshing(false);
 
-        if(!isTavern) {
+        gotNewMessages = true;
+
+        markMessagesAsSeen();
+    }
+
+    private boolean navigatedOnceToFragment = false;
+    private boolean gotNewMessages = false;
+
+    private void markMessagesAsSeen(){
+        if(!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
+        && gotNewMessages && navigatedOnceToFragment) {
+
+            gotNewMessages = false;
+
             apiHelper.apiService.seenMessages(seenGroupId, new Callback<String>() {
                 @Override
                 public void success(String str, Response response) {
