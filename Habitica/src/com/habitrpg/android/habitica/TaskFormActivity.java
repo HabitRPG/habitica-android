@@ -287,7 +287,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onEmojiconClicked(Emojicon emojicon) {
                 EmojiEditText emojiEditText = null;
-                if (isEmojiEditText(getCurrentFocus()) || getCurrentFocus() == null || emojicon == null) {
+                if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
                     return;
                 } else {
                     emojiEditText = (EmojiEditText) getCurrentFocus();
