@@ -6,17 +6,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiGridView;
+import com.github.data5tream.emojilib.EmojiPopup;
 import com.github.data5tream.emojilib.EmojiTextView;
+import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
@@ -26,6 +34,7 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -212,6 +221,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     btnSendNewMessage.setText(new Iconics.IconicsBuilder().ctx(context).on("{faw-comment}").build());
 
                     ViewHelper.SetBackgroundTint(btnSendNewMessage, color);
+
+                    // Set up the emoji keyboard
+                    EmojiKeyboard.createKeyboard(itemView, context);
 
                     break;
                 }

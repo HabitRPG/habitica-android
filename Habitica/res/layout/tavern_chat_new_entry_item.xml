@@ -18,6 +18,17 @@
         android:orientation="horizontal"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/emoji.toggle.btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/emoji_1f642"
+            android:scaleType="center"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="Toogle Emojis" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="72dp"
@@ -30,8 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Write Message"
-                android:textColor="@android:color/black"
-                />
+                android:textColor="@android:color/black" />
 
         </android.support.design.widget.TextInputLayout>
 

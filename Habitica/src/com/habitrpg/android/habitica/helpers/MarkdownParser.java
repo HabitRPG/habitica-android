@@ -6,7 +6,7 @@ import com.commonsware.cwac.anddown.AndDown;
 import com.github.data5tream.emojilib.EmojiParser;
 
 /**
- * Created by void on 12/24/15.
+ * @author data5tream
  */
 public class MarkdownParser {
 
@@ -31,8 +31,7 @@ public class MarkdownParser {
      * @return Markdown formatted String
      */
     public static String parseCompiled(CharSequence input) {
-        String output = EmojiParser.convertToCheatCode(input.toString());
-        return output;
+        return EmojiParser.convertToCheatCode(input.toString());
     }
 
 }
