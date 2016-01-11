@@ -96,8 +96,10 @@ public class GemsPurchaseFragment extends BaseFragment {
             public void onReady(final BillingRequests billingRequests) {
                 GemsPurchaseFragment.this.billingRequests = billingRequests;
 
-                btnPurchaseGems.setEnabled(true);
-
+                // if the user leaves the fragment before the checkout callback is done
+                if(btnPurchaseGems != null) {
+                    btnPurchaseGems.setEnabled(true);
+                }
                 checkIfPendingPurchases();
             }
 
