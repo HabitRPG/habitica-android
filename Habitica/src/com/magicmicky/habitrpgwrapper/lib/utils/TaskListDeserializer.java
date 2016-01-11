@@ -15,10 +15,10 @@ import java.util.List;
 public class TaskListDeserializer implements JsonDeserializer<List<Task>> {
 
     public List<Task> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) {
-        List<Task> vals = new ArrayList<Task>();
+        List<Task> vals = new ArrayList<>();
         int position = 0;
         for (JsonElement e : json.getAsJsonArray()) {
-            Task task = (Task) ctx.deserialize(e, Task.class);
+            Task task = ctx.deserialize(e, Task.class);
             task.position = position;
             vals.add(task);
             position++;

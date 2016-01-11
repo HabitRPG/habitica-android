@@ -14,7 +14,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.prefs.TimePreference;
