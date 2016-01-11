@@ -22,10 +22,8 @@
             android:id="@+id/emoji.toggle.btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/emoji_1f642"
+            android:src="@drawable/ic_emoticon_grey600_24dp"
             android:scaleType="center"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
             android:backgroundTint="@color/transparent"
             android:contentDescription="Toogle Emojis" />
 

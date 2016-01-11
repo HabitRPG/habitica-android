@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,7 +39,7 @@ public class EmojiKeyboard {
 
             @Override
             public void onDismiss() {
-                //changeEmojiKeyboardIcon(emojiButton, R.drawable.ic_emoji_symbols_light_activated);
+                changeEmojiKeyboardIcon(emojiButton, context, false);
             }
         });
 
@@ -95,7 +96,7 @@ public class EmojiKeyboard {
 
                     if(popup.isKeyBoardOpen()){
                         popup.showAtBottom();
-                        //changeEmojiKeyboardIcon(emojiButton, R.drawable.ic_emoji_symbols_light_activated);
+                        changeEmojiKeyboardIcon(emojiButton, context, true);
                     }
 
                     else{
@@ -104,14 +105,23 @@ public class EmojiKeyboard {
                         popup.showAtBottomPending();
                         final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         inputMethodManager.showSoftInput(emojiEditText, InputMethodManager.SHOW_IMPLICIT);
-                        //changeEmojiKeyboardIcon(emojiButton, R.drawable.ic_emoji_people_light_activated);
+                        changeEmojiKeyboardIcon(emojiButton, context, true);
                     }
                 }
 
                 else{
                     popup.dismiss();
+                    changeEmojiKeyboardIcon(emojiButton, context, false);
                 }
             }
         });
+    }
+    private static void changeEmojiKeyboardIcon(ImageButton view, Context context, Boolean keyboardOpened) {
+
+        if (keyboardOpened) {
+            view.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_keyboard_grey600_24dp));
+        } else {
+            view.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_emoticon_grey600_24dp));
+        }
     }
 }
