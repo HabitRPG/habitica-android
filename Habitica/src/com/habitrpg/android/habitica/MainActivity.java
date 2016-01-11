@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -136,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         this.hostConfig = PrefsActivity.fromContext(this);
         if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
+
+        //Check if reminder alarm is set
+        scheduleReminder(this);
 
         HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
 
@@ -741,5 +747,35 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         }
 
         return super.onKeyUp(keyCode, event);
+    }
+
+    private void scheduleReminder(Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (prefs.getBoolean("use_reminder", false)) {
+
+            String timeval = prefs.getString("reminder_time", "19:00");
+            if (timeval == null) timeval = "19:00";
+
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            int minute = Integer.parseInt(pieces[1]);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+            long trigger_time = cal.getTimeInMillis();
+
+            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
+
+            if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
     }
 }
