@@ -1,5 +1,8 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,23 +11,23 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.NotificationPublisher;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
@@ -33,9 +36,9 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
@@ -74,67 +77,49 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity implements HabitRPGUserCallback.OnUserReceived,
-                                                               TaskScoringCallback.OnTaskScored,
-                                                               GemsPurchaseFragment.Listener {
+import static com.habitrpg.android.habitica.ui.UiUtils.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.UiUtils.showSnackbar;
 
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP
-    }
+public class MainActivity extends BaseActivity implements HabitRPGUserCallback.OnUserReceived,
+        TaskScoringCallback.OnTaskScored,
+        GemsPurchaseFragment.Listener {
 
-    BaseFragment activeFragment;
-
-    @Bind(R.id.floating_menu_wrapper)
-    FrameLayout floatingMenuWrapper;
-
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-
-    @Bind(R.id.detail_tabs)
-    TabLayout detail_tabs;
-
-    @Bind(R.id.avatar_with_bars)
-    View avatar_with_bars;
-
-    AccountHeader accountHeader;
-    public Drawer drawer;
-
-    protected HostConfig hostConfig;
-    protected HabitRPGUser user;
-
-    AvatarWithBarsViewModel avatarInHeader;
-
-    APIHelper mAPIHelper;
-
-    private MaterialDialog faintDialog;
+    @Bind(R.id.floating_menu_wrapper) FrameLayout floatingMenuWrapper;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.detail_tabs) TabLayout detail_tabs;
+    @Bind(R.id.avatar_with_bars) View avatar_with_bars;
 
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
+    public Drawer drawer;
+    protected HostConfig hostConfig;
+    protected HabitRPGUser user;
+    private AccountHeader accountHeader;
+    private BaseFragment activeFragment;
+    private AvatarWithBarsViewModel avatarInHeader;
+    private APIHelper mAPIHelper;
+    private MaterialDialog faintDialog;
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Inject Controls
-        ButterKnife.bind(this);
-
-        // Initialize Crashlytics
-        Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);
 
         this.hostConfig = PrefsActivity.fromContext(this);
-        if(!HabiticaApplication.checkUserAuthentication(this, hostConfig))
+        if (!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
+
+        //Check if reminder alarm is set
+        scheduleReminder(this);
 
         HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
 
@@ -144,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
             setSupportActionBar(toolbar);
 
             ActionBar actionBar = getSupportActionBar();
-
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowHomeEnabled(false);
@@ -152,25 +136,22 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                 actionBar.setDisplayUseLogoEnabled(false);
                 actionBar.setHomeButtonEnabled(false);
             }
-
         }
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
-
         drawer.setSelectionAtPosition(1);
 
-        // Create Checkout
-
-        checkout = Checkout.forActivity(this, HabiticaApplication.Instance.getCheckout());
-
-        checkout.start();
-
+        setupCheckout();
         EventBus.getDefault().register(this);
-
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    private void setupCheckout() {
+        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
+        checkout.start();
     }
 
     @Override
@@ -190,11 +171,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         if (!ans) {
             Log.e("SHARED PREFERENCES", "Shared Preferences Username and Email error");
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     public void displayFragment(BaseFragment fragment) {
@@ -258,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                     public void run() {
 
                         // multiple crashes because user is null
-                        if(user != null) {
+                        if (user != null) {
                             ArrayList<Task> allTasks = new ArrayList<>();
                             allTasks.addAll(user.getDailys());
                             allTasks.addAll(user.getTodos());
@@ -279,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                         }
                     }
                 }).start();
-            }else{
+            } else {
                 displayDeathDialogIfNeeded();
             }
         }
@@ -337,7 +313,9 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                     }
                 });
             }
-        } catch (SQLiteDoneException e) {}
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
     }
 
     private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries) {
@@ -380,7 +358,9 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                     }
                 });
             }
-        } catch (SQLiteDoneException e) {}
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
 
     }
 
@@ -449,6 +429,8 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     public void onBackPressed() {
         if (drawer.isDrawerOpen()) {
             drawer.closeDrawer();
+        } else if (drawer.getDrawerLayout().isDrawerOpen(Gravity.RIGHT)) {
+            drawer.getDrawerLayout().closeDrawer(Gravity.RIGHT);
         } else {
             super.onBackPressed();
         }
@@ -470,30 +452,6 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         super.onDestroy();
     }
 
-    public void showSnackbar(String content) {
-        showSnackbar(content, SnackbarDisplayType.NORMAL);
-    }
-
-    public void showSnackbar(String content, SnackbarDisplayType displayType) {
-        if (this.isFinishing()) {
-            return;
-        }
-            Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-
-        if (displayType == SnackbarDisplayType.FAILURE) {
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
-        } else if(displayType == SnackbarDisplayType.FAILURE_BLUE) {
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_100));
-        } else if (displayType == SnackbarDisplayType.DROP) {
-            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            tv.setMaxLines(5);
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
-        }
-        snackbar.show();
-    }
-
     // region Events
 
     public void onEvent(ToggledInnStateEvent evt) {
@@ -504,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            this.showSnackbar("Not enough Gold", MainActivity.SnackbarDisplayType.FAILURE);
+            showSnackbar(this, floatingMenuWrapper, "Not enough Gold", SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -516,7 +474,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                this.showSnackbar("You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
+                UiUtils.showSnackbar(this, floatingMenuWrapper, "You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
             double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
@@ -537,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                     user.async().save();
                     MainActivity.this.setUserData(true);
 
-                    showSnackbar(event.Reward.getText() + " successfully purchased!");
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, event.Reward.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
                 }
 
                 @Override
@@ -557,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                     avatarInHeader.updateData(user);
                     user.async().save();
 
-                    showSnackbar("Buy Reward Error " + event.Reward.getText(), MainActivity.SnackbarDisplayType.FAILURE);
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, "Buy Reward Error " + event.Reward.getText(), SnackbarDisplayType.FAILURE);
                 }
             });
         } else {
@@ -569,8 +527,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
         user.async().save();
     }
 
-
-    public void onEvent(final DeleteTaskCommand cmd){
+    public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
@@ -594,12 +551,12 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
 
-            showSnackbar(task.getText() + " successfully purchased!");
+            showSnackbar(this, floatingMenuWrapper, task.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
 
         } else {
 
-            if(user != null){
-                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl(), data.getDelta());
+            if (user != null) {
+                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl());
             }
 
             showSnackBarForDataReceived(data);
@@ -609,22 +566,21 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
     private void showSnackBarForDataReceived(TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                this.showSnackbar(data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                showSnackbar(this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
             }
         }
     }
 
-    private void notifyUser(double xp, double hp, double gold,
-                            int lvl, double delta) {
+    private void notifyUser(double xp, double hp, double gold, int lvl) {
         StringBuilder message = new StringBuilder();
-        MainActivity.SnackbarDisplayType displayType = MainActivity.SnackbarDisplayType.NORMAL;
+        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
         if (lvl > user.getStats().getLvl()) {
             displayLevelUpDialog(lvl);
 
             this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
-            user.getStats().setLvl((int) lvl);
+            user.getStats().setLvl(lvl);
 
-            this.showSnackbar(message.toString());
+            showSnackbar(this, floatingMenuWrapper, message.toString(), SnackbarDisplayType.NORMAL);
         } else {
             com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
 
@@ -633,7 +589,7 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                 user.getStats().setExp(xp);
             }
             if (hp != stats.getHp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
                 user.getStats().setHp(hp);
             }
@@ -641,18 +597,18 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
                 message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
                 stats.setGp(gold);
             } else if (gold < stats.getGp()) {
-                displayType = MainActivity.SnackbarDisplayType.FAILURE;
+                displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
                 stats.setGp(gold);
             }
-            this.showSnackbar(message.toString(), displayType);
+            showSnackbar(this, floatingMenuWrapper, message.toString(), displayType);
         }
         setUserData(true);
     }
 
     @Override
     public void onTaskScoringFailed() {
-
+        //Do nothing
     }
 
     static public Double round(Double value, int n) {
@@ -732,11 +688,45 @@ public class MainActivity extends AppCompatActivity implements HabitRPGUserCallb
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_MENU && drawer != null){
+        if (keyCode == KeyEvent.KEYCODE_MENU && drawer != null) {
             drawer.openDrawer();
             return true;
         }
 
         return super.onKeyUp(keyCode, event);
+    }
+
+    public FrameLayout getFloatingMenuWrapper() {
+        return floatingMenuWrapper;
+    }
+
+    private void scheduleReminder(Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (prefs.getBoolean("use_reminder", false)) {
+
+            String timeval = prefs.getString("reminder_time", "19:00");
+            if (timeval == null) timeval = "19:00";
+
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            int minute = Integer.parseInt(pieces[1]);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+            long trigger_time = cal.getTimeInMillis();
+
+            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
+
+            if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
     }
 }

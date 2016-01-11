@@ -29,6 +29,10 @@
       {
         "type": "F",
         "title": "Quest-Text can now display the HTML correctly"
+      },
+      {
+        "type": "N",
+        "title": "Task filter drawer now closes when back button is pressed"
       }
     ]
   },
