@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +21,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiGridView;
+import com.github.data5tream.emojilib.EmojiPopup;
+import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.MarkdownParser;
@@ -128,6 +134,17 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     @Bind(R.id.add_checklist_button)
     Button button;
 
+    @Bind(R.id.emoji_toggle_btn0)
+    ImageButton emojiToggle0;
+
+    @Bind(R.id.emoji_toggle_btn1)
+    ImageButton emojiToggle1;
+
+
+    ImageButton emojiToggle2;
+
+    EmojiPopup popup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +243,134 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
+        }
+
+        // Emoji keyboard stuff
+        boolean isTodo = false;
+        if (task.type.equals("todo")) {
+            isTodo = true;
+        }
+
+        // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
+        if (isTodo) {
+            emojiToggle2 = (ImageButton) findViewById(R.id.emoji_toggle_btn2);
+        } else {
+            emojiToggle2 = emojiToggle0;
+        }
+
+        popup = new EmojiPopup(emojiToggle0.getRootView(), this);
+
+        popup.setSizeForSoftKeyboard();
+        popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                changeEmojiKeyboardIcon(false);
+            }
+        });
+        popup.setOnSoftKeyboardOpenCloseListener(new EmojiPopup.OnSoftKeyboardOpenCloseListener() {
+
+            @Override
+            public void onKeyboardOpen(int keyBoardHeight) {
+
+            }
+
+            @Override
+            public void onKeyboardClose() {
+                if (popup.isShowing())
+                    popup.dismiss();
+            }
+        });
+
+        popup.setOnEmojiconClickedListener(new EmojiGridView.OnEmojiconClickedListener() {
+
+            @Override
+            public void onEmojiconClicked(Emojicon emojicon) {
+                EmojiEditText emojiEditText = null;
+                if (isEmojiEditText(getCurrentFocus()) || getCurrentFocus() == null || emojicon == null) {
+                    return;
+                } else {
+                    emojiEditText = (EmojiEditText) getCurrentFocus();
+                }
+                int start = emojiEditText.getSelectionStart();
+                int end = emojiEditText.getSelectionEnd();
+                if (start < 0) {
+                    emojiEditText.append(emojicon.getEmoji());
+                } else {
+                    emojiEditText.getText().replace(Math.min(start, end),
+                            Math.max(start, end), emojicon.getEmoji(), 0,
+                            emojicon.getEmoji().length());
+                }
+            }
+        });
+
+        popup.setOnEmojiconBackspaceClickedListener(new EmojiPopup.OnEmojiconBackspaceClickedListener() {
+
+            @Override
+            public void onEmojiconBackspaceClicked(View v) {
+                if (isEmojiEditText(getCurrentFocus())) {
+                    KeyEvent event = new KeyEvent(
+                            0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
+                    getCurrentFocus().dispatchKeyEvent(event);
+                }
+            }
+        });
+
+        emojiToggle0.setOnClickListener(new emojiClickListener(taskText));
+        emojiToggle1.setOnClickListener(new emojiClickListener(taskNotes));
+        if (isTodo) {
+            emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
+        }
+    }
+
+    private boolean isEmojiEditText(View view) {
+        return view instanceof EmojiEditText;
+    }
+
+    private void changeEmojiKeyboardIcon(Boolean keyboardOpened) {
+
+        if (keyboardOpened) {
+            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+            emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+        } else {
+            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+            emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+        }
+    }
+
+    private class emojiClickListener implements View.OnClickListener {
+
+        EmojiEditText view;
+
+        public emojiClickListener(EmojiEditText view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(!popup.isShowing()){
+
+                if(popup.isKeyBoardOpen()){
+                    popup.showAtBottom();
+                    changeEmojiKeyboardIcon(true);
+                }
+
+                else{
+                    view.setFocusableInTouchMode(true);
+                    view.requestFocus();
+                    popup.showAtBottomPending();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                    changeEmojiKeyboardIcon(true);
+                }
+            }
+
+            else{
+                popup.dismiss();
+                changeEmojiKeyboardIcon(false);
+            }
         }
     }
 
