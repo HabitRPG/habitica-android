@@ -104,6 +104,10 @@ public class LoginActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_screen);
 
+        //Set default values to avoid null-responses when requesting unedited settings
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_account_details, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
+
         ButterKnife.bind(this);
 
 		mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
