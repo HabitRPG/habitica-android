@@ -13,12 +13,15 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
+
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
@@ -30,35 +33,53 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by Negue on 14.06.2015.
  */
 public class HabiticaApplication extends Application {
 
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
-
-    public static HabiticaApplication Instance;
     public static HabitRPGUser User;
-
     public static APIHelper ApiHelper;
+    public static Activity currentActivity = null;
+
+    public static HabiticaApplication getInstance(Context context) {
+        return (HabiticaApplication) context.getApplicationContext();
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        setupLeakCanary();
+        setupFlowManager();
+        setupFacebookSdk();
+        setupCrashlytics();
+        createBillingAndCheckout();
+        registerActivityLifecycleCallbacks();
+    }
 
-        Instance = this;
-
+    private void setupLeakCanary() {
         // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             LeakCanary.install(this);
         }
+    }
 
-        createBillingAndCheckout();
-
+    private void setupFlowManager() {
         FlowManager.init(this);
+    }
 
+    private void setupFacebookSdk() {
         FacebookSdk.sdkInitialize(getApplicationContext());
-        registerActivityLifecycleCallbacks();
+    }
+
+    private void setupCrashlytics() {
+        Crashlytics crashlytics = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlytics);
     }
 
     private void registerActivityLifecycleCallbacks() {
@@ -101,8 +122,6 @@ public class HabiticaApplication extends Application {
         });
     }
 
-    public static Activity currentActivity = null;
-
     // region SQLite overrides
 
     @Override
@@ -119,7 +138,7 @@ public class HabiticaApplication extends Application {
 
     @Override
     public boolean deleteDatabase(String name) {
-        if(!name.endsWith(".db")){
+        if (!name.endsWith(".db")) {
             name += ".db";
         }
 
@@ -129,7 +148,7 @@ public class HabiticaApplication extends Application {
         boolean deleted = super.deleteDatabase(getDatabasePath(name).getAbsolutePath());
 
         if (deleted) {
-            Log.i("hack","Database deleted");
+            Log.i("hack", "Database deleted");
         } else {
             Log.e("hack", "Database not deleted");
         }
@@ -186,7 +205,7 @@ public class HabiticaApplication extends Application {
     }
 
     public static void logout(Context context) {
-        Instance.deleteDatabase(HabitDatabase.NAME);
+        getInstance(context).deleteDatabase(HabitDatabase.NAME);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean use_reminder = preferences.getBoolean("use_reminder", false);
         String reminder_time = preferences.getString("reminder_time", "19:00");
@@ -260,12 +279,4 @@ public class HabiticaApplication extends Application {
     }
 
     // endregion
-
-    public static void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager) currentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View currentFocus = currentActivity.getCurrentFocus();
-        if (currentFocus != null) {
-            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-        }
-    }
 }

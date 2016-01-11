@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import de.greenrobot.event.EventBus;

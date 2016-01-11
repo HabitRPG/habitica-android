@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.prefs;
+package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;

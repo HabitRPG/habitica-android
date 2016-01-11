@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -25,6 +24,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
@@ -52,7 +52,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
-public class TaskFormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private String taskType;
     private String taskId;
@@ -127,11 +127,13 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
     Button button;
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_task_form;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_form);
-
-        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

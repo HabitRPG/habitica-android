@@ -12,7 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.SkillTasksActivity;
+import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
@@ -106,7 +107,7 @@ public class SkillsFragment extends BaseFragment {
         removeProgressDialog();
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
-        activity.showSnackbar(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), activity.getString(R.string.used_skill, skill.text, skill.mana), UiUtils.SnackbarDisplayType.NORMAL);
         mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
     }
 
