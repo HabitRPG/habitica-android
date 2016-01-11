@@ -445,30 +445,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         super.onDestroy();
     }
 
-    public void showSnackbar(String content) {
-        showSnackbar(content, SnackbarDisplayType.NORMAL);
-    }
-
-    public void showSnackbar(String content, SnackbarDisplayType displayType) {
-        if (this.isFinishing()) {
-            return;
-        }
-            Snackbar snackbar = Snackbar.make(floatingMenuWrapper, content, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-
-        if (displayType == SnackbarDisplayType.FAILURE) {
-            //change Snackbar's background color;
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.worse_10));
-        } else if(displayType == SnackbarDisplayType.FAILURE_BLUE) {
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_100));
-        } else if (displayType == SnackbarDisplayType.DROP) {
-            TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            tv.setMaxLines(5);
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.best_10));
-        }
-        snackbar.show();
-    }
-
     // region Events
 
     public void onEvent(ToggledInnStateEvent evt) {
@@ -715,29 +691,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     public FrameLayout getFloatingMenuWrapper() {
         return floatingMenuWrapper;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen()) {
-            drawer.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        if (checkout != null) {
-            checkout.stop();
-        }
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
 }
