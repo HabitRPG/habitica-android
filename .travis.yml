@@ -1,9 +1,5 @@
 language: android
 
-env:
-  global:
-    - secure: "1us+SiIwdQ7Ai1vIT7Ep5IIY5BhQF48rVwhVoWWOulYfLm6W33k8Es5Vva8hZb6F6h0N3tZ8U6fT17osksD3uaieBAbgCzAUFiLaoBqDdNUs8H35/sCFNmGwEmBert04aPyROqL4atJhpVpNt5inBqstA3c4H0tk0o8Qnm3yS9NGRJPyz0LBwN8/qB/sj9n7zICEzTj1XvlwsrEewS7mB+dsTztcje/aRw16+xN+K1IuH5jwG2bKWQwvSe19rVODldKQ8ja/ozFbArHOx35NtiXDDtFZBmK6PLJsmME4Df31H60LSha13fUzZ+kzfvhhkMvlP5wBCNEkP4pBCbUI4Twe5GjBHSDRrCj63hcsA0GAVkK5eZEy9+49mGUlbsPspU9vrq1E4E3HpJuwPY39gPRYOn0PTtXsPSvl5SHwEdu9HJr1GXogjGL6aQdPF7/m27mwhL0mgZVdEMEEEDlLlDnRcWHS7ygHMQLRPoUW5m18dv3cag8vlSiGpdrSVmpySU+B/OzO2kNcSeSMXy6c8h4uS8GQ1xqd0p92bVwHSd3SK/ucYCjNyBYv8f6BZ5l88/lkFyGp5gv6hKV15tFdJtfpiEunpquiHSPb10TyrmkKoQx6V3xMWtSAd0SAlLGTuxL3IP5Okvp4bY1PACpCMEnwEJEd4GKZsca5ggSKSP0="
-    
 android:
   components:
     # Uncomment the lines below if you want to
@@ -26,16 +22,4 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
-script: if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then ./gradlew assembleDebug ;
-  fi
-
-addons:
-  coverity_scan:
-    project:
-      name: Data5tream/habitrpg-android
-      version: 1.0
-      description: Habitica Android Client (Data5tream's fork)
-
-    notification_email: admin@7base.net
-    build_command: "./gradlew assembleDebug"
-    branch_pattern: coverity_scan
+script: ./gradlew assembleDebug
