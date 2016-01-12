@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,8 +28,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.prefs.PrefsActivity;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -101,6 +103,10 @@ public class LoginActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_screen);
+
+        //Set default values to avoid null-responses when requesting unedited settings
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_account_details, false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
 
         ButterKnife.bind(this);
 

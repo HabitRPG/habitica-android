@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".ui.activities.MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="0dp"
-        tools:context=".MainActivity">
+        tools:context=".ui.activities.MainActivity">
 
 
         <FrameLayout

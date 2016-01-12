@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -152,7 +153,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
                         apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
                             @Override
                             public void success(Void aVoid, Response response) {
-                                activity.showSnackbar("Flagged message by " + cmd.chatMessage.user);
+                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
                             }
 
                             @Override
@@ -217,7 +218,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        HabiticaApplication.dismissKeyboard();
+        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
