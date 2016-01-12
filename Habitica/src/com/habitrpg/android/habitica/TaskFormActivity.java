@@ -239,6 +239,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             btnDelete.setEnabled(true);
         } else {
             setTitle((Task) null);
+            taskText.requestFocus();
         }
 
         if (taskType.equals("todo") || taskType.equals("daily")) {
@@ -247,7 +248,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
 
         // Emoji keyboard stuff
         boolean isTodo = false;
-        if (task.type.equals("todo")) {
+        if (taskType.equals("todo")) {
             isTodo = true;
         }
 
