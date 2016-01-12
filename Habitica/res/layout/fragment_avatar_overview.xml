@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.Preferences" />
+        <import type="android.view.View" />
+
+        <variable
+            name="preferences"
+            type="Preferences" />
+    </data>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/md_grey_500"
+
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/avatar_body"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/textView3"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="@string/avatar_size"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/avatar_size_spinner"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:entries="@array/avatar_sizes"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_shirt}"
+                bind:value="@{preferences.getShirt}"
+                bind:imageNamed='@{preferences.getSize + "_shirt_" + preferences.getShirt}'/>
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_skin}"
+                bind:value="@{preferences.getSkin}"
+                bind:imageNamed='@{"skin_" + preferences.getSkin}' />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avatar_hair"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_margin="5dp"/>
+
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_color}"
+                bind:value="@{preferences.getHair.getColor}"
+                bind:imageNamed='@{"hair_bangs_1_" + preferences.getHair.getColor}' />
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_base}"
+                bind:valueInt="@{preferences.getHair.getBase}"
+                bind:imageNamed='@{preferences.getHair.getBase == 0 ? null : "hair_base_" + preferences.getHair.getBase + "_" + preferences.getHair.getColor}' />
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_bangs}"
+                bind:valueInt="@{preferences.getHair.getBangs}"
+                bind:imageNamed='@{preferences.getHair.getBangs == 0 ? null : "hair_bangs_" + preferences.getHair.getBangs + "_" + preferences.getHair.getColor}' />
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_flower}"
+                bind:valueInt="@{preferences.getHair.getFlower}"
+                bind:imageNamed='@{preferences.getHair.getFlower == 0 ? null : "hair_flower_" + preferences.getHair.getFlower}' />
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_beard}"
+                bind:valueInt="@{preferences.getHair.getBeard}"
+                bind:imageNamed='@{preferences.getHair.getBeard == 0 ? null : "hair_beard_" + preferences.getHair.getBeard + "_" + preferences.getHair.getColor}' />
+            <include layout="@layout/avatar_overview_card"
+                bind:title="@{@string/avatar_mustache}"
+                bind:valueInt="@{preferences.getHair.getMustache}"
+                bind:imageNamed='@{preferences.getHair.getMustache == 0 ? null : "hair_mustache_" + preferences.getHair.getMustache + "_" + preferences.getHair.getColor}' />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

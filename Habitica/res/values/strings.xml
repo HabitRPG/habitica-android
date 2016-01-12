@@ -140,4 +140,19 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="quest">Quest</string>
+    <string name="avatar_body">Body</string>
+    <string name="avatar_hair">Hair</string>
+    <string name="avatar_shirt">Shirt</string>
+    <string name="avatar_skin">Skin</string>
+    <string name="avatar_ears">Animal Ears</string>
+    <string name="avatar_base">Base</string>
+    <string name="avatar_color">Color</string>
+    <string name="avatar_beard">Beard</string>
+    <string name="avatar_mustache">Mustache</string>
+    <string name="avatar_flower">Flower</string>
+    <string name="avatar_bangs">Bangs</string>
+    <string name="avatar_nothing">Nothing set</string>
+    <string name="avatar_size">Size</string>
+    <string name="avatar_size_slim">Slim</string>
+    <string name="avatar_size_broad">Broad</string>
 </resources>
