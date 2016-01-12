@@ -31,6 +31,7 @@ import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiGridView;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.github.data5tream.emojilib.emoji.Emojicon;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.MarkdownParser;
@@ -55,7 +56,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
