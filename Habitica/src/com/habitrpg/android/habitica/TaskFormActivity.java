@@ -259,7 +259,7 @@ public class TaskFormActivity extends AppCompatActivity implements AdapterView.O
             emojiToggle2 = emojiToggle0;
         }
 
-        popup = new EmojiPopup(emojiToggle0.getRootView(), this);
+        popup = new EmojiPopup(emojiToggle0.getRootView(), this, ContextCompat.getColor(this, R.color.brand));
 
         popup.setSizeForSoftKeyboard();
         popup.setOnDismissListener(new PopupWindow.OnDismissListener() {

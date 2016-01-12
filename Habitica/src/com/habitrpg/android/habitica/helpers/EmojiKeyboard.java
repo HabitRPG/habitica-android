@@ -31,7 +31,7 @@ public class EmojiKeyboard {
 
         final ImageButton emojiButton = (ImageButton) itemView.findViewById(R.id.emoji_toggle_btn);
         final EmojiEditText emojiEditText = (EmojiEditText) itemView.findViewById(R.id.edit_new_message_text);
-        final EmojiPopup popup = new EmojiPopup(itemView.getRootView(), context);
+        final EmojiPopup popup = new EmojiPopup(itemView.getRootView(), context, ContextCompat.getColor(context, R.color.brand));
 
         popup.setSizeForSoftKeyboard();
 
