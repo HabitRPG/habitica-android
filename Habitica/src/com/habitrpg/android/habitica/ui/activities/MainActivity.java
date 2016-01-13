@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -184,7 +185,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (getSupportFragmentManager().getFragments() == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+            transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
         }
     }
 
