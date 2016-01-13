@@ -49,4 +49,5 @@
 	<dimen name="login_field_width">350dp</dimen>
 	<dimen name="task_top_bottom_padding">20dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
+	<dimen name="grid_item_margin">6dp</dimen>
 </resources>

@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.UiUtils;
@@ -459,6 +460,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(user);
+    }
+
+    public void onEvent(UpdateUserCommand event) {
+        mAPIHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
     }
 
     public void onEvent(final BuyRewardCommand event) {

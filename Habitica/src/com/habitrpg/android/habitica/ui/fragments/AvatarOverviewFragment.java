@@ -1,7 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
 import com.habitrpg.android.habitica.databinding.FragmentPartyInfoBinding;
+import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.HashMap;
@@ -30,6 +34,30 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
     @Bind(R.id.avatar_size_spinner)
     Spinner avatarSizeSpinner;
 
+    @Bind(R.id.avatar_shirt)
+    View avatarShirtView;
+
+    @Bind(R.id.avatar_skin)
+    View avatarSkinView;
+
+    @Bind(R.id.avatar_hair_color)
+    View avatarHairColorView;
+
+    @Bind(R.id.avatar_hair_base)
+    View avatarHairBaseView;
+
+    @Bind(R.id.avatar_hair_bangs)
+    View avatarHairBangsView;
+
+    @Bind(R.id.avatar_hair_flower)
+    View avatarHairFlowerView;
+
+    @Bind(R.id.avatar_hair_beard)
+    View avatarHairBeardView;
+
+    @Bind(R.id.avatar_hair_mustache)
+    View avatarHairMustacheView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +72,65 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
         this.setSize(this.user.getPreferences().getSize());
         avatarSizeSpinner.setOnItemSelectedListener(this);
 
+        avatarShirtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("shirt", null);
+            }
+        });
+
+        avatarSkinView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("skin", null);
+            }
+        });
+
+        avatarHairColorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "color");
+            }
+        });
+        avatarHairBangsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "bangs");
+            }
+        });
+        avatarHairBaseView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "base");
+            }
+        });
+        avatarHairFlowerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "flower");
+            }
+        });
+        avatarHairBeardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "beard");
+            }
+        });
+        avatarHairMustacheView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("hair", "mustache");
+            }
+        });
+
         return v;
+    }
+
+    private void displayCustomizationFragment(String type, String group) {
+                AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
+                fragment.type = type;
+                fragment.group = group;
+                activity.displayFragment(fragment);
     }
 
     @Override

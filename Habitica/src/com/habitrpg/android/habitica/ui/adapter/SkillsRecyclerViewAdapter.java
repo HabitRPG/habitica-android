@@ -23,7 +23,6 @@ import de.greenrobot.event.EventBus;
  */
 public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder> {
 
-
     private List<Skill> skillList;
 
     public Double mana;

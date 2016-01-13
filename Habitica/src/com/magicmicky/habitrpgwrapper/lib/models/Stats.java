@@ -12,10 +12,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 public class Stats extends PlayerMinStats{
 
     @Column
-    private int toNextLevel;//xp needed to be earned
-
-    @Column
-    private int maxHealth, maxMP;
+    private int toNextLevel, maxHealth, maxMP;
 
 
     public int getToNextLevel() {

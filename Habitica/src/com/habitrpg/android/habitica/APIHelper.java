@@ -9,6 +9,11 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -21,6 +26,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
@@ -47,6 +53,7 @@ import retrofit.Profiler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.converter.ConversionException;
 import retrofit.converter.GsonConverter;
 
 
@@ -209,6 +216,10 @@ public class APIHelper implements ErrorHandler, Profiler {
         public String err;
     }
 
+    public class ErrorListResponse {
+        public List<String> err;
+    }
+
 	@Override
 	public Throwable handleError(RetrofitError cause) {
 
@@ -219,17 +230,24 @@ public class APIHelper implements ErrorHandler, Profiler {
         } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
             retrofit.client.Response response = cause.getResponse();
 
-           ErrorResponse res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+            ErrorResponse res = null;
+
+            try {
+                res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+            } catch (RuntimeException e) {
+                //Can cause errors when error is a list and not a string
+                ErrorListResponse resList = (ErrorListResponse) cause.getBodyAs(ErrorListResponse.class);
+                if (resList.err != null && resList.err.size() >= 1) {
+                    res = new ErrorResponse();
+                    res.err = resList.err.get(0);
+                }
+            }
 
             int status = response.getStatus();
             if (status == 401) {
-
-                if(res.err != null && !res.err.isEmpty())
-                {
+                if(res != null && res.err != null && !res.err.isEmpty()) {
                     showConnectionProblemDialog("", res.err);
-                }
-                else
-                {
+                } else {
                     showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
 
