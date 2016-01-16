@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +13,11 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
 public class AvatarCustomizationFragment extends BaseFragment {
 
     public String type;
-    public String group;
+    public String category;
     public String activeCustomization;
 
     @Bind(R.id.recyclerView)
@@ -69,6 +68,7 @@ public class AvatarCustomizationFragment extends BaseFragment {
         this.updateActiveCustomization();
         this.adapter.userSize = this.user.getPreferences().getSize();
         this.adapter.hairColor = this.user.getPreferences().getHair().getColor();
+        this.adapter.gemBalance = user.getBalance() * 4;
 
         return v;
     }
@@ -81,14 +81,21 @@ public class AvatarCustomizationFragment extends BaseFragment {
         Where<Customization> select = new Select()
                 .from(Customization.class)
                 .where(Condition.column("type").eq(this.type))
-                .and(Condition.CombinedCondition.begin(Condition.column("purchasable").eq(true))
-                        .or(Condition.column("purchased").eq(true))
+                .and(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
                         .or(Condition.column("price").eq(0))
-                        .or(Condition.column("price").isNull()));
-        if (this.group != null) {
-            select = select.and(Condition.column("group").eq(this.group));
+                        .or(Condition.column("price").isNull())
+                        .or(Condition.CombinedCondition.begin(
+                                Condition.CombinedCondition.begin(Condition.column("availableUntil").isNull())
+                                .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))
+                            .and(Condition.CombinedCondition.begin(Condition.column("availableFrom").isNull())
+                                .or(Condition.column("availableFrom").lessThanOrEq(new Date().getTime()))
+                            )
+                        )
+                );
+        if (this.category != null) {
+            select = select.and(Condition.column("category").eq(this.category));
         }
-        select.orderBy(true, "set", "identifier");
+        select.orderBy(true, "customizationSet", "identifier");
 
         List<Customization> customizations = select.queryList();
         adapter.setCustomizationList(customizations);
@@ -102,7 +109,9 @@ public class AvatarCustomizationFragment extends BaseFragment {
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
+        this.adapter.gemBalance = user.getBalance() * 4;
         this.updateActiveCustomization();
+        this.loadCustomizations();
     }
 
     private void updateActiveCustomization() {
@@ -115,7 +124,7 @@ public class AvatarCustomizationFragment extends BaseFragment {
                 this.activeCustomization = prefs.getShirt();
                 break;
             case "hair":
-                switch (this.group) {
+                switch (this.category) {
                     case "bangs":
                         this.activeCustomization = String.valueOf(prefs.getHair().getBangs());
                         break;

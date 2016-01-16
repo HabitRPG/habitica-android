@@ -73,6 +73,8 @@ public class HabitRPGUser extends BaseModel {
     @SerializedName("auth")
     private Authentication authentication;
 
+    private Purchases purchased;
+
     public Preferences getPreferences() {
         return preferences;
     }
@@ -156,6 +158,9 @@ public class HabitRPGUser extends BaseModel {
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
     }
+
+    public Purchases getPurchased() { return purchased; }
+    public void setPurchased(Purchases purchased) { this.purchased = purchased; }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
     public List<Task> getHabits() {

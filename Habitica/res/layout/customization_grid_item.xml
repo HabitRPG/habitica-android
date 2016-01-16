@@ -3,22 +3,35 @@
     android:id="@+id/card_view"
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:minHeight="60dp"
-        android:padding="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:orientation="vertical"
         android:clickable="true"
         android:background="@drawable/btn_habit_background">
+        <View
+            android:id="@+id/purchaseOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/black" />
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
-            android:scaleType="fitEnd"/>
-    </LinearLayout>
+            android:scaleType="fitEnd"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

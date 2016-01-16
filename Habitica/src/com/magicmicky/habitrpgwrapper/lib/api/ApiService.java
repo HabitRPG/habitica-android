@@ -11,6 +11,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
@@ -51,14 +52,14 @@ public interface ApiService {
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
 
+    @POST("/user/unlock")
+    void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);
 
     @GET("/user/tasks/{id}")
     void getTask(@Path("id") String id, Callback<Task> habitItemCallback);
 
-
     @POST("/user/tasks/{id}/{direction}")
     void postTaskDirection(@Path("id") String id, @Path("direction") String direction, Callback<TaskDirectionData> taskDirectionCallback);
-
 
     @POST("/user/tasks")
     void createItem(@Body Task item, Callback<Task> habitItemCallback);

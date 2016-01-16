@@ -1,10 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +11,7 @@ import android.widget.Spinner;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.databinding.FragmentPartyInfoBinding;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.HashMap;
@@ -126,10 +122,10 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
         return v;
     }
 
-    private void displayCustomizationFragment(String type, String group) {
+    private void displayCustomizationFragment(String type, String category) {
                 AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
                 fragment.type = type;
-                fragment.group = group;
+                fragment.category = category;
                 activity.displayFragment(fragment);
     }
 

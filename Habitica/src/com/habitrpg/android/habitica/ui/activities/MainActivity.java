@@ -31,12 +31,15 @@ import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
@@ -464,6 +467,15 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     public void onEvent(UpdateUserCommand event) {
         mAPIHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
+    }
+
+    public void onEvent(UnlockPathCommand event) {
+        this.user.setBalance(this.user.getBalance() - event.balanceDiff);
+        mAPIHelper.apiService.unlockPath(event.path, new UnlockCallback(this, this.user));
+    }
+
+    public void onEvent(OpenMenuItemCommand event) {
+        drawer.setSelection(event.identifier);
     }
 
     public void onEvent(final BuyRewardCommand event) {

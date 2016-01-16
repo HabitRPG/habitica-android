@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
@@ -9,11 +7,6 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -26,9 +19,10 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
@@ -39,6 +33,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
@@ -53,7 +49,6 @@ import retrofit.Profiler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.converter.ConversionException;
 import retrofit.converter.GsonConverter;
 
 
@@ -84,6 +79,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
+        Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -105,6 +101,8 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(SkillList.class, new SkillDeserializer())
                 .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
                 .registerTypeAdapter(taskClassListType, new TaskListDeserializer())
+                .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
+                .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
