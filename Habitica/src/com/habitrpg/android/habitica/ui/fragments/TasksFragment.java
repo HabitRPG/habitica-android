@@ -432,6 +432,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
             updateTags(event.task.getTags());
+            floatingMenu.close(true);
         } else {
             this.mAPIHelper.updateTask(task, new TaskUpdateCallback());
         }
