@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.MarkdownParser;
 import com.squareup.picasso.Picasso;
 
 /**

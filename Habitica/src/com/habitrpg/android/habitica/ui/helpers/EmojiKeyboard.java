@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.helpers;
+package com.habitrpg.android.habitica.ui.helpers;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

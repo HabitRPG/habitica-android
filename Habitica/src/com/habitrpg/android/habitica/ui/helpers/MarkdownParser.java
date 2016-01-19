@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.helpers;
+package com.habitrpg.android.habitica.ui.helpers;
 
 import android.text.Html;
 
