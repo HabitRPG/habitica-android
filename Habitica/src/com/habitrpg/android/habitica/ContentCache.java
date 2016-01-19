@@ -73,11 +73,9 @@ public class ContentCache {
 
         Where<ItemData> query = new Select().from(ItemData.class).where(keyCondition);
 
-        String queryString = query.getQuery();
         List<ItemData> items = query.queryList();
 
-
-        if (items != null && items.size() != 0) {
+        if (items != null && items.size() == keysToSearch.size()) {
             gotEntries.GotObject(items);
         } else {
             getContentAndSearchForList("item", keysToSearch, gotEntries);
