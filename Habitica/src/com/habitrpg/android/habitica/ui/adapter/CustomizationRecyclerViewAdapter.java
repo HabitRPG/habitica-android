@@ -48,9 +48,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.customizationList = new ArrayList<Object>();
         CustomizationSet lastSet = new CustomizationSet();
         for (Customization customization : newCustomizationList) {
-            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.text)) {
+            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.identifier)) {
                 CustomizationSet set = new CustomizationSet();
-                set.text = customization.getCustomizationSet();
+                set.identifier = customization.getCustomizationSet();
+                set.text = customization.getCustomizationSetName();
                 set.price = customization.getSetPrice();
                 set.hasPurchasable = !customization.isUsable();
                 lastSet = set;
@@ -250,8 +251,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         public void bind(CustomizationSet set) {
             this.set = set;
-            String uppercasedSectionName = this.set.text.substring(0, 1).toUpperCase() + this.set.text.substring(1);
-            this.label.setText(uppercasedSectionName);
+            this.label.setText(set.text);
             if (set.hasPurchasable) {
                 this.purchaseSetButton.setVisibility(View.VISIBLE);
                 this.purchaseSetButton.setText(context.getString(R.string.purchase_set_button, set.price));

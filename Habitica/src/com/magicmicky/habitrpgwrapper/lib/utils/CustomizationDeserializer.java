@@ -128,6 +128,7 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 if (setInfo.has("availableUntil")) {
                     customization.setAvailableUntil(format.parse(setInfo.get("availableUntil").getAsString()));
                 }
+                customization.setCustomizationSetName(setInfo.get("text").getAsString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -142,10 +143,11 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         if (customization == null) {
             customization = new Customization();
             customization.setCustomizationSet(setName);
+            String readableSetName = setName.substring(13, 17) + "." + setName.substring(11, 13);
+            customization.setCustomizationSetName(readableSetName);
             customization.setType("background");
             customization.setIdentifier(key);
         }
-
 
         customization.setText(entry.get("text").getAsString());
         customization.setNotes(entry.getAsJsonObject().get("notes").getAsString());

@@ -6,6 +6,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 public class CustomizationSet {
 
     public String text;
+    public String identifier;
     public Integer price;
     public boolean hasPurchasable;
 

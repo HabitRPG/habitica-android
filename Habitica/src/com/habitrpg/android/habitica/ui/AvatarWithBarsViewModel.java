@@ -39,6 +39,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     private HabitRPGUser userObject;
     private UserPicture userPicture;
 
+    private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
+
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
 
@@ -119,13 +121,11 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
                 drawable.getMinimumHeight());
         lvlText.setCompoundDrawables(drawable, null, null, null);
 
-//        binding.setClassShort(classShort);
+        goldText.setText(String.valueOf(gp));
+        silverText.setText(String.valueOf(sp));
 
-        goldText.setText(gp + "");
-        silverText.setText(sp + "");
-
-        Double gems = new Double(user.getBalance() * 4);
-        gemsText.setText(gems.intValue() + "");
+        Double gems = user.getBalance() * 4;
+        gemsText.setText(String.valueOf(gems.intValue()));
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
@@ -142,14 +142,29 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     public void setHpBarData(float value, int valueMax){
+        if (valueMax == 0) {
+            valueMax = cachedMaxHealth;
+        } else {
+            cachedMaxHealth = valueMax;
+        }
         setValueBar(hpBar, value, valueMax, context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     public void setXpBarData(float value, int valueMax){
+        if (valueMax == 0) {
+            valueMax = cachedMaxExp;
+        } else {
+            cachedMaxExp = valueMax;
+        }
         setValueBar(xpBar, value, valueMax, context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
     }
 
     public void setMpBarData(float value, int valueMax){
+        if (valueMax == 0) {
+            valueMax = cachedMaxMana;
+        } else {
+            cachedMaxMana = valueMax;
+        }
         setValueBar(mpBar, value, valueMax, context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
     }
 
@@ -173,9 +188,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     public void onEvent(BoughtGemsEvent gemsEvent){
-        Double gems = new Double(userObject.getBalance() * 4);
+        Double gems = userObject.getBalance() * 4;
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(gems.intValue() + "");
+        gemsText.setText(String.valueOf(gems.intValue()));
     }
 
     @Override

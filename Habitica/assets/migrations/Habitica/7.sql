@@ -1,0 +1,1 @@
+ALTER TABLE Customization ADD COLUMN customizationSetName varchar(255);

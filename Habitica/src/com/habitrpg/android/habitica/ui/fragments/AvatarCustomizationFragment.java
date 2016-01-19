@@ -14,6 +14,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
@@ -95,7 +96,11 @@ public class AvatarCustomizationFragment extends BaseFragment {
         if (this.category != null) {
             select = select.and(Condition.column("category").eq(this.category));
         }
-        select.orderBy(true, "customizationSet", "identifier");
+        if (this.type.equals("background")) {
+            select.orderBy(OrderBy.columns("customizationSetName").descending());
+        } else {
+            select.orderBy(true, "customizationSet");
+        }
 
         List<Customization> customizations = select.queryList();
         adapter.setCustomizationList(customizations);

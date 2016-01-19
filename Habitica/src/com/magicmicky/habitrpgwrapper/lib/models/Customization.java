@@ -16,7 +16,7 @@ public class Customization extends BaseModel {
     private String id;
 
     @Column
-    private String identifier, category, type, notes, customizationSet, text;
+    private String identifier, category, type, notes, customizationSet, customizationSetName, text;
 
     @Column
     private boolean purchased;
@@ -49,6 +49,7 @@ public class Customization extends BaseModel {
     public void setId(String id) {this.id = id;}
     public void setNotes(String notes) {this.notes = notes;}
     public void setCustomizationSet(String customizationSet) {this.customizationSet = customizationSet;}
+    public void setCustomizationSetName(String customizationSetName) {this.customizationSetName = customizationSetName;}
     public void setText(String text) {this.text = text;}
     public void setPurchased(boolean purchased) {this.purchased = purchased;}
     public void setPrice(Integer price) {this.price = price;}
@@ -62,6 +63,7 @@ public class Customization extends BaseModel {
     public String getType() { return this.type; }
     public String getNotes() { return this.notes; }
     public String getCustomizationSet() { return this.customizationSet; }
+    public String getCustomizationSetName() { return this.customizationSetName; }
     public String getText() { return this.text; }
 
     @SuppressWarnings("RedundantIfStatement")

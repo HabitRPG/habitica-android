@@ -31,6 +31,7 @@
     <LinearLayout
         android:id="@+id/LL_header"
         android:layout_toRightOf="@id/IMG_ProfilePicture"
+        android:layout_toEndOf="@id/IMG_ProfilePicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -53,7 +54,7 @@
     <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_below="@id/LL_header"
+        android:layout_below="@id/IMG_ProfilePicture"
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -64,7 +65,7 @@
         android:textSize="14sp"
         android:textColor="@color/textColorSecondaryDark"/>
     <LinearLayout
-        android:layout_below="@id/LL_header"
+        android:layout_below="@id/IMG_ProfilePicture"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
