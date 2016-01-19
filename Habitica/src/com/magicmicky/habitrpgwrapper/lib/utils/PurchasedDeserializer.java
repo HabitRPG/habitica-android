@@ -34,6 +34,9 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
         Purchases purchases = new Purchases();
 
         for (String type : Arrays.asList("background", "shirt", "skin")) {
+            if (!object.has(type)) {
+                continue;
+            }
             for (Map.Entry<String,JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
                 Customization customization = new Customization();
                 customization.setType(type);
@@ -42,15 +45,16 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
                 customizations.add(customization);
             }
         }
-
-        for (Map.Entry<String,JsonElement> categoryEntry : object.get("hair").getAsJsonObject().entrySet()) {
-            for (Map.Entry<String,JsonElement> entry : categoryEntry.getValue().getAsJsonObject().entrySet()) {
-                Customization customization = new Customization();
-                customization.setType("hair");
-                customization.setCategory(categoryEntry.getKey());
-                customization.setIdentifier(entry.getKey());
-                customization.setPurchased(entry.getValue().getAsBoolean());
-                customizations.add(customization);
+        if (object.has("hair")) {
+            for (Map.Entry<String, JsonElement> categoryEntry : object.get("hair").getAsJsonObject().entrySet()) {
+                for (Map.Entry<String, JsonElement> entry : categoryEntry.getValue().getAsJsonObject().entrySet()) {
+                    Customization customization = new Customization();
+                    customization.setType("hair");
+                    customization.setCategory(categoryEntry.getKey());
+                    customization.setIdentifier(entry.getKey());
+                    customization.setPurchased(entry.getValue().getAsBoolean());
+                    customizations.add(customization);
+                }
             }
         }
 

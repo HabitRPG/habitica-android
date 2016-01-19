@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
+import com.magicmicky.habitrpgwrapper.lib.models.CustomizationSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,13 +46,20 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     public void setCustomizationList(List<Customization> newCustomizationList) {
         this.customizationList = new ArrayList<Object>();
-        String lastSetName = null;
+        CustomizationSet lastSet = new CustomizationSet();
         for (Customization customization : newCustomizationList) {
-            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSetName)) {
-                customizationList.add(customization.getCustomizationSet());
-                lastSetName = customization.getCustomizationSet();
+            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.text)) {
+                CustomizationSet set = new CustomizationSet();
+                set.text = customization.getCustomizationSet();
+                set.price = customization.getSetPrice();
+                set.hasPurchasable = !customization.isUsable();
+                lastSet = set;
+                customizationList.add(set);
             }
             customizationList.add(customization);
+            if (!customization.isUsable() && !lastSet.hasPurchasable) {
+                lastSet.hasPurchasable = true;
+            }
         }
         this.notifyDataSetChanged();
     }
@@ -70,8 +78,16 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
             return new SectionViewHolder(view);
         } else {
+            int viewID;
+            if (viewType == 1) {
+                viewID = R.layout.customization_grid_item;
+            } else {
+                viewID = R.layout.customization_grid_background_item;
+            }
+
+
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.customization_grid_item, parent, false);
+                    .inflate(viewID, parent, false);
 
             return new CustomizationViewHolder(view);
         }
@@ -81,10 +97,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = customizationList.get(position);
-        if (obj.getClass().equals(String.class)) {
-            ((SectionViewHolder)holder).bind((String) obj);
+        if (obj.getClass().equals(CustomizationSet.class)) {
+            ((SectionViewHolder)holder).bind((CustomizationSet) obj);
         } else {
-            ((CustomizationViewHolder)holder).bind((Customization) customizationList.get(position));
+            ((CustomizationViewHolder) holder).bind((Customization) customizationList.get(position));
 
         }
     }
@@ -96,9 +112,13 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public int getItemViewType(int position) {
-        if (this.customizationList.get(position).getClass().equals(String.class)) {
+        if (this.customizationList.get(position).getClass().equals(CustomizationSet.class)) {
             return 0;
         } else {
+            Customization customization = (Customization) customizationList.get(position);
+            if (customization.getType().equals("background")) {
+                return 2;
+            }
             return 1;
         }
     }
@@ -211,7 +231,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     class SectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private String sectionName;
+        private CustomizationSet set;
 
         @Bind(R.id.label)
         TextView label;
@@ -228,11 +248,11 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             purchaseSetButton.setOnClickListener(this);
         }
 
-        public void bind(String sectionName) {
-            this.sectionName = sectionName;
-            String uppercasedSectionName = sectionName.substring(0, 1).toUpperCase() + sectionName.substring(1);
+        public void bind(CustomizationSet set) {
+            this.set = set;
+            String uppercasedSectionName = this.set.text.substring(0, 1).toUpperCase() + this.set.text.substring(1);
             this.label.setText(uppercasedSectionName);
-            this.purchaseSetButton.setText(context.getString(R.string.purchase_set_button, 5));
+            this.purchaseSetButton.setText(context.getString(R.string.purchase_set_button, set.price));
         }
 
         @Override
@@ -246,7 +266,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                if (5 > gemBalance) {
+                                if (set.price > gemBalance) {
                                     OpenMenuItemCommand event = new OpenMenuItemCommand();
                                     event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
                                     EventBus.getDefault().post(event);
@@ -257,13 +277,13 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                                 for (Object obj : customizationList) {
                                     if (obj.getClass().equals(Customization.class)) {
                                         Customization customization = (Customization) obj;
-                                        if (customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(sectionName)) {
+                                        if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.text)) {
                                             path = path + "," + customization.getPath();
                                         }
                                     }
                                 }
                                 event.path = path;
-                                event.balanceDiff = 1.25;
+                                event.balanceDiff = set.price / 4;
                                 EventBus.getDefault().post(event);
                             }
                         })

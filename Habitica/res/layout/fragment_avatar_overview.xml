@@ -156,6 +156,28 @@
                         bind:imageNamed='@{preferences.getHair.getMustache == 0 ? null : "hair_mustache_" + preferences.getHair.getMustache + "_" + preferences.getHair.getColor}' />
                 </LinearLayout>
         </android.support.v7.widget.CardView>
-        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/avatar_background"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_margin="5dp"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/avatar_background_overview_card"
+                    android:id="@+id/avatar_background"
+                    bind:text="@{preferences.getBackground}"
+                    bind:imageNamed='@{"background_" + preferences.getBackground}' />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

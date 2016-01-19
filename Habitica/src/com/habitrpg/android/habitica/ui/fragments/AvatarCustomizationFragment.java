@@ -102,7 +102,14 @@ public class AvatarCustomizationFragment extends BaseFragment {
     }
 
     private void setGridSpanCount(int width) {
-        int spanCount = width / 100;
+        float itemWidth;
+        if (this.type.equals("background")) {
+            itemWidth = getContext().getResources().getDimension(R.dimen.avatar_width);
+        } else {
+            itemWidth = 100;
+        }
+
+        int spanCount = (int) (width / itemWidth);
         layoutManager.setSpanCount(spanCount);
     }
 
@@ -122,6 +129,9 @@ public class AvatarCustomizationFragment extends BaseFragment {
                 break;
             case "shirt":
                 this.activeCustomization = prefs.getShirt();
+                break;
+            case "background":
+                this.activeCustomization = prefs.getBackground();
                 break;
             case "hair":
                 switch (this.category) {

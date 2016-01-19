@@ -21,5 +21,6 @@ public class ContentResult {
     public SkillList spells;
 
     public List<Customization> appearances;
+    public List<Customization> backgrounds;
 }
 

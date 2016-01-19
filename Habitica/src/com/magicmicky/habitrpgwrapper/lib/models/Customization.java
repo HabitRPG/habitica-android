@@ -105,6 +105,8 @@ public class Customization extends BaseModel {
                     default:
                         return "hair_" + this.category + "_" + this.identifier + "_" + hairColor;
                 }
+            case "background":
+                return "background_" + this.identifier;
         }
          return "";
     }

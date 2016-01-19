@@ -54,6 +54,9 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
     @Bind(R.id.avatar_hair_mustache)
     View avatarHairMustacheView;
 
+    @Bind(R.id.avatar_background)
+    View avatarBackgroundView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,6 +119,12 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
             @Override
             public void onClick(View v) {
                 displayCustomizationFragment("hair", "mustache");
+            }
+        });
+        avatarBackgroundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCustomizationFragment("background", null);
             }
         });
 

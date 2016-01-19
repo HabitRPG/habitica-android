@@ -36,18 +36,25 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         JsonObject object = json.getAsJsonObject();
         List<Customization> customizations = new ArrayList<Customization>();
 
-        for (String type : Arrays.asList("shirt", "skin")) {
-            for (Map.Entry<String,JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
-                customizations.add(this.parseCustomization(type, null, entry));
+        if (object.has("shirt")) {
+            for (String type : Arrays.asList("shirt", "skin")) {
+                for (Map.Entry<String, JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
+                    customizations.add(this.parseCustomization(type, null, entry));
+                }
+            }
+
+            for (Map.Entry<String, JsonElement> categoryEntry : object.get("hair").getAsJsonObject().entrySet()) {
+                for (Map.Entry<String, JsonElement> entry : categoryEntry.getValue().getAsJsonObject().entrySet()) {
+                    customizations.add(this.parseCustomization("hair", categoryEntry.getKey(), entry));
+                }
+            }
+        } else {
+            for (Map.Entry<String, JsonElement> setEntry : object.entrySet()) {
+                for (Map.Entry<String, JsonElement> entry : setEntry.getValue().getAsJsonObject().entrySet()) {
+                    customizations.add(this.parseBackground(setEntry.getKey(), entry));
+                }
             }
         }
-
-        for (Map.Entry<String,JsonElement> categoryEntry : object.get("hair").getAsJsonObject().entrySet()) {
-            for (Map.Entry<String,JsonElement> entry : categoryEntry.getValue().getAsJsonObject().entrySet()) {
-                customizations.add(this.parseCustomization("hair", categoryEntry.getKey(), entry));
-            }
-        }
-
         TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
 
         return customizations;
@@ -80,6 +87,20 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 e.printStackTrace();
             }
         }
+
+        return customization;
+    }
+
+    private Customization parseBackground(String setName, Map.Entry<String,JsonElement> entry) {
+        JsonObject obj = entry.getValue().getAsJsonObject();
+        Customization customization = new Customization();
+        customization.setCustomizationSet(setName);
+        customization.setType("background");
+        customization.setIdentifier(entry.getKey());
+        customization.setText(entry.getValue().getAsJsonObject().get("text").getAsString());
+        customization.setNotes(entry.getValue().getAsJsonObject().get("notes").getAsString());
+        customization.setPrice(7);
+        customization.setSetPrice(15);
 
         return customization;
     }

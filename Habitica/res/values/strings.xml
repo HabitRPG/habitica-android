@@ -155,6 +155,7 @@
     <string name="avatar_size">Size</string>
     <string name="avatar_size_slim">Slim</string>
     <string name="avatar_size_broad">Broad</string>
+    <string name="avatar_background">Background</string>
     <string name="purchase_customization">Purchase Customization</string>
     <string name="purchase_set_button" formatted="false">Unlock set for %d gems</string>
 </resources>
