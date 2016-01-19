@@ -24,7 +24,7 @@ public class UserPicture {
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 147;
-    private static final int COMPACT_WIDTH = 103;
+    private static final int COMPACT_WIDTH = 114;
     private static final int COMPACT_HEIGHT = 90;
 
     private HabitRPGUser user;
