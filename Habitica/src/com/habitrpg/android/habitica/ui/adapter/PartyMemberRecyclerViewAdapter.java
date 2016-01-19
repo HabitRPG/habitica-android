@@ -74,6 +74,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         ValueBarBinding hpBar;
 
         Resources resources;
+        UserPicture userPicture;
 
         public MemberViewHolder(View itemView) {
             super(itemView);
@@ -86,12 +87,14 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             hpBar.setPartyMembers(true);
 
             resources = itemView.getResources();
+            userPicture = new UserPicture(itemView.getContext(), false, false);
+
         }
 
         public void bind(HabitRPGUser user) {
             android.content.Context ctx = itemView.getContext();
 
-            UserPicture userPicture = new UserPicture(user, ctx, false, false);
+            userPicture.setUser(user);
             userPicture.setPictureOn(imageView);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);

@@ -110,6 +110,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private APIHelper mAPIHelper;
     private MaterialDialog faintDialog;
 
+    private UserPicture sideUserPicture;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -148,6 +150,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1);
+        this.sideUserPicture =   new UserPicture(this, true, false);
 
         setupCheckout();
         EventBus.getDefault().register(this);
@@ -394,7 +397,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             }
         }
         profile.withName(user.getProfile().getName());
-        new UserPicture(user, this, true, false).setPictureWithRunnable(new UserPictureRunnable() {
+        sideUserPicture.setUser(this.user);
+        sideUserPicture.setPictureWithRunnable(new UserPictureRunnable() {
             public void run(Bitmap avatar) {
                 profile.withIcon(avatar);
                 accountHeader.updateProfile(profile);
@@ -671,7 +675,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
 
                 ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-                UserPicture userPicture = new UserPicture(user, this, false, false);
+                UserPicture userPicture = new UserPicture(this, false, false);
+                userPicture.setUser(this.user);
                 userPicture.setPictureOn(avatarView);
             }
 
@@ -699,7 +704,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
             ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-            UserPicture userPicture = new UserPicture(user, this, false, false);
+            UserPicture userPicture = new UserPicture(this, false, false);
+            userPicture.setUser(this.user);
             userPicture.setPictureOn(avatarView);
         }
 

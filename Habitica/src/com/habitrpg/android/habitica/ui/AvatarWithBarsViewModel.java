@@ -37,6 +37,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     private TextView lvlText, goldText, silverText, gemsText;
     private HabitRPGUser userObject;
+    private UserPicture userPicture;
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
@@ -65,6 +66,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
+        this.userPicture = new UserPicture(this.context);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -81,7 +83,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
         setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
 
-        new UserPicture(user, this.context).setPictureOn(image);
+        userPicture.setUser(user);
+        userPicture.setPictureOn(image);
 
         if (stats.get_class() != null) {
             userClass += stats.getCleanedClassName();
@@ -89,7 +92,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10) ? View.GONE : View.VISIBLE);
 
-        lvlText.setText("Lvl" + user.getStats().getLvl() + " " + userClass);
+        lvlText.setText("Lvl " + user.getStats().getLvl() + " - " + userClass);
         Drawable drawable;
         switch (stats.get_class()) {
             case warrior:
