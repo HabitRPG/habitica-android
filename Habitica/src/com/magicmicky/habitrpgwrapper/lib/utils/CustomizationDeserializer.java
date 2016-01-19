@@ -15,6 +15,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.json.JSONObject;
 
@@ -36,22 +38,62 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         JsonObject object = json.getAsJsonObject();
         List<Customization> customizations = new ArrayList<Customization>();
 
+
         if (object.has("shirt")) {
+            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").isNot("background")).queryList();
+
+            for (Customization customization : existingCustomizations) {
+                if(object.has(customization.getType())) {
+                    JsonObject nestedObject = object.get(customization.getType()).getAsJsonObject();
+                    if (customization.getCategory() != null) {
+                        if (nestedObject.has(customization.getCategory())) {
+                            nestedObject = nestedObject.get(customization.getCategory()).getAsJsonObject();
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (nestedObject.has(customization.getIdentifier())) {
+                        customizations.add(this.parseCustomization(customization, customization.getType(), customization.getCategory(), customization.getIdentifier(), nestedObject.get(customization.getIdentifier()).getAsJsonObject()));
+                        nestedObject.remove(customization.getIdentifier());
+                    }
+                }
+            }
+
             for (String type : Arrays.asList("shirt", "skin")) {
                 for (Map.Entry<String, JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
-                    customizations.add(this.parseCustomization(type, null, entry));
+                    customizations.add(this.parseCustomization(null, type, null, entry.getKey(), entry.getValue().getAsJsonObject()));
                 }
             }
 
             for (Map.Entry<String, JsonElement> categoryEntry : object.get("hair").getAsJsonObject().entrySet()) {
                 for (Map.Entry<String, JsonElement> entry : categoryEntry.getValue().getAsJsonObject().entrySet()) {
-                    customizations.add(this.parseCustomization("hair", categoryEntry.getKey(), entry));
+                    customizations.add(this.parseCustomization(null, "hair", categoryEntry.getKey(), entry.getKey(), entry.getValue().getAsJsonObject()));
                 }
             }
         } else {
+
+            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").isNot("background")).queryList();
+
+            for (Customization customization : existingCustomizations) {
+                if(object.has(customization.getType())) {
+                    JsonObject nestedObject = object.get(customization.getType()).getAsJsonObject();
+                    if (customization.getCustomizationSet() != null) {
+                        if (nestedObject.has(customization.getCustomizationSet())) {
+                            nestedObject = nestedObject.get(customization.getCustomizationSet()).getAsJsonObject();
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (nestedObject.has(customization.getIdentifier())) {
+                        customizations.add(this.parseBackground(customization, customization.getCustomizationSet(), customization.getIdentifier(), nestedObject.get(customization.getIdentifier()).getAsJsonObject()));
+                        nestedObject.remove(customization.getIdentifier());
+                    }
+                }
+            }
+
             for (Map.Entry<String, JsonElement> setEntry : object.entrySet()) {
                 for (Map.Entry<String, JsonElement> entry : setEntry.getValue().getAsJsonObject().entrySet()) {
-                    customizations.add(this.parseBackground(setEntry.getKey(), entry));
+                    customizations.add(this.parseBackground(null, setEntry.getKey(), entry.getKey(), entry.getValue().getAsJsonObject()));
                 }
             }
         }
@@ -60,14 +102,17 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         return customizations;
     }
 
-    private Customization parseCustomization(String type, String category, Map.Entry<String,JsonElement> entry) {
-        JsonObject obj = entry.getValue().getAsJsonObject();
-        Customization customization = new Customization();
-        customization.setType(type);
-        if (category != null) {
-            customization.setCategory(category);
+    private Customization parseCustomization(Customization existingCustomizaion, String type, String category, String key, JsonObject entry) {
+        JsonObject obj = entry;
+        Customization customization = existingCustomizaion;
+        if (customization == null) {
+            customization = new Customization();
+            customization.setIdentifier(key);
+            customization.setType(type);
+            if (category != null) {
+                customization.setCategory(category);
+            }
         }
-        customization.setIdentifier(entry.getKey());
         if (obj.has("price")) {
             customization.setPrice(obj.get("price").getAsInt());
         }
@@ -91,14 +136,19 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         return customization;
     }
 
-    private Customization parseBackground(String setName, Map.Entry<String,JsonElement> entry) {
-        JsonObject obj = entry.getValue().getAsJsonObject();
-        Customization customization = new Customization();
-        customization.setCustomizationSet(setName);
-        customization.setType("background");
-        customization.setIdentifier(entry.getKey());
-        customization.setText(entry.getValue().getAsJsonObject().get("text").getAsString());
-        customization.setNotes(entry.getValue().getAsJsonObject().get("notes").getAsString());
+    private Customization parseBackground(Customization existingCustomization, String setName, String key, JsonObject entry) {
+        Customization customization = existingCustomization;
+
+        if (customization == null) {
+            customization = new Customization();
+            customization.setCustomizationSet(setName);
+            customization.setType("background");
+            customization.setIdentifier(key);
+        }
+
+
+        customization.setText(entry.get("text").getAsString());
+        customization.setNotes(entry.getAsJsonObject().get("notes").getAsString());
         customization.setPrice(7);
         customization.setSetPrice(15);
 
