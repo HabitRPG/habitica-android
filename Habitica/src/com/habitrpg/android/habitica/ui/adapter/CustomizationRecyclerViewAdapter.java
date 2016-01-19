@@ -198,7 +198,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         })
                         .contentGravity(GravityEnum.CENTER)
                         .positiveColor(context.getResources().getColor(R.color.brand_200))
-                        .positiveText(R.string.reward_dialog_buy)
+                        .positiveText(R.string.purchase_button)
                         .title(context.getString(R.string.purchase_customization))
                         .customView(dialogContent, true)
                         .negativeText(R.string.reward_dialog_dismiss)
@@ -252,7 +252,12 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             this.set = set;
             String uppercasedSectionName = this.set.text.substring(0, 1).toUpperCase() + this.set.text.substring(1);
             this.label.setText(uppercasedSectionName);
-            this.purchaseSetButton.setText(context.getString(R.string.purchase_set_button, set.price));
+            if (set.hasPurchasable) {
+                this.purchaseSetButton.setVisibility(View.VISIBLE);
+                this.purchaseSetButton.setText(context.getString(R.string.purchase_set_button, set.price));
+            } else {
+                this.purchaseSetButton.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -260,7 +265,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 LinearLayout dialogContent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null);
 
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
-                priceLabel.setText("5");
+                priceLabel.setText(String.valueOf(set.price));
 
                 MaterialDialog dialog = new MaterialDialog.Builder(context)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -289,8 +294,8 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                         })
                         .contentGravity(GravityEnum.CENTER)
                         .positiveColor(context.getResources().getColor(R.color.brand_200))
-                        .positiveText(R.string.reward_dialog_buy)
-                        .title(context.getString(R.string.purchase_customization))
+                        .positiveText(R.string.purchase_button)
+                        .title(context.getString(R.string.purchase_set_title, set.text))
                         .customView(dialogContent, true)
                         .negativeText(R.string.reward_dialog_dismiss)
                         .onNegative(new MaterialDialog.SingleButtonCallback() {

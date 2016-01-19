@@ -158,4 +158,6 @@
     <string name="avatar_background">Background</string>
     <string name="purchase_customization">Purchase Customization</string>
     <string name="purchase_set_button" formatted="false">Unlock set for %d gems</string>
+    <string name="purchase_button">Purchase</string>
+    <string name="purchase_set_title" formatted="false">Purchase set %s</string>
 </resources>
