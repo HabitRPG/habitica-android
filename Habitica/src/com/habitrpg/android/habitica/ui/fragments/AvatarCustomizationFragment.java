@@ -111,7 +111,7 @@ public class AvatarCustomizationFragment extends BaseFragment {
         if (this.type.equals("background")) {
             itemWidth = getContext().getResources().getDimension(R.dimen.avatar_width);
         } else {
-            itemWidth = 100;
+            itemWidth = getContext().getResources().getDimension(R.dimen.customization_width);
         }
 
         int spanCount = (int) (width / itemWidth);

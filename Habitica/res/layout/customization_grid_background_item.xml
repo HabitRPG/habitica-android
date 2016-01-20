@@ -27,7 +27,7 @@
             android:layout_width="@dimen/avatar_width"
             android:layout_height="@dimen/avatar_height"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_centerVertical="true"

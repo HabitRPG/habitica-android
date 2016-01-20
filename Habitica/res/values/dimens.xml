@@ -52,4 +52,7 @@
 	<dimen name="task_top_bottom_padding">20dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
 	<dimen name="grid_item_margin">6dp</dimen>
+	<dimen name="avatar_small_width">114dp</dimen>
+	<dimen name="avatar_small_height">90dp</dimen>
+	<dimen name="customization_width">100dp</dimen>
 </resources>
