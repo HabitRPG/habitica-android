@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
@@ -252,13 +253,13 @@ public class APIHelper implements ErrorHandler, Profiler {
 
                 return cause;
             } else if (status >= 500 && status < 600) {
-                showConnectionProblemDialog(R.string.internal_error_api);
+                this.showConnectionProblemDialog(R.string.internal_error_api);
                 return cause;
             } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
                 return cause;
             }
 		}
-        showConnectionProblemDialog(R.string.internal_error_api);
+        this.showConnectionProblemDialog(R.string.internal_error_api);
 
         return cause;
 	}
@@ -268,7 +269,10 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
     private void showConnectionProblemDialog(final int resourceTitleString, final int resourceMessageString) {
-        showConnectionProblemDialog(HabiticaApplication.currentActivity.getString(resourceTitleString), HabiticaApplication.currentActivity.getString(resourceMessageString));
+        Activity currentActivity = HabiticaApplication.currentActivity;
+        if (currentActivity != null) {
+            showConnectionProblemDialog(currentActivity.getString(resourceTitleString), currentActivity.getString(resourceMessageString));
+        }
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString){
