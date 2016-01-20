@@ -171,6 +171,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
     private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
+        value = (float) Math.ceil(value);
         double percent = Math.min(1, value / valueMax);
 
         if (percent == 1) {
