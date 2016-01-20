@@ -126,6 +126,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.add_checklist_button)
     Button button;
 
+    @Bind(R.id.task_duedate_layout)
+    LinearLayout dueDateLayout;
+
+    @Bind(R.id.task_duedate_picker)
+    DatePicker dueDatePicker;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_task_form;
@@ -197,6 +203,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         } else {
             mainWrapper.removeView(weekdayWrapper);
             mainWrapper.removeView(startDateLayout);
+        }
+
+        if (!taskType.equals("todo")) {
+            mainWrapper.removeView(dueDateLayout);
         }
 
         if (!taskType.equals("reward")) {
@@ -395,6 +405,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     this.frequencyPicker.setValue(task.getEveryX());
                 }
             }
+        }
+
+        if (task.type.equals("todo")) {
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(task.getDueDate());
+            dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         }
 
     }
