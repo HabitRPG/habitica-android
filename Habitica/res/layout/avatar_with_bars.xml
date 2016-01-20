@@ -17,13 +17,13 @@
 
     <ImageView
         android:id="@+id/IMG_ProfilePicture"
-        android:layout_width="@dimen/avatar_width"
-        android:layout_height="@dimen/avatar_height"
+        android:layout_width="@dimen/avatar_header_width"
+        android:layout_height="@dimen/avatar_header_height"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:paddingRight="24dp"
-        android:paddingEnd="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:scaleType="fitStart"
         android:src="@mipmap/ic_launcher"
         android:contentDescription="@string/profile_image" />
@@ -34,9 +34,7 @@
         android:layout_toEndOf="@id/IMG_ProfilePicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/bar_padding"
-        android:paddingTop="@dimen/bar_padding">
+        android:orientation="vertical">
 
         <include
             android:id="@+id/hpBar"
