@@ -25,7 +25,7 @@ public class UserPicture {
     private static final int WIDTH = 140;
     private static final int HEIGHT = 147;
     private static final int COMPACT_WIDTH = 114;
-    private static final int COMPACT_HEIGHT = 90;
+    private static final int COMPACT_HEIGHT = 114;
 
     private HabitRPGUser user;
     private ImageView imageView;
@@ -76,7 +76,7 @@ public class UserPicture {
                 layerNumber++;
             }
             if (!this.hasPetMount) {
-                res = Bitmap.createBitmap(res, 25, 18, COMPACT_WIDTH, COMPACT_HEIGHT);
+                res = Bitmap.createBitmap(res, 25, 0, COMPACT_WIDTH, COMPACT_HEIGHT);
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {
