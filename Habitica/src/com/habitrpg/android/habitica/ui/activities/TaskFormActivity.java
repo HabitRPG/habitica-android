@@ -357,13 +357,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskValue.setText(String.format("%.0f", task.value));
 
         float priority = task.getPriority();
-        if (priority == 0.1) {
+        if (Math.abs(priority - 0.1) < 0.000001) {
             this.taskDifficultySpinner.setSelection(0);
-        } else if (priority == 1.0) {
+        } else if (Math.abs(priority - 1.0) < 0.000001) {
             this.taskDifficultySpinner.setSelection(1);
-        } else if (priority == 1.5) {
+        } else if (Math.abs(priority - 1.5) < 0.000001) {
             this.taskDifficultySpinner.setSelection(2);
-        } else if (priority == 2.0) {
+        } else if (Math.abs(priority - 2.0) < 0.000001) {
             this.taskDifficultySpinner.setSelection(3);
         }
 
