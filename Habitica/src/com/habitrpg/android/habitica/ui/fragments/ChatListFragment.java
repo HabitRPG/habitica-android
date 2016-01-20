@@ -54,7 +54,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private MainActivity activity;
     private boolean registerEventBus = false;
 
-    public ChatListFragment(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
+    public void configure(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
 
         this.ctx = ctx;
         this.groupId = groupId;
