@@ -161,7 +161,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        task.delete();
+                        if (task != null) {
+                            task.delete();
+                        }
 
                         finish();
                         dismissKeyboard();
