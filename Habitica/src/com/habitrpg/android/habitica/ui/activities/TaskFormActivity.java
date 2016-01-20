@@ -386,9 +386,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (task.type.equals("daily")) {
 
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(task.getStartDate());
-            startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            if (task.getStartDate() != null) {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getStartDate());
+                startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            }
 
             if (task.getFrequency().equals("weekly")) {
                 this.dailyFrequencySpinner.setSelection(0);
@@ -410,9 +412,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (task.type.equals("todo")) {
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(task.getDueDate());
-            dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            if (task.getDueDate() != null) {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getDueDate());
+                dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            }
         }
 
     }
