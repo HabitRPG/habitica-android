@@ -220,21 +220,23 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, activity), Task.TYPE_HABIT);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, activity, 0), Task.TYPE_HABIT);
 
                         break;
                     case 1:
                         layoutOfType = R.layout.daily_item_card;
-                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, activity);
+                        int dailyResetOffset = 0;
                         if (user != null) {
-                            adapter.dailyResetOffset = user.getPreferences().getDayStart();
+                            dailyResetOffset = user.getPreferences().getDayStart();
                         }
+                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, activity, dailyResetOffset);
+
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
                         adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, TasksFragment.this.tagsHelper,
-                                layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, activity,
+                                layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, activity, 0,
                                 new HabitItemRecyclerViewAdapter.IAdditionalEntries() {
                                     @Override
                                     public void GetAdditionalEntries(final IReceiveNewEntries callBack) {
@@ -290,7 +292,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, activity), Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, activity, 0), Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -335,14 +337,10 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         }
         if (this.user != null) {
             fillTagFilterDrawer(user.getTags());
-            TaskRecyclerViewFragment fragment = ViewFragmentsDictionary.get(2);
-            if (fragment != null) {
-                HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragment.mAdapter;
-                adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
-            }
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
                     final HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
+                    adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {

@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
-        drawer.setSelectionAtPosition(1);
+        drawer.setSelectionAtPosition(1, false);
         this.sideUserPicture = new UserPicture(this, true, false);
         this.dialogUserPicture = new UserPicture(this, false, false);
 
@@ -206,6 +206,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
             user = habitRPGUser;
+            if (activeFragment == null) {
+                drawer.setSelectionAtPosition(1);
+            }
             setUserData(true);
         }
 

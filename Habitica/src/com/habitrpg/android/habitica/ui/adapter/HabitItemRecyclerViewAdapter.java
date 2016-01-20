@@ -79,12 +79,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     private TagsHelper tagsHelper;
     private IAdditionalEntries additionalEntries;
 
-    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext) {
-        this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, null);
+    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext, int dailyResetOffset) {
+        this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, dailyResetOffset, null);
     }
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
-                                        Context newContext, final IAdditionalEntries additionalEntries) {
+                                        Context newContext, int dailyResetOffset, final IAdditionalEntries additionalEntries) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext;
@@ -96,6 +96,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
+        this.dailyResetOffset = dailyResetOffset;
 
         EventBus.getDefault().register(this);
     }
@@ -474,13 +475,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             binding = DataBindingUtil.bind(itemView);
             checkbox.setOnCheckedChangeListener(this);
-            binding.setOffset(dailyResetOffset);
         }
 
         @Override
         public void bindHolder(Task habitItem, int position) {
             super.bindHolder(habitItem, position);
-
+            binding.setOffset(dailyResetOffset);
             binding.setDaily(habitItem);
         }
 
