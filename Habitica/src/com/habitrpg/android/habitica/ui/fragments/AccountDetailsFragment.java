@@ -1,11 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
+import android.widget.Toast;
 
 import com.habitrpg.android.habitica.R;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -24,22 +30,28 @@ public class AccountDetailsFragment extends PreferenceFragment {
     }
 
     private void setupPreferences() {
+
+        String[] accountDetailsPreferences = {
+                context.getResources().getString(R.string.SP_username),
+                context.getResources().getString(R.string.SP_email),
+                context.getResources().getString(R.string.SP_APIToken),
+                context.getResources().getString(R.string.SP_userID)
+        };
+
         for(Map.Entry<String, ?> preference : getPreferenceScreen().getSharedPreferences().getAll().entrySet() ){
-
-            String usernamePreference = context.getResources().getString(R.string.SP_username);
-            String emailPreference = context.getResources().getString(R.string.SP_email);
-            String apiTokenPreference = context.getResources().getString(R.string.SP_APIToken);
-            String userIdPreference = context.getResources().getString(R.string.SP_userID);
-
-            if(preference.getKey().equals(usernamePreference)){
-                findPreference(usernamePreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(emailPreference)){
-                findPreference(emailPreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(apiTokenPreference)){
-                findPreference(apiTokenPreference).setSummary(preference.getValue().toString());
-            }else if(preference.getKey().equals(userIdPreference)){
-                findPreference(userIdPreference).setSummary(preference.getValue().toString());
+            String key = preference.getKey();
+            if (Arrays.asList(accountDetailsPreferences).contains(key)) {
+               findPreference(key).setSummary(preference.getValue().toString());
             }
         }
+    }
+
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipMan.setPrimaryClip(ClipData.newPlainText(preference.getKey(), preference.getSummary()));
+        Toast.makeText(getActivity(), "Copied " + preference.getKey() + " to clipboard.", Toast.LENGTH_SHORT).show();
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
