@@ -365,8 +365,10 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        this.displayingTaskForm = true;
-        startActivityForResult(intent, TASK_CREATED_RESULT);
+        if (this.isAdded()) {
+            this.displayingTaskForm = true;
+            startActivityForResult(intent, TASK_CREATED_RESULT);
+        }
     }
 
     // endregion
@@ -409,7 +411,9 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         this.displayingTaskForm = true;
-        startActivityForResult(intent, TASK_UPDATED_RESULT);
+        if (isAdded()) {
+            startActivityForResult(intent, TASK_UPDATED_RESULT);
+        }
     }
 
     public void onEvent(TaskLongPressedEvent event) {
