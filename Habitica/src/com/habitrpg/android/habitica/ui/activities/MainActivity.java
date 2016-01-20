@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -238,6 +239,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 }
             });
 
+            displayDeathDialogIfNeeded();
+
             if (!fromLocalDb) {
                 // Update the oldEntries
                 new Thread(new Runnable() {
@@ -265,8 +268,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         }
                     }
                 }).start();
-            } else {
-                displayDeathDialogIfNeeded();
             }
         }
     }
@@ -587,10 +588,17 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
     }
 
-    private void showSnackBarForDataReceived(TaskDirectionData data) {
+    private void showSnackBarForDataReceived(final TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                showSnackbar(this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+
+                    }
+                }, 3000L);
             }
         }
     }
