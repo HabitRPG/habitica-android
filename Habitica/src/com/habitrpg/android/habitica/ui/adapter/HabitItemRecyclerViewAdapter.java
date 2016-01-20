@@ -444,7 +444,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     v = (View) v.getParent();
                 }
                 Integer position = (Integer) ((ViewGroup) v.getParent()).indexOfChild(v);
-                if (isChecked != Item.checklist.get(position).getCompleted()) {
+                if (Item.checklist.size() > position && isChecked != Item.checklist.get(position).getCompleted()) {
                     TaskSaveEvent event = new TaskSaveEvent();
                     Item.checklist.get(position).setCompleted(isChecked);
                     event.task = Item;
