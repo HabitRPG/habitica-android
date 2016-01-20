@@ -61,7 +61,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
 
     private void openAccountDetailsFragment() {
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new AccountDetailsFragment())
+                .replace(android.R.id.content, new AccountDetailsFragment()).addToBackStack(null)
                 .commit();
     }
 
