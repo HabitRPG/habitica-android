@@ -112,6 +112,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private MaterialDialog faintDialog;
 
     private UserPicture sideUserPicture;
+    private UserPicture dialogUserPicture;
 
     @Override
     protected int getLayoutResId() {
@@ -151,7 +152,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1);
-        this.sideUserPicture =   new UserPicture(this, true, false);
+        this.sideUserPicture = new UserPicture(this, true, false);
+        this.dialogUserPicture = new UserPicture(this, false, false);
+
 
         setupCheckout();
         EventBus.getDefault().register(this);
@@ -656,7 +659,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (this.faintDialog == null) {
             this.faintDialog = new MaterialDialog.Builder(this)
                     .title(R.string.faint_header)
-                    .customView(R.layout.faint_dialog, true)
+                    .customView(R.layout.dialog_faint, true)
                     .positiveText(R.string.faint_button)
                     .positiveColorRes(R.color.worse_100)
                     .dismissListener(new DialogInterface.OnDismissListener() {
@@ -683,9 +686,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
 
                 ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-                UserPicture userPicture = new UserPicture(this, false, false);
-                userPicture.setUser(this.user);
-                userPicture.setPictureOn(avatarView);
+                this.dialogUserPicture.setUser(this.user);
+                this.dialogUserPicture.setPictureOn(avatarView);
             }
 
             this.faintDialog.show();
@@ -702,7 +704,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .title(R.string.levelup_header)
-                .customView(R.layout.levelup_dialog, true)
+                .customView(R.layout.dialog_levelup, true)
                 .positiveText(R.string.levelup_button)
                 .positiveColorRes(R.color.brand_100)
                 .build();
@@ -712,9 +714,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
             ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-            UserPicture userPicture = new UserPicture(this, false, false);
-            userPicture.setUser(this.user);
-            userPicture.setPictureOn(avatarView);
+            this.dialogUserPicture.setUser(this.user);
+            this.dialogUserPicture.setPictureOn(avatarView);
         }
 
         dialog.show();
