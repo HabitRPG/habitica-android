@@ -263,6 +263,7 @@ public class Task extends BaseModel {
             this.checklist = new Select()
                     .from(ChecklistItem.class)
                     .where(Condition.column("task_id").eq(this.id))
+                    .orderBy(true, "position")
                     .queryList();
         }
         return this.checklist;
@@ -378,12 +379,15 @@ public class Task extends BaseModel {
                 tag.async().save();
             }
         }
+        int position = 0;
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
                 if(item.getTask() == null){
                     item.setTask(this);
                 }
+                item.setPosition(position);
                 item.async().save();
+                position++;
             }
         }
     }

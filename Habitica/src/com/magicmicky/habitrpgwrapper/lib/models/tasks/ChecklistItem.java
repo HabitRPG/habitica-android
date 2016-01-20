@@ -27,6 +27,9 @@ public class ChecklistItem extends BaseModel {
     private boolean completed;
 
     @Column
+    private int position;
+
+    @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
@@ -72,6 +75,8 @@ public class ChecklistItem extends BaseModel {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+    public int getPosition() { return this.position; }
+    public void setPosition(int position) { this.position = position; }
 
     public Task getTask() {
         if (task != null) {

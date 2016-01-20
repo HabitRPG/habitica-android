@@ -79,6 +79,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
+        Type checklistType = new TypeToken<List<ChecklistItem>>() {}.getType();
         Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
