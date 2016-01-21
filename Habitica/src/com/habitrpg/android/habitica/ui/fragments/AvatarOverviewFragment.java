@@ -19,11 +19,11 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-/**
- * Created by viirus on 12/01/16.
- */
-public class AvatarOverviewFragment extends BaseFragment implements AdapterView.OnItemSelectedListener {
+public class AvatarOverviewFragment extends BaseFragment implements AdapterView.OnItemSelectedListener, Callback<ContentResult> {
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -56,6 +56,15 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
 
     @Bind(R.id.avatar_background)
     View avatarBackgroundView;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mAPIHelper.apiService.getContent(this);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -171,4 +180,14 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
+
+    @Override
+    public void success(ContentResult contentResult, Response response) {
+
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+
+    }
 }
