@@ -35,6 +35,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
@@ -42,6 +43,7 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -105,6 +107,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(taskClassListType, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
