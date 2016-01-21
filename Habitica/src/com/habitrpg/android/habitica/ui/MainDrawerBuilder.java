@@ -27,10 +27,6 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-
-/**
- * Created by Negue on 18.08.2015.
- */
 public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
@@ -48,7 +44,7 @@ public class MainDrawerBuilder {
 
 
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
-        AccountHeaderBuilder builder = new AccountHeaderBuilder()
+        return new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.sidebar_background)
                 .addProfiles(
@@ -61,7 +57,6 @@ public class MainDrawerBuilder {
                     }
                 })
                 .withSelectionListEnabledForSingleProfile(false);
-        return builder;
     }
 
 

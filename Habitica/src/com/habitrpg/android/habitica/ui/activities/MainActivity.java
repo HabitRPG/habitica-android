@@ -186,6 +186,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     }
 
     public void displayFragment(BaseFragment fragment) {
+        if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
+            return;
+        }
+
         fragment.setArguments(getIntent().getExtras());
         fragment.mAPIHelper = mAPIHelper;
         fragment.setUser(user);
