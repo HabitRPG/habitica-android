@@ -30,11 +30,10 @@ public class PartyMemberListFragment extends Fragment {
 
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
-    public PartyMemberListFragment(Context ctx, Group group) {
+    public void configure(Context ctx, Group group) {
         this.ctx = ctx;
         this.group = group;
 
-        viewAdapter = new PartyMemberRecyclerViewAdapter();
     }
 
     private View view;
@@ -58,6 +57,7 @@ public class PartyMemberListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+        viewAdapter = new PartyMemberRecyclerViewAdapter();
         mRecyclerView.setAdapter(viewAdapter);
 
         if (group != null) {

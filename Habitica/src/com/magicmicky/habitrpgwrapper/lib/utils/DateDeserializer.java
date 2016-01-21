@@ -33,6 +33,9 @@ public class DateDeserializer implements JsonDeserializer<Date> {
 
     @Override
     public synchronized Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) {
+        if (jsonElement.getAsString().length() == 0) {
+            return null;
+        }
         try {
             return dateFormat.parse(jsonElement.getAsString());
         } catch (ParseException e) {

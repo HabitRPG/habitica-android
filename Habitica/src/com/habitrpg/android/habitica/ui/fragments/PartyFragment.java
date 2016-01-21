@@ -115,7 +115,9 @@ public class PartyFragment extends BaseFragment {
                         break;
                     }
                     case 2: {
-                        fragment = partyMemberListFragment = new PartyMemberListFragment(activity, group);
+                        PartyMemberListFragment memberFragment = new PartyMemberListFragment();
+                        memberFragment.configure(activity, group);
+                        fragment = memberFragment;
                         break;
                     }
                     default:
