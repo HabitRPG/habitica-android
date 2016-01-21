@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
@@ -93,7 +95,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     LinearLayoutManager layoutManager;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
@@ -129,20 +131,44 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
 
-        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
-
-        if(mRecyclerView != null) {
-            mRecyclerView.setAdapter(tavernAdapter);
-        }
-
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        //Parse chatMessages in AsyncTask
+        ParseMessages parseMessages = new ParseMessages(chatMessages);
+        parseMessages.execute();
     }
 
     @Override
     public void failure(RetrofitError error) {
 
+    }
+
+    private class ParseMessages extends AsyncTask<Void, Void, Void> {
+        private List<ChatMessage> chatMessages;
+
+        public ParseMessages(List<ChatMessage> chatMessages) {
+            this.chatMessages = chatMessages;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            for (int i = 0; i < chatMessages.size() ; i++) {
+                chatMessages.get(i).parsedText = MarkdownParser.parseMarkdown(chatMessages.get(i).text);
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+
+            if(mRecyclerView != null) {
+                mRecyclerView.setAdapter(tavernAdapter);
+            }
+
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     public void onEvent(final FlagChatMessageCommand cmd) {

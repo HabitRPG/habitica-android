@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -245,7 +244,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
                 if (messageText != null) {
-                    messageText.setText(MarkdownParser.parseMarkdown(msg.text));
+                    messageText.setText(msg.parsedText);
                 }
                 agoLabel.setText(msg.getAgoString());
             }
