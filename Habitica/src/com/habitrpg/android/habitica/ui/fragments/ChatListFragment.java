@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -130,6 +131,13 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
+
+        //Load unparsed messages first
+        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+
+        if(mRecyclerView != null) {
+            mRecyclerView.setAdapter(tavernAdapter);
+        }
 
         //Parse chatMessages in AsyncTask
         ParseMessages parseMessages = new ParseMessages(chatMessages);
