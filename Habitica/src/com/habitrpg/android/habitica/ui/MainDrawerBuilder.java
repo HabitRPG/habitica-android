@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
@@ -39,7 +40,8 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_STABLE = 7;
     public static final int SIDEBAR_PURCHASE = 8;
     public static final int SIDEBAR_SETTINGS = 9;
-    public static final int SIDEBAR_ABOUT = 10;
+    public static final int SIDEBAR_HELP = 10;
+    public static final int SIDEBAR_ABOUT = 11;
 
 
 
@@ -89,6 +91,7 @@ public class MainDrawerBuilder {
                         new DividerDrawerItem(),
                         //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT)
 
                 )
@@ -126,6 +129,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_SETTINGS: {
                                 newActivityClass = PrefsActivity.class;
+                                break;
+                            }
+                            case SIDEBAR_HELP: {
+                                fragment = new FAQOverviewFragment();
                                 break;
                             }
                             case SIDEBAR_ABOUT: {

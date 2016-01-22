@@ -22,5 +22,7 @@ public class ContentResult {
 
     public List<Customization> appearances;
     public List<Customization> backgrounds;
+
+    public List<FAQArticle> faq;
 }
 

@@ -21,11 +21,13 @@ import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
+import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
@@ -36,9 +38,11 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.FAQArticleListDeserilializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
@@ -84,6 +88,8 @@ public class APIHelper implements ErrorHandler, Profiler {
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
         Type checklistType = new TypeToken<List<ChecklistItem>>() {}.getType();
         Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
+        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
+        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -107,6 +113,8 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(taskClassListType, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
+                .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
+                .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();

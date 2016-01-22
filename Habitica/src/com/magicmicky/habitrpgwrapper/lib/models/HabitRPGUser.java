@@ -16,10 +16,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by MagicMicky on 10/06/2014.
- */
-
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
 
@@ -72,6 +68,12 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "user_id")})
     @SerializedName("auth")
     private Authentication authentication;
+
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "flags_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
+    private Flags flags;
 
     private Purchases purchased;
 
@@ -221,6 +223,14 @@ public class HabitRPGUser extends BaseModel {
         return tags;
     }
 
+    public Flags getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Flags flags) {
+        this.flags = flags;
+    }
+
     @Override
     public void save() {
         // We need to set the user_id to all other objects
@@ -229,6 +239,7 @@ public class HabitRPGUser extends BaseModel {
         profile.user_Id = id;
         items.user_id = id;
         authentication.user_id = id;
+        flags.user_id = id;
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
