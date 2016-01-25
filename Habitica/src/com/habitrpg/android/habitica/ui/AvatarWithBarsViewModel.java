@@ -174,14 +174,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         value = (float) Math.ceil(value);
         double percent = Math.min(1, value / valueMax);
 
-        if (percent == 1) {
-            valueBar.setWeightToShow(1);
-            valueBar.setWeightToHide(0);
-        } else {
-            valueBar.setWeightToShow((float) percent);
-            valueBar.setWeightToHide((float) (1 - percent));
-        }
-
+        valueBar.setWeightToShow((float) percent);
         valueBar.setText((int) value + "/" + (int) valueMax);
         valueBar.setDescription(description);
         valueBar.setBarForegroundColor(color);
