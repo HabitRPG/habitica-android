@@ -158,7 +158,12 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         setupCheckout();
         EventBus.getDefault().register(this);
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void setupCheckout() {
@@ -209,11 +214,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
-            user = habitRPGUser;
+            MainActivity.this.user = habitRPGUser;
             if (activeFragment == null) {
-                drawer.setSelectionAtPosition(1);
+                MainActivity.this.drawer.setSelectionAtPosition(1);
             }
-            setUserData(true);
+            MainActivity.this.setUserData(true);
         }
 
         @Override
@@ -298,7 +303,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     @Override
                     public void onResultReceived(List<Task> tasks) {
 
-                        ArrayList<Task> tasksToDelete = new ArrayList<Task>();
+                        ArrayList<Task> tasksToDelete = new ArrayList<>();
 
                         for (Task dbTask : tasks) {
                             if (!onlineTaskIdList.contains(dbTask.getId())) {
@@ -523,8 +528,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 public void success(Void aVoid, Response response) {
                     if (!event.Reward.getId().equals("potion")) {
                         EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
-                    } else {
-                        // TODO Update gears in avatar
                     }
 
                     user.async().save();

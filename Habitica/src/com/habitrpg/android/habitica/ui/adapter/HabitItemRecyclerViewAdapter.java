@@ -73,7 +73,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     Context context;
     public int dailyResetOffset;
 
-    private static final int TYPE_HEADER = 0;
     private static final int TYPE_CELL = 1;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
@@ -90,9 +89,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.context = newContext;
         this.tagsHelper = tagsHelper;
         this.additionalEntries = additionalEntries;
-        filteredObservableContent = new ObservableArrayList<Task>();
+        filteredObservableContent = new ObservableArrayList<>();
 
-        this.loadContent();
+        this.loadContent(true);
 
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
@@ -246,11 +245,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     // region ViewHolders
 
-    public abstract class ViewHolder<THabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public abstract class ViewHolder<HabitItem extends Task> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         protected android.content.res.Resources resources;
 
-        public THabitItem Item;
+        public HabitItem Item;
 
         @Bind(R.id.notesTextView)
         TextView notesTextView;
@@ -269,7 +268,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             resources = itemView.getResources();
         }
 
-        public void bindHolder(THabitItem habitItem, int position) {
+        public void bindHolder(HabitItem habitItem, int position) {
             Item = habitItem;
             if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);
@@ -407,7 +406,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 if (this.displayChecklist && this.Item.checklist != null) {
                     LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     for (ChecklistItem item : this.Item.checklist) {
-                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
+                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
                         TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
@@ -444,7 +443,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 while (v.getParent() != this.checklistView) {
                     v = (View) v.getParent();
                 }
-                Integer position = (Integer) ((ViewGroup) v.getParent()).indexOfChild(v);
+                Integer position = ((ViewGroup) v.getParent()).indexOfChild(v);
                 if (Item.checklist.size() > position && isChecked != Item.checklist.get(position).getCompleted()) {
                     TaskSaveEvent event = new TaskSaveEvent();
                     Item.checklist.get(position).setCompleted(isChecked);
@@ -555,7 +554,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             return new MaterialDialog.Builder(context)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
                             BuyRewardCommand event = new BuyRewardCommand();
                             event.Reward = Item;
                             EventBus.getDefault().post(event);
@@ -569,7 +568,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     .negativeText(R.string.reward_dialog_dismiss)
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
                             materialDialog.dismiss();
                         }
                     }).build();
@@ -651,10 +650,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     }
 
     // endregion
-
-    public void loadContent() {
-        this.loadContent(false);
-    }
 
     public void loadContent(boolean forced) {
 

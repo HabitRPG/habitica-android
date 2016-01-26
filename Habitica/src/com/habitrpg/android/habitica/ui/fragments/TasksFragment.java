@@ -209,8 +209,6 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
 
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
-            int oldPosition = -1;
-
             @Override
             public Fragment getItem(int position) {
                 int layoutOfType;
@@ -248,7 +246,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
                                                 public void success(List<ItemData> itemDatas, Response response) {
 
                                                     // get itemdata list
-                                                    ArrayList<String> itemKeys = new ArrayList<String>();
+                                                    ArrayList<String> itemKeys = new ArrayList<>();
                                                     for (ItemData item : itemDatas) {
                                                         itemKeys.add(item.key);
                                                     }
@@ -257,7 +255,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
                                                     contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
                                                         @Override
                                                         public void GotObject(List<ItemData> obj) {
-                                                            ArrayList<Task> buyableItems = new ArrayList<Task>();
+                                                            ArrayList<Task> buyableItems = new ArrayList<>();
 
                                                             for (ItemData item : obj) {
                                                                 Task reward = new Task();
@@ -337,6 +335,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         }
         if (this.user != null) {
             fillTagFilterDrawer(user.getTags());
+
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
                     final HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
@@ -358,7 +357,7 @@ public class TasksFragment extends BaseFragment implements OnCheckedChangeListen
         }
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
-        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
+        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsHelper.getTags()));
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);

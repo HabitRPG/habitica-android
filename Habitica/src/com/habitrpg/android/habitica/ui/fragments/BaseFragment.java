@@ -18,9 +18,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.EventBusException;
 
-/**
- * Created by admin on 18/11/15.
- */
 public abstract class BaseFragment extends Fragment {
 
     private boolean registerEventBus = false;

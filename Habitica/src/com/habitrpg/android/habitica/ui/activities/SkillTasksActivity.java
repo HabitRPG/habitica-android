@@ -19,9 +19,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 
-/**
- * Created by viirus on 28/11/15.
- */
 public class SkillTasksActivity extends BaseActivity {
 
     @Bind(R.id.viewpager)

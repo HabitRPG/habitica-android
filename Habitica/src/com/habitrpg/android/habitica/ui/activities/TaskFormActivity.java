@@ -48,7 +48,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
@@ -251,7 +250,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(checklistAdapter);
-        int i = checklistAdapter.getItemCount();
 
         recyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
 
@@ -305,7 +303,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
             for (int i = 0; i < 7; i++) {
-                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, null);
+                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer);
                 TextView tv = (TextView) weekdayRow.findViewById(R.id.label);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
                 checkbox.setChecked(true);
@@ -314,7 +312,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 this.frequencyContainer.addView(weekdayRow);
             }
         } else {
-            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, null);
+            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, this.frequencyContainer);
             this.frequencyPicker = (NumberPicker) dayRow.findViewById(R.id.numberPicker);
             this.frequencyPicker.setMinValue(1);
             this.frequencyPicker.setMaxValue(366);
@@ -455,8 +453,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             case "daily": {
                 Calendar calendar = new GregorianCalendar();
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
+
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
                     Days repeat = task.getRepeat();
