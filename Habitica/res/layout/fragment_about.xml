@@ -93,9 +93,9 @@
 
             <TextView
                 android:id="@+id/sourceCodeLink"
-                android:layout_width="347dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:layout_marginTop="20sp"
                 android:text="@string/about.habitica_open_source"
                 android:textSize="@dimen/abc_text_size_small_material" />
@@ -113,6 +113,13 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/abc_text_size_medium_material" />
 
+            <TextView
+                android:id="@+id/versionInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="30sp"
+                android:textSize="@dimen/abc_text_size_small_material" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

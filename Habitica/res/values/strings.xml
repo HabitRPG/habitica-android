@@ -161,4 +161,7 @@
     <string name="purchase_button">Purchase</string>
     <string name="purchase_set_title" formatted="false">Purchase set %s</string>
     <string name="due_date">Due Date</string>
+
+    <string name="version_info" formatted="false">Version %s (%d)</string>
+
 </resources>

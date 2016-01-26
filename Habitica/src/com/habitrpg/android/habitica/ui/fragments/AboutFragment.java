@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,6 +25,9 @@ public class AboutFragment extends Fragment {
 
     private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
     private String twitterLink = "https://twitter.com/habitica";
+
+    @Bind(R.id.versionInfo)
+    public TextView versionInfo;
 
     @OnClick(R.id.sourceCodeLink)
     public void openSourceCodePageByLabel() {
@@ -72,6 +79,18 @@ public class AboutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
+
+        Activity activity = getActivity();
+        try {
+            String versionName = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
+            int versionCode = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionCode;
+
+            this.versionInfo.setText(getString(R.string.version_info, versionName, versionCode));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void openBrowserLink(String url) {
