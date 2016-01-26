@@ -42,7 +42,16 @@ public class DateDeserializer implements JsonDeserializer<Date> {
             try {
                 return alternativeFormat.parse(jsonElement.getAsString());
             } catch (ParseException e1) {
-                throw new JsonParseException(e);
+                try {
+                    Long timestamp = jsonElement.getAsLong();
+                    if (timestamp > 0) {
+                        return new Date(timestamp);
+                    } else {
+                        return null;
+                    }
+                } catch (NumberFormatException e2) {
+                    return null;
+                }
             }
         }
     }
