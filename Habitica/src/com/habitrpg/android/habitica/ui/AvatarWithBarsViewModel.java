@@ -134,7 +134,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             maxHP = 50;
         }
 
-        setValueBar(valueBar, stats.getHp().floatValue(), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     public void setHpBarData(Stats stats) {
@@ -147,7 +147,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxHealth = valueMax;
         }
-        setValueBar(hpBar, value, valueMax, context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     public void setXpBarData(float value, int valueMax){
@@ -156,7 +156,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxExp = valueMax;
         }
-        setValueBar(xpBar, value, valueMax, context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
+        setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
     }
 
     public void setMpBarData(float value, int valueMax){
@@ -165,13 +165,12 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxMana = valueMax;
         }
-        setValueBar(mpBar, value, valueMax, context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
+        setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
     private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
-        value = (float) Math.ceil(value);
         double percent = Math.min(1, value / valueMax);
 
         if (percent == 1) {
