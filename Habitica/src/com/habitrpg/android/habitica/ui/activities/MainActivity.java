@@ -75,6 +75,7 @@ import org.solovyev.android.checkout.Checkout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +114,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     private UserPicture sideUserPicture;
     private UserPicture dialogUserPicture;
+
+    private Date lastSync;
 
     @Override
     protected int getLayoutResId() {
@@ -163,6 +166,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     @Override
     protected void onResume() {
         super.onResume();
+
+        //resync, if last sync was more than 10 minutes ago
+        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 600000) {
+            this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+        }
 
     }
 
@@ -441,6 +449,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
+        this.lastSync = new Date();
         MainActivity.this.setUserData(false);
     }
 
