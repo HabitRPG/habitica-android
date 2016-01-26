@@ -169,7 +169,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         //resync, if last sync was more than 10 minutes ago
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 600000) {
-            this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            if (this.mAPIHelper != null) {
+                this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            }
         }
 
     }

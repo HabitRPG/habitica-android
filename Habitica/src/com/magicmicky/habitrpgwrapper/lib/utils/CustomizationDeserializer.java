@@ -120,6 +120,12 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
         if (obj.has("set")) {
             JsonObject setInfo = obj.get("set").getAsJsonObject();
             customization.setCustomizationSet(setInfo.get("key").getAsString());
+            if (setInfo.has("setPrice")) {
+                customization.setSetPrice(setInfo.get("setPrice").getAsInt());
+            }
+            if (setInfo.has("text")) {
+                customization.setCustomizationSetName(setInfo.get("text").getAsString());
+            }
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 if (setInfo.has("availableFrom")) {
@@ -128,7 +134,6 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 if (setInfo.has("availableUntil")) {
                     customization.setAvailableUntil(format.parse(setInfo.get("availableUntil").getAsString()));
                 }
-                customization.setCustomizationSetName(setInfo.get("text").getAsString());
             } catch (Exception e) {
                 e.printStackTrace();
             }

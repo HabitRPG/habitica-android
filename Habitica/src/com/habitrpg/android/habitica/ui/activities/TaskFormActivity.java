@@ -303,7 +303,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
             for (int i = 0; i < 7; i++) {
-                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer);
+                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, null);
                 TextView tv = (TextView) weekdayRow.findViewById(R.id.label);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
                 checkbox.setChecked(true);
@@ -312,13 +312,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 this.frequencyContainer.addView(weekdayRow);
             }
         } else {
-            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, this.frequencyContainer);
+            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, null);
             this.frequencyPicker = (NumberPicker) dayRow.findViewById(R.id.numberPicker);
             this.frequencyPicker.setMinValue(1);
             this.frequencyPicker.setMaxValue(366);
             TextView tv = (TextView) dayRow.findViewById(R.id.label);
             tv.setText(getResources().getString(R.string.frequency_daily));
-            this.frequencyContainer.addView(dayRow);
         }
 
         if (this.task != null) {
