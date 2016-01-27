@@ -22,7 +22,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (tutorialStepIdentifier != null) {
+        if (this.getUserVisibleHint() && tutorialStepIdentifier != null) {
             new Select().from(TutorialStep.class).where(Condition.column("identifier").eq(tutorialStepIdentifier)).async().querySingle(tutorialStepTransactionListener);
         }
     }
