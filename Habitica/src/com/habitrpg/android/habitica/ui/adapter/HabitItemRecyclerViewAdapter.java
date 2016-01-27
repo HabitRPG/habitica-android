@@ -406,7 +406,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 if (this.displayChecklist && this.Item.checklist != null) {
                     LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     for (ChecklistItem item : this.Item.checklist) {
-                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView);
+                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
                         TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
