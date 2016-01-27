@@ -10,5 +10,5 @@ public class HabitDatabase {
 
     public static final String NAME = "Habitica";
 
-    public static final int VERSION = 10;
+    public static final int VERSION = 11;
 }

@@ -2,15 +2,12 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-/**
- * Created by viirus on 22/01/16.
- */
+import java.util.Date;
+
 @Table(databaseName = HabitDatabase.NAME)
 public class TutorialStep extends BaseModel {
 
@@ -22,10 +19,13 @@ public class TutorialStep extends BaseModel {
     public String user_id;
 
     @Column
-    private String group, identifier;
+    private String tutorialGroup, identifier;
 
     @Column
     private boolean wasCompleted;
+
+    @Column
+    private Date displayedOn;
 
     public String getKey() {
         return key;
@@ -43,12 +43,13 @@ public class TutorialStep extends BaseModel {
         this.user_id = user_id;
     }
 
-    public String getGroup() {
-        return group;
+    public String getTutorialGroup() {
+        return tutorialGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setTutorialGroup(String group) {
+        this.tutorialGroup = group;
+        this.key = group + "_" + this.identifier;
     }
 
     public String getIdentifier() {
@@ -57,6 +58,7 @@ public class TutorialStep extends BaseModel {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+        this.key = this.tutorialGroup + "_" + identifier;
     }
 
     public boolean getWasCompleted() {
@@ -67,4 +69,11 @@ public class TutorialStep extends BaseModel {
         this.wasCompleted = wasCompleted;
     }
 
+    public Date getDisplayedOn() {
+        return displayedOn;
+    }
+
+    public void setDisplayedOn(Date displayedOn) {
+        this.displayedOn = displayedOn;
+    }
 }

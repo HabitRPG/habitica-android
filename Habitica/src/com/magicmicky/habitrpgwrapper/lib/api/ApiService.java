@@ -44,7 +44,7 @@ public interface ApiService {
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
 
     @PUT("/user/")
-    void updateUser(@Body Map<String, String> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
+    void updateUser(@Body Map<String, Object> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
 
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);

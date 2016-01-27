@@ -7,6 +7,6 @@ import java.util.Map;
  */
 public class UpdateUserCommand {
 
-    public Map<String, String> updateData;
+    public Map<String, Object> updateData;
 
 }

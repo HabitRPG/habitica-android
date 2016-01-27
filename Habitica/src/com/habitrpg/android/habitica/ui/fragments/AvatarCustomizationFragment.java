@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by viirus on 12/01/16.
  */
-public class AvatarCustomizationFragment extends BaseFragment {
+public class AvatarCustomizationFragment extends BaseMainFragment {
 
     public String type;
     public String category;

@@ -218,7 +218,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             }
 
             UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, String> updateData = new HashMap<String, String>();
+            Map<String, Object> updateData = new HashMap<>();
             String updatePath = "preferences." + customization.getType();
             if (customization.getCategory() != null) {
                 updatePath = updatePath + "." + customization.getCategory();

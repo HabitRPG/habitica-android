@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import de.greenrobot.event.EventBus;
 
@@ -21,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * - Adds FAB Icon
  * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
-public class TaskRecyclerViewFragment extends Fragment implements View.OnClickListener {
+public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
     public RecyclerView mRecyclerView;
     public RecyclerView.Adapter mAdapter;
     private String classType;
@@ -36,8 +37,32 @@ public class TaskRecyclerViewFragment extends Fragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        }
+
+        switch (this.classType) {
+            case Task.TYPE_HABIT: {
+                this.tutorialStepIdentifier = "habits";
+                this.tutorialText = getString(R.string.tutorial_habits);
+                break;
+            }
+            case Task.FREQUENCY_DAILY: {
+                this.tutorialStepIdentifier = "dailies";
+                this.tutorialText = getString(R.string.tutorial_dailies);
+                break;
+            }
+            case Task.TYPE_TODO: {
+                this.tutorialStepIdentifier = "todos";
+                this.tutorialText = getString(R.string.tutorial_todos);
+                break;
+            }
+            case Task.TYPE_REWARD: {
+                this.tutorialStepIdentifier = "rewards";
+                this.tutorialText = getString(R.string.tutorial_rewards);
+                break;
+            }
+        }
 
         return view;
     }

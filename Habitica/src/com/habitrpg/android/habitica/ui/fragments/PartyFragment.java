@@ -24,7 +24,7 @@ import retrofit.client.Response;
 /**
  * Created by admin on 18/11/15.
  */
-public class PartyFragment extends BaseFragment {
+public class PartyFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
     private Group group;
@@ -89,6 +89,9 @@ public class PartyFragment extends BaseFragment {
             }
         });
         setViewPagerAdapter();
+
+        this.tutorialStepIdentifier = "party";
+        this.tutorialText = getString(R.string.tutorial_party);
 
         return v;
     }

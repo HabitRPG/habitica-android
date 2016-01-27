@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.AvatarOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
@@ -99,7 +99,7 @@ public class MainDrawerBuilder {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        BaseFragment fragment = null;
+                        BaseMainFragment fragment = null;
                         Class newActivityClass = null;
 
                         switch (drawerItem.getIdentifier()) {

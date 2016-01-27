@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 
-/**
- * Created by viirus on 19/11/15.
- */
-public class TavernFragment extends BaseFragment {
+public class TavernFragment extends BaseMainFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +21,9 @@ public class TavernFragment extends BaseFragment {
         ChatListFragment fragment = new ChatListFragment();
         fragment.configure(activity, "habitrpg", mAPIHelper, user, activity, true);
         setFragment(fragment);
+
+        this.tutorialStepIdentifier = "tavern";
+        this.tutorialText = getString(R.string.tutorial_tavern);
 
         return v;
     }

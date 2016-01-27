@@ -309,7 +309,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 checkbox.setChecked(true);
                 this.weekdayCheckboxes.add(checkbox);
                 tv.setText(weekdays[i]);
-                this.frequencyContainer.addView(weekdayRow);
             }
         } else {
             View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, null);

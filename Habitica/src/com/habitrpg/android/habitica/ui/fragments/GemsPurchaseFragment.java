@@ -23,15 +23,11 @@ import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Negue on 24.11.2015.
  */
-public class GemsPurchaseFragment extends BaseFragment {
+public class GemsPurchaseFragment extends BaseMainFragment {
 
     private static final int GEMS_TO_ADD = 21;
 

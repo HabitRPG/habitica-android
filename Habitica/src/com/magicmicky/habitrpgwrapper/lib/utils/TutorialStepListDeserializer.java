@@ -13,9 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by viirus on 22/01/16.
- */
 public class TutorialStepListDeserializer implements JsonDeserializer<List<TutorialStep>> {
     @Override
     public List<TutorialStep> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -34,7 +31,7 @@ public class TutorialStepListDeserializer implements JsonDeserializer<List<Tutor
 
     private TutorialStep parseStep(String group, Map.Entry<String, JsonElement> entry) {
         TutorialStep article = new TutorialStep();
-        article.setGroup(group);
+        article.setTutorialGroup(group);
         article.setIdentifier(entry.getKey());
         article.setWasCompleted(entry.getValue().getAsBoolean());
         return article;

@@ -1,19 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +15,7 @@ import butterknife.ButterKnife;
 /**
  * Created by viirus on 22/01/16.
  */
-public class FAQDetailFragment extends BaseFragment {
+public class FAQDetailFragment extends BaseMainFragment {
     @Bind(R.id.questionTextView)
     TextView questionTextView;
 

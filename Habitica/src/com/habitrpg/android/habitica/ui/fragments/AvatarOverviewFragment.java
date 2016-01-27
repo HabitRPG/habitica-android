@@ -23,7 +23,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class AvatarOverviewFragment extends BaseFragment implements AdapterView.OnItemSelectedListener, Callback<ContentResult> {
+public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener, Callback<ContentResult> {
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -62,7 +62,9 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAPIHelper.apiService.getContent(this);
+        if (this.mAPIHelper != null) {
+            this.mAPIHelper.apiService.getContent(this);
+        }
 
     }
 
@@ -172,7 +174,7 @@ public class AvatarOverviewFragment extends BaseFragment implements AdapterView.
         }
 
         if (!this.user.getPreferences().getSize().equals(newSize)) {
-            Map<String, String> updateData = new HashMap<String, String>();
+            Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.size", newSize);
             mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(activity));
         }

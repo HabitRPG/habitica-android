@@ -165,4 +165,6 @@
     <string name="version_info" formatted="false">Version %s (%d)</string>
 
     <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+    <string name="complete_tutorial">Got it!</string>
+    <string name="dismiss_tutorial">Remind me again</string>
 </resources>

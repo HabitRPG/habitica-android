@@ -70,7 +70,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TasksFragment extends BaseFragment implements OnCheckedChangeListener {
+public class TasksFragment extends BaseMainFragment implements OnCheckedChangeListener {
 
     private static final int TASK_CREATED_RESULT = 1;
     private static final int TASK_UPDATED_RESULT = 2;
