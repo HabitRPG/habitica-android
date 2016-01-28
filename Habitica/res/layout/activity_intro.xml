@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/intro_background">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/view_pager_indicator"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skip"
+        android:id="@+id/skipButton"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="6dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="6dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/brand_100" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/intro_finish_button"
+        android:id="@+id/finishButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="6dp"
+        android:backgroundTint="@color/brand_100"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+</RelativeLayout>
