@@ -48,7 +48,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
@@ -251,7 +250,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(checklistAdapter);
-        int i = checklistAdapter.getItemCount();
 
         recyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
 
@@ -320,7 +318,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.frequencyPicker.setMaxValue(366);
             TextView tv = (TextView) dayRow.findViewById(R.id.label);
             tv.setText(getResources().getString(R.string.frequency_daily));
-            this.frequencyContainer.addView(dayRow);
         }
 
         if (this.task != null) {
@@ -455,8 +452,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             case "daily": {
                 Calendar calendar = new GregorianCalendar();
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
+
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
                     Days repeat = task.getRepeat();

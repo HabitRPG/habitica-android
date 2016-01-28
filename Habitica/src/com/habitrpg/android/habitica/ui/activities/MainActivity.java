@@ -75,6 +75,7 @@ import org.solovyev.android.checkout.Checkout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +114,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     private UserPicture sideUserPicture;
     private UserPicture dialogUserPicture;
+
+    private Date lastSync;
 
     @Override
     protected int getLayoutResId() {
@@ -158,7 +161,19 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         setupCheckout();
         EventBus.getDefault().register(this);
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //resync, if last sync was more than 10 minutes ago
+        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 600000) {
+            if (this.mAPIHelper != null) {
+                this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+            }
+        }
+
     }
 
     private void setupCheckout() {
@@ -209,11 +224,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
-            user = habitRPGUser;
+            MainActivity.this.user = habitRPGUser;
             if (activeFragment == null) {
-                drawer.setSelectionAtPosition(1);
+                MainActivity.this.drawer.setSelectionAtPosition(1);
             }
-            setUserData(true);
+            MainActivity.this.setUserData(true);
         }
 
         @Override
@@ -298,7 +313,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     @Override
                     public void onResultReceived(List<Task> tasks) {
 
-                        ArrayList<Task> tasksToDelete = new ArrayList<Task>();
+                        ArrayList<Task> tasksToDelete = new ArrayList<>();
 
                         for (Task dbTask : tasks) {
                             if (!onlineTaskIdList.contains(dbTask.getId())) {
@@ -436,6 +451,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
+        this.lastSync = new Date();
         MainActivity.this.setUserData(false);
     }
 
@@ -523,8 +539,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 public void success(Void aVoid, Response response) {
                     if (!event.Reward.getId().equals("potion")) {
                         EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
-                    } else {
-                        // TODO Update gears in avatar
                     }
 
                     user.async().save();

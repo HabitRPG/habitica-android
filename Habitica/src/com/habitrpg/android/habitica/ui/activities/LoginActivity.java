@@ -222,10 +222,10 @@ public class LoginActivity extends AppCompatActivity
 
     private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
-        this.setRegistering(this.isRegistering);
+        this.setRegistering();
 	}
 
-	private void setRegistering(boolean registering) {
+	private void setRegistering() {
         MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
         if (this.isRegistering) {
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
@@ -256,7 +256,7 @@ public class LoginActivity extends AppCompatActivity
 	}
 
 	private void parse(String contents) {
-		String adr=null,user=null,key=null;
+		String adr,user,key;
 		try {
 			JSONObject obj;
 
