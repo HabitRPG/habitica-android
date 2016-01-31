@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
@@ -28,6 +29,8 @@ import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,24 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+          if (savedInstanceState.containsKey("groupId")) {
+            this.groupId = savedInstanceState.getString("groupId");
+          }
+
+          if (savedInstanceState.containsKey("isTavern")) {
+            this.isTavern = savedInstanceState.getBoolean("isTavern");
+          }
+
+          if (savedInstanceState.containsKey("userId")) {
+            this.userId = savedInstanceState.getString("userId");
+            if (this.userId != null) {
+              this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+            }
+          }
+
+        }
+
         if (view == null)
             view = inflater.inflate(R.layout.fragment_chatlist, container, false);
 
@@ -79,6 +100,10 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             registerEventBus = true;
         } catch (EventBusException ignored) {
 
+        }
+
+        if (apiHelper == null) {
+            apiHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
         }
 
         return view;
@@ -249,5 +274,12 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         super.onDestroyView();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("userId", this.userId);
+        outState.putString("groupId", this.groupId);
+        outState.putBoolean("isTavern", this.isTavern);
+        super.onSaveInstanceState(outState);
+    }
 
 }
