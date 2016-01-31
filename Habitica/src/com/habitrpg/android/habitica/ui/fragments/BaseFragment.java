@@ -13,7 +13,10 @@ import android.widget.FrameLayout;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.EventBusException;
@@ -57,8 +60,19 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
+            String userId = savedInstanceState.getString("userId");
+            this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+        }
 
         if (tabLayout != null) {
             if (this.usesTabLayout) {
@@ -66,6 +80,10 @@ public abstract class BaseFragment extends Fragment {
             } else {
                 tabLayout.setVisibility(View.GONE);
             }
+        }
+
+        if (mAPIHelper == null) {
+            mAPIHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
         }
 
         if (floatingMenuWrapper != null) {
@@ -99,6 +117,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (user != null) {
+            outState.putString("userId", user.getId());
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
 
