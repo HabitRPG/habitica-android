@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -73,6 +74,8 @@ import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
@@ -803,6 +806,18 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         view.onReaction = this;
         this.overlayFrameLayout.addView(view);
         this.activeTutorialView = view;
+
+        JSONObject eventProperties = new JSONObject();
+        try {
+            eventProperties.put("eventAction", "tutorial");
+            eventProperties.put("eventCategory", "behaviour");
+            eventProperties.put("hitType", "event");
+            eventProperties.put("eventLabel", step.getIdentifier()+"-android");
+            eventProperties.put("eventValue", step.getIdentifier());
+            eventProperties.put("complete", false);
+        } catch (JSONException exception) {
+        }
+        Amplitude.getInstance().logEvent("tutorial", eventProperties);
     }
 
     @Override
@@ -813,6 +828,18 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
         this.overlayFrameLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
+
+        JSONObject eventProperties = new JSONObject();
+        try {
+            eventProperties.put("eventAction", "tutorial");
+            eventProperties.put("eventCategory", "behaviour");
+            eventProperties.put("hitType", "event");
+            eventProperties.put("eventLabel", step.getIdentifier()+"-android");
+            eventProperties.put("eventValue", step.getIdentifier());
+            eventProperties.put("complete", true);
+        } catch (JSONException exception) {
+        }
+        Amplitude.getInstance().logEvent("tutorial", eventProperties);
     }
 
     @Override

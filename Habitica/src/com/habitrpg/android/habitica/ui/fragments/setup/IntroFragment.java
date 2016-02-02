@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class IntroFragment extends Fragment {
-
+public class IntroFragment extends BaseFragment {
 
     @Bind(R.id.titleTextView)
     TextView titleTextView;

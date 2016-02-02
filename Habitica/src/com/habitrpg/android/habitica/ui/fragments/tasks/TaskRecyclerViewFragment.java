@@ -102,4 +102,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
         EventBus.getDefault().post(event);
     }
+
+    @Override
+    public String getDisplayedClassName() {
+        return this.classType + super.getDisplayedClassName();
+    }
 }

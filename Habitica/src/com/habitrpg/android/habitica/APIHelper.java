@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
+import com.amplitude.api.Amplitude;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -71,6 +72,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     //private HostConfig mConfig;
     public APIHelper(final HostConfig cfg) {
         this.cfg = cfg;
+        Amplitude.getInstance().setUserId(cfg.getUser());
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override

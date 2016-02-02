@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.amplitude.api.Amplitude;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
@@ -60,6 +61,7 @@ public class HabiticaApplication extends Application {
         setupCrashlytics();
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
+        Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
     }
 
     private void setupLeakCanary() {

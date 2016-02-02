@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
@@ -29,7 +30,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AvatarSetupFragment extends Fragment {
+public class AvatarSetupFragment extends BaseFragment {
 
     View view;
     public SetupActivity activity;

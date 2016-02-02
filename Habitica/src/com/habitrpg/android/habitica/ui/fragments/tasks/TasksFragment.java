@@ -531,4 +531,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 break;
         }
     }
+
+    @Override
+    public String getDisplayedClassName() {
+        return null;
+    }
 }

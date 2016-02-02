@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 
+import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -22,6 +23,9 @@ import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -74,6 +78,16 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         this.nextButton.setOnClickListener(this);
         this.previousButton.setOnClickListener(this);
         this.completedSetup = false;
+
+        JSONObject eventProperties = new JSONObject();
+        try {
+            eventProperties.put("eventAction", "setup");
+            eventProperties.put("eventCategory", "behaviour");
+            eventProperties.put("hitType", "event");
+            eventProperties.put("status", "displayed");
+        } catch (JSONException exception) {
+        }
+        Amplitude.getInstance().logEvent("setup", eventProperties);
     }
 
     @Override
@@ -147,6 +161,17 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             this.pager.setCurrentItem(this.pager.getCurrentItem()+1);
         } else if (v == this.previousButton) {
             this.pager.setCurrentItem(this.pager.getCurrentItem()-1);
+        } else if (v == this.skipButton) {
+            JSONObject eventProperties = new JSONObject();
+            try {
+                eventProperties.put("eventAction", "setup");
+                eventProperties.put("eventCategory", "behaviour");
+                eventProperties.put("hitType", "event");
+                eventProperties.put("status", "skipped");
+            } catch (JSONException exception) {
+            }
+            Amplitude.getInstance().logEvent("setup", eventProperties);
+            this.startMainActivity();
         }
     }
 
@@ -185,6 +210,16 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
                 this.avatarSetupFragment.setUser(user);
             }
         }
+
+        JSONObject eventProperties = new JSONObject();
+        try {
+            eventProperties.put("eventAction", "setup");
+            eventProperties.put("eventCategory", "behaviour");
+            eventProperties.put("hitType", "event");
+            eventProperties.put("status", "completed");
+        } catch (JSONException exception) {
+        }
+        Amplitude.getInstance().logEvent("setup", eventProperties);
     }
 
     @Override

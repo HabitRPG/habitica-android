@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TaskSetupFragment extends Fragment {
+public class TaskSetupFragment extends BaseFragment {
 
 
     View view;
