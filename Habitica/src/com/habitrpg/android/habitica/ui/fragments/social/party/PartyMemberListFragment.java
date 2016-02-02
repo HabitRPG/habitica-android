@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.PartyMemberRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 

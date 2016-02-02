@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
-import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -309,6 +309,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 checkbox.setChecked(true);
                 this.weekdayCheckboxes.add(checkbox);
                 tv.setText(weekdays[i]);
+                this.frequencyContainer.addView(weekdayRow);
             }
         } else {
             View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, null);
@@ -317,6 +318,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.frequencyPicker.setMaxValue(366);
             TextView tv = (TextView) dayRow.findViewById(R.id.label);
             tv.setText(getResources().getString(R.string.frequency_daily));
+            this.frequencyContainer.addView(dayRow);
         }
 
         if (this.task != null) {

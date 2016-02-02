@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 public class TavernFragment extends BaseMainFragment {
 

@@ -1,26 +1,26 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.IntroFragment;
+import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class IntroActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, Callback<ContentResult> {
 
     @Bind(R.id.view_pager)
     ViewPager pager;
@@ -35,16 +35,23 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
     Button finishButton;
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_intro;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
-        ButterKnife.bind(this);
 
         setupIntro();
         indicator.setViewPager(pager);
 
         this.skipButton.setOnClickListener(this);
         this.finishButton.setOnClickListener(this);
+
+        HostConfig hostConfig = PrefsActivity.fromContext(this);
+        APIHelper apiHelper = new APIHelper(hostConfig);
+        apiHelper.apiService.getContent(this);
     }
 
     private void setupIntro() {
@@ -116,6 +123,16 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void success(ContentResult contentResult, Response response) {
+
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
 
     }
 }

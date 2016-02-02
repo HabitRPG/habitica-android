@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.adapter;
+package com.habitrpg.android.habitica.ui.adapter.social;
 
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;

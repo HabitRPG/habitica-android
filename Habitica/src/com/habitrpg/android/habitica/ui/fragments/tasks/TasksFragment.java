@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,8 +44,9 @@ import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.HabitItemRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;

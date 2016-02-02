@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +25,7 @@ import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.UiUtils;
-import com.habitrpg.android.habitica.ui.adapter.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
@@ -63,7 +63,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         this.groupId = groupId;
         this.apiHelper = apiHelper;
         this.user = user;
-        this.userId = user.getId();
+        if (this.user != null) {
+            this.userId = this.user.getId();
+        }
         this.isTavern = isTavern;
         this.activity = activity;
     }

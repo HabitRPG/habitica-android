@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.fragments.FAQDetailFragment;
+import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 
 import java.util.List;

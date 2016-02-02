@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

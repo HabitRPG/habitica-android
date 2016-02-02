@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.adapter;
+package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;

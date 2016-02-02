@@ -173,6 +173,42 @@
     <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armor, pets, and more to reward you for meeting your goals!</string>
     <string name="intro_3_title">Get Social and Fight Monsters</string>
     <string name="intro_3_description">Keep your goals on track with help from your friends. Support each other in life and in battle as you improve together!</string>
-    <string name="skip">Skip</string>
     <string name="intro_finish_button">Get Started</string>
+    <string name="previous_button">Previous</string>
+    <string name="next_button">Next</string>
+    <string name="skip_button">Skip</string>
+    <string name="setup_welcome_description">Welcome to Habitica, where advancing in the game will improve your real life! As you accomplish real-world goals, you\'ll unlock equipment, pets, quests, and more.</string>
+    <string name="setup_welcome_title">Welcome</string>
+    <string name="avatar_setup_description">First, you need an avatar in the game to represent you! The things you do in real life will affect your avatar\'s health, experience level, and gold.</string>
+    <string name="task_setup_description">Splendid! Now let\'s set up your tasks so that you can start earning experience and gold.
+
+To start, which parts of your life do you want to improve?</string>
+    <string name="setup_group_work">Work</string>
+    <string name="setup_group_exercise">Exercise</string>
+    <string name="setup_group_heathWellness">Health + Wellness</string>
+    <string name="setup_group_school">School</string>
+    <string name="setup_group_teams">Teams</string>
+    <string name="setup_group_chores">Chores</string>
+    <string name="setup_group_creativity">Creativity</string>
+    <string name="setup_task_work_1">Process email</string>
+    <string name="setup_task_work_2">Most important task</string>
+    <string name="setup_task_work_3">Work Project</string>
+    <string name="setup_task_exercise_1">10 min cardio</string>
+    <string name="setup_task_exercise_2">Stretching</string>
+    <string name="setup_task_exercise_3">Set up workout schedule</string>
+    <string name="setup_task_healthWellness_1">Eat healthy / junk food</string>
+    <string name="setup_task_healthWellness_2">Floss</string>
+    <string name="setup_task_healthWellness_3">Schedule check-up</string>
+    <string name="setup_task_school_1">Study/Procrastinate</string>
+    <string name="setup_task_school_2">Do homework</string>
+    <string name="setup_task_school_3">Finish assignment for class</string>
+    <string name="setup_task_teams_1">Check in with team</string>
+    <string name="setup_task_teams_2">Update team on status</string>
+    <string name="setup_task_teams_3">Complete team project</string>
+    <string name="setup_task_chores_1">10 minutes cleaning</string>
+    <string name="setup_task_chores_2">Wash Dishes</string>
+    <string name="setup_task_chores_3">Organize closet</string>
+    <string name="setup_task_creativity_1">Study a master of the craft</string>
+    <string name="setup_task_creativity_2">Work on creative project</string>
+    <string name="setup_task_creativity_3">Finish creative project</string>
 </resources>

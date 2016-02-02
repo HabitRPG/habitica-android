@@ -218,11 +218,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
 
         if (getSupportFragmentManager().getFragments() == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-            transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+            transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commitAllowingStateLoss();
         }
     }
 
@@ -265,6 +265,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     saveLoginInformation();
                     if (activeFragment != null) {
                         activeFragment.updateUserData(user);
+                    } else {
+                        drawer.setSelectionAtPosition(1);
                     }
                 }
             });

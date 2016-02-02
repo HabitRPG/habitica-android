@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.adapter;
+package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;

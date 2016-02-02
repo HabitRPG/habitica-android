@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

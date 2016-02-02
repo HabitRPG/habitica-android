@@ -220,6 +220,13 @@ public class LoginActivity extends AppCompatActivity
 		finish();
     }
 
+    private void startSetupActivity() {
+        Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
         this.setRegistering();
@@ -323,7 +330,11 @@ public class LoginActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.startMainActivity();
+        if (this.isRegistering) {
+            this.startSetupActivity();
+        } else {
+            this.startMainActivity();
+        }
     }
 
     private void saveTokens(String api, String user) throws Exception {
