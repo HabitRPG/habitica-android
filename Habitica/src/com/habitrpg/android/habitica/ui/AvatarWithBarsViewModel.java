@@ -92,7 +92,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             userClass += stats.getCleanedClassName();
         }
 
-        mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10) ? View.GONE : View.VISIBLE);
+        mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
         lvlText.setText("Lvl " + user.getStats().getLvl() + " - " + userClass);
         Drawable drawable;
