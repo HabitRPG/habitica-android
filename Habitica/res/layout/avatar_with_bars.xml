@@ -10,7 +10,11 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:background="@color/brand">
+    android:background="@color/brand"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,8 +23,6 @@
             android:layout_width="@dimen/avatar_header_width"
             android:layout_height="@dimen/avatar_header_height"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"
             android:scaleType="fitStart"
@@ -29,8 +31,6 @@
 
         <LinearLayout
             android:id="@+id/LL_header"
-            android:layout_toRightOf="@id/IMG_ProfilePicture"
-            android:layout_toEndOf="@id/IMG_ProfilePicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -53,8 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
