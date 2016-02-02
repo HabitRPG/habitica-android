@@ -230,9 +230,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
             MainActivity.this.user = habitRPGUser;
-            if (activeFragment == null) {
-                MainActivity.this.drawer.setSelectionAtPosition(1);
-            }
             MainActivity.this.setUserData(true);
         }
 
