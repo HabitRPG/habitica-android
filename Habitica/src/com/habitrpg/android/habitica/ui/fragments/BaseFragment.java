@@ -20,9 +20,9 @@ public class BaseFragment extends Fragment {
     public String tutorialText;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (this.getUserVisibleHint() && tutorialStepIdentifier != null) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
             new Select().from(TutorialStep.class).where(Condition.column("identifier").eq(tutorialStepIdentifier)).async().querySingle(tutorialStepTransactionListener);
         }
     }
