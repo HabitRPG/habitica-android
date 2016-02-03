@@ -109,7 +109,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
 
     private void setGridSpanCount(int width) {
         float itemWidth;
-        if (this.type.equals("background")) {
+        if (this.type != null && this.type.equals("background")) {
             itemWidth = getContext().getResources().getDimension(R.dimen.avatar_width);
         } else {
             itemWidth = getContext().getResources().getDimension(R.dimen.customization_width);
