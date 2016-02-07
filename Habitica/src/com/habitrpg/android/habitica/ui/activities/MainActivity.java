@@ -182,6 +182,15 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
             }
         }
+
+        //after the activity has been stopped and is thereafter resumed,
+        //a state can arise in which the active fragment no longer has a
+        //reference to the tabLayout (and all its adapters are null).
+        //Recreate the fragment as a result.
+        if (activeFragment != null && activeFragment.tabLayout == null){
+            activeFragment = null;
+            drawer.setSelectionAtPosition(1);
+        }
     }
 
     private void setupCheckout() {
