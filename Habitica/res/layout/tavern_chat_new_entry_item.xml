@@ -32,7 +32,7 @@
                 android:layout_margin="5dp"
                 android:hint="Write Message"
                 android:textColor="@android:color/black"
-                />
+                android:inputType="textCapSentences" />
 
         </android.support.design.widget.TextInputLayout>
 

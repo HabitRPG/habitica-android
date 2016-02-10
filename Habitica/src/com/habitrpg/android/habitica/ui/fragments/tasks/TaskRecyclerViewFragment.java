@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public RecyclerView mRecyclerView;
     public RecyclerView.Adapter mAdapter;
     private String classType;
+    private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
 
     // TODO needs a bit of cleanup
     public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType) {
@@ -39,6 +41,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        }
+
+        if (savedInstanceState != null){
+            this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "");
         }
 
         switch (this.classType) {
@@ -84,6 +90,12 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(CLASS_TYPE_KEY, this.classType);
     }
 
     public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
