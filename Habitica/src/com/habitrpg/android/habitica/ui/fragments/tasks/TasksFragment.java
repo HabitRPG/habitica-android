@@ -518,6 +518,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
 
                     if (tagId != null && currentTag != null && tagId.equals(currentTag.getId())) {
+                        //This doesn't seem to work properly. Sometimes it displays more tasks than I actually have.
                         currentfilter.withDescription("" + (currentTag.getTasks().size() + 1));
                         filterDrawer.updateItem(currentfilter);
                     }
