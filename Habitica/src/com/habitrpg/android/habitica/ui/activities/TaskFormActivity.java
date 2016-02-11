@@ -567,6 +567,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
             break;
 
+            case "todo":{
+                Calendar calendar = new GregorianCalendar();
+                calendar.set(dueDatePicker.getYear(), dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
+                task.setDueDate(new Date(calendar.getTimeInMillis()));
+            }
+
             case "reward": {
                 String value = taskValue.getText().toString();
                 if(!value.isEmpty()){
