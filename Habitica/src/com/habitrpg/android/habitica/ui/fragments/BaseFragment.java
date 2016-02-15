@@ -1,108 +1,78 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.amplitude.api.Amplitude;
+import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
-import de.greenrobot.event.EventBusException;
 
-/**
- * Created by admin on 18/11/15.
- */
-public abstract class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment {
 
-    private boolean registerEventBus = false;
-
-    public MainActivity activity;
-    public TabLayout tabLayout;
-    public FrameLayout floatingMenuWrapper;
-    public APIHelper mAPIHelper;
-    protected HabitRPGUser user;
-    public boolean usesTabLayout;
-    public int fragmentSidebarPosition;
-
-    public void setUser(HabitRPGUser user) {
-        this.user = user;
-    }
-
-    public void updateUserData(HabitRPGUser user) {
-        this.user = user;
-    }
-
-    public void setTabLayout(TabLayout tabLayout) {
-        this.tabLayout = tabLayout;
-    }
-
-    public void setFloatingMenuWrapper(FrameLayout view) {
-        this.floatingMenuWrapper = view;
-    }
-
-    public void setActivity(MainActivity activity) {
-        this.activity = activity;
-    }
+    public String tutorialStepIdentifier;
+    public String tutorialText;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.activity = (MainActivity) getActivity();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (this.tutorialStepIdentifier != null) {
+                new Select().from(TutorialStep.class).where(Condition.column("identifier").eq(tutorialStepIdentifier)).async().querySingle(tutorialStepTransactionListener);
+            }
+
+            String displayedClassName = this.getDisplayedClassName();
+
+            if (displayedClassName != null) {
+                JSONObject eventProperties = new JSONObject();
+                try {
+                    eventProperties.put("eventAction", "navigate");
+                    eventProperties.put("eventCategory", "navigation");
+                    eventProperties.put("hitType", "pageview");
+                    eventProperties.put("page", displayedClassName);
+                } catch (JSONException exception) {
+                }
+                Amplitude.getInstance().logEvent("navigate", eventProperties);
+            }
+        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public String getDisplayedClassName() {
+        return this.getClass().getSimpleName();
+    }
 
-        if (tabLayout != null) {
-            if (this.usesTabLayout) {
-                tabLayout.setVisibility(View.VISIBLE);
-            } else {
-                tabLayout.setVisibility(View.GONE);
+    private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
+        @Override
+        public void onResultReceived(TutorialStep step) {
+            if (step != null && !step.getWasCompleted() && (step.getDisplayedOn() == null || (new Date().getTime() - step.getDisplayedOn().getTime()) > 86400000)) {
+                DisplayTutorialEvent event = new DisplayTutorialEvent();
+                event.step = step;
+                event.tutorialText = tutorialText;
+                EventBus.getDefault().post(event);
             }
         }
 
-        if (floatingMenuWrapper != null) {
-            floatingMenuWrapper.removeAllViews();
+        @Override
+        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
+            return true;
         }
 
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this);
-            registerEventBus = true;
-        } catch (EventBusException ignored) {
-
+        @Override
+        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
+            return true;
         }
+    };
 
-        setHasOptionsMenu(true);
-
-        activity.setActiveFragment(this);
-
-        return null;
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (registerEventBus) {
-            EventBus.getDefault().unregister(this);
-        }
-
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
 
 }

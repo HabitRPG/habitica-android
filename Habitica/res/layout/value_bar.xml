@@ -19,10 +19,6 @@
             type="float" />
 
         <variable
-            name="weightToHide"
-            type="float" />
-
-        <variable
             name="barForegroundColor"
             type="int" />
         <variable
@@ -65,15 +61,13 @@
                 android:id="@+id/bar"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:rounded_background="@{barForegroundColor}"
-                app:layout_weight_anim="@{weightToShow}" />
+                android:layout_weight="@{weightToShow}"
+                app:rounded_background="@{barForegroundColor}" />
 
             <View
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0"
-                app:layout_weight_anim="@{weightToHide}" />
+                android:layout_weight="@{1.0f - weightToShow}" />
         </LinearLayout>
 
         <LinearLayout

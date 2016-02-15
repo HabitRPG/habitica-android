@@ -24,8 +24,8 @@ public class UserPicture {
 
     private static final int WIDTH = 140;
     private static final int HEIGHT = 147;
-    private static final int COMPACT_WIDTH = 103;
-    private static final int COMPACT_HEIGHT = 90;
+    private static final int COMPACT_WIDTH = 114;
+    private static final int COMPACT_HEIGHT = 114;
 
     private HabitRPGUser user;
     private ImageView imageView;
@@ -39,23 +39,26 @@ public class UserPicture {
     private String currentCacheFileName;
 
     final List<Bitmap> layers = new ArrayList<>();
+    final List<SpriteTarget> targets = new ArrayList<>();
 
-    public UserPicture(HabitRPGUser user, Context context) {
-        this.user = user;
+    public UserPicture(Context context) {
         this.context = context;
         this.hasBackground = true;
         this.hasPetMount = true;
     }
 
-    public UserPicture(HabitRPGUser user, Context context, boolean hasBackground, boolean hasPetMount) {
-        this.user = user;
+    public UserPicture(Context context, boolean hasBackground, boolean hasPetMount) {
         this.context = context;
         this.hasBackground = hasBackground;
         this.hasPetMount = hasPetMount;
     }
 
+    public void setUser(HabitRPGUser user) {
+        this.user = user;
+    }
+
     public void removeTask() {
-        numOfTasks.decrementAndGet();
+        this.numOfTasks.decrementAndGet();
     }
 
     public void allTasksComplete() {
@@ -73,7 +76,7 @@ public class UserPicture {
                 layerNumber++;
             }
             if (!this.hasPetMount) {
-                res = Bitmap.createBitmap(res, 25, 18, COMPACT_WIDTH, COMPACT_HEIGHT);
+                res = Bitmap.createBitmap(res, 25, 0, COMPACT_WIDTH, COMPACT_HEIGHT);
             }
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {
@@ -91,6 +94,10 @@ public class UserPicture {
     }
 
     public void setPictureOn(final ImageView imageView) {
+        if (this.user == null) {
+            return;
+        }
+        clearRunning();
         this.imageView = imageView;
         List<String> layerNames = UserPicture.this.getLayerNames();
 
@@ -102,15 +109,15 @@ public class UserPicture {
             return;
         }
 
-        // Clear out current image while loading the new one
-        imageView.setImageBitmap(null);
-        Picasso.with(context).cancelRequest(imageView);
-
         // no => generate it
         generateImage(layerNames);
     }
 
     public void setPictureWithRunnable(UserPictureRunnable runnable) {
+        if (this.user == null) {
+            return;
+        }
+        this.clearRunning();
         this.runnable = runnable;
         List<String> layerNames = this.getLayerNames();
 
@@ -122,11 +129,19 @@ public class UserPicture {
             return;
         }
 
-        // Clear out current image while loading the new one
-        runnable.run(null);
-
         // no => generate it
         generateImage(layerNames);
+    }
+
+    private void clearRunning() {
+        for (SpriteTarget target : this.targets) {
+            Picasso.with(this.context).cancelRequest(target);
+        }
+        this.targets.clear();
+        this.numOfTasks.set(0);
+        this.layers.clear();
+        this.imageView = null;
+        this.runnable = null;
     }
 
     private List<String> getLayerNames() {
@@ -180,11 +195,13 @@ public class UserPicture {
     private void generateImage(List<String> layerNames) {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
-        layers.clear();
+        this.layers.clear();
+        Picasso picasso = Picasso.with(this.context);
         for (String layer : layerNames) {
-            layers.add(null);
+            this.layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
-            Picasso.with(this.context).load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
+            this.targets.add(target);
+            picasso.load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
             layerNumber = layerNumber + 1;
         }
     }
@@ -261,17 +278,17 @@ public class UserPicture {
 
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            layers.set(this.layerNumber, bitmap);
-            removeTask();
-            allTasksComplete();
+            UserPicture.this.layers.set(this.layerNumber, bitmap);
+            UserPicture.this.removeTask();
+            UserPicture.this.allTasksComplete();
         }
 
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
             Log.w("SpriteTarget", layer + " not on S3");
 
-            removeTask();
-            allTasksComplete();
+            UserPicture.this.removeTask();
+            UserPicture.this.allTasksComplete();
         }
 
         @Override

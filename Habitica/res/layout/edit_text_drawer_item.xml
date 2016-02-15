@@ -22,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:textColor="@android:color/black"
-                android:hint="Add Tag" />
+                android:hint="Add Tag"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

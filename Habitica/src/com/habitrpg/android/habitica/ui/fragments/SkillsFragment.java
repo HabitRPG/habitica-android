@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * Created by viirus on 25/11/15.
  */
-public class SkillsFragment extends BaseFragment {
+public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
 
@@ -50,6 +50,9 @@ public class SkillsFragment extends BaseFragment {
 
         adapter = new SkillsRecyclerViewAdapter();
         checkUserLoadSkills();
+
+        this.tutorialStepIdentifier = "skills";
+        this.tutorialText = getString(R.string.tutorial_skills);
 
         return view;
     }

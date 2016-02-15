@@ -1,5 +1,54 @@
 [
   {
+    "name": "Version 0.0.25",
+    "items":[
+      {
+        "type": "F",
+        "title": "Customize avatar inside the app"
+      },
+      {
+        "type": "F",
+        "title": "Purchase new avatar customizations inside the app"
+      },
+      {
+        "type": "B",
+        "title": "Displayed dailies ignored custom day starts"
+      },
+      {
+        "type": "B",
+        "title": "Start date for dailies had issues with timezones"
+      },
+      {
+        "type": "F",
+        "title": "Added Due date to to-dos"
+      },
+      {
+        "type": "B",
+        "title": "Fixed several crashes"
+      },
+      {
+        "type": "B",
+        "title": "Not having a mana bar made the header shrink and overlap"
+      },
+      {
+        "type": "F",
+        "title": "App can now be moved to SD card"
+      },
+      {
+        "type": "B",
+        "title": "Checklist items were not sorted"
+      },
+      {
+        "type": "B",
+        "title": "Using a skill caused experience and mana to be displayed as 0"
+      },
+      {
+        "type": "B",
+        "title": "Fixed issues with avatar display"
+      }
+    ]
+  },
+  {
     "name": "Version 0.0.24",
     "items":[
       {

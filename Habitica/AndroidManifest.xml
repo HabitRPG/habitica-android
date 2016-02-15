@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="24"
-    android:versionName="0.0.24"
-    android:screenOrientation="portrait" >
+    android:versionCode="36"
+    android:versionName="0.0.26"
+    android:screenOrientation="portrait"
+    android:installLocation="auto" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -38,12 +40,23 @@
             android:theme="@style/PreferencesTheme"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/PS_settings_title"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
             android:theme="@style/AppThemeWithActionBarBlackText"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activities.IntroActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activities.SetupActivity"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
@@ -63,7 +76,8 @@
             android:name=".ui.activities.TaskFormActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"
             android:parentActivityName=".ui.activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
@@ -75,7 +89,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
-        <receiver  android:process=":remote" android:name=".NotificationPublisher"></receiver>
+        <receiver  android:process=":remote" android:name=".NotificationPublisher" />
     </application>
 
 </manifest>

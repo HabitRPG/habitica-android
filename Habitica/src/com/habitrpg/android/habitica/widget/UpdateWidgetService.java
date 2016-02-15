@@ -101,9 +101,6 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
             remoteViews.setOnClickPendingIntent(R.id.IMG_ProfilePicture, openApp);
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
-
-
-            //If user click on the
         }
 
 

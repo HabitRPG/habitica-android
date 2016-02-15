@@ -12,7 +12,7 @@ DEFAULT_JVM_OPTS=""
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
-# Use the maximum available, or set MAX_FD != -1 to use that value.
+# Use the maximum available, or customizationSet MAX_FD != -1 to use that value.
 MAX_FD="maximum"
 
 warn ( ) {
@@ -42,7 +42,7 @@ case "`uname`" in
     ;;
 esac
 
-# Attempt to set APP_HOME
+# Attempt to customizationSet APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
 # Need this for relative symlinks.
@@ -71,16 +71,16 @@ if [ -n "$JAVA_HOME" ] ; then
         JAVACMD="$JAVA_HOME/bin/java"
     fi
     if [ ! -x "$JAVACMD" ] ; then
-        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
+        die "ERROR: JAVA_HOME is customizationSet to an invalid directory: $JAVA_HOME
 
-Please set the JAVA_HOME variable in your environment to match the
+Please customizationSet the JAVA_HOME variable in your environment to match the
 location of your Java installation."
     fi
 else
     JAVACMD="java"
-    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not customizationSet and no 'java' command could be found in your PATH.
 
-Please set the JAVA_HOME variable in your environment to match the
+Please customizationSet the JAVA_HOME variable in your environment to match the
 location of your Java installation."
 fi
 
@@ -93,7 +93,7 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" ] ; then
         fi
         ulimit -n $MAX_FD
         if [ $? -ne 0 ] ; then
-            warn "Could not set maximum file descriptor limit: $MAX_FD"
+            warn "Could not customizationSet maximum file descriptor limit: $MAX_FD"
         fi
     else
         warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
@@ -137,16 +137,16 @@ if $cygwin ; then
         i=$((i+1))
     done
     case $i in
-        (0) set -- ;;
-        (1) set -- "$args0" ;;
-        (2) set -- "$args0" "$args1" ;;
-        (3) set -- "$args0" "$args1" "$args2" ;;
-        (4) set -- "$args0" "$args1" "$args2" "$args3" ;;
-        (5) set -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
-        (6) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
-        (7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
-        (8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
-        (9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
+        (0) customizationSet -- ;;
+        (1) customizationSet -- "$args0" ;;
+        (2) customizationSet -- "$args0" "$args1" ;;
+        (3) customizationSet -- "$args0" "$args1" "$args2" ;;
+        (4) customizationSet -- "$args0" "$args1" "$args2" "$args3" ;;
+        (5) customizationSet -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
+        (6) customizationSet -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
+        (7) customizationSet -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
+        (8) customizationSet -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
+        (9) customizationSet -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
     esac
 fi
 

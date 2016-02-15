@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
-import com.habitrpg.android.habitica.ui.adapter.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -48,7 +48,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
@@ -126,6 +125,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.add_checklist_button)
     Button button;
 
+    @Bind(R.id.task_duedate_layout)
+    LinearLayout dueDateLayout;
+
+    @Bind(R.id.task_duedate_picker)
+    DatePicker dueDatePicker;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_task_form;
@@ -155,7 +160,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        task.delete();
+                        if (task != null) {
+                            task.delete();
+                        }
 
                         finish();
                         dismissKeyboard();
@@ -199,6 +206,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             mainWrapper.removeView(startDateLayout);
         }
 
+        if (!taskType.equals("todo")) {
+            mainWrapper.removeView(dueDateLayout);
+        }
+
         if (!taskType.equals("reward")) {
             taskValueLayout.setVisibility(View.GONE);
         } else {
@@ -239,7 +250,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(checklistAdapter);
-        int i = checklistAdapter.getItemCount();
 
         recyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
 
@@ -357,13 +367,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskValue.setText(String.format("%.0f", task.value));
 
         float priority = task.getPriority();
-        if (priority == 0.1) {
+        if (Math.abs(priority - 0.1) < 0.000001) {
             this.taskDifficultySpinner.setSelection(0);
-        } else if (priority == 1.0) {
+        } else if (Math.abs(priority - 1.0) < 0.000001) {
             this.taskDifficultySpinner.setSelection(1);
-        } else if (priority == 1.5) {
+        } else if (Math.abs(priority - 1.5) < 0.000001) {
             this.taskDifficultySpinner.setSelection(2);
-        } else if (priority == 2.0) {
+        } else if (Math.abs(priority - 2.0) < 0.000001) {
             this.taskDifficultySpinner.setSelection(3);
         }
 
@@ -374,9 +384,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (task.type.equals("daily")) {
 
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(task.getStartDate());
-            startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            if (task.getStartDate() != null) {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getStartDate());
+                startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            }
 
             if (task.getFrequency().equals("weekly")) {
                 this.dailyFrequencySpinner.setSelection(0);
@@ -394,6 +406,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 if (this.frequencyPicker != null) {
                     this.frequencyPicker.setValue(task.getEveryX());
                 }
+            }
+        }
+
+        if (task.type.equals("todo")) {
+            if (task.getDueDate() != null) {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getDueDate());
+                dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             }
         }
 
@@ -433,8 +453,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             case "daily": {
                 Calendar calendar = new GregorianCalendar();
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
+
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
                     Days repeat = task.getRepeat();

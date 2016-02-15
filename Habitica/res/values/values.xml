@@ -29,4 +29,9 @@
         <item>@string/saturday</item>
         <item>@string/sunday</item>
     </string-array>
+
+    <string-array name="avatar_sizes">
+        <item>@string/avatar_size_slim</item>
+        <item>@string/avatar_size_broad</item>
+    </string-array>
 </resources>

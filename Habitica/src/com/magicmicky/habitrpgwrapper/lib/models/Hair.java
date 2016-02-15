@@ -16,19 +16,20 @@ public class Hair extends BaseModel {
     public String userId;
 
     @Column
-    private int mustache,beard, bangs,base;
+    private int mustache,beard, bangs,base, flower;
 
     @Column
     private String color;
 
     public Hair() {
     }
-    public Hair(int mustache, int beard, int bangs, int base, String color) {
+    public Hair(int mustache, int beard, int bangs, int base, String color, int flower) {
         this.mustache = mustache;
         this.beard = beard;
         this.bangs = bangs;
         this.base = base;
         this.color = color;
+        this.flower = flower;
     }
 
     public int getMustache() {
@@ -70,4 +71,8 @@ public class Hair extends BaseModel {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public int getFlower() { return flower; }
+
+    public void setFlower(int flower) { this.flower = flower; }
 }

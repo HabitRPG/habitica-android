@@ -12,6 +12,9 @@
 
         <ImageView
             android:id="@+id/avatar"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:layout_width="103dp"
             android:layout_height="90dp" />
 

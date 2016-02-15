@@ -9,7 +9,8 @@ It's also on Google Play:
 
 <a href="https://play.google.com/store/apps/details?id=com.habitrpg.android.habitica">
   <img alt="Get it on Google Play"
-       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+       width="185"
+       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
 </a>
 
 Having the application installed is a good way to be notified of new releases. However, clicking "Watch" on this 

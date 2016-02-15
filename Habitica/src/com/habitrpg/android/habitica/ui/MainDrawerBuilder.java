@@ -9,12 +9,14 @@ import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
-import com.habitrpg.android.habitica.ui.fragments.PartyFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
-import com.habitrpg.android.habitica.ui.fragments.TasksFragment;
-import com.habitrpg.android.habitica.ui.fragments.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -26,10 +28,6 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-
-/**
- * Created by Negue on 18.08.2015.
- */
 public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
@@ -37,14 +35,18 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_SKILLS = 1;
     public static final int SIDEBAR_TAVERN = 3;
     public static final int SIDEBAR_PARTY = 4;
-    public static final int SIDEBAR_PURCHASE = 5;
-    public static final int SIDEBAR_SETTINGS = 7;
-    public static final int SIDEBAR_ABOUT = 8;
+    public static final int SIDEBAR_AVATAR = 5;
+    public static final int SIDEBAR_EQUIPMENT = 6;
+    public static final int SIDEBAR_STABLE = 7;
+    public static final int SIDEBAR_PURCHASE = 8;
+    public static final int SIDEBAR_SETTINGS = 9;
+    public static final int SIDEBAR_HELP = 10;
+    public static final int SIDEBAR_ABOUT = 11;
 
 
 
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
-        AccountHeaderBuilder builder = new AccountHeaderBuilder()
+        return new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.sidebar_background)
                 .addProfiles(
@@ -57,7 +59,6 @@ public class MainDrawerBuilder {
                     }
                 })
                 .withSelectionListEnabledForSingleProfile(false);
-        return builder;
     }
 
 
@@ -82,14 +83,15 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),*/
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withEnabled(false).withBadge(R.string.coming_soon),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withEnabled(false).withBadge(R.string.coming_soon),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withEnabled(false).withBadge(R.string.coming_soon),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withIdentifier(SIDEBAR_EQUIPMENT).withEnabled(false).withBadge(R.string.coming_soon),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE).withEnabled(false).withBadge(R.string.coming_soon),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
                         new DividerDrawerItem(),
                         //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT)
 
                 )
@@ -97,7 +99,7 @@ public class MainDrawerBuilder {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        BaseFragment fragment = null;
+                        BaseMainFragment fragment = null;
                         Class newActivityClass = null;
 
                         switch (drawerItem.getIdentifier()) {
@@ -117,12 +119,20 @@ public class MainDrawerBuilder {
                                 fragment = new TavernFragment();
                                 break;
                             }
+                            case SIDEBAR_AVATAR: {
+                                fragment = new AvatarOverviewFragment();
+                                break;
+                            }
                             case SIDEBAR_PURCHASE: {
                                 fragment = new GemsPurchaseFragment();
                                 break;
                             }
                             case SIDEBAR_SETTINGS: {
                                 newActivityClass = PrefsActivity.class;
+                                break;
+                            }
+                            case SIDEBAR_HELP: {
+                                fragment = new FAQOverviewFragment();
                                 break;
                             }
                             case SIDEBAR_ABOUT: {

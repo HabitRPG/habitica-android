@@ -14,8 +14,10 @@
 	<dimen name="bar_size">15dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
 	<dimen name="bar_radius">5dp</dimen>
-	<dimen name="avatar_width">150dp</dimen>
-    <dimen name="avatar_height">120dp</dimen>
+	<dimen name="avatar_width">140dp</dimen>
+    <dimen name="avatar_height">147dp</dimen>
+	<dimen name="avatar_header_width">108dp</dimen>
+	<dimen name="avatar_header_height">113dp</dimen>
     <dimen name="header_height">70dp</dimen>
 
 	<dimen name="new_task_bar_size">48dp</dimen>
@@ -49,4 +51,8 @@
 	<dimen name="login_field_width">350dp</dimen>
 	<dimen name="task_top_bottom_padding">20dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
+	<dimen name="grid_item_margin">6dp</dimen>
+	<dimen name="avatar_small_width">114dp</dimen>
+	<dimen name="avatar_small_height">90dp</dimen>
+	<dimen name="customization_width">100dp</dimen>
 </resources>

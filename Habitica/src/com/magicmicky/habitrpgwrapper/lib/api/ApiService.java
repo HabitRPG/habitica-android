@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -11,6 +12,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
@@ -43,7 +45,7 @@ public interface ApiService {
     void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
 
     @PUT("/user/")
-    void updateUser(@Body Map<String, String> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
+    void updateUser(@Body Map<String, Object> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
 
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
@@ -51,14 +53,14 @@ public interface ApiService {
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
 
+    @POST("/user/unlock")
+    void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);
 
     @GET("/user/tasks/{id}")
     void getTask(@Path("id") String id, Callback<Task> habitItemCallback);
 
-
     @POST("/user/tasks/{id}/{direction}")
     void postTaskDirection(@Path("id") String id, @Path("direction") String direction, Callback<TaskDirectionData> taskDirectionCallback);
-
 
     @POST("/user/tasks")
     void createItem(@Body Task item, Callback<Task> habitItemCallback);
@@ -131,4 +133,6 @@ public interface ApiService {
     @POST("/groups/{gid}/chat/seen")
     void seenMessages(@Path("gid") String groupId, Callback<String> cb);
 
+    @POST("/user/batch-update")
+    void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
 }

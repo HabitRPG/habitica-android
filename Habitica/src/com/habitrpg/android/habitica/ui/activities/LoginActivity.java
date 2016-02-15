@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.amplitude.api.Amplitude;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -146,6 +147,16 @@ public class LoginActivity extends AppCompatActivity
 		mApiHelper = new APIHelper(hc);
 
         this.isRegistering = true;
+
+        JSONObject eventProperties = new JSONObject();
+        try {
+            eventProperties.put("eventAction", "navigate");
+            eventProperties.put("eventCategory", "navigation");
+            eventProperties.put("hitType", "pageview");
+            eventProperties.put("page", this.getClass().getSimpleName());
+        } catch (JSONException exception) {
+        }
+        Amplitude.getInstance().logEvent("navigate", eventProperties);
     }
 
 	private void resetLayout() {
@@ -220,12 +231,19 @@ public class LoginActivity extends AppCompatActivity
 		finish();
     }
 
+    private void startSetupActivity() {
+        Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     private void toggleRegistering() {
         this.isRegistering = !this.isRegistering;
-        this.setRegistering(this.isRegistering);
+        this.setRegistering();
 	}
 
-	private void setRegistering(boolean registering) {
+	private void setRegistering() {
         MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
         if (this.isRegistering) {
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
@@ -256,7 +274,7 @@ public class LoginActivity extends AppCompatActivity
 	}
 
 	private void parse(String contents) {
-		String adr=null,user=null,key=null;
+		String adr,user,key;
 		try {
 			JSONObject obj;
 
@@ -323,7 +341,19 @@ public class LoginActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.startMainActivity();
+        if (this.isRegistering) {
+            this.startSetupActivity();
+        } else {
+            JSONObject eventProperties = new JSONObject();
+            try {
+                eventProperties.put("eventAction", "lofin");
+                eventProperties.put("eventCategory", "behaviour");
+                eventProperties.put("hitType", "event");
+            } catch (JSONException exception) {
+            }
+            Amplitude.getInstance().logEvent("login", eventProperties);
+            this.startMainActivity();
+        }
     }
 
     private void saveTokens(String api, String user) throws Exception {

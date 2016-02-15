@@ -41,21 +41,9 @@ public class PrefsActivity extends AppCompatActivity {
         HostConfig config;
         String httpPort = "80";
         String address = prefs.getString(ctx.getString(R.string.SP_address), ctx.getString(R.string.SP_address_default));
-        if (address.contains("http://habitrpg.com")) {
-            address = "https://habitrpg.com";
-            prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
-        } else if (address.contains("http://beta.habitrpg.com")) {
-            address = "https://beta.habitrpg.com/";
-            prefs.edit().putString(ctx.getString(R.string.SP_address), address).commit();
-
-        }
-        if (address == null || address == "" || address.length() < 2) {
-            config = null;
-        } else {
-            String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
-            String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
-            config = new HostConfig(address, httpPort, api, userID);
-        }
+        String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
+        String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
+        config = new HostConfig(address, httpPort, api, userID);
         return config;
     }
 }

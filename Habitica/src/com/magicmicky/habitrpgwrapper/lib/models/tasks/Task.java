@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -92,7 +93,8 @@ public class Task extends BaseModel {
 
     //todos
     @Column
-    public String date;
+    @SerializedName("date")
+    public Date duedate;
 
     // used for buyable items
     public String specialTag;
@@ -263,6 +265,7 @@ public class Task extends BaseModel {
             this.checklist = new Select()
                     .from(ChecklistItem.class)
                     .where(Condition.column("task_id").eq(this.id))
+                    .orderBy(true, "position")
                     .queryList();
         }
         return this.checklist;
@@ -325,16 +328,16 @@ public class Task extends BaseModel {
     /**
      * @return the due date
      */
-    public String getDate() {
-        return date;
+    public Date getDueDate() {
+        return this.duedate;
     }
 
     /**
      * Set the due date
-     * @param date the date to set
+     * @param duedate the date to set
      */
-    public void setDate(String date) {
-        this.date = date;
+    public void setDueDate(Date duedate) {
+        this.duedate = duedate;
     }
 
     /**
@@ -378,12 +381,15 @@ public class Task extends BaseModel {
                 tag.async().save();
             }
         }
+        int position = 0;
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
                 if(item.getTask() == null){
                     item.setTask(this);
                 }
+                item.setPosition(position);
                 item.async().save();
+                position++;
             }
         }
     }

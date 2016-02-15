@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
+import com.amplitude.api.Amplitude;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -21,10 +21,14 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.Customization;
+import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
@@ -33,12 +37,18 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.FAQArticleListDeserilializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -62,6 +72,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     //private HostConfig mConfig;
     public APIHelper(final HostConfig cfg) {
         this.cfg = cfg;
+        Amplitude.getInstance().setUserId(cfg.getUser());
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
@@ -77,6 +88,10 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
+        Type checklistType = new TypeToken<List<ChecklistItem>>() {}.getType();
+        Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
+        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
+        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -98,6 +113,11 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(SkillList.class, new SkillDeserializer())
                 .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
                 .registerTypeAdapter(taskClassListType, new TaskListDeserializer())
+                .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
+                .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
+                .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
+                .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
@@ -209,6 +229,10 @@ public class APIHelper implements ErrorHandler, Profiler {
         public String err;
     }
 
+    public class ErrorListResponse {
+        public List<String> err;
+    }
+
 	@Override
 	public Throwable handleError(RetrofitError cause) {
 
@@ -219,29 +243,36 @@ public class APIHelper implements ErrorHandler, Profiler {
         } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
             retrofit.client.Response response = cause.getResponse();
 
-           ErrorResponse res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+            ErrorResponse res = null;
+
+            try {
+                res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+            } catch (RuntimeException e) {
+                //Can cause errors when error is a list and not a string
+                ErrorListResponse resList = (ErrorListResponse) cause.getBodyAs(ErrorListResponse.class);
+                if (resList.err != null && resList.err.size() >= 1) {
+                    res = new ErrorResponse();
+                    res.err = resList.err.get(0);
+                }
+            }
 
             int status = response.getStatus();
             if (status == 401) {
-
-                if(res.err != null && !res.err.isEmpty())
-                {
+                if(res != null && res.err != null && !res.err.isEmpty()) {
                     showConnectionProblemDialog("", res.err);
-                }
-                else
-                {
+                } else {
                     showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
 
                 return cause;
             } else if (status >= 500 && status < 600) {
-                showConnectionProblemDialog(R.string.internal_error_api);
+                this.showConnectionProblemDialog(R.string.internal_error_api);
                 return cause;
             } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
                 return cause;
             }
 		}
-        showConnectionProblemDialog(R.string.internal_error_api);
+        this.showConnectionProblemDialog(R.string.internal_error_api);
 
         return cause;
 	}
@@ -251,7 +282,10 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
     private void showConnectionProblemDialog(final int resourceTitleString, final int resourceMessageString) {
-        showConnectionProblemDialog(HabiticaApplication.currentActivity.getString(resourceTitleString), HabiticaApplication.currentActivity.getString(resourceMessageString));
+        Activity currentActivity = HabiticaApplication.currentActivity;
+        if (currentActivity != null) {
+            showConnectionProblemDialog(currentActivity.getString(resourceTitleString), currentActivity.getString(resourceMessageString));
+        }
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString){

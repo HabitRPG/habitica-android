@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/avatar_with_bars_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,51 +9,50 @@
     android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="horizontal"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-
-    android:background="@color/brand">
-
-    <ImageView
-        android:id="@+id/IMG_ProfilePicture"
-        android:layout_width="@dimen/avatar_width"
-        android:layout_height="@dimen/avatar_height"
-        android:layout_gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:paddingRight="24dp"
-        android:paddingEnd="24dp"
-        android:scaleType="fitStart"
-        android:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/profile_image" />
-
+    android:orientation="vertical"
+    android:background="@color/brand"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
     <LinearLayout
-        android:id="@+id/LL_header"
-        android:layout_toRightOf="@id/IMG_ProfilePicture"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/bar_padding"
-        android:paddingTop="@dimen/bar_padding">
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/IMG_ProfilePicture"
+            android:layout_width="@dimen/avatar_header_width"
+            android:layout_height="@dimen/avatar_header_height"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="fitStart"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/profile_image" />
 
-        <include
-            android:id="@+id/hpBar"
-            layout="@layout/value_bar" />
+        <LinearLayout
+            android:id="@+id/LL_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/xpBar"
-            layout="@layout/value_bar" />
+            <include
+                android:id="@+id/hpBar"
+                layout="@layout/value_bar" />
 
-        <include
-            android:id="@+id/mpBar"
-            layout="@layout/value_bar" />
+            <include
+                android:id="@+id/xpBar"
+                layout="@layout/value_bar" />
 
+            <include
+                android:id="@+id/mpBar"
+                layout="@layout/value_bar" />
+
+        </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_below="@id/LL_header"
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -62,11 +61,12 @@
         android:drawablePadding="6dp"
         android:gravity="center"
         android:textSize="14sp"
-        android:textColor="@color/textColorSecondaryDark"/>
+        android:textColor="@color/textColorSecondaryDark" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     <LinearLayout
-        android:layout_below="@id/LL_header"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:gravity="center_vertical">
@@ -108,4 +108,5 @@
             android:layout_marginStart="16dp"
             />
     </LinearLayout>
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
