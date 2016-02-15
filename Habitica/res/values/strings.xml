@@ -211,4 +211,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="setup_task_creativity_1">Study a master of the craft</string>
     <string name="setup_task_creativity_2">Work on creative project</string>
     <string name="setup_task_creativity_3">Finish creative project</string>
+
+    <string name="gem.purchase.support">Want to help us keep Habitica running? You can support the developers by buying gems!\n\nGems allow you to buy fun extras for your account, including: \n\n - Cool costumes for your avatar\n - Awesome backgrounds\n - Fun quests that reward you with pet eggs\n - The ability to change your class before level 100\n\nThank you so much for helping us make Habitica the best it can be. Your support means a lot to us!</string>
 </resources>
