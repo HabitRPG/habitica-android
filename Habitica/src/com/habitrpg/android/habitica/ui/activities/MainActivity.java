@@ -102,6 +102,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         TaskScoringCallback.OnTaskScored,
         GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
 
+    private static final int MIN_LEVEL_FOR_SKILLS = 11;
+
     @Bind(R.id.floating_menu_wrapper) FrameLayout floatingMenuWrapper;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.detail_tabs) TabLayout detail_tabs;
@@ -449,14 +451,14 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         accountHeader.updateProfile(profile);
 
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if (user.getStats().getLvl() < 11 && item.isEnabled()) {
+        if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && item.isEnabled()) {
             IDrawerItem newItem = new PrimaryDrawerItem()
                     .withName(this.getString(R.string.sidebar_skills))
                     .withEnabled(false)
                     .withBadge(this.getString(R.string.unlock_lvl_11))
                     .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
             drawer.updateItem(newItem);
-        } else if (user.getStats().getLvl() >= 11 && !item.isEnabled()) {
+        } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS && !item.isEnabled()) {
             IDrawerItem newItem = new PrimaryDrawerItem()
                     .withName(this.getString(R.string.sidebar_skills))
                     .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
@@ -628,7 +630,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         } else {
 
             if (user != null) {
-                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getLvl());
+                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl());
             }
 
             showSnackBarForDataReceived(data);
@@ -650,7 +652,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
     }
 
-    private void notifyUser(double xp, double hp, double gold, int lvl) {
+    private void notifyUser(double xp, double hp, double gold, double mp, int lvl) {
         StringBuilder message = new StringBuilder();
         SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
         if (lvl > user.getStats().getLvl()) {
@@ -679,6 +681,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 displayType = SnackbarDisplayType.FAILURE;
                 message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
                 stats.setGp(gold);
+            }
+            if (mp > stats.getMp() && stats.getLvl() >= MIN_LEVEL_FOR_SKILLS) {
+                message.append(" + ").append(round(mp - stats.getMp(), 2)).append(" MP");
+                stats.setMp(mp);
             }
             showSnackbar(this, floatingMenuWrapper, message.toString(), displayType);
         }
