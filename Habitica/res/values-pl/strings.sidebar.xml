@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">Zadania</string>
+  <string name="sidebar.skills">Umiejętności</string>
+  <string name="sidebar.section.social">Społeczność</string>
+  <string name="sidebar.tavern">Karczma</string>
+  <string name="sidebar.party">Drużyna</string>
+  <string name="sidebar.purchaseGems">Kup Klejnoty</string>
+  <string name="sidebar.guilds">Gildie</string>
+  <string name="sidebar.challenges">Wyzwania</string>
+  <string name="sidebar.section.inventory">Inwentarz</string>
+  <string name="sidebar.avatar">Awatar</string>
+  <string name="sidebar.equipment">Ekwipunek</string>
+  <string name="sidebar.stable">Stajnia</string>
+  <string name="sidebar.news">Aktualności</string>
+  <string name="sidebar.settings">Ustawienia</string>
+  <string name="sidebar.about">O programie</string>
+</resources>
