@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -62,7 +63,7 @@ public class MainDrawerBuilder {
     }
 
 
-    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, Toolbar toolbar, AccountHeader accountHeader) {
+    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, Toolbar toolbar, final AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(activity);
 
@@ -147,7 +148,9 @@ public class MainDrawerBuilder {
                             return false;
                         }
                         if (newActivityClass != null) {
-                            activity.startActivity(new Intent(activity, newActivityClass));
+                            Intent passUserId = new Intent(activity, newActivityClass);
+                            passUserId.putExtra("userId", activity.getUserID());
+                            activity.startActivity(passUserId);
                             return false;
                         }
 

@@ -75,6 +75,7 @@
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
+    <string name="tags">Tags</string>
     <string name="trivial">Trivial</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>

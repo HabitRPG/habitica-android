@@ -871,4 +871,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             this.activeTutorialView = null;
         }
     }
+
+    public String getUserID(){
+        return user.getId();
+    }
 }

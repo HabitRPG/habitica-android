@@ -66,12 +66,12 @@
                     android:numeric="decimal" />
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/task_difficulty_wrapper">
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/task_difficulty_wrapper">
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -281,6 +281,29 @@
                 tools:ignore="UnusedAttribute" />
 
         </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/task_tags_wrapper">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/task_tags_checklist">
+            </LinearLayout>
+
+    </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/task_delete_wrapper"
