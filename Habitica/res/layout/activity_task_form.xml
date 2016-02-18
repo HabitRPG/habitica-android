@@ -272,6 +272,12 @@
                 android:text="@string/due_date"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check to add Due Date"
+                android:id="@+id/duedate_checkbox" />
+
             <DatePicker
                 android:id="@+id/task_duedate_picker"
                 android:layout_width="wrap_content"
