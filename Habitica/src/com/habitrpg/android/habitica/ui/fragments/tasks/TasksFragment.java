@@ -159,7 +159,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
-        if (this.tagsIdHelper == null) {
+        if (this.tagsIdHelper == null && user != null) {
             this.tagsIdHelper = new TagsHelper();
             //Pass in the information of the user because TagsHelper does the filtering.
             for(Tag userTags : user.getTags()){
@@ -168,7 +168,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //This is to pass the names into other activities, not just their IDs
-        if (this.tagsNameHelper == null) {
+        if (this.tagsNameHelper == null && user != null) {
             this.tagsNameHelper = new TagsHelper();
             for(Tag userTags : user.getTags()){
 
