@@ -91,4 +91,10 @@
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_stroke">#32000000</color>
+
+    <!-- buttons -->
+    <color name="btn_success">#ff5cb85c</color>
+    <color name="btn_warning">#fff0ad4e</color>
+    <color name="btn_danger">#ffd9534f</color>
+
 </resources>
