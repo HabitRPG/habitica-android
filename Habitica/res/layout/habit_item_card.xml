@@ -20,16 +20,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/btnLayout">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 <FrameLayout
-                    android:layout_width="0dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
-                    android:layout_weight="1">
+                    android:id="@+id/btnLayoutLeft"
+                    app:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
+                    android:layout_weight="1"
+                    android:layout_alignParentLeft="true">
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -42,10 +42,51 @@
                         android:background="@drawable/btn_habit_background"
                         style="@style/HabitButton" />
                 </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{habit.down ? View.VISIBLE : View.GONE}"
+                    android:layout_toRightOf="@id/btnLayoutLeft">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="@dimen/task_top_bottom_padding"
+                        android:paddingTop="@dimen/task_top_bottom_padding">
+                        <TextView
+                            android:id="@+id/checkedTextView"
+                            style="@style/CardTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{habit.text}" />
+
+                        <TextView
+                            android:id="@+id/notesTextView"
+                            style="@style/CardText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{habit.notes}"
+                            app:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"/>
+                    </LinearLayout>
+                    <View
+                        android:id="@+id/rightBorderView"
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        app:backgroundColor="@{habit.getLightTaskColor}"
+                        android:gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+                <FrameLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/btnLayoutRight"
+                    app:visibility="@{habit.down ? View.VISIBLE : View.INVISIBLE}"
+                    android:layout_alignParentRight="true"
                     android:layout_weight="1">
                     <View
                         android:layout_width="match_parent"
@@ -59,44 +100,6 @@
                         android:background="@drawable/btn_habit_background"
                         style="@style/HabitButton"/>
                 </FrameLayout>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="@dimen/task_top_bottom_padding"
-                    android:paddingTop="@dimen/task_top_bottom_padding">
-                    <TextView
-                        android:id="@+id/checkedTextView"
-                        style="@style/CardTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{habit.text}" />
-
-                    <TextView
-                        android:id="@+id/notesTextView"
-                        style="@style/CardText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{habit.notes}"
-                        android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"/>
-                </LinearLayout>
-                <View
-                    android:id="@+id/rightBorderView"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    app:backgroundColor="@{habit.getLightTaskColor}"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
         <View
