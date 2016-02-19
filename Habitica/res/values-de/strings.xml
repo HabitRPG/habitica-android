@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Habitica</string>
+    <string name="action_refresh">aktualisieren</string>
+    <string name="XP_default">Erfahrung</string>
+    <string name="HP_default">Gesundheit</string>
+    <string name="MP_default">Mana</string>
+    <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
+
+    <!--  Prefs -->
+    <string name="PS_settings_title">Einstellungen</string>
+    <string name="SP_address_hint">Dein eigener Server</string>
+    <string name="SP_userID_title">User ID</string>
+    <string name="SP_userID_summary">Deine User ID</string>
+    <string name="SP_APIToken_title">API Token</string>
+    <string name="SP_APIToken_summary">Dein API Token</string>
+    <string name="PS_contact_title">Kontaktiere mich</string>
+    <string name="unknown_error">Ein Fehler ist aufgetreten…</string>
+    <string name="pref_account_header">Account</string>
+    <string name="pref_reminder_header">Erinnerung</string>
+    <string name="pref_reminder_checkbox">aktivere Erinnerung</string>
+    <string name="pref_reminder_picker">Bestimme den Zeitpinkt</string>
+
+    <!-- Adding tasks -->
+    <string name="task_value">Wert</string>
+    <string name="new_todo">Neue Aufgabe</string>
+    <string name="new_reward">Neue Belohnung</string>
+    <string name="new_daily">Neue tägl. Aufgabe</string>
+    <string name="new_habit">Neue Gewohnheit</string>
+    <string name="action_edit">Bearbeiten</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_cancel">abbrechen</string>
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Anmelden</string>
+    <string name="username">Username</string>
+    <string name="email_username">Email oder Username</string>
+    <string name="password">Passwort</string>
+    <string name="emailAddress">Email</string>
+    <string name="confirmpassword">Bestätige das Passwort</string>
+
+    <string name="logout">Logout</string>
+    <string name="account_details">Account Details</string>
+    <string name="LoginActivityName">Willkommen</string>
+	<string name="user_dead_title">Du bist tot!</string>
+	<string name="user_dead_mess">Du warst nicht vorsichtig genug und bist zwischen einigen schlechten Angewohnheiten und täglichen Aufgaben verloren gegangen. 
+	Du wirst wiederbelebt, verlierst aber ein Level, all dein Gold und einen zufälligen Gegenstand. Versuch vorsichtig zu seinen, erfülle deine Aufgaben und achte auf deine Angewohnheiten.
+	</string>
+
+    <string name="string_revive">Wiederbeleben</string>
+    <string name="please_connect">Bitte verbinde dich erst mit der Anwendung, bevor du das Widget nutzen kannst.</string>
+        
+    <string name="about.title">About</string>
+    <string name="about.libraries">Bibliotheken</string>
+    <string name="about.versionhistory">Version history</string>
+    <string name="about.habitica_open_source">Habitica ist als OpenSource auf Github verfügbar</string>
+    <string name="about.rate_our_app">Bewerte unsere App</string>
+    <string name="about.give_us_feedback">Sende uns Feedback!</string>
+    <string name="about.bugreport">Melde einen Fehler</string>
+    <string name="about.source_code">Source Code</string>
+
+	<!-- Network Errors -->
+	<string name="network_error_title">Verbindungsfehler</string>
+	<string name="network_error_no_network_body">Du bist nicht mit dem Internet verbunden.</string>
+    <string name="internal_error_api">Es scheint ein Problem mit dem Server zu bestehen. Versuch es später erneut.</string>
+
+    <string name="authentication_error_title">Authentifizierungsfehler</string>
+    <string name="authentication_error_body">Benutzername und/oder Passwort sind fehlerhaft.</string>
+
+    <string name="login_validation_error_title">Validation Error</string>
+    <string name="login_validation_error_fieldsmissing">Du musst alle Felder ausfüllen.</string>
+
+    <string name="save_changes">Speichern</string>
+    <string name="notes">Notizen</string>
+    <string name="text">Text</string>
+    <string name="difficulty">Schwierigkeit</string>
+    <string name="trivial">Unbedeutend</string>
+    <string name="easy">Leicht</string>
+    <string name="medium">Mittel</string>
+    <string name="hard">Schwer</string>
+    <string name="start_date">Startzeitpunkt</string>
+    <string name="positive_habit_form">Positiv ( + )</string>
+    <string name="negative_habit_form">Negativ ( - )</string>
+    <string name="checklist">Checklist</string>
+    <string name="actions">Aktionen</string>
+
+    <string name="frequency">Frequenz</string>
+    <string name="frequency_weekly">An bestimmten Wochentagen</string>
+    <string name="frequency_daily">Alle X Tage</string>
+
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
+
+    <string name="levelup_header">Du bist ein Level aufgestiegen!</string>
+    <string name="levelup_detail">Durch die Erfüllung deiner "Real-Life"-Aufgaben bist auf Level %1$d aufgestiegen.</string>
+    <string name="levelup_health">Du wurdest vollständig geheilt!</string>
+    <string name="levelup_button">Hurra!</string>
+
+    <string name="faint_subtitle">Verzweifel nicht!</string>
+    <string name="faint_penalty_body">Du hast ein Level, all dein Gold und einen Gegenstand verloren. Du kannst dies aber durch Anstrengung zurück verdienen. Viel Erfolg--Du wirst es schaffen.</string>
+    <string name="faint_header">Du bist am Ende mit deiner Gesundheit!</string>
+    <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
+
+    <string name="filter">Filter</string>
+    <string name="profile_image">Profilbild</string>
+
+    <string name="mana_price_button" formatted="false">%d MP</string>
+    <string name="used_skill" formatted="false">Du verwendest %1$s für %2$d Mana.</string>
+    <string name="new_checklist_item">neuer Checklistenpunkt</string>
+    <string name="add_checklist_item">Hinzufügen</string>
+
+    <string name="reminder_title">Denke daran alle deine täglichen Aufgaben zu erfüllen!</string>
+    <string name="skill_progress_title">Setze Skill ein</string>
+    <string name="coming_soon">Kommt bald</string>
+    <string name="chat_flag_confirmation">Bist du dir sicher, dass du diese Nachricht zur Überprüfung melden möchtest?</string>
+    <string name="flag_confirm">Markiere Nachricht</string>
+    <string name="unlock_lvl_11">Freischaltung mit Level 11</string>
+    <string name="no_party_message">Du bist nicht in der Gruppe. Um der Gruppe beizutreten, besuch die Webseite.</string>
+    <string name="forgot_pw_btn">Passwort vergessen</string>
+    <string name="forgot_pw_tv">Passwort vergessen? Bitte benutze die mobile Webseite.</string>
+    <string name="tavern.inn.checkOut">Check Out of Inn</string>
+    <string name="tavern.inn.rest">Ruhe dich aus</string>
+    <string name="reward.dialog.buy">Kaufen</string>
+    <string name="reward.dialog.dismiss">Verwerfen</string>
+    <string name="party">Party</string>
+    <string name="chat">Chat</string>
+    <string name="members">Mitglieder</string>
+    <string name="habits">Gewohnheiten</string>
+    <string name="dailies">tägliche Aufgaben (Dailies)</string>
+    <string name="todos">Todos</string>
+    <string name="rewards">Belognungen</string>
+    <string name="taskform.delete.title">Bist du sicher?</string>
+    <string name="taskform.delete.message">Möchtest du das wirklich löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="quest">Quest</string>
+    <string name="avatar_body">Körper</string>
+    <string name="avatar_hair">Haare</string>
+    <string name="avatar_shirt">Shirt</string>
+    <string name="avatar_skin">Hautfarbe</string>
+    <string name="avatar_ears">Tierohren</string>
+    <string name="avatar_base">Base</string>
+    <string name="avatar_color">Farbe</string>
+    <string name="avatar_beard">Bart</string>
+    <string name="avatar_mustache">Schnurrbart</string>
+    <string name="avatar_flower">Blume</string>
+    <string name="avatar_bangs">Pony</string>
+    <string name="avatar_nothing">Nichts ausgewählt</string>
+    <string name="avatar_size">Größe</string>
+    <string name="avatar_size_slim">schmal</string>
+    <string name="avatar_size_broad">breit</string>
+    <string name="avatar_background">Hintergrund</string>
+    <string name="purchase_customization">Purchase Customization</string>
+    <string name="purchase_set_button" formatted="false">Schalte das Set für %d Edelsteine frei</string>
+    <string name="purchase_button">Kaufen</string>
+    <string name="purchase_set_title" formatted="false">Kaufe Set %s</string>
+    <string name="due_date">Bis zum</string>
+
+    <string name="version_info" formatted="false">Version %s (%d)</string>
+
+    <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+    <string name="complete_tutorial">Geschafft!</string>
+    <string name="dismiss_tutorial">Erninnere mich wieder!</string>
+    <string name="intro_1_title">Willkommen zu Habitica</string>
+    <string name="intro_1_description">Schließen Sie sich über 1,1 Millionen Menschen an, die Spaß haben, während Dinge zu erledigen sind. Erstellen Sie einen Avatar und verfolgen Sie Ihre realen Aufgaben.</string>
+    <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
+    <string name="intro_2_description">Schalte Features im Spiel durch die Erfüllung deiner realen Aufgaben frei. Verdiene dir Rüstungen, Tiere und Erungenschaften durch die Erreichung deiner Ziele!</string>
+    <string name="intro_3_title">Verbinde dich und bekämpfe Monster</string>
+    <string name="intro_3_description">Verfolge deiner Ziele durch die Unterstützung deiner Freunde. Unterstützt euch im Leben und im Spiel um euch zu verbessern!</string>
+    <string name="intro_finish_button">Fang an!</string>
+    <string name="previous_button">Zurück</string>
+    <string name="next_button">Nächste</string>
+    <string name="skip_button">Abbrechen</string>
+    <string name="setup_welcome_description">Willkommen zu Habitica, wo Fortschritte im Spiel dein Leben verändert! Durch Erfüllung deiner realen Aufgaben verdienst du Ausrüstung, Tiere, Quests und mehr.</string>
+    <string name="setup_welcome_title">Willkommen</string>
+    <string name="avatar_setup_description">Zuerst benötigst du einen Avatar im Spiel der dich verkörpert! Die Dinge, die du im realen Leben tust wirken sich auf die Gesundheit, die Erfahrung und das Gold deines Avatars aus.</string>
+    <string name="task_setup_description">Herrlich! Nun lege Aufgaben und Belohnungen an und bereichere dein Leben.
+
+TZum Start: Welcher Teil deines Lebens soll verbessert werden?</string>
+    <string name="setup_group_work">Beruf</string>
+    <string name="setup_group_exercise">Übung</string>
+    <string name="setup_group_heathWellness">Gesundheit + Wellness</string>
+    <string name="setup_group_school">Schule</string>
+    <string name="setup_group_teams">Gruppe</string>
+    <string name="setup_group_chores">Haushalt</string>
+    <string name="setup_group_creativity">Kreativität</string>
+    <string name="setup_task_work_1">Bearbeite Emails</string>
+    <string name="setup_task_work_2">Die wichtigsten Aufgaben</string>
+    <string name="setup_task_work_3">Arbeite am Projekt</string>
+    <string name="setup_task_exercise_1">10 min cardio</string>
+    <string name="setup_task_exercise_2">Stretching</string>
+    <string name="setup_task_exercise_3">Set up workout schedule</string>
+    <string name="setup_task_healthWellness_1">gesundes Essen / Junk Food</string>
+    <string name="setup_task_healthWellness_2">Zahnseide</string>
+    <string name="setup_task_healthWellness_3">Vereinbare Vorsorge</string>
+    <string name="setup_task_school_1">lerne / verzögere</string>
+    <string name="setup_task_school_2">Hausaufgaben erledigen</string>
+    <string name="setup_task_school_3">Klassenaufgabe bearbeiten</string>
+    <string name="setup_task_teams_1">Team-Meeting</string>
+    <string name="setup_task_teams_2">Informiere über den aktuellen Status</string>
+    <string name="setup_task_teams_3">Beende Team-Projekt</string>
+    <string name="setup_task_chores_1">10 Minutes Saubermachen</string>
+    <string name="setup_task_chores_2">Geschirrspülen</string>
+    <string name="setup_task_chores_3">Schrank aufräumen</string>
+    <string name="setup_task_creativity_1">Mit einem Meister auseinandersetzen</string>
+    <string name="setup_task_creativity_2">Am Kunstwerk arbeiten</string>
+    <string name="setup_task_creativity_3">Beende Kunstwerk</string>
+
+    <string name="gem.purchase.support">Du möchtest Habitica unterstützen? Du kannst die Entwickler mit dem Kauf von Edelsteinen unterstützen!\n\nEdelsteine ermöglichen dir den Kauf von Spaßgegenständen im Spiel, inklusive: \n\n - tolle Verkleidungen für deinen Avatar\n - Beeindruckende Hintergründe\n - Spaßaufgaben mit Eiern als Belohnung\n - Die Möglichkeit deine Klasse vor Level 100 zu ändern\n\nDanke für deine Unterstützung das Beste aus Habitica zu machen. Deine Unterstützung bedeutet uns viel!</string>
+</resources>

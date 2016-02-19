@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sidebar.tasks">Aufgaben</string>
+    <string name="sidebar.skills">Fähigkeiten</string>
+    <string name="sidebar.section.social">Soziales</string>
+    <string name="sidebar.tavern">Gasthaus</string>
+    <string name="sidebar.party">Party</string>
+    <string name="sidebar.purchaseGems">Edelsteinkauf</string>
+    <string name="sidebar.guilds">Gilden</string>
+    <string name="sidebar.challenges">Herausforderungen</string>
+    <string name="sidebar.section.inventory">Inventar</string>
+    <string name="sidebar.avatar">Avatar</string>
+    <string name="sidebar.equipment">Ausrüstung</string>
+    <string name="sidebar.stable">Stable</string>
+    <string name="sidebar.news">News</string>
+    <string name="sidebar.settings">Einstellungen</string>
+    <string name="sidebar.about">About</string>
+</resources>
