@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="tutorial_habits">Wenn du positive Gewohnheiten erfüllst, verdienst du Gold und Erfahrung. Negative Gewohnheiten verletzen deinen Avatar. Also vermeide sie!</string>
+    <string name="tutorial_dailies">Löse deine täglichen Aufgaben. Für ihre Erfüllung gewinnst du Gold und Erfahrung. Vorsicht! Nicht erfüllte Aufgaben verletzen dich, wenn die Zeit um ist.</string>
+	<string name="tutorial_todos">Erledige deine To-Do`s im Alltag, dann hake sie ab um mit GOLD und ERFAHRUNG belohnt zu werden. So erhälst du Belohnungen und schaltest Features frei.</string>
+    <string name="tutorial_rewards">Das sind deine Belohnungen. Verdiene Gold durch die Erfüllung deiner Aufgaben, To-Do`s und Angewohnheiten. Dann investiere das Gold in virtuelle oder "Real-Life"-Belohnungen!</string>
+
+    <string name="tutorial_equipment">Wenn du Ausrüstung kaufst, erscheint sie hier. Deine Kampfausrüstung beeinflusst deine Fähigkeiten und deine Verkleidung (wenn aktiviert) beeinflusst, was dein Avatar trägt.</string>
+    <string name="tutorial_items">Verdiene Gegenstände durch die Aufgabenerfüllung und das Aufsteigen eines Levels. Tippe auf den Gegenstand um ihn zu verwenden!</string>
+    <string name="tutorial_pets">Bei der Erfüllung einer Aufgabe besteht die Chance Eier und Tränke zu finden. Kombiniere sie um daraus Tier schlüpfen zu lassen.</string>
+    <string name="tutorial_skills">Skills sind besondere Fähigkeiten, die einen starken Effekt auslösen! Tippe den Skill an, um ihn auszulösen. Es kostet dich Mana (blauer Balken). Mana wird durch den täglichen Login und die Erfüllung von Aufgaben regeneriert. Lies die FAQ im Menü um mehr darüber zu erfahren.</string>
+    <string name="tutorial_party">Hier kannst du dich mit deinen Freunden treffen und Monster bekämpfen. Haltet euchen gegenseitig zur Erfüllung eurer Aufgaben an.</string>
+    <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen Chatraum! Hier könnt ihr euch austauschen und Fragen stellen. Habt Spaß!</string>
+    <string name="tutorial_classes">Wähle aus, ob du Krieger, Magier, Heiler der Dieb sein möchtest! Jede Klasse hat eigenständige Ausrüstung und Skills. Tippe auf das (?) um mehr darüber zu erfahren!</string>
+</resources>
