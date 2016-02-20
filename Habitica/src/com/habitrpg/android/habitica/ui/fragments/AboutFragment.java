@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,10 @@ public class AboutFragment extends Fragment {
 
     private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
     private String twitterLink = "https://twitter.com/habitica";
+
+    String versionName = "";
+    int versionCode = 0;
+    String userId = "";
 
     @Bind(R.id.versionInfo)
     public TextView versionInfo;
@@ -67,6 +72,8 @@ public class AboutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Gets the userId that was passed from MainActivity -> MainDrawerBuilder -> About Activity
+        userId = this.getActivity().getIntent().getStringExtra("userId");
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null)
             view = inflater.inflate(R.layout.fragment_about, container, false);
@@ -82,8 +89,8 @@ public class AboutFragment extends Fragment {
 
         Activity activity = getActivity();
         try {
-            String versionName = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
-            int versionCode = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionCode;
+            versionName = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
+            versionCode = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionCode;
 
             this.versionInfo.setText(getString(R.string.version_info, versionName, versionCode));
 
@@ -100,9 +107,20 @@ public class AboutFragment extends Fragment {
     }
 
     private void sendEmail(String subject) {
+        Build grabInfo = new Build();
+        Build.VERSION getVersion = new Build.VERSION();
+        int version = getVersion.SDK_INT;
+        String device = grabInfo.DEVICE;
+        String bodyOfEmail = "Device: " + device +
+                             " \nAndroid Version: " + version +
+                             " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
+                             " \nUser ID: " + userId +
+                             " \nDetails: ";
+
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto","mobile@habitica.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail);
         startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 

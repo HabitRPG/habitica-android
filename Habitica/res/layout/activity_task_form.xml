@@ -31,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/text"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -45,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/notes"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -64,12 +66,12 @@
                     android:numeric="decimal" />
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/task_difficulty_wrapper">
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/task_difficulty_wrapper">
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -186,7 +188,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/new_checklist_item" />
+                    android:hint="@string/new_checklist_item"
+                    android:inputType="textCapSentences" />
 
                 <Button
                     android:id="@+id/add_checklist_button"
@@ -269,6 +272,12 @@
                 android:text="@string/due_date"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check to add Due Date"
+                android:id="@+id/duedate_checkbox" />
+
             <DatePicker
                 android:id="@+id/task_duedate_picker"
                 android:layout_width="wrap_content"
@@ -278,6 +287,29 @@
                 tools:ignore="UnusedAttribute" />
 
         </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/task_tags_wrapper">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/task_tags_checklist">
+            </LinearLayout>
+
+    </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/task_delete_wrapper"

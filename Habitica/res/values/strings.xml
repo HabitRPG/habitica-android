@@ -7,6 +7,7 @@
     <string name="HP_default">Health</string>
     <string name="MP_default">Mana</string>
     <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
+    <string name="amplitude_app_id">zxczxc</string>
 
     <!--  Prefs -->
     <string name="PS_settings_title">Settings</string>
@@ -75,6 +76,7 @@
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
+    <string name="tags">Tags</string>
     <string name="trivial">Trivial</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
@@ -120,7 +122,7 @@
     <string name="coming_soon">Coming Soon</string>
     <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
     <string name="flag_confirm">Flag Message</string>
-    <string name="unlock_lvl_10">Unlock at lvl 10</string>
+    <string name="unlock_lvl_10">Unlock at lvl 11</string>
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>

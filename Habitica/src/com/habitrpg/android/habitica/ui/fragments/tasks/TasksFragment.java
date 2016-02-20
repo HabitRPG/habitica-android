@@ -86,7 +86,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
-    private TagsHelper tagsHelper;
+    private TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
+    private TagsHelper tagsNameHelper; // Added this so other activities/fragments can get the String names, not IDs
+    private TagsHelper tagsIdHelper; // Added this so other activities/fragments can get the IDs
     private ContentCache contentCache;
 
     private boolean displayingTaskForm;
@@ -151,8 +153,35 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
 
         viewPager.setCurrentItem(0);
+
         if (this.tagsHelper == null) {
             this.tagsHelper = new TagsHelper();
+        }
+
+        //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
+<<<<<<< HEAD
+        if (this.tagsIdHelper == null) {
+=======
+        if (this.tagsIdHelper == null && user != null) {
+>>>>>>> origin/develop
+            this.tagsIdHelper = new TagsHelper();
+            //Pass in the information of the user because TagsHelper does the filtering.
+            for(Tag userTags : user.getTags()){
+                tagsIdHelper.addTags(userTags.getId());
+            }
+        }
+
+        //This is to pass the names into other activities, not just their IDs
+<<<<<<< HEAD
+        if (this.tagsNameHelper == null) {
+=======
+        if (this.tagsNameHelper == null && user != null) {
+>>>>>>> origin/develop
+            this.tagsNameHelper = new TagsHelper();
+            for(Tag userTags : user.getTags()){
+
+                tagsNameHelper.addTags(userTags.getName());
+            }
         }
 
         loadTaskLists();
@@ -358,7 +387,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
-        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsHelper.getTags()));
+        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsIdHelper.getTags()));
+        bundle.putStringArrayList("tagsName", new ArrayList<>(this.tagsNameHelper.getTags()));
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -405,7 +435,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
-        bundle.putStringArrayList("tagsId", new ArrayList<String>(this.tagsHelper.getTags()));
+        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsIdHelper.getTags()));
+        bundle.putStringArrayList("tagsName", new ArrayList<>(this.tagsNameHelper.getTags()));
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         this.displayingTaskForm = true;
@@ -495,6 +526,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
 
                     if (tagId != null && currentTag != null && tagId.equals(currentTag.getId())) {
+                        //This doesn't seem to work properly. Sometimes it displays more tasks than I actually have.
                         currentfilter.withDescription("" + (currentTag.getTasks().size() + 1));
                         filterDrawer.updateItem(currentfilter);
                     }
