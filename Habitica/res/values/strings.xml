@@ -122,7 +122,11 @@
     <string name="coming_soon">Coming Soon</string>
     <string name="chat_flag_confirmation">Are you sure you want to report this message for violation?</string>
     <string name="flag_confirm">Flag Message</string>
+<<<<<<< HEAD
     <string name="unlock_lvl_10">Unlock at lvl 11</string>
+=======
+    <string name="unlock_lvl_11">Unlock at lvl 11</string>
+>>>>>>> 33c3e77b0015335335bea0fca295931b6b88b2bd
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
@@ -170,7 +174,7 @@
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
     <string name="intro_1_title">Welcome to Habitica</string>
-    <string name="intro_1_description">Join over 900,000 people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
+    <string name="intro_1_description">Join over 1,100,000 people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
     <string name="intro_2_title">Game Progress = Life Progress</string>
     <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armor, pets, and more to reward you for meeting your goals!</string>
     <string name="intro_3_title">Get Social and Fight Monsters</string>
@@ -213,4 +217,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="setup_task_creativity_1">Study a master of the craft</string>
     <string name="setup_task_creativity_2">Work on creative project</string>
     <string name="setup_task_creativity_3">Finish creative project</string>
+
+    <string name="gem.purchase.support">Want to help us keep Habitica running? You can support the developers by buying gems!\n\nGems allow you to buy fun extras for your account, including: \n\n - Cool costumes for your avatar\n - Awesome backgrounds\n - Fun quests that reward you with pet eggs\n - The ability to change your class before level 100\n\nThank you so much for helping us make Habitica the best it can be. Your support means a lot to us!</string>
 </resources>

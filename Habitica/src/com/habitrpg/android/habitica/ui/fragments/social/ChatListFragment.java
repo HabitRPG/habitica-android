@@ -50,6 +50,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private Context ctx;
     private String groupId;
+    public String seenGroupId;
     private APIHelper apiHelper;
     private HabitRPGUser user;
     private String userId;
@@ -152,6 +153,13 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private List<ChatMessage> currentChatMessages;
 
+    public void setNavigatedToFragment(String groupId){
+        seenGroupId = groupId;
+        navigatedOnceToFragment = true;
+
+        markMessagesAsSeen();
+    }
+
     @Override
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
@@ -163,6 +171,33 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
+        }
+
+        gotNewMessages = true;
+
+        markMessagesAsSeen();
+    }
+
+    private boolean navigatedOnceToFragment = false;
+    private boolean gotNewMessages = false;
+
+    private void markMessagesAsSeen(){
+        if(!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
+        && gotNewMessages && navigatedOnceToFragment) {
+
+            gotNewMessages = false;
+
+            apiHelper.apiService.seenMessages(seenGroupId, new Callback<String>() {
+                @Override
+                public void success(String str, Response response) {
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
         }
     }
 

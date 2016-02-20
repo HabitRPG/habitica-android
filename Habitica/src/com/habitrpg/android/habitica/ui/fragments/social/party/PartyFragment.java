@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 
 import java.util.HashMap;
 
@@ -34,6 +35,7 @@ public class PartyFragment extends BaseMainFragment {
 
     private PartyMemberListFragment partyMemberListFragment;
     private PartyInformationFragment partyInformationFragment;
+    private ChatListFragment chatListFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +76,10 @@ public class PartyFragment extends BaseMainFragment {
                     partyInformationFragment.setGroup(group);
                 }
 
+                if(chatListFragment != null){
+                    chatListFragment.seenGroupId = group.id;
+                }
+
                 if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
@@ -90,8 +96,8 @@ public class PartyFragment extends BaseMainFragment {
             public void failure(RetrofitError error) {
             }
         });
-        setViewPagerAdapter();
 
+        setViewPagerAdapter();
         this.tutorialStepIdentifier = "party";
         this.tutorialText = getString(R.string.tutorial_party);
 
@@ -100,6 +106,12 @@ public class PartyFragment extends BaseMainFragment {
 
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
+
+        UserParty party = user.getParty();
+
+        if(party == null) {
+            return;
+        }
 
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
@@ -114,7 +126,7 @@ public class PartyFragment extends BaseMainFragment {
                         break;
                     }
                     case 1: {
-                        ChatListFragment chatListFragment = new ChatListFragment();
+                        chatListFragment = new ChatListFragment();
                         chatListFragment.configure(activity, "party", mAPIHelper, user, activity, false);
                         fragment = chatListFragment;
                         break;
@@ -153,8 +165,27 @@ public class PartyFragment extends BaseMainFragment {
             }
         });
 
-        if (tabLayout != null) {
-            tabLayout.setupWithViewPager(viewPager);
-        }
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 1 && group != null) {
+                    chatListFragment.setNavigatedToFragment(group.id);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 && group != null) {
+                    chatListFragment.setNavigatedToFragment(group.id);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
