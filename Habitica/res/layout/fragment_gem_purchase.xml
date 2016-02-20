@@ -6,9 +6,9 @@
     <TextView android:layout_height="wrap_content"
         android:layout_width="wrap_content"
 
-        android:layout_marginTop="5dp"
-        android:text="Help support Habitica"
-        android:layout_gravity="center_horizontal">
+        android:text="@string/gem.purchase.support"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp">
 
     </TextView>
 

@@ -191,7 +191,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     btnToggleInn.setOnClickListener(this);
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, res.getColor(R.color.brand));
-                    if(HabiticaApplication.User.getPreferences().getSleep()){
+                    if(HabiticaApplication.User != null && HabiticaApplication.User.getPreferences().getSleep()){
                         btnToggleInn.setText(R.string.tavern_inn_checkOut);
                     }else{
                         btnToggleInn.setText(R.string.tavern_inn_rest);

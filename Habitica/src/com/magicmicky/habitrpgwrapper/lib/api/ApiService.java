@@ -131,7 +131,7 @@ public interface ApiService {
     void flagMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<Void> cb);
 
     @POST("/groups/{gid}/chat/seen")
-    void seenMessage(@Path("gid") String groupId, Callback<Void> cb);
+    void seenMessages(@Path("gid") String groupId, Callback<String> cb);
 
     @POST("/user/batch-update")
     void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
