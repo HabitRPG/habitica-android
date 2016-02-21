@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abc_action_bar_home_description">﻿转到主屏幕</string>
+    <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
+    <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
+    <string name="abc_action_bar_up_description">向上一级</string>
+    <string name="abc_action_menu_overflow_description">更多选项</string>
+    <string name="abc_action_mode_done">完成</string>
+    <string name="abc_activity_chooser_view_see_all">查看全部</string>
+    <string name="abc_activitychooserview_choose_application">选择一个应用程序</string>
+    <string name="abc_capital_off">关闭</string>
+    <string name="abc_capital_on">开启</string>
+    <string name="abc_search_hint">搜索…</string>
+    <string name="abc_searchview_description_clear">清除查询</string>
+    <string name="abc_searchview_description_query">搜索查询</string>
+    <string name="abc_searchview_description_search">搜索</string>
+    <string name="abc_searchview_description_submit">提交问题</string>
+    <string name="abc_searchview_description_voice">语音搜索</string>
+    <string name="abc_shareactionprovider_share_with">分享给朋友</string>
+    <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
+    <string name="abc_toolbar_collapse_description">崩溃了</string>
+    <string name="com_facebook_image_download_unknown_error">下载时发生意外错误。</string>
+    <string name="com_facebook_internet_permission_error_message">WebView登录需要INTERNET权限</string>
+    <string name="com_facebook_internet_permission_error_title">AndroidManifest错误</string>
+    <string name="com_facebook_like_button_liked">已赞</string>
+    <string name="com_facebook_like_button_not_liked">赞</string>
+    <string name="com_facebook_loading">载入中...</string>
+    <string name="com_facebook_loginview_cancel_action">取消</string>
+    <string name="com_facebook_loginview_log_in_button">登录</string>
+    <string name="com_facebook_loginview_log_in_button_long">通过Facebook登陆</string>
+    <string name="com_facebook_loginview_log_out_action">登出</string>
+    <string name="com_facebook_loginview_log_out_button">登出</string>
+    <string name="com_facebook_loginview_logged_in_using_facebook">使用Facebook登录</string>
+    <string name="com_facebook_send_button_text">发送</string>
+    <string name="com_facebook_share_button_text">分享</string>
+    <string name="com_facebook_tooltip_default">“新功能！由您决定 - 选择要分享的信息“。</string>
+    <string name="messenger_send_button_text">发送</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="ERR_pb_barcode">“偏好设置不能从条形码加载”</string>
+    <string name="HP_default">体力</string>
+    <string name="LoginActivityName">欢迎</string>
+    <string name="MP_default">法力</string>
+    <string name="PS_contact_title">联络我</string>
+    <string name="PS_settings_title">设置</string>
+    <string name="SP_APIToken">APIToken</string>
+    <string name="SP_APIToken_summary">您的API令牌</string>
+    <string name="SP_APIToken_title">API令牌</string>
+    <string name="SP_address">服务器地址</string>
+    <string name="SP_address_default">https://habitica.com/</string>
+    <string name="SP_address_hint">您的自定义服务器</string>
+    <string name="SP_email">电子邮件</string>
+    <string name="SP_userID">用户帐号</string>
+    <string name="SP_userID_summary">您的用户ID</string>
+    <string name="SP_userID_title">用户帐号</string>
+    <string name="SP_username">用户名</string>
+    <string name="XP_default">经验</string>
+    <string name="about.bugreport">报告错误</string>
+    <string name="about.give_us_feedback">给我们反馈！</string>
+    <string name="about.habitica_open_source">Habitica是一个Github上的开源软件</string>
+    <string name="about.libraries">第三方库</string>
+    <string name="about.rate_our_app">为我们的应用程序评分 </string>
+    <string name="about.source_code">源代码</string>
+    <string name="about.title">关于</string>
+    <string name="about.versionhistory">版本历史</string>
+    <string name="account_details">帐户详细资料</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_delete">删除</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_refresh">刷新</string>
+    <string name="actions">操作</string>
+    <string name="add_checklist_item">增加</string>
+    <string name="app_name">Habitica</string>
+    <string name="authentication_error_body">您的用户名或密码不正确。</string>
+    <string name="authentication_error_title">授权错误</string>
+    <string name="avatar_background">背景</string>
+    <string name="avatar_bangs">刘海</string>
+    <string name="avatar_base">脸型</string>
+    <string name="avatar_beard">胡子</string>
+    <string name="avatar_body">身体</string>
+    <string name="avatar_color">发色</string>
+    <string name="avatar_ears">动物耳朵</string>
+    <string name="avatar_flower">花</string>
+    <string name="avatar_hair">头发</string>
+    <string name="avatar_mustache">髭</string>
+    <string name="avatar_nothing">未设置</string>
+    <string name="avatar_setup_description">“您将置身于一个RPG游戏中，而您在现实生活中的行动会影响您的角色的健康，经验等级和金币。“</string>
+    <string name="avatar_shirt">衬衫</string>
+    <string name="avatar_size">身材</string>
+    <string name="avatar_size_broad">魁梧</string>
+    <string name="avatar_size_slim">苗条</string>
+    <string name="avatar_skin">皮肤</string>
+    <string name="chat">聊天</string>
+    <string name="chat_flag_confirmation">您确定要举报这个消息？</string>
+    <string name="checklist">清单</string>
+    <string name="coming_soon">即将推出</string>
+    <string name="complete_tutorial">好了别啰嗦了！</string>
+    <string name="confirmpassword">确认密码</string>
+    <string name="dailies">每日任务</string>
+    <string name="difficulty">困难</string>
+    <string name="dismiss_tutorial">再提醒我</string>
+    <string name="due_date">截止日期</string>
+    <string name="easy">简单</string>
+    <string name="emailAddress">电子邮件地址</string>
+    <string name="email_username">电子邮件或用户名</string>
+    <string name="fabric_key">改变我自己</string>
+    <string name="faint_button">重生 </string>
+    <string name="faint_header">您快没有体力值了！</string>
+    <string name="faint_penalty_body">“您降低了一个等级，失去了您的钱和一件装备，但是您可以努力把它们赢回来！祝您好运 - 看好您。“</string>
+    <string name="faint_subtitle">“不要认输！“</string>
+    <string name="filter">过滤</string>
+    <string name="flag_confirm">信息</string>
+    <string name="forgot_pw_btn">忘了密码</string>
+    <string name="forgot_pw_tv">忘了密码？请使用移动网站。</string>
+    <string name="frequency">频率</string>
+    <string name="frequency_daily">每隔X天</string>
+    <string name="frequency_weekly">在一周的某几天</string>
+    <string name="friday">星期五</string>
+    <string name="habits">习惯</string>
+    <string name="hard">困难</string>
+    <string name="internal_error_api">与服务器的连接好像有问题，请稍后再试。</string>
+    <string name="intro_1_description">加入90万人在玩的游戏，让完成目标像游戏一样有趣！创建角色，完成您的现实生活中的任务。</string>
+    <string name="intro_1_title">欢迎Habitica</string>
+    <string name="intro_2_description">通过完成您现实生活中的任务，解锁游戏中的功能、装备、宠物，以及更多奖励。同时，慢慢地您会达到您的目标！</string>
+    <string name="intro_2_title">游戏进度=生活进展</string>
+    <string name="intro_3_description">和朋友一起持续追踪您的目标，相互支持，在生活和战斗中共同提高！</string>
+    <string name="intro_3_title">加入队伍并与怪物战斗</string>
+    <string name="intro_finish_button">入门</string>
+    <string name="levelup_button">好！</string>
+    <string name="levelup_detail">"By accomplishing your real-life goals, you've grown to Level %1$d!"</string>
+    <string name="levelup_header">您升级了！</string>
+    <string name="levelup_health">您已经被完全治愈！</string>
+    <string name="login_btn">登录</string>
+    <string name="login_validation_error_fieldsmissing">您必须填写完整</string>
+    <string name="login_validation_error_title">验证错误</string>
+    <string name="logout">登出</string>
+    <string name="mana_price_button">%d MP</string>
+    <string name="material_drawer_close">关闭</string>
+    <string name="material_drawer_open">打开</string>
+    <string name="medium">中</string>
+    <string name="members">成员</string>
+    <string name="monday">星期一</string>
+    <string name="negative_habit_form">消极（ - ）</string>
+    <string name="network_error_no_network_body">您没有连接到互联网。</string>
+    <string name="network_error_title">连接错误</string>
+    <string name="new_checklist_item">新清单项</string>
+    <string name="new_daily">新的每日任务</string>
+    <string name="new_habit">新的习惯</string>
+    <string name="new_reward">新的奖励</string>
+    <string name="new_todo">新待办事项</string>
+    <string name="next_button">下一个</string>
+    <string name="no">没有</string>
+    <string name="no_party_message">您还没有加入任何队伍。要加入一个公会或队伍，请访问网站。</string>
+    <string name="notes">笔记</string>
+    <string name="paperboy_item_glyph">•</string>
+    <string name="paperboy_item_title">标题</string>
+    <string name="paperboy_item_type_bug">错误</string>
+    <string name="paperboy_item_type_bugs">错误</string>
+    <string name="paperboy_item_type_feature">功能更新</string>
+    <string name="paperboy_item_type_features">功能更新</string>
+    <string name="paperboy_item_type_improvement">改进</string>
+    <string name="paperboy_item_type_improvements">改进</string>
+    <string name="paperboy_section_name">部分</string>
+    <string name="party">队伍</string>
+    <string name="password">密码</string>
+    <string name="please_connect">请通过应用程序中使用的窗口小部件连接前，</string>
+    <string name="positive_habit_form">积极（+）</string>
+    <string name="pref_account_header">帐户</string>
+    <string name="pref_reminder_checkbox">激活提醒</string>
+    <string name="pref_reminder_header">每日提示</string>
+    <string name="pref_reminder_picker">设置提醒时间</string>
+    <string name="previous_button">前一个</string>
+    <string name="profile_image">资料图片</string>
+    <string name="purchase_button">采购</string>
+    <string name="purchase_customization">购买定制</string>
+    <string name="purchase_set_button">Unlock set for %d gems</string>
+    <string name="purchase_set_title">Purchase set %s</string>
+    <string name="quest">团队冒险</string>
+    <string name="register_btn">注册</string>
+    <string name="reminder_title">别忘了检查您的冒险旅程～</string>
+    <string name="reward.dialog.buy">购买</string>
+    <string name="reward.dialog.dismiss">取消</string>
+    <string name="rewards">奖励</string>
+    <string name="saturday">星期六</string>
+    <string name="save_changes">保存</string>
+    <string name="setup_group_chores">努力</string>
+    <string name="setup_group_creativity">创造力</string>
+    <string name="setup_group_exercise">执行</string>
+    <string name="setup_group_heathWellness">健康</string>
+    <string name="setup_group_school">学校</string>
+    <string name="setup_group_teams">小组</string>
+    <string name="setup_group_work">工作</string>
+    <string name="setup_task_chores_1">10分钟清洗</string>
+    <string name="setup_task_chores_2">洗碗</string>
+    <string name="setup_task_chores_3">整理衣柜</string>
+    <string name="setup_task_creativity_1">集大成者</string>
+    <string name="setup_task_creativity_2">创意物品的工作</string>
+    <string name="setup_task_creativity_3">完成创造性的物品</string>
+    <string name="setup_task_exercise_1">10分钟的有氧运动</string>
+    <string name="setup_task_exercise_2">伸展</string>
+    <string name="setup_task_exercise_3">设置锻炼计划</string>
+    <string name="setup_task_healthWellness_1">吃健康/垃圾食品</string>
+    <string name="setup_task_healthWellness_2">绵</string>
+    <string name="setup_task_healthWellness_3">日程安排体检</string>
+    <string name="setup_task_school_1">书房/拖延</string>
+    <string name="setup_task_school_2">做作业</string>
+    <string name="setup_task_school_3">类完成任务</string>
+    <string name="setup_task_teams_1">查看团队</string>
+    <string name="setup_task_teams_2">更新队伍状态</string>
+    <string name="setup_task_teams_3">完整的团队信息</string>
+    <string name="setup_task_work_1">处理电子邮件</string>
+    <string name="setup_task_work_2">最重要的任务</string>
+    <string name="setup_task_work_3">工作物品</string>
+    <string name="setup_welcome_description">“欢迎来到Habitica，每一次在游戏中的推进将提高您的现实生活质量！当您完成现实世界的目标，您会解锁装备，宠物，任务，以及更多。“</string>
+    <string name="setup_welcome_title">欢迎</string>
+    <string name="sidebar.about">关于</string>
+    <string name="sidebar.avatar">头像</string>
+    <string name="sidebar.challenges">挑战</string>
+    <string name="sidebar.equipment">装备</string>
+    <string name="sidebar.guilds">公会</string>
+    <string name="sidebar.news">新闻</string>
+    <string name="sidebar.party">团队</string>
+    <string name="sidebar.purchaseGems">购买宝石</string>
+    <string name="sidebar.section.inventory">仓库</string>
+    <string name="sidebar.section.social">社交</string>
+    <string name="sidebar.settings">设置</string>
+    <string name="sidebar.skills">技能</string>
+    <string name="sidebar.stable">稳定</string>
+    <string name="sidebar.tasks">任务</string>
+    <string name="sidebar.tavern">酒馆</string>
+    <string name="sidebar_help">帮助和常见问题解答</string>
+    <string name="skill_progress_title">使用技巧</string>
+    <string name="skip_button">跳过</string>
+    <string name="start_date">开始日期</string>
+    <string name="string_revive">复活</string>
+    <string name="sunday">星期日</string>
+    <string name="task_setup_description">“干得漂亮！现在让我们来设置您的任务，这样您就可以开始赚取经验和金币。首先，您想提高其生活的哪一部分？“</string>
+    <string name="task_value">数值</string>
+    <string name="taskform.delete.message">您真的要删除？</string>
+    <string name="taskform.delete.title">您确定？</string>
+    <string name="tavern.inn.checkOut">结帐退房</string>
+    <string name="tavern.inn.rest">在酒馆里休息</string>
+    <string name="text">文本</string>
+    <string name="thursday">星期四</string>
+    <string name="todos">待办事项</string>
+    <string name="trivial">不重要的</string>
+    <string name="tuesday">星期二</string>
+    <string name="tutorial_classes">选择成为战士，法师，医师，或者盗贼！每个职业都有独特的装备和技能。轻触（？）了解更多信息！</string>
+    <string name="tutorial_dailies">“完成您的日常任务来获得金币和经验。请注意，如果您不及时完成它们，每日任务会对您造成伤害。“</string>
+    <string name="tutorial_equipment">欢迎，您购买的装备陈列在这里。战斗装备影响您的能力，而服装决定了您的样子。</string>
+    <string name="tutorial_habits">好习惯完成时会为您赚取金币和经验，坏习惯则会对您造成伤害。建议多使用积极习惯作为生活的正面激励！</string>
+    <string name="tutorial_items">通过完成任务来赚取物品，提升等级。轻触一个物品使用它！</string>
+    <string name="tutorial_party">和朋友一起完成自己的目标，与怪物战斗，并一同承担失败的伤害！</string>
+    <string name="tutorial_pets">当您完成真实世界的任务，您会有机会找到宠物蛋和孵化药水，用来孵化属于您的宠物！</string>
+    <string name="tutorial_rewards">这些是您的奖励！通过完成真实世界的习惯，每日任务和待办事项赚取金币，用来购买游戏中的奖励或真实世界中自己想要的东西！</string>
+    <string name="tutorial_skills">技能是具有震撼效果的特殊能力！轻按一个技能来使用它。这将花费法力（蓝条），您可以通过每天完成任务来补充法力。更多信息请查看菜单中的“常见问题”！</string>
+    <string name="tutorial_tavern">欢迎来到我的小酒馆！在这儿，您可以聊聊您的冒险，听别人分享经验。祝您玩得开心！</string>
+    <string name="tutorial_todos">在现实生活中完成您的待办事项，赚取金币和经验，解锁新的功能！</string>
+    <string name="unknown_error">发生错误...</string>
+    <string name="unlock_lvl_10">将在10级解锁</string>
+    <string name="used_skill">您发动了 %1$s ，消耗了 %2$d 法力</string>
+    <string name="user_dead_mess">“您不是不够自觉，每个人都可能在日常的困难和坏习惯中迷失。您很快会复活，但会降低一级并失去您的所有金币和一件随机的设备。请小心地管理您的每日任务，并克服这些坏习惯！“</string>
+    <string name="user_dead_title">“您被击败了！“</string>
+    <string name="username">用户名</string>
+    <string name="version">版本</string>
+    <string name="version_info" formatted="false">Version %s (%d)</string>
+    <string name="wednesday">星期三</string>
+    <string name="yes">是</string>
+</resources>
