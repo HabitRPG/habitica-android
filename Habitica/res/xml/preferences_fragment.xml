@@ -25,4 +25,13 @@
             android:title="@string/pref_reminder_picker" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/pref_dailies_title">
+        <CheckBoxPreference
+            android:key="show_due"
+            android:defaultValue="false"
+            android:title="@string/pref_dailies_show_due"/>
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

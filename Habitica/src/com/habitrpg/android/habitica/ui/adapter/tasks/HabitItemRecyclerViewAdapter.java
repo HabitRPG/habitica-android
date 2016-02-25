@@ -5,8 +5,10 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.TouchDelegate;
@@ -127,7 +129,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public void onEvent(TaskCreatedEvent evnt) {
         if (!taskType.equals(evnt.task.getType()))
             return;
-
         observableContent.add(0, evnt.task);
         filter();
     }
@@ -167,6 +168,21 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             filteredObservableContent = new ObservableArrayList<Task>();
             filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
         }
+
+        // Filter Due Dailies
+        boolean showDueOnly = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("show_due", false);
+
+        Log.i("MT: ", "showDueOnly: " + showDueOnly);
+
+        if (showDueOnly) {
+            ObservableArrayList<Task> filtered2 = new ObservableArrayList<>();
+            filtered2.addAll(this.tagsHelper.filterDue(filteredObservableContent, dailyResetOffset));
+            filteredObservableContent = filtered2;
+        }
+
+        // End Filter Due Dailies
+
 
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
@@ -474,6 +490,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
+
             checkbox.setOnCheckedChangeListener(this);
         }
 

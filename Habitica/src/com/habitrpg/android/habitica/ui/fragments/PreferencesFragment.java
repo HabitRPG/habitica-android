@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
@@ -53,7 +54,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         if (preference.getKey().equals("logout")) {
             HabiticaApplication.logout(context);
             getActivity().finish();
-        }else if(preference.getKey().equals("accountDetails")) {
+        } else if(preference.getKey().equals("accountDetails")) {
             openAccountDetailsFragment();
         }
         return false;
@@ -112,6 +113,8 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         } else if (key.equals("reminder_time")) {
             removeNotifications();
             scheduleNotifications();
+        } else if (key.equals("show_due")) {
+            Log.i("MT: ", "Inside Pref: " + sharedPreferences.getBoolean(key, true));
         }
     }
 }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by franzejr on 15/11/15.
- */
 public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>
     implements ItemTouchHelperAdapter{
 
