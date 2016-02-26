@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.util.Log;
+
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.ArrayList;
@@ -44,6 +46,18 @@ public class TagsHelper {
             }
         }
 
+        return filtered;
+    }
+
+    public List<Task> filterDue(List<Task> tasks, int offset) {
+        if (tasks.size() > 0 && !tasks.get(0).getType().equals(Task.TYPE_DAILY)) return tasks;
+        List<Task> filtered = new ArrayList<Task>();
+        for (Task t : tasks) {
+            if (t.getType().equals(Task.TYPE_DAILY))
+            Log.i("MT:", "Task is due - " + t.isDisplayedActive(offset) + " N: " + t.getText());
+            if (t.isDisplayedActive(offset))
+                filtered.add(t);
+        }
         return filtered;
     }
 }
