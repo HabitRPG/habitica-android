@@ -18,6 +18,15 @@
         android:orientation="horizontal"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/emoji.toggle.btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_emoticon_grey600_24dp"
+            android:scaleType="center"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="Toogle Emojis" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -25,13 +34,13 @@
             android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-            <EditText
+            <com.github.data5tream.emojilib.EmojiEditText
                 android:id="@+id/edit.new.message.text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Write Message"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/black" />
                 android:inputType="textCapSentences" />
 
         </android.support.design.widget.TextInputLayout>

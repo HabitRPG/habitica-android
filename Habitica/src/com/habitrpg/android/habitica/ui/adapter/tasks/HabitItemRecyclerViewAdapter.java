@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
 import com.habitrpg.android.habitica.databinding.HabitItemCardBinding;
@@ -312,6 +314,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         public HabitViewHolder(View itemView) {
             super(itemView);
 
+
             binding = DataBindingUtil.bind(itemView);
 
             btnPlus.setClickable(true);
@@ -340,7 +343,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         @Override
         public void bindHolder(Task habitItem, int position) {
             super.bindHolder(habitItem, position);
-
             binding.setHabit(habitItem);
         }
     }
@@ -409,7 +411,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                     for (ChecklistItem item : this.Item.checklist) {
                         LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
-                        TextView textView = (TextView) itemView.findViewById(R.id.checkedTextView);
+                        EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
                         textView.setText(item.getText());
                         checkbox.setChecked(item.getCompleted());
@@ -548,7 +550,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
                     EventBus.getDefault().post(event);
                 }
-            };
+            }
         }
 
         private MaterialDialog createGearDialog(LinearLayout contentViewForDialog) {
@@ -562,7 +564,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                         }
                     })
                     .contentGravity(GravityEnum.CENTER)
-                    .positiveColor(context.getResources().getColor(R.color.brand_200))
+                    .positiveColor(ContextCompat.getColor(context, R.color.brand_200))
                     .positiveText(R.string.reward_dialog_buy)
                     .title(binding.getReward().getText())
                     .customView(contentViewForDialog, true)
@@ -620,7 +622,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             priceTextView.setPadding(10, 0, 0, 0);
 
             ImageView gold = new ImageView(context);
-            gold.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_header_gold));
+            gold.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_header_gold));
             gold.setMinimumHeight(50);
             gold.setMinimumWidth(50);
             gold.setPadding(0, 0, 5, 0);

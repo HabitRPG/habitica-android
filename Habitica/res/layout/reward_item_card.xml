@@ -51,19 +51,19 @@
                         android:layout_toRightOf="@+id/imageView3"
                         android:layout_toEndOf="@+id/imageView3">
 
-                        <TextView
+                        <com.github.data5tream.emojilib.EmojiTextView
                             android:id="@+id/checkedTextView"
                             style="@style/CardTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{reward.text}"/>
+                            bind:parsemarkdown="@{reward.text}"/>
 
-                        <TextView
+                        <com.github.data5tream.emojilib.EmojiTextView
                             android:id="@+id/notesTextView"
                             style="@style/CardText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{reward.notes}"
+                            bind:parsemarkdown="@{reward.notes}"
                             android:visibility="@{reward.notes != null ? View.VISIBLE : View.GONE}"/>
 
                     </LinearLayout>

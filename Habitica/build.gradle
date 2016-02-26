@@ -26,6 +26,11 @@ repositories {
         url "http://dl.bintray.com/florent37/maven"
     }
 
+    // Markdown
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+
     maven {
         url "https://jitpack.io"
     }
@@ -60,6 +65,12 @@ dependencies {
 
     // Icons
     compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+
+    // Emojis
+    compile 'com.github.data5tream:emoji-lib:0.0.2.1'
+
+    // Markdown
+    compile 'com.commonsware.cwac:anddown:0.2.4'
 
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'

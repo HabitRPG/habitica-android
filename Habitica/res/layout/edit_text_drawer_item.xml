@@ -17,7 +17,7 @@
             android:layout_weight="8"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-            <EditText
+            <com.github.data5tream.emojilib.EmojiEditText
                 android:id="@+id/editText"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"

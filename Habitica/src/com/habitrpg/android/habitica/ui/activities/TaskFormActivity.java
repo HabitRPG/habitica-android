@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,15 +20,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiGridView;
+import com.github.data5tream.emojilib.EmojiPopup;
+import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
@@ -63,7 +71,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private CheckListAdapter checklistAdapter;
 
     @Bind(R.id.task_value_edittext)
-    EditText taskValue;
+    EmojiEditText taskValue;
 
     @Bind(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
@@ -81,10 +89,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     LinearLayout mainWrapper;
 
     @Bind(R.id.task_text_edittext)
-    EditText taskText;
+    EmojiEditText taskText;
 
     @Bind(R.id.task_notes_edittext)
-    EditText taskNotes;
+    EmojiEditText taskNotes;
 
     @Bind(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
@@ -120,14 +128,23 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     RecyclerView recyclerView;
 
     @Bind(R.id.new_checklist)
-    EditText newCheckListEditText;
+    EmojiEditText newCheckListEditText;
 
     @Bind(R.id.add_checklist_button)
     Button button;
 
+    @Bind(R.id.emoji_toggle_btn0)
+    ImageButton emojiToggle0;
+
+    @Bind(R.id.emoji_toggle_btn1)
+    ImageButton emojiToggle1;
+
+
+    ImageButton emojiToggle2;
     @Bind(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
 
+    EmojiPopup popup;
     @Bind(R.id.task_duedate_picker)
     DatePicker dueDatePicker;
 
@@ -150,7 +167,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         btnDelete.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnDelete, getResources().getColor(R.color.worse_10));
+        ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,10 +248,139 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             btnDelete.setEnabled(true);
         } else {
             setTitle((Task) null);
+            taskText.requestFocus();
         }
 
         if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
+        }
+
+        // Emoji keyboard stuff
+        boolean isTodo = false;
+        if (taskType.equals("todo")) {
+            isTodo = true;
+        }
+
+        // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
+        if (isTodo) {
+            emojiToggle2 = (ImageButton) findViewById(R.id.emoji_toggle_btn2);
+        } else {
+            emojiToggle2 = emojiToggle0;
+        }
+
+        popup = new EmojiPopup(emojiToggle0.getRootView(), this, ContextCompat.getColor(this, R.color.brand));
+
+        popup.setSizeForSoftKeyboard();
+        popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                changeEmojiKeyboardIcon(false);
+            }
+        });
+        popup.setOnSoftKeyboardOpenCloseListener(new EmojiPopup.OnSoftKeyboardOpenCloseListener() {
+
+            @Override
+            public void onKeyboardOpen(int keyBoardHeight) {
+
+            }
+
+            @Override
+            public void onKeyboardClose() {
+                if (popup.isShowing())
+                    popup.dismiss();
+            }
+        });
+
+        popup.setOnEmojiconClickedListener(new EmojiGridView.OnEmojiconClickedListener() {
+
+            @Override
+            public void onEmojiconClicked(Emojicon emojicon) {
+                EmojiEditText emojiEditText = null;
+                if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
+                    return;
+                } else {
+                    emojiEditText = (EmojiEditText) getCurrentFocus();
+                }
+                int start = emojiEditText.getSelectionStart();
+                int end = emojiEditText.getSelectionEnd();
+                if (start < 0) {
+                    emojiEditText.append(emojicon.getEmoji());
+                } else {
+                    emojiEditText.getText().replace(Math.min(start, end),
+                            Math.max(start, end), emojicon.getEmoji(), 0,
+                            emojicon.getEmoji().length());
+                }
+            }
+        });
+
+        popup.setOnEmojiconBackspaceClickedListener(new EmojiPopup.OnEmojiconBackspaceClickedListener() {
+
+            @Override
+            public void onEmojiconBackspaceClicked(View v) {
+                if (isEmojiEditText(getCurrentFocus())) {
+                    KeyEvent event = new KeyEvent(
+                            0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
+                    getCurrentFocus().dispatchKeyEvent(event);
+                }
+            }
+        });
+
+        emojiToggle0.setOnClickListener(new emojiClickListener(taskText));
+        emojiToggle1.setOnClickListener(new emojiClickListener(taskNotes));
+        if (isTodo) {
+            emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
+        }
+    }
+
+    private boolean isEmojiEditText(View view) {
+        return view instanceof EmojiEditText;
+    }
+
+    private void changeEmojiKeyboardIcon(Boolean keyboardOpened) {
+
+        if (keyboardOpened) {
+            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+            emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_keyboard_grey600_24dp));
+        } else {
+            emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+            emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+            emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+        }
+    }
+
+    private class emojiClickListener implements View.OnClickListener {
+
+        EmojiEditText view;
+
+        public emojiClickListener(EmojiEditText view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(!popup.isShowing()){
+
+                if(popup.isKeyBoardOpen()){
+                    popup.showAtBottom();
+                    changeEmojiKeyboardIcon(true);
+                }
+
+                else{
+                    view.setFocusableInTouchMode(true);
+                    view.requestFocus();
+                    popup.showAtBottomPending();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                    changeEmojiKeyboardIcon(true);
+                }
+            }
+
+            else{
+                popup.dismiss();
+                changeEmojiKeyboardIcon(false);
+            }
         }
     }
 
@@ -385,9 +531,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (task.type.equals("daily")) {
 
             if (task.getStartDate() != null) {
-                Calendar calendar = new GregorianCalendar();
-                calendar.setTime(task.getStartDate());
-                startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTime(task.getStartDate());
+            startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             }
 
             if (task.getFrequency().equals("weekly")) {
@@ -420,7 +566,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private boolean saveTask(Task task) {
-        task.text = taskText.getText().toString();
+        task.text = MarkdownParser.parseCompiled(taskText.getText());
 
         if (checklistAdapter != null) {
             if (checklistAdapter.getCheckListItems() != null) {
@@ -431,7 +577,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (task.text.isEmpty())
             return false;
 
-        task.notes = taskNotes.getText().toString();
+        task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
         if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
             task.setPriority((float) 0.1);
@@ -451,7 +597,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             break;
 
             case "daily": {
-                Calendar calendar = new GregorianCalendar();
+                GregorianCalendar calendar = new GregorianCalendar();
                 calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
                 task.setStartDate(new Date(calendar.getTimeInMillis()));
 

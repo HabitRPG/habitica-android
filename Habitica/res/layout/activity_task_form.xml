@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:padding="@dimen/abc_action_bar_content_inset_material">
 
-
         <LinearLayout
             android:id="@+id/task_task_wrapper"
             android:layout_width="match_parent"
@@ -20,30 +19,58 @@
             android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                android:orientation="horizontal" >
 
-                <EditText
-                    android:id="@+id/task_text_edittext"
+                <ImageButton
+                    android:id="@+id/emoji.toggle.btn0"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_emoticon_grey600_24dp"
+                    android:background="@drawable/md_transparent"
+                    android:contentDescription="Toogle Emoji"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                    <com.github.data5tream.emojilib.EmojiEditText
+                        android:id="@+id/task_text_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/text"
                     android:textColor="@android:color/black"
                     android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
+                </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/task_notes_edittext"
+                <ImageButton
+                    android:id="@+id/emoji.toggle.btn1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_emoticon_grey600_24dp"
+                    android:background="@drawable/md_transparent"
+                    android:contentDescription="Toogle Emoji" />
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="72dp"
+                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                    <com.github.data5tream.emojilib.EmojiEditText
+                        android:id="@+id/task_notes_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/notes"
                     android:textColor="@android:color/black"
@@ -56,7 +83,7 @@
                 android:layout_height="72dp"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                <EditText
+                <com.github.data5tream.emojilib.EmojiEditText
                     android:id="@+id/task_value_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +92,7 @@
                     android:textColor="@android:color/black"
                     android:numeric="decimal" />
             </android.support.design.widget.TextInputLayout>
-
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,7 +210,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
+                <ImageButton
+                    android:id="@+id/emoji.toggle.btn2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_emoticon_grey600_24dp"
+                    android:background="@drawable/md_transparent"
+                    android:contentDescription="Toogle Emoji" />
+
+                <com.github.data5tream.emojilib.EmojiEditText
                     android:id="@+id/new_checklist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

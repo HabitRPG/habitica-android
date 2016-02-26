@@ -32,11 +32,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.github.data5tream.emojilib.EmojiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@{party.name}"
+                bind:parsemarkdown="@{party.name}"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
@@ -44,10 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">
 
-                <TextView android:layout_margin="5dp"
+                <com.github.data5tream.emojilib.EmojiTextView
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{party.description}" />
+                    bind:parsemarkdown="@{party.description}" />
 
             </android.support.v7.widget.CardView>
 
