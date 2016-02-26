@@ -35,7 +35,6 @@ public class Task extends BaseModel {
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
 
-
     @Column
     @PrimaryKey
     @NotNull

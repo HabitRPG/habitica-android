@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
         <import type="android.view.View"/>
@@ -52,19 +53,19 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="@dimen/task_top_bottom_padding"
                     android:paddingTop="@dimen/task_top_bottom_padding">
-                    <CheckedTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{todo.text}" />
+                        bind:parsemarkdown="@{todo.text}" />
 
-                    <TextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{todo.notes}"
+                        bind:parsemarkdown="@{todo.notes}"
                         android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}" />
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"

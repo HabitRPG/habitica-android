@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -56,7 +56,7 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
         View view;
 
         @Bind(R.id.editText)
-        EditText editText;
+        EmojiEditText editText;
 
         @Bind(R.id.btnAdd)
         Button btnAdd;
