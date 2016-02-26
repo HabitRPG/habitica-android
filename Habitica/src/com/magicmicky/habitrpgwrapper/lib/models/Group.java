@@ -25,6 +25,8 @@ public class Group extends BaseModel {
 
     public int memberCount;
 
+    public Boolean isMember;
+
     public String type;
 
     public String logo;
