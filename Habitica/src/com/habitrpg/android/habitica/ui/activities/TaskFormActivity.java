@@ -137,6 +137,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
 
+    @Bind(R.id.duedate_checkbox)
+    CheckBox dueDateCheckBox;
+
     @Bind(R.id.task_duedate_picker)
     DatePicker dueDatePicker;
 
@@ -237,7 +240,20 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             mainWrapper.removeView(startDateLayout);
         }
 
-        if (!taskType.equals("todo")) {
+        if (taskType.equals("todo")) {
+            dueDateLayout.removeView(dueDatePicker);
+            //Allows user to decide if they want to add a due date or not
+            dueDateCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (buttonView.isChecked()) {
+                        dueDateLayout.addView(dueDatePicker);
+                    } else {
+                        dueDateLayout.removeView(dueDatePicker);
+                    }
+                }
+            });
+        }else{
             mainWrapper.removeView(dueDateLayout);
         }
 
@@ -479,6 +495,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (task.type.equals("todo")) {
             if (task.getDueDate() != null) {
+                dueDateCheckBox.setChecked(true);
                 Calendar calendar = new GregorianCalendar();
                 calendar.setTime(task.getDueDate());
                 dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -568,10 +585,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             break;
 
             case "todo":{
-                Calendar calendar = new GregorianCalendar();
-                calendar.set(dueDatePicker.getYear(), dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
-                task.setDueDate(new Date(calendar.getTimeInMillis()));
+                if(dueDateCheckBox.isChecked()) {
+                    Calendar calendar = new GregorianCalendar();
+                    calendar.set(dueDatePicker.getYear(), dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
+                    task.setDueDate(new Date(calendar.getTimeInMillis()));
+                }else{
+                    task.setDueDate(null);
+                }
             }
+            break;
 
             case "reward": {
                 String value = taskValue.getText().toString();
