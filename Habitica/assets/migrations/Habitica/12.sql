@@ -1,0 +1,1 @@
+ALTER TABLE Quest ADD COLUMN RSVPNeeded bool;
