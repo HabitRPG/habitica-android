@@ -48,7 +48,7 @@
                     android:textColor="@android:color/black"
                     android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
-
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
@@ -92,7 +92,7 @@
                     android:textColor="@android:color/black"
                     android:numeric="decimal" />
             </android.support.design.widget.TextInputLayout>
-
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -190,9 +190,8 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private void markMessagesAsSeen(){
         if(!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
-        && gotNewMessages && navigatedOnceToFragment) {
+                && gotNewMessages && navigatedOnceToFragment) {
 
-    private class ParseMessages extends AsyncTask<Void, Void, Void> {
             gotNewMessages = false;
 
             apiHelper.apiService.seenMessages(seenGroupId, new Callback<String>() {
@@ -200,27 +199,18 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 public void success(String str, Response response) {
 
                 }
-        protected Void doInBackground(Void... params) {
 
                 @Override
                 public void failure(RetrofitError error) {
-            }
 
                 }
             });
         }
+    }
 
-        protected void onPostExecute(Void result) {
-            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+    @Override
+    public void failure(RetrofitError error) {
 
-            if(mRecyclerView != null) {
-                mRecyclerView.setAdapter(tavernAdapter);
-            }
-
-            if (swipeRefreshLayout != null) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }
     }
 
     public void onEvent(final FlagChatMessageCommand cmd) {
@@ -334,6 +324,36 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         outState.putString("groupId", this.groupId);
         outState.putBoolean("isTavern", this.isTavern);
         super.onSaveInstanceState(outState);
+    }
+
+    private class ParseMessages extends AsyncTask<Void, Void, Void> {
+        private List<ChatMessage> chatMessages;
+
+        public ParseMessages(List<ChatMessage> chatMessages) {
+            this.chatMessages = chatMessages;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            for (int i = 0; i < chatMessages.size() ; i++) {
+                chatMessages.get(i).parsedText = MarkdownParser.parseMarkdown(chatMessages.get(i).text);
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+
+            if(mRecyclerView != null) {
+                mRecyclerView.setAdapter(tavernAdapter);
+            }
+
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
 }
