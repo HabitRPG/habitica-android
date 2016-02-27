@@ -4,27 +4,46 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
+import android.support.v7.widget.Toolbar;
 
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
 
-public class PrefsActivity extends AppCompatActivity implements
+import butterknife.Bind;
+
+public class PrefsActivity extends BaseActivity implements
         PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_prefs;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_prefs);
+        setupToolbar(toolbar);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new PreferencesFragment())
                 .commit();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            onBackPressed();
+            return true;
+        }
+        return super.onSupportNavigateUp();
     }
 
     @Override
