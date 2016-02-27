@@ -59,7 +59,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:gridlayout-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:preference-v7:23.1.1'
+    compile 'com.android.support:preference-v14:23.1.1'
 
     // Image Loading/Caching
     compile 'com.squareup.picasso:picasso:2.5.2'

@@ -36,7 +36,7 @@
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">

@@ -91,4 +91,7 @@
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_stroke">#32000000</color>
+
+    <!-- Preferences -->
+    <color name="preference_fallback_accent_color">@color/colorAccent</color>
 </resources>
