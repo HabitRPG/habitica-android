@@ -44,8 +44,8 @@ import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -159,15 +159,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (this.tagsIdHelper == null) {
-=======
+
         if (this.tagsIdHelper == null && user != null) {
->>>>>>> origin/develop
-=======
-        if (this.tagsIdHelper == null && user != null) {
->>>>>>> origin/develop
             this.tagsIdHelper = new TagsHelper();
             //Pass in the information of the user because TagsHelper does the filtering.
             for(Tag userTags : user.getTags()){
@@ -176,15 +169,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //This is to pass the names into other activities, not just their IDs
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (this.tagsNameHelper == null) {
-=======
         if (this.tagsNameHelper == null && user != null) {
->>>>>>> origin/develop
-=======
-        if (this.tagsNameHelper == null && user != null) {
->>>>>>> origin/develop
             this.tagsNameHelper = new TagsHelper();
             for(Tag userTags : user.getTags()){
 

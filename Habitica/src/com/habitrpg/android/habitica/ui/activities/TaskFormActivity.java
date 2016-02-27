@@ -153,13 +153,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
 
-<<<<<<< HEAD
     @Bind(R.id.duedate_checkbox)
     CheckBox dueDateCheckBox;
 
-=======
-    EmojiPopup popup;
->>>>>>> ad3d3e223cbd2cf9a02bc030bbce1637d5ace8d0
     @Bind(R.id.task_duedate_picker)
     DatePicker dueDatePicker;
 
@@ -169,6 +165,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.task_tags_checklist)
     LinearLayout tagsContainerLinearLayout;
 
+    EmojiPopup popup;
 
     @Override
     protected int getLayoutResId() {

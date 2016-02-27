@@ -92,16 +92,7 @@
                     android:textColor="@android:color/black"
                     android:numeric="decimal" />
             </android.support.design.widget.TextInputLayout>
-<<<<<<< HEAD
-
-=======
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/task_difficulty_wrapper">
->>>>>>> ad3d3e223cbd2cf9a02bc030bbce1637d5ace8d0
 
             <LinearLayout
                     android:layout_width="match_parent"
