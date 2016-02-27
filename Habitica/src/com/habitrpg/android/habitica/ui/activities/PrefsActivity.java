@@ -18,7 +18,7 @@ public class PrefsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new PreferencesFragment())
                 .commit();
     }
