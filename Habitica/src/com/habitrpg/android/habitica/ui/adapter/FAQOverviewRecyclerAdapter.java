@@ -31,7 +31,7 @@ public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOvervie
     @Override
     public FAQArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.faq_overview_item, parent, false);
+                .inflate(R.layout.plain_list_item, parent, false);
 
         return new FAQArticleViewHolder(view);
     }

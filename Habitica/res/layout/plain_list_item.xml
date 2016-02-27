@@ -3,8 +3,7 @@
     android:id="@+id/linearLayout"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:background="@drawable/btn_habit_background">
+    android:clickable="true">
 <TextView
     android:id="@+id/textView"
     android:layout_width="match_parent"

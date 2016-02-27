@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.customization.Avatar
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
@@ -36,13 +37,14 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_SKILLS = 1;
     public static final int SIDEBAR_TAVERN = 3;
     public static final int SIDEBAR_PARTY = 4;
-    public static final int SIDEBAR_AVATAR = 5;
-    public static final int SIDEBAR_EQUIPMENT = 6;
-    public static final int SIDEBAR_STABLE = 7;
-    public static final int SIDEBAR_PURCHASE = 8;
-    public static final int SIDEBAR_SETTINGS = 9;
-    public static final int SIDEBAR_HELP = 10;
-    public static final int SIDEBAR_ABOUT = 11;
+    public static final int SIDEBAR_GUILDS = 5;
+    public static final int SIDEBAR_AVATAR = 6;
+    public static final int SIDEBAR_EQUIPMENT = 7;
+    public static final int SIDEBAR_STABLE = 8;
+    public static final int SIDEBAR_PURCHASE = 9;
+    public static final int SIDEBAR_SETTINGS = 10;
+    public static final int SIDEBAR_HELP = 11;
+    public static final int SIDEBAR_ABOUT = 12;
 
 
 
@@ -80,8 +82,8 @@ public class MainDrawerBuilder {
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
-                        /*new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),*/
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)).withIdentifier(SIDEBAR_GUILDS),
+                        //new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
                         new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR),
@@ -114,6 +116,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_PARTY: {
                                 fragment = new PartyFragment();
+                                break;
+                            }
+                            case SIDEBAR_GUILDS: {
+                                fragment = new GuildsOverviewFragment();
                                 break;
                             }
                             case SIDEBAR_TAVERN: {

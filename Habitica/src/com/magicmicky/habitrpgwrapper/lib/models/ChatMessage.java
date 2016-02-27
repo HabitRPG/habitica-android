@@ -32,6 +32,8 @@ public class ChatMessage {
 
     public String text;
 
+    public CharSequence parsedText;
+
     public long timestamp;
 
     public HashMap<String, Boolean> likes;
