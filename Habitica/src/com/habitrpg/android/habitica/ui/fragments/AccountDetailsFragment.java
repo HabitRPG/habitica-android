@@ -37,6 +37,6 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
         ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         clipMan.setPrimaryClip(ClipData.newPlainText(preference.getKey(), preference.getSummary()));
         Toast.makeText(getActivity(), "Copied " + preference.getKey() + " to clipboard.", Toast.LENGTH_SHORT).show();
-        return true;
+        return super.onPreferenceTreeClick(preference);
     }
 }

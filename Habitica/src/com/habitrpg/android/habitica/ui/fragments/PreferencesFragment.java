@@ -56,7 +56,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             HabiticaApplication.logout(context);
             getActivity().finish();
         }
-        return false;
+        return super.onPreferenceTreeClick(preference);
     }
 
     private void scheduleNotifications() {
