@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.prefs;
+package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Build;

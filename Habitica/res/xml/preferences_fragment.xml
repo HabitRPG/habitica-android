@@ -50,8 +50,8 @@
 
 
         <Preference android:title="@string/logout"
-        android:key="logout"
-        android:summary="Log out of your account"/>
+            android:key="logout"
+            android:summary="Log out of your account"/>
     </PreferenceCategory>
 
     <PreferenceCategory
