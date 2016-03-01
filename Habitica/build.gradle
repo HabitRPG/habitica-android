@@ -95,7 +95,7 @@ dependencies {
 
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     //Material Dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar')
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar')
 
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 

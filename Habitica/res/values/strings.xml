@@ -7,7 +7,6 @@
     <string name="HP_default">Health</string>
     <string name="MP_default">Mana</string>
     <string name="ERR_pb_barcode">Prefs couldn\'t be loaded from the barcode</string>
-    <string name="amplitude_app_id">zxczxc</string>
 
     <!--  Prefs -->
     <string name="PS_settings_title">Settings</string>
