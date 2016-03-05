@@ -60,7 +60,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {

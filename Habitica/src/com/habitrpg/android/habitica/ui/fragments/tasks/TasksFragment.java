@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -66,7 +67,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -144,13 +147,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
         });
 
-        filterDrawer = new DrawerBuilder()
-                .withActivity(activity)
-                .withDrawerGravity(Gravity.RIGHT)
-                .withCloseOnClick(false)
-                .append(activity.drawer);
+        if (this.filterDrawer == null) {
+            filterDrawer = new DrawerBuilder()
+                    .withActivity(activity)
+                    .withDrawerGravity(Gravity.END)
+                    .withCloseOnClick(false)
+                    .append(activity.drawer);
+        }
 
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
+        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
         viewPager.setCurrentItem(0);
 
@@ -396,6 +401,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //region Events
 
+    @Subscribe
     public void onEvent(final CreateTagCommand event) {
         final Tag t = new Tag();
         t.setName(event.tagName);
@@ -421,6 +427,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(TaskTappedEvent event) {
         if (this.displayingTaskForm) {
             return;
@@ -438,21 +445,22 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
-    public void onEvent(TaskLongPressedEvent event) {
-    }
-
+    @Subscribe
     public void onEvent(TaskCheckedCommand event) {
         mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(activity, event.Task.getId()));
     }
 
+    @Subscribe
     public void onEvent(HabitScoreEvent event) {
         mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(activity, event.Habit.getId()));
     }
 
+    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
+    @Subscribe
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
         if (event.created) {
@@ -464,25 +472,28 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(ToggledInnStateEvent event) {
         user.getPreferences().setSleep(event.Inn);
     }
 
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        filterDrawer.removeAllItems();
-        filterDrawer.addItems(
-                new SectionDrawerItem().withName("Filter by Tag"),
-                new EditTextDrawer()
-        );
-
-        for (Tag t : tagList) {
-            filterDrawer.addItem(new SwitchDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                            .withOnCheckedChangeListener(this)
+        if (filterDrawer != null) {
+            filterDrawer.removeAllItems();
+            filterDrawer.addItems(
+                    new SectionDrawerItem().withName("Filter by Tag"),
+                    new EditTextDrawer()
             );
+
+            for (Tag t : tagList) {
+                filterDrawer.addItem(new SwitchDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                                .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                                .withOnCheckedChangeListener(this)
+                );
+            }
         }
     }
 
@@ -542,7 +553,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onDestroyView() {
         DrawerLayout layout =  filterDrawer.getDrawerLayout();
-        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         super.onDestroyView();
     }
 

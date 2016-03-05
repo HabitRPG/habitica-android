@@ -19,7 +19,8 @@ import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by Negue on 14.06.2015.
@@ -180,6 +181,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         valueBar.icHeader.setImageResource(icon);
     }
 
+    @Subscribe
     public void onEvent(BoughtGemsEvent gemsEvent){
         Double gems = userObject.getBalance() * 4;
         gems += gemsEvent.NewGemsToAdd;

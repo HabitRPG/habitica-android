@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 public class BaseFragment extends Fragment {
 

@@ -23,6 +23,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
@@ -40,6 +41,7 @@ import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.FAQArticleListDeserilializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.GroupDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
@@ -117,6 +119,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
                 .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
                 .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
+                .registerTypeAdapter(Group.class, new GroupDeserializer())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();

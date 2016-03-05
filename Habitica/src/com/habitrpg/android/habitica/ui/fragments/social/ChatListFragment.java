@@ -40,8 +40,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.EventBusException;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
+import org.greenrobot.eventbus.Subscribe;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -213,6 +215,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     }
 
+    @Subscribe
     public void onEvent(final FlagChatMessageCommand cmd) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
@@ -236,6 +239,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         builder.show();
     }
 
+    @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
         apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id, new Callback<List<Void>>() {
             @Override
@@ -250,6 +254,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    @Subscribe
     public void onEvent(final DeleteChatMessageCommand cmd) {
         apiHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
             @Override
@@ -268,6 +273,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    @Subscribe
     public void onEvent(SendNewGroupMessageCommand cmd) {
 
         apiHelper.apiService.postGroupChat(cmd.TargetGroupId, cmd.Message, new Callback<PostChatMessageResult>() {
@@ -290,6 +296,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
+    @Subscribe
     public void onEvent(ToggleInnCommand event) {
         apiHelper.toggleSleep(new Callback<Void>() {
             @Override

@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
-
         android:scrollbars="vertical" />
 
 </android.support.design.widget.CoordinatorLayout>

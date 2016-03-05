@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -74,6 +76,7 @@ import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
@@ -90,7 +93,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -148,18 +151,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(false);
-                actionBar.setDisplayShowTitleEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-            }
-        }
+        setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
@@ -223,7 +215,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
             return;
         }
-
+        this.activeFragment = fragment;
         fragment.setArguments(getIntent().getExtras());
         fragment.mAPIHelper = mAPIHelper;
         fragment.setUser(user);
@@ -488,10 +480,11 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
         if (drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (drawer.getDrawerLayout().isDrawerOpen(Gravity.RIGHT)) {
-            drawer.getDrawerLayout().closeDrawer(Gravity.RIGHT);
+        } else if (drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
+            drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -513,23 +506,28 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     // region Events
 
+    @Subscribe
     public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(user);
     }
 
+    @Subscribe
     public void onEvent(UpdateUserCommand event) {
         mAPIHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
     }
 
+    @Subscribe
     public void onEvent(UnlockPathCommand event) {
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         mAPIHelper.apiService.unlockPath(event.path, new UnlockCallback(this, this.user));
     }
 
+    @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
         drawer.setSelection(event.identifier);
     }
 
+    @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
 
@@ -597,6 +595,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         user.async().save();
     }
 
+    @Subscribe
     public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
             @Override
@@ -611,12 +610,19 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         });
     }
 
+    @Subscribe
     public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
+    @Subscribe
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
         this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+    }
+
+    @Subscribe
+    public void onEvent(DisplayFragmentEvent event) {
+        this.displayFragment(event.fragment);
     }
 
     // endregion
