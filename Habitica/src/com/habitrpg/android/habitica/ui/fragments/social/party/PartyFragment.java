@@ -123,7 +123,7 @@ public class PartyFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group);
+                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user, mAPIHelper);
                         break;
                     }
                     case 1: {

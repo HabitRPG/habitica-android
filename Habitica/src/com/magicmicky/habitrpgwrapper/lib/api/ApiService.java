@@ -141,4 +141,22 @@ public interface ApiService {
 
     @POST("/user/batch-update")
     void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
+
+    @POST("/groups/{gid}/questAccept")
+    void acceptQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questReject")
+    void rejectQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questCancel")
+    void cancelQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questAccept?force=true")
+    void forceStartQuest(@Path("gid") String groupId, @Body Group group, Callback<Group> cb);
+
+    @POST("/groups/{gid}/questAbort")
+    void abortQuest(@Path("gid") String groupId, Callback<Group> cb);
+
+    @POST("/groups/{gid}/questLeave")
+    void leaveQuest(@Path("gid") String groupId, Callback<Void> cb);
 }

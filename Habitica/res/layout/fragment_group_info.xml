@@ -6,6 +6,7 @@
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.Group" />
         <import type="com.magicmicky.habitrpgwrapper.lib.models.QuestContent" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>
 
@@ -16,6 +17,10 @@
         <variable
             name="quest"
             type="QuestContent" />
+
+        <variable
+            name="user"
+            type="HabitRPGUser" />
     </data>
 
 
@@ -115,6 +120,99 @@
                         android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}"
                         />
 
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:visibility="@{quest != null ? View.VISIBLE : View.GONE}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/questMemberView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:visibility="@{party.quest.active? View.VISIBLE : View.GONE}">
+
+                        <Button
+                            android:id="@+id/btnQuestAbort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_warning"
+                            android:text="@string/quest.abort"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{(party.quest != null &amp;&amp; user.getId().equals(party.quest.leader))? View.VISIBLE : View.GONE}" />
+
+                        <Button
+                            android:id="@+id/btnQuestLeave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_warning"
+                            android:text="@string/quest.leave"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{(!user.getId().equals(party.quest.leader) &amp;&amp; party.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:visibility="@{!party.quest.active? View.VISIBLE : View.GONE}">
+
+                        <Button
+                            android:id="@+id/btnQuestAccept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_success"
+                            android:text="@string/quest.accept"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{user.getParty().getQuest().RSVPNeeded? View.VISIBLE : View.GONE}" />
+
+                        <Button
+                            android:id="@+id/btnQuestReject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_danger"
+                            android:text="@string/quest.reject"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{user.getParty().getQuest().RSVPNeeded? View.VISIBLE : View.GONE}" />
+
+                        <Button
+                            android:id="@+id/btnQuestBegin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_warning"
+                            android:text="@string/quest.begin"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{user.getId().equals(party.quest.leader) ? View.VISIBLE : View.GONE}" />
+
+                        <Button
+                            android:id="@+id/btnQuestCancel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/btn_danger"
+                            android:text="@string/quest.cancel"
+                            android:textColor="@android:color/white"
+                            android:visibility="@{user.getId().equals(party.quest.leader) ? View.VISIBLE : View.GONE}" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
