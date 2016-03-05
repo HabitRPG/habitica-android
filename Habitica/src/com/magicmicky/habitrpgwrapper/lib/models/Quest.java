@@ -25,6 +25,9 @@ public class Quest extends BaseModel {
     @Column
     public String leader;
 
+    @Column
+    public boolean RSVPNeeded;
+
     public HashMap<String, Boolean> members;
 
     @ForeignKey(references = {@ForeignKeyReference(columnName = "progress_id",
