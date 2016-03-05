@@ -149,18 +149,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(false);
-                actionBar.setDisplayShowTitleEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-            }
-        }
+        setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
