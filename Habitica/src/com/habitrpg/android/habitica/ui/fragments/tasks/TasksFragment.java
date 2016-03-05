@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -144,13 +145,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
         });
 
-        filterDrawer = new DrawerBuilder()
-                .withActivity(activity)
-                .withDrawerGravity(Gravity.RIGHT)
-                .withCloseOnClick(false)
-                .append(activity.drawer);
+        if (this.filterDrawer == null) {
+            filterDrawer = new DrawerBuilder()
+                    .withActivity(activity)
+                    .withDrawerGravity(Gravity.END)
+                    .withCloseOnClick(false)
+                    .append(activity.drawer);
+        }
 
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
+        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
         viewPager.setCurrentItem(0);
         if (this.tagsHelper == null) {
@@ -525,7 +528,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onDestroyView() {
         DrawerLayout layout =  filterDrawer.getDrawerLayout();
-        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         super.onDestroyView();
     }
 

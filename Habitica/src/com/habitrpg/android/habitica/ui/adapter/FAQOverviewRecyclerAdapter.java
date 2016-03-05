@@ -48,9 +48,6 @@ public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOvervie
 
     class FAQArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.linearLayout)
-        LinearLayout linearLayout;
-
         @Bind(R.id.textView)
         TextView textView;
 
@@ -62,7 +59,7 @@ public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOvervie
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            linearLayout.setOnClickListener(this);
+            textView.setOnClickListener(this);
 
             context = itemView.getContext();
         }

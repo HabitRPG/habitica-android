@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
@@ -34,6 +35,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
             adapter = new FAQOverviewRecyclerAdapter();
             adapter.activity = activity;
             recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             recyclerView.setAdapter(adapter);
             this.loadArticles();
 

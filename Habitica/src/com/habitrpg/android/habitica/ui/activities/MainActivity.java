@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -479,8 +480,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
         if (drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (drawer.getDrawerLayout().isDrawerOpen(Gravity.RIGHT)) {
-            drawer.getDrawerLayout().closeDrawer(Gravity.RIGHT);
+        } else if (drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
+            drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
 
