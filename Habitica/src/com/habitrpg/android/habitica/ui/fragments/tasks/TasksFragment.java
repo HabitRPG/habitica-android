@@ -446,19 +446,21 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        filterDrawer.removeAllItems();
-        filterDrawer.addItems(
-                new SectionDrawerItem().withName("Filter by Tag"),
-                new EditTextDrawer()
-        );
-
-        for (Tag t : tagList) {
-            filterDrawer.addItem(new SwitchDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                            .withOnCheckedChangeListener(this)
+        if (filterDrawer != null) {
+            filterDrawer.removeAllItems();
+            filterDrawer.addItems(
+                    new SectionDrawerItem().withName("Filter by Tag"),
+                    new EditTextDrawer()
             );
+
+            for (Tag t : tagList) {
+                filterDrawer.addItem(new SwitchDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                                .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                                .withOnCheckedChangeListener(this)
+                );
+            }
         }
     }
 

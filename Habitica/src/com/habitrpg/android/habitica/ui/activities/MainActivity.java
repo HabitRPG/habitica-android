@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -223,7 +224,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
             return;
         }
-
+        this.activeFragment = fragment;
         fragment.setArguments(getIntent().getExtras());
         fragment.mAPIHelper = mAPIHelper;
         fragment.setUser(user);
@@ -492,6 +493,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             drawer.getDrawerLayout().closeDrawer(Gravity.RIGHT);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -617,6 +619,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
         this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+    }
+
+    public void onEvent(DisplayFragmentEvent event) {
+        this.displayFragment(event.fragment);
     }
 
     // endregion

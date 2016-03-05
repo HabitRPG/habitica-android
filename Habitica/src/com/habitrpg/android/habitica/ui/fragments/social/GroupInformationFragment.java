@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.social.party;
+package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,32 +9,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.FragmentPartyInfoBinding;
+import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 
 /**
  * Created by Negue on 16.09.2015.
  */
-public class PartyInformationFragment extends Fragment {
+public class GroupInformationFragment extends Fragment {
 
 
     private View view;
-    FragmentPartyInfoBinding viewBinding;
+    FragmentGroupInfoBinding viewBinding;
     private Group group;
 
-
-    public static PartyInformationFragment newInstance(Group group) {
+    public static GroupInformationFragment newInstance(Group group) {
 
         Bundle args = new Bundle();
 
-        PartyInformationFragment fragment = new PartyInformationFragment();
+        GroupInformationFragment fragment = new GroupInformationFragment();
         fragment.setArguments(args);
         fragment.group = group;
         return fragment;
     }
 
-    public PartyInformationFragment(){
+    public GroupInformationFragment(){
 
     }
 
@@ -42,7 +41,7 @@ public class PartyInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_party_info, container, false);
+            view = inflater.inflate(R.layout.fragment_group_info, container, false);
 
         viewBinding = DataBindingUtil.bind(view);
 
@@ -55,7 +54,7 @@ public class PartyInformationFragment extends Fragment {
 
     public void setGroup(Group group) {
         if (viewBinding != null) {
-            viewBinding.setParty(group);
+            viewBinding.setGroup(group);
         }
     }
 

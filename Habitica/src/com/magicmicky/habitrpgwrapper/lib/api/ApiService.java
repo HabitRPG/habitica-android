@@ -117,6 +117,12 @@ public interface ApiService {
     @GET("/groups/{gid}/chat")
     void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
 
+    @GET("/groups/{gid}/join")
+    void joinGroup(@Path("gid") String groupId, Callback<Group> cb);
+
+    @GET("/groups/{gid}/leave")
+    void leaveGroup(@Path("gid") String groupId, Callback<Group> cb);
+
     @POST("/groups/{gid}/chat")
     void postGroupChat(@Path("gid") String groupId, @Query("message") String message, Callback<PostChatMessageResult> cb);
 
