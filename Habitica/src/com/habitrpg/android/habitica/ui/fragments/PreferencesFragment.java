@@ -6,13 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
+import android.support.v7.preference.Preference;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
-import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 
 import java.util.Calendar;
@@ -20,18 +17,24 @@ import java.util.Calendar;
 /**
  * Created by franzejr on 28/11/15.
  */
-public class PreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PreferencesFragment extends BasePreferencesFragment implements
+        SharedPreferences.OnSharedPreferenceChangeListener {
+
     private Context context;
     private TimePreference timePreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this.getActivity();
-        addPreferencesFromResource(R.xml.preferences_fragment);
+
+        context = getActivity();
+    }
+
+    @Override
+    protected void setupPreferences() {
         timePreference = (TimePreference) findPreference("reminder_time");
-        boolean use_reminder = getPreferenceManager().getSharedPreferences().getBoolean("use_reminder", false);
-        timePreference.setEnabled(use_reminder);
+        boolean useReminder = getPreferenceManager().getSharedPreferences().getBoolean("use_reminder", false);
+        timePreference.setEnabled(useReminder);
     }
 
     @Override
@@ -48,23 +51,13 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
+    public boolean onPreferenceTreeClick(Preference preference) {
         if (preference.getKey().equals("logout")) {
             HabiticaApplication.logout(context);
             getActivity().finish();
-        }else if(preference.getKey().equals("accountDetails")) {
-            openAccountDetailsFragment();
         }
-        return false;
+        return super.onPreferenceTreeClick(preference);
     }
-
-    private void openAccountDetailsFragment() {
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new AccountDetailsFragment()).addToBackStack(null)
-                .commit();
-    }
-
 
     private void scheduleNotifications() {
 
@@ -114,4 +107,17 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
             scheduleNotifications();
         }
     }
+
+    @Override
+    public void onDisplayPreferenceDialog(Preference preference) {
+        if (preference instanceof TimePreference) {
+            if (getFragmentManager().findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
+                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                        .show(getFragmentManager(), TimePreferenceDialogFragment.TAG);
+            }
+        } else {
+            super.onDisplayPreferenceDialog(preference);
+        }
+    }
+
 }

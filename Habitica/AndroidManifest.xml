@@ -37,7 +37,6 @@
         </activity>
         <activity
             android:name=".ui.activities.PrefsActivity"
-            android:theme="@style/PreferencesTheme"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/PS_settings_title"
             android:screenOrientation="portrait"
