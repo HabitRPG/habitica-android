@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="8dp"
-                        android:visibility="@{party.quest.active? View.VISIBLE : View.GONE}">
+                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
 
                         <Button
                             android:id="@+id/btnQuestAbort"
@@ -156,7 +156,7 @@
                             android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.abort"
                             android:textColor="@android:color/white"
-                            android:visibility="@{(party.quest != null &amp;&amp; user.getId().equals(party.quest.leader))? View.VISIBLE : View.GONE}" />
+                            android:visibility="@{(group.quest != null &amp;&amp; user.getId().equals(group.quest.leader))? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestLeave"
@@ -165,7 +165,7 @@
                             android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.leave"
                             android:textColor="@android:color/white"
-                            android:visibility="@{(!user.getId().equals(party.quest.leader) &amp;&amp; party.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
+                            android:visibility="@{(!user.getId().equals(group.quest.leader) &amp;&amp; group.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
 
                     </LinearLayout>
 
@@ -174,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="8dp"
-                        android:visibility="@{!party.quest.active? View.VISIBLE : View.GONE}">
+                        android:visibility="@{!group.quest.active? View.VISIBLE : View.GONE}">
 
                         <Button
                             android:id="@+id/btnQuestAccept"
@@ -201,7 +201,7 @@
                             android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.begin"
                             android:textColor="@android:color/white"
-                            android:visibility="@{user.getId().equals(party.quest.leader) ? View.VISIBLE : View.GONE}" />
+                            android:visibility="@{user.getId().equals(group.quest.leader) ? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestCancel"
@@ -210,7 +210,7 @@
                             android:backgroundTint="@color/btn_danger"
                             android:text="@string/quest.cancel"
                             android:textColor="@android:color/white"
-                            android:visibility="@{user.getId().equals(party.quest.leader) ? View.VISIBLE : View.GONE}" />
+                            android:visibility="@{user.getId().equals(group.quest.leader) ? View.VISIBLE : View.GONE}" />
 
                     </LinearLayout>
                 </LinearLayout>

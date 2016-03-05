@@ -56,7 +56,8 @@ import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
@@ -103,10 +104,12 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         EventBus.getDefault().register(this);
     }
 
+    @Subscribe
     public void onEvent(FilterTasksByTagsCommand cmd) {
         filter();
     }
 
+    @Subscribe
     public void onEvent(TaskCheckedCommand evnt){
         if (!taskType.equals(evnt.Task.getType()))
             return;
@@ -119,6 +122,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filter();
     }
 
+    @Subscribe
     public void onEvent(TaskUpdatedEvent evnt) {
         if (!taskType.equals(evnt.task.getType()))
             return;
@@ -126,6 +130,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filter();
     }
 
+    @Subscribe
     public void onEvent(TaskCreatedEvent evnt) {
         if (!taskType.equals(evnt.task.getType()))
             return;
@@ -134,6 +139,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         filter();
     }
 
+    @Subscribe
     public void onEvent(TaskRemovedEvent evnt) {
         Task taskToDelete = null;
 

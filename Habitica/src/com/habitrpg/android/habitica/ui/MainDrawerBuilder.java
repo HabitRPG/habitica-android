@@ -104,7 +104,8 @@ public class MainDrawerBuilder {
                         BaseMainFragment fragment = null;
                         Class newActivityClass = null;
 
-                        switch (drawerItem.getIdentifier()) {
+                        int identifier = (int) drawerItem.getIdentifier();
+                        switch (identifier) {
                             case SIDEBAR_TASKS: {
                                 fragment = new TasksFragment();
                                 break;

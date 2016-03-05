@@ -17,8 +17,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.EventBusException;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
 
 public abstract class BaseMainFragment extends BaseFragment {
 

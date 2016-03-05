@@ -25,7 +25,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

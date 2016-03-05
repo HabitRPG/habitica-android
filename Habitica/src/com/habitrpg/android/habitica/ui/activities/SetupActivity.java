@@ -24,6 +24,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -146,6 +147,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         pager.addOnPageChangeListener(this);
     }
 
+    @Subscribe
     public void onEvent(UpdateUserCommand event) {
         this.apiHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
     }

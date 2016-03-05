@@ -66,7 +66,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -373,6 +375,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //region Events
 
+    @Subscribe
     public void onEvent(final CreateTagCommand event) {
         final Tag t = new Tag();
         t.setName(event.tagName);
@@ -398,6 +401,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(TaskTappedEvent event) {
         if (this.displayingTaskForm) {
             return;
@@ -414,21 +418,22 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
-    public void onEvent(TaskLongPressedEvent event) {
-    }
-
+    @Subscribe
     public void onEvent(TaskCheckedCommand event) {
         mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(activity, event.Task.getId()));
     }
 
+    @Subscribe
     public void onEvent(HabitScoreEvent event) {
         mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(activity, event.Habit.getId()));
     }
 
+    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
+    @Subscribe
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
         if (event.created) {
@@ -440,6 +445,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(ToggledInnStateEvent event) {
         user.getPreferences().setSleep(event.Inn);
     }

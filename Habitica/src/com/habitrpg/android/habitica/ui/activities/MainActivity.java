@@ -75,6 +75,7 @@ import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
@@ -91,7 +92,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -504,23 +505,28 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     // region Events
 
+    @Subscribe
     public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(user);
     }
 
+    @Subscribe
     public void onEvent(UpdateUserCommand event) {
         mAPIHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
     }
 
+    @Subscribe
     public void onEvent(UnlockPathCommand event) {
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         mAPIHelper.apiService.unlockPath(event.path, new UnlockCallback(this, this.user));
     }
 
+    @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
         drawer.setSelection(event.identifier);
     }
 
+    @Subscribe
     public void onEvent(final BuyRewardCommand event) {
         final String rewardKey = event.Reward.getId();
 
@@ -588,6 +594,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         user.async().save();
     }
 
+    @Subscribe
     public void onEvent(final DeleteTaskCommand cmd) {
         mAPIHelper.apiService.deleteTask(cmd.TaskIdToDelete, new Callback<Void>() {
             @Override
@@ -602,14 +609,17 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         });
     }
 
+    @Subscribe
     public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
+    @Subscribe
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
         this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
     }
 
+    @Subscribe
     public void onEvent(DisplayFragmentEvent event) {
         this.displayFragment(event.fragment);
     }

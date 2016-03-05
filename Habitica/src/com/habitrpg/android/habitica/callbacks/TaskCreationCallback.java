@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

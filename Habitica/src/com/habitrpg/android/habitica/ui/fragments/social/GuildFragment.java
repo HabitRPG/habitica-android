@@ -136,7 +136,7 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
 
                 switch (position) {
                     case 0: {
-                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild);
+                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user, mAPIHelper);
                         break;
                     }
                     case 1: {

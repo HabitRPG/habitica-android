@@ -232,4 +232,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
+    <string name="add_tag">Add Tag</string>
 </resources>

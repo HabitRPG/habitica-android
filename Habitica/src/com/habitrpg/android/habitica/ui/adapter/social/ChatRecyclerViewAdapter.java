@@ -30,8 +30,7 @@ import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.iconics.Iconics;
+
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -39,7 +38,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Negue on 20.08.2015.
@@ -206,10 +205,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 case TYPE_NEW_MESSAGE: {
                     btnSendNewMessage.setOnClickListener(this);
                     int color = ContextCompat.getColor(context, R.color.brand);
-
-                    // Using the Iconics buttons, it is unable to tint the background
-                    btnSendNewMessage.setTypeface(Iconics.findFont(FontAwesome.Icon.faw_comment).getTypeface(context));
-                    btnSendNewMessage.setText(new Iconics.IconicsBuilder().ctx(context).on("{faw-comment}").build());
 
                     ViewHelper.SetBackgroundTint(btnSendNewMessage, color);
 
