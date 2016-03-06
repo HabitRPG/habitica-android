@@ -8,14 +8,20 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/group_name_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/name"
-                    android:textColor="@android:color/black"
-                    android:inputType="textCapSentences" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat">
+            <EditText
+                android:id="@+id/group_name_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/name"
+                android:textColor="@android:color/black"
+                android:inputType="textCapSentences" />
+        </android.support.design.widget.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="72dp"
@@ -45,6 +51,24 @@
                     android:textColor="@android:color/black"
                     android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/privacyWrapper">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/privacySpinner" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

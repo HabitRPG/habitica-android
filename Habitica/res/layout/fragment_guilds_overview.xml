@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.Preferences" />
@@ -10,13 +12,11 @@
     </data>
 
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/chat.refresh.layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/md_grey_500"
-
-        android:scrollbars="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,8 +47,8 @@
                 android:id="@+id/publicGuildsButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_margin="@dimen/card_horizontal_padding"
                     android:text="@string/public_guilds" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

@@ -107,7 +107,7 @@ public class GroupInformationFragment extends Fragment {
     private void updateQuestMember(Group group) {
 
         questMemberView.removeAllViewsInLayout();
-        if (group.quest.key == null) return;
+        if (group.quest == null || group.quest.key == null) return;
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (HabitRPGUser member : group.members) {
             final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, null);

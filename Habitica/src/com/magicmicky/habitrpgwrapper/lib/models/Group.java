@@ -31,6 +31,8 @@ public class Group extends BaseModel {
 
     public Quest quest;
 
+    public String privacy;
+
     public ArrayList<ChatMessage> chat;
 
     public ArrayList<HabitRPGUser> members;
