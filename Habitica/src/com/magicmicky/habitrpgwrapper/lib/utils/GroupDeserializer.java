@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -20,7 +21,9 @@ public class GroupDeserializer implements JsonDeserializer<Group> {
         JsonObject obj = json.getAsJsonObject();
         group.id = obj.get("_id").getAsString();
         group.name = obj.get("name").getAsString();
-        group.description = obj.get("description").getAsString();
+        if (obj.has("description")) {
+            group.description = obj.get("description").getAsString();
+        }
 
         if (obj.has("memberCount")) {
             group.memberCount = obj.get("memberCount").getAsInt();
@@ -47,6 +50,10 @@ public class GroupDeserializer implements JsonDeserializer<Group> {
             } else {
                 group.leaderID = obj.get("leader").getAsJsonObject().get("_id").getAsString();
             }
+        }
+        if (obj.has("quest")) {
+            group.quest = context.deserialize(obj.get("quest"), new TypeToken<Quest>() {
+            }.getType());
         }
 
         return group;

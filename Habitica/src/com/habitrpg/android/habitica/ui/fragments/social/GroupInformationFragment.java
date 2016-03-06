@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
@@ -41,8 +45,16 @@ public class GroupInformationFragment extends Fragment {
     APIHelper mAPIHelper;
     @Bind(R.id.questMemberView)
     LinearLayout questMemberView;
+    @Bind(R.id.collectionStats)
+    RecyclerView collectionStats;
     private Group group;
     private HabitRPGUser user;
+    private QuestContent quest;
+    private ValueBarBinding bossHpBar;
+    private ValueBarBinding bossRageBar;
+
+    private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
+
 
 
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user, APIHelper mAPIHelper) {
@@ -78,6 +90,12 @@ public class GroupInformationFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        collectionStats.setLayoutManager(new LinearLayoutManager(getContext()));
+        questCollectViewAdapter = new QuestCollectRecyclerViewAdapter();
+        collectionStats.setAdapter(questCollectViewAdapter);
+        bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
+        bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
+
         return view;
     }
 
@@ -95,6 +113,8 @@ public class GroupInformationFragment extends Fragment {
             updateQuestMember(group);
         }
 
+        updateQuestProgress(group, quest);
+
         this.group = group;
     }
 
@@ -102,6 +122,20 @@ public class GroupInformationFragment extends Fragment {
         if (viewBinding != null) {
             viewBinding.setQuest(quest);
         }
+
+        updateQuestProgress(group, quest);
+
+        this.quest = quest;
+    }
+
+    private void updateQuestProgress(Group group, QuestContent quest) {
+        if (group == null || quest == null) {
+            return;
+        }
+        questCollectViewAdapter.setQuestContent(quest);
+        questCollectViewAdapter.setQuestProgress(group.quest.getProgress());
+        bossHpBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.hp > 0) ? View.VISIBLE : View.GONE);
+        bossRageBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.rage_value > 0) ? View.VISIBLE : View.GONE);
     }
 
     private void updateQuestMember(Group group) {

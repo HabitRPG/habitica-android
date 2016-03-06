@@ -6,6 +6,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.HashMap;
+
 /**
  * Created by viirus on 06/07/15.
  */
@@ -18,6 +20,11 @@ public class QuestProgress extends BaseModel {
 
     @Column
     private float down, up;
+
+    @Column
+    public double hp, rage;
+
+    public HashMap<String, Integer> collect;
 
     private QuestProgress(float down, float up) {
         this.down = down;
