@@ -39,17 +39,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Write Message"
-                android:textColor="@android:color/black" />
-                android:inputType="textCapSentences" />
+                android:hint="@string/write_message"
+                android:textColor="@android:color/black"
+                android:inputType="textCapSentences|textMultiLine" />
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btn.send.message"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:textColor="@color/white"
+            android:text="@string/post"
             android:drawableTint="@color/white"/>
     </LinearLayout>
 

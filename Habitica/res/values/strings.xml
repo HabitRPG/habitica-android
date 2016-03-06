@@ -234,4 +234,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="description">Description</string>
     <string name="add_tag">Add Tag</string>
     <string name="privacy">Privacy</string>
+    <string name="write_message">Write Message</string>
+    <string name="post">Post</string>
 </resources>
