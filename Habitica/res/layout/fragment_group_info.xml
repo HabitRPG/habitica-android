@@ -114,6 +114,40 @@
                         bind:questImageName='@{"quest_"+ quest.key}'
                         />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
+
+                        <include
+                            android:id="@+id/bossHpBar"
+                            layout="@layout/value_bar"
+                            bind:barForegroundColor="@{@color/hpColor}"
+                            bind:description='@{String.format("%.0f",Math.ceil(group.quest.getProgress().hp))+" / "+String.format("%.0f",Math.ceil(quest.boss.hp))}'
+                            bind:icon="@drawable/ic_header_heart"
+                            bind:partyMembers="@{true}"
+                            bind:text='@{"Boss Health"}'
+                            bind:weightToShow="@{(float)(group.quest.getProgress().hp / quest.boss.hp)}" />
+
+                        <include
+                            android:id="@+id/bossRageBar"
+                            layout="@layout/value_bar"
+                            bind:barForegroundColor="@{@color/mpColor}"
+                            bind:description='@{String.format("%.0f",Math.ceil(group.quest.getProgress().rage))+" / "+String.format("%.0f",Math.ceil(quest.boss.rage_value))}'
+                            bind:icon="@drawable/ic_header_magic"
+                            bind:partyMembers="@{true}"
+                            bind:text='@{"Rage"}'
+                            bind:weightToShow="@{(float)(group.quest.getProgress().rage / quest.boss.rage_value)}" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/collectionStats"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
