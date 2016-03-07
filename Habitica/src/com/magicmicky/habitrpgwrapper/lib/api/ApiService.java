@@ -114,6 +114,9 @@ public interface ApiService {
     @GET("/groups/{gid}")
     void getGroup(@Path("gid") String groupId, Callback<Group> cb);
 
+    @POST("/groups/{id}")
+    void updateGroup(@Path("id") String id, @Body Group item, Callback<Void> habitItemCallback);
+
     @GET("/groups/{gid}/chat")
     void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
 

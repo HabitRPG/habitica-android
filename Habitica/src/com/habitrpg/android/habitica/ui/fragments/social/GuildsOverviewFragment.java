@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +34,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class GuildsOverviewFragment extends BaseMainFragment implements Callback<ArrayList<Group>>, View.OnClickListener {
+public class GuildsOverviewFragment extends BaseMainFragment implements Callback<ArrayList<Group>>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.my_guilds_listview)
     LinearLayout  guildsListView;
@@ -41,6 +42,8 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
     @Bind(R.id.publicGuildsButton)
     Button publicGuildsButton;
 
+    @Bind(R.id.chat_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Group> guilds;
     private ArrayList<String> guildIDs;
@@ -57,11 +60,19 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_guilds_overview, container, false);
         ButterKnife.bind(this, v);
+        swipeRefreshLayout.setOnRefreshListener(this);
         this.publicGuildsButton.setOnClickListener(this);
         if (this.guilds != null) {
             this.setGuildsOnListView();
         }
         return v;
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+
+        fetchGuilds();
     }
 
     private void fetchGuilds() {
@@ -86,6 +97,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
             return;
         }
         this.guildIDs = new ArrayList<>();
+        this.guildsListView.removeAllViewsInLayout();
         LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (Group guild : this.guilds) {
             TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, null);
@@ -100,6 +112,9 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
     public void success(ArrayList<Group> groups, Response response) {
         this.guilds = groups;
         this.setGuildsOnListView();
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

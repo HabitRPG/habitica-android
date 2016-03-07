@@ -80,7 +80,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private static final int TASK_UPDATED_RESULT = 2;
 
     public ViewPager viewPager;
-    Drawer filterDrawer;
 
     MenuItem refreshItem;
 
@@ -147,15 +146,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
         });
 
-        if (this.filterDrawer == null) {
-            filterDrawer = new DrawerBuilder()
-                    .withActivity(activity)
-                    .withDrawerGravity(Gravity.END)
-                    .withCloseOnClick(false)
-                    .append(activity.drawer);
-        }
-
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
+        this.activity.filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
         viewPager.setCurrentItem(0);
 
@@ -205,7 +196,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         switch (id) {
             case R.id.action_search:
-                filterDrawer.openDrawer();
+                this.activity.filterDrawer.openDrawer();
                 return true;
             case R.id.action_reload:
                 refreshItem = item;
@@ -479,15 +470,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        if (filterDrawer != null) {
-            filterDrawer.removeAllItems();
-            filterDrawer.addItems(
+        if (this.activity.filterDrawer != null) {
+            this.activity.filterDrawer.removeAllItems();
+            this.activity.filterDrawer.addItems(
                     new SectionDrawerItem().withName("Filter by Tag"),
                     new EditTextDrawer()
             );
 
             for (Tag t : tagList) {
-                filterDrawer.addItem(new SwitchDrawerItem()
+                this.activity.filterDrawer.addItem(new SwitchDrawerItem()
                                 .withName(t.getName())
                                 .withTag(t)
                                 .withChecked(this.tagsHelper.isTagChecked(t.getId()))
@@ -519,7 +510,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
      */
     public void updateTags(List<TaskTag> tags) {
         Log.d("tags", "Updating tags");
-        List<IDrawerItem> filters = filterDrawer.getDrawerItems();
+        List<IDrawerItem> filters = this.activity.filterDrawer.getDrawerItems();
         for (IDrawerItem filter : filters) {
             if (filter instanceof SwitchDrawerItem) {
                 SwitchDrawerItem currentfilter = (SwitchDrawerItem) filter;
@@ -532,7 +523,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                     if (tagId != null && currentTag != null && tagId.equals(currentTag.getId())) {
                         //This doesn't seem to work properly. Sometimes it displays more tasks than I actually have.
                         currentfilter.withDescription("" + (currentTag.getTasks().size() + 1));
-                        filterDrawer.updateItem(currentfilter);
+                        this.activity.filterDrawer.updateItem(currentfilter);
                     }
                 }
             }
@@ -552,7 +543,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Override
     public void onDestroyView() {
-        DrawerLayout layout =  filterDrawer.getDrawerLayout();
+        DrawerLayout layout =  this.activity.filterDrawer.getDrawerLayout();
         layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         super.onDestroyView();
     }

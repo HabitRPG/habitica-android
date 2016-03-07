@@ -74,7 +74,7 @@
                     android:layout_gravity="center_horizontal"
                     android:hint="@string/notes"
                     android:textColor="@android:color/black"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textCapSentences|textMultiLine" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

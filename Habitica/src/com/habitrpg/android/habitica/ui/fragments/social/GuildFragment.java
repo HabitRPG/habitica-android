@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -28,6 +30,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class GuildFragment extends BaseMainFragment implements Callback<Group> {
+    private final int GROUP_FORM_ACTIVITY = 11;
 
     private Group guild;
     public boolean isMember;
@@ -58,28 +61,7 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 
         // Get the full group data
-        mAPIHelper.apiService.getGroup(this.guild.id, new Callback<Group>() {
-            @Override
-            public void success(Group group, Response response) {
-                if (group == null) {
-                    tabLayout.removeAllTabs();
-                    return;
-                }
-                GuildFragment.this.guild = group;
-
-                if (guildInformationFragment != null) {
-                    guildInformationFragment.setGroup(group);
-                }
-
-                if (chatListFragment != null) {
-                    chatListFragment.seenGroupId = group.id;
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        });
+        mAPIHelper.apiService.getGroup(this.guild.id, this);
 
         setViewPagerAdapter();
 
@@ -193,24 +175,84 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void displayEditForm() {
+        Bundle bundle = new Bundle();
+        bundle.putString("groupID",this.guild.id);
+        bundle.putString("name",this.guild.name);
+        bundle.putString("description",this.guild.description);
+        bundle.putString("privacy",this.guild.privacy);
+        bundle.putString("leader",this.guild.leaderID);
+
+        Intent intent = new Intent(activity, GroupFormActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(intent, GROUP_FORM_ACTIVITY);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (GROUP_FORM_ACTIVITY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    boolean needsSaving = false;
+                    Bundle bundle = data.getExtras();
+                    if (this.guild.name != null && !this.guild.name.equals(bundle.getString("name"))) {
+                        this.guild.name = bundle.getString("name");
+                        needsSaving = true;
+                    }
+                    if (this.guild.description != null && !this.guild.description.equals(bundle.getString("description"))) {
+                        this.guild.description = bundle.getString("description");
+                        needsSaving = true;
+                    }
+                    if (this.guild.leaderID != null && !this.guild.leaderID.equals(bundle.getString("leader"))) {
+                        this.guild.leaderID = bundle.getString("leader");
+                        needsSaving = true;
+                    }
+                    if (this.guild.privacy != null && !this.guild.privacy.equals(bundle.getString("privacy"))) {
+                        this.guild.privacy = bundle.getString("privacy");
+                        needsSaving = true;
+                    }
+                    if (needsSaving) {
+                        this.mAPIHelper.apiService.updateGroup(this.guild.id, this.guild, new Callback<Void>() {
+                            @Override
+                            public void success(Void aVoid, Response response) {
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+                        this.guildInformationFragment.setGroup(guild);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     @Override
     public void success(Group group, Response response) {
+        if (group == null) {
+            this.tabLayout.removeAllTabs();
+            return;
+        }
         this.guild = group;
-        this.guildInformationFragment.setGroup(group);
+
+        if (this.guildInformationFragment != null) {
+            this.guildInformationFragment.setGroup(group);
+        }
+
+        if (this.chatListFragment != null) {
+            this.chatListFragment.seenGroupId = group.id;
+        }
+
+        this.guild = group;
+        this.activity.supportInvalidateOptionsMenu();
     }
 
     @Override
     public void failure(RetrofitError error) {
-
-    }
-
-    private void displayEditForm() {
-        Bundle bundle = new Bundle();
-        bundle.putString("groupID",this.guild.id);
-
-        Intent intent = new Intent(activity, TaskFormActivity.class);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
     }
 }
