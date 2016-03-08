@@ -101,6 +101,38 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (this.tagsHelper == null) {
+            this.tagsHelper = new TagsHelper();
+        }
+
+        //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
+
+        if (this.tagsIdHelper == null && user != null) {
+            this.tagsIdHelper = new TagsHelper();
+            //Pass in the information of the user because TagsHelper does the filtering.
+            for(Tag userTags : user.getTags()){
+                tagsIdHelper.addTags(userTags.getId());
+            }
+        }
+
+        //This is to pass the names into other activities, not just their IDs
+        if (this.tagsNameHelper == null && user != null) {
+            this.tagsNameHelper = new TagsHelper();
+            for(Tag userTags : user.getTags()){
+
+                tagsNameHelper.addTags(userTags.getName());
+            }
+        }
+
+        if (user != null) {
+            fillTagFilterDrawer(user.getTags());
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
@@ -148,36 +180,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         this.activity.filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
-        viewPager.setCurrentItem(0);
-
-        if (this.tagsHelper == null) {
-            this.tagsHelper = new TagsHelper();
-        }
-
-        //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
-
-        if (this.tagsIdHelper == null && user != null) {
-            this.tagsIdHelper = new TagsHelper();
-            //Pass in the information of the user because TagsHelper does the filtering.
-            for(Tag userTags : user.getTags()){
-                tagsIdHelper.addTags(userTags.getId());
-            }
-        }
-
-        //This is to pass the names into other activities, not just their IDs
-        if (this.tagsNameHelper == null && user != null) {
-            this.tagsNameHelper = new TagsHelper();
-            for(Tag userTags : user.getTags()){
-
-                tagsNameHelper.addTags(userTags.getName());
-            }
-        }
-
         loadTaskLists();
-
-        if (user != null) {
-            fillTagFilterDrawer(user.getTags());
-        }
 
         return v;
     }
