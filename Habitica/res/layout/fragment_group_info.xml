@@ -64,7 +64,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="@dimen/card_padding">
+                        android:layout_margin="@dimen/card_padding"
+                        android:visibility='@{group.type.equals("guild") ? View.VISIBLE : View.GONE}' >
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
