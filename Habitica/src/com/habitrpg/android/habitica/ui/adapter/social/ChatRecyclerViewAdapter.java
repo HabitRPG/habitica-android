@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatEditText;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
@@ -24,11 +26,11 @@ import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.iconics.Iconics;
+
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -36,7 +38,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Negue on 20.08.2015.
@@ -137,7 +139,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         // New Msg
         @Bind(R.id.edit_new_message_text)
         @Nullable
-        AppCompatEditText textNewMessage;
+        EmojiEditText textNewMessage;
 
         @Bind(R.id.btn_send_message)
         @Nullable
@@ -161,7 +163,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
         @Bind(R.id.message_text)
         @Nullable
-        TextView messageText;
+        EmojiTextView messageText;
 
         @Bind(R.id.ago_label)
         @Nullable
@@ -202,13 +204,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 case TYPE_NEW_MESSAGE: {
                     btnSendNewMessage.setOnClickListener(this);
-                    int color = res.getColor(R.color.brand);
-
-                    // Using the Iconics buttons, it is unable to tint the background
-                    btnSendNewMessage.setTypeface(Iconics.findFont(FontAwesome.Icon.faw_comment).getTypeface(context));
-                    btnSendNewMessage.setText(new Iconics.IconicsBuilder().ctx(context).on("{faw-comment}").build());
+                    int color = ContextCompat.getColor(context, R.color.brand);
 
                     ViewHelper.SetBackgroundTint(btnSendNewMessage, color);
+
+                    // Set up the emoji keyboard
+                    EmojiKeyboard.createKeyboard(itemView, context);
 
                     break;
                 }
@@ -237,7 +238,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 userLabel.setText(msg.user);
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
-                messageText.setText(msg.text.trim());
+                if (messageText != null) {
+                    messageText.setText(msg.parsedText);
+                }
                 agoLabel.setText(msg.getAgoString());
             }
         }
@@ -283,8 +286,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 foregroundColorRes = R.color.tavern_nolikes_foreground;
             }
 
-            DataBindingUtils.setRoundedBackground(likeBackground, res.getColor(backgroundColorRes));
-            tvLikes.setTextColor(res.getColor(foregroundColorRes));
+            DataBindingUtils.setRoundedBackground(likeBackground, ContextCompat.getColor(context, backgroundColorRes));
+            tvLikes.setTextColor( ContextCompat.getColor(context, foregroundColorRes));
         }
 
         @Override

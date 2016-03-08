@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapt
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * TaskRecyclerViewFragment

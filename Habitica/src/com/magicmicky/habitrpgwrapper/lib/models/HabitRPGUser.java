@@ -21,6 +21,7 @@ public class HabitRPGUser extends BaseModel {
 
     @Column
     @PrimaryKey
+    @SerializedName("_id")
     private String id;
 
     List<Task> dailys;

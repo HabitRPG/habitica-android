@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -44,8 +45,8 @@ import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -66,7 +67,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -77,7 +80,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private static final int TASK_UPDATED_RESULT = 2;
 
     public ViewPager viewPager;
-    Drawer filterDrawer;
 
     MenuItem refreshItem;
 
@@ -144,13 +146,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
         });
 
-        filterDrawer = new DrawerBuilder()
-                .withActivity(activity)
-                .withDrawerGravity(Gravity.RIGHT)
-                .withCloseOnClick(false)
-                .append(activity.drawer);
-
-        filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
+        this.activity.filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
         viewPager.setCurrentItem(0);
 
@@ -159,15 +155,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (this.tagsIdHelper == null) {
-=======
+
         if (this.tagsIdHelper == null && user != null) {
->>>>>>> origin/develop
-=======
-        if (this.tagsIdHelper == null && user != null) {
->>>>>>> origin/develop
             this.tagsIdHelper = new TagsHelper();
             //Pass in the information of the user because TagsHelper does the filtering.
             for(Tag userTags : user.getTags()){
@@ -176,15 +165,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         //This is to pass the names into other activities, not just their IDs
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (this.tagsNameHelper == null) {
-=======
         if (this.tagsNameHelper == null && user != null) {
->>>>>>> origin/develop
-=======
-        if (this.tagsNameHelper == null && user != null) {
->>>>>>> origin/develop
             this.tagsNameHelper = new TagsHelper();
             for(Tag userTags : user.getTags()){
 
@@ -215,7 +196,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         switch (id) {
             case R.id.action_search:
-                filterDrawer.openDrawer();
+                this.activity.filterDrawer.openDrawer();
                 return true;
             case R.id.action_reload:
                 refreshItem = item;
@@ -411,6 +392,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //region Events
 
+    @Subscribe
     public void onEvent(final CreateTagCommand event) {
         final Tag t = new Tag();
         t.setName(event.tagName);
@@ -436,6 +418,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(TaskTappedEvent event) {
         if (this.displayingTaskForm) {
             return;
@@ -453,21 +436,22 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
-    public void onEvent(TaskLongPressedEvent event) {
-    }
-
+    @Subscribe
     public void onEvent(TaskCheckedCommand event) {
         mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(activity, event.Task.getId()));
     }
 
+    @Subscribe
     public void onEvent(HabitScoreEvent event) {
         mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(activity, event.Habit.getId()));
     }
 
+    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
+    @Subscribe
     public void onEvent(final TaskSaveEvent event) {
         Task task = (Task) event.task;
         if (event.created) {
@@ -479,25 +463,28 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Subscribe
     public void onEvent(ToggledInnStateEvent event) {
         user.getPreferences().setSleep(event.Inn);
     }
 
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        filterDrawer.removeAllItems();
-        filterDrawer.addItems(
-                new SectionDrawerItem().withName("Filter by Tag"),
-                new EditTextDrawer()
-        );
-
-        for (Tag t : tagList) {
-            filterDrawer.addItem(new SwitchDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                            .withOnCheckedChangeListener(this)
+        if (this.activity.filterDrawer != null) {
+            this.activity.filterDrawer.removeAllItems();
+            this.activity.filterDrawer.addItems(
+                    new SectionDrawerItem().withName("Filter by Tag"),
+                    new EditTextDrawer()
             );
+
+            for (Tag t : tagList) {
+                this.activity.filterDrawer.addItem(new SwitchDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                                .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                                .withOnCheckedChangeListener(this)
+                );
+            }
         }
     }
 
@@ -523,7 +510,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
      */
     public void updateTags(List<TaskTag> tags) {
         Log.d("tags", "Updating tags");
-        List<IDrawerItem> filters = filterDrawer.getDrawerItems();
+        List<IDrawerItem> filters = this.activity.filterDrawer.getDrawerItems();
         for (IDrawerItem filter : filters) {
             if (filter instanceof SwitchDrawerItem) {
                 SwitchDrawerItem currentfilter = (SwitchDrawerItem) filter;
@@ -536,7 +523,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                     if (tagId != null && currentTag != null && tagId.equals(currentTag.getId())) {
                         //This doesn't seem to work properly. Sometimes it displays more tasks than I actually have.
                         currentfilter.withDescription("" + (currentTag.getTasks().size() + 1));
-                        filterDrawer.updateItem(currentfilter);
+                        this.activity.filterDrawer.updateItem(currentfilter);
                     }
                 }
             }
@@ -556,8 +543,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Override
     public void onDestroyView() {
-        DrawerLayout layout =  filterDrawer.getDrawerLayout();
-        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+        DrawerLayout layout =  this.activity.filterDrawer.getDrawerLayout();
+        layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
         super.onDestroyView();
     }
 

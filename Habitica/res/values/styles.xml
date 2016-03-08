@@ -9,6 +9,7 @@
         <item name="elevation">0dp</item>
 
         <item name="android:windowContentOverlay">@null</item>
+        <item name="actionMenuTextColor">@color/white</item>
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -36,18 +37,13 @@
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
 
-    </style>
-
-    <style name="PreferencesTheme" parent="AppThemeWithActionBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">

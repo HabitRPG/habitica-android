@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 import io.fabric.sdk.android.Fabric;
 import org.solovyev.android.checkout.*;
 

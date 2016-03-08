@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
@@ -80,7 +80,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
         @Bind(R.id.item_edittext)
-        EditText checkListTextView;
+        EmojiEditText checkListTextView;
 
         @Bind(R.id.delete_item_button)
         Button deleteButton;

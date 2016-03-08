@@ -114,8 +114,17 @@ public interface ApiService {
     @GET("/groups/{gid}")
     void getGroup(@Path("gid") String groupId, Callback<Group> cb);
 
+    @POST("/groups/{id}")
+    void updateGroup(@Path("id") String id, @Body Group item, Callback<Void> habitItemCallback);
+
     @GET("/groups/{gid}/chat")
     void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
+
+    @GET("/groups/{gid}/join")
+    void joinGroup(@Path("gid") String groupId, Callback<Group> cb);
+
+    @GET("/groups/{gid}/leave")
+    void leaveGroup(@Path("gid") String groupId, Callback<Group> cb);
 
     @POST("/groups/{gid}/chat")
     void postGroupChat(@Path("gid") String groupId, @Query("message") String message, Callback<PostChatMessageResult> cb);
@@ -135,4 +144,22 @@ public interface ApiService {
 
     @POST("/user/batch-update")
     void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
+
+    @POST("/groups/{gid}/questAccept")
+    void acceptQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questReject")
+    void rejectQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questCancel")
+    void cancelQuest(@Path("gid") String groupId, Callback<Void> cb);
+
+    @POST("/groups/{gid}/questAccept?force=true")
+    void forceStartQuest(@Path("gid") String groupId, @Body Group group, Callback<Group> cb);
+
+    @POST("/groups/{gid}/questAbort")
+    void abortQuest(@Path("gid") String groupId, Callback<Group> cb);
+
+    @POST("/groups/{gid}/questLeave")
+    void leaveQuest(@Path("gid") String groupId, Callback<Void> cb);
 }

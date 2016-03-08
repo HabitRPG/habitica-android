@@ -24,6 +24,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -94,6 +96,7 @@ public class SkillsFragment extends BaseMainFragment {
         checkUserLoadSkills();
     }
 
+    @Subscribe
     public void onEvent(UseSkillCommand command) {
         Skill skill = command.skill;
         if (skill.target.equals("task")) {
@@ -106,6 +109,7 @@ public class SkillsFragment extends BaseMainFragment {
         }
     }
 
+    @Subscribe
     public void onEvent(SkillUsedEvent event) {
         removeProgressDialog();
         Skill skill = event.usedSkill;

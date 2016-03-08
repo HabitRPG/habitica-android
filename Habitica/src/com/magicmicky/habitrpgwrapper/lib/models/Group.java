@@ -17,19 +17,21 @@ public class Group extends BaseModel {
 
     public String description;
 
-    // TODO Leader
-    // GET /groups?type={0} => leader is string
-    // GET /groups/{gid} => leader is user-object
+    public String leaderID;
 
     public String name;
 
     public int memberCount;
+
+    public Boolean isMember;
 
     public String type;
 
     public String logo;
 
     public Quest quest;
+
+    public String privacy;
 
     public ArrayList<ChatMessage> chat;
 

@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
@@ -34,7 +35,7 @@ public class PartyFragment extends BaseMainFragment {
     private HashMap<Integer, Fragment> fragmentDictionary = new HashMap<>();
 
     private PartyMemberListFragment partyMemberListFragment;
-    private PartyInformationFragment partyInformationFragment;
+    private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
 
     @Override
@@ -72,8 +73,8 @@ public class PartyFragment extends BaseMainFragment {
                     partyMemberListFragment.setMemberList(group.members);
                 }
 
-                if (partyInformationFragment != null) {
-                    partyInformationFragment.setGroup(group);
+                if (groupInformationFragment != null) {
+                    groupInformationFragment.setGroup(group);
                 }
 
                 if(chatListFragment != null){
@@ -84,8 +85,8 @@ public class PartyFragment extends BaseMainFragment {
                     contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
                         @Override
                         public void GotQuest(QuestContent content) {
-                            if (partyInformationFragment != null) {
-                                partyInformationFragment.setQuestContent(content);
+                            if (groupInformationFragment != null) {
+                                groupInformationFragment.setQuestContent(content);
                             }
                         }
                     });
@@ -122,7 +123,7 @@ public class PartyFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = partyInformationFragment = PartyInformationFragment.newInstance(group);
+                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user, mAPIHelper);
                         break;
                     }
                     case 1: {

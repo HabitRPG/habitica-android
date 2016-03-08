@@ -6,24 +6,22 @@
         android:id="@+id/menu.chat.copy.as.todo"
         android:icon="@drawable/ic_action_launch"
 
-        android:title="Copy as ToDo" />
+        android:title="@string/copy_as_todo" />
     <item
         android:id="@+id/menu.chat.send.pm"
         android:icon="@drawable/ic_action_chat"
 
-        android:title="Send PM" />
+        android:title="@string/send_pm" />
     <group>
 
         <item
             android:id="@+id/menu.chat.flag"
             android:icon="@drawable/ic_action_warning"
             app:showAsAction="always|withText"
-            android:title="Flag" />
-
+            android:title="@string/flag" />
         <item
             android:id="@+id/menu.chat.delete"
             android:icon="@drawable/ic_action_delete_white_24"
-
-            android:title="Delete" />
+            android:title="@string/delete" />
     </group>
 </menu>

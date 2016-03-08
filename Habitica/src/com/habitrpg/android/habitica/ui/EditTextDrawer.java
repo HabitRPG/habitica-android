@@ -5,23 +5,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.utils.ViewHolderFactory;
+import com.mikepenz.materialdrawer.model.BaseViewHolder;
+import com.mikepenz.fastadapter.utils.ViewHolderFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
-/**
- * Created by Negue on 18.06.2015.
- */
-public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
+public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer, EditTextDrawer.ViewHolder> {
     @Override
-    public String getType() {
-        return "EDIT_TEXT_DRAWER";
+    public int getType() {
+        return R.id.material_drawer_item_primary;
     }
 
     @Override
@@ -30,26 +29,20 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer> {
     }
 
     @Override
-    public void bindView(RecyclerView.ViewHolder viewHolder) {
-        final ViewHolder holder = (ViewHolder) viewHolder;
-//        ((ViewHolder) viewHolder).btnAdd
-
+    public void bindView(ViewHolder holder) {
         onPostBindView(this, holder.itemView);
-
     }
-
 
     @Override
     public ViewHolderFactory getFactory() {
         return new ItemFactory();
     }
 
-    public static class ItemFactory implements ViewHolderFactory<ViewHolder> {
-        public ViewHolder factory(View v) {
+    public static class ItemFactory implements ViewHolderFactory<EditTextDrawer.ViewHolder> {
+        public ViewHolder create(View v) {
             return new ViewHolder(v);
         }
     }
-
 
     public static class ViewHolder extends BaseViewHolder implements View.OnClickListener {
 

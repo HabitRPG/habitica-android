@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -26,6 +28,7 @@ import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
@@ -37,8 +40,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.EventBusException;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
+import org.greenrobot.eventbus.Subscribe;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -121,7 +126,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     LinearLayoutManager layoutManager;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
@@ -164,6 +169,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void success(List<ChatMessage> chatMessages, Response response) {
         currentChatMessages = chatMessages;
 
+        //Load unparsed messages first
         ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
 
         if(mRecyclerView != null) {
@@ -173,6 +179,9 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
             swipeRefreshLayout.setRefreshing(false);
         }
 
+        //Parse chatMessages in AsyncTask
+        ParseMessages parseMessages = new ParseMessages(chatMessages);
+        parseMessages.execute();
         gotNewMessages = true;
 
         markMessagesAsSeen();
@@ -183,7 +192,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private void markMessagesAsSeen(){
         if(!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
-        && gotNewMessages && navigatedOnceToFragment) {
+                && gotNewMessages && navigatedOnceToFragment) {
 
             gotNewMessages = false;
 
@@ -206,6 +215,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     }
 
+    @Subscribe
     public void onEvent(final FlagChatMessageCommand cmd) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
@@ -229,6 +239,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         builder.show();
     }
 
+    @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
         apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id, new Callback<List<Void>>() {
             @Override
@@ -243,6 +254,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    @Subscribe
     public void onEvent(final DeleteChatMessageCommand cmd) {
         apiHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
             @Override
@@ -261,6 +273,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
     }
 
+    @Subscribe
     public void onEvent(SendNewGroupMessageCommand cmd) {
 
         apiHelper.apiService.postGroupChat(cmd.TargetGroupId, cmd.Message, new Callback<PostChatMessageResult>() {
@@ -283,6 +296,7 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode
+    @Subscribe
     public void onEvent(ToggleInnCommand event) {
         apiHelper.toggleSleep(new Callback<Void>() {
             @Override
@@ -317,6 +331,36 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
         outState.putString("groupId", this.groupId);
         outState.putBoolean("isTavern", this.isTavern);
         super.onSaveInstanceState(outState);
+    }
+
+    private class ParseMessages extends AsyncTask<Void, Void, Void> {
+        private List<ChatMessage> chatMessages;
+
+        public ParseMessages(List<ChatMessage> chatMessages) {
+            this.chatMessages = chatMessages;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            for (int i = 0; i < chatMessages.size() ; i++) {
+                chatMessages.get(i).parsedText = MarkdownParser.parseMarkdown(chatMessages.get(i).text);
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+
+            if(mRecyclerView != null) {
+                mRecyclerView.setAdapter(tavernAdapter);
+            }
+
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
 }
