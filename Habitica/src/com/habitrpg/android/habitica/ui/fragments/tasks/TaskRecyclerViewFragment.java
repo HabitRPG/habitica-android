@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -90,6 +91,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override

@@ -16,7 +16,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:clickable="true"
-            android:background="@drawable/btn_habit_background">
+            android:background="@drawable/selection_highlight">
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"

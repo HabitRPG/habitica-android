@@ -72,6 +72,11 @@
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{daily.notes}"
                         android:visibility="@{daily.notes != null ? View.VISIBLE : View.GONE}"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{daily.streak > 0 ? View.VISIBLE : View.GONE}"
+                        android:text="@{@string/daily_streak(daily.streak)}"/>
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"
                     android:id="@+id/checklistIndicatorWrapper"
@@ -119,10 +124,10 @@
 
         </LinearLayout>
         <View
-            android:id="@+id/bottomBorderView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hairline_height"
-            android:background="@color/cell_separator"/>
+            android:background="@color/cell_separator"
+            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,10 +139,6 @@
             android:layout_height="10dp"
             android:background="@color/checklist_separator"
             android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/hairline_height"
-            android:background="@color/cell_separator"
-            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+
     </LinearLayout>
 </layout>

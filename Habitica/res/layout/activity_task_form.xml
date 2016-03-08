@@ -295,7 +295,7 @@
         <LinearLayout
             android:id="@+id/task_duedate_layout"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
@@ -310,9 +310,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Check to add Due Date"
+                android:text="@string/todo_has_duedate"
                 android:id="@+id/duedate_checkbox" />
-
             <DatePicker
                 android:id="@+id/task_duedate_picker"
                 android:layout_width="wrap_content"
@@ -320,7 +319,6 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 tools:ignore="UnusedAttribute" />
-
         </LinearLayout>
 
         <LinearLayout

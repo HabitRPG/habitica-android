@@ -171,7 +171,7 @@
 
     <string name="version_info" formatted="false">Version %s (%d)</string>
 
-    <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+    <string name="sidebar_help">Help &amp; FAQ</string>
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
     <string name="intro_1_title">Welcome to Habitica</string>
@@ -237,4 +237,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
     <string name="post">Post</string>
+
+    <string name="todo_due" formatted="false">Due: %s</string>
+    <string name="daily_streak" formatted="false">current streak: %d</string>
+    <string name="todo_has_duedate">Task has Due Date</string>
 </resources>

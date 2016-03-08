@@ -25,14 +25,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by admin on 18/11/15.
- */
+
 public class PartyFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
     private Group group;
-    private HashMap<Integer, Fragment> fragmentDictionary = new HashMap<>();
 
     private PartyMemberListFragment partyMemberListFragment;
     private GroupInformationFragment groupInformationFragment;
@@ -133,16 +130,19 @@ public class PartyFragment extends BaseMainFragment {
                         break;
                     }
                     case 2: {
-                        PartyMemberListFragment memberFragment = new PartyMemberListFragment();
-                        memberFragment.configure(activity, group);
-                        fragment = memberFragment;
+                        partyMemberListFragment = new PartyMemberListFragment();
+                        if (group != null) {
+                            partyMemberListFragment.configure(activity, group.members);
+
+                        } else {
+                            partyMemberListFragment.configure(activity, null);
+                        }
+                        fragment = partyMemberListFragment;
                         break;
                     }
                     default:
                         fragment = new Fragment();
                 }
-
-                fragmentDictionary.put(position, fragment);
 
                 return fragment;
             }

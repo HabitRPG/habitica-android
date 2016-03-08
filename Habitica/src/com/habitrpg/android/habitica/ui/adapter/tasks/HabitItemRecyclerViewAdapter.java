@@ -51,6 +51,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.text.DateFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -504,10 +505,14 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         TodoItemCardBinding binding;
 
+        DateFormat dateFormat;
+
         public TodoViewHolder(View itemView) {
             super(itemView);
 
             binding = DataBindingUtil.bind(itemView);
+
+            this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
         }
 
         @Override
@@ -515,6 +520,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             super.bindHolder(habitItem, position);
 
             binding.setTodo(habitItem);
+            if (habitItem.duedate != null) {
+                binding.setDuedate(this.dateFormat.format(habitItem.duedate));
+            }
         }
 
         @Override

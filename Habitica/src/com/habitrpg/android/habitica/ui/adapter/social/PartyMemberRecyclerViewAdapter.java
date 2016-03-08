@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
 
     private ArrayList<HabitRPGUser> memberList;
-
+    public Context context;
     public void setMemberList(ArrayList<HabitRPGUser> memberList) {
         this.memberList = memberList;
         this.notifyDataSetChanged();
@@ -87,8 +89,13 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             hpBar.setPartyMembers(true);
 
             resources = itemView.getResources();
-            userPicture = new UserPicture(itemView.getContext(), false, false);
-
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            if (dpWidth >= 320) {
+                userPicture = new UserPicture(itemView.getContext(), true, true);
+            } else {
+                userPicture = new UserPicture(itemView.getContext(), false, false);
+            }
         }
 
         public void bind(HabitRPGUser user) {

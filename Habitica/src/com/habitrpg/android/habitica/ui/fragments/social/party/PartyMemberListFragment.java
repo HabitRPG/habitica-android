@@ -26,13 +26,13 @@ import butterknife.ButterKnife;
 public class PartyMemberListFragment extends Fragment {
 
     private Context ctx;
-    private Group group;
+    private ArrayList<HabitRPGUser> members;
 
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
-    public void configure(Context ctx, Group group) {
+    public void configure(Context ctx, ArrayList<HabitRPGUser> members) {
         this.ctx = ctx;
-        this.group = group;
+        this.members = members;
 
     }
 
@@ -58,14 +58,16 @@ public class PartyMemberListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
         viewAdapter = new PartyMemberRecyclerViewAdapter();
+        viewAdapter.context = this.ctx;
         mRecyclerView.setAdapter(viewAdapter);
 
-        if (group != null) {
-            setMemberList(group.members);
+        if (members != null) {
+            setMemberList(members);
         }
     }
 
     public void setMemberList(ArrayList<HabitRPGUser> members) {
+        this.members = members;
         viewAdapter.setMemberList(members);
     }
 
