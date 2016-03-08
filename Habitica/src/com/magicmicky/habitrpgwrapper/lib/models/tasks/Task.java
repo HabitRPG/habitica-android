@@ -52,6 +52,7 @@ public class Task extends BaseModel {
     @Column
     public double value;
 
+
     public List<TaskTag> tags;
 
     @Column
