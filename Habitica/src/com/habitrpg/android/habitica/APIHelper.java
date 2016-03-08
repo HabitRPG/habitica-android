@@ -97,6 +97,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
+                .serializeNulls()
                 .setExclusionStrategies(new CheckListItemExcludeStrategy())
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override

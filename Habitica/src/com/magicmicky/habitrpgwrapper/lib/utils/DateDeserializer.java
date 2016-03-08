@@ -19,7 +19,7 @@ import java.util.TimeZone;
 /**
  * Created by viirus on 21/01/16.
  */
-public class DateDeserializer implements JsonDeserializer<Date> {
+public class DateDeserializer implements JsonDeserializer<Date>, JsonSerializer<Date> {
 
     private final DateFormat dateFormat;
     private final DateFormat alternativeFormat;
@@ -54,5 +54,13 @@ public class DateDeserializer implements JsonDeserializer<Date> {
                 }
             }
         }
+    }
+
+    @Override
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        if (src == null) {
+            return new JsonPrimitive("");
+        }
+        return new JsonPrimitive(this.dateFormat.format(src));
     }
 }
