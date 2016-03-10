@@ -53,6 +53,9 @@ public int getItemCount() {
 
 class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    @Bind(R.id.gear_container)
+    View gearContainer;
+
     @Bind(R.id.gear_text)
     TextView gearNameTextView;
 
@@ -61,6 +64,9 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     @Bind(R.id.gear_image)
     ImageView imageView;
+
+    @Bind(R.id.equippedIndicator)
+    View equippedIndicator;
 
     ItemData gear;
 
@@ -80,6 +86,14 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         this.gearNameTextView.setText(this.gear.text);
         this.gearNotesTextView.setText(this.gear.notes);
 
+        if (gear.key.equals(equippedGear)) {
+            this.equippedIndicator.setVisibility(View.VISIBLE);
+            this.gearContainer.setBackgroundColor(resources.getColor(R.color.brand_700));
+        } else {
+            this.equippedIndicator.setVisibility(View.GONE);
+            this.gearContainer.setBackgroundResource(R.drawable.selection_highlight);
+        }
+
         Picasso.with(imageView.getContext())
                 .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + gear.key + ".png")
                 .into(imageView);
@@ -91,6 +105,8 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         command.gear = this.gear;
         command.asCostume = isCostume;
         EventBus.getDefault().post(command);
+        equippedGear = this.gear.key;
+        notifyDataSetChanged();
     }
 }
 }

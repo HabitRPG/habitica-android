@@ -252,4 +252,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="outfit_shield">Shield</string>
     <string name="outfit_weapon">Weapon</string>
     <string name="wear_costume">Wear Costume</string>
+    <string name="equipped">Equipped</string>
 </resources>
