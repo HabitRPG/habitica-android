@@ -1,10 +1,13 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Gear;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -49,6 +52,12 @@ public interface ApiService {
 
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
+
+    @POST("/user/inventory/equip/equipped/{key}")
+    void equipBattleGear(@Path("key") String itemKey, Callback<Items> gearCallback);
+
+    @POST("/user/inventory/equip/costume/{key}")
+    void equipCostume(@Path("key") String itemKey, Callback<Items> gearCallback);
 
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);

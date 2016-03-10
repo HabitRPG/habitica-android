@@ -28,9 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by viirus on 14/01/16.
- */
 public class CustomizationDeserializer implements JsonDeserializer<List<Customization>> {
 
     @Override

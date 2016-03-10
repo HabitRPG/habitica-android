@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.Outfit" />
+        <import type="android.view.View" />
+
+        <variable
+            name="currentBattleGear"
+            type="Outfit" />
+        <variable
+            name="currentCostume"
+            type="Outfit" />
+        <variable
+            name="usingCostume"
+            type="Boolean" />
+    </data>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/md_grey_500"
+        android:scrollbars="vertical"
+        android:paddingTop="@dimen/row_padding"
+        android:paddingBottom="@dimen/row_padding" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/equipment_overview_list"
+                android:id="@+id/battle_gear_group"
+                bind:categorytitle="@{@string/battle_gear}"
+                bind:outfit="@{currentBattleGear}"/>
+            <include layout="@layout/equipment_overview_list"
+                android:id="@+id/costume_group"
+                bind:categorytitle="@{@string/costume}"
+                bind:outfit="@{currentCostume}"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/row_padding">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/wear_costume"/>
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/costume_switch"
+                    android:checked="@{usingCostume}"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -42,4 +42,7 @@ public class ItemData extends BaseModel {
     @Column
     @SerializedName("int")
     public float _int;
+
+    @Column
+    public Boolean owned;
 }

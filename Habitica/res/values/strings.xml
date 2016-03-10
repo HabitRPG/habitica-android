@@ -241,4 +241,15 @@ To start, which parts of your life do you want to improve?</string>
     <string name="todo_due" formatted="false">Due: %s</string>
     <string name="daily_streak" formatted="false">current streak: %d</string>
     <string name="todo_has_duedate">Task has Due Date</string>
+    <string name="battle_gear">Battle Gear</string>
+    <string name="costume">Costume</string>
+    <string name="outfit_head">Head</string>
+    <string name="outfit_headAccessory">Head Accessory</string>
+    <string name="outfit_eyewear">Eyewear</string>
+    <string name="outfit_armor">Armor</string>
+    <string name="outfit_back">Back</string>
+    <string name="outfit_body">Body</string>
+    <string name="outfit_shield">Shield</string>
+    <string name="outfit_weapon">Weapon</string>
+    <string name="wear_costume">Wear Costume</string>
 </resources>

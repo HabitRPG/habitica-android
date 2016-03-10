@@ -71,12 +71,12 @@
                             android:layout_marginEnd="8dp"
                             android:entries="@array/avatar_sizes"/>
                     </LinearLayout>
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_shirt"
                         bind:title="@{@string/avatar_shirt}"
                         bind:value="@{preferences.getShirt}"
                         bind:imageNamed='@{preferences.getSize + "_shirt_" + preferences.getShirt}'/>
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_skin"
                         bind:title="@{@string/avatar_skin}"
                         bind:value="@{preferences.getSkin}"
@@ -100,32 +100,32 @@
                     android:orientation="vertical"
                     android:divider="?android:listDivider"
                     android:showDividers="middle">
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_color"
                         bind:title="@{@string/avatar_color}"
                         bind:value="@{preferences.getHair.getColor}"
                         bind:imageNamed='@{"hair_bangs_1_" + preferences.getHair.getColor}' />
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_base"
                         bind:title="@{@string/avatar_base}"
                         bind:valueInt="@{preferences.getHair.getBase}"
                         bind:imageNamed='@{preferences.getHair.getBase == 0 ? null : "hair_base_" + preferences.getHair.getBase + "_" + preferences.getHair.getColor}' />
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_bangs"
                         bind:title="@{@string/avatar_bangs}"
                         bind:valueInt="@{preferences.getHair.getBangs}"
                         bind:imageNamed='@{preferences.getHair.getBangs == 0 ? null : "hair_bangs_" + preferences.getHair.getBangs + "_" + preferences.getHair.getColor}' />
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_flower"
                         bind:title="@{@string/avatar_flower}"
                         bind:valueInt="@{preferences.getHair.getFlower}"
                         bind:imageNamed='@{preferences.getHair.getFlower == 0 ? null : "hair_flower_" + preferences.getHair.getFlower}' />
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_beard"
                         bind:title="@{@string/avatar_beard}"
                         bind:valueInt="@{preferences.getHair.getBeard}"
                         bind:imageNamed='@{preferences.getHair.getBeard == 0 ? null : "hair_beard_" + preferences.getHair.getBeard + "_" + preferences.getHair.getColor}' />
-                    <include layout="@layout/avatar_overview_card"
+                    <include layout="@layout/item_image_row"
                         android:id="@+id/avatar_hair_mustache"
                         bind:title="@{@string/avatar_mustache}"
                         bind:valueInt="@{preferences.getHair.getMustache}"

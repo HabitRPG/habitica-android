@@ -3,9 +3,10 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class ContentGear{
 
-    public HashMap<String, ItemData> flat;
+    public List<ItemData> flat;
 
 }

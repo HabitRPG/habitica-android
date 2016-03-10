@@ -35,6 +35,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
@@ -42,6 +43,7 @@ import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.FAQArticleListDeserilializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.GroupSerialization;
+import com.magicmicky.habitrpgwrapper.lib.utils.ItemDataListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
@@ -94,6 +96,7 @@ public class APIHelper implements ErrorHandler, Profiler {
         Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
         Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
         Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
+        Type itemDataListType = new TypeToken<List<ItemData>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -122,6 +125,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
+                .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 
