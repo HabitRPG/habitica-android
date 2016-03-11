@@ -15,16 +15,22 @@ import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBindin
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class EquipmentOverviewFragment extends BaseMainFragment {
+public class EquipmentOverviewFragment extends BaseMainFragment implements TransactionListener<List<ItemData>> {
 
     FragmentEquipmentOverviewBinding viewBinding;
 
@@ -55,6 +61,8 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
     @Bind(R.id.costume_switch)
     Switch costumeSwitch;
 
+    HashMap<String, String> nameMapping;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +74,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         viewBinding.setCurrentBattleGear(this.user.getItems().getGear().getEquipped());
         viewBinding.setCurrentCostume(this.user.getItems().getGear().getCostume());
         viewBinding.setUsingCostume(this.user.getPreferences().getCostume());
+        viewBinding.setUserSize(this.user.getPreferences().getSize());
 
         ButterKnife.bind(this, v);
 
@@ -198,6 +207,12 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
             }
         });
 
+        if (this.nameMapping == null) {
+            new Select().from(ItemData.class).where(Condition.column("owned").eq(true)).async().queryList(this);
+        } else {
+            this.viewBinding.setEquipmentNames(this.nameMapping);
+        }
+
         return v;
     }
 
@@ -209,4 +224,24 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         activity.displayFragment(fragment);
     }
 
+    @Override
+    public void onResultReceived(List<ItemData> result) {
+        this.nameMapping = new HashMap<>();
+
+        for (ItemData gear : result) {
+            this.nameMapping.put(gear.key, gear.text);
+        }
+
+        this.viewBinding.setEquipmentNames(this.nameMapping);
+    }
+
+    @Override
+    public boolean onReady(BaseTransaction<List<ItemData>> transaction) {
+        return true;
+    }
+
+    @Override
+    public boolean hasResult(BaseTransaction<List<ItemData>> transaction, List<ItemData> result) {
+        return true;
+    }
 }

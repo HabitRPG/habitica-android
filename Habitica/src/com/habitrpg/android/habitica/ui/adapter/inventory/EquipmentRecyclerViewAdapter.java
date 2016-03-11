@@ -26,6 +26,7 @@ private List<ItemData> gearList;
 
 public String equippedGear;
 public Boolean isCostume;
+public String userSize;
 
 public void setGearList(List<ItemData> gearList) {
         this.gearList = gearList;
@@ -95,7 +96,7 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         }
 
         Picasso.with(imageView.getContext())
-                .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + gear.key + ".png")
+                .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + userSize + "_" + gear.key + ".png")
                 .into(imageView);
     }
 

@@ -50,6 +50,7 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         this.adapter = new EquipmentRecyclerViewAdapter();
         this.adapter.equippedGear = this.equippedGear;
         this.adapter.isCostume = this.isCostume;
+        this.adapter.userSize = this.user.getPreferences().getSize();
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
