@@ -9,8 +9,10 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.R;
@@ -115,12 +117,16 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 		}
 	}
 
-    private void resetAnimatingStatusWithDelay(View child) {
+    private void resetAnimatingStatusWithDelay(final View child) {
         child.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				isAnimating = false;
-			}
+                FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) child).getChildAt(0);
+                if (!fab.isMenuHidden()) {
+                    fab.hideMenu(false);
+                }
+            }
 		}, FAB_ANIMATION_DURATION);
     }
 
@@ -135,6 +141,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.fab_slide_in);
         slideIn.setDuration(FAB_ANIMATION_DURATION);
         slideIn.setFillAfter(true);
+        FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) view).getChildAt(0);
         view.startAnimation(slideIn);
+        fab.showMenu(false);
     }
 }
