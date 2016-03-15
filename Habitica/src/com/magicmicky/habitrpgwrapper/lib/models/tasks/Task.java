@@ -223,6 +223,7 @@ public class Task extends BaseModel {
      * @return whether or not the habit can be "upped"
      */
     public boolean getUp() {
+        if (up == null) { return false; }
         return up;
     }
     /**
@@ -236,6 +237,7 @@ public class Task extends BaseModel {
      * @return whether or not the habit can be "down"
      */
     public boolean getDown() {
+        if (down == null) { return false; }
         return down;
     }
     /**
@@ -288,13 +290,20 @@ public class Task extends BaseModel {
         return count;
     }
 
-    public String getFrequency() { return frequency; }
+    public String getFrequency() {
+        if (frequency == null) { return FREQUENCY_WEEKLY; }
+        return frequency; }
     public void setFrequency(String frequency) { this.frequency = frequency; }
 
-    public Integer getEveryX() { return everyX; }
+    public Integer getEveryX() {
+        if (everyX == null) { return 1; }
+        return everyX; }
     public void setEveryX(Integer everyX) { this.everyX = everyX; }
 
-    public Date getStartDate() { return startDate; }
+    public Date getStartDate() {
+        if (startDate == null) { return new Date(); }
+        return startDate;
+    }
     public void setStartDate(Date startDate) {this.startDate = startDate; }
 
     /**
@@ -302,6 +311,7 @@ public class Task extends BaseModel {
      * This array contains 7 values, one for each days, starting from monday.
      */
     public Days getRepeat() {
+        if (repeat == null) { return new Days(); }
         return repeat;
     }
     /**
@@ -315,6 +325,9 @@ public class Task extends BaseModel {
 	 * @return the streak
 	 */
     public int getStreak() {
+        if (streak == null) {
+            return 0;
+        }
         return streak;
     }
     /**

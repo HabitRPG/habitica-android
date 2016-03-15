@@ -123,7 +123,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 			public void run() {
 				isAnimating = false;
                 FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) child).getChildAt(0);
-                if (!fab.isMenuHidden()) {
+                if (isOffScreen && fab != null) {
                     fab.hideMenu(false);
                 }
             }
@@ -143,6 +143,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         slideIn.setFillAfter(true);
         FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) view).getChildAt(0);
         view.startAnimation(slideIn);
-        fab.showMenu(false);
+        if (fab != null) {
+            fab.showMenu(false);
+        }
     }
 }

@@ -19,40 +19,46 @@ import java.util.Map;
 public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>> {
     @Override
     public List<ItemData> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject object = json.getAsJsonObject();
         List<ItemData> vals = new ArrayList<>();
+        if (json.isJsonObject()) {
+            JsonObject object = json.getAsJsonObject();
 
-        List<ItemData> existingItems = new Select().from(ItemData.class).queryList();
+            List<ItemData> existingItems = new Select().from(ItemData.class).queryList();
 
-        for (ItemData item : existingItems) {
-            if(object.has(item.key)) {
-                JsonElement itemObject = object.get(item.key);
+            for (ItemData item : existingItems) {
+                if(object.has(item.key)) {
+                    JsonElement itemObject = object.get(item.key);
 
-                if (itemObject.isJsonObject()) {
-                    ItemData parsedItem = context.deserialize(itemObject.getAsJsonObject(), ItemData.class);
-                    item.text = parsedItem.text;
-                    item.value = parsedItem.value;
-                    item.type = parsedItem.type;
-                    item.klass = parsedItem.klass;
-                    item.index = parsedItem.index;
-                    item.notes = parsedItem.notes;
-                    item.con = parsedItem.con;
-                    item.str = parsedItem.str;
-                    item.per = parsedItem.per;
-                    item._int = parsedItem._int;
-                } else {
-                    item.owned = itemObject.getAsBoolean();
+                    if (itemObject.isJsonObject()) {
+                        ItemData parsedItem = context.deserialize(itemObject.getAsJsonObject(), ItemData.class);
+                        item.text = parsedItem.text;
+                        item.value = parsedItem.value;
+                        item.type = parsedItem.type;
+                        item.klass = parsedItem.klass;
+                        item.index = parsedItem.index;
+                        item.notes = parsedItem.notes;
+                        item.con = parsedItem.con;
+                        item.str = parsedItem.str;
+                        item.per = parsedItem.per;
+                        item._int = parsedItem._int;
+                    } else {
+                        item.owned = itemObject.getAsBoolean();
+                    }
+                    vals.add(item);
+                    object.remove(item.key);
                 }
+            }
+
+            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+                ItemData item = context.deserialize(entry.getValue(), ItemData.class);
                 vals.add(item);
-                object.remove(item.key);
+            }
+            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
+        } else {
+            for (JsonElement item : json.getAsJsonArray()) {
+                vals.add((ItemData) context.deserialize(item.getAsJsonObject(), ItemData.class));
             }
         }
-
-        for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
-            ItemData item = context.deserialize(entry.getValue(), ItemData.class);
-            vals.add(item);
-        }
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
 
         return vals;
     }
