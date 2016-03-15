@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public Drawer drawer;
     public Drawer filterDrawer;
     protected HostConfig hostConfig;
-    protected HabitRPGUser user;
+    public HabitRPGUser user;
     private AccountHeader accountHeader;
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
@@ -227,6 +227,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
             return;
         }
+        if (this.isDestroyed()) {
+            return;
+        }
         this.activeFragment = fragment;
         fragment.setArguments(getIntent().getExtras());
         fragment.mAPIHelper = mAPIHelper;
@@ -234,6 +237,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
+
 
         if (getSupportFragmentManager().getFragments() == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
@@ -496,7 +500,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
-
+            this.activeFragment.updateUserData(user);
         }
     }
 

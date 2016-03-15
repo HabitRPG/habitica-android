@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.crashlytics.android.Crashlytics;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 

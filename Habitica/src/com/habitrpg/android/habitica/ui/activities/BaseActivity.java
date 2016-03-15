@@ -11,6 +11,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutResId();
 
+    private boolean destroyed;
+
+    public boolean isDestroyed(){
+        return destroyed;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +37,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 actionBar.setHomeButtonEnabled(false);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        destroyed = true;
+        super.onDestroy();
     }
 }

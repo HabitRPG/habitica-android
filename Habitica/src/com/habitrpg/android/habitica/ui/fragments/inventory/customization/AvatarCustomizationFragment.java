@@ -116,6 +116,9 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         }
 
         int spanCount = (int) (width / itemWidth);
+        if (spanCount == 0) {
+            spanCount = 1;
+        }
         layoutManager.setSpanCount(spanCount);
     }
 

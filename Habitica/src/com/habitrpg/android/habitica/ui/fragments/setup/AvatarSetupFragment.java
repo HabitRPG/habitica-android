@@ -52,12 +52,17 @@ public class AvatarSetupFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (view == null)
+        if (view == null) {
             view = inflater.inflate(R.layout.fragment_setup_avatar, container, false);
+        }
 
         ButterKnife.bind(this, view);
         this.adapter = new CustomizationSetupAdapter();
-        this.adapter.userSize = this.user.getPreferences().getSize();
+        if (this.user != null) {
+            this.adapter.userSize = this.user.getPreferences().getSize();
+        } else {
+            this.adapter.userSize = "slim";
+        }
         this.adapter.user = this.user;
         this.layoutManager = new GridLayoutManager(activity, 2);
         this.layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

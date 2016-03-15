@@ -3,8 +3,10 @@ package com.habitrpg.android.habitica;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.amplitude.api.Amplitude;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -249,6 +251,7 @@ public class APIHelper implements ErrorHandler, Profiler {
             showConnectionProblemDialog(R.string.network_error_no_network_body);
             return cause;
         } else if (cause.getKind().equals(RetrofitError.Kind.HTTP)) {
+            Crashlytics.getInstance().core.log(Log.INFO, "Habitica", "Error loading " + cause.getUrl());
             retrofit.client.Response response = cause.getResponse();
 
             ErrorResponse res = null;

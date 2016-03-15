@@ -133,7 +133,9 @@ public class GroupInformationFragment extends Fragment {
             return;
         }
         questCollectViewAdapter.setQuestContent(quest);
-        questCollectViewAdapter.setQuestProgress(group.quest.getProgress());
+        if (group.quest.getProgress() != null) {
+            questCollectViewAdapter.setQuestProgress(group.quest.getProgress());
+        }
         bossHpBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.hp > 0) ? View.VISIBLE : View.GONE);
         bossRageBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.rage_value > 0) ? View.VISIBLE : View.GONE);
     }
@@ -158,13 +160,13 @@ public class GroupInformationFragment extends Fragment {
             if (group.quest.active) {
                 questResponse.setText("");
             } else if (questresponse == null) {
-                questResponse.setText("Pending");
-            } else if (questresponse.booleanValue() == true) {
-                questResponse.setText("Accepted");
-                questResponse.setTextColor(Color.parseColor("#2db200"));
-            } else if (questresponse.booleanValue() == false) {
-                questResponse.setText("Rejected");
-                questResponse.setTextColor(Color.parseColor("#b30409"));
+                questResponse.setText(R.string.quest_pending);
+            } else if (questresponse) {
+                questResponse.setText(R.string.quest_accepted);
+                questResponse.setTextColor(getResources().getColor(R.color.good_10));
+            } else {
+                questResponse.setText(R.string.quest_rejected);
+                questResponse.setTextColor(getResources().getColor(R.color.worse_10));
             }
             questMemberView.post(new Runnable() {
                 @Override

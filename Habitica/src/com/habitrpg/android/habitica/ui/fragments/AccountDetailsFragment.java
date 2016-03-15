@@ -12,9 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by franzejr on 28/11/15.
- */
 public class AccountDetailsFragment extends BasePreferencesFragment {
 
     @Override

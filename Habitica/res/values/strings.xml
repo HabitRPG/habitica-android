@@ -253,4 +253,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="outfit_weapon">Weapon</string>
     <string name="wear_costume">Wear Costume</string>
     <string name="equipped">Equipped</string>
+    <string name="quest_pending">Pending</string>
+    <string name="quest_accepted">Accepted</string>
+    <string name="quest_rejected">Rejected</string>
+    <string name="quest_participants">Participants</string>
 </resources>
