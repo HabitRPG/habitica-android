@@ -16,9 +16,9 @@
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
   <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
-  <string name="pref_reminder_header">Przypominacz</string>
-  <string name="pref_reminder_checkbox">Aktywuj przypominacz</string>
-  <string name="pref_reminder_picker">Ustaw czas przypomnień</string>
+  <string name="pref_reminder_header">Przypominienie</string>
+  <string name="pref_reminder_checkbox">Aktywuj Przypomnienie</string>
+  <string name="pref_reminder_picker">Ustaw Czas Przypomnienia</string>
   <!--Adding tasks-->
   <string name="task_value">Wartość</string>
   <string name="new_todo">Nowe DoZrobienia</string>
@@ -65,6 +65,7 @@
   <string name="notes">Notatki</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Trudność</string>
+  <string name="tags">Tagi</string>
   <string name="trivial">Trywialny</string>
   <string name="easy">Łatwy</string>
   <string name="medium">Średni</string>
@@ -96,16 +97,16 @@
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
   <string name="used_skill" formatted="false">Użyłeś %1$s za %2$d pkt. many.</string>
-  <string name="new_checklist_item">nowe zadanie składowe</string>
+  <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="reminder_title">Pamiętaj o odhaczaniu Codziennych!</string>
   <string name="skill_progress_title">Użycie umiejętności</string>
   <string name="coming_soon">Wkrótce dostępne</string>
   <string name="chat_flag_confirmation">Jesteś pewny że chcesz zgłosić tą wiadomość z powodu naruszeń?</string>
   <string name="flag_confirm">Oznacz wiadomość</string>
-  <string name="unlock_lvl_10">Dostępne na 10 poziomie</string>
+  <string name="unlock_lvl_11">Odblokuj na poziomie 11</string>
   <string name="no_party_message">Nie jesteś w drużynie. Żeby dołączyć do drużyny odwiedź stronę internetową.</string>
-  <string name="forgot_pw_btn">Zapomniałem hasła</string>
+  <string name="forgot_pw_btn">Zapomniane hasło</string>
   <string name="forgot_pw_tv">Zapomniane hasło? Użyj mobilnej strony internetowej.</string>
   <string name="tavern.inn.checkOut">Wymelduj się z Gospody</string>
   <string name="tavern.inn.rest">Odpoczywaj w Gospodzie</string>
@@ -118,7 +119,7 @@
   <string name="dailies">Codzienne</string>
   <string name="todos">DoZrobienia</string>
   <string name="rewards">Nagrody</string>
-  <string name="taskform.delete.title">Czy masz pewność?</string>
+  <string name="taskform.delete.title">Jesteś pewien?</string>
   <string name="taskform.delete.message">Czy na pewno chcesz usunąć?</string>
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
@@ -144,22 +145,27 @@
   <string name="purchase_button">Kup</string>
   <string name="purchase_set_title" formatted="false">Kup zestaw %s</string>
   <string name="due_date">Termin</string>
+  <string name="quest.accept">Akceptuj</string>
+  <string name="quest.reject">Odrzuć</string>
+  <string name="quest.begin">Rozpocznij</string>
+  <string name="quest.cancel">Anuluj</string>
+  <string name="quest.abort">Porzuć</string>
+  <string name="quest.leave">Opuść Misję</string>
   <string name="version_info" formatted="false">Wersja %s (%d)</string>
-  <string name="sidebar_help"><![CDATA[Pomoc i FAQ]]></string>
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
-  <string name="intro_1_description">Dołącz do ponad 1,100,000 osób wykonujących obowiązki poprzez zabawę. Utwórz awatar i pilnuj swoich zadań z prawdziwego życia.</string>
-  <string name="intro_2_title">Progres w grze = progres w życiu</string>
-  <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych jako nagrodę za zrealizowanie celów!</string>
+  <string name="intro_1_description">Dołącz do ponad 1 100 000 osób wykonujących obowiązki poprzez zabawę. Stwórz awatara i pilnuj swoich zadań z prawdziwego życia.</string>
+  <string name="intro_2_title">Awans w grze = Awans w życiu</string>
+  <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
   <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
   <string name="intro_3_description">Zmierzaj do swoich celów z pomocą przyjaciół. Wspierajcie się wzajemnie w życiu i w walce, aby wspólnie się udoskonalać!</string>
   <string name="intro_finish_button">Zaczynamy</string>
   <string name="previous_button">Poprzedni</string>
   <string name="next_button">Następny</string>
   <string name="skip_button">Pomiń</string>
-  <string name="setup_welcome_description">Witamy w Habitice, gdzie postęp w grze, ulepszy twoje życie! Osiągając cele w prawdziwym świecie, odblokowujesz ekwipunek, chowańce, misje i wiele więcej.</string>
-  <string name="setup_welcome_title">Witamy</string>
+  <string name="setup_welcome_description">Witaj w Habitice, gdzie postęp w grze ulepszy twoje życie! Osiągając cele w prawdziwym świecie, odblokowujesz ekwipunek, chowańce, misje i wiele więcej.</string>
+  <string name="setup_welcome_title">Witaj</string>
   <string name="avatar_setup_description">Na początek, potrzebujesz awatara - twoją reprezentację w grze! To, co robisz w prawdziwym życiu, ma wpływ na zdrowie, poziom doświadczenia i złoto twojego awatara.</string>
   <string name="task_setup_description">Wspaniale! Teraz ustalmy twoje zadania, żeby zacząć zdobywać doświadczenie i złoto.
 
@@ -188,8 +194,26 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="setup_task_teams_3">Ukończyć projekt zespołowy</string>
   <string name="setup_task_chores_1">10 minut sprzątania</string>
   <string name="setup_task_chores_2">Umyć naczynia</string>
-  <string name="setup_task_chores_3">Zorganizować szafę</string>
-  <string name="setup_task_creativity_1">Studiować mistrza rzemiosła</string>
-  <string name="setup_task_creativity_2">Pracować nad projektem artystycznym</string>
-  <string name="setup_task_creativity_3">Ukończyć projekt artystyczny</string>
+  <string name="setup_task_chores_3">Posprzątać w szafie</string>
+  <string name="setup_task_creativity_1">Studiować mistrzostwo rzemiosła</string>
+  <string name="setup_task_creativity_2">Pracować nad twórczym projektem</string>
+  <string name="setup_task_creativity_3">Ukończyć twórczy projekt</string>
+  <string name="gem.purchase.support">Chcesz nam pomóc w utrzymaniu Habitiki? Możesz wesprzeć deweloperów kupując Klejnoty!\n\nZa Klejnoty można kupować zabawne dodatki do konta, takie jak:\n\n - Fajne kostiumy dla twojego awatara\n - Fantastyczne tła\n - Ciekawe misje, w których nagrodą są jaja chowańców\n - Możliwość zmiany klasy przed osiągnięciem poziomu 100\n\nStukrotne dzięki za pomaganie nam w czynieniu Habitiki najlepszą, jaka może być. Twoja pomoc wiele dla nas znaczy!</string>
+  <string name="my_guilds">Moje Gildie</string>
+  <string name="public_guilds">Publiczne Gildie</string>
+  <string name="guild">Gildia</string>
+  <string name="leave">Opuść</string>
+  <string name="join">Dołącz</string>
+  <string name="leader">Lider</string>
+  <string name="gems">Klejnoty</string>
+  <string name="copy_as_todo">Skopiuj jako Do-Zrobienia</string>
+  <string name="send_pm">Wyślij wiadomość</string>
+  <string name="flag">Oznacz</string>
+  <string name="delete">Usuń</string>
+  <string name="name">Nazwa</string>
+  <string name="description">Opis</string>
+  <string name="add_tag">Dodaj tag</string>
+  <string name="privacy">Prywatność</string>
+  <string name="write_message">Napisz wiadomość</string>
+  <string name="post">Wyślij</string>
 </resources>

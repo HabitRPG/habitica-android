@@ -221,6 +221,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/quest_participants"
+                        android:id="@+id/textView12" />
+
                     <LinearLayout
                         android:id="@+id/questMemberView"
                         android:layout_width="match_parent"

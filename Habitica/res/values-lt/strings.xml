@@ -65,6 +65,7 @@
   <string name="notes">Užrašai</string>
   <string name="text">Tekstas</string>
   <string name="difficulty">Sunkumas</string>
+  <string name="tags">Žymės</string>
   <string name="trivial">Labai Lengva</string>
   <string name="easy">Lengva</string>
   <string name="medium">Vidutiniška</string>
@@ -103,7 +104,7 @@
   <string name="coming_soon">Jau Greitai</string>
   <string name="chat_flag_confirmation">Ar tikrai norite pranešti apie šią žinutę dėl pažeidimo?</string>
   <string name="flag_confirm">Žymėti Žinutę</string>
-  <string name="unlock_lvl_10">Atidenk 10 lygyje</string>
+  <string name="unlock_lvl_11">Atsidengia pasiekus 11 lygį</string>
   <string name="no_party_message">Tu nesi grupėje. Norėdama(s) prisidėti prie grupės, apsilankyk svetainėje.</string>
   <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
   <string name="forgot_pw_tv">Pamiršote Slaptažodį? Naudokite mobilią Svetainę.</string>
@@ -144,12 +145,18 @@
   <string name="purchase_button">Pirkti</string>
   <string name="purchase_set_title" formatted="false">Pirkti rinkinį %s</string>
   <string name="due_date">Baigimo Terminas</string>
+  <string name="quest.accept">Sutikti</string>
+  <string name="quest.reject">Atmesti</string>
+  <string name="quest.begin">Pradėti</string>
+  <string name="quest.cancel">Atšaukti</string>
+  <string name="quest.abort">Nutraukti</string>
+  <string name="quest.leave">Palikti Misiją</string>
   <string name="version_info" formatted="false">Versija: %s (%d)</string>
-  <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+  <string name="sidebar_help">Pagalba &amp; DUK</string>
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
   <string name="intro_1_title">Sveiki užsukę į Habitica</string>
-  <string name="intro_1_description">Prisidėkite prie virš 1,100,000 žmonių besilinksminančių atliekant savo darbus. Susikurk veikėją ir sek savo gyvenimo užduotis.</string>
+  <string name="intro_1_description">Prisidėk prie virš 1,100,000 žmonių, kurie linksminasi darydami savo darbus. Susikurk veikėją ir sek savo gyvenimo užduotis.</string>
   <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
   <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
   <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
@@ -192,4 +199,37 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="setup_task_creativity_1">Mokytis amato</string>
   <string name="setup_task_creativity_2">Dirbti prie kūrybinio projekto</string>
   <string name="setup_task_creativity_3">Baigti kūrybinį projektą</string>
+  <string name="gem.purchase.support">Nori padėti Habitica gyvuoti? Gali paremti programuotojus perkant brangakmenius!\n\nBrangakmeniai leidžia pirkti smagius priedus savo paskyrai, pvz: \n\n - Smagūs kostiumai tavo veikėjui\n - Nepakartojami fonai\n - Smagios misijos, kuriose galima rasti kiaušinių\n - Galimybė pasikeisti klasę nepasiekus 100 lygio\n\nDėkojame, kad padedate Habitica klestėti. Jūsų parama mums tikrai daug reiškia!</string>
+  <string name="my_guilds">Mano Gildijos</string>
+  <string name="public_guilds">Viešos Gildijos</string>
+  <string name="guild">Gildija</string>
+  <string name="leave">Palikti</string>
+  <string name="join">Prisidėti</string>
+  <string name="leader">Vadas</string>
+  <string name="gems">Brangakmeniai</string>
+  <string name="copy_as_todo">Kopijuoti kaip Užduotį</string>
+  <string name="send_pm">Siųsti Žinutę</string>
+  <string name="flag">Žymėti</string>
+  <string name="delete">Trinti</string>
+  <string name="name">Pavadinimas</string>
+  <string name="description">Aprašymas</string>
+  <string name="add_tag">Pridėti Žymę</string>
+  <string name="privacy">Privatumas</string>
+  <string name="write_message">Rašyti Žinutę</string>
+  <string name="post">Siųsti</string>
+  <string name="todo_due" formatted="false">Terminas: %s</string>
+  <string name="daily_streak" formatted="false">dabartinė serija: %d</string>
+  <string name="todo_has_duedate">Užduotis turi Terminą</string>
+  <string name="battle_gear">Kovinė Apranga</string>
+  <string name="costume">Kostiumas</string>
+  <string name="outfit_head">Galva</string>
+  <string name="outfit_headAccessory">Galvos Aksesuaras</string>
+  <string name="outfit_eyewear">Akiniai</string>
+  <string name="outfit_armor">Šarvai</string>
+  <string name="outfit_back">Nugara</string>
+  <string name="outfit_body">Kūnas</string>
+  <string name="outfit_shield">Skydas</string>
+  <string name="outfit_weapon">Ginklas</string>
+  <string name="wear_costume">Užsidėti Kostiumą</string>
+  <string name="equipped">Užsidėta</string>
 </resources>

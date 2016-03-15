@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Ukończ Pozytywne Nawyki, aby uzyskać złoto i punkty doświadczenia! Jeśli stukniesz Negatywne Nawyki, zranią twojego awatara, więc unikaj ich w prawdziwym życiu!</string>
-  <string name="tutorial_dailies">Pokonaj powtarzające się Codzienne zadania, aby zdobyć złoto i doświadczenie. Uwaga! Codzienne zranią twojego awatara, jeśli nie ukończysz ich na czas.</string>
+  <string name="tutorial_habits">Utrwalaj Pozytywne Nawyki, aby zdobyć złoto i punkty doświadczenia! Negatywne Nawyki zranią twojego bohatera gdy na nie natrafisz. Unikaj ich w prawdziwym życiu!</string>
+  <string name="tutorial_dailies">Pokonuj kolejne Codzienne zadania, aby zdobyć złoto i doświadczenie. Uwaga! Codzienne zranią twojego awatara, jeśli nie ukończysz ich na czas.</string>
   <string name="tutorial_todos">Ukończ swoje Do-Zrobienia w prawdziwym życiu i odznacz je w zamian za ZŁOTO i DOŚWIADCZENIE, aby móc kupować Nagrody i odblokowywać nowe funkcje!</string>
   <string name="tutorial_rewards">Oto twoje Nagrody! Zyskuj złoto za ukończone w prawdziwym życiu Nawyki, Codzienne i Do-Zrobienia. Następnie wydawaj na Nagrody w grze lub własne w realnym świecie!</string>
   <string name="tutorial_equipment">Tu pojawia się zakupiony ekwipunek. Wyposażenie Bojowe wpływa na twoje statystyki, a Kostium (o ile włączony) na wygląd twojego awatara.</string>
@@ -9,6 +9,6 @@
   <string name="tutorial_pets">Kończąc zadania w prawdziwym świecie, masz szansę znalezienia losowych jaj i eliksirów. Połącz je, aby wykluć chowańce.</string>
   <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
   <string name="tutorial_party">Tutaj ty i twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami poprzez swoje zadania!</string>
-  <string name="tutorial_tavern">Witajcie w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
+  <string name="tutorial_tavern">Witaj w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
   <string name="tutorial_classes">Wybierz, czy zostać Wojownikiem, Magiem, Uzdrowicielem, czy Łotrzykiem! Każda klasa ma unikalny zestaw wyposażenia i umiejętności. By dowiedzieć się więcej, stuknij (?) !</string>
 </resources>
