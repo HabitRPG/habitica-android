@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
-import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import android.util.Log;
+
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

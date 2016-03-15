@@ -6,17 +6,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+
 import org.greenrobot.eventbus.EventBus;
-import io.fabric.sdk.android.Fabric;
-import org.solovyev.android.checkout.*;
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.BillingRequests;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.Inventory;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Purchase;
+import org.solovyev.android.checkout.Purchases;
+import org.solovyev.android.checkout.RequestListener;
+import org.solovyev.android.checkout.Sku;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Negue on 24.11.2015.

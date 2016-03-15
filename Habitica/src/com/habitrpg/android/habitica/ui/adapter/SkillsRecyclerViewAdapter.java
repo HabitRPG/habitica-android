@@ -12,11 +12,12 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by viirus on 25/11/15.

@@ -5,6 +5,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 
 import org.greenrobot.eventbus.EventBus;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

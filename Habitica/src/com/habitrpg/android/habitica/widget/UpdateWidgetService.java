@@ -11,9 +11,9 @@ import android.widget.RemoteViews;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 

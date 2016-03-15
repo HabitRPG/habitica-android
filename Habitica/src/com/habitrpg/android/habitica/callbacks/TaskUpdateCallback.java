@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import android.util.Log;
+
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
 import org.greenrobot.eventbus.EventBus;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

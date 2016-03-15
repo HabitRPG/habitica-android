@@ -1,7 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
@@ -11,7 +10,6 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

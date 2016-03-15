@@ -22,10 +22,6 @@ import com.github.data5tream.emojilib.EmojiPopup;
 import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import butterknife.Bind;
 
