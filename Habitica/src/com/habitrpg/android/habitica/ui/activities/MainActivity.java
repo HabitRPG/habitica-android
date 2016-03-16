@@ -60,6 +60,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -559,8 +560,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             return;
         }
 
-        double newGp = user.getStats().getGp() - event.Reward.getValue();
-        user.getStats().setGp(newGp);
 
         if (rewardKey.equals("potion")) {
             int currentHp = user.getStats().getHp().intValue();
@@ -570,41 +569,39 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 UiUtils.showSnackbar(this, floatingMenuWrapper, "You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
-            double newHp = Math.min(user.getStats().getMaxHealth(), user.getStats().getHp() + 15);
-            user.getStats().setHp(newHp);
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<Void>() {
+            mAPIHelper.apiService.buyItem(event.Reward.getId(), new Callback<BuyResponse>() {
 
                 @Override
-                public void success(Void aVoid, Response response) {
-                    if (!event.Reward.getId().equals("potion")) {
+                public void success(BuyResponse buyResponse, Response response) {
+                    String snackbarMessage = event.Reward.getText() + " successfully purchased!";
+
+                    if (event.Reward.getId().equals("armoire")) {
+                        if (buyResponse.armoire.get("type").equals("gear")) {
+                            snackbarMessage = getApplicationContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
+                        } else if (buyResponse.armoire.get("type").equals("food")) {
+                            snackbarMessage = getApplicationContext().getString(R.string.armoireFood, buyResponse.armoire.get("dropArticle"), buyResponse.armoire.get("dropText"));
+                        } else {
+                            snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
+                        }
+                    } else if(!event.Reward.getId().equals("potion")) {
                         EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                     }
+
+                    user.setItems(buyResponse.getItems());
+                    user.setStats(buyResponse.getStats());
+                    user.setFlags(buyResponse.getFlags());
 
                     user.async().save();
                     MainActivity.this.setUserData(true);
 
-                    showSnackbar(MainActivity.this, floatingMenuWrapper, event.Reward.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    double newGp = user.getStats().getGp() + event.Reward.getValue();
-                    user.getStats().setGp(newGp);
-                    switch (rewardKey) {
-                        case "potion":
-                            double newHp = Math.max(0, user.getStats().getHp() - 15);
-                            user.getStats().setHp(newHp);
-
-                            break;
-                        default:
-                            break;
-                    }
-
-                    avatarInHeader.updateData(user);
-                    user.async().save();
 
                     showSnackbar(MainActivity.this, floatingMenuWrapper, "Buy Reward Error " + event.Reward.getText(), SnackbarDisplayType.FAILURE);
                 }
