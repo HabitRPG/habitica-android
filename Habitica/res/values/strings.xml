@@ -260,5 +260,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="quest.invitation">Quest Invitation</string>
     <string name="quest_begin_message">Are you sure you want to begin the quest? Once it is active, no additional party members can join the quest.</string>
     <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
+    <string name="ago_1day">1 day ago</string>
+    <string name="ago_days" formatted="false">%d days ago</string>
+    <string name="ago_1Minute">1 minute ago</string>
+    <string name="ago_minutes" formatted="false">%d minutes ago</string>
+    <string name="ago_hours" formatted="false">%d hours ago</string>
+    <string name="ago_1hour">1 hour ago</string>
 
 </resources>

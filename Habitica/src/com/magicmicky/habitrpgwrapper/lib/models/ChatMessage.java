@@ -1,5 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
+import android.content.res.Resources;
+
 import com.habitrpg.android.habitica.R;
 
 import java.util.Date;
@@ -77,7 +79,7 @@ public class ChatMessage {
         return rColor;
     }
 
-    public String getAgoString() {
+    public String getAgoString(Resources res) {
         long diff = new Date().getTime() - timestamp;
 
         long diffMinutes = diff / (60 * 1000) % 60;
@@ -85,14 +87,23 @@ public class ChatMessage {
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
         if (diffDays != 0) {
-            return diffDays + " days ago";
+            if (diffDays == 1) {
+                return res.getString(R.string.ago_1day);
+            }
+            return res.getString(R.string.ago_days, diffDays);
         }
 
         if (diffHours != 0) {
-            return diffHours + " hours ago";
+            if (diffHours == 1) {
+                return res.getString(R.string.ago_1hour);
+            }
+            return res.getString(R.string.ago_hours, diffHours);
         }
 
-        return diffMinutes + " minutes ago";
+        if (diffMinutes == 1) {
+            return res.getString(R.string.ago_1Minute);
+        }
+        return res.getString(R.string.ago_minutes, diffMinutes);
     }
 }
 

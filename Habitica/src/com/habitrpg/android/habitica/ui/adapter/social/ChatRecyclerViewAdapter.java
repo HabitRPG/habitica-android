@@ -244,7 +244,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
                 }
 
-                agoLabel.setText(msg.getAgoString());
+                agoLabel.setText(msg.getAgoString(res));
             }
         }
 
