@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
@@ -92,7 +93,7 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE).withEnabled(false).withBadge(R.string.coming_soon),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
-                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)).withIcon(GoogleMaterial.Icon.gmd_info_outline),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIcon(GoogleMaterial.Icon.gmd_info_outline),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_news)).withIdentifier(SIDEBAR_NEWS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP),
@@ -138,6 +139,10 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_PURCHASE: {
                                 fragment = new GemsPurchaseFragment();
+                                break;
+                            }
+                            case SIDEBAR_NEWS: {
+                                fragment= new NewsFragment();
                                 break;
                             }
                             case SIDEBAR_SETTINGS: {
