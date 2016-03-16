@@ -147,9 +147,6 @@
   <string name="due_date">Termin</string>
   <string name="quest.accept">Akceptuj</string>
   <string name="quest.reject">Odrzuć</string>
-  <string name="quest.begin">Rozpocznij</string>
-  <string name="quest.cancel">Anuluj</string>
-  <string name="quest.abort">Porzuć</string>
   <string name="quest.leave">Opuść Misję</string>
   <string name="version_info" formatted="false">Wersja %s (%d)</string>
   <string name="complete_tutorial">Jasne!</string>

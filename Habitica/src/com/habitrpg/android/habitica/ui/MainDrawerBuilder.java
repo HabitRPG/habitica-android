@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -42,9 +43,10 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_EQUIPMENT = 7;
     public static final int SIDEBAR_STABLE = 8;
     public static final int SIDEBAR_PURCHASE = 9;
-    public static final int SIDEBAR_SETTINGS = 10;
-    public static final int SIDEBAR_HELP = 11;
-    public static final int SIDEBAR_ABOUT = 12;
+    public static final int SIDEBAR_NEWS = 10;
+    public static final int SIDEBAR_SETTINGS = 11;
+    public static final int SIDEBAR_HELP = 12;
+    public static final int SIDEBAR_ABOUT = 13;
 
 
 
@@ -79,20 +81,19 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS),
 
-                        new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_social)),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social)).withIcon(GoogleMaterial.Icon.gmd_group),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)).withIdentifier(SIDEBAR_GUILDS),
-                        //new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)),
 
-                        new SectionDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)).withIcon(GoogleMaterial.Icon.gmd_work),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withIdentifier(SIDEBAR_EQUIPMENT),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE).withEnabled(false).withBadge(R.string.coming_soon),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
-                        new DividerDrawerItem(),
-                        //new SecondaryDrawerItem().withName(activity.getString(R.string.sidebar_news)),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory)).withIcon(GoogleMaterial.Icon.gmd_info_outline),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_news)).withIdentifier(SIDEBAR_NEWS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_about)).withIdentifier(SIDEBAR_ABOUT).withSelectable(false)

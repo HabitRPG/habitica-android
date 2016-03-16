@@ -65,6 +65,7 @@
   <string name="notes">Notas</string>
   <string name="text">Texto</string>
   <string name="difficulty">Dificuldade</string>
+  <string name="tags">Rótulo</string>
   <string name="trivial">Trivial</string>
   <string name="easy">Fácil</string>
   <string name="medium">Médio</string>
@@ -103,7 +104,7 @@
   <string name="coming_soon">Em Breve</string>
   <string name="chat_flag_confirmation">Você tem certeza que quer reportar esta mensagem por violação?</string>
   <string name="flag_confirm">Reportar Mensagem</string>
-  <string name="unlock_lvl_10">Desbloqueie no nv 10</string>
+  <string name="unlock_lvl_11">Desbloqueie no nível 11</string>
   <string name="no_party_message">Você não está em um grupo. Para entrar em um grupo, por favor visite o site.</string>
   <string name="forgot_pw_btn">Esqueci a senha</string>
   <string name="forgot_pw_tv">Esqueceu a senha? Por favor use o Site móvel.</string>
@@ -144,47 +145,53 @@
   <string name="purchase_button">Comprar</string>
   <string name="purchase_set_title" formatted="false">Comprar conjunto %s</string>
   <string name="due_date">Data limite</string>
+  <string name="quest.accept">Aceitar</string>
+  <string name="quest.reject">Rejeitar</string>
+  <string name="quest.begin">Iniciar</string>
+  <string name="quest.cancel">Cancelar</string>
+  <string name="quest.abort">Abortar</string>
+  <string name="quest.leave">Abandonar missão</string>
   <string name="version_info" formatted="false">Versão %s (%d)</string>
-  <string name="sidebar_help"><![CDATA[Ajuda & Perguntas frequentes]]></string>
+  <string name="sidebar_help">Ajuda &amp;amp: Perguntas Frequentes</string>
   <string name="complete_tutorial">Entendi!</string>
   <string name="dismiss_tutorial">Lembre-me novamente</string>
   <string name="intro_1_title">Bem vindo(a) ao Habitica</string>
-  <string name="intro_1_description">Junte-se a mais de 1,100,000 pessoas que se divertem enquanto fazem as coisas acontecerem. Crie um avatar e acompanhe suas tarefas da vida real.</string>
+  <string name="intro_1_description">Junte-se à mais de 1.100.000 pessoas se divertindo enquanto fazem o que precisam. Crie um avatar e acompanhe suas atividades na vida real.</string>
   <string name="intro_2_title">Progresso no jogo = Progresso na vida</string>
   <string name="intro_2_description">Desbloqueie recursos no jogo ao completar suas tarefas da vida real. Ganhe armaduras, animais de estimação, montarias e mais para recompensá-lo por atingir suas metas!</string>
   <string name="intro_3_title">Socialize e lute contra monstros</string>
   <string name="intro_3_description">Mantenha suas metas sob controle com a ajuda de seus amigos. Ajudem-se na vida e na batalha enquanto melhoram juntos!</string>
-  <string name="intro_finish_button">Entrar</string>
+  <string name="intro_finish_button">Iniciar</string>
   <string name="previous_button">Anterior</string>
   <string name="next_button">Próximo</string>
   <string name="skip_button">Pular</string>
-  <string name="setup_welcome_description">Bem vindo ao Habitica, onde avançar no jogo vai melhorar sua vida real! Completando metas do mundo real, você vai desbloquear equipamentos, animais de estimação, missões, e mais.</string>
-  <string name="setup_welcome_title">Bem vindo</string>
-  <string name="avatar_setup_description">Primeiramente, você precisa de um avatar no jogo para te representar! As coisas que você faz na vida real, vão afetar a saúde, nível de experiência e ouro do seu avatar.</string>
+  <string name="setup_welcome_description">Bem vindo ao Habitica, onde avançar no jogo vai melhorar sua vida real! Completando metas do mundo real, você vai desbloquear equipamentos, animais de estimação, missões e mais.</string>
+  <string name="setup_welcome_title">Bem-vindo</string>
+  <string name="avatar_setup_description">Primeiramente, você precisa de um avatar no jogo para te representar! As coisas que você faz na vida real, vão afetar a saúde do seu avatar, nível de experiência e ouro.</string>
   <string name="task_setup_description">Esplêndido! Agora vamos configurar suas tarefas para que você comece a ganhar experiência e ouro.
 
 Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="setup_group_work">Trabalho</string>
   <string name="setup_group_exercise">Exercício</string>
-  <string name="setup_group_heathWellness">Saúde + Bem estar</string>
+  <string name="setup_group_heathWellness">Saúde + Bem-estar</string>
   <string name="setup_group_school">Escola</string>
   <string name="setup_group_teams">Equipes</string>
-  <string name="setup_group_chores">Ocupações</string>
+  <string name="setup_group_chores">Tarefas</string>
   <string name="setup_group_creativity">Criatividade</string>
-  <string name="setup_task_work_1">Processar seus e-mails</string>
+  <string name="setup_task_work_1">Processar e-mails</string>
   <string name="setup_task_work_2">Tarefa mais importante</string>
   <string name="setup_task_work_3">Projeto de trabalho</string>
-  <string name="setup_task_exercise_1">10 minutos de exercício cardiovascular</string>
-  <string name="setup_task_exercise_2">Alongamentos</string>
+  <string name="setup_task_exercise_1">10 min cardio</string>
+  <string name="setup_task_exercise_2">Alongamento</string>
   <string name="setup_task_exercise_3">Criar agenda de atividades físicas</string>
   <string name="setup_task_healthWellness_1">Comer bem / Comer besteiras</string>
   <string name="setup_task_healthWellness_2">Passar fio dental</string>
-  <string name="setup_task_healthWellness_3">Agendar check-up médico</string>
+  <string name="setup_task_healthWellness_3">Agendar check-up</string>
   <string name="setup_task_school_1">Estudar/Procrastinar</string>
   <string name="setup_task_school_2">Fazer a lição de casa</string>
   <string name="setup_task_school_3">Terminar tarefa para a aula</string>
-  <string name="setup_task_teams_1">\"Check in\" com a equipe</string>
-  <string name="setup_task_teams_2">Atualizar a equipe do status</string>
+  <string name="setup_task_teams_1">Confirmar com a equipe</string>
+  <string name="setup_task_teams_2">Atualizar a equipe sobre o status</string>
   <string name="setup_task_teams_3">Completar projeto da equipe</string>
   <string name="setup_task_chores_1">Limpeza de 10 minutos</string>
   <string name="setup_task_chores_2">Lavar a louça</string>
@@ -192,4 +199,41 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="setup_task_creativity_1">Estudar um mestre no ofício</string>
   <string name="setup_task_creativity_2">Trabalhar em um projeto criativo</string>
   <string name="setup_task_creativity_3">Terminar um projeto criativo</string>
+  <string name="gem.purchase.support">Quer nos ajudar a manter o Habitica funcionando? Você pode contribuir com os desenvolvedores ao comprar gemas!\n\nGemas permitem que você compre extras divertidos para sua conta, incluindo:  \n\n - Fantasias legais para seu avatar\n - Imagens de fundo incríveis\n - Missões divertidas que te recompensam com ovos\n - A habilidade de mudar de classe antes do nível 100\n\n Muito obrigado por nos ajudar a manter o Habita o melhor possível. Sua ajuda significa muito para nós!</string>
+  <string name="my_guilds">Minhas Guildas</string>
+  <string name="public_guilds">Guildas Públicas</string>
+  <string name="guild">Guilda</string>
+  <string name="leave">Sair</string>
+  <string name="join">Juntar-se</string>
+  <string name="leader">Líder</string>
+  <string name="gems">Gemas</string>
+  <string name="copy_as_todo">Copiar como Afazer</string>
+  <string name="send_pm">Enviar mensagem privada</string>
+  <string name="flag">Bandeira</string>
+  <string name="delete">Deletar</string>
+  <string name="name">Nome</string>
+  <string name="description">Descrição</string>
+  <string name="add_tag">Adicionar marcador</string>
+  <string name="privacy">Privacidade</string>
+  <string name="write_message">Escrever mensagem</string>
+  <string name="post">Cargo</string>
+  <string name="todo_due" formatted="false">Devido: %s</string>
+  <string name="daily_streak" formatted="false">Raia atual: %d</string>
+  <string name="todo_has_duedate">Tarefa com vencimento</string>
+  <string name="battle_gear">Equipamento de batalha</string>
+  <string name="costume">Traje</string>
+  <string name="outfit_head">Cabeça</string>
+  <string name="outfit_headAccessory">Acessório de cabeça</string>
+  <string name="outfit_eyewear">Óculos</string>
+  <string name="outfit_armor">Armadura</string>
+  <string name="outfit_back">Costas</string>
+  <string name="outfit_body">Corpo</string>
+  <string name="outfit_shield">Escudo</string>
+  <string name="outfit_weapon">Arma</string>
+  <string name="wear_costume">Vestir traje</string>
+  <string name="equipped">Equipado</string>
+  <string name="quest.pending">Pendente</string>
+  <string name="quest.accepted">Aceito</string>
+  <string name="quest.rejected">Rejeitado</string>
+  <string name="quest.participants">Participantes</string>
 </resources>

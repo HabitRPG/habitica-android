@@ -232,4 +232,8 @@
   <string name="outfit_weapon">武器</string>
   <string name="wear_costume">穿上装扮</string>
   <string name="equipped">装备</string>
+  <string name="quest.pending">等待中</string>
+  <string name="quest.accepted">接受了</string>
+  <string name="quest.rejected">拒绝的</string>
+  <string name="quest.participants">参与者</string>
 </resources>

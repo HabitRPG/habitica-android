@@ -231,4 +231,8 @@ Für den Anfang, welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="outfit_weapon">Waffe</string>
   <string name="wear_costume">Kostüm tragen</string>
   <string name="equipped">Ausgerüstet</string>
+  <string name="quest.pending">Ausstehend</string>
+  <string name="quest.accepted">Angenommen</string>
+  <string name="quest.rejected">Abgelehnt</string>
+  <string name="quest.participants">Teilnehmer</string>
 </resources>

@@ -481,13 +481,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        if (this.activity.filterDrawer != null) {
+        if (this.activity.filterDrawer != null && this.tagsHelper != null) {
             this.activity.filterDrawer.removeAllItems();
             this.activity.filterDrawer.addItems(
                     new SectionDrawerItem().withName("Filter by Tag"),
                     new EditTextDrawer()
             );
-
             for (Tag t : tagList) {
                 this.activity.filterDrawer.addItem(new SwitchDrawerItem()
                                 .withName(t.getName())

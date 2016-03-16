@@ -85,7 +85,7 @@
   <string name="friday">Vendredi</string>
   <string name="saturday">Samedi</string>
   <string name="sunday">Dimanche</string>
-  <string name="levelup_header">Vous avez passé un niveau !</string>
+  <string name="levelup_header">Vous avez gagné un niveau !</string>
   <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez atteint le Niveau %1$d !</string>
   <string name="levelup_health">Vous avez été guéri·e complètement !</string>
   <string name="levelup_button">Bravo !</string>
@@ -99,15 +99,15 @@
   <string name="used_skill" formatted="false">Vous avez utilisé %1$s pour %2$d points de mana.</string>
   <string name="new_checklist_item">Nouvelle vérification</string>
   <string name="add_checklist_item">Ajouter</string>
-  <string name="reminder_title">N\'oubliez pas de cocher vos tâches quotidiennes accomplies !</string>
+  <string name="reminder_title">N\'oubliez pas de cocher vos tâches Quotidiennes !</string>
   <string name="skill_progress_title">Utiliser une compétence</string>
   <string name="coming_soon">Bientôt disponible</string>
-  <string name="chat_flag_confirmation">Êtes-vous sûr·e de vouloir signaler ce message pour violation ?</string>
+  <string name="chat_flag_confirmation">Êtes-vous sûr·e de vouloir signaler ce message pour infraction ?</string>
   <string name="flag_confirm">Signaler</string>
   <string name="unlock_lvl_11">Disponible au niveau 11</string>
-  <string name="no_party_message">Vous ne faites pas partie d\'une équipe. Pour rejoindre une équipe, veuillez visiter le site Internet.</string>
+  <string name="no_party_message">Vous ne faites pas partie d\'une équipe. Pour rejoindre une équipe, veuillez visiter le site.</string>
   <string name="forgot_pw_btn">Mot de passe oublié</string>
-  <string name="forgot_pw_tv">Mot de passe oublié ? Veuillez vous rendre sur la version mobile de notre site.</string>
+  <string name="forgot_pw_tv">Mot de passe oublié ? Veuillez vous rendre sur la version mobile du site.</string>
   <string name="tavern.inn.checkOut">Quitter l\'Auberge</string>
   <string name="tavern.inn.rest">Se reposer à l\'Auberge</string>
   <string name="reward.dialog.buy">Acheter</string>
@@ -232,4 +232,8 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="outfit_weapon">Arme</string>
   <string name="wear_costume">Porter un costume</string>
   <string name="equipped">Équipé</string>
+  <string name="quest.pending">En attente</string>
+  <string name="quest.accepted">Acceptée</string>
+  <string name="quest.rejected">Rejeté</string>
+  <string name="quest.participants">Participants</string>
 </resources>

@@ -52,6 +52,7 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.0.9@aar') {
         transitive = true
     }
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
 
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'

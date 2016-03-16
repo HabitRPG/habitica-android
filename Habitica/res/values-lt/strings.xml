@@ -147,10 +147,14 @@
   <string name="due_date">Baigimo Terminas</string>
   <string name="quest.accept">Sutikti</string>
   <string name="quest.reject">Atmesti</string>
-  <string name="quest.begin">Pradėti</string>
-  <string name="quest.cancel">Atšaukti</string>
-  <string name="quest.abort">Nutraukti</string>
+  <string name="quest.begin">Pradėti Misiją</string>
+  <string name="quest.cancel">Atšaukti Pakvietimą</string>
+  <string name="quest.abort">Atšaukti Misiją</string>
   <string name="quest.leave">Palikti Misiją</string>
+  <string name="quest.pending">Laukiama</string>
+  <string name="quest.accepted">Sutiko</string>
+  <string name="quest.rejected">Atsisakė</string>
+  <string name="quest.participants">Dalyviai</string>
   <string name="version_info" formatted="false">Versija: %s (%d)</string>
   <string name="sidebar_help">Pagalba &amp; DUK</string>
   <string name="complete_tutorial">Supratau!</string>
@@ -232,4 +236,14 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="outfit_weapon">Ginklas</string>
   <string name="wear_costume">Užsidėti Kostiumą</string>
   <string name="equipped">Užsidėta</string>
+  <string name="quest_cancel_message">Ar tikrai nori atšaukti misiją? Visi pakvietimai bus nutraukti. Misijos savininkas atgaus misijos rankraštį.</string>
+  <string name="quest.invitation">Misijos Pakvietimas</string>
+  <string name="quest_begin_message">Ar tikrai nori pradėti misiją? Kai ji prasidės, kiti grupės nariai nebegalės prisijungti.</string>
+  <string name="quest.invitation.text">Tave pakvietė dalyvauti misijoje!</string>
+  <string name="ago_1day">Liko 1 diena</string>
+  <string name="ago_days" formatted="false">prieš %d dieną(as)</string>
+  <string name="ago_1Minute">prieš 1 minutę</string>
+  <string name="ago_minutes" formatted="false">prieš %d minutę(es)</string>
+  <string name="ago_hours" formatted="false">prieš %d valandą(as)</string>
+  <string name="ago_1hour">prieš 1 valandą</string>
 </resources>

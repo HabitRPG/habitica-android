@@ -147,9 +147,6 @@
   <string name="due_date">Fecha límite</string>
   <string name="quest.accept">Aceptar</string>
   <string name="quest.reject">Rechazar</string>
-  <string name="quest.begin">Empezar</string>
-  <string name="quest.cancel">Cancelar</string>
-  <string name="quest.abort">Abortar</string>
   <string name="quest.leave">Abandonar Desafío</string>
   <string name="version_info" formatted="false">Versión %s (%d)</string>
   <string name="sidebar_help">Ayuda &amp; FAQ</string>
