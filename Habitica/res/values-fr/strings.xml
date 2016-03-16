@@ -147,10 +147,14 @@
   <string name="due_date">échéance</string>
   <string name="quest.accept">Accepter</string>
   <string name="quest.reject">Refuser</string>
-  <string name="quest.begin">Commencer</string>
-  <string name="quest.cancel">Annuler</string>
-  <string name="quest.abort">Abandonner</string>
-  <string name="quest.leave">Quitter la quête</string>
+  <string name="quest.begin">Lancer la Quête</string>
+  <string name="quest.cancel">Annuler l\'invitation</string>
+  <string name="quest.abort">Annuler la Quête</string>
+  <string name="quest.leave">Abandonner la Quête</string>
+  <string name="quest.pending">En attente</string>
+  <string name="quest.accepted">Acceptée</string>
+  <string name="quest.rejected">Rejetée</string>
+  <string name="quest.participants">Participants</string>
   <string name="version_info" formatted="false">Version %s (%d)</string>
   <string name="sidebar_help">Aide &amp; FAQ</string>
   <string name="complete_tutorial">J\'ai compris !</string>
@@ -232,8 +236,14 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="outfit_weapon">Arme</string>
   <string name="wear_costume">Porter un costume</string>
   <string name="equipped">Équipé</string>
-  <string name="quest.pending">En attente</string>
-  <string name="quest.accepted">Acceptée</string>
-  <string name="quest.rejected">Rejeté</string>
-  <string name="quest.participants">Participants</string>
+  <string name="quest_cancel_message">Êtes-vous sûr·e de vouloir annuler cette quête ? Toutes les invitations ayant été acceptées seront perdues. Le lanceur de la quête gardera le parchemin de la quête en sa possession.</string>
+  <string name="quest.invitation">Invitation à une quête</string>
+  <string name="quest_begin_message">Êtes-vous sûr·e de vouloir commencer la quête ? Une fois lancée, aucun autre membre de l\'équipe ne peut rejoindre la quête.</string>
+  <string name="quest.invitation.text">Vous avez été invité·e à participer à une quête !</string>
+  <string name="ago_1day">il y a 1 jour</string>
+  <string name="ago_days" formatted="false">il y a %d jours</string>
+  <string name="ago_1Minute">il y a 1 minute</string>
+  <string name="ago_minutes" formatted="false">il y a %d minutes</string>
+  <string name="ago_hours" formatted="false">il y a %d heures</string>
+  <string name="ago_1hour">il y a 1 heure</string>
 </resources>
