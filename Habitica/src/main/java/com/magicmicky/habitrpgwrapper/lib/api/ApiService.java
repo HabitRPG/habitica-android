@@ -12,6 +12,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -57,7 +58,7 @@ public interface ApiService {
     void equipCostume(@Path("key") String itemKey, Callback<Items> gearCallback);
 
     @POST("/user/inventory/buy/{key}")
-    void buyItem(@Path("key") String itemKey, Callback<Void> voidCallback);
+    void buyItem(@Path("key") String itemKey, Callback<BuyResponse> voidCallback);
 
     @POST("/user/unlock")
     void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);

@@ -266,6 +266,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                                                         itemKeys.add(item.key);
                                                     }
                                                     itemKeys.add("potion");
+                                                    if (user.getFlags().getArmoireEnabled())
+                                                        itemKeys.add("armoire");
 
                                                     contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
                                                         @Override
