@@ -63,7 +63,6 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.usesTabLayout = true;
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_equipment_overview, container, false);
 

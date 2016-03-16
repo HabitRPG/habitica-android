@@ -9,7 +9,11 @@
 	<dimen name="card_large_text">25.0sp</dimen>
     <dimen name="card_medium_text">18.0sp</dimen>
     <dimen name="card_small_text">14.0sp</dimen>
-    <dimen name="card_padding">16.0dip</dimen>
+    <dimen name="card_padding">12dp</dimen>
+    <dimen name="card_padding_compact">6dp</dimen>
+    <dimen name="section_leftright_padding">6dp</dimen>
+    <dimen name="section_top_padding">16dp</dimen>
+    <dimen name="card_margin">6dp</dimen>
 
 	<dimen name="bar_size">15dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
@@ -55,6 +59,9 @@
 	<dimen name="avatar_small_width">114dp</dimen>
 	<dimen name="avatar_small_height">90dp</dimen>
 	<dimen name="customization_width">100dp</dimen>
-	<dimen name="gear_image_size">90dp</dimen>
-	<dimen name="row_padding">8dp</dimen>
+	<dimen name="gear_image_size">60dp</dimen>
+	<dimen name="row_padding">12dp</dimen>
+    <dimen name="row_title_size">16sp</dimen>
+    <dimen name="row_text_size">14sp</dimen>
+    <dimen name="row_title_bottommargin">2dp</dimen>
 </resources>

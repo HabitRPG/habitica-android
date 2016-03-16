@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,12 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by viirus on 22/01/16.
- */
 public class FAQDetailFragment extends BaseMainFragment {
     @Bind(R.id.questionTextView)
     TextView questionTextView;
@@ -35,9 +34,9 @@ public class FAQDetailFragment extends BaseMainFragment {
 
         if (this.article != null) {
             this.questionTextView.setText(this.article.getQuestion());
-            this.answerTextView.setText(this.article.getAnswer());
+            this.answerTextView.setText(MarkdownParser.parseMarkdown(this.article.getAnswer()));
         }
-
+        this.answerTextView.setMovementMethod(LinkMovementMethod.getInstance());
         return v;
     }
 
@@ -47,7 +46,7 @@ public class FAQDetailFragment extends BaseMainFragment {
             this.questionTextView.setText(this.article.getQuestion());
         }
         if (this.answerTextView != null) {
-            this.answerTextView.setText(this.article.getAnswer());
+            this.answerTextView.setText(MarkdownParser.parseMarkdown(this.article.getAnswer()));
         }
     }
 }

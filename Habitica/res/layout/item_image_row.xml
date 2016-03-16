@@ -11,35 +11,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="60dp"
-            android:padding="5dp"
-            android:paddingTop="@dimen/row_padding"
-            android:paddingBottom="@dimen/row_padding"
-            android:clickable="true"
-            android:background="@drawable/selection_highlight">
+            style="Row"
+            android:clickable="true">
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/gear_image_size"
+                android:layout_height="@dimen/gear_image_size"
                 bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'
                 android:contentDescription="@{imageNamed}"
                 android:alpha="@{imageNamed == null ? 0.4f : 1.0f}"
-                android:scaleType="fitEnd"/>
+                android:scaleType="fitEnd"
+                android:layout_marginRight="@dimen/row_padding"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{title}"
                     tools:text="Title"
-                    android:textStyle="bold"/>
-                <TextView android:layout_margin="5dp"
+                    style="@style/RowTitle"/>
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/darker_gray"
                     tools:text="Value"
-                    android:text="@{value != null ? value : (valueInt != 0 ? String.valueOf(valueInt) : @string/avatar_nothing)}" />
+                    android:text="@{value != null ? value : (valueInt != 0 ? String.valueOf(valueInt) : @string/avatar_nothing)}"
+                    style="@style/RowText"/>
             </LinearLayout>
         </LinearLayout>
 </layout>

@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/questionTextView"
             android:layout_gravity="center_horizontal"
             android:padding="@dimen/card_padding"/>
@@ -25,12 +24,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/answerTextView"
             android:layout_gravity="center_horizontal"
             android:paddingLeft="@dimen/card_padding"
             android:paddingStart="@dimen/card_padding"
             android:paddingEnd="@dimen/card_padding"
-            android:paddingRight="@dimen/card_padding"/>
+            android:paddingRight="@dimen/card_padding"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

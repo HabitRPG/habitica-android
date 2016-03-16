@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.TouchDelegate;
@@ -262,6 +263,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public HabitItem Item;
 
+        @Bind(R.id.checkedTextView)
+        TextView titleTextView;
+
         @Bind(R.id.notesTextView)
         TextView notesTextView;
 
@@ -275,6 +279,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             itemView.setLongClickable(true);
 
             ButterKnife.bind(this, itemView);
+
+            this.notesTextView.setMovementMethod(LinkMovementMethod.getInstance());
+            this.titleTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
             resources = itemView.getResources();
         }

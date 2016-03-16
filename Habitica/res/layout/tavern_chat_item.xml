@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
-        android:layout_margin="8dp">
+        style="@style/CardView.Default">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            style="@style/CardContent.Compact">
 
 
             <LinearLayout
@@ -44,8 +45,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:ellipsize="middle"
-                            android:lines="1"
-                            android:text="some user name" />
+                            android:lines="1" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -79,8 +79,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:clickable="true"
-                                android:gravity="center_vertical"
-                                android:text="+1" />
+                                android:gravity="center_vertical" />
                         </LinearLayout>
 
                         <ImageView
@@ -110,8 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
                 android:layout_marginRight="8dp"
-                android:ellipsize="end"
-                android:text="5 hours ago" />
+                android:ellipsize="end" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

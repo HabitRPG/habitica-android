@@ -88,7 +88,7 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
             this.nameTextView.setText(guild.name);
             this.memberCountTextView.setText(String.valueOf(guild.memberCount));
             this.descriptionTextView.setText(guild.description);
-            if (PublicGuildsRecyclerViewAdapter.this.memberGuildIDs.contains(guild.id)) {
+            if (PublicGuildsRecyclerViewAdapter.this.memberGuildIDs != null && PublicGuildsRecyclerViewAdapter.this.memberGuildIDs.contains(guild.id)) {
                 this.isMember = true;
                 this.joinLeaveButton.setText(R.string.leave);
             } else {

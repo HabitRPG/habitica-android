@@ -2,37 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/row_padding"
-    android:background="@drawable/selection_highlight"
+    style="@style/Row"
     android:id="@+id/gear_container">
 
     <ImageView
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
-        android:id="@+id/gear_image" />
+        android:id="@+id/gear_image"
+        android:layout_marginRight="@dimen/row_padding" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gear_text"
-            android:textStyle="bold" />
+            style="@style/RowTitle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/equipped"
-            android:id="@+id/equippedIndicator" />
+            android:id="@+id/equippedIndicator"
+            style="@style/RowText.unimportant"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gear_notes" />
+            android:id="@+id/gear_notes"
+            style="@style/RowText" />
     </LinearLayout>
 
 </LinearLayout>

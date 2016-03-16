@@ -95,8 +95,13 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
             this.gearContainer.setBackgroundResource(R.drawable.selection_highlight);
         }
 
+        String imageUrl = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_" + gear.key + ".png";
+        if (gear.type.equals("armor")) {
+            imageUrl = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_" + userSize + "_" + gear.key + ".png";
+        }
+
         Picasso.with(imageView.getContext())
-                .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + userSize + "_" + gear.key + ".png")
+                .load(imageUrl)
                 .into(imageView);
     }
 

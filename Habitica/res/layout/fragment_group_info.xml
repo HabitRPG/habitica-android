@@ -37,34 +37,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.github.data5tream.emojilib.EmojiTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                bind:parsemarkdown="@{group.name}"
-                android:textStyle="bold" />
+                android:text="@{group.name}"
+                style="@style/SectionTitle"/>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                style="@style/CardView.Default">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@android:drawable/divider_horizontal_dark"
-                    android:dividerPadding="8dp"
+                    style="@style/CardContent"
+                    android:divider="?android:listDivider"
                     android:showDividers="middle"
                     android:orientation="vertical">
-                <com.github.data5tream.emojilib.EmojiTextView
-                    android:layout_margin="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    bind:parsemarkdown="@{group.description}" />
+                    <com.github.data5tream.emojilib.EmojiTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        bind:parsemarkdown="@{group.description}" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_margin="@dimen/card_padding"
                         android:visibility='@{group.type.equals("guild") ? View.VISIBLE : View.GONE}' >
                         <TextView
                             android:layout_width="0dp"
@@ -84,79 +81,96 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/quest"
-                android:layout_margin="5dp"
+                style="@style/SectionTitle"
                 android:visibility="@{quest != null ? View.VISIBLE : View.GONE}" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                style="@style/CardView.Default"
                 android:visibility="@{quest != null &amp;&amp; !group.quest.active ? View.VISIBLE : View.GONE}">
-                    <LinearLayout
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/CardContent">
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@string/quest.invitation"
+                        style="@style/CardTitle" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quest.invitation.text"
+                        style="@style/CardText"
+                        android:visibility="@{user.getParty().getQuest().RSVPNeeded? View.VISIBLE : View.GONE}"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:layout_gravity="right">
 
                         <Button
                             android:id="@+id/btnQuestAccept"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_success"
                             android:text="@string/quest.accept"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_success"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{user.getParty().getQuest().RSVPNeeded? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestReject"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_danger"
                             android:text="@string/quest.reject"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{user.getParty().getQuest().RSVPNeeded? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestBegin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.begin"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_warning"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{user.getId().equals(group.quest.leader) ? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestCancel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_danger"
                             android:text="@string/quest.cancel"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{user.getId().equals(group.quest.leader) ? View.VISIBLE : View.GONE}" />
 
                     </LinearLayout>
-            </android.support.v7.widget.CardView>
 
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                style="@style/CardView.Default"
                 android:visibility="@{quest != null ? View.VISIBLE : View.GONE}">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp"
-                    >
+                    style="@style/CardContent">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@{quest.text}"
-                        android:textStyle="bold"
+                        style="@style/CardTitle"
                         />
 
                     <ImageView
@@ -170,6 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        style="?android:buttonBarStyle"
                         android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
 
                         <include
@@ -196,7 +211,8 @@
                             android:id="@+id/collectionStats"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical" />
+                            android:orientation="vertical"
+                            android:layout_margin="@dimen/row_padding"/>
 
                     </LinearLayout>
 
@@ -204,6 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}"
+                        style="@style/CardText"
                         />
 
                 </LinearLayout>
@@ -213,51 +230,55 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                style="@style/CardView.Default"
                 android:visibility="@{quest != null ? View.VISIBLE : View.GONE}">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    style="@style/CardContent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/quest_participants"
-                        android:id="@+id/textView12" />
+                        android:text="@string/quest.participants"
+                        android:id="@+id/textView12"
+                        style="@style/CardTitle" />
 
                     <LinearLayout
                         android:id="@+id/questMemberView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="8dp" />
+                        android:divider="?android:listDivider"
+                        android:showDividers="middle"
+                        style="@style/CardContent"/>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="8dp"
-                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}">
+                        style="?android:buttonBarStyle"
+                        android:visibility="@{group.quest.active? View.VISIBLE : View.GONE}"
+                        android:layout_gravity="right">
 
                         <Button
                             android:id="@+id/btnQuestAbort"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.abort"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{(group.quest != null &amp;&amp; user.getId().equals(group.quest.leader))? View.VISIBLE : View.GONE}" />
 
                         <Button
                             android:id="@+id/btnQuestLeave"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/btn_warning"
                             android:text="@string/quest.leave"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/btn_warning"
+                            style="?android:buttonBarButtonStyle"
                             android:visibility="@{(!user.getId().equals(group.quest.leader) &amp;&amp; group.quest.members.containsKey(user.getId()))? View.VISIBLE : View.GONE}" />
 
                     </LinearLayout>

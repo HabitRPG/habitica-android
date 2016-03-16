@@ -138,18 +138,18 @@ public class GroupInformationFragment extends Fragment {
     }
 
     private void updateQuestMember(Group group) {
-
         questMemberView.removeAllViewsInLayout();
         if (group.quest == null || group.quest.key == null) return;
-        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (HabitRPGUser member : group.members) {
             final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, null);
             TextView questResponse = (TextView) itemView.findViewById(R.id.rsvpneeded);
             TextView userName = (TextView) itemView.findViewById(R.id.username);
-            if (group.quest.leader.equals(member.getId()))
-                userName.setText("* " + member.getProfile().getName());
-            else
-                userName.setText(member.getProfile().getName());
+            userName.setText(member.getProfile().getName());
 
             if (!group.quest.members.containsKey(member.getId()))
                 continue;
@@ -244,24 +244,38 @@ public class GroupInformationFragment extends Fragment {
 
     @OnClick(R.id.btnQuestBegin)
     public void onQuestBegin() {
-        mAPIHelper.apiService.forceStartQuest(group.id, group, new Callback<Group>() {
-            @Override
-            public void success(Group group, Response response) {
-                setGroup(group);
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.quest_begin_message)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAPIHelper.apiService.forceStartQuest(group.id, group, new Callback<Group>() {
+                            @Override
+                            public void success(Group group, Response response) {
+                                setGroup(group);
+                            }
 
-            }
-        });
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+                    }
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
     }
 
     @OnClick(R.id.btnQuestCancel)
     public void onQuestCancel() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setMessage("Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.quest_cancel_message)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mAPIHelper.apiService.cancelQuest(group.id, new Callback<Void>() {
@@ -277,7 +291,7 @@ public class GroupInformationFragment extends Fragment {
                             }
                         });
                     }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

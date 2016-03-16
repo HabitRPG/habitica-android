@@ -110,26 +110,28 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             classLabel.setText(user.getStats().getCleanedClassName());
 
-
+            int colorResourceID;
             switch (user.getStats()._class) {
                 case healer: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.neutral_100));
+                    colorResourceID = R.color.class_healer;
                     break;
                 }
                 case warrior: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.worse_100));
+                    colorResourceID = R.color.class_warrior;
                     break;
                 }
                 case rogue: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.brand_50));
+                    colorResourceID = R.color.class_rogue;
                     break;
                 }
                 case wizard: {
-                    ViewHelper.SetBackgroundTint(classBackground, resources.getColor(R.color.best_100));
+                    colorResourceID = R.color.class_wizard;
                     break;
                 }
+                default:
+                    colorResourceID = R.color.task_gray;
             }
-
+            ViewHelper.SetBackgroundTint(classBackground, resources.getColor(colorResourceID));
             userName.setText(user.getProfile().getName());
         }
     }

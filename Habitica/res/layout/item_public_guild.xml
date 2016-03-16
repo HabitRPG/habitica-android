@@ -12,16 +12,14 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            style="@style/RowTitle"
             android:id="@+id/nameTextView"
             android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
+            style="@style/RowText"
             android:id="@+id/memberCountTextView" />
     </LinearLayout>
 

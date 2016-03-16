@@ -164,11 +164,14 @@
     <string name="due_date">Due Date</string>
     <string name="quest.accept">Accept</string>
     <string name="quest.reject">Reject</string>
-    <string name="quest.begin">Begin</string>
-    <string name="quest.cancel">Cancel</string>
-    <string name="quest.abort">Abort</string>
+    <string name="quest.begin">Begin Quest</string>
+    <string name="quest.cancel">Cancel Invitation</string>
+    <string name="quest.abort">Abort Quest</string>
     <string name="quest.leave">Leave Quest</string>
-
+    <string name="quest.pending">Pending</string>
+    <string name="quest.accepted">Accepted</string>
+    <string name="quest.rejected">Rejected</string>
+    <string name="quest.participants">Participants</string>
     <string name="version_info" formatted="false">Version %s (%d)</string>
 
     <string name="sidebar_help">Help &amp; FAQ</string>
@@ -253,8 +256,9 @@ To start, which parts of your life do you want to improve?</string>
     <string name="outfit_weapon">Weapon</string>
     <string name="wear_costume">Wear Costume</string>
     <string name="equipped">Equipped</string>
-    <string name="quest_pending">Pending</string>
-    <string name="quest_accepted">Accepted</string>
-    <string name="quest_rejected">Rejected</string>
-    <string name="quest_participants">Participants</string>
+    <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
+    <string name="quest.invitation">Quest Invitation</string>
+    <string name="quest_begin_message">Are you sure you want to begin the quest? Once it is active, no additional party members can join the quest.</string>
+    <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
+
 </resources>

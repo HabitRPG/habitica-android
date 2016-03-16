@@ -74,6 +74,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         if (tabLayout != null) {
             if (this.usesTabLayout) {
+                tabLayout.removeAllTabs();
                 tabLayout.setVisibility(View.VISIBLE);
             } else {
                 tabLayout.setVisibility(View.GONE);

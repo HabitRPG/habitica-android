@@ -23,7 +23,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         JsonObject obj = json.getAsJsonObject();
         group.id = obj.get("_id").getAsString();
         group.name = obj.get("name").getAsString();
-        if (obj.has("description")) {
+        if (obj.has("description") && !obj.get("description").isJsonNull()) {
             group.description = obj.get("description").getAsString();
         }
         if (obj.has("privacy")) {
@@ -35,7 +35,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         if (obj.has("balance")) {
             group.balance = obj.get("balance").getAsDouble();
         }
-        if (obj.has("logo")) {
+        if (obj.has("logo") && !obj.get("logo").isJsonNull()) {
             group.logo = obj.get("logo").getAsString();
         }
         if (obj.has("type")) {

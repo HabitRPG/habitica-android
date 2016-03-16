@@ -2,7 +2,7 @@
 <resources>
     <!--  Prefs -->
     <string name="SP_address">ServerAddress</string>
-    <string name="SP_address_default">https://habitrpg-gamma.herokuapp.com/</string>
+    <string name="SP_address_default">https://habitica.com/</string>
     <string name="SP_userID">UserID</string>
     <string name="SP_APIToken">APIToken</string>
     <string name="SP_username">Username</string>
