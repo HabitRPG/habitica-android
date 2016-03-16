@@ -49,6 +49,7 @@ import com.magicmicky.habitrpgwrapper.lib.utils.ItemDataListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.TaskSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
@@ -102,7 +103,6 @@ public class APIHelper implements ErrorHandler, Profiler {
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
-                .serializeNulls()
                 .setExclusionStrategies(new CheckListItemExcludeStrategy())
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -128,6 +128,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
                 .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
+                .registerTypeAdapter(Task.class, new TaskSerializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 

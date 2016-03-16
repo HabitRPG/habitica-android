@@ -68,7 +68,9 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
     }
 
     private void fetchGuilds() {
-        this.mAPIHelper.apiService.listGroups("guilds", this);
+        if (this.mAPIHelper != null && this.mAPIHelper.apiService != null) {
+            this.mAPIHelper.apiService.listGroups("guilds", this);
+        }
     }
 
     private void loadGuilds() {
