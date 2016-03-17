@@ -592,9 +592,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                     }
 
-                    user.setItems(buyResponse.getItems());
-                    user.setStats(buyResponse.getStats());
-                    user.setFlags(buyResponse.getFlags());
+                    user.setItems(buyResponse.items);
+                    user.setStats(buyResponse.stats);
+                    user.setFlags(buyResponse.flags);
 
                     user.async().save();
                     MainActivity.this.setUserData(true);
