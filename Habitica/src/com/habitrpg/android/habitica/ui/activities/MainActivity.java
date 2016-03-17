@@ -268,7 +268,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (user != null) {
             Calendar mCalendar = new GregorianCalendar();
             TimeZone mTimeZone = mCalendar.getTimeZone();
-            long offset = -TimeUnit.MINUTES.convert(mTimeZone.getRawOffset(), TimeUnit.MILLISECONDS);
+            long offset = -TimeUnit.MINUTES.convert(mTimeZone.getOffset(mCalendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
             if (offset != user.getPreferences().getTimezoneOffset()) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
