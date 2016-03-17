@@ -79,6 +79,8 @@ public class APIHelper implements ErrorHandler, Profiler {
     //private HostConfig mConfig;
     public APIHelper(final HostConfig cfg) {
         this.cfg = cfg;
+        Crashlytics.getInstance().core.setUserIdentifier(cfg.getUser());
+        Crashlytics.getInstance().core.setUserName(cfg.getUser());
         Amplitude.getInstance().setUserId(cfg.getUser());
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
