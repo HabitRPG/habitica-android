@@ -73,7 +73,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<String> tags;
     private List<String> tagsName; //added this
     private CheckListAdapter checklistAdapter;
-    private CheckBox tagsCheckBox; //added this
     private List<CharSequence> userSelectedTags;
     private List<CheckBox> allTags;
     private List<String> userSelectedTagIds;
@@ -465,7 +464,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         for(int i = 0; i < tagsName.size(); i++){
             TableRow row = new TableRow(tagsContainerLinearLayout.getContext());
             row.setId(i);
-            tagsCheckBox = new CheckBox(tagsContainerLinearLayout.getContext());
+            CheckBox tagsCheckBox = new CheckBox(tagsContainerLinearLayout.getContext());
             tagsCheckBox.setText(tagsName.get(i)); // set text Name
             tagsCheckBox.setId(i);
             //This is to check if the tag was selected by the user. Similar to onClickListener

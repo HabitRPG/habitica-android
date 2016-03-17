@@ -498,7 +498,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
-            this.activeFragment.updateUserData(user);
+            if (this.activeFragment != null) {
+                this.activeFragment.updateUserData(user);
+            }
         }
     }
 
@@ -902,6 +904,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     }
 
     public String getUserID(){
-        return user.getId();
+        if (this.user != null) {
+            return user.getId();
+        } else {
+            return "";
+        }
     }
 }

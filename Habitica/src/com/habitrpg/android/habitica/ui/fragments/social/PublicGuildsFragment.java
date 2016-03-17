@@ -61,7 +61,9 @@ public class PublicGuildsFragment extends BaseMainFragment implements Callback<A
     }
 
     private void fetchGuilds() {
-        this.mAPIHelper.apiService.listGroups("public", this);
+        if (this.mAPIHelper != null) {
+            this.mAPIHelper.apiService.listGroups("public", this);
+        }
     }
 
     @Override

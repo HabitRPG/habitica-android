@@ -85,8 +85,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
     private TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
-    private TagsHelper tagsNameHelper; // Added this so other activities/fragments can get the String names, not IDs
-    private TagsHelper tagsIdHelper; // Added this so other activities/fragments can get the IDs
+    private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
+    private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
     private ContentCache contentCache;
 
     private boolean displayingTaskForm;
@@ -117,25 +117,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         if (this.tagsHelper == null) {
             this.tagsHelper = new TagsHelper();
-        }
-
-        //Without these following if statements, the Fragment has no way to pass the Tags to other activities/fragments
-
-        if (this.tagsIdHelper == null && user != null) {
-            this.tagsIdHelper = new TagsHelper();
-            //Pass in the information of the user because TagsHelper does the filtering.
-            for (Tag userTags : user.getTags()) {
-                tagsIdHelper.addTags(userTags.getId());
-            }
-        }
-
-        //This is to pass the names into other activities, not just their IDs
-        if (this.tagsNameHelper == null && user != null) {
-            this.tagsNameHelper = new TagsHelper();
-            for (Tag userTags : user.getTags()) {
-
-                tagsNameHelper.addTags(userTags.getName());
-            }
         }
 
         if (user != null) {
@@ -391,8 +372,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
-        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsIdHelper.getTags()));
-        bundle.putStringArrayList("tagsName", new ArrayList<>(this.tagsNameHelper.getTags()));
+        bundle.putStringArrayList("tagsId", new ArrayList<>(this.getTagIds()));
+        bundle.putStringArrayList("tagsName", new ArrayList<>(this.getTagNames()));
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -437,8 +418,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         Bundle bundle = new Bundle();
         bundle.putString("type", event.Task.getType());
         bundle.putString("taskId", event.Task.getId());
-        bundle.putStringArrayList("tagsId", new ArrayList<>(this.tagsIdHelper.getTags()));
-        bundle.putStringArrayList("tagsName", new ArrayList<>(this.tagsNameHelper.getTags()));
+        bundle.putStringArrayList("tagsId", new ArrayList<>(this.getTagIds()));
+        bundle.putStringArrayList("tagsName", new ArrayList<>(this.getTagNames()));
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         this.displayingTaskForm = true;
@@ -555,5 +536,31 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public String getDisplayedClassName() {
         return null;
+    }
+
+    private ArrayList<String>getTagNames() {
+        if (this.tagNames == null) {
+            this.tagNames = new ArrayList<>();
+        }
+        if (this.user != null && this.user.getTags().size() != this.tagNames.size()) {
+            this.tagNames.clear();
+            for (Tag tag : this.user.getTags()) {
+                this.tagNames.add(tag.getName());
+            }
+        }
+        return this.tagNames;
+    }
+
+    private ArrayList<String>getTagIds() {
+        if (this.tagIds == null) {
+            this.tagIds = new ArrayList<>();
+        }
+        if (this.user != null && this.user.getTags().size() != this.tagIds.size()) {
+            this.tagIds.clear();
+            for (Tag tag : this.user.getTags()) {
+                this.tagIds.add(tag.getName());
+            }
+        }
+        return this.tagIds;
     }
 }

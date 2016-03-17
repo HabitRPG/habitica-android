@@ -260,13 +260,22 @@ public class APIHelper implements ErrorHandler, Profiler {
             ErrorResponse res = null;
 
             try {
-                res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class) ;
+                res = new ErrorResponse();
+                res.err = (String) cause.getBodyAs(String.class);
             } catch (RuntimeException e) {
-                //Can cause errors when error is a list and not a string
-                ErrorListResponse resList = (ErrorListResponse) cause.getBodyAs(ErrorListResponse.class);
-                if (resList.err != null && resList.err.size() >= 1) {
-                    res = new ErrorResponse();
-                    res.err = resList.err.get(0);
+                try {
+                    res = (ErrorResponse) cause.getBodyAs(ErrorResponse.class);
+                } catch (RuntimeException e2) {
+                    try {
+                        ErrorListResponse resList = (ErrorListResponse) cause.getBodyAs(ErrorListResponse.class);
+                        if (resList.err != null && resList.err.size() >= 1) {
+                            res = new ErrorResponse();
+                            res.err = resList.err.get(0);
+                        }
+                    } catch (RuntimeException e3) {
+                        res = null;
+                    }
+
                 }
             }
 
