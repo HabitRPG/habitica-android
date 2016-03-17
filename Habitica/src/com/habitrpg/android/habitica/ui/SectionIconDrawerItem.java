@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -183,7 +184,7 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         viewHolder.view.setEnabled(false);
 
         //define the text color
-        viewHolder.name.setTextColor(ColorHolder.color(getTextColor(), ctx, R.attr.material_drawer_secondary_text, R.color.material_drawer_secondary_text));
+        viewHolder.name.setTextColor(ctx.getResources().getColor(R.color.brand));
 
         //set the text for the name
         StringHolder.applyTo(this.getName(), viewHolder.name);
@@ -203,7 +204,7 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         //set the color for the divider
         viewHolder.divider.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(ctx, R.attr.material_drawer_divider, R.color.material_drawer_divider));
 
-        viewHolder.icon.setImageDrawable(getIcon().decideIcon(ctx, ctx.getResources().getColor(R.color.material_drawer_secondary_text), true, 0));
+        viewHolder.icon.setImageDrawable(getIcon().decideIcon(ctx, ctx.getResources().getColor(R.color.brand), true, 0));
 
         //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
         onPostBindView(this, viewHolder.itemView);
