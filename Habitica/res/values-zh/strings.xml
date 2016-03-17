@@ -70,6 +70,11 @@
   <string name="easy">简单</string>
   <string name="medium">中等</string>
   <string name="hard">困难</string>
+  <string name="attributes">属性</string>
+  <string name="physical">生理上的</string>
+  <string name="mental">心理上的</string>
+  <string name="social">社交</string>
+  <string name="other">其他</string>
   <string name="start_date">开始日期</string>
   <string name="positive_habit_form">正面的(+)</string>
   <string name="negative_habit_form">负面的 (-)</string>
