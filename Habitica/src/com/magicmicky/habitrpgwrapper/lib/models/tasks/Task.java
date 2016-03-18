@@ -486,16 +486,21 @@ public class Task extends BaseModel {
         Calendar today = new GregorianCalendar();
         today.add(Calendar.HOUR, -offset);
 
+        Calendar startDate = new GregorianCalendar();
+        Calendar startDateAtMidnight;
         if (this.getStartDate() != null) {
-            Calendar startDate = new GregorianCalendar();
             startDate.setTime(this.getStartDate());
-            Calendar startDateAtMidnight = new GregorianCalendar(startDate.get(Calendar.YEAR),
+            startDateAtMidnight = new GregorianCalendar(startDate.get(Calendar.YEAR),
                     startDate.get(Calendar.MONTH),
                     startDate.get(Calendar.DAY_OF_MONTH));
 
             if ( startDateAtMidnight.after(today) ) {
                 return false;
             }
+        } else {
+            startDateAtMidnight = new GregorianCalendar(startDate.get(Calendar.YEAR),
+                    startDate.get(Calendar.MONTH),
+                    startDate.get(Calendar.DAY_OF_MONTH));
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {
@@ -503,12 +508,8 @@ public class Task extends BaseModel {
                 return false;
             }
 
-            Calendar startDate = new GregorianCalendar();
-            if (this.getStartDate() != null) {
-                startDate.setTime(this.getStartDate());
-            }
             TimeUnit timeUnit = TimeUnit.DAYS;
-            long diffInMillies = startDate.getTimeInMillis() - today.getTimeInMillis();
+            long diffInMillies = startDateAtMidnight.getTimeInMillis() - today.getTimeInMillis();
             long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
             return (daySinceStart % this.getEveryX() == 0);
         } else {
