@@ -57,6 +57,8 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -285,6 +287,19 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                                                                 reward.setType("reward");
                                                                 reward.specialTag = "item";
                                                                 reward.setId(item.key);
+
+                                                                if (item.key.equals("armoire")) {
+                                                                    if (user.getFlags().getArmoireEmpty()) {
+                                                                        reward.notes = getResources().getString(R.string.armoireNotesEmpty);
+                                                                    } else {
+                                                                        long gearCount = new Select().count()
+                                                                                .from(ItemData.class)
+                                                                                .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
+                                                                                        .and(Condition.column("owned").isNull())
+                                                                                ).count();
+                                                                        reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
+                                                                    }
+                                                                }
 
                                                                 buyableItems.add(reward);
                                                             }
