@@ -56,6 +56,7 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -212,10 +213,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @Override
     public long getItemId(int position) {
         Task task = filteredObservableContent.get(position);
-        if (task.getId() != null && task.getId().length() == 36) {
+        try {
             return UUID.fromString(task.getId()).getMostSignificantBits();
+        } catch (IllegalArgumentException e) {
+            return UUID.randomUUID().getMostSignificantBits();
         }
-        return UUID.randomUUID().getMostSignificantBits();
     }
 
     @Override
