@@ -275,5 +275,8 @@ To start, which parts of your life do you want to improve?</string>
 
     <string name="armoireEquipment" formatted="false">You found a piece of rare Equipment in the Armoire: %s! Awesome!</string>
     <string name="armoireFood" formatted="false">You rummage in the Armoire and find %s %s. What\'s that doing in here?</string>
-    <string name="armoireExp" formatted="false">You wrestle with the Armoire and gain Experience. Take that!</string>
+    <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
+    <string name="armoireNotesFull" formatted="false">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
+    <string name="armoireLastItem">You\'ve found the last piece of rare Equipment in the Enchanted Armoire.</string>
+    <string name="armoireNotesEmpty">The Armoire will have new Equipment in the first week of every month. Until then, keep clicking for Experience and Food!</string>
 </resources>
