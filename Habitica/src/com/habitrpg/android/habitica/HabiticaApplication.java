@@ -20,7 +20,6 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -217,20 +216,12 @@ public class HabiticaApplication extends Application {
         editor.clear();
         editor.putBoolean("use_reminder", use_reminder);
         editor.putString("reminder_time", reminder_time);
-        editor.apply();
+        editor.commit();
         startActivity(LoginActivity.class, context);
     }
 
     public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.putBoolean("use_reminder", preferences.getBoolean("use_reminder", true));
-            editor.putString("reminder_time", preferences.getString("reminder_time", "19:00"));
-            editor.apply();
-            PreferencesFragment.scheduleNotifications(context, "19:00");
-
             startActivity(IntroActivity.class, context);
 
             return false;

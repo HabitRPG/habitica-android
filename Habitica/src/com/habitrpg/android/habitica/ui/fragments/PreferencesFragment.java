@@ -2,15 +2,12 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 
-import com.habitrpg.android.habitica.BootReceiver;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.prefs.TimePreference;
@@ -62,7 +59,12 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         return super.onPreferenceTreeClick(preference);
     }
 
-    public static void scheduleNotifications(Context context, String timeval) {
+    private void scheduleNotifications() {
+
+        String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
+
+        if (timeval == null) timeval = "19:00";
+
         String[] pieces = timeval.split(":");
         int hour = Integer.parseInt(pieces[0]);
         int minute = Integer.parseInt(pieces[1]);
@@ -75,17 +77,12 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-
-        ComponentName receiver = new ComponentName(context, BootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
     }
 
     private void removeNotifications() {
@@ -93,13 +90,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
         PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
         alarmManager.cancel(displayIntent);
-
-        ComponentName receiver = new ComponentName(context, BootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -108,13 +98,13 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             boolean use_reminder = sharedPreferences.getBoolean(key, false);
             timePreference.setEnabled(use_reminder);
             if (use_reminder) {
-                scheduleNotifications(context, getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00"));
+                scheduleNotifications();
             } else {
                 removeNotifications();
             }
         } else if (key.equals("reminder_time")) {
             removeNotifications();
-            scheduleNotifications(context, getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00"));
+            scheduleNotifications();
         }
     }
 
