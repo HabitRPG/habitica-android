@@ -272,6 +272,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="ago_minutes" formatted="false">%d minutes ago</string>
     <string name="ago_hours" formatted="false">%d hours ago</string>
     <string name="ago_1hour">1 hour ago</string>
+    <string name="sidebar_items">Items</string>
+    <string name="eggs">Eggs</string>
+    <string name="hatching_potions">Hatching Potions</string>
+    <string name="food">Food</string>
+    <string name="quests">Quests</string>
 
     <string name="armoireEquipment" formatted="false">You found a piece of rare Equipment in the Armoire: %s! Awesome!</string>
     <string name="armoireFood" formatted="false">You rummage in the Armoire and find %s %s. What\'s that doing in here?</string>

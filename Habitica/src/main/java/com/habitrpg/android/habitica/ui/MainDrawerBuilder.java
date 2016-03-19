@@ -11,8 +11,10 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
+import com.habitrpg.android.habitica.ui.fragments.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
@@ -42,12 +44,13 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_GUILDS = 5;
     public static final int SIDEBAR_AVATAR = 6;
     public static final int SIDEBAR_EQUIPMENT = 7;
-    public static final int SIDEBAR_STABLE = 8;
-    public static final int SIDEBAR_PURCHASE = 9;
-    public static final int SIDEBAR_NEWS = 10;
-    public static final int SIDEBAR_SETTINGS = 11;
-    public static final int SIDEBAR_HELP = 12;
-    public static final int SIDEBAR_ABOUT = 13;
+    public static final int SIDEBAR_ITEMS = 8;
+    public static final int SIDEBAR_STABLE = 9;
+    public static final int SIDEBAR_PURCHASE = 10;
+    public static final int SIDEBAR_NEWS = 11;
+    public static final int SIDEBAR_SETTINGS = 12;
+    public static final int SIDEBAR_HELP = 13;
+    public static final int SIDEBAR_ABOUT = 14;
 
 
 
@@ -90,7 +93,8 @@ public class MainDrawerBuilder {
                         new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory).toUpperCase()),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withIdentifier(SIDEBAR_EQUIPMENT),
-                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE).withEnabled(false).withBadge(R.string.coming_soon),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_items)).withIdentifier(SIDEBAR_ITEMS),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
                         new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about).toUpperCase()),
@@ -135,6 +139,14 @@ public class MainDrawerBuilder {
                             }
                             case SIDEBAR_EQUIPMENT: {
                                 fragment = new EquipmentOverviewFragment();
+                                break;
+                            }
+                            case SIDEBAR_ITEMS: {
+                                fragment = new ItemsFragment();
+                                break;
+                            }
+                            case SIDEBAR_STABLE: {
+                                fragment = new StableFragment();
                                 break;
                             }
                             case SIDEBAR_PURCHASE: {

@@ -133,7 +133,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         this.usesTabLayout = true;
         this.displayingTaskForm = false;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_tasks, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
