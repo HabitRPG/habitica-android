@@ -586,10 +586,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskValue.setText(String.format("%.0f", task.value));
 
         for(TaskTag tt : task.getTags()){
-            for(CheckBox box : allTags){
-                int tagNameLocation = tags.indexOf(tt.getTag().getId());
-                if(tagsName.get(tagNameLocation) == box.getText()){
-                    box.setChecked(true);
+            int tagNameLocation = tags.indexOf(tt.getTag().getId());
+            if (tagsName.size() > tagNameLocation) {
+                for(CheckBox box : allTags){
+                    if(tagsName.get(tagNameLocation) == box.getText()){
+                        box.setChecked(true);
+                    }
                 }
             }
         }
@@ -666,22 +668,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         //To add tags, I must first make a TaskTag, then grab information on which Tag they want to associate with the task
         //After that, I need to make a List<TaskTag> so I can do task.setTags(List<TaskTag>)
         if(!userSelectedTags.isEmpty()){
-            List<TaskTag> selectedTags = new ArrayList<TaskTag>();
             for(CharSequence names : userSelectedTags){
-                TaskTag addMeToList = new TaskTag();
                 int tagIdLocation = tagsName.indexOf(names);
-
-                //Creates a Tag, so we can associate it with the task.
-                Tag pickedTag = new Tag(tags.get(tagIdLocation),tagsName.get(tagIdLocation));
-
-                //Set the selected Tag and the new Task to the TaskTag Object
-                addMeToList.setTag(pickedTag);
-                addMeToList.setTask(task);
-
-                selectedTags.add(addMeToList);
-                userSelectedTagIds.add(pickedTag.getId()); //used for the SQL command
+                userSelectedTagIds.add(tags.get(tagIdLocation)); //used for the SQL command
             }
-            task.setTags(selectedTags);
         }
 
         if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {

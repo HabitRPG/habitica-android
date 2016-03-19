@@ -558,7 +558,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         if (this.user != null && this.user.getTags().size() != this.tagIds.size()) {
             this.tagIds.clear();
             for (Tag tag : this.user.getTags()) {
-                this.tagIds.add(tag.getName());
+                this.tagIds.add(tag.getId());
             }
         }
         return this.tagIds;
