@@ -79,7 +79,7 @@
                         android:textSize="15sp"
                         android:drawableLeft="@drawable/ic_header_gold"
                         android:drawableStart="@drawable/ic_header_gold"
-                        android:text='@{String.format("%.0f", reward.value)}'
+                        android:text='@{String.format("%.2f", reward.value)}'
                         android:background="@drawable/rounded_purple_square"
                         android:paddingLeft="6dp"
                         android:paddingStart="6dp"

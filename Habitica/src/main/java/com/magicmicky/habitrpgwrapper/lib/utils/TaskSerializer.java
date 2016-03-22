@@ -42,9 +42,9 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 break;
             case "todo":
                 if (task.getDueDate() == null) {
-                    obj.addProperty("duedate", "");
+                    obj.addProperty("date", "");
                 } else {
-                    obj.add("duedate", context.serialize(task.getDueDate()));
+                    obj.add("date", context.serialize(task.getDueDate()));
                 }
                 obj.add("checklist", context.serialize(task.getChecklist()));
                 obj.addProperty("completed", task.getCompleted());

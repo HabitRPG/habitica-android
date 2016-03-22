@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -78,7 +79,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<String> userSelectedTagIds;
 
     @Bind(R.id.task_value_edittext)
-    EmojiEditText taskValue;
+    EditText taskValue;
 
     @Bind(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
@@ -583,7 +584,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
-        taskValue.setText(String.format("%.0f", task.value));
+        taskValue.setText(String.format("%.2f", task.value));
 
         for(TaskTag tt : task.getTags()){
             int tagNameLocation = tags.indexOf(tt.getTag().getId());
