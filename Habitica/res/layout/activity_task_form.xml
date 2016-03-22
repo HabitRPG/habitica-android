@@ -95,10 +95,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/task_difficulty_wrapper">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/task_difficulty_wrapper">
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -109,6 +109,27 @@
 
                 <Spinner
                     android:id="@+id/task_difficulty_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:id="@+id/task_attribute_wrapper">
+                <TextView
+                    android:id="@+id/attribute_title_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/attributes"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <Spinner
+                    android:id="@+id/task_attribute_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

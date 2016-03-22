@@ -70,6 +70,11 @@
   <string name="easy">Facile</string>
   <string name="medium">Moyen</string>
   <string name="hard">Difficile</string>
+  <string name="attributes">Attributs</string>
+  <string name="physical">Physique</string>
+  <string name="mental">Mental</string>
+  <string name="social">Social</string>
+  <string name="other">Autres</string>
   <string name="start_date">Date de début</string>
   <string name="positive_habit_form">Positif ( + )</string>
   <string name="negative_habit_form">Négatif ( - )</string>

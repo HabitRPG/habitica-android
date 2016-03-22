@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
@@ -415,11 +416,19 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         if (this.displayingTaskForm) {
             return;
         }
+
+        String allocationMode = "";
+        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null){
+            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        }
+
         Bundle bundle = new Bundle();
-        bundle.putString("type", event.Task.getType());
-        bundle.putString("taskId", event.Task.getId());
-        bundle.putStringArrayList("tagsId", new ArrayList<>(this.getTagIds()));
-        bundle.putStringArrayList("tagsName", new ArrayList<>(this.getTagNames()));
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
+        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        bundle.putStringArrayList(TaskFormActivity.TAG_IDS_KEY, new ArrayList<>(this.getTagIds()));
+        bundle.putStringArrayList(TaskFormActivity.TAG_NAMES_KEY, new ArrayList<>(this.getTagNames()));
+
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
         this.displayingTaskForm = true;

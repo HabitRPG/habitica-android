@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,11 +65,17 @@ import butterknife.Bind;
 
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+    public static final String TASK_ID_KEY = "taskId";
+    public static final String TASK_TYPE_KEY = "type";
+    public static final String TAG_IDS_KEY = "tagsId";
+    public static final String TAG_NAMES_KEY = "tagsName";
+    public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
 
     private String taskType;
     private String taskId;
     private Task task;
 
+    private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
     private List<String> tags;
@@ -93,6 +100,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
 
+    @Bind(R.id.task_attribute_wrapper)
+    LinearLayout attributeWrapper;
+
     @Bind(R.id.task_main_wrapper)
     LinearLayout mainWrapper;
 
@@ -104,6 +114,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @Bind(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
+
+    @Bind(R.id.task_attribute_spinner)
+    Spinner taskAttributeSpinner;
 
     @Bind(R.id.btn_delete_task)
     Button btnDelete;
@@ -177,10 +190,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        taskType = bundle.getString("type");
-        taskId = bundle.getString("taskId");
-        tags = bundle.getStringArrayList("tagsId");
-        tagsName = bundle.getStringArrayList("tagsName");
+        taskType = bundle.getString(TASK_TYPE_KEY);
+        taskId = bundle.getString(TASK_ID_KEY);
+        tags = bundle.getStringArrayList(TAG_IDS_KEY);
+        tagsName = bundle.getStringArrayList(TAG_NAMES_KEY);
+        allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         userSelectedTags = new ArrayList<CharSequence>();
         allTags = new ArrayList<CheckBox>();
         userSelectedTagIds = new ArrayList<String>();
@@ -217,11 +231,17 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        taskDifficultySpinner.setAdapter(adapter);
+        difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskDifficultySpinner.setAdapter(difficultyAdapter);
         taskDifficultySpinner.setSelection(1);
+
+        ArrayAdapter<CharSequence> attributeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.task_attributes, android.R.layout.simple_spinner_item);
+        attributeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskAttributeSpinner.setAdapter(attributeAdapter);
+        taskAttributeSpinner.setSelection(0);
 
         //Filling in the tags check boxes
         //If tags list is empty, we don't allow user to select a tag.
@@ -232,6 +252,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
         else {
             createTagsCheckBoxes();
+        }
+
+        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")){
+            attributeWrapper.setVisibility(View.GONE);
         }
 
         if (taskType.equals("habit")) {
@@ -280,6 +304,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             mainWrapper.removeView(checklistWrapper);
 
             difficultyWrapper.setVisibility(View.GONE);
+            attributeWrapper.setVisibility(View.GONE);
         }
 
         if (taskId != null) {
@@ -608,6 +633,24 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.taskDifficultySpinner.setSelection(3);
         }
 
+        String attribute = task.getAttribute();
+        if (attribute != null){
+            switch (attribute){
+                case Task.ATTRIBUTE_STRENGTH:
+                    taskAttributeSpinner.setSelection(0);
+                    break;
+                case Task.ATTRIBUTE_INTELLIGENCE:
+                    taskAttributeSpinner.setSelection(1);
+                    break;
+                case Task.ATTRIBUTE_CONSTITUTION:
+                    taskAttributeSpinner.setSelection(2);
+                    break;
+                case Task.ATTRIBUTE_PERCEPTION:
+                    taskAttributeSpinner.setSelection(3);
+                    break;
+            }
+        }
+
         if (task.type.equals("habit")) {
             positiveCheckBox.setChecked(task.getUp());
             negativeCheckBox.setChecked(task.getDown());
@@ -683,6 +726,25 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             task.setPriority((float) 1.5);
         } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 3) {
             task.setPriority((float) 2.0);
+        }
+
+        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")){
+            task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+        }else {
+            switch (this.taskAttributeSpinner.getSelectedItemPosition()){
+                case 0:
+                    task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+                    break;
+                case 1:
+                    task.setAttribute(Task.ATTRIBUTE_INTELLIGENCE);
+                    break;
+                case 2:
+                    task.setAttribute(Task.ATTRIBUTE_CONSTITUTION);
+                    break;
+                case 3:
+                    task.setAttribute(Task.ATTRIBUTE_PERCEPTION);
+                    break;
+            }
         }
 
         switch (task.type) {

@@ -86,6 +86,12 @@
     <string name="checklist">Checklist</string>
     <string name="actions">Actions</string>
 
+    <string name="attributes">Attributes</string>
+    <string name="physical">Physical</string>
+    <string name="mental">Mental</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
+
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
     <string name="frequency_daily">Every X Days</string>
