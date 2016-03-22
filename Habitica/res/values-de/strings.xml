@@ -69,6 +69,11 @@ Versuche sorgfältiger deine täglichen Aufgaben zu erledigen und bekomme diese 
   <string name="easy">Einfach</string>
   <string name="medium">Mittel</string>
   <string name="hard">Schwer</string>
+  <string name="attributes">Attribute</string>
+  <string name="physical">Körperlich</string>
+  <string name="mental">Mental</string>
+  <string name="social">Soziales</string>
+  <string name="other">Anderes</string>
   <string name="start_date">Starttermin</string>
   <string name="positive_habit_form">Positiv ( + )</string>
   <string name="negative_habit_form">Negativ ( - )</string>

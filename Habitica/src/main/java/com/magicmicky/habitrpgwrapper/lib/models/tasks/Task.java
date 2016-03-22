@@ -34,6 +34,10 @@ public class Task extends BaseModel {
     public static final String TYPE_REWARD = "reward";
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
+    public static final String ATTRIBUTE_STRENGTH = "str";
+    public static final String ATTRIBUTE_CONSTITUTION = "con";
+    public static final String ATTRIBUTE_INTELLIGENCE = "int";
+    public static final String ATTRIBUTE_PERCEPTION = "per";
 
     @Column
     @PrimaryKey
