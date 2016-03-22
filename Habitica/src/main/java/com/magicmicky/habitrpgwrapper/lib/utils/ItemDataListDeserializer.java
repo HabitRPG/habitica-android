@@ -50,7 +50,18 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
             }
 
             for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
-                ItemData item = context.deserialize(entry.getValue(), ItemData.class);
+                ItemData item;
+                if (entry.getValue().isJsonObject()) {
+                    item = context.deserialize(entry.getValue(), ItemData.class);
+                } else {
+                    item = new ItemData();
+                    item.key = entry.getKey();
+                    if (entry.getValue().isJsonNull()) {
+                        item.owned = null;
+                    } else {
+                        item.owned = entry.getValue().getAsBoolean();
+                    }
+                }
                 vals.add(item);
             }
             TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
