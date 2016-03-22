@@ -65,16 +65,11 @@
   <string name="notes">Notas</string>
   <string name="text">Texto</string>
   <string name="difficulty">Dificuldade</string>
-  <string name="tags">Rótulo</string>
+  <string name="tags">Marcadores</string>
   <string name="trivial">Trivial</string>
   <string name="easy">Fácil</string>
   <string name="medium">Médio</string>
   <string name="hard">Dificil</string>
-  <string name="attributes">Atributos</string>
-  <string name="physical">Físico</string>
-  <string name="mental">Mental</string>
-  <string name="social">Social</string>
-  <string name="other">Outros</string>
   <string name="start_date">Data de inicio</string>
   <string name="positive_habit_form">Positivo ( + )</string>
   <string name="negative_habit_form">Negativo ( + )</string>
@@ -152,10 +147,14 @@
   <string name="due_date">Data limite</string>
   <string name="quest.accept">Aceitar</string>
   <string name="quest.reject">Rejeitar</string>
-  <string name="quest.begin">Iniciar</string>
-  <string name="quest.cancel">Cancelar</string>
-  <string name="quest.abort">Abortar</string>
+  <string name="quest.begin">Iniciar Missão</string>
+  <string name="quest.cancel">Cancelar Convite</string>
+  <string name="quest.abort">Abortar Missão</string>
   <string name="quest.leave">Abandonar missão</string>
+  <string name="quest.pending">Pendente</string>
+  <string name="quest.accepted">Aceito</string>
+  <string name="quest.rejected">Rejeitado</string>
+  <string name="quest.participants">Participantes</string>
   <string name="version_info" formatted="false">Versão %s (%d)</string>
   <string name="sidebar_help">Ajuda &amp;amp: Perguntas Frequentes</string>
   <string name="complete_tutorial">Entendi!</string>
@@ -215,13 +214,13 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="copy_as_todo">Copiar como Afazer</string>
   <string name="send_pm">Enviar mensagem privada</string>
   <string name="flag">Bandeira</string>
-  <string name="delete">Deletar</string>
+  <string name="delete">Excluir</string>
   <string name="name">Nome</string>
   <string name="description">Descrição</string>
   <string name="add_tag">Adicionar marcador</string>
   <string name="privacy">Privacidade</string>
   <string name="write_message">Escrever mensagem</string>
-  <string name="post">Cargo</string>
+  <string name="post">Publicar</string>
   <string name="todo_due" formatted="false">Devido: %s</string>
   <string name="daily_streak" formatted="false">Raia atual: %d</string>
   <string name="todo_has_duedate">Tarefa com vencimento</string>
@@ -237,8 +236,14 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="outfit_weapon">Arma</string>
   <string name="wear_costume">Vestir traje</string>
   <string name="equipped">Equipado</string>
-  <string name="quest.pending">Pendente</string>
-  <string name="quest.accepted">Aceito</string>
-  <string name="quest.rejected">Rejeitado</string>
-  <string name="quest.participants">Participantes</string>
+  <string name="quest_cancel_message">Tem certeza que deseja cancelar esta missão? Todas as aceitações de convites serão perdidas. O proprietário da missão manterá posse do pergaminho da missão.</string>
+  <string name="quest.invitation">Convite para Missão</string>
+  <string name="quest_begin_message">Tem certeza que deseja começar a missão? Uma vez ativa, outros membros do grupo não poderão juntar-se à missão.</string>
+  <string name="quest.invitation.text">Você foi convidado a participar de uma missão!</string>
+  <string name="ago_1day">1 dia atrás</string>
+  <string name="ago_days" formatted="false">%d dias atrás</string>
+  <string name="ago_1Minute">1 minuto atrás</string>
+  <string name="ago_minutes" formatted="false">%d minutos atrás</string>
+  <string name="ago_hours" formatted="false">%d horas atrás</string>
+  <string name="ago_1hour">1 hora atrás</string>
 </resources>

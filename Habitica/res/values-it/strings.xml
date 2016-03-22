@@ -70,11 +70,6 @@
   <string name="easy">Facile</string>
   <string name="medium">Medio</string>
   <string name="hard">Difficile</string>
-  <string name="attributes">Attributi</string>
-  <string name="physical">Fisico</string>
-  <string name="mental">Mentale</string>
-  <string name="social">Social</string>
-  <string name="other">Altro</string>
   <string name="start_date">Data di partenza</string>
   <string name="positive_habit_form">Positiva ( + )</string>
   <string name="negative_habit_form">Negativa ( - )</string>
@@ -152,8 +147,16 @@
   <string name="due_date">Data di scadenza</string>
   <string name="quest.accept">Accetta</string>
   <string name="quest.reject">Rifiuta</string>
+  <string name="quest.begin">Inizia missione</string>
+  <string name="quest.cancel">Annulla invito</string>
+  <string name="quest.abort">Annulla missione</string>
   <string name="quest.leave">Abbandona Missione</string>
+  <string name="quest.pending">In attesa</string>
+  <string name="quest.accepted">Accettata</string>
+  <string name="quest.rejected">Rifiutata</string>
+  <string name="quest.participants">Partecipanti</string>
   <string name="version_info" formatted="false">Versione %s (%d)</string>
+  <string name="sidebar_help">Aiuto &amp; FAQ</string>
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
@@ -204,18 +207,43 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="my_guilds">Le mie Gilde</string>
   <string name="public_guilds">Gilde pubbliche</string>
   <string name="guild">Gilda</string>
+  <string name="leave">Abbandona</string>
+  <string name="join">Partecipa</string>
+  <string name="leader">Leader</string>
   <string name="gems">Gemme</string>
-  <string name="flag">Segnalare</string>
+  <string name="copy_as_todo">Copia come ToDo</string>
+  <string name="send_pm">Invia messaggio</string>
+  <string name="flag">Segnala</string>
   <string name="delete">Elimina</string>
   <string name="name">Nome</string>
   <string name="description">Descrizione</string>
   <string name="add_tag">Aggiungi etichetta</string>
+  <string name="privacy">Privacy</string>
+  <string name="write_message">Scrivi messaggio</string>
+  <string name="post">Invia</string>
+  <string name="todo_due" formatted="false">Scade: %s</string>
+  <string name="daily_streak" formatted="false">serie: %d</string>
+  <string name="todo_has_duedate">L\'attività ha una scadenza</string>
   <string name="battle_gear">Assetto da battaglia</string>
   <string name="costume">Costume</string>
+  <string name="outfit_head">Testa</string>
+  <string name="outfit_headAccessory">Accessorio da testa</string>
+  <string name="outfit_eyewear">Occhi</string>
   <string name="outfit_armor">Armatura</string>
+  <string name="outfit_back">Schiena</string>
   <string name="outfit_body">Corpo</string>
   <string name="outfit_shield">Scudo</string>
   <string name="outfit_weapon">Arma</string>
   <string name="wear_costume">Indossa Costume</string>
   <string name="equipped">Equipaggiato</string>
+  <string name="quest_cancel_message">Vuoi davvero annullare questa missione? Tutti gli inviti accettati andranno persi. Il proprietario della missione tornerà in possesso della Pergamena.</string>
+  <string name="quest.invitation">Invito Missione</string>
+  <string name="quest_begin_message">Vuoi davvero iniziare la missione? Una volta attiva, nessun altro membro della squadra potrà unirsi alla missione.</string>
+  <string name="quest.invitation.text">Sei stato invitato a partecipare ad una missione!</string>
+  <string name="ago_1day">1 giorno fa</string>
+  <string name="ago_days" formatted="false">%d giorni fa</string>
+  <string name="ago_1Minute">1 minuto fa</string>
+  <string name="ago_minutes" formatted="false">%d minuti fa</string>
+  <string name="ago_hours" formatted="false">%d ore fa</string>
+  <string name="ago_1hour">1 ora fa</string>
 </resources>

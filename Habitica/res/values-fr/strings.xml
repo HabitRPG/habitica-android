@@ -70,11 +70,6 @@
   <string name="easy">Facile</string>
   <string name="medium">Moyen</string>
   <string name="hard">Difficile</string>
-  <string name="attributes">Attributs</string>
-  <string name="physical">Physique</string>
-  <string name="mental">Mental</string>
-  <string name="social">Social</string>
-  <string name="other">Autres</string>
   <string name="start_date">Date de début</string>
   <string name="positive_habit_form">Positif ( + )</string>
   <string name="negative_habit_form">Négatif ( - )</string>
@@ -134,7 +129,7 @@
   <string name="avatar_shirt">Tunique</string>
   <string name="avatar_skin">Peau</string>
   <string name="avatar_ears">Oreilles d\'Animaux</string>
-  <string name="avatar_base">nuque</string>
+  <string name="avatar_base">Nuque</string>
   <string name="avatar_color">Couleur</string>
   <string name="avatar_beard">Barbe</string>
   <string name="avatar_mustache">Moustache</string>
@@ -149,7 +144,7 @@
   <string name="purchase_set_button" formatted="false">Débloquer le lot pour %d gemmes</string>
   <string name="purchase_button">Acheter</string>
   <string name="purchase_set_title" formatted="false">Acheter le lot %s</string>
-  <string name="due_date">échéance</string>
+  <string name="due_date">Échéance</string>
   <string name="quest.accept">Accepter</string>
   <string name="quest.reject">Refuser</string>
   <string name="quest.begin">Lancer la Quête</string>
@@ -195,7 +190,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="setup_task_exercise_3">Définir des horaires où faire du sport</string>
   <string name="setup_task_healthWellness_1">Manger sainement / Malbouffe</string>
   <string name="setup_task_healthWellness_2">Utiliser du fil dentaire</string>
-  <string name="setup_task_healthWellness_3">Prévoir un bilan</string>
+  <string name="setup_task_healthWellness_3">Planifier un bilan</string>
   <string name="setup_task_school_1">Etudier/Procrastiner</string>
   <string name="setup_task_school_2">Faire mes devoirs</string>
   <string name="setup_task_school_3">Finir un devoir pour l\'école</string>

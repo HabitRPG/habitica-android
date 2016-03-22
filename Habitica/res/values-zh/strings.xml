@@ -70,11 +70,6 @@
   <string name="easy">简单</string>
   <string name="medium">中等</string>
   <string name="hard">困难</string>
-  <string name="attributes">属性</string>
-  <string name="physical">生理上的</string>
-  <string name="mental">心理上的</string>
-  <string name="social">社交</string>
-  <string name="other">其他</string>
   <string name="start_date">开始日期</string>
   <string name="positive_habit_form">正面的(+)</string>
   <string name="negative_habit_form">负面的 (-)</string>
@@ -152,10 +147,14 @@
   <string name="due_date">截止日期</string>
   <string name="quest.accept">接受</string>
   <string name="quest.reject">拒绝</string>
-  <string name="quest.begin">开始</string>
-  <string name="quest.cancel">取消</string>
-  <string name="quest.abort">舍弃</string>
+  <string name="quest.begin">开始探索任务</string>
+  <string name="quest.cancel">取消邀请</string>
+  <string name="quest.abort">放弃探索任务</string>
   <string name="quest.leave">放弃任务</string>
+  <string name="quest.pending">等待中</string>
+  <string name="quest.accepted">接受了</string>
+  <string name="quest.rejected">拒绝的</string>
+  <string name="quest.participants">参与者</string>
   <string name="version_info" formatted="false">版本%s (%d)</string>
   <string name="sidebar_help">帮助&amp;FAQ</string>
   <string name="complete_tutorial">成功！</string>
@@ -237,8 +236,14 @@
   <string name="outfit_weapon">武器</string>
   <string name="wear_costume">穿上装扮</string>
   <string name="equipped">装备</string>
-  <string name="quest.pending">等待中</string>
-  <string name="quest.accepted">接受了</string>
-  <string name="quest.rejected">拒绝的</string>
-  <string name="quest.participants">参与者</string>
+  <string name="quest_cancel_message">你是否确定要放弃这个探索任务？这将会失去所有已接受的邀请。探索任务拥有者将拿回探索任务卷轴。</string>
+  <string name="quest.invitation">任务邀请</string>
+  <string name="quest_begin_message">你是否确定要直接开始这个探索任务？一旦开始，其他队伍成员就不能加入这个探索任务。</string>
+  <string name="quest.invitation.text">你被邀请参加一个探索任务！</string>
+  <string name="ago_1day">1天前</string>
+  <string name="ago_days" formatted="false">%d天前</string>
+  <string name="ago_1Minute">1分钟前</string>
+  <string name="ago_minutes" formatted="false">%d分钟前</string>
+  <string name="ago_hours" formatted="false">%d小时前</string>
+  <string name="ago_1hour">1小时前</string>
 </resources>
