@@ -151,4 +151,9 @@
         <item name="android:paddingRight">@dimen/section_leftright_padding</item>
         <item name="android:paddingTop">@dimen/section_top_padding</item>
     </style>
+
+    <style name="MenuSectionTitle">
+        <item name="android:background">@color/brand</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

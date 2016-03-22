@@ -64,4 +64,6 @@
     <dimen name="row_title_size">16sp</dimen>
     <dimen name="row_text_size">14sp</dimen>
     <dimen name="row_title_bottommargin">2dp</dimen>
+	<dimen name="drawer_section_item_text">12sp</dimen>
+	<dimen name="material_drawer_section_vertical_padding">4dp</dimen>
 </resources>

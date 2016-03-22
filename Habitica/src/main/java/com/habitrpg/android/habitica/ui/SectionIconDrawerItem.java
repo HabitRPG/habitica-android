@@ -71,27 +71,6 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         return this;
     }
 
-    public SectionIconDrawerItem withIcon(ImageHolder icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    public SectionIconDrawerItem withIcon(Drawable icon) {
-        this.icon = new ImageHolder(icon);
-        return this;
-    }
-
-    public SectionIconDrawerItem withIcon(@DrawableRes int iconRes) {
-        this.icon = new ImageHolder(iconRes);
-        return this;
-    }
-
-    public SectionIconDrawerItem withIcon(IIcon iicon) {
-        this.icon = new ImageHolder(iicon);
-
-        return this;
-    }
-
     public SectionIconDrawerItem withTypeface(Typeface typeface) {
         this.typeface = typeface;
         return this;
@@ -135,41 +114,12 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         return typeface;
     }
 
-    public SectionIconDrawerItem withIconColor(@ColorInt int iconColor) {
-        this.iconColor = ColorHolder.fromColor(iconColor);
-        return this;
-    }
-
-    public SectionIconDrawerItem withIconColorRes(@ColorRes int iconColorRes) {
-        this.iconColor = ColorHolder.fromColorRes(iconColorRes);
-        return this;
-    }
-
-    public SectionIconDrawerItem withIconTintingEnabled(boolean iconTintingEnabled) {
-        this.iconTinted = iconTintingEnabled;
-        return this;
-    }
-
-    @Deprecated
-    public SectionIconDrawerItem withIconTinted(boolean iconTinted) {
-        this.iconTinted = iconTinted;
-        return this;
-    }
-
-    public boolean isIconTinted() {
-        return iconTinted;
-    }
-
     public ImageHolder getIcon() {
         return icon;
     }
 
     public ColorHolder getIconColor() {
         return iconColor;
-    }
-
-    public int getIconColor(Context ctx) {
-        return ColorHolder.color(getIconColor(), ctx, R.attr.material_drawer_primary_icon, R.color.material_drawer_primary_icon);
     }
 
     @Override
@@ -184,7 +134,7 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         viewHolder.view.setEnabled(false);
 
         //define the text color
-        viewHolder.name.setTextColor(ctx.getResources().getColor(R.color.brand));
+        viewHolder.name.setTextColor(ctx.getResources().getColor(R.color.white));
 
         //set the text for the name
         StringHolder.applyTo(this.getName(), viewHolder.name);
@@ -193,18 +143,6 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         if (getTypeface() != null) {
             viewHolder.name.setTypeface(getTypeface());
         }
-
-        //hide the divider if we do not need one
-        if (this.hasDivider()) {
-            viewHolder.divider.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.divider.setVisibility(View.GONE);
-        }
-
-        //set the color for the divider
-        viewHolder.divider.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(ctx, R.attr.material_drawer_divider, R.color.material_drawer_divider));
-
-        viewHolder.icon.setImageDrawable(getIcon().decideIcon(ctx, ctx.getResources().getColor(R.color.brand), true, 0));
 
         //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
         onPostBindView(this, viewHolder.itemView);
@@ -223,16 +161,12 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private View divider;
         private TextView name;
-        protected ImageView icon;
 
         private ViewHolder(View view) {
             super(view);
             this.view = view;
-            this.divider = view.findViewById(R.id.material_drawer_divider);
             this.name = (TextView) view.findViewById(R.id.material_drawer_name);
-            this.icon = (ImageView) view.findViewById(R.id.material_drawer_icon);
         }
     }
 }
