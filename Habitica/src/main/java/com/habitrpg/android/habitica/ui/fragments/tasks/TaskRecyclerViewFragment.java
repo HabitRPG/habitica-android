@@ -41,6 +41,19 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+
+            android.support.v4.app.FragmentActivity context = getActivity();
+
+            layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+
+            if (layoutManager == null) {
+                layoutManager = new LinearLayoutManager(context);
+
+                mRecyclerView.setLayoutManager(layoutManager);
+            }
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
 
         if (savedInstanceState != null){
@@ -77,20 +90,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-
-        android.support.v4.app.FragmentActivity context = getActivity();
-
-        layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-
-        if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(context);
-
-            mRecyclerView.setLayoutManager(layoutManager);
-        }
-
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
