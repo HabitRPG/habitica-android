@@ -37,6 +37,7 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
 
     public void setGuild(Group guild) {
         this.guild = guild;
+        mAPIHelper.apiService.getGroup(this.guild.id, this);
         if (this.guildInformationFragment != null) {
             this.guildInformationFragment.setGroup(guild);
         }
@@ -54,9 +55,6 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         viewPager.setCurrentItem(0);
 
         final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
-
-        // Get the full group data
-        mAPIHelper.apiService.getGroup(this.guild.id, this);
 
         setViewPagerAdapter();
 

@@ -613,7 +613,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         for(TaskTag tt : task.getTags()){
             int tagNameLocation = tags.indexOf(tt.getTag().getId());
-            if (tagsName.size() > tagNameLocation) {
+            if (tagsName.size() > tagNameLocation && tagNameLocation > 0) {
                 for(CheckBox box : allTags){
                     if(tagsName.get(tagNameLocation) == box.getText()){
                         box.setChecked(true);
@@ -714,7 +714,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if(!userSelectedTags.isEmpty()){
             for(CharSequence names : userSelectedTags){
                 int tagIdLocation = tagsName.indexOf(names);
-                userSelectedTagIds.add(tags.get(tagIdLocation)); //used for the SQL command
+                if (tagIdLocation > 0) {
+                    userSelectedTagIds.add(tags.get(tagIdLocation)); //used for the SQL command
+                }
             }
         }
 

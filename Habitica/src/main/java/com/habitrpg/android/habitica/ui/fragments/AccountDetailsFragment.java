@@ -18,7 +18,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
     protected void setupPreferences() {
         for (Map.Entry<String, ?> preference : getPreferenceScreen().getSharedPreferences().getAll().entrySet()) {
             String key = preference.getKey();
-            if (getAccountDetailsPreferences().contains(key)) {
+            if (getAccountDetailsPreferences().contains(key) && preference.getValue() != null) {
                 findPreference(key).setSummary(preference.getValue().toString());
             }
         }
