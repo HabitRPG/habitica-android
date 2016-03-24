@@ -315,7 +315,9 @@ public class Task extends BaseModel {
      * This array contains 7 values, one for each days, starting from monday.
      */
     public Days getRepeat() {
-        if (repeat == null) { return new Days(); }
+        if (repeat == null) {
+            repeat = new Days();
+        }
         return repeat;
     }
     /**
