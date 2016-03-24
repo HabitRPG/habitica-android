@@ -27,6 +27,7 @@ private List<ItemData> gearList;
 public String equippedGear;
 public Boolean isCostume;
 public String userSize;
+public String type;
 
 public void setGearList(List<ItemData> gearList) {
         this.gearList = gearList;
@@ -111,7 +112,11 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         command.gear = this.gear;
         command.asCostume = isCostume;
         EventBus.getDefault().post(command);
-        equippedGear = this.gear.key;
+        if (this.gear.key.equals(equippedGear)) {
+            equippedGear = type + "_base_0";
+        } else {
+            equippedGear = this.gear.key;
+        }
         notifyDataSetChanged();
     }
 }
