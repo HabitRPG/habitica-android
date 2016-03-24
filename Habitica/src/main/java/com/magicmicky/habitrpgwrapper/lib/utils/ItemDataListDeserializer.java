@@ -41,8 +41,6 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
                         item.str = parsedItem.str;
                         item.per = parsedItem.per;
                         item._int = parsedItem._int;
-                    } else {
-                        item.owned = itemObject.getAsBoolean();
                     }
                     vals.add(item);
                     object.remove(item.key);
@@ -56,11 +54,6 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
                 } else {
                     item = new ItemData();
                     item.key = entry.getKey();
-                    if (entry.getValue().isJsonNull()) {
-                        item.owned = null;
-                    } else {
-                        item.owned = entry.getValue().getAsBoolean();
-                    }
                 }
                 vals.add(item);
             }
