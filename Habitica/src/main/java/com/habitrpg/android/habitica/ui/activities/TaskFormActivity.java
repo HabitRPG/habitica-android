@@ -1,11 +1,14 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +38,9 @@ import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiGridView;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.github.data5tream.emojilib.emoji.Emojicon;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
@@ -55,11 +61,13 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -84,6 +92,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<CharSequence> userSelectedTags;
     private List<CheckBox> allTags;
     private List<String> userSelectedTagIds;
+    private DatePickerDialog dueDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     @Bind(R.id.task_value_edittext)
     EditText taskValue;
@@ -171,6 +181,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.task_duedate_picker)
     DatePicker dueDatePicker;
 
+
+    @Bind(R.id.duedate_text_edittext)
+    EmojiEditText dueDatePickerText;
+
     @Bind(R.id.task_tags_wrapper)
     LinearLayout tagsWrapper;
 
@@ -178,6 +192,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     LinearLayout tagsContainerLinearLayout;
 
     EmojiPopup popup;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected int getLayoutResId() {
@@ -201,6 +220,26 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (taskType == null) {
             return;
         }
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        Calendar datePickerCalendar = Calendar.getInstance();
+
+        dueDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    Calendar newDate = Calendar.getInstance();
+                    newDate.set(year, monthOfYear, dayOfMonth);
+                    dueDatePickerText.setText(dateFormatter.format(newDate.getTime()));
+                }
+
+            }, datePickerCalendar.get(Calendar.YEAR),
+                datePickerCalendar.get(Calendar.MONTH),
+                datePickerCalendar.get(Calendar.DAY_OF_MONTH));
+        dueDatePickerText.setOnClickListener(new View.OnClickListener() {
+                                                 public void onClick(View view) {
+                                                     dueDatePickerDialog.show();
+                                                 }
+                                             });
 
         btnDelete.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
@@ -246,15 +285,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         //Filling in the tags check boxes
         //If tags list is empty, we don't allow user to select a tag.
         //If they have tags, we allow them to add tags
-        if(tags.isEmpty())
-        {
+        if (tags.isEmpty()) {
             mainWrapper.removeView(tagsWrapper);
-        }
-        else {
+        } else {
             createTagsCheckBoxes();
         }
 
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")){
+        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
             attributeWrapper.setVisibility(View.GONE);
         }
 
@@ -293,7 +330,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
             });
-        }else{
+        } else {
             mainWrapper.removeView(dueDateLayout);
         }
 
@@ -310,7 +347,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
-            if(task != null){
+            if (task != null) {
                 populate(task);
             }
 
@@ -402,6 +439,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (isTodo) {
             emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private boolean isEmojiEditText(View view) {
@@ -421,6 +461,46 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "TaskForm Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.habitrpg.android.habitica.ui.activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "TaskForm Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.habitrpg.android.habitica.ui.activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
     private class emojiClickListener implements View.OnClickListener {
 
         EmojiEditText view;
@@ -431,14 +511,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         @Override
         public void onClick(View v) {
-            if(!popup.isShowing()){
+            if (!popup.isShowing()) {
 
-                if(popup.isKeyBoardOpen()){
+                if (popup.isKeyBoardOpen()) {
                     popup.showAtBottom();
                     changeEmojiKeyboardIcon(true);
-                }
-
-                else{
+                } else {
                     view.setFocusableInTouchMode(true);
                     view.requestFocus();
                     popup.showAtBottomPending();
@@ -446,9 +524,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
                     changeEmojiKeyboardIcon(true);
                 }
-            }
-
-            else{
+            } else {
                 popup.dismiss();
                 changeEmojiKeyboardIcon(false);
             }
@@ -487,7 +563,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
 
     private void createTagsCheckBoxes() {
-        for(int i = 0; i < tagsName.size(); i++){
+        for (int i = 0; i < tagsName.size(); i++) {
             TableRow row = new TableRow(tagsContainerLinearLayout.getContext());
             row.setId(i);
             CheckBox tagsCheckBox = new CheckBox(tagsContainerLinearLayout.getContext());
@@ -514,7 +590,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
 
     private void setTitle(Task task) {
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
 
@@ -611,11 +687,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskNotes.setText(task.notes);
         taskValue.setText(String.format("%.2f", task.value));
 
-        for(TaskTag tt : task.getTags()){
+        for (TaskTag tt : task.getTags()) {
             int tagNameLocation = tags.indexOf(tt.getTag().getId());
             if (tagsName.size() > tagNameLocation && tagNameLocation > 0) {
-                for(CheckBox box : allTags){
-                    if(tagsName.get(tagNameLocation) == box.getText()){
+                for (CheckBox box : allTags) {
+                    if (tagsName.get(tagNameLocation) == box.getText()) {
                         box.setChecked(true);
                     }
                 }
@@ -634,8 +710,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         String attribute = task.getAttribute();
-        if (attribute != null){
-            switch (attribute){
+        if (attribute != null) {
+            switch (attribute) {
                 case Task.ATTRIBUTE_STRENGTH:
                     taskAttributeSpinner.setSelection(0);
                     break;
@@ -659,9 +735,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (task.type.equals("daily")) {
 
             if (task.getStartDate() != null) {
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTime(task.getStartDate());
-            startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                GregorianCalendar calendar = new GregorianCalendar();
+                calendar.setTime(task.getStartDate());
+                startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             }
 
             if (task.getFrequency().equals("weekly")) {
@@ -711,8 +787,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         //To add tags, I must first make a TaskTag, then grab information on which Tag they want to associate with the task
         //After that, I need to make a List<TaskTag> so I can do task.setTags(List<TaskTag>)
-        if(!userSelectedTags.isEmpty()){
-            for(CharSequence names : userSelectedTags){
+        if (!userSelectedTags.isEmpty()) {
+            for (CharSequence names : userSelectedTags) {
                 int tagIdLocation = tagsName.indexOf(names);
                 if (tagIdLocation > 0) {
                     userSelectedTagIds.add(tags.get(tagIdLocation)); //used for the SQL command
@@ -730,10 +806,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             task.setPriority((float) 2.0);
         }
 
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")){
+        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
             task.setAttribute(Task.ATTRIBUTE_STRENGTH);
-        }else {
-            switch (this.taskAttributeSpinner.getSelectedItemPosition()){
+        } else {
+            switch (this.taskAttributeSpinner.getSelectedItemPosition()) {
                 case 0:
                     task.setAttribute(Task.ATTRIBUTE_STRENGTH);
                     break;
@@ -783,12 +859,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
             break;
 
-            case "todo":{
-                if(dueDateCheckBox.isChecked()) {
+            case "todo": {
+                if (dueDateCheckBox.isChecked()) {
                     Calendar calendar = new GregorianCalendar();
                     calendar.set(dueDatePicker.getYear(), dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
                     task.setDueDate(new Date(calendar.getTimeInMillis()));
-                }else{
+                } else {
                     task.setDueDate(null);
                 }
             }
@@ -796,9 +872,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             case "reward": {
                 String value = taskValue.getText().toString();
-                if(!value.isEmpty()){
+                if (!value.isEmpty()) {
                     task.setValue(Double.parseDouble(value));
-                }else{
+                } else {
                     task.setValue(0.0d);
                 }
 
