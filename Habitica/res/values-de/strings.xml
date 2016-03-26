@@ -245,4 +245,5 @@ Für den Anfang, welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="ago_minutes" formatted="false">Vor %d Minuten</string>
   <string name="ago_hours" formatted="false">Vor %d Stunden </string>
   <string name="ago_1hour">Vor 1 Stunde</string>
+  <string name="today">Heute</string>
 </resources>

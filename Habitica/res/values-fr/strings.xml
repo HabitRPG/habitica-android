@@ -246,4 +246,5 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="ago_minutes" formatted="false">il y a %d minutes</string>
   <string name="ago_hours" formatted="false">il y a %d heures</string>
   <string name="ago_1hour">il y a 1 heure</string>
+  <string name="today">Today</string>
 </resources>

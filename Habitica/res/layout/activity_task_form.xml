@@ -1,6 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -290,7 +289,7 @@
         <LinearLayout
             android:id="@+id/task_startdate_layout"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
@@ -303,13 +302,14 @@
                 android:text="@string/start_date"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <DatePicker
-                android:id="@+id/task_startdate_picker"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/startdate_text_edittext"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                tools:ignore="UnusedAttribute" />
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/start_date"
+                android:textColor="@android:color/black"
+                android:focusable="false" />
 
         </LinearLayout>
 
@@ -328,18 +328,28 @@
                 android:text="@string/due_date"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/task_duedate_picker_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/todo_has_duedate"
-                android:id="@+id/duedate_checkbox" />
-            <DatePicker
-                android:id="@+id/task_duedate_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                tools:ignore="UnusedAttribute" />
+                android:layout_gravity="center_horizontal">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/todo_has_duedate"
+                    android:id="@+id/duedate_checkbox" />
+
+                <EditText
+                    android:id="@+id/duedate_text_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:hint="@string/due_date"
+                    android:textColor="@android:color/black"
+                    android:focusable="false" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
