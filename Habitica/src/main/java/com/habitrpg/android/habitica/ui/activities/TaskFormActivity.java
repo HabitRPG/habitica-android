@@ -430,7 +430,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
 
-    private class DateEditTextListener implements View.OnClickListener {
+    private class DateEditTextListener implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
         Calendar calendar;
         DatePickerDialog datePickerDialog;
         EditText datePickerText;
@@ -442,23 +442,26 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             this.datePickerText = dateText;
             this.datePickerText.setOnClickListener(this);
             this.dateFormatter = DateFormat.getDateInstance();
-            // TODO add a today button
-            this.datePickerDialog = new DatePickerDialog(datePickerText.getContext(), new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    calendar.set(year, monthOfYear, dayOfMonth);
-                    updateDateText();
-                }
-
-            }, calendar.get(Calendar.YEAR),
+            this.datePickerDialog = new DatePickerDialog(datePickerText.getContext(), this,
+                    calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH));
+            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    setCalendar(Calendar.getInstance().getTime());
+                }
+            });
             updateDateText();
         }
 
-
         public void onClick(View view) {
             datePickerDialog.show();
+        }
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(year, monthOfYear, dayOfMonth);
+            updateDateText();
         }
 
         public Calendar getCalendar() {
@@ -467,6 +470,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         public void setCalendar(Date date) {
             calendar.setTime(date);
+            datePickerDialog.updateDate(calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
             updateDateText();
         }
 
