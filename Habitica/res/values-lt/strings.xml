@@ -246,4 +246,5 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="ago_minutes" formatted="false">prieš %d minutę(es)</string>
   <string name="ago_hours" formatted="false">prieš %d valandą(as)</string>
   <string name="ago_1hour">prieš 1 valandą</string>
+  <string name="today">šiandien</string>
 </resources>

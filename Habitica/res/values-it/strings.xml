@@ -246,4 +246,5 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="ago_minutes" formatted="false">%d minuti fa</string>
   <string name="ago_hours" formatted="false">%d ore fa</string>
   <string name="ago_1hour">1 ora fa</string>
+  <string name="today">Oggi</string>
 </resources>
