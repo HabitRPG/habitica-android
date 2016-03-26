@@ -57,13 +57,11 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -88,8 +86,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<CharSequence> userSelectedTags;
     private List<CheckBox> allTags;
     private List<String> userSelectedTagIds;
-    private DatePickerDialog dueDatePickerDialog;
-    private SimpleDateFormat dateFormatter;
 
     @Bind(R.id.task_value_edittext)
     EditText taskValue;
@@ -99,9 +95,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @Bind(R.id.task_checklist_wrapper)
     LinearLayout checklistWrapper;
-
-    @Bind(R.id.task_startdate_picker)
-    DatePicker startDatePicker;
 
     @Bind(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
@@ -168,18 +161,23 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
 
     ImageButton emojiToggle2;
+
     @Bind(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
+
+    @Bind(R.id.task_duedate_picker_layout)
+    LinearLayout dueDatePickerLayout;
 
     @Bind(R.id.duedate_checkbox)
     CheckBox dueDateCheckBox;
 
-    @Bind(R.id.task_duedate_picker)
-    DatePicker dueDatePicker;
-
+    @Bind(R.id.startdate_text_edittext)
+    EditText startDatePickerText;
+    DateEditTextListener startDateListener;
 
     @Bind(R.id.duedate_text_edittext)
-    EmojiEditText dueDatePickerText;
+    EditText dueDatePickerText;
+    DateEditTextListener dueDateListener;
 
     @Bind(R.id.task_tags_wrapper)
     LinearLayout tagsWrapper;
@@ -212,25 +210,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             return;
         }
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        Calendar datePickerCalendar = Calendar.getInstance();
-
-        dueDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    Calendar newDate = Calendar.getInstance();
-                    newDate.set(year, monthOfYear, dayOfMonth);
-                    dueDatePickerText.setText(dateFormatter.format(newDate.getTime()));
-                }
-
-            }, datePickerCalendar.get(Calendar.YEAR),
-                datePickerCalendar.get(Calendar.MONTH),
-                datePickerCalendar.get(Calendar.DAY_OF_MONTH));
-        dueDatePickerText.setOnClickListener(new View.OnClickListener() {
-                                                 public void onClick(View view) {
-                                                     dueDatePickerDialog.show();
-                                                 }
-                                             });
+        dueDateListener = new DateEditTextListener(dueDatePickerText);
+        startDateListener = new DateEditTextListener(startDatePickerText);
 
         btnDelete.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
@@ -309,15 +290,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (taskType.equals("todo")) {
-            dueDateLayout.removeView(dueDatePicker);
+            dueDatePickerLayout.removeView(dueDatePickerText);
             //Allows user to decide if they want to add a due date or not
             dueDateCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (buttonView.isChecked()) {
-                        dueDateLayout.addView(dueDatePicker);
+                        dueDatePickerLayout.addView(dueDatePickerText);
                     } else {
-                        dueDateLayout.removeView(dueDatePicker);
+                        dueDatePickerLayout.removeView(dueDatePickerText);
                     }
                 }
             });
@@ -446,6 +427,51 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
             emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
             emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
+        }
+    }
+
+    private class DateEditTextListener implements View.OnClickListener {
+        Calendar calendar;
+        DatePickerDialog datePickerDialog;
+        EditText datePickerText;
+        DateFormat dateFormatter;
+
+
+        public DateEditTextListener(EditText dateText) {
+            calendar = Calendar.getInstance();
+            this.datePickerText = dateText;
+            this.datePickerText.setOnClickListener(this);
+            this.dateFormatter = DateFormat.getDateInstance();
+            // TODO add a today button
+            this.datePickerDialog = new DatePickerDialog(datePickerText.getContext(), new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    calendar.set(year, monthOfYear, dayOfMonth);
+                    updateDateText();
+                }
+
+            }, calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            updateDateText();
+        }
+
+
+        public void onClick(View view) {
+            datePickerDialog.show();
+        }
+
+        public Calendar getCalendar() {
+            return (Calendar) calendar.clone();
+        }
+
+        public void setCalendar(Date date) {
+            calendar.setTime(date);
+            updateDateText();
+        }
+
+        private void updateDateText() {
+            datePickerText.setText(dateFormatter.format(calendar.getTime()));
         }
     }
 
@@ -683,9 +709,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (task.type.equals("daily")) {
 
             if (task.getStartDate() != null) {
-                GregorianCalendar calendar = new GregorianCalendar();
-                calendar.setTime(task.getStartDate());
-                startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                startDateListener.setCalendar(task.getStartDate());
             }
 
             if (task.getFrequency().equals("weekly")) {
@@ -710,9 +734,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (task.type.equals("todo")) {
             if (task.getDueDate() != null) {
                 dueDateCheckBox.setChecked(true);
-                Calendar calendar = new GregorianCalendar();
-                calendar.setTime(task.getDueDate());
-                dueDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                dueDateListener.setCalendar(task.getDueDate());
             }
         }
 
@@ -781,9 +803,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             break;
 
             case "daily": {
-                GregorianCalendar calendar = new GregorianCalendar();
-                calendar.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-                task.setStartDate(new Date(calendar.getTimeInMillis()));
+                task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
 
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
@@ -809,9 +829,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             case "todo": {
                 if (dueDateCheckBox.isChecked()) {
-                    Calendar calendar = new GregorianCalendar();
-                    calendar.set(dueDatePicker.getYear(), dueDatePicker.getMonth(), dueDatePicker.getDayOfMonth());
-                    task.setDueDate(new Date(calendar.getTimeInMillis()));
+                    task.setDueDate(new Date(dueDateListener.getCalendar().getTimeInMillis()));
                 } else {
                     task.setDueDate(null);
                 }
