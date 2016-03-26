@@ -246,4 +246,5 @@
   <string name="ago_minutes" formatted="false">%d分前</string>
   <string name="ago_hours" formatted="false">%d時間前</string>
   <string name="ago_1hour">1時間前</string>
+  <string name="today">今日</string>
 </resources>
