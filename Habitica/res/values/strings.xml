@@ -272,6 +272,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="ago_minutes" formatted="false">%d minutes ago</string>
     <string name="ago_hours" formatted="false">%d hours ago</string>
     <string name="ago_1hour">1 hour ago</string>
+    <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
     <string name="eggs">Eggs</string>
     <string name="hatching_potions">Hatching Potions</string>
