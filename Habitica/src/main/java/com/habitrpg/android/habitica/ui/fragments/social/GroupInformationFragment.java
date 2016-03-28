@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

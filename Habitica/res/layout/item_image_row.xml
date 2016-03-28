@@ -11,7 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="Row"
+            style="@style/RowWrapper"
             android:clickable="true">
             <ImageView
                 android:layout_width="@dimen/gear_image_size"

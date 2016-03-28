@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
-import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
@@ -20,10 +19,10 @@ import java.util.Map;
  * Created by viirus on 25/11/15.
  */
 public class SkillDeserializer
-        implements JsonDeserializer<SkillList> {
+        implements JsonDeserializer<List<Skill>> {
 
     @Override
-    public SkillList deserialize(JsonElement json, Type type,
+    public List<Skill> deserialize(JsonElement json, Type type,
                                              JsonDeserializationContext context) throws JsonParseException {
 
         JsonObject object = json.getAsJsonObject();
@@ -49,10 +48,6 @@ public class SkillDeserializer
             }
         }
 
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(skills)));
-
-        SkillList skillList = new SkillList();
-
-        return skillList;
+        return skills;
     }
 }

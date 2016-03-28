@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestProgress;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
 
         public void bind(String key) {
             Picasso.with(view.getContext())
-                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.key + "_" + key + ".png")
+                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + key + ".png")
                     .into(image);
             name.setText(quest.getCollect().get(key).text);
             count.setText(progress.collect.get(key) + " / " + quest.getCollect().get(key).count);

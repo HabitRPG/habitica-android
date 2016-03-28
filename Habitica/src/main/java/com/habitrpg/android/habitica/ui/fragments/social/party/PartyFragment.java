@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

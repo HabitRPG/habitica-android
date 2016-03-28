@@ -23,30 +23,44 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
-import com.magicmicky.habitrpgwrapper.lib.models.SkillList;
+import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocialTokens;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.ContentDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.DateDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.EggListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.FAQArticleListDeserilializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.FoodListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.GroupSerialization;
+import com.magicmicky.habitrpgwrapper.lib.utils.HatchingPotionListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ItemDataListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.MountListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.PetListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.QuestListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskSerializer;
@@ -97,11 +111,18 @@ public class APIHelper implements ErrorHandler, Profiler {
 
 
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
+        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
         Type checklistType = new TypeToken<List<ChecklistItem>>() {}.getType();
         Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
         Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
         Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
         Type itemDataListType = new TypeToken<List<ItemData>>() {}.getType();
+        Type eggListType = new TypeToken<List<Egg>>() {}.getType();
+        Type foodListType = new TypeToken<List<Food>>() {}.getType();
+        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {}.getType();
+        Type questContentListType = new TypeToken<List<QuestContent>>() {}.getType();
+        Type petListType = new TypeToken<List<Pet>>() {}.getType();
+        Type mountListType = new TypeToken<List<Mount>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -120,7 +141,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(taskTagClassListType, new TagsAdapter())
                 .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
                 .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
-                .registerTypeAdapter(SkillList.class, new SkillDeserializer())
+                .registerTypeAdapter(skillListType, new SkillDeserializer())
                 .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
                 .registerTypeAdapter(taskClassListType, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
@@ -130,7 +151,14 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
                 .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
+                .registerTypeAdapter(eggListType, new EggListDeserializer())
+                .registerTypeAdapter(foodListType, new FoodListDeserializer())
+                .registerTypeAdapter(hatchingPotionListType, new HatchingPotionListDeserializer())
+                .registerTypeAdapter(questContentListType, new QuestListDeserializer())
+                .registerTypeAdapter(petListType, new PetListDeserializer())
+                .registerTypeAdapter(mountListType, new MountListDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
+                .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
 

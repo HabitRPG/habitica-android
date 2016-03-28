@@ -87,7 +87,6 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
                 }
             }
         }
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
 
         return customizations;
     }

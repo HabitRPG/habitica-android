@@ -64,7 +64,6 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
                 }
                 vals.add(item);
             }
-            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
                 vals.add((ItemData) context.deserialize(item.getAsJsonObject(), ItemData.class));

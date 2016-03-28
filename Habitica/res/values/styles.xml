@@ -85,7 +85,7 @@
         <item name="android:layout_margin">@dimen/card_margin</item>
     </style>
 
-    <style name="Row">
+    <style name="RowWrapper">
         <item name="android:padding">@dimen/row_padding</item>
         <item name="android:background">@drawable/selection_highlight</item>
     </style>

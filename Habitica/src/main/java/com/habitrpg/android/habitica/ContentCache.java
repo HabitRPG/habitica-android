@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -88,10 +88,10 @@ public class ContentCache {
             public void success(ContentResult contentResult, Response response) {
                 switch (typeOfSearch) {
                     case "quest": {
-                        Collection<QuestContent> questList = contentResult.quests.values();
+                        Collection<QuestContent> questList = contentResult.quests;
 
                         for (QuestContent quest : questList) {
-                            if (quest.key == searchKey) {
+                            if (quest.getKey() == searchKey) {
                                 gotEntry.GotObject((T) quest);
                             }
                         }
@@ -170,13 +170,13 @@ public class ContentCache {
 
 
     private void saveContentResultToDb(ContentResult contentResult) {
-        Collection<QuestContent> questList = contentResult.quests.values();
+        Collection<QuestContent> questList = contentResult.quests;
 
         for (QuestContent quest : questList) {
             quest.save();
 
             if (quest.boss != null) {
-                quest.boss.key = quest.key;
+                quest.boss.key = quest.getKey();
                 quest.boss.async().save();
             }
         }

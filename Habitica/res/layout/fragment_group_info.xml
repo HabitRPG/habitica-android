@@ -5,7 +5,7 @@
 
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.Group" />
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.QuestContent" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent" />
         <import type="com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>

@@ -1,36 +1,21 @@
-package com.magicmicky.habitrpgwrapper.lib.models;
+package com.magicmicky.habitrpgwrapper.lib.models.inventory;
 
 import com.habitrpg.android.habitica.HabitDatabase;
+import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
+import com.magicmicky.habitrpgwrapper.lib.models.QuestCollect;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Negue on 29.09.2015.
- */
 @Table(databaseName = HabitDatabase.NAME)
-public class QuestContent extends BaseModel {
-    @PrimaryKey
-    @Column
-    public String key;
-
-    @Column
-    public String text;
-
-    @Column
-    public String notes;
-
-    @Column
-    public double value;
+public class QuestContent extends Item {
 
     @Column
     public String previous;
@@ -47,6 +32,46 @@ public class QuestContent extends BaseModel {
     public QuestBoss boss;
 
     HashMap<String, QuestCollect> collect;
+
+    public String getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(String previous) {
+        this.previous = previous;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
+    public boolean isCanBuy() {
+        return canBuy;
+    }
+
+    public void setCanBuy(boolean canBuy) {
+        this.canBuy = canBuy;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public QuestBoss getBoss() {
+        return boss;
+    }
+
+    public void setBoss(QuestBoss boss) {
+        this.boss = boss;
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "collect")
     public Collection<QuestCollect> getCollectCollection() {
@@ -81,6 +106,4 @@ public class QuestContent extends BaseModel {
         super.save();
     }
 
-    // todo drops
 }
-

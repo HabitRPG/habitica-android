@@ -38,8 +38,6 @@ public class FAQArticleListDeserilializer implements JsonDeserializer<List<FAQAr
             position++;
         }
 
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
-
         return vals;
     }
 }
