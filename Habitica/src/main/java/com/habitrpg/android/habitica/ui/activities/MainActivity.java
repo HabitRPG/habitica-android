@@ -43,8 +43,10 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipGearCommand;
+import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -573,6 +575,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     @Subscribe
     public void onEvent(UnlockPathCommand event) {
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
+        this.setUserData(false);
         mAPIHelper.apiService.unlockPath(event.path, new UnlockCallback(this, this.user));
     }
 
@@ -674,6 +677,26 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public void onEvent(DisplayFragmentEvent event) {
         this.displayFragment(event.fragment);
     }
+
+    @Subscribe
+    public void onEvent(SellItemCommand event) {
+        String itemType = "";
+        this.mAPIHelper.apiService.sellItem(event.item.getType(), event.item.getKey(), new Callback<HabitRPGUser>() {
+            @Override
+            public void success(HabitRPGUser habitRPGUser, Response response) {
+                user.setItems(habitRPGUser.getItems());
+                user.save();
+                user.setStats(habitRPGUser.getStats());
+                setUserData(false);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
 
     // endregion
 

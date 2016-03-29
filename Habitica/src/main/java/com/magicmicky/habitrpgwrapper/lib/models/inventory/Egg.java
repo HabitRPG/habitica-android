@@ -46,4 +46,9 @@ public class Egg extends Item {
     public void setStableTotal(Integer stableTotal) {
         this.stableTotal = stableTotal;
     }
+
+    @Override
+    public String getType() {
+        return "eggs";
+    }
 }

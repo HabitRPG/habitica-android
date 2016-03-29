@@ -67,4 +67,5 @@
 	<dimen name="drawer_section_item_text">12sp</dimen>
 	<dimen name="material_drawer_section_vertical_padding">4dp</dimen>
 	<dimen name="pet_width">120dp</dimen>
+	<dimen name="bottom_menu_padding">18dp</dimen>
 </resources>

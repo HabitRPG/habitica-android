@@ -12,8 +12,12 @@ import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.runtime.TransactionManager;
+import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
+import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -163,6 +167,13 @@ public class Items extends BaseModel {
     @Override
     public void save() {
         gear.user_id = user_id;
+
+        List<BaseModel> items = new ArrayList<>();
+        items.addAll(this.quests);
+        items.addAll(this.eggs);
+        items.addAll(this.food);
+        items.addAll(this.hatchingPotions);
+        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(items)));
 
         super.save();
     }

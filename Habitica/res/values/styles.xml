@@ -156,4 +156,18 @@
         <item name="android:background">@color/brand</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="BottomMenu">
+        <item name="android:divider">?android:listDivider</item>
+        <item name="android:showDividers">middle</item>
+    </style>
+    
+    <style name="BottomMenuItem">
+        <item name="android:padding">@dimen/bottom_menu_padding</item>
+        <item name="android:background">@drawable/selection_highlight</item>
+    </style>
+
+    <style name="BottomMenuItemText">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+    </style>
 </resources>

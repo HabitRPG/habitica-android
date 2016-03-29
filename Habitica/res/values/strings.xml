@@ -287,4 +287,9 @@ To start, which parts of your life do you want to improve?</string>
     <string name="armoireNotesFull" formatted="false">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
     <string name="armoireLastItem">You\'ve found the last piece of rare Equipment in the Enchanted Armoire.</string>
     <string name="armoireNotesEmpty">The Armoire will have new Equipment in the first week of every month. Until then, keep clicking for Experience and Food!</string>
+    <string name="sell" formatted="false">Sell (%s Gold)</string>
+    <string name="hatch_with_potion">Hatch with potion</string>
+    <string name="feed_to_pet">Feed to pet</string>
+    <string name="hatch_egg">Hatch egg</string>
+    <string name="invite_party">Invite party</string>
 </resources>

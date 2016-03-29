@@ -36,4 +36,8 @@ public class Food extends Item {
     public void setCanDrop(Boolean canDrop) {
         this.canDrop = canDrop;
     }
+
+    public String getType() {
+        return "food";
+    }
 }

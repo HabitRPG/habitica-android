@@ -25,4 +25,9 @@ public class HatchingPotion extends Item {
     public void setPremium(Boolean premium) {
         this.premium = premium;
     }
+
+    @Override
+    public String getType() {
+        return "hatchingPotions";
+    }
 }

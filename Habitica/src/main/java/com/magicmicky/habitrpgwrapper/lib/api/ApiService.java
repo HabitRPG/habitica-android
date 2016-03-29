@@ -60,6 +60,9 @@ public interface ApiService {
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<BuyResponse> voidCallback);
 
+    @POST("/user/inventory/sell/{type}/{key}")
+    void sellItem(@Path("type") String itemType, @Path("key") String itemKey, Callback<HabitRPGUser> voidCallback);
+
     @POST("/user/unlock")
     void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);
 
@@ -164,6 +167,8 @@ public interface ApiService {
     @POST("/groups/{gid}/questAccept?force=true")
     void forceStartQuest(@Path("gid") String groupId, @Body Group group, Callback<Group> cb);
 
+    @POST("/groups/{gid}/questAccept")
+    void inviteToQuest(@Path("gid") String groupId, @Query("key") String questKey, Callback<Group> cb);
     @POST("/groups/{gid}/questAbort")
     void abortQuest(@Path("gid") String groupId, Callback<Group> cb);
 

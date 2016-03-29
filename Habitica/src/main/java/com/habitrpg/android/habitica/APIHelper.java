@@ -321,6 +321,11 @@ public class APIHelper implements ErrorHandler, Profiler {
                 return cause;
             } else if (status == 404 && cause.getUrl().endsWith("party/chat")) {
                 return cause;
+            } else if (status == 400) {
+                if(res != null && res.err != null && !res.err.isEmpty()) {
+                    showConnectionProblemDialog("", res.err);
+                }
+                return cause;
             }
 		}
         this.showConnectionProblemDialog(R.string.internal_error_api);

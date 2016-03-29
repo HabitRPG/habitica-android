@@ -106,4 +106,8 @@ public class QuestContent extends Item {
         super.save();
     }
 
+    @Override
+    public String getType() {
+        return "quests";
+    }
 }

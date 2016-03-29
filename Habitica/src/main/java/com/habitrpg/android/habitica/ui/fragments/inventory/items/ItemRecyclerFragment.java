@@ -28,6 +28,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     public RecyclerView recyclerView;
     public ItemRecyclerAdapter adapter;
     public String itemType;
+    public Boolean isHatching;
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     LinearLayoutManager layoutManager = null;
 
@@ -54,6 +55,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             if (adapter == null) {
                 adapter = new ItemRecyclerAdapter();
                 adapter.context = this.getActivity();
+                adapter.isHatching = this.isHatching;
                 recyclerView.setAdapter(adapter);
                 this.loadItems();
 

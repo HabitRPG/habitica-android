@@ -10,8 +10,19 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ItemsFragment extends BaseMainFragment {
 
@@ -67,6 +78,7 @@ public class ItemsFragment extends BaseMainFragment {
                         break;
                     }
                 }
+                fragment.isHatching = false;
 
                 return fragment;
             }
@@ -93,5 +105,22 @@ public class ItemsFragment extends BaseMainFragment {
         });
 
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Subscribe
+    public void onEvent(InvitePartyToQuestCommand event) {
+        this.mAPIHelper.apiService.inviteToQuest("party", event.questKey, new Callback<Group>() {
+            @Override
+            public void success(Group group, Response response) {
+                OpenMenuItemCommand event = new OpenMenuItemCommand();
+                event.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
+                EventBus.getDefault().post(event);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 }

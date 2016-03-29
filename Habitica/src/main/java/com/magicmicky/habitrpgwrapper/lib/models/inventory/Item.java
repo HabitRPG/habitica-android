@@ -6,7 +6,7 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public class Item extends BaseModel {
+public abstract class Item extends BaseModel {
 
     @Column
     @PrimaryKey
@@ -57,4 +57,6 @@ public class Item extends BaseModel {
     public void setOwned(Integer owned) {
         this.owned = owned;
     }
+
+    public abstract String getType();
 }
