@@ -388,10 +388,17 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         if (this.displayingTaskForm) {
             return;
         }
+
+        String allocationMode = "";
+        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null){
+            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        }
+
         Bundle bundle = new Bundle();
-        bundle.putString("type", type);
-        bundle.putStringArrayList("tagsId", new ArrayList<>(this.getTagIds()));
-        bundle.putStringArrayList("tagsName", new ArrayList<>(this.getTagNames()));
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
+        bundle.putStringArrayList(TaskFormActivity.TAG_IDS_KEY, new ArrayList<>(this.getTagIds()));
+        bundle.putStringArrayList(TaskFormActivity.TAG_NAMES_KEY, new ArrayList<>(this.getTagNames()));
+        bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
