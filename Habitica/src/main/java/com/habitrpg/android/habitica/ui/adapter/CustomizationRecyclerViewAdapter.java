@@ -283,7 +283,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                                 for (Object obj : customizationList) {
                                     if (obj.getClass().equals(Customization.class)) {
                                         Customization customization = (Customization) obj;
-                                        if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.text)) {
+                                        if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
                                             path = path + "," + customization.getPath();
                                         }
                                     }
