@@ -63,6 +63,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -71,8 +72,11 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
+import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
@@ -315,6 +319,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                             }
 
                             loadAndRemoveOldChecklists(allChecklistItems);
+
+                            updateOwnedEquipment(user.getItems().getGear().owned);
                         }
                     }
                 }).start();
@@ -423,6 +429,28 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             //Ignored
         }
 
+    }
+
+    private void updateOwnedEquipment(List<ItemData> owned) {
+        HashMap<String, ItemData> ownedMap = new HashMap<>();
+        for (ItemData item : owned) {
+            ownedMap.put(item.key, item);
+        }
+
+        List<ItemData> items = new Select().from(ItemData.class).queryList();
+        List<ItemData> updates = new ArrayList<>();
+        for (ItemData item : items) {
+            if (ownedMap.containsKey(item.key) && !Boolean.TRUE.equals(item.owned)) {
+                item.owned = true;
+                updates.add(item);
+            } else if (!ownedMap.containsKey(item.key) && Boolean.TRUE.equals(item.owned)) {
+                item.owned = null;
+                updates.add(item);
+            }
+        }
+        if (!updates.isEmpty()) {
+            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(updates)));
+        }
     }
 
     private void updateUserAvatars() {

@@ -145,49 +145,49 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         costumeHeadView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("head", user.getItems().getGear().getEquipped().getHead(), true);
+                displayEquipmentDetailList("head", user.getItems().getGear().getCostume().getHead(), true);
             }
         });
         costumeHeadAccessoryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("headAccessory", user.getItems().getGear().getEquipped().getHeadAccessory(), true);
+                displayEquipmentDetailList("headAccessory", user.getItems().getGear().getCostume().getHeadAccessory(), true);
             }
         });
         costumeEyewearView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("eyewear", user.getItems().getGear().getEquipped().getEyeWear(), true);
+                displayEquipmentDetailList("eyewear", user.getItems().getGear().getCostume().getEyeWear(), true);
             }
         });
         costumeArmorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("armor", user.getItems().getGear().getEquipped().getArmor(), true);
+                displayEquipmentDetailList("armor", user.getItems().getGear().getCostume().getArmor(), true);
             }
         });
         costumeBackView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("back", user.getItems().getGear().getEquipped().getBack(), true);
+                displayEquipmentDetailList("back", user.getItems().getGear().getCostume().getBack(), true);
             }
         });
         costumeBodyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("body", user.getItems().getGear().getEquipped().getBody(), true);
+                displayEquipmentDetailList("body", user.getItems().getGear().getCostume().getBody(), true);
             }
         });
         costumeWeaponView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("weapon", user.getItems().getGear().getEquipped().getWeapon(), true);
+                displayEquipmentDetailList("weapon", user.getItems().getGear().getCostume().getWeapon(), true);
             }
         });
         costumeShieldView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayEquipmentDetailList("shield", user.getItems().getGear().getEquipped().getShield(), true);
+                displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true);
             }
         });
 
