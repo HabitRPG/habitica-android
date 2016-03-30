@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,6 +39,35 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     private View view;
+
+    LinearLayoutManager layoutManager = null;
+
+    private ItemTouchHelper.Callback mItemTouchCallback = new ItemTouchHelper.Callback() {
+        private Integer mFromPosition = null;
+
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
+            ((ItemTouchHelperAdapter)mAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+
+        //defines the enabled move directions in each state (idle, swiping, dragging).
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                    ItemTouchHelper.DOWN | ItemTouchHelper.UP);
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+
+            ((ItemTouchHelperDropCallback)mAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,16 +96,19 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             case Task.TYPE_HABIT: {
                 this.tutorialStepIdentifier = "habits";
                 this.tutorialText = getString(R.string.tutorial_habits);
+                allowReordering();
                 break;
             }
             case Task.FREQUENCY_DAILY: {
                 this.tutorialStepIdentifier = "dailies";
                 this.tutorialText = getString(R.string.tutorial_dailies);
+                allowReordering();
                 break;
             }
             case Task.TYPE_TODO: {
                 this.tutorialStepIdentifier = "todos";
                 this.tutorialText = getString(R.string.tutorial_todos);
+                allowReordering();
                 break;
             }
             case Task.TYPE_REWARD: {
@@ -86,7 +121,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         return view;
     }
 
-    LinearLayoutManager layoutManager = null;
+    private void allowReordering(){
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

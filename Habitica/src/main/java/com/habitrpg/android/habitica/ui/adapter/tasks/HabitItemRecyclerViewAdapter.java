@@ -8,14 +8,8 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +32,6 @@ import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
@@ -49,6 +42,8 @@ import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.adapter.IReceiveNewEntries;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -56,13 +51,12 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,10 +66,14 @@ import butterknife.ButterKnife;
 
 public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         extends RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>
-        implements IReceiveNewEntries {
+        implements IReceiveNewEntries, ItemTouchHelperAdapter, ItemTouchHelperDropCallback {
 
     public interface IAdditionalEntries {
         void GetAdditionalEntries(IReceiveNewEntries callBack);
+    }
+
+    public interface SortTasksCallback {
+        void onMove(Task task, int from, int to);
     }
 
     int layoutResource;
@@ -91,18 +89,22 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
     private IAdditionalEntries additionalEntries;
+    private SortTasksCallback sortCallback;
 
-    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass, Context newContext, int dailyResetOffset) {
-        this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, dailyResetOffset, null);
+    public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
+                                        Class<ViewHolder<Task>> viewHolderClass, Context newContext,
+                                        int dailyResetOffset, SortTasksCallback sortCallback) {
+        this(taskType, tagsHelper, layoutResource, viewHolderClass, newContext, dailyResetOffset, null, sortCallback);
     }
 
     public HabitItemRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Class<ViewHolder<Task>> viewHolderClass,
-                                        Context newContext, int dailyResetOffset, final IAdditionalEntries additionalEntries) {
+                                        Context newContext, int dailyResetOffset, final IAdditionalEntries additionalEntries, SortTasksCallback sortCallback) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext;
         this.tagsHelper = tagsHelper;
         this.additionalEntries = additionalEntries;
+        this.sortCallback = sortCallback;
         filteredObservableContent = new ObservableArrayList<>();
 
         this.loadContent(true);
@@ -200,6 +202,24 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
         this.parentAdapter = parentAdapter;
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(filteredObservableContent, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        //NO OP
+    }
+
+    @Override
+    public void onDrop(int from, int to) {
+        if (this.sortCallback != null && from != to){
+            this.sortCallback.onMove(filteredObservableContent.get(to), from, to);
+        }
     }
 
     @Override

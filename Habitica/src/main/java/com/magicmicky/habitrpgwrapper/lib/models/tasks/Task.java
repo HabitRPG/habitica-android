@@ -530,4 +530,16 @@ public class Task extends BaseModel {
     public Boolean isChecklistDisplayActive(int offset) {
         return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean result = super.equals(o);
+        if (result) return true;
+
+        if (o.getClass() != this.getClass()) return false;
+
+        Task otherTask = (Task)o;
+
+        return otherTask.getId().equals(this.getId());
+    }
 }
