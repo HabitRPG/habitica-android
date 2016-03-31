@@ -11,9 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuSelectionRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,18 +91,22 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
+        public Boolean  isOwned() {
+            if (ownedMapping != null && animal != null) {
+                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void bind(Mount item) {
+            animal = item;
             titleView.setText(item.getColor());
             ownedTextView.setVisibility(View.GONE);
             this.imageView.setAlpha(1.0f);
-            if (ownedMapping != null) {
-                if (ownedMapping.containsKey(item.getKey()) && ownedMapping.get(item.getKey())) {
-                    DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
-                } else {
-                    ownedTextView.setText(null);
-                    DataBindingUtils.loadImage(this.imageView, "PixelPaw");
-                    this.imageView.setAlpha(0.4f);
-                }
+            if (this.isOwned()) {
+                DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
             } else {
                 DataBindingUtils.loadImage(this.imageView, "PixelPaw");
                 this.imageView.setAlpha(0.4f);
@@ -104,7 +115,22 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         @Override
         public void onClick(View v) {
-
+            if (!this.isOwned()) {
+                return;
+            }
+            BottomSheetMenu menu = new BottomSheetMenu(context);
+            menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
+            menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
+                @Override
+                public void selectedItemAt(Integer index) {
+                    if (index == 0) {
+                        EquipCommand event = new EquipCommand();
+                        event.type = "mount";
+                        event.key = animal.getKey();
+                    }
+                }
+            });
+            menu.show();
         }
     }
 }

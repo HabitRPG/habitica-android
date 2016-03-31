@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipGearCommand;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.squareup.picasso.Picasso;
 
@@ -108,9 +108,13 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        EquipGearCommand command = new EquipGearCommand();
-        command.gear = this.gear;
-        command.asCostume = isCostume;
+        EquipCommand command = new EquipCommand();
+        command.key = this.gear.key;
+        if (isCostume) {
+            command.type = "costume";
+        } else {
+            command.type = "gear";
+        }
         EventBus.getDefault().post(command);
         if (this.gear.key.equals(equippedGear)) {
             equippedGear = type + "_base_0";

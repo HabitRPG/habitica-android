@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 
 import com.amplitude.api.Amplitude;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends DialogFragment {
 
     public String tutorialStepIdentifier;
     public String tutorialText;

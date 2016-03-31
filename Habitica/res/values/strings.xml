@@ -290,6 +290,15 @@ To start, which parts of your life do you want to improve?</string>
     <string name="sell" formatted="false">Sell (%s Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="feed_to_pet">Feed to pet</string>
-    <string name="hatch_egg">Hatch egg</string>
+    <string name="hatch_egg">Hatch with egg</string>
     <string name="invite_party">Invite party</string>
+    <string name="dialog_feeding" formatted="false">Feed %s with</string>
+    <string name="use_animal">Use</string>
+    <string name="feed">Feed</string>
+    <string name="hatch_with" formatted="false">Hatch pet with %s</string>
+    <string name="hatched_pet_title" formatted="false">You hatched a %s %s!</string>
+    <string name="close">Close</string>
+    <string name="share">Share</string>
+    <string name="notification_pet_fed" formatted="false">You fed your %s!</string>
+    <string name="notification_purchase" formatted="false">%s was purchased</string>
 </resources>

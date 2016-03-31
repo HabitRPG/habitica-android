@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.events.commands;
 
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
-public class EquipGearCommand {
+public class EquipCommand {
 
-    public ItemData gear;
-    public Boolean asCostume;
+    public String key;
+    public String type;
 
 }

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,10 +11,13 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.PetDetailRecyclerFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 
@@ -47,12 +51,6 @@ public class ItemsFragment extends BaseMainFragment {
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
 
-        UserParty party = user.getParty();
-
-        if (party == null) {
-            return;
-        }
-
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
             @Override
@@ -79,6 +77,7 @@ public class ItemsFragment extends BaseMainFragment {
                     }
                 }
                 fragment.isHatching = false;
+                fragment.isFeeding = false;
 
                 return fragment;
             }
@@ -122,5 +121,23 @@ public class ItemsFragment extends BaseMainFragment {
 
             }
         });
+    }
+
+    @Subscribe
+    public void showHatchingDialog(HatchingCommand event) {
+        if (event.usingEgg == null || event.usingHatchingPotion == null) {
+            ItemRecyclerFragment fragment = new ItemRecyclerFragment();
+            if (event.usingEgg != null) {
+                fragment.itemType = "hatchingPotions";
+                fragment.hatchingItem= event.usingEgg;
+            } else {
+                fragment.itemType = "eggs";
+                fragment.hatchingItem = event.usingHatchingPotion;
+            }
+            fragment.isHatching = true;
+            fragment.isFeeding = false;
+            fragment.ownedPets = this.user.getItems().getPets();
+            fragment.show(getFragmentManager(), "hatchingDialog");
+        }
     }
 }

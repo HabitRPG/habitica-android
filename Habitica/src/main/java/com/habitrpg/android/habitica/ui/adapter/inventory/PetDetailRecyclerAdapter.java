@@ -8,12 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuSelectionRunnable;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +51,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.animal_overview_item, parent, false);
+                .inflate(R.layout.pet_detail_item, parent, false);
 
         return new PetViewHolder(view);
     }
@@ -70,8 +78,8 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
         @Bind(R.id.titleTextView)
         TextView titleView;
 
-        @Bind(R.id.ownedTextView)
-        TextView ownedTextView;
+        @Bind(R.id.trainedProgressBar)
+        ProgressBar trainedProgressbar;
 
         Resources resources;
 
@@ -84,22 +92,25 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Pet item) {
-            titleView.setText(item.getColor());
-            ownedTextView.setVisibility(View.VISIBLE);
-            this.imageView.setAlpha(1.0f);
-            if (ownedMapping != null) {
-                if (ownedMapping.containsKey(item.getKey()) && ownedMapping.get(item.getKey()) > 0) {
-                    this.ownedTextView.setText(ownedMapping.get(item.getKey()).toString());
-                    DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
-                } else {
-                    ownedTextView.setVisibility(View.GONE);
-                    ownedTextView.setText(null);
-                    DataBindingUtils.loadImage(this.imageView, "PixelPaw");
-                    this.imageView.setAlpha(0.4f);
+        public Boolean  isOwned() {
+            if (ownedMapping != null && animal != null) {
+                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey()) > 0) {
+                    return true;
                 }
+            }
+            return false;
+        }
+
+        public void bind(Pet item) {
+            this.animal = item;
+            this.titleView.setText(item.getColor());
+            this.trainedProgressbar.setVisibility(View.VISIBLE);
+            this.imageView.setAlpha(1.0f);
+            if (this.isOwned()) {
+                this.trainedProgressbar.setProgress(ownedMapping.get(item.getKey()));
+                DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
             } else {
-                ownedTextView.setVisibility(View.GONE);
+                this.trainedProgressbar.setVisibility(View.GONE);
                 DataBindingUtils.loadImage(this.imageView, "PixelPaw");
                 this.imageView.setAlpha(0.4f);
             }
@@ -107,7 +118,27 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
         @Override
         public void onClick(View v) {
-
+            if (!this.isOwned()) {
+                return;
+            }
+            BottomSheetMenu menu = new BottomSheetMenu(context);
+            menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
+            menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
+            menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
+                @Override
+                public void selectedItemAt(Integer index) {
+                    if (index == 0) {
+                        EquipCommand event = new EquipCommand();
+                        event.type = "pet";
+                        event.key = animal.getKey();
+                    } else if (index == 1) {
+                        FeedCommand event = new FeedCommand();
+                        event.usingPet = animal;
+                        EventBus.getDefault().post(event);
+                    }
+                }
+            });
+            menu.show();
         }
     }
 }

@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
@@ -21,6 +23,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -87,8 +91,6 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         outState.putString(ANIMAL_TYPE_KEY, this.animalType);
     }
 
-
-
     private void setGridSpanCount(int width) {
         float itemWidth;
         itemWidth = getContext().getResources().getDimension(R.dimen.pet_width);
@@ -112,6 +114,17 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
             }
         };
         itemsRunnable.run();
+    }
 
+    @Subscribe
+    public void showFeedingDialog(FeedCommand event) {
+        if (event.usingPet == null || event.usingFood == null) {
+            ItemRecyclerFragment fragment = new ItemRecyclerFragment();
+            fragment.feedingPet = event.usingPet;
+            fragment.isFeeding = true;
+            fragment.isHatching = false;
+            fragment.itemType = "food";
+            fragment.show(getFragmentManager(), "feedDialog");
+        }
     }
 }

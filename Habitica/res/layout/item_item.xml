@@ -6,6 +6,9 @@
         <variable name="title" type="String"/>
         <variable name="value" type="String"/>
         <variable name="imageNamed" type="String"/>
+        <variable
+            name="disabled"
+            type="Boolean" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +20,7 @@
             android:layout_height="@dimen/gear_image_size"
             bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'
             android:contentDescription="@{imageNamed}"
-            android:alpha="@{imageNamed == null ? 0.4f : 1.0f}"
+            android:alpha="@{imageNamed == null || disabled ? 0.3f : 1.0f}"
             android:scaleType="fitEnd"
             android:layout_marginRight="@dimen/row_padding"/>
         <LinearLayout
@@ -30,13 +33,15 @@
                 android:layout_height="wrap_content"
                 android:text="@{title}"
                 tools:text="Title"
-                style="@style/RowTitle"/>
+                style="@style/RowTitle"
+                android:alpha="@{disabled ? 0.3f : 1.0f}" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Value"
                 android:text="@{value}"
-                style="@style/RowText"/>
+                style="@style/RowText"
+                android:alpha="@{disabled ? 0.3f : 1.0f}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

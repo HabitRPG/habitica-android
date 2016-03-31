@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,8 +43,9 @@ import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
-import com.habitrpg.android.habitica.events.commands.EquipGearCommand;
-import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
@@ -55,6 +57,7 @@ import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -62,7 +65,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -84,6 +89,7 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -92,6 +98,7 @@ import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -564,12 +571,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     }
 
     @Subscribe
-    public void onEvent(EquipGearCommand event) {
-        if (event.asCostume) {
-            this.mAPIHelper.apiService.equipCostume(event.gear.key, new ItemsCallback(this, this.user));
-        } else {
-            this.mAPIHelper.apiService.equipBattleGear(event.gear.key, new ItemsCallback(this, this.user));
-        }
+    public void onEvent(EquipCommand event) {
+        this.mAPIHelper.apiService.equipItem(event.type, event.key, new ItemsCallback(this, this.user));
     }
 
     @Subscribe
@@ -697,6 +700,59 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         });
     }
 
+    @Subscribe
+    public void onEvent(final HatchingCommand event) {
+        if (event.usingEgg == null || event.usingHatchingPotion == null) {
+            return;
+        }
+        this.mAPIHelper.apiService.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey(), new ItemsCallback(new HabitRPGUserCallback.OnUserReceived() {
+            @Override
+            public void onUserReceived(HabitRPGUser user) {
+                ImageView petImageView = (ImageView)getLayoutInflater().inflate(R.layout.pet_imageview, null);
+
+                DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
+
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(getString(R.string.hatched_pet_title, event.usingHatchingPotion.getText(), event.usingEgg.getText()))
+                        .setView(petImageView)
+                        .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                dialog.show();
+            }
+
+            @Override
+            public void onUserFail() {
+
+            }
+        }, this.user));
+    }
+
+    @Subscribe
+    public void onEvent(FeedCommand event) {
+        if (event.usingFood == null || event.usingPet == null) {
+            return;
+        }
+        final Pet pet = event.usingPet;
+        this.mAPIHelper.apiService.feedPet(event.usingPet.getKey(), event.usingFood.getKey(), new Callback<FeedResponse>() {
+            @Override
+            public void success(FeedResponse feedResponse, Response response) {
+                MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
+                MainActivity.this.setUserData(false);
+                showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getKey()), SnackbarDisplayType.NORMAL);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
 
     // endregion
 
@@ -704,7 +760,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
 
-            showSnackbar(this, floatingMenuWrapper, task.getText() + " successfully purchased!", SnackbarDisplayType.NORMAL);
+            showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), SnackbarDisplayType.NORMAL);
 
         } else {
 

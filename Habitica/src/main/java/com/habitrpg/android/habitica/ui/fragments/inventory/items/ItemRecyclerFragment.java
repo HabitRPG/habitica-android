@@ -2,12 +2,15 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
@@ -17,18 +20,35 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class ItemRecyclerFragment extends BaseFragment {
+    @Bind(R.id.recyclerView)
     public RecyclerView recyclerView;
+
+    @Bind(R.id.titleTextView)
+    public TextView titleView;
     public ItemRecyclerAdapter adapter;
     public String itemType;
+
     public Boolean isHatching;
+    public Boolean isFeeding;
+    public Item hatchingItem;
+    public Pet feedingPet;
+    public HashMap<String, Integer> ownedPets;
+
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     LinearLayoutManager layoutManager = null;
 
@@ -37,9 +57,9 @@ public class ItemRecyclerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_items, container, false);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            ButterKnife.bind(this, view);
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
@@ -56,6 +76,15 @@ public class ItemRecyclerFragment extends BaseFragment {
                 adapter = new ItemRecyclerAdapter();
                 adapter.context = this.getActivity();
                 adapter.isHatching = this.isHatching;
+                adapter.isFeeding = this.isFeeding;
+                adapter.fragment = this;
+                adapter.ownedPets = this.ownedPets;
+                if (this.hatchingItem != null) {
+                    adapter.hatchingItem = this.hatchingItem;
+                }
+                if (this.feedingPet != null) {
+                    adapter.feedingPet = this.feedingPet;
+                }
                 recyclerView.setAdapter(adapter);
                 this.loadItems();
 
@@ -67,7 +96,31 @@ public class ItemRecyclerFragment extends BaseFragment {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");
         }
 
+        if (this.isHatching) {
+            getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.titleView.setText(getString(R.string.hatch_with, this.hatchingItem.getText()));
+            this.titleView.setVisibility(View.VISIBLE);
+        } else if (this.isFeeding) {
+            getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+            this.titleView.setText(getString(R.string.dialog_feeding, this.feedingPet.getKey()));
+            this.titleView.setVisibility(View.VISIBLE);
+        } else {
+            this.titleView.setVisibility(View.GONE);
+        }
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        if (this.isHatching) {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        }
+
+        super.onResume();
     }
 
     @Override

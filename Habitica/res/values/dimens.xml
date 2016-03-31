@@ -68,4 +68,6 @@
 	<dimen name="material_drawer_section_vertical_padding">4dp</dimen>
 	<dimen name="pet_width">120dp</dimen>
 	<dimen name="bottom_menu_padding">18dp</dimen>
+	<dimen name="pet_image_width">81dp</dimen>
+	<dimen name="pet_image_height">99dp</dimen>
 </resources>

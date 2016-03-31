@@ -13,6 +13,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -51,17 +52,21 @@ public interface ApiService {
     @GET("/user/inventory/buy")
     void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
 
-    @POST("/user/inventory/equip/equipped/{key}")
-    void equipBattleGear(@Path("key") String itemKey, Callback<Items> gearCallback);
-
-    @POST("/user/inventory/equip/costume/{key}")
-    void equipCostume(@Path("key") String itemKey, Callback<Items> gearCallback);
+    @POST("/user/inventory/equip/{type}/{key}")
+    void equipItem(@Path("type") String type, @Path("key") String itemKey, Callback<Items> gearCallback);
 
     @POST("/user/inventory/buy/{key}")
     void buyItem(@Path("key") String itemKey, Callback<BuyResponse> voidCallback);
 
     @POST("/user/inventory/sell/{type}/{key}")
     void sellItem(@Path("type") String itemType, @Path("key") String itemKey, Callback<HabitRPGUser> voidCallback);
+
+    @POST("/user/inventory/feed/{pet}/{food}")
+    void feedPet(@Path("pet") String petKey, @Path("food") String foodKey, Callback<FeedResponse> feedingCallback);
+
+    @POST("/user/inventory/hatch/{egg}/{hatchingPotion}")
+    void hatchPet(@Path("egg") String eggKey, @Path("hatchingPotion") String hatchingPotionKey, Callback<Items> itemsCallback);
+
 
     @POST("/user/unlock")
     void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);
