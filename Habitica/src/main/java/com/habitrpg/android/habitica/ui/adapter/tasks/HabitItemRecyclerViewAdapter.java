@@ -7,6 +7,7 @@ import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -393,6 +394,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 } else {
                     this.setDisplayChecklist(true);
                 }
+                RecyclerView recyclerView = (RecyclerView)this.checklistView.getParent().getParent();
+                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+                layoutManager.scrollToPositionWithOffset(this.getAdapterPosition(), 15);
             } else {
                 super.onClick(v);
             }
