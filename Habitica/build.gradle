@@ -93,9 +93,6 @@ dependencies {
         transitive = true
     }
 
-    //Material Dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar')
-
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
     compile 'com.amplitude:android-sdk:2.5.0'

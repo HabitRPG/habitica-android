@@ -25,7 +25,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -139,7 +138,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
     private APIHelper mAPIHelper;
-    private MaterialDialog faintDialog;
+    private AlertDialog faintDialog;
 
     private UserPicture sideUserPicture;
     private UserPicture dialogUserPicture;
@@ -708,13 +707,14 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         this.mAPIHelper.apiService.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey(), new ItemsCallback(new HabitRPGUserCallback.OnUserReceived() {
             @Override
             public void onUserReceived(HabitRPGUser user) {
-                ImageView petImageView = (ImageView)getLayoutInflater().inflate(R.layout.pet_imageview, null);
+                FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
+                ImageView petImageView = (ImageView)petWrapper.findViewById(R.id.pet_imageview);
 
                 DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
 
                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.hatched_pet_title, event.usingHatchingPotion.getText(), event.usingEgg.getText()))
-                        .setView(petImageView)
+                        .setView(petWrapper)
                         .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -842,27 +842,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
 
         if (this.faintDialog == null) {
-            this.faintDialog = new MaterialDialog.Builder(this)
-                    .title(R.string.faint_header)
-                    .customView(R.layout.dialog_faint, true)
-                    .positiveText(R.string.faint_button)
-                    .positiveColorRes(R.color.worse_100)
-                    .dismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            faintDialog = null;
-                            mAPIHelper.reviveUser(new HabitRPGUserCallback(MainActivity.this));
-                        }
-                    })
-                    .cancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            faintDialog = null;
-                        }
-                    })
-                    .build();
 
-            View customView = this.faintDialog.getCustomView();
+            View customView = getLayoutInflater().inflate(R.layout.dialog_faint, null);
             if (customView != null) {
                 View hpBarView = customView.findViewById(R.id.hpBar);
 
@@ -874,6 +855,20 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 this.dialogUserPicture.setUser(this.user);
                 this.dialogUserPicture.setPictureOn(avatarView);
             }
+
+            this.faintDialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.faint_header)
+                    .setView(customView)
+                    .setPositiveButton(R.string.faint_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            faintDialog = null;
+                            mAPIHelper.reviveUser(new HabitRPGUserCallback(MainActivity.this));
+                        }
+                    })
+                    .create();
+
+
 
             this.faintDialog.show();
         }
@@ -887,14 +882,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             }
         }
 
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .title(R.string.levelup_header)
-                .customView(R.layout.dialog_levelup, true)
-                .positiveText(R.string.levelup_button)
-                .positiveColorRes(R.color.brand_100)
-                .build();
-
-        View customView = dialog.getCustomView();
+        View customView = getLayoutInflater().inflate(R.layout.dialog_levelup, null);
         if (customView != null) {
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
@@ -902,6 +890,12 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             this.dialogUserPicture.setUser(this.user);
             this.dialogUserPicture.setPictureOn(avatarView);
         }
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.levelup_header)
+                .setView(customView)
+                .setPositiveButton(R.string.levelup_button, null)
+                .create();
 
         dialog.show();
     }

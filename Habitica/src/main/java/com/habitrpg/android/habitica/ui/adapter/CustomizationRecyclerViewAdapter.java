@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
@@ -34,9 +33,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by viirus on 13/01/16.
- */
 public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> customizationList;
@@ -182,34 +178,30 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
                 priceLabel.setText(String.valueOf(customization.getPrice()));
 
-                MaterialDialog dialog = new MaterialDialog.Builder(context)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setPositiveButton(R.string.purchase_button, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                    if (customization.getPrice() > gemBalance) {
-                                        OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                        event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
-                                        EventBus.getDefault().post(event);
-                                        return;
-                                    }
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (customization.getPrice() > gemBalance) {
+                                    OpenMenuItemCommand event = new OpenMenuItemCommand();
+                                    event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
+                                    EventBus.getDefault().post(event);
+                                    return;
+                                }
                                 UnlockPathCommand event = new UnlockPathCommand();
                                 event.path = customization.getPath();
                                 event.balanceDiff = customization.getPrice() / 4;
                                 EventBus.getDefault().post(event);
                             }
                         })
-                        .contentGravity(GravityEnum.CENTER)
-                        .positiveColor(context.getResources().getColor(R.color.brand_200))
-                        .positiveText(R.string.purchase_button)
-                        .title(context.getString(R.string.purchase_customization))
-                        .customView(dialogContent, true)
-                        .negativeText(R.string.reward_dialog_dismiss)
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        .setTitle(context.getString(R.string.purchase_customization))
+                        .setView(dialogContent)
+                        .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                materialDialog.dismiss();
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
                             }
-                        }).build();
+                        }).create();
                 dialog.show();
                 return;
             }
@@ -268,10 +260,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
                 priceLabel.setText(String.valueOf(set.price));
 
-                MaterialDialog dialog = new MaterialDialog.Builder(context)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setPositiveButton(R.string.purchase_button, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                            public void onClick(DialogInterface dialog, int which) {
                                 if (set.price > gemBalance) {
                                     OpenMenuItemCommand event = new OpenMenuItemCommand();
                                     event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
@@ -293,18 +285,14 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                                 EventBus.getDefault().post(event);
                             }
                         })
-                        .contentGravity(GravityEnum.CENTER)
-                        .positiveColor(context.getResources().getColor(R.color.brand_200))
-                        .positiveText(R.string.purchase_button)
-                        .title(context.getString(R.string.purchase_set_title, set.text))
-                        .customView(dialogContent, true)
-                        .negativeText(R.string.reward_dialog_dismiss)
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        .setTitle(context.getString(R.string.purchase_set_title, set.text))
+                        .setView(dialogContent)
+                        .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                materialDialog.dismiss();
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
                             }
-                        }).build();
+                        }).create();
                 dialog.show();
         }
     }

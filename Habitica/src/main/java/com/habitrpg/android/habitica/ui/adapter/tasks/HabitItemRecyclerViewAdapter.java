@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -28,9 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
@@ -566,7 +565,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             } else {
                 if(Item.specialTag != null && Item.specialTag.equals("item")) {
                     LinearLayout contentViewForDialog = createContentViewForGearDialog();
-                    MaterialDialog dialog = createGearDialog(contentViewForDialog);
+                    AlertDialog dialog = createGearDialog(contentViewForDialog);
                     dialog.show();
                 } else {
                     TaskTappedEvent event = new TaskTappedEvent();
@@ -577,28 +576,24 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             }
         }
 
-        private MaterialDialog createGearDialog(LinearLayout contentViewForDialog) {
-            return new MaterialDialog.Builder(context)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+        private AlertDialog createGearDialog(LinearLayout contentViewForDialog) {
+            return new AlertDialog.Builder(context)
+                    .setPositiveButton(R.string.reward_dialog_buy, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        public void onClick(DialogInterface dialog, int which) {
                             BuyRewardCommand event = new BuyRewardCommand();
                             event.Reward = Item;
                             EventBus.getDefault().post(event);
                         }
                     })
-                    .contentGravity(GravityEnum.CENTER)
-                    .positiveColor(ContextCompat.getColor(context, R.color.brand_200))
-                    .positiveText(R.string.reward_dialog_buy)
-                    .title(binding.getReward().getText())
-                    .customView(contentViewForDialog, true)
-                    .negativeText(R.string.reward_dialog_dismiss)
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    .setTitle(binding.getReward().getText())
+                    .setView(contentViewForDialog)
+                    .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                            materialDialog.dismiss();
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                         }
-                    }).build();
+                    }).create();
         }
 
         @NonNull
