@@ -12,11 +12,11 @@
   <string name="SP_userID_title">ユーザーID</string>
   <string name="SP_userID_summary">あなたのユーザーID</string>
   <string name="SP_APIToken_title">API トークン</string>
-  <string name="SP_APIToken_summary">あなたの API Token</string>
-  <string name="PS_contact_title">開発者に連絡したい</string>
-  <string name="unknown_error">エラーが発生しました。</string>
+  <string name="SP_APIToken_summary">あなたの API トークン</string>
+  <string name="PS_contact_title">開発者に連絡する</string>
+  <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
-  <string name="pref_reminder_header">日課の通知</string>
+  <string name="pref_reminder_header">毎日の通知</string>
   <string name="pref_reminder_checkbox">通知を有効にする</string>
   <string name="pref_reminder_picker">通知時間を設定</string>
   <!--Adding tasks-->
@@ -25,29 +25,29 @@
   <string name="new_reward">新しいごほうび</string>
   <string name="new_daily">新しい日課</string>
   <string name="new_habit">新しい習慣</string>
-  <string name="action_edit">変更</string>
+  <string name="action_edit">編集</string>
   <string name="action_delete">削除</string>
   <string name="action_cancel">戻る</string>
   <string name="login_btn">ログイン</string>
-  <string name="register_btn">登録</string>
+  <string name="register_btn">登録する</string>
   <string name="username">ユーザー名</string>
   <string name="email_username">メールアドレスまたはユーザー名</string>
   <string name="password">パスワード</string>
   <string name="emailAddress">メールアドレス</string>
-  <string name="confirmpassword">メールアドレス（確認）</string>
+  <string name="confirmpassword">パスワード (確認)</string>
   <string name="logout">ログアウト</string>
   <string name="account_details">アカウントの詳細</string>
   <string name="LoginActivityName">ようこそ</string>
-  <string name="user_dead_title">あなたは死んでしまいました！</string>
-  <string name="user_dead_mess">あなたは、注意が足りず、いくつかの悪い習慣といくつかの困難な日課に敗れてしまいました。
-　　あなたは復活します。しかし、レベル、ゴールド、いくつかのランダムに選ばれた装備品を失います。
-　　もっと注意深く日課にとりくみ、悪い習慣をコントロールしましょう!</string>
+  <string name="user_dead_title">あなたは死んだ!</string>
+  <string name="user_dead_mess">注意が足りず、悪い習慣と難しい日課に敗れてしまいました。
+　　あなたは復活します。しかし、レベル、ゴールド、いくつかの装備品のどれかを失います。
+　　もっと注意深く日課にとりくみ、悪い習慣と戦いましょう!</string>
   <string name="string_revive">復活</string>
   <string name="please_connect">Widget を使う前に、アプリから接続してください。</string>
-  <string name="about.title">Habiticaについて</string>
+  <string name="about.title">Habitica について</string>
   <string name="about.libraries">ライブラリー</string>
   <string name="about.versionhistory">バージョン履歴</string>
-  <string name="about.habitica_open_source">Habitica は Github にてオープン・ソース・ソフトウェアとして開かれています。</string>
+  <string name="about.habitica_open_source">Habitica は Github にてオープンソース・ソフトウェアとして開かれています。</string>
   <string name="about.rate_our_app">このアプリをレビュー</string>
   <string name="about.give_us_feedback">フィードバックを送る!</string>
   <string name="about.bugreport">バグを報告する</string>
@@ -65,31 +65,36 @@
   <string name="text">テキスト</string>
   <string name="difficulty">難易度</string>
   <string name="tags">タグ</string>
-  <string name="trivial">ちょいっ!</string>
-  <string name="easy">簡単</string>
-  <string name="medium">普通</string>
-  <string name="hard">困難</string>
+  <string name="trivial">ちょちょい</string>
+  <string name="easy">かんたん</string>
+  <string name="medium">ふつう</string>
+  <string name="hard">むずかしい</string>
   <string name="start_date">開始日</string>
-  <string name="positive_habit_form">前向き ( + )</string>
-  <string name="negative_habit_form">後向き ( - )</string>
+  <string name="positive_habit_form">いい ( + )</string>
+  <string name="negative_habit_form">悪い ( - )</string>
   <string name="checklist">チェックリスト</string>
   <string name="actions">行動</string>
+  <string name="attributes">属性</string>
+  <string name="physical">肉体</string>
+  <string name="mental">精神</string>
+  <string name="social">社会性</string>
+  <string name="other">ほか</string>
   <string name="frequency">頻度</string>
   <string name="frequency_weekly">決まった曜日</string>
   <string name="frequency_daily">何日かごと</string>
-  <string name="monday">月曜日</string>
-  <string name="tuesday">火曜日</string>
-  <string name="wednesday">水曜日</string>
-  <string name="thursday">木曜日</string>
-  <string name="friday">金曜日</string>
-  <string name="saturday">土曜日</string>
-  <string name="sunday">日曜日</string>
+  <string name="monday">月</string>
+  <string name="tuesday">火</string>
+  <string name="wednesday">水</string>
+  <string name="thursday">木</string>
+  <string name="friday">金</string>
+  <string name="saturday">土</string>
+  <string name="sunday">日</string>
   <string name="levelup_header">レベルが上がりました!</string>
   <string name="levelup_detail">実生活での目標を達成したので、レベル %1$d に成長しました!</string>
   <string name="levelup_health">無事、傷がいえました!</string>
   <string name="levelup_button">イエーイ!</string>
   <string name="faint_subtitle">がっかりしないで!</string>
-  <string name="faint_penalty_body">レベルとゴールドと、いくつかの装備品を失いました。しかし、がんばれば、すべてを取り返せます! 　あなたなら、きっとできる。幸あらんことを。</string>
+  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失いました。しかし、がんばればすべてを取り返せます! 　あなたなら、きっとできる。幸あらんことを。</string>
   <string name="faint_header">体力がなくなった!</string>
   <string name="faint_button"><![CDATA[体力を満たしてもう一度]]></string>
   <string name="filter">フィルター</string>
@@ -98,17 +103,17 @@
   <string name="used_skill" formatted="false">%2$d マナを %1$s ゴールドで買った</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
-  <string name="reminder_title">日課を毎日片づけられるようにしよう!</string>
+  <string name="reminder_title">日課をチェックしましたか?</string>
   <string name="skill_progress_title">使っている特殊能力</string>
-  <string name="coming_soon">お楽しみに!</string>
+  <string name="coming_soon">近日中</string>
   <string name="chat_flag_confirmation">本当にこのメッセージを違反として報告してよろしいですか?</string>
   <string name="flag_confirm">メッセージに印をつける</string>
-  <string name="unlock_lvl_11">レベル11でアンロック</string>
+  <string name="unlock_lvl_11">レベル11 でアンロック</string>
   <string name="no_party_message">パーティーに参加していません。パーティーに参加する方法を website で確認してください。</string>
   <string name="forgot_pw_btn">パスワードがわからない</string>
   <string name="forgot_pw_tv">パスワードを忘れた? 携帯電話用のWebsiteへアクセスしてください。</string>
-  <string name="tavern.inn.checkOut">宿屋からチェックアウト</string>
-  <string name="tavern.inn.rest">宿屋で休憩</string>
+  <string name="tavern.inn.checkOut">宿からチェックアウト</string>
+  <string name="tavern.inn.rest">宿で休憩</string>
   <string name="reward.dialog.buy">買う</string>
   <string name="reward.dialog.dismiss">中止</string>
   <string name="party">パーティー</string>
@@ -144,33 +149,33 @@
   <string name="purchase_button">購入</string>
   <string name="purchase_set_title" formatted="false">%s セットを購入</string>
   <string name="due_date">締切日</string>
-  <string name="quest.accept">わかりました</string>
-  <string name="quest.reject">認めません</string>
+  <string name="quest.accept">承認</string>
+  <string name="quest.reject">拒否</string>
   <string name="quest.begin">クエストをはじめる</string>
   <string name="quest.cancel">招待を中止する</string>
   <string name="quest.abort">クエストを中断する</string>
-  <string name="quest.leave">クエストを止める</string>
+  <string name="quest.leave">クエストを抜ける</string>
   <string name="quest.pending">保留</string>
   <string name="quest.accepted">承認済</string>
   <string name="quest.rejected">拒否</string>
   <string name="quest.participants">参加者</string>
   <string name="version_info" formatted="false">バージョン : %s (%d)</string>
-  <string name="sidebar_help">ヘルプとよくある質問</string>
+  <string name="sidebar_help">ヘルプとFAQ</string>
   <string name="complete_tutorial">わかった!</string>
   <string name="dismiss_tutorial">もう一度通知</string>
   <string name="intro_1_title">Habitica へようこそ</string>
-  <string name="intro_1_description">1,100,000人以上の方々が、仕事をかたづけることを楽しんでいるよ。あなたも参加しない?　アバターをつくって、実生活のタスクを記録してみよう。</string>
+  <string name="intro_1_description">1,100,000人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
   <string name="intro_2_title">ゲームの進行 = 人生の進行</string>
-  <string name="intro_2_description">ゲーム内の機能は、あなたの実生活でタスクをこなすことでアンロックされる。よろい、ペット、そして「ごほうび」を手に入れながら、あなた自身の目標に接近しよう!</string>
+  <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろい、ペット、そして「ごほうび」を手に入れながら、自分自身の目標に接近しよう!</string>
   <string name="intro_3_title">友だちとつながってモンスターと戦おう</string>
-  <string name="intro_3_description">友だちの力を借りて、目標にしがみつこう。実生活とバトルでお互いに助け合い、いっしょに成長しよう。</string>
+  <string name="intro_3_description">友だちの力を借りて目標にしがみつこう。実生活とバトルでお互いに助け合い、いっしょに成長しよう!</string>
   <string name="intro_finish_button">さあ、はじまりだ</string>
   <string name="previous_button">戻る</string>
   <string name="next_button">次へ</string>
   <string name="skip_button">スキップ</string>
   <string name="setup_welcome_description">Habitica へようこそ。ここはゲームが進むほどに、あなたの実生活が改善されるところ!　あなたが現実世界のゴールを達成すれば、装備やペット、クエストなどなど、新たな世界が広がります。</string>
   <string name="setup_welcome_title">ようこそ</string>
-  <string name="avatar_setup_description">まず、ゲーム内であなたの代わりとなるアバターが必要です。あなたの実生活での行動が、アバターの健康、経験値とレベル、そしてゴールドに影響します。</string>
+  <string name="avatar_setup_description">まず、ゲーム内であなたの代わりとなるアバターが必要です。あなたの実生活での行動が、アバターの体力、経験値とレベル、そしてゴールドに影響します。</string>
   <string name="task_setup_description">すごい!　自分のタスクを設定して、経験値とゴールドを集めよう。
 
 はじめに、自分の生活のどの部分を改善したい?</string>
@@ -188,7 +193,7 @@
   <string name="setup_task_exercise_2">ストレッチ</string>
   <string name="setup_task_exercise_3">ワークアウトの日程調整</string>
   <string name="setup_task_healthWellness_1">体にいいもの / ジャンクフードを食べる</string>
-  <string name="setup_task_healthWellness_2">フロス（ていねいな歯みがき）</string>
+  <string name="setup_task_healthWellness_2">歯のフロス</string>
   <string name="setup_task_healthWellness_3">健康診断の日程を決める</string>
   <string name="setup_task_school_1">勉強する / 先延ばしする</string>
   <string name="setup_task_school_2">宿題をする</string>
@@ -247,4 +252,29 @@
   <string name="ago_hours" formatted="false">%d時間前</string>
   <string name="ago_1hour">1時間前</string>
   <string name="today">今日</string>
+  <string name="sidebar_items">アイテム</string>
+  <string name="eggs">たまご</string>
+  <string name="hatching_potions">たまごがえしの薬</string>
+  <string name="food">えさ</string>
+  <string name="quests">クエスト</string>
+  <string name="pets">ペット</string>
+  <string name="mounts">乗用獣</string>
+  <string name="armoireEquipment" formatted="false">戸棚で貴重なアイテム、 %s を見つけました!　すごい!</string>
+  <string name="armoireExp">戸棚と格闘して経験値を増やしました。どうぞっ!</string>
+  <string name="armoireNotesFull" formatted="false">戸棚を開くと、ときどき特別な装備、経験値、餌を手にすることができます!　残っているアイテムの部品 : %d</string>
+  <string name="armoireLastItem">貴重なアイテムの最後の部品を魅惑の戸棚で発見しました。</string>
+  <string name="armoireNotesEmpty">戸棚には毎月最初の週に新しいアイテムが入ります。それまでは、クリックして経験値やえさを手に入れましょう!</string>
+  <string name="sell" formatted="false">%s ゴールドで売る</string>
+  <string name="hatch_with_potion">たまごがえしの薬を使う</string>
+  <string name="feed_to_pet">ペットにえさをやる</string>
+  <string name="hatch_egg">たまごをかえす</string>
+  <string name="invite_party">パーティーに招待する</string>
+  <string name="dialog_feeding" formatted="false">%s にえさをやる : </string>
+  <string name="use_animal">つかう</string>
+  <string name="feed">えさやり</string>
+  <string name="hatch_with" formatted="false">%s でペットをかえす</string>
+  <string name="close">閉じる</string>
+  <string name="share">共有する</string>
+  <string name="notification_pet_fed" formatted="false">%s にえさをやった!</string>
+  <string name="notification_purchase" formatted="false">%s は購入済み</string>
 </resources>

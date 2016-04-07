@@ -9,12 +9,12 @@
   <!--Prefs-->
   <string name="PS_settings_title">Einstellungen</string>
   <string name="SP_address_hint">Deine benutzerdefinierten Server</string>
-  <string name="SP_userID_title">Benutzer ID</string>
-  <string name="SP_userID_summary">Deine Benutzer ID</string>
-  <string name="SP_APIToken_title">API Token</string>
-  <string name="SP_APIToken_summary">Dein API Token</string>
+  <string name="SP_userID_title">Benutzer-ID</string>
+  <string name="SP_userID_summary">Deine Benutzer-ID</string>
+  <string name="SP_APIToken_title">API-Token</string>
+  <string name="SP_APIToken_summary">Dein API-Token</string>
   <string name="PS_contact_title">Kontakt</string>
-  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
+  <string name="unknown_error">Ein Fehler ist aufgetreten ...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
@@ -33,21 +33,21 @@
   <string name="username">Benutzername</string>
   <string name="email_username">Email oder Benutzername</string>
   <string name="password">Passwort</string>
-  <string name="emailAddress">Email Adresse</string>
+  <string name="emailAddress">E-Mail-Adresse</string>
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
   <string name="account_details">Kontodetails</string>
   <string name="LoginActivityName">Wilkommen</string>
   <string name="user_dead_title">Du bist tot!</string>
-  <string name="user_dead_mess">Du warst nicht aufmerksam genug und hast dich zwischen einigen schlechten Angewohnheiten und schwierigen täglichen Aufgaben verlaufen.
-Du wirst zu neuem Leben erweckt, verlierst aber einen Level, dein Gold und einen zufälligen Ausrüstungsgegenstand.
-Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine schlechten Angewohnheiten in den Griff!</string>
+  <string name="user_dead_mess">Du warst nicht aufmerksam genug und hast Dich zwischen einigen schlechten Angewohnheiten und schwierigen täglichen Aufgaben verlaufen.
+Du wirst zu neuem Leben erweckt, verlierst aber einen Level, Dein Gold und einen zufälligen Ausrüstungsgegenstand.
+Versuche Deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme Deine schlechten Angewohnheiten in den Griff!</string>
   <string name="string_revive">Wiederbeleben</string>
-  <string name="please_connect">Baue eine Verbindung mit Hilfe der App auf, bevor du ein Widget benutzt</string>
+  <string name="please_connect">Baue eine Verbindung mit Hilfe der App auf, bevor Du ein Widget benutzt</string>
   <string name="about.title">Über</string>
   <string name="about.libraries">Bibliotheken</string>
   <string name="about.versionhistory">Versionsverlauf</string>
-  <string name="about.habitica_open_source">Habitica ist als Open Source Software auf GitHub verfügbar</string>
+  <string name="about.habitica_open_source">Habitica ist als Open-Source-Software auf GitHub verfügbar</string>
   <string name="about.rate_our_app">Bewerte unsere App</string>
   <string name="about.give_us_feedback">Feedback senden!</string>
   <string name="about.bugreport">Melde einen Fehler</string>
@@ -57,7 +57,7 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
   <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuch es später noch mal.</string>
   <string name="authentication_error_title">Autentifikationsfehler</string>
-  <string name="authentication_error_body">Ungültiger Username oder Passwort</string>
+  <string name="authentication_error_body">Ungültiger Benutzername oder Passwort</string>
   <string name="login_validation_error_title">Validierungsfehler</string>
   <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
   <string name="save_changes">Speichern</string>
@@ -74,6 +74,11 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="negative_habit_form">Negativ ( - )</string>
   <string name="checklist">Checkliste</string>
   <string name="actions">Aktionen</string>
+  <string name="attributes">Attribute</string>
+  <string name="physical">Körperlich</string>
+  <string name="mental">Mental</string>
+  <string name="social">Sozial</string>
+  <string name="other">Anderes</string>
   <string name="frequency">Wiederholen</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
@@ -89,8 +94,8 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="levelup_health">Du wurdest vollständig geheilt!</string>
   <string name="levelup_button">Hurra!</string>
   <string name="faint_subtitle">Nicht verzweifeln!</string>
-  <string name="faint_penalty_body">Du hast einen Level, dein Gold und einen Teil deiner Ausrüstung verloren, aber Du kannst alles durch harte Arbeit wieder zurückbekommen! Viel Glück -- Du schaffst das.</string>
-  <string name="faint_header">Du hast alle deine Lebenspunkte verloren!</string>
+  <string name="faint_penalty_body">Du hast einen Level, Dein Gold und einen Teil Deiner Ausrüstung verloren, aber Du kannst alles durch harte Arbeit wieder zurückbekommen! Viel Glück -- Du schaffst das.</string>
+  <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>
   <string name="faint_button"><![CDATA[Lebenspunkte wiederherstellen & nochmal versuchen]]></string>
   <string name="filter">Filtern</string>
   <string name="profile_image">Profilbild</string>
@@ -98,10 +103,10 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="used_skill" formatted="false">Du hast %1$s für %2$d Mana benutzt.</string>
   <string name="new_checklist_item">Unteraufgabe</string>
   <string name="add_checklist_item">Hinzufügen</string>
-  <string name="reminder_title">Denke daran deine täglichen Aufgaben abzuhaken!</string>
+  <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
   <string name="skill_progress_title">Fertigkeiten benutzen</string>
   <string name="coming_soon">demnächst</string>
-  <string name="chat_flag_confirmation">Möchtest du diesen Beitrag wirklich melden?</string>
+  <string name="chat_flag_confirmation">Möchtest Du diesen Beitrag wirklich melden?</string>
   <string name="flag_confirm">Verletzung der Community-Richtlinien melden</string>
   <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
   <string name="no_party_message">Du bist nicht in einer Gruppe. Besuche die Website, um einer Gruppe beizutreten.</string>
@@ -118,7 +123,7 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="dailies">Tägliche Aufgaben</string>
   <string name="todos">To-Dos</string>
   <string name="rewards">Belohnungen</string>
-  <string name="taskform.delete.title">Bist du sicher?</string>
+  <string name="taskform.delete.title">Bist Du sicher?</string>
   <string name="taskform.delete.message">Wirklich löschen?</string>
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
@@ -159,21 +164,21 @@ Versuche deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme deine 
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
   <string name="intro_1_title">Willkommen in Habitica</string>
-  <string name="intro_1_description">Mach mit bei über 1.100.000 Menschen, die Spaß haben während Sie Sachen erledigen. Erstell deinen Avatar und erfülle Aufgaben aus deinem echten Leben.</string>
+  <string name="intro_1_description">Mach mit bei über 1.100.000 Menschen, die Spaß haben während Sie Sachen erledigen. Erstelle Deinen Avatar und erfülle Aufgaben aus Deinem echten Leben.</string>
   <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
-  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei indem du Real-Life Aufgaben erledigst. Verdiene dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung deiner Ziele!</string>
+  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
   <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
-  <string name="intro_3_description">Behalte deine Ziele im Auge mit Hilfe deiner Freunde. Unterstützt euch gegenseitig im Leben und im Kampf während ihr euch gemeinsam verbessert!</string>
+  <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt euch gegenseitig im Leben und im Kampf während ihr euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Anfangen</string>
-  <string name="previous_button">Vorherig</string>
+  <string name="previous_button">Zurück</string>
   <string name="next_button">Nächstes</string>
   <string name="skip_button">Überspringen</string>
-  <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während du Ziele im echten Leben erreichst wirst du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
+  <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
-  <string name="avatar_setup_description">Als erstes benötigst du einen Avater der dich repräsentiert! Dinge die du im echten Leben tust beeinflussen deine Lebenspunkte, dein Level und dein Gold.</string>
-  <string name="task_setup_description">Großartig! Jetzt lass uns deine Aufgaben anlegen, damit du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
+  <string name="avatar_setup_description">Als erstes benötigst Du einen Avater der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
+  <string name="task_setup_description">Großartig! Jetzt lass uns Deine Aufgaben anlegen, damit Du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
 
-Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
+Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
   <string name="setup_group_heathWellness">Gesundheit + Wellness</string>
@@ -181,7 +186,7 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Hausarbeit</string>
   <string name="setup_group_creativity">Kreativität</string>
-  <string name="setup_task_work_1">Verarbeite email</string>
+  <string name="setup_task_work_1">Verarbeite E-Mail</string>
   <string name="setup_task_work_2">Wichtigste Aufgabe</string>
   <string name="setup_task_work_3">Arbeitsprojekt</string>
   <string name="setup_task_exercise_1">10 Min Ausdauer</string>
@@ -190,26 +195,26 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="setup_task_healthWellness_1">Gesund ernähren / Junkfood essen</string>
   <string name="setup_task_healthWellness_2">Zahnseide benutzen</string>
   <string name="setup_task_healthWellness_3">Check-up ausmachen</string>
-  <string name="setup_task_school_1">Lernen / Prokrastinieren</string>
+  <string name="setup_task_school_1">Lernen / Aufschieben</string>
   <string name="setup_task_school_2">Hausaufgaben machen</string>
-  <string name="setup_task_school_3">Aufgabe für die Schule fertig stellen</string>
+  <string name="setup_task_school_3">Aufgabe für die Schule fertigstellen</string>
   <string name="setup_task_teams_1">Status des Teams abfragen</string>
   <string name="setup_task_teams_2">Team auf dem laufenden halten</string>
-  <string name="setup_task_teams_3">Team Projekt fertig gestellt</string>
+  <string name="setup_task_teams_3">Team-Projekt abschließen</string>
   <string name="setup_task_chores_1">10 Minuten aufräumen</string>
   <string name="setup_task_chores_2">Geschirr spülen</string>
   <string name="setup_task_chores_3">Schrank aufräumen</string>
   <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
   <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
   <string name="setup_task_creativity_3">Kreatives Projekt fertigstellen</string>
-  <string name="gem.purchase.support">Du möchtest helfen, Habitica am Laufen zu halten? Unterstütze die Entwickler, indem du Edelsteine kaufst!\n\nMit Edelsteinen kannst du lustige Extras kaufen, zum Beispiel: \n\n - Coole Kostüme für deinen Avatar\n - Hübsche Hintergründe\n - Spannende Quests, um Haustiere freizuschalten\n - Die Möglichkeit, deine Klasse schon vor Level 100 zu wechseln\n\nVielen Vielen Dank, dass du hilfst, Habitica großartig zu machen. Deine Unterstützung bedeutet uns sehr viel!</string>
+  <string name="gem.purchase.support">Du möchtest helfen, Habitica am Laufen zu halten? Unterstütze die Entwickler, indem Du Edelsteine kaufst!\n\nMit Edelsteinen kannst Du lustige Extras kaufen, zum Beispiel:\n\n - Coole Kostüme für Deinen Avatar\n - Hübsche Hintergründe\n - Spannende Quests, um Haustiere freizuschalten\n - Die Möglichkeit, Deine Klasse schon vor Level 100 zu wechseln\n\nVielen Vielen Dank, dass Du hilfst, Habitica großartig zu machen. Deine Unterstützung bedeutet uns sehr viel!</string>
   <string name="my_guilds">Meine Gilden</string>
   <string name="public_guilds">Öffentliche Gilden</string>
   <string name="guild">Gilde</string>
   <string name="leave">verlassen</string>
   <string name="join">beitreten</string>
   <string name="leader">Anführer</string>
-  <string name="gems">Juwelen</string>
+  <string name="gems">Edelsteine</string>
   <string name="copy_as_todo">Als Aufgabe kopieren</string>
   <string name="send_pm">PM senden</string>
   <string name="flag">Melden</string>
@@ -220,7 +225,7 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="privacy">Privatsphäre</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
-  <string name="todo_due" formatted="false">bis: %s</string>
+  <string name="todo_due" formatted="false">Bis: %s</string>
   <string name="daily_streak" formatted="false">Aktuelle Serie: %d</string>
   <string name="todo_has_duedate">Diese Aufgabe hat eine Frist.</string>
   <string name="battle_gear">Kampfausrüstung</string>
@@ -235,15 +240,42 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="outfit_weapon">Waffe</string>
   <string name="wear_costume">Kostüm tragen</string>
   <string name="equipped">Ausgerüstet</string>
-  <string name="quest_cancel_message">Bist du sicher, dass du diesen Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
+  <string name="quest_cancel_message">Bist Du sicher, dass Du diesen Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
   <string name="quest.invitation">Questeinladung</string>
-  <string name="quest_begin_message">Bist du sicher, dass du den Quest beginnen willst? Sobald dieser aktiv ist, können keine zusätzlichen Gruppenmitglieder dem Quest beitreten.</string>
+  <string name="quest_begin_message">Bist Du sicher, dass Du den Quest beginnen willst? Sobald dieser aktiv ist, können keine zusätzlichen Gruppenmitglieder dem Quest beitreten.</string>
   <string name="quest.invitation.text">Du wurdest eingeladen, an einem Quest teilzunehmen!</string>
   <string name="ago_1day">Vor einem Tag</string>
   <string name="ago_days" formatted="false">Vor %d Tagen</string>
   <string name="ago_1Minute">Vor einer Minute</string>
   <string name="ago_minutes" formatted="false">Vor %d Minuten</string>
-  <string name="ago_hours" formatted="false">Vor %d Stunden </string>
+  <string name="ago_hours" formatted="false">Vor %d Stunden</string>
   <string name="ago_1hour">Vor einer Stunde</string>
   <string name="today">Heute</string>
+  <string name="sidebar_items">Gegenstände</string>
+  <string name="eggs">Eier</string>
+  <string name="hatching_potions">Schlupftränke</string>
+  <string name="food">Futter</string>
+  <string name="quests">Quests</string>
+  <string name="pets">Haustiere</string>
+  <string name="mounts">Reittiere</string>
+  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Juhu!</string>
+  <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %s %s. Was macht das denn hier?</string>
+  <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
+  <string name="armoireNotesFull" formatted="false">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
+  <string name="armoireLastItem">Du hast das letzte Stück der seltenen Ausrüstung im verzauberten Schrank gefunden.</string>
+  <string name="armoireNotesEmpty">Der Schrank wird jeden Monat neue Ausrüstung beinhalten. Bis dahin kannst Du weiterklicken um Erfahrung und Nahrung zu erhalten.</string>
+  <string name="sell" formatted="false">Verkaufen (%s Gold)</string>
+  <string name="hatch_with_potion">Mit Tränk ausbrüten</string>
+  <string name="feed_to_pet">An Haustier verfüttern</string>
+  <string name="hatch_egg">Mit Ei ausbrüten</string>
+  <string name="invite_party">Gruppe einladen</string>
+  <string name="dialog_feeding" formatted="false">Füttere %s mit</string>
+  <string name="use_animal">Nutzen</string>
+  <string name="feed">Verfüttern</string>
+  <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
+  <string name="hatched_pet_title" formatted="false">Du hast ein %s %s ausgebrütet!</string>
+  <string name="close">Schließen</string>
+  <string name="share">Teilen</string>
+  <string name="notification_pet_fed" formatted="false">Du hast Dein/e/n %s gefüttert</string>
+  <string name="notification_purchase" formatted="false">%s gekauft</string>
 </resources>

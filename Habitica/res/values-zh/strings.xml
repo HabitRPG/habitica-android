@@ -75,6 +75,11 @@
   <string name="negative_habit_form">负面的 (-)</string>
   <string name="checklist">检查蛋</string>
   <string name="actions">动作</string>
+  <string name="attributes">属性</string>
+  <string name="physical">身体上的</string>
+  <string name="mental">精神上的</string>
+  <string name="social">社交</string>
+  <string name="other">其他</string>
   <string name="frequency">频率</string>
   <string name="frequency_weekly">每周中的特定日期</string>
   <string name="frequency_daily">每x日</string>
@@ -247,4 +252,29 @@
   <string name="ago_hours" formatted="false">%d小时前</string>
   <string name="ago_1hour">1小时前</string>
   <string name="today">今天</string>
+  <string name="sidebar_items">物品</string>
+  <string name="eggs">蛋</string>
+  <string name="hatching_potions">孵化药水</string>
+  <string name="food">食物</string>
+  <string name="quests">任务</string>
+  <string name="pets">宠物</string>
+  <string name="mounts">坐骑</string>
+  <string name="armoireEquipment" formatted="false">您在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
+  <string name="armoireExp">你和大衣柜展开了殊死搏斗，并赢得了经验，尝尝这个吧！</string>
+  <string name="armoireNotesFull" formatted="false">拉开 魔法衣橱 来获得随机的特殊装备，经验或者食物！剩余的装备：%d</string>
+  <string name="armoireLastItem">您在魔法衣橱里找到了最后一件稀有装备。</string>
+  <string name="armoireNotesEmpty">每个月的第一个星期这里都会有新的装备，到时记得常点进来获得经验和食物！</string>
+  <string name="sell" formatted="false">出售 (%s金币)</string>
+  <string name="hatch_with_potion">用孵化药水孵化</string>
+  <string name="feed_to_pet">喂养宠物</string>
+  <string name="hatch_egg">孵化宠物蛋</string>
+  <string name="invite_party">邀请队伍</string>
+  <string name="dialog_feeding" formatted="false">喂养%s用</string>
+  <string name="use_animal">使用</string>
+  <string name="feed">喂食</string>
+  <string name="hatch_with" formatted="false">用%s孵化宠物</string>
+  <string name="close">关闭</string>
+  <string name="share">分享</string>
+  <string name="notification_pet_fed" formatted="false">你喂食了你的%s！</string>
+  <string name="notification_purchase" formatted="false">已购买 %s</string>
 </resources>

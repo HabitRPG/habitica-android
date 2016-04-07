@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Négatif ( - )</string>
   <string name="checklist">Liste de vérification</string>
   <string name="actions">Instructions/Actions</string>
+  <string name="attributes">Attributs</string>
+  <string name="physical">Physique</string>
+  <string name="mental">Mental</string>
+  <string name="social">Social</string>
+  <string name="other">Autre</string>
   <string name="frequency">Répéter</string>
   <string name="frequency_weekly">Certains jours de la semaine</string>
   <string name="frequency_daily">Tous les X Jours</string>
@@ -247,4 +252,31 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="ago_hours" formatted="false">il y a %d heures</string>
   <string name="ago_1hour">il y a 1 heure</string>
   <string name="today">Today</string>
+  <string name="sidebar_items">Objets</string>
+  <string name="eggs">Oeufs</string>
+  <string name="hatching_potions">Potions d\'éclosion</string>
+  <string name="food">Nourriture</string>
+  <string name="quests">Quêtes</string>
+  <string name="pets">Familiers</string>
+  <string name="mounts">Montures</string>
+  <string name="armoireEquipment" formatted="false">Vous avez trouvé une pièce d\'Équipement rare dans l\'Armoire : %s! Génial !</string>
+  <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez : %s %s. Qu\'est-ce que ça fait là ?</string>
+  <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'Expérience. Prends ça !</string>
+  <string name="armoireNotesFull" formatted="false">Ouvrez l\'Armoire pour recevoir au hasard de l\'Équipement spécial, de l\'Expérience ou de la nourriture ! Pièces d\'Équipement restantes : %d</string>
+  <string name="armoireLastItem">Vous avez trouvé la dernière pièce d\'Équipement rare dans l\'Armoire Enchantée.</string>
+  <string name="armoireNotesEmpty">L\'Armoire contiendra de nouvelles pièces d\'Équipement la première semaine de chaque mois. D\'ici là, continuez à cliquer pour obtenir de l\'Expérience et de la Nourriture!</string>
+  <string name="sell" formatted="false">Vendre (%s Pièces d\'or)</string>
+  <string name="hatch_with_potion">Faire éclore avec la Potion</string>
+  <string name="feed_to_pet">Donner au Familier</string>
+  <string name="hatch_egg">Faire éclore avec l\'oeuf</string>
+  <string name="invite_party">Inviter l\'Équipe</string>
+  <string name="dialog_feeding" formatted="false">Nourrir %s avec </string>
+  <string name="use_animal">Utiliser</string>
+  <string name="feed">Nourrir</string>
+  <string name="hatch_with" formatted="false">Faire éclore le Familier avec %s</string>
+  <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un-e %s %s!</string>
+  <string name="close">Fermer</string>
+  <string name="share">Partager</string>
+  <string name="notification_pet_fed" formatted="false">Vous avez nourri votre %s!</string>
+  <string name="notification_purchase" formatted="false">%s acheté</string>
 </resources>

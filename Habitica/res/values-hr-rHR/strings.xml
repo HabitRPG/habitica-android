@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Habitica</string>
+  <string name="action_refresh">Osvježi</string>
+  <string name="XP_default">Iskustvo</string>
+  <string name="HP_default">Život</string>
+  <string name="MP_default">Mana</string>
+  <string name="ERR_pb_barcode">Opcije nisu mogle biti učitane bez barkoda</string>
+  <!--Prefs-->
+  <string name="PS_settings_title">Postavke</string>
+  <string name="SP_address_hint">Tvoj ručno namješteni server</string>
+  <string name="SP_userID_title">Korisnički ID</string>
+  <string name="SP_userID_summary">Tvoj Korisnički ID</string>
+  <string name="SP_APIToken_title">API Token</string>
+  <string name="SP_APIToken_summary">Tvoj API Token</string>
+  <string name="PS_contact_title">Kontaktiraj me</string>
+  <string name="unknown_error">Dogodila se greška...</string>
+  <string name="pref_account_header">Račun</string>
+  <string name="pref_reminder_header">Svakodnevni Podsjetnik</string>
+  <string name="pref_reminder_checkbox">Aktiviraj Podsjetnik</string>
+  <string name="pref_reminder_picker">Postavi Vrijeme Podsjetnika</string>
+  <!--Adding tasks-->
+  <string name="task_value">Vrijednost</string>
+  <string name="new_todo">Novi To-Do</string>
+  <string name="new_reward">Nova nagrada</string>
+  <string name="new_daily">Novi daily</string>
+  <string name="new_habit">Nova navika</string>
+  <string name="action_edit">Uredi</string>
+  <string name="action_delete">Izbriši</string>
+  <string name="action_cancel">Otkaži</string>
+  <string name="login_btn">Prijavi se</string>
+  <string name="register_btn">Registriraj se</string>
+  <string name="username">Korisničko ime</string>
+  <string name="email_username">Email ili Korisničko ime</string>
+  <string name="password">Lozinka</string>
+  <string name="emailAddress">Email adresa</string>
+  <string name="confirmpassword">Potvrdi lozinku</string>
+  <string name="logout">Odjavi se</string>
+  <string name="account_details">Detalji o računu</string>
+  <string name="LoginActivityName">Dobrodošli</string>
+  <string name="user_dead_title">Mrtav/va si!</string>
+  <string name="user_dead_mess">Nisi bio dovoljno oprezan i izgubio si se između nekih loših navika i nekih teških Dailyja.
+       Oživjet ćeš, ali pasti za jednu razinu, svoje zlato i nasumičan komad opreme.
+        Pokušaj biti oprezniji sa svojim dailiesima i riješi onebloše navike!</string>
+  <string name="string_revive">Oživi</string>
+  <string name="please_connect">Molimo spojite se kroz aplikaciju prije korištenja widgeta</string>
+  <string name="about.title">O nama</string>
+  <string name="about.libraries">Knjižnice</string>
+  <string name="about.versionhistory">Povijest verzija</string>
+  <string name="about.habitica_open_source">Habitica je dostupna u obliku otvorenog izvora na Githubu</string>
+  <string name="about.rate_our_app">Ocijeni našu Aplikaciju</string>
+  <string name="about.give_us_feedback">Pošalji nam povratnu informaciju</string>
+  <string name="about.bugreport">Prijavi grešku</string>
+  <string name="about.source_code">Izvorni Kod</string>
+  <!--Network Errors-->
+  <string name="network_error_title">Greška u vezi</string>
+  <string name="network_error_no_network_body">Niste spojeni s Internetom</string>
+  <string name="internal_error_api">Čini se da postoji problem sa serverom. Pokušajte ponovno kasnije.</string>
+  <string name="authentication_error_title">Autentikacijska Greška</string>
+  <string name="authentication_error_body">Tvoje Korisničko ime i/ili Lozinku nisu točni.</string>
+  <string name="login_validation_error_title">Greška u potvrdi</string>
+  <string name="login_validation_error_fieldsmissing">Morate ispuniti sva polja</string>
+  <string name="save_changes">Spremi</string>
+  <string name="notes">Bilješke</string>
+  <string name="text">Tekst</string>
+  <string name="difficulty">Težina</string>
+  <string name="tags">Oznake</string>
+  <string name="trivial">Jako lagano</string>
+  <string name="easy">Lagano</string>
+  <string name="medium">Srednje</string>
+  <string name="hard">Teško</string>
+  <string name="start_date">Početni Datum</string>
+  <string name="positive_habit_form">Pozitivno ( + )</string>
+  <string name="negative_habit_form">Negativno ( - )</string>
+  <string name="checklist">Spisak</string>
+  <string name="actions">Akcije</string>
+  <string name="attributes">Atributi</string>
+  <string name="physical">Fizičke</string>
+  <string name="mental">Mentalne</string>
+  <string name="social">Socijalno</string>
+  <string name="other">Drugo</string>
+  <string name="frequency">Učestalost</string>
+  <string name="frequency_weekly">Na Određene dane u tjednu</string>
+  <string name="frequency_daily">Svakih X dana</string>
+  <string name="monday">Ponedjeljak</string>
+  <string name="tuesday">Utorak</string>
+  <string name="wednesday">Srijeda</string>
+  <string name="thursday">Četvrtak</string>
+  <string name="friday">Petak</string>
+  <string name="saturday">Subota</string>
+  <string name="sunday">Nedjelja</string>
+  <string name="levelup_header">Prešao/la si na višu razinu!</string>
+  <string name="levelup_detail">Postizajući svoje ciljeve, došao/la si na razinu %1$d!</string>
+  <string name="levelup_health">Izliječen/a si!</string>
+  <string name="levelup_button">Hura!</string>
+  <string name="faint_subtitle">Ne očajavaj!</string>
+  <string name="faint_penalty_body">Pao/la si Razinu, izgubio/la Zlato i komad Opreme, ali možeš sve to vratiti ako se potrudiš! Sretno--proć ćeš super.</string>
+  <string name="faint_header">Ostao/la si bez života</string>
+  <string name="faint_button"><![CDATA[Napuni život i pokušaj ponovno]]></string>
+  <string name="filter">Filtriraj</string>
+  <string name="profile_image">Profilna Slika</string>
+  <string name="mana_price_button" formatted="false">%d MP</string>
+  <string name="used_skill" formatted="false">Iskoristio si %1$s za %2$d mane.</string>
+  <string name="new_checklist_item">Novi predmet na spisku</string>
+  <string name="add_checklist_item">Dodaj</string>
+  <string name="reminder_title">Sjeti se označiti Dailiese</string>
+  <string name="skill_progress_title">Koristeći Vještinu</string>
+  <string name="coming_soon">Dolazi Uskoro</string>
+  <string name="chat_flag_confirmation">Jeste li sigurni da želite prijaviti ovu poruku kao neprikladnu?</string>
+  <string name="flag_confirm">Označi Poruku</string>
+  <string name="unlock_lvl_11">Otključano na razini 11</string>
+  <string name="no_party_message">Nisi u grupi. Za pridruživanje grupi, posjetite stranicu.</string>
+  <string name="forgot_pw_btn">Zaboravili Lozinku</string>
+  <string name="forgot_pw_tv">Zaboravili Lozinku? Molimo koristite mobilnu Stranicu.</string>
+  <string name="tavern.inn.checkOut">Odjavi se iz Krčme</string>
+  <string name="tavern.inn.rest">Odmaraj se u Krčmi</string>
+  <string name="reward.dialog.buy">Kupi</string>
+  <string name="reward.dialog.dismiss">Zanemari</string>
+  <string name="party">Partija</string>
+  <string name="chat">Chat</string>
+  <string name="members">Članovi</string>
+  <string name="habits">Navike</string>
+  <string name="dailies">Dailies</string>
+  <string name="todos">Todos</string>
+  <string name="rewards">Nagrade </string>
+  <string name="taskform.delete.title">Jeste li sigurni?</string>
+  <string name="taskform.delete.message">Želite li stvarno izbrisati?</string>
+  <string name="yes">Da</string>
+  <string name="no">Ne</string>
+  <string name="quest">Pothvat</string>
+  <string name="avatar_body">Tijelo</string>
+  <string name="avatar_hair">Kosa</string>
+  <string name="avatar_shirt">Majica</string>
+  <string name="avatar_skin">Koža</string>
+  <string name="avatar_ears">Životinjske Uši</string>
+  <string name="avatar_base">Baza</string>
+  <string name="avatar_color">Boja</string>
+  <string name="avatar_beard">Brada</string>
+  <string name="avatar_mustache">Brkovi</string>
+  <string name="avatar_flower">Cvijet</string>
+  <string name="avatar_bangs">Šiške</string>
+  <string name="avatar_nothing">Ništa</string>
+  <string name="avatar_size">Veličina</string>
+  <string name="avatar_size_slim">Vitko</string>
+  <string name="avatar_size_broad">Široko</string>
+  <string name="avatar_background">Pozadina</string>
+  <string name="purchase_customization">Kupi Prilagodbe</string>
+  <string name="purchase_set_button" formatted="false">Otključaj set za %d dragulja</string>
+  <string name="purchase_button">Kupi</string>
+  <string name="purchase_set_title" formatted="false">Kupi set %s</string>
+  <string name="due_date">Do Dana</string>
+  <string name="quest.accept">Prihvati </string>
+  <string name="quest.reject">Odbij</string>
+  <string name="quest.begin">Započni Pothvat</string>
+  <string name="quest.cancel">Otkaži Pozivnicu</string>
+  <string name="quest.abort">Otkaži Pothvat</string>
+  <string name="quest.leave">Otkaži Pothvat</string>
+  <string name="quest.pending">Čeka se</string>
+  <string name="quest.accepted">Prihvaćeno</string>
+  <string name="quest.rejected">Odbijeno</string>
+  <string name="quest.participants">Sudionici </string>
+  <string name="version_info" formatted="false">Verzija %s (%d)</string>
+  <string name="sidebar_help">Pomoć &amp; Često Postavljena Pitanja</string>
+  <string name="complete_tutorial">Razumijem!</string>
+  <string name="dismiss_tutorial">Podsjeti me ponovno</string>
+  <string name="intro_1_title">Dobrodošli u Habiticu</string>
+  <string name="intro_1_description">Pridruži se preka 1,100,000 ljudi koji se zabavljaju dok rješavaju stvari. Stvori avatara i prati svoje zadatke u stvarnom životu.</string>
+  <string name="intro_2_title">Napredak u Igri = Napredak u Životu </string>
+  <string name="intro_2_description">Otključaj nove mogućnosti u igri označavanjem napravljenih zadataka u stvarnom životu. Zaradi oklope, ljubimce i više nagrada za ispunjavanje ciljeva!</string>
+  <string name="intro_3_title">Postani društven i bori se protiv Čudovišta</string>
+  <string name="intro_3_description">Drži svoje ciljeve na stazi uz pomoć prijatelja. Podržavajte se u bitci i životu te tako napredujte zajedno!</string>
+  <string name="intro_finish_button">Započni</string>
+  <string name="previous_button">Prijašnje</string>
+  <string name="next_button">Dalje</string>
+  <string name="skip_button">Preskoči</string>
+  <string name="setup_welcome_description">Dobrodošli u Habiticu, gdje će napredak u igri poboljšati tvoj stvarni život! Kako postižeš ciljeve u stvarnom svijetu, otključat ćeš opremu, ljubimce, pothvate i više.</string>
+  <string name="setup_welcome_title">Dobrodošli </string>
+  <string name="avatar_setup_description">Prvo, trebaš avatara u igri da te predstavlja! Stvari koje radiš u stvarnom životu utjecat će na avatarov život, iskustvo, razinu i zlato.</string>
+  <string name="task_setup_description">Izvrsno! Sada ajmo namjestiti tvoje zadatke tako da možeš početi zarađivati iskustvo i zlato.
+
+Za početak, koje djelove života želiš poboljšati?</string>
+  <string name="setup_group_work">Posao</string>
+  <string name="setup_group_exercise">Vježbanje</string>
+  <string name="setup_group_heathWellness">Zdravlje i Wellness</string>
+  <string name="setup_group_school">Školu</string>
+  <string name="setup_group_teams">Timove </string>
+  <string name="setup_group_chores">Kućanske poslove</string>
+  <string name="setup_group_creativity">Kreativnost</string>
+  <string name="setup_task_work_1">Obradi email</string>
+  <string name="setup_task_work_2">Najvažniji zadatak</string>
+  <string name="setup_task_work_3">Radni Projekt</string>
+  <string name="setup_task_exercise_1">10 min. cardio</string>
+  <string name="setup_task_exercise_2">Istezanje</string>
+  <string name="setup_task_exercise_3">Namjesti raspored vježbanja </string>
+  <string name="setup_task_healthWellness_1">Jedi zdravu / nezdravu hranu</string>
+  <string name="setup_task_healthWellness_2">Očisti zube koncem</string>
+  <string name="setup_task_healthWellness_3">Provjeri raspored </string>
+  <string name="setup_task_school_1">Uči/Odugovlači</string>
+  <string name="setup_task_school_2">Napravi Zadaću</string>
+  <string name="setup_task_school_3">Završi zadatak za razred</string>
+  <string name="setup_task_teams_1">Prijavi se u tim</string>
+  <string name="setup_task_teams_2">Ažuriraj tim na statusu </string>
+  <string name="setup_task_teams_3">Završi timski projekt</string>
+  <string name="setup_task_chores_1">10 minuta čišćenja</string>
+  <string name="setup_task_chores_2">Operi Suđe</string>
+  <string name="setup_task_chores_3">Organiziraj ormar</string>
+  <string name="setup_task_creativity_1">Uči majstora vještine</string>
+  <string name="setup_task_creativity_2">Radi na kreativnom projektu </string>
+  <string name="setup_task_creativity_3">Završi kreativni projekt</string>
+  <string name="gem.purchase.support">Želiš nam pomoći u razvoju Habitice? Možeš podržati razvijače kupujući dragulje!\n\nDragulji ti dopuštaju da kupiš zabavne dodatke za svoj račun, uključujući: \n\n - Kul kostimebza svog avatara\n - Zakon pozadine\n - Zabavne pothvate koji te nagrade s jajima ljubimaca\n - Sposobnost da promijeniš klasu prije razine 100\n\nHvala ti puno za pomaganje da Habiticu učinimo najboljom što može biti. Tvoja potpora nam znači puno!</string>
+  <string name="my_guilds">Moji Cehovi</string>
+  <string name="public_guilds">Javni Cehovi</string>
+  <string name="guild">Ceh</string>
+  <string name="leave">Otiđi</string>
+  <string name="join">Pridruži se</string>
+  <string name="leader">Vođa</string>
+  <string name="gems">Dragulji</string>
+  <string name="copy_as_todo">Kopiraj kao ToDo</string>
+  <string name="send_pm">Pošalji PM</string>
+  <string name="flag">Označi</string>
+  <string name="delete">Izbriši</string>
+  <string name="name">Ime</string>
+  <string name="description">Opis</string>
+  <string name="add_tag">Dodaj oznaku</string>
+  <string name="privacy">Privatnost </string>
+  <string name="write_message">Napiši Poruku</string>
+  <string name="post">Objavi</string>
+  <string name="todo_due" formatted="false">Do: %s</string>
+  <string name="daily_streak" formatted="false">Trenutni niz: %d</string>
+  <string name="todo_has_duedate">Zadatak ima Rok Do</string>
+  <string name="battle_gear">Borbena Oprema</string>
+  <string name="costume">Kostim</string>
+  <string name="outfit_head">Glava</string>
+  <string name="outfit_headAccessory">Odjeća za glavu</string>
+  <string name="outfit_eyewear">Naočale</string>
+  <string name="outfit_armor">Oklop </string>
+  <string name="outfit_back">Natrag</string>
+  <string name="outfit_body">Tijelo</string>
+  <string name="outfit_shield">Štit</string>
+  <string name="outfit_weapon">Oružje</string>
+  <string name="wear_costume">Nosi Kostim </string>
+  <string name="equipped">Opremljeno</string>
+  <string name="quest_cancel_message">Jesi li siguran da želiš otkazati ovaj pothvat? Svi prihvati pozivnica će biti izgubljeni. Vlasnik pothvata će dobiti natrag svitak Pothvata</string>
+  <string name="quest.invitation">Pozivnica za Pothvat</string>
+  <string name="quest_begin_message">Jesi li siguran da želiš započeti pothvat? Jednom kad je aktivan, članovi grupe se ne mogu pridružiti.</string>
+  <string name="quest.invitation.text">Pozvani ste na sudjelovanje u pothvatu!</string>
+  <string name="ago_1day">Prije 1 dan</string>
+  <string name="ago_days" formatted="false">Prije %d dana </string>
+  <string name="ago_1Minute">Prije 1 minute </string>
+  <string name="ago_minutes" formatted="false">Prije %d minuta</string>
+  <string name="ago_hours" formatted="false">Prije %d sati</string>
+  <string name="ago_1hour">Prije 1 sat</string>
+  <string name="today">Danas</string>
+  <string name="sidebar_items">Predmeti</string>
+  <string name="eggs">Jaja</string>
+  <string name="hatching_potions">Napitci za jaja</string>
+  <string name="food">Hrana</string>
+  <string name="quests">Pothvati </string>
+  <string name="pets">Ljubimci</string>
+  <string name="mounts">Životinje za jahanje</string>
+  <string name="armoireEquipment" formatted="false">Našao si komad rijetke Opreme u Ormaru: %s!! Zakon!</string>
+  <string name="armoireExp">Hrvaš se s Ormarom i zarađuješ iskustvo. Evo ti ovo!</string>
+  <string name="armoireNotesFull" formatted="false">Otvori Ormar za nasumično dobivanje Opreme, Iskustva ili hrane! Ostalo komada opreme: %d</string>
+  <string name="armoireLastItem">Našao si zadnji komad rijetke Opreme u Začaranom Ormaru.</string>
+  <string name="armoireNotesEmpty">Ormar će dobiti novu opremu u prvom tjednu svakog mjeseca. Do tada, nastavi klikati za Iskustvo i Hranu!</string>
+  <string name="sell" formatted="false">Prodaj(%s Zlata) </string>
+  <string name="hatch_with_potion">Izlegni s napitkom</string>
+  <string name="feed_to_pet">Nahrani ljubimca</string>
+  <string name="hatch_egg">Izlegni s jajetom</string>
+  <string name="invite_party">Pozovi grupu</string>
+  <string name="dialog_feeding" formatted="false">Nahrani %s sa</string>
+  <string name="use_animal">Koristi</string>
+  <string name="feed">Nahrani</string>
+  <string name="hatch_with" formatted="false">Izlegni ljubimca sa %s</string>
+  <string name="close">Zatvori</string>
+  <string name="share">Podijeli</string>
+  <string name="notification_pet_fed" formatted="false">Hraniš svog/svoju %s!</string>
+  <string name="notification_purchase" formatted="false">%s je kupljen/a</string>
+</resources>

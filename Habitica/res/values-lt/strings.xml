@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Neigiamas ( - )</string>
   <string name="checklist">Sąrašas</string>
   <string name="actions">Veiksmai</string>
+  <string name="attributes">Savybės</string>
+  <string name="physical">Fizinė</string>
+  <string name="mental">Protinė</string>
+  <string name="social">Socialinė</string>
+  <string name="other">Kita</string>
   <string name="frequency">Dažnumas</string>
   <string name="frequency_weekly">Specifinėmis Savaitės Dienomis</string>
   <string name="frequency_daily">Kas X Dienų</string>
@@ -246,5 +251,30 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="ago_minutes" formatted="false">prieš %d minutę(es)</string>
   <string name="ago_hours" formatted="false">prieš %d valandą(as)</string>
   <string name="ago_1hour">prieš 1 valandą</string>
-  <string name="today">šiandien</string>
+  <string name="today">Šiandien</string>
+  <string name="sidebar_items">Daiktai</string>
+  <string name="eggs">Kiaušiniai</string>
+  <string name="hatching_potions">Perėjimosi Eliksyrai</string>
+  <string name="food">Maistas</string>
+  <string name="quests">Misijos</string>
+  <string name="pets">Maži Augintiniai</string>
+  <string name="mounts">Suaugę Augintiniai</string>
+  <string name="armoireEquipment" formatted="false">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
+  <string name="armoireExp">Besigrumiant su Drabužine, gauni patirties!</string>
+  <string name="armoireNotesFull" formatted="false">Atidaryk Drabužinę ir gauk retos Aprangos dalį, Patirties ar maisto! Nerasto aprangos dalys: %d</string>
+  <string name="armoireLastItem">Radai paskutinę retos aprangos dalį Užburtoje Drabužinėje.</string>
+  <string name="armoireNotesEmpty">Drabužinėje atsiranda naujų daiktų pirmą kiekvieno mėnesio savaitę. Iki tol, gali toliau joje ieškoti Patirties ir Maisto!</string>
+  <string name="sell" formatted="false">Parduoti (%s Augso)</string>
+  <string name="hatch_with_potion">Užauginti su eliksyru</string>
+  <string name="feed_to_pet">Maitinti Gyvūnui</string>
+  <string name="hatch_egg">Išperėti kiaušinį</string>
+  <string name="invite_party">Pakviesti Grupę</string>
+  <string name="dialog_feeding" formatted="false">Pamaitinti %s su </string>
+  <string name="use_animal">Panaudoti</string>
+  <string name="feed">Maitinti</string>
+  <string name="hatch_with" formatted="false">Užauginti gyvūną su %s</string>
+  <string name="close">Uždaryti</string>
+  <string name="share">Dalintis</string>
+  <string name="notification_pet_fed" formatted="false">Pamaitinai savo %s!</string>
+  <string name="notification_purchase" formatted="false">%s nupirkta</string>
 </resources>

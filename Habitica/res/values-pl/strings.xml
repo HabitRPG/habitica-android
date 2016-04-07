@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Negatywne ( - )</string>
   <string name="checklist">Lista</string>
   <string name="actions">Akcje</string>
+  <string name="attributes">Atrybuty</string>
+  <string name="physical">Fizyczne</string>
+  <string name="mental">Umysłowe</string>
+  <string name="social">Społeczne</string>
+  <string name="other">Pozostałe</string>
   <string name="frequency">Częstotliwość</string>
   <string name="frequency_weekly">W konkretne dni tygodnia</string>
   <string name="frequency_daily">Co X dni</string>
@@ -147,8 +152,16 @@
   <string name="due_date">Termin</string>
   <string name="quest.accept">Akceptuj</string>
   <string name="quest.reject">Odrzuć</string>
+  <string name="quest.begin">Rozpocznij Quest</string>
+  <string name="quest.cancel">Anuluj Zaproszenie</string>
+  <string name="quest.abort">Przerwij Quest</string>
   <string name="quest.leave">Opuść Misję</string>
+  <string name="quest.pending">Oczekujące</string>
+  <string name="quest.accepted">Zaakceptowane</string>
+  <string name="quest.rejected">Odrzucone</string>
+  <string name="quest.participants">Uczestnicy</string>
   <string name="version_info" formatted="false">Wersja %s (%d)</string>
+  <string name="sidebar_help">Pomoc i FAQ</string>
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
@@ -213,5 +226,30 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="privacy">Prywatność</string>
   <string name="write_message">Napisz wiadomość</string>
   <string name="post">Wyślij</string>
+  <string name="todo_due" formatted="false">Termin: %s</string>
+  <string name="daily_streak" formatted="false">licznik serii: %d</string>
+  <string name="todo_has_duedate">Zdania mają termin wykonania</string>
+  <string name="battle_gear">Sprzęt Bojowy</string>
+  <string name="costume">Kostium</string>
+  <string name="outfit_head">Głowa</string>
+  <string name="outfit_headAccessory">Nakrycie Głowy</string>
+  <string name="outfit_eyewear">Na oczy</string>
+  <string name="outfit_armor">Zbroja</string>
+  <string name="outfit_back">Plecy</string>
+  <string name="outfit_body">Postura</string>
+  <string name="outfit_shield">Tarcza</string>
+  <string name="outfit_weapon">Broń</string>
+  <string name="wear_costume">Użyj kostiumu</string>
+  <string name="equipped">W użyciu</string>
+  <string name="quest_cancel_message">Jesteś pewien że chcesz przerwać quest? Quest zostanie przerwany dla wszystkich uczestników. Zwołujący quest odzyska skrypt (quest scroll).</string>
+  <string name="quest.invitation">Zaproszenie do questa.</string>
+  <string name="quest_begin_message">Czy jesteś pewien, ze chcesz zacząć misję? Gdy zostanie aktywowana, żaden dodatkowy członek drużyny nie będzie mógł do niej dołączyc.</string>
+  <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
+  <string name="ago_1day">1 dzień temu</string>
+  <string name="ago_days" formatted="false">%d dni temu</string>
+  <string name="ago_1Minute">1 minutę temu</string>
+  <string name="ago_minutes" formatted="false">%d minut temu</string>
+  <string name="ago_hours" formatted="false">%d godzin temu</string>
+  <string name="ago_1hour">1 godzinę temu</string>
   <string name="today">Dzisiaj</string>
 </resources>

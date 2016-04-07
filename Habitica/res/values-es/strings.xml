@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Negativo ( - )</string>
   <string name="checklist">Listado</string>
   <string name="actions">Acciones</string>
+  <string name="attributes">Atributos</string>
+  <string name="physical">Físico</string>
+  <string name="mental">Mental</string>
+  <string name="social">Social</string>
+  <string name="other">Otros</string>
   <string name="frequency">Frecuencia</string>
   <string name="frequency_weekly">Ciertos días de la semana</string>
   <string name="frequency_daily">Cada X días</string>

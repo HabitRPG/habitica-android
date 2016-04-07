@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Negativa ( - )</string>
   <string name="checklist">Checklist</string>
   <string name="actions">Azioni</string>
+  <string name="attributes">Attributi</string>
+  <string name="physical">Fisica</string>
+  <string name="mental">Mentale</string>
+  <string name="social">Sociale</string>
+  <string name="other">Altro</string>
   <string name="frequency">Frequenza</string>
   <string name="frequency_weekly">Certi giorni della settimana</string>
   <string name="frequency_daily">Ogni X giorni</string>
@@ -247,4 +252,20 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="ago_hours" formatted="false">%d ore fa</string>
   <string name="ago_1hour">1 ora fa</string>
   <string name="today">Oggi</string>
+  <string name="sidebar_items">Oggetti</string>
+  <string name="eggs">Uova</string>
+  <string name="hatching_potions">Pozioni di schiusura</string>
+  <string name="food">Cibo</string>
+  <string name="quests">Missioni</string>
+  <string name="pets">Animali</string>
+  <string name="mounts">Cavalcature</string>
+  <string name="sell" formatted="false">Vendi (%s Oro)</string>
+  <string name="feed_to_pet">Dai ad animale</string>
+  <string name="invite_party">Invita squadra</string>
+  <string name="dialog_feeding" formatted="false">Nutri %s con</string>
+  <string name="use_animal">Usa</string>
+  <string name="close">Chiudi</string>
+  <string name="share">Condividi</string>
+  <string name="notification_pet_fed" formatted="false">Hai nutrito il tuo %s!</string>
+  <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
 </resources>

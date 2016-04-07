@@ -75,6 +75,11 @@
   <string name="negative_habit_form">Negativo ( + )</string>
   <string name="checklist">Lista de controle</string>
   <string name="actions">Ações</string>
+  <string name="attributes">Atributos</string>
+  <string name="physical">Físico</string>
+  <string name="mental">Mental</string>
+  <string name="social">Social</string>
+  <string name="other">Outro</string>
   <string name="frequency">Frequência</string>
   <string name="frequency_weekly">Em Certos Dias da Semana</string>
   <string name="frequency_daily">Todos x Dias</string>
@@ -247,4 +252,29 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="ago_hours" formatted="false">%d horas atrás</string>
   <string name="ago_1hour">1 hora atrás</string>
   <string name="today">Hoje</string>
+  <string name="sidebar_items">Itens</string>
+  <string name="eggs">Ovos</string>
+  <string name="hatching_potions">Poções Incubadoras</string>
+  <string name="food">Comida</string>
+  <string name="quests">Missões</string>
+  <string name="pets">Animais de estimação</string>
+  <string name="mounts">Montarias</string>
+  <string name="armoireEquipment" formatted="false">Você encontrou uma peça de um Equipamento raro no Armário: %s Incrível!</string>
+  <string name="armoireExp">Você lutou com o Armário e ganhou Experiência. Toma essa!</string>
+  <string name="armoireNotesFull" formatted="false">Abra o Armário para receber aleatoriamente um Equipamento especial, Experiência, ou comida! Peças de Equipamentos restantes: %d</string>
+  <string name="armoireLastItem">Você encontrou a ultima peça de um Equipamento raro no Armário Encantado.</string>
+  <string name="armoireNotesEmpty">O Armário terá novos Equipamentos na primeira semana de cada mês. Até lá, continue clicando para Experiência e Comida!</string>
+  <string name="sell" formatted="false">Vender (%s Ouro)</string>
+  <string name="hatch_with_potion">Chocar com poção</string>
+  <string name="feed_to_pet">Alimentar mascote</string>
+  <string name="hatch_egg">Chocar com ovo</string>
+  <string name="invite_party">Convidar equipe</string>
+  <string name="dialog_feeding" formatted="false">Alimentar %s com</string>
+  <string name="use_animal">Usar</string>
+  <string name="feed">Alimentar</string>
+  <string name="hatch_with" formatted="false">Chocar mascote com %s</string>
+  <string name="close">Fechar</string>
+  <string name="share">Compartilhar</string>
+  <string name="notification_pet_fed" formatted="false">Você alimentou seu %s!</string>
+  <string name="notification_purchase" formatted="false">%s foi comprado</string>
 </resources>

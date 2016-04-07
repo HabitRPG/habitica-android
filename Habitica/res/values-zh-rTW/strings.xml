@@ -75,6 +75,11 @@
   <string name="negative_habit_form">負面的(-)</string>
   <string name="checklist">檢核表</string>
   <string name="actions">動作</string>
+  <string name="attributes">屬性</string>
+  <string name="physical">物理的</string>
+  <string name="mental">心理的</string>
+  <string name="social">社會的</string>
+  <string name="other">其他</string>
   <string name="frequency">頻率</string>
   <string name="frequency_weekly">每周中的特定日期</string>
   <string name="frequency_daily">每x日</string>

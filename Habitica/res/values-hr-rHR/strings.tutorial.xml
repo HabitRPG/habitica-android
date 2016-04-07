@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="tutorial_habits">Izvršavaj Pozitivne navike  i tako zaradi zlato i iskustvo. Negativne navike će ozlijediti tvog avatara ako ih klikneš, tako da ih izbjegni u stvarnom životu!</string>
+  <string name="tutorial_dailies">Porazi svoje ponavljajuće svakodnevne zadatke da zaradiš zlato i iskustvo. Oprez! Dailiesi će ozlijediti tvog avatara ako ih ne dovršiš na vrijeme.</string>
+  <string name="tutorial_todos">Izvrši svoje To-Do-ove u stvarnom životu, a zatim ih označi za ZLATO i ISKUSTVO da zaradiš Nagrade i otključaš nove sadržaje!</string>
+  <string name="tutorial_rewards">Ovo su tvoje Nagrade! Zaradi zlato izvršavajući Navike, Dailiese i To-Do-ove u stvarnom svijetu. Zatim ga potroši na Nagrade u igrici ili Nagrade u stvarnom svijetu!</string>
+  <string name="tutorial_equipment">Kada kupiš opremu, pojavit će se ovdje. Tvoja Ratna oprema utječe na tvoje statistike, a tvoj kostim (ako je uključen) utječe na ono što tvoj avatar nosi.</string>
+  <string name="tutorial_items">Zaradi predmete izvršavanjem zadataka i prelaženjem na višu razinu. Klikni na predmet da ga iskoristiš!</string>
+  <string name="tutorial_pets">Kako izvršavaš zadatke u stvarnom svijetu, sada imaš nasumičnu šansu za pronalazak jaja i napitaka. Kombiniraj ih te izlegni ljubimce</string>
+  <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
+  <string name="tutorial_party">Ovo je mjesto gdje se ti i tvoji prijatelji možete držati svojih ciljeva i boriti protiv čudovišta preko svojih zadataka!</string>
+  <string name="tutorial_tavern">Dobrodošao u Krčmu, javni, svegodišnji chat! Ovdje možeš razgovarati o produktivnosti i postavljati pitanja. Dobru zabavu!</string>
+  <string name="tutorial_classes">Izaberi hoćeš li poatati Ratnik, Čarobnjak, Iscjelitelj ili Odmetnik! Svaka klasa ima jedinstvenu opremu i vještine. Klikni na (?) i saznaj više!</string>
+</resources>

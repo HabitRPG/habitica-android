@@ -282,7 +282,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="mounts">Mounts</string>
 
     <string name="armoireEquipment" formatted="false">You found a piece of rare Equipment in the Armoire: %s! Awesome!</string>
-    <string name="armoireFood" formatted="false">You rummage in the Armoire and find %s %s. What\'s that doing in here?</string>
+    <string name="armoireFood" formatted="false">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="armoireNotesFull" formatted="false">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
     <string name="armoireLastItem">You\'ve found the last piece of rare Equipment in the Enchanted Armoire.</string>
@@ -296,7 +296,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="use_animal">Use</string>
     <string name="feed">Feed</string>
     <string name="hatch_with" formatted="false">Hatch pet with %s</string>
-    <string name="hatched_pet_title" formatted="false">You hatched a %s %s!</string>
+    <string name="hatched_pet_title" formatted="false">You hatched a %1$s %2$s!</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
     <string name="notification_pet_fed" formatted="false">You fed your %s!</string>
