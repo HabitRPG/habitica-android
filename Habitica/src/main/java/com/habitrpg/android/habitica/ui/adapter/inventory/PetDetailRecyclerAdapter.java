@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,18 +149,17 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             if (!this.isMountOwned()) {
                 menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
             }
-            menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
-                @Override
-                public void selectedItemAt(Integer index) {
-                    if (index == 0) {
-                        EquipCommand event = new EquipCommand();
-                        event.type = "pet";
-                        event.key = animal.getKey();
-                    } else if (index == 1) {
-                        FeedCommand event = new FeedCommand();
-                        event.usingPet = animal;
-                        EventBus.getDefault().post(event);
-                    }
+            menu.setSelectionRunnable(index -> {
+                Log.e("EEEEEEE", index.toString());
+                if (index == 0) {
+                    EquipCommand event = new EquipCommand();
+                    event.type = "pet";
+                    event.key = animal.getKey();
+                    EventBus.getDefault().post(event);
+                } else if (index == 1) {
+                    FeedCommand event = new FeedCommand();
+                    event.usingPet = animal;
+                    EventBus.getDefault().post(event);
                 }
             });
             menu.show();

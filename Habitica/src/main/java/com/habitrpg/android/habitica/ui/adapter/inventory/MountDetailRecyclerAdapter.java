@@ -120,14 +120,12 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
-                @Override
-                public void selectedItemAt(Integer index) {
-                    if (index == 0) {
-                        EquipCommand event = new EquipCommand();
-                        event.type = "mount";
-                        event.key = animal.getKey();
-                    }
+            menu.setSelectionRunnable(index -> {
+                if (index == 0) {
+                    EquipCommand event = new EquipCommand();
+                    event.type = "mount";
+                    event.key = animal.getKey();
+                    EventBus.getDefault().post(event);
                 }
             });
             menu.show();
