@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.amplitude.api.Amplitude;
@@ -40,7 +42,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by Negue on 14.06.2015.
  */
-public class HabiticaApplication extends Application {
+public class HabiticaApplication extends MultiDexApplication {
 
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
     public static HabitRPGUser User;
