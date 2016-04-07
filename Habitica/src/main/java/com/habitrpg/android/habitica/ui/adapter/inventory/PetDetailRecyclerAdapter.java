@@ -33,6 +33,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
     private List<Pet> itemList;
     private HashMap<String, Integer> ownedMapping;
+    private HashMap<String, Boolean> ownedMountMapping;
     public String itemType;
 
     public Context context;
@@ -44,6 +45,11 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
     public void setOwnedMapping(HashMap<String, Integer> map) {
         this.ownedMapping = map;
+        this.notifyDataSetChanged();
+    }
+
+    public void setOwnedMountsMapping(HashMap<String, Boolean> map) {
+        this.ownedMountMapping = map;
         this.notifyDataSetChanged();
     }
 
@@ -94,7 +100,16 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
         public Boolean  isOwned() {
             if (ownedMapping != null && animal != null) {
-                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey()) > 0) {
+                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey()) != 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Boolean isMountOwned() {
+            if (ownedMountMapping != null && animal != null) {
+                if (ownedMountMapping.containsKey(animal.getKey()) && ownedMountMapping.get(animal.getKey())) {
                     return true;
                 }
             }
@@ -107,7 +122,11 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             this.trainedProgressbar.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (this.isOwned()) {
-                this.trainedProgressbar.setProgress(ownedMapping.get(item.getKey()));
+                if (this.isMountOwned()) {
+                    this.trainedProgressbar.setVisibility(View.GONE);
+                } else {
+                    this.trainedProgressbar.setProgress(ownedMapping.get(item.getKey()));
+                }
                 DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
             } else {
                 this.trainedProgressbar.setVisibility(View.GONE);
@@ -123,7 +142,9 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
+            if (!this.isMountOwned()) {
+                menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
+            }
             menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
                 @Override
                 public void selectedItemAt(Integer index) {

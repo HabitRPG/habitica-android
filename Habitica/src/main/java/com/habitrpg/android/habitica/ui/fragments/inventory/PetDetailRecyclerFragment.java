@@ -111,6 +111,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
                 adapter.setItemList(items);
                 animals = items;
                 adapter.setOwnedMapping(user.getItems().getPets());
+                adapter.setOwnedMountsMapping(user.getItems().getMounts());
             }
         };
         itemsRunnable.run();
@@ -126,5 +127,12 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
             fragment.itemType = "food";
             fragment.show(getFragmentManager(), "feedDialog");
         }
+    }
+
+    @Override
+    public void updateUserData(HabitRPGUser user) {
+        super.updateUserData(user);
+        adapter.setOwnedMapping(user.getItems().getPets());
+        adapter.setOwnedMountsMapping(user.getItems().getMounts());
     }
 }
