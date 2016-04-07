@@ -301,4 +301,12 @@ To start, which parts of your life do you want to improve?</string>
     <string name="share">Share</string>
     <string name="notification_pet_fed" formatted="false">You fed your %s!</string>
     <string name="notification_purchase" formatted="false">%s was purchased</string>
+    <string name="sectionpets">Base Pets</string>
+    <string name="sectionpremiumPets">Magic Potion Pets</string>
+    <string name="sectionquestPets">Quest Pets</string>
+    <string name="sectionspecialPets">Rare Pets</string>
+    <string name="sectionmounts">Base Mounts</string>
+    <string name="sectionpremiumMounts">Magic Potion Mounts</string>
+    <string name="sectionquestMounts">Quest Mounts</string>
+    <string name="sectionspecialMounts">Rare Mounts</string>
 </resources>

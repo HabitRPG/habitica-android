@@ -29,17 +29,20 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Where;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import rx.Observable;
 
 public class StableRecyclerFragment extends BaseFragment {
     public RecyclerView recyclerView;
     public StableRecyclerAdapter adapter;
     public String itemType;
     public HabitRPGUser user;
-    public List<Animal> animals;
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     GridLayoutManager layoutManager = null;
 
@@ -56,6 +59,16 @@ public class StableRecyclerFragment extends BaseFragment {
             android.support.v4.app.FragmentActivity context = getActivity();
 
             layoutManager = new GridLayoutManager(getActivity(), 2);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (adapter.getItemViewType(position) == 0) {
+                        return layoutManager.getSpanCount();
+                    } else {
+                        return 1;
+                    }
+                }
+            });
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
@@ -109,46 +122,64 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = new Runnable() {
-            @Override
-            public void run() {
-                From from = null;
+        Runnable itemsRunnable = () -> {
+            List<Object> items = new ArrayList<>();
+
+            Where<? extends Animal> query = null;
+            switch (itemType) {
+                case "pets":
+                    query = new Select().from(Pet.class).orderBy(true, "animalGroup", "animal", "color");
+                    break;
+                case "mounts":
+                    query = new Select().from(Mount.class).orderBy(true, "animalGroup", "animal", "color");
+                    break;
+            }
+            if (query == null) {
+                return;
+            }
+            List<? extends Animal> unsortedAnimals = query.queryList();
+            if (unsortedAnimals.size() == 0) {
+                return;
+            }
+            String lastSectionTitle = "";
+
+            Animal lastAnimal = unsortedAnimals.get(0);
+            for (Animal animal : unsortedAnimals) {
+                if (!animal.getAnimal().equals(lastAnimal.getAnimal())) {
+                    if (!((lastAnimal.getAnimalGroup().equals("premiumPets") || lastAnimal.getAnimalGroup().equals("specialPets")
+                            || lastAnimal.getAnimalGroup().equals("specialMounts"))
+                            && lastAnimal.getNumberOwned() == 0)) {
+                        items.add(lastAnimal);
+                    }
+                    lastAnimal = animal;
+                }
+                if (!animal.getAnimalGroup().equals(lastSectionTitle)) {
+                    if (items.size() > 0 && items.get(items.size()-1).getClass().equals(String.class)) {
+                        items.remove(items.size()-1);
+                    }
+                    items.add(animal.getAnimalGroup());
+                    lastSectionTitle = animal.getAnimalGroup();
+                }
                 switch (itemType) {
                     case "pets":
-                        from = new Select().from(Pet.class);
+                        if (user.getItems().getPets().containsKey(animal.getKey()) && user.getItems().getPets().get(animal.getKey()) != null) {
+                            if (lastAnimal.getNumberOwned() == 0) {
+                                lastAnimal.setColor(animal.getColor());
+                            }
+                            lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
+                        }
                         break;
                     case "mounts":
-                        from = new Select().from(Mount.class);
+                        if (user.getItems().getMounts().containsKey(animal.getKey()) && user.getItems().getMounts().get(animal.getKey()) != null) {
+                            if (lastAnimal.getNumberOwned() == 0) {
+                                lastAnimal.setColor(animal.getColor());
+                            }
+                            lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
+                        }
                         break;
                 }
-
-                if (from != null) {
-                    List<Animal> items = from.where().orderBy(true, "animalGroup", "animal").groupBy("animal").queryList();
-                    adapter.setItemList(items);
-                    animals = items;
-                    HashMap<String, Integer> ownedMap = new HashMap<>();
-                    for (Animal animal : animals) {
-                        ownedMap.put(animal.getAnimal(), 0);
-                    }
-                    switch (itemType) {
-                        case "pets":
-                            for (Map.Entry<String, Integer> pet : StableRecyclerFragment.this.user.getItems().getPets().entrySet()) {
-                                if (pet.getValue() > 0) {
-                                    ownedMap.put(pet.getKey().split("-")[0], ownedMap.get(pet.getKey().split("-")[0])+1);
-                                }
-                            }
-                            break;
-                        case "mounts":
-                            for (Map.Entry<String, Boolean> mount : StableRecyclerFragment.this.user.getItems().getMounts().entrySet()) {
-                                if (mount.getValue()) {
-                                    ownedMap.put(mount.getKey().split("-")[0], ownedMap.get(mount.getKey().split("-")[0])+1);
-                                }
-                            }
-                            break;
-                    }
-                    adapter.setOwnedMapping(ownedMap);
-                }
             }
+            adapter.setItemList(items);
         };
         itemsRunnable.run();
 

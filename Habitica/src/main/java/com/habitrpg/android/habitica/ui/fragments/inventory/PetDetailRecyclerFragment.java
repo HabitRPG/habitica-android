@@ -34,6 +34,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     public RecyclerView recyclerView;
     public PetDetailRecyclerAdapter adapter;
     public String animalType;
+    public String animalGroup;
     public List<Pet> animals;
     private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     GridLayoutManager layoutManager = null;
@@ -104,15 +105,14 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = new Runnable() {
-            @Override
-            public void run() {
-                List<Pet> items = new Select().from(Pet.class).where(Condition.column("animal").eq(animalType)).orderBy(true, "color").queryList();
-                adapter.setItemList(items);
-                animals = items;
-                adapter.setOwnedMapping(user.getItems().getPets());
-                adapter.setOwnedMountsMapping(user.getItems().getMounts());
-            }
+        Runnable itemsRunnable = () -> {
+            List<Pet> items = new Select().from(Pet.class).where(Condition.CombinedCondition
+                    .begin(Condition.column("animal").eq(animalType))
+            .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
+            adapter.setItemList(items);
+            animals = items;
+            adapter.setOwnedMapping(user.getItems().getPets());
+            adapter.setOwnedMountsMapping(user.getItems().getMounts());
         };
         itemsRunnable.run();
     }

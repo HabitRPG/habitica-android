@@ -70,6 +70,7 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
@@ -121,8 +122,8 @@ public class APIHelper implements ErrorHandler, Profiler {
         Type foodListType = new TypeToken<List<Food>>() {}.getType();
         Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {}.getType();
         Type questContentListType = new TypeToken<List<QuestContent>>() {}.getType();
-        Type petListType = new TypeToken<List<Pet>>() {}.getType();
-        Type mountListType = new TypeToken<List<Mount>>() {}.getType();
+        Type petListType = new TypeToken<HashMap<String, Pet>>() {}.getType();
+        Type mountListType = new TypeToken<HashMap<String, Mount>>() {}.getType();
 
         //Exclusion stratety needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()

@@ -25,10 +25,10 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ContentDeserializer implements JsonDeserializer<ContentResult> {
-
 
     @Override
     public ContentResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -51,44 +51,71 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         items.addAll(result.food);
         items.addAll(result.hatchingPotions);
 
-        result.pets = context.deserialize(object.get("pets"), new TypeToken<List<Pet>>() {}.getType());
-        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<List<Pet>>() {}.getType());
-        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<List<Pet>>() {}.getType());
-        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<List<Pet>>() {}.getType());
+        result.pets = context.deserialize(object.get("pets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
+        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
+        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
+        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
+        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
+        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
+        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
 
-        for (Pet pet : result.pets) {
+        for (Egg egg : result.eggs) {
+            for (HatchingPotion potion : result.hatchingPotions) {
+                String key = egg.getKey() + "-" + potion.getKey();
+                if (result.pets.containsKey(key)) {
+                    result.pets.put(key, this.populatePet(result.pets.get(key), egg, potion));
+                }
+                if (result.specialPets.containsKey(key)) {
+                    result.specialPets.put(key, this.populatePet(result.specialPets.get(key), egg, potion));
+                }
+                if (result.premiumPets.containsKey(key)) {
+                    result.premiumPets.put(key, this.populatePet(result.premiumPets.get(key), egg, potion));
+                }
+                if (result.questPets.containsKey(key)) {
+                    result.questPets.put(key, this.populatePet(result.questPets.get(key), egg, potion));
+                }
+                if (result.mounts.containsKey(key)) {
+                    result.mounts.put(key, this.popupateMount(result.mounts.get(key), egg, potion));
+                }
+                if (result.specialMounts.containsKey(key)) {
+                    result.specialMounts.put(key, this.popupateMount(result.specialMounts.get(key), egg, potion));
+                }
+                if (result.questMounts.containsKey(key)) {
+                    result.questMounts.put(key, this.popupateMount(result.questMounts.get(key), egg, potion));
+                }
+            }
+        }
+
+        for (Pet pet : result.pets.values()) {
             pet.setAnimalGroup("pets");
             items.add(pet);
         }
-        for (Pet pet : result.specialPets) {
+        for (Pet pet : result.specialPets.values()) {
             pet.setAnimalGroup("specialPets");
             items.add(pet);
         }
-        for (Pet pet : result.premiumPets) {
+        for (Pet pet : result.premiumPets.values()) {
             pet.setAnimalGroup("premiumPets");
             items.add(pet);
         }
-        for (Pet pet : result.questPets) {
+        for (Pet pet : result.questPets.values()) {
             pet.setAnimalGroup("questPets");
             items.add(pet);
         }
 
-        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<List<Mount>>() {}.getType());
-        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<List<Mount>>() {}.getType());
-        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<List<Mount>>() {}.getType());
-
-        for (Mount mount : result.mounts) {
+        for (Mount mount : result.mounts.values()) {
             mount.setAnimalGroup("mounts");
             items.add(mount);
         }
-        for (Mount mount : result.specialMounts) {
+        for (Mount mount : result.specialMounts.values()) {
             mount.setAnimalGroup("specialMounts");
             items.add(mount);
         }
-        for (Mount mount : result.questMounts) {
+        for (Mount mount : result.questMounts.values()) {
             mount.setAnimalGroup("questMounts");
             items.add(mount);
         }
+
 
         result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {}.getType());
 
@@ -106,5 +133,21 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
         TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(items)));
         return result;
+    }
+
+    private Mount popupateMount(Mount mount, Egg egg, HatchingPotion potion) {
+        mount.setAnimalText(egg.getMountText());
+        mount.setColorText(potion.getText());
+        mount.setLimited(potion.getLimited());
+        mount.setPremium(potion.getPremium());
+        return mount;
+    }
+
+    private Pet populatePet(Pet pet, Egg egg, HatchingPotion potion) {
+        pet.setAnimalText(egg.getText());
+        pet.setColorText(potion.getText());
+        pet.setLimited(potion.getLimited());
+        pet.setPremium(potion.getPremium());
+        return pet;
     }
 }

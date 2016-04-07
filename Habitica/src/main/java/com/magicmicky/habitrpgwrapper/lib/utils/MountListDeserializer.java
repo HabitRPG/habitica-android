@@ -12,19 +12,20 @@ import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransact
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MountListDeserializer implements JsonDeserializer<List<Mount>> {
+public class MountListDeserializer implements JsonDeserializer<HashMap<String, Mount>> {
     @Override
-    public List<Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<Mount> vals = new ArrayList<>();
+    public HashMap<String, Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        HashMap<String, Mount> vals = new HashMap<>();
         for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
             Mount pet = new Mount();
             pet.setKey(entry.getKey());
             pet.setAnimal(entry.getKey().split("-")[0]);
             pet.setColor(entry.getKey().split("-")[1]);
-            vals.add(pet);
+            vals.put(entry.getKey(), pet);
         }
 
         return vals;

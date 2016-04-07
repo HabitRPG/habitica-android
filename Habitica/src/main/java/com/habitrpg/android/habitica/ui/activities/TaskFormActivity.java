@@ -58,10 +58,14 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -665,7 +669,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private void populate(Task task) {
         taskText.setText(task.text);
         taskNotes.setText(task.notes);
-        taskValue.setText(String.format("%.2f", task.value));
+        taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
 
         for (TaskTag tt : task.getTags()) {
             int tagNameLocation = tags.indexOf(tt.getTag().getId());
@@ -845,7 +849,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             case "reward": {
                 String value = taskValue.getText().toString();
                 if (!value.isEmpty()) {
-                    task.setValue(Double.parseDouble(value));
+                    NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
+                    try {
+                        task.setValue(localFormat.parse(value).doubleValue());
+                    } catch (ParseException e) {
+                    }
                 } else {
                     task.setValue(0.0d);
                 }

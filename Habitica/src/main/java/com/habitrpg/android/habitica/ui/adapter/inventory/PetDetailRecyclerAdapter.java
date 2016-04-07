@@ -108,6 +108,9 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
         }
 
         public Boolean isMountOwned() {
+            if (animal.getAnimalGroup().equals("specialPets")) {
+                return false;
+            }
             if (ownedMountMapping != null && animal != null) {
                 if (ownedMountMapping.containsKey(animal.getKey()) && ownedMountMapping.get(animal.getKey())) {
                     return true;
@@ -118,7 +121,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
 
         public void bind(Pet item) {
             this.animal = item;
-            this.titleView.setText(item.getColor());
+            this.titleView.setText(item.getColorText());
             this.trainedProgressbar.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (this.isOwned()) {

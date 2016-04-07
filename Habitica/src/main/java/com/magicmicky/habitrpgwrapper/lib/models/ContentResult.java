@@ -27,14 +27,14 @@ public class ContentResult {
     public List<Food> food;
     public List<HatchingPotion> hatchingPotions;
 
-    public List<Pet> pets;
-    public List<Pet> specialPets;
-    public List<Pet> premiumPets;
-    public List<Pet> questPets;
+    public HashMap<String, Pet> pets;
+    public HashMap<String, Pet> specialPets;
+    public HashMap<String, Pet> premiumPets;
+    public HashMap<String, Pet> questPets;
 
-    public List<Mount> mounts;
-    public List<Mount> specialMounts;
-    public List<Mount> questMounts;
+    public HashMap<String, Mount> mounts;
+    public HashMap<String, Mount> specialMounts;
+    public HashMap<String, Mount> questMounts;
 
     public List<Skill> spells;
 

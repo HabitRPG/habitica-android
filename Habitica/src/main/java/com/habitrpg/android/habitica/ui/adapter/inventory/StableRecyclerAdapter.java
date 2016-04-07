@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,36 +24,51 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class StableRecyclerAdapter extends RecyclerView.Adapter<StableRecyclerAdapter.StableViewHolder> {
+public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Animal> itemList;
-    private HashMap<String, Integer> ownedMapping;
+    private List<Object> itemList;
     public String itemType;
 
     public MainActivity activity;
 
-    public <T extends Animal> void setItemList(List<Animal> itemList) {
+    public <T extends Animal> void setItemList(List<Object> itemList) {
         this.itemList = itemList;
         this.notifyDataSetChanged();
     }
 
-    public void setOwnedMapping(HashMap<String, Integer> map) {
-        this.ownedMapping = map;
-        this.notifyDataSetChanged();
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.customization_section_header, parent, false);
+
+            return new SectionViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.animal_overview_item, parent, false);
+
+            return new StableViewHolder(view);
+        }
     }
 
     @Override
-    public StableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Object obj = this.itemList.get(position);
+        if (obj.getClass().equals(String.class)) {
+            ((SectionViewHolder)holder).bind((String) obj);
+        } else {
+            ((StableViewHolder) holder).bind((Animal) itemList.get(position));
 
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.animal_overview_item, parent, false);
-
-        return new StableViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(StableViewHolder holder, int position) {
-        holder.bind(this.itemList.get(position));
+    public int getItemViewType(int position) {
+        if (this.itemList.get(position).getClass().equals(String.class)) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     @Override
@@ -87,22 +104,15 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<StableRecyclerAd
 
         public void bind(Animal item) {
             this.animal = item;
-            titleView.setText(item.getAnimal());
+            titleView.setText(item.getAnimalText());
             ownedTextView.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
-            if (ownedMapping != null) {
-                if (ownedMapping.containsKey(item.getAnimal()) && ownedMapping.get(item.getAnimal()) > 0) {
-                    this.ownedTextView.setText(ownedMapping.get(item.getAnimal()).toString());
-                    if (itemType.equals("pets")) {
-                        DataBindingUtils.loadImage(this.imageView, "Pet-" + item.getAnimal() + "-Base");
-                    } else {
-                        DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + item.getAnimal() + "-Base");
-                    }
+            if (animal.getNumberOwned() > 0) {
+                this.ownedTextView.setText(animal.getNumberOwned().toString());
+                if (itemType.equals("pets")) {
+                    DataBindingUtils.loadImage(this.imageView, "Pet-" + item.getKey());
                 } else {
-                    ownedTextView.setVisibility(View.GONE);
-                    ownedTextView.setText(null);
-                    DataBindingUtils.loadImage(this.imageView, "PixelPaw");
-                    this.imageView.setAlpha(0.4f);
+                    DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + item.getKey());
                 }
             } else {
                 ownedTextView.setVisibility(View.GONE);
@@ -114,20 +124,47 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<StableRecyclerAd
         @Override
         public void onClick(View v) {
             if (animal != null) {
-                if (ownedMapping != null) {
-                    if (ownedMapping.containsKey(animal.getAnimal()) && ownedMapping.get(animal.getAnimal()) > 0) {
-                        if (itemType.equals("pets")) {
-                            PetDetailRecyclerFragment fragment = new PetDetailRecyclerFragment();
-                            fragment.animalType = animal.getAnimal();
-                            activity.displayFragment(fragment);
-                        } else {
-                            MountDetailRecyclerFragment fragment = new MountDetailRecyclerFragment();
-                            fragment.animalType = animal.getAnimal();
-                            activity.displayFragment(fragment);
-                        }
+                if (animal.getNumberOwned() > 0) {
+                    if (itemType.equals("pets")) {
+                        PetDetailRecyclerFragment fragment = new PetDetailRecyclerFragment();
+                        fragment.animalType = animal.getAnimal();
+                        fragment.animalGroup = animal.getAnimalGroup();
+                        activity.displayFragment(fragment);
+                    } else {
+                        MountDetailRecyclerFragment fragment = new MountDetailRecyclerFragment();
+                        fragment.animalType = animal.getAnimal();
+                        fragment.animalGroup = animal.getAnimalGroup();
+                        activity.displayFragment(fragment);
                     }
                 }
             }
+        }
+    }
+
+    class SectionViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.label)
+        TextView label;
+
+        @Bind(R.id.purchaseSetButton)
+        Button purchaseSetButton;
+
+        Context context;
+
+        public SectionViewHolder(View itemView) {
+            super(itemView);
+            context = itemView.getContext();
+            ButterKnife.bind(this, itemView);
+            this.purchaseSetButton.setVisibility(View.GONE);
+        }
+
+        public void bind(String title) {
+                try {
+                    Integer stringID = context.getResources().getIdentifier("section"+title, "string", context.getPackageName());
+                    this.label.setText(context.getString(stringID));
+                } catch (Exception e) {
+                    this.label.setText(title);
+                }
         }
     }
 }

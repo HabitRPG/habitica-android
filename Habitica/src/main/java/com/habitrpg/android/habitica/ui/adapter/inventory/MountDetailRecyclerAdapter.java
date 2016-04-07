@@ -102,7 +102,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         public void bind(Mount item) {
             animal = item;
-            titleView.setText(item.getColor());
+            titleView.setText(item.getColorText());
             ownedTextView.setVisibility(View.GONE);
             this.imageView.setAlpha(1.0f);
             if (this.isOwned()) {

@@ -11,7 +11,12 @@ public class Animal extends BaseModel {
     String key;
 
     @Column
-    String animal, color, animalGroup;
+    String animal, color, animalGroup, animalText, colorText;
+
+    @Column
+    Boolean premium, limited;
+
+    Integer numberOwned;
 
     public String getKey() {
         return key;
@@ -45,4 +50,52 @@ public class Animal extends BaseModel {
         this.animalGroup = group;
     }
 
+    public String getAnimalText() {
+        if (animalText == null) {
+            return animal;
+        }
+        return animalText;
+    }
+
+    public void setAnimalText(String animalText) {
+        this.animalText = animalText;
+    }
+
+    public String getColorText() {
+        if (colorText == null) {
+            return color;
+        }
+        return colorText;
+    }
+
+    public void setColorText(String colorText) {
+        this.colorText = colorText;
+    }
+
+    public Boolean getPremium() {
+        return premium;
+    }
+
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
+    }
+
+    public Boolean getLimited() {
+        return limited;
+    }
+
+    public void setLimited(Boolean limited) {
+        this.limited = limited;
+    }
+
+    public Integer getNumberOwned() {
+        if (numberOwned == null) {
+            return 0;
+        }
+        return numberOwned;
+    }
+
+    public void setNumberOwned(Integer numberOwned) {
+        this.numberOwned = numberOwned;
+    }
 }

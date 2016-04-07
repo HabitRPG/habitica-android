@@ -27,6 +27,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     public RecyclerView recyclerView;
     public MountDetailRecyclerAdapter adapter;
     public String animalType;
+    public String animalGroup;
     public List<Mount> animals;
     private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     GridLayoutManager layoutManager = null;
@@ -102,7 +103,9 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         Runnable itemsRunnable = new Runnable() {
             @Override
             public void run() {
-                List<Mount> items = new Select().from(Mount.class).where(Condition.column("animal").eq(animalType)).orderBy(true, "color").queryList();
+                List<Mount> items = new Select().from(Mount.class).where(Condition.CombinedCondition
+                        .begin(Condition.column("animal").eq(animalType))
+                        .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
                 adapter.setItemList(items);
                 animals = items;
                 adapter.setOwnedMapping(user.getItems().getMounts());
