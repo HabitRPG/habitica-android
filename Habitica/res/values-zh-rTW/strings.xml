@@ -252,4 +252,29 @@
   <string name="ago_hours" formatted="false">%d 小時之前</string>
   <string name="ago_1hour">1 小時之前</string>
   <string name="today">今天</string>
+  <string name="sidebar_items">物品</string>
+  <string name="eggs">寵物蛋</string>
+  <string name="hatching_potions">孵化藥水</string>
+  <string name="food">食物</string>
+  <string name="quests">任務</string>
+  <string name="pets">寵物</string>
+  <string name="mounts">坐騎</string>
+  <string name="armoireEquipment" formatted="false">你在神秘寶箱裡找到稀有物品: %s! 真是太棒了!</string>
+  <string name="armoireExp">你奮力打開神秘寶箱而且拿到經驗值!</string>
+  <string name="armoireNotesFull" formatted="false">打開神秘寶箱會隨機獲得特殊裝備，經驗，或是食物! 數量剩下: %d 份</string>
+  <string name="armoireLastItem">你在神秘寶箱裡找到最後一份稀有裝備。</string>
+  <string name="armoireNotesEmpty">神秘寶箱會在每個月的第一個星期更新，在那之前，持續點擊以獲得經驗值與食物!</string>
+  <string name="sell" formatted="false">賣掉 (%s 黃金)</string>
+  <string name="hatch_with_potion">用藥水孵化</string>
+  <string name="feed_to_pet">餵食寵物</string>
+  <string name="hatch_egg">孵化寵物蛋</string>
+  <string name="invite_party">隊伍邀請</string>
+  <string name="dialog_feeding" formatted="false">餵食 %s 寵物</string>
+  <string name="use_animal">用</string>
+  <string name="feed">餵</string>
+  <string name="hatch_with" formatted="false">用 %s 孵化寵物</string>
+  <string name="close">關閉</string>
+  <string name="share">分享</string>
+  <string name="notification_pet_fed" formatted="false">你餵了你的 %s!</string>
+  <string name="notification_purchase" formatted="false">%s 被買下來了</string>
 </resources>

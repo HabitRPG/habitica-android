@@ -747,7 +747,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             public void success(FeedResponse feedResponse, Response response) {
                 MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
                 MainActivity.this.setUserData(false);
-                showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getKey()), SnackbarDisplayType.NORMAL);
+                showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
             }
 
             @Override

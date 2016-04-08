@@ -260,7 +260,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="pets">Familiers</string>
   <string name="mounts">Montures</string>
   <string name="armoireEquipment" formatted="false">Vous avez trouvé une pièce d\'Équipement rare dans l\'Armoire : %s! Génial !</string>
-  <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez : %s %s. Qu\'est-ce que ça fait là ?</string>
+  <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez : %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
   <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'Expérience. Prends ça !</string>
   <string name="armoireNotesFull" formatted="false">Ouvrez l\'Armoire pour recevoir au hasard de l\'Équipement spécial, de l\'Expérience ou de la nourriture ! Pièces d\'Équipement restantes : %d</string>
   <string name="armoireLastItem">Vous avez trouvé la dernière pièce d\'Équipement rare dans l\'Armoire Enchantée.</string>
@@ -274,9 +274,17 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="use_animal">Utiliser</string>
   <string name="feed">Nourrir</string>
   <string name="hatch_with" formatted="false">Faire éclore le Familier avec %s</string>
-  <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un-e %s %s!</string>
+  <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un·e %1$s %2$s !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
   <string name="notification_pet_fed" formatted="false">Vous avez nourri votre %s!</string>
   <string name="notification_purchase" formatted="false">%s acheté</string>
+  <string name="sectionpets">Familiers de Base</string>
+  <string name="sectionpremiumPets">Familiers Magiques</string>
+  <string name="sectionquestPets">Familiers de Quête</string>
+  <string name="sectionspecialPets">Familiers rares</string>
+  <string name="sectionmounts">Montures de Base</string>
+  <string name="sectionpremiumMounts">Montures Magiques</string>
+  <string name="sectionquestMounts">Montures de Quête</string>
+  <string name="sectionspecialMounts">Montures rares</string>
 </resources>

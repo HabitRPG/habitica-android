@@ -131,8 +131,8 @@
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
-    <string name="tavern.inn.checkOut">Check Out of Inn</string>
-    <string name="tavern.inn.rest">Rest in the Inn</string>
+    <string name="tavern.inn.checkOut">Reactivate your Dailies</string>
+    <string name="tavern.inn.rest">Pause your Dailies</string>
     <string name="reward.dialog.buy">Buy</string>
     <string name="reward.dialog.dismiss">Dismiss</string>
     <string name="party">Party</string>
@@ -292,14 +292,14 @@ To start, which parts of your life do you want to improve?</string>
     <string name="feed_to_pet">Feed to pet</string>
     <string name="hatch_egg">Hatch with egg</string>
     <string name="invite_party">Invite party</string>
-    <string name="dialog_feeding" formatted="false">Feed %s with</string>
+    <string name="dialog_feeding" formatted="false">Feed %1$s %2$s with:</string>
     <string name="use_animal">Use</string>
     <string name="feed">Feed</string>
     <string name="hatch_with" formatted="false">Hatch pet with %s</string>
     <string name="hatched_pet_title" formatted="false">You hatched a %1$s %2$s!</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
-    <string name="notification_pet_fed" formatted="false">You fed your %s!</string>
+    <string name="notification_pet_fed" formatted="false">You fed your %1$s %2$s!</string>
     <string name="notification_purchase" formatted="false">%s was purchased</string>
     <string name="sectionpets">Base Pets</string>
     <string name="sectionpremiumPets">Magic Potion Pets</string>
@@ -310,7 +310,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="sectionquestMounts">Quest Mounts</string>
     <string name="sectionspecialMounts">Rare Mounts</string>
     <string name="world_quest">World Quest</string>
-    <string name="inn_button">Pause my Dailies</string>
     <string name="inn_description">Rest in the Inn to prevent your undone Dailies from hurting you overnight! (Note: does not prevent you from receiving Boss damage.)</string>
-    <string name="empty_items">You don\'t have any %s</string>
+    <string name="empty_items" formatted="false">You don\'t have any %s</string>
 </resources>

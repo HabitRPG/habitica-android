@@ -259,7 +259,7 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="pets">Haustiere</string>
   <string name="mounts">Reittiere</string>
   <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Juhu!</string>
-  <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %s %s. Was macht das denn hier?</string>
+  <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
   <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
   <string name="armoireNotesFull" formatted="false">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
   <string name="armoireLastItem">Du hast das letzte Stück der seltenen Ausrüstung im verzauberten Schrank gefunden.</string>
@@ -273,9 +273,17 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="use_animal">Nutzen</string>
   <string name="feed">Verfüttern</string>
   <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
-  <string name="hatched_pet_title" formatted="false">Du hast ein %s %s ausgebrütet!</string>
+  <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
   <string name="notification_pet_fed" formatted="false">Du hast Dein/e/n %s gefüttert</string>
   <string name="notification_purchase" formatted="false">%s gekauft</string>
+  <string name="sectionpets">Normale Haustiere</string>
+  <string name="sectionpremiumPets">Magische Haustiere</string>
+  <string name="sectionquestPets">Quest Haustiere</string>
+  <string name="sectionspecialPets">Seltene Haustiere</string>
+  <string name="sectionmounts">Normale Reittiere</string>
+  <string name="sectionpremiumMounts">Magische Reittiere</string>
+  <string name="sectionquestMounts">Quest Reittiere</string>
+  <string name="sectionspecialMounts">Seltene Reittiere</string>
 </resources>

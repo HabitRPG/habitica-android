@@ -112,7 +112,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             this.titleView.setVisibility(View.VISIBLE);
         } else if (this.isFeeding) {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.titleView.setText(getString(R.string.dialog_feeding, this.feedingPet.getKey()));
+            this.titleView.setText(getString(R.string.dialog_feeding, this.feedingPet.getColorText(), this.feedingPet.getAnimalText()));
             this.titleView.setVisibility(View.VISIBLE);
         } else {
             this.titleView.setVisibility(View.GONE);

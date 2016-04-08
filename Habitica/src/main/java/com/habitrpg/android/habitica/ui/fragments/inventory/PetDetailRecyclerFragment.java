@@ -125,6 +125,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
             fragment.isFeeding = true;
             fragment.isHatching = false;
             fragment.itemType = "food";
+            fragment.itemTypeText = getString(R.string.food);
             fragment.show(getFragmentManager(), "feedDialog");
         }
     }
