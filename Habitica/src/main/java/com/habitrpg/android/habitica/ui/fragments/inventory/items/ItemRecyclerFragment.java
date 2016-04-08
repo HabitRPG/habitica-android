@@ -13,9 +13,11 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
@@ -26,6 +28,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
@@ -36,12 +39,16 @@ import butterknife.ButterKnife;
 
 public class ItemRecyclerFragment extends BaseFragment {
     @Bind(R.id.recyclerView)
-    public RecyclerView recyclerView;
+    public RecyclerViewEmptySupport recyclerView;
+
+    @Bind(R.id.empty_view)
+    public TextView emptyView;
 
     @Bind(R.id.titleTextView)
     public TextView titleView;
     public ItemRecyclerAdapter adapter;
     public String itemType;
+    public String itemTypeText;
 
     public Boolean isHatching;
     public Boolean isFeeding;
@@ -60,6 +67,9 @@ public class ItemRecyclerFragment extends BaseFragment {
             view = inflater.inflate(R.layout.fragment_items, container, false);
 
             ButterKnife.bind(this, view);
+
+            recyclerView.setEmptyView(emptyView);
+            emptyView.setText(getString(R.string.empty_items, itemTypeText));
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
@@ -127,6 +137,11 @@ public class ItemRecyclerFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ITEM_TYPE_KEY, this.itemType);
+    }
+
+    @Subscribe
+    public void reloadedContent(ContentReloadedEvent event) {
+        this.loadItems();
     }
 
     private void loadItems() {

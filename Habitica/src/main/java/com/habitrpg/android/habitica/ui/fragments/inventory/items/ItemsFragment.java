@@ -78,6 +78,7 @@ public class ItemsFragment extends BaseMainFragment {
                 }
                 fragment.isHatching = false;
                 fragment.isFeeding = false;
+                fragment.itemTypeText = this.getPageTitle(position).toString();
 
                 return fragment;
             }

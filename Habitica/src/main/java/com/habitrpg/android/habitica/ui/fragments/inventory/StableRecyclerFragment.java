@@ -9,14 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.ContentReloadedEvent;
+import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
@@ -31,17 +35,28 @@ import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import rx.Observable;
 
 public class StableRecyclerFragment extends BaseFragment {
-    public RecyclerView recyclerView;
+    @Bind(R.id.recyclerView)
+    public RecyclerViewEmptySupport recyclerView;
+
+    @Bind(R.id.empty_view)
+    public TextView emptyView;
+
     public StableRecyclerAdapter adapter;
     public String itemType;
+    public String itemTypeText;
     public HabitRPGUser user;
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     GridLayoutManager layoutManager = null;
@@ -54,7 +69,10 @@ public class StableRecyclerFragment extends BaseFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            ButterKnife.bind(this, view);
+
+            recyclerView.setEmptyView(emptyView);
+            emptyView.setText(getString(R.string.empty_items, itemTypeText));
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
@@ -139,6 +157,8 @@ public class StableRecyclerFragment extends BaseFragment {
             }
             List<? extends Animal> unsortedAnimals = query.queryList();
             if (unsortedAnimals.size() == 0) {
+                ReloadContentEvent event = new ReloadContentEvent();
+                EventBus.getDefault().post(event);
                 return;
             }
             String lastSectionTitle = "";
@@ -182,6 +202,10 @@ public class StableRecyclerFragment extends BaseFragment {
             adapter.setItemList(items);
         };
         itemsRunnable.run();
+    }
 
+    @Subscribe
+    public void reloadedContent(ContentReloadedEvent event) {
+        this.loadItems();
     }
 }

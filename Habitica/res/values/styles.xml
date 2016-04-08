@@ -170,4 +170,11 @@
     <style name="BottomMenuItemText">
         <item name="android:textSize">@dimen/card_medium_text</item>
     </style>
+
+    <style name="EmptyView">
+        <item name="android:textSize">@dimen/card_large_text</item>
+        <item name="android:padding">@dimen/section_top_padding</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

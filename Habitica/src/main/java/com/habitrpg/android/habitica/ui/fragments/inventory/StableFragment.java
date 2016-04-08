@@ -54,6 +54,7 @@ public class StableFragment extends BaseMainFragment {
                     }
                 }
                 fragment.user = StableFragment.this.user;
+                fragment.itemTypeText = this.getPageTitle(position).toString();
 
                 return fragment;
             }

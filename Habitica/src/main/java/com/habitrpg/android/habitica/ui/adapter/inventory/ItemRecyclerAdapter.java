@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
+import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
@@ -96,6 +97,12 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         public void bind(Item item) {
             this.item = item;
             binding.setTitle(item.getText());
+
+            if (item.getText() == null) {
+                ReloadContentEvent event = new ReloadContentEvent();
+                EventBus.getDefault().post(event);
+            }
+
             binding.setDisabled(false);
             if (item instanceof QuestContent) {
                 binding.setImageNamed("inventory_quest_scroll_"+item.getKey());

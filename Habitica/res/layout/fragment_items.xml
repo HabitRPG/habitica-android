@@ -16,13 +16,19 @@
             android:id="@+id/titleTextView"
             android:background="@color/brand_100"
             android:textColor="@android:color/white"/>
-        <android.support.v7.widget.RecyclerView
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@color/md_grey_500"
             android:scrollbars="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/empty_view"
+            style="@style/EmptyView"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

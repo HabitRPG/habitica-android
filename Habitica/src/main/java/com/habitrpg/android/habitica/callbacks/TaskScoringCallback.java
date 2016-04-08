@@ -3,10 +3,16 @@ package com.habitrpg.android.habitica.callbacks;
 import android.util.Log;
 
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import retrofit.Callback;
@@ -51,6 +57,47 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
                         return task != null;
                     }
                 });
+        if (taskDirectionData.get_tmp() != null) {
+            if (taskDirectionData.get_tmp().getDrop() != null) {
+                String type = taskDirectionData.get_tmp().getDrop().getType();
+                From from = null;
+
+                switch (type.toLowerCase()) {
+                    case "hatchingpotion":
+                        from = new Select().from(HatchingPotion.class);
+                        break;
+                    case "food":
+                        from = new Select().from(Food.class);
+                        break;
+                    case "egg":
+                        from = new Select().from(Egg.class);
+                        break;
+                }
+
+                if (from != null) {
+                    from.where(Condition.column("key").eq(taskDirectionData.get_tmp().getDrop().getKey()))
+                            .async()
+                            .querySingle(new TransactionListener() {
+                                @Override
+                                public void onResultReceived(Object result) {
+                                    Item item = (Item)result;
+                                    item.setOwned(item.getOwned()+1);
+                                    item.save();
+                                }
+
+                                @Override
+                                public boolean onReady(BaseTransaction transaction) {
+                                    return true;
+                                }
+
+                                @Override
+                                public boolean hasResult(BaseTransaction transaction, Object result) {
+                                    return true;
+                                }
+                            });
+                }
+            }
+        }
     }
 
     @Override

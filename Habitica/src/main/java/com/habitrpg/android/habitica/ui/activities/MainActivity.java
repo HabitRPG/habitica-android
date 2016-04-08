@@ -36,8 +36,10 @@ import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -59,6 +61,7 @@ import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
+import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -146,6 +149,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private Date lastSync;
 
     private TutorialView activeTutorialView;
+    private boolean isloadingContent;
 
     @Override
     protected int getLayoutResId() {
@@ -753,6 +757,25 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         });
     }
 
+    @Subscribe
+    public void reloadContent(ReloadContentEvent event) {
+        if (!this.isloadingContent) {
+            this.isloadingContent = true;
+            this.mAPIHelper.apiService.getContent(new Callback<ContentResult>() {
+                @Override
+                public void success(ContentResult contentResult, Response response) {
+                    isloadingContent = false;
+                    ContentReloadedEvent event = new ContentReloadedEvent();
+                    EventBus.getDefault().post(event);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    isloadingContent = false;
+                }
+            });
+        }
+    }
 
     // endregion
 

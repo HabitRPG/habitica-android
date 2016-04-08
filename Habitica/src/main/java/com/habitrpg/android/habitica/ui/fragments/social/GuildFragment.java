@@ -40,6 +40,11 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         if (this.guildInformationFragment != null) {
             this.guildInformationFragment.setGroup(guild);
         }
+        if (this.guild.chat == null) {
+            if (this.mAPIHelper != null) {
+                mAPIHelper.apiService.getGroup(this.guild.id, this);
+            }
+        }
     }
 
     @Override
@@ -61,7 +66,7 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.mAPIHelper != null) {
+        if (this.mAPIHelper != null && this.guild != null) {
             mAPIHelper.apiService.getGroup(this.guild.id, this);
         }
     }
