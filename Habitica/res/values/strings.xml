@@ -309,4 +309,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="sectionpremiumMounts">Magic Potion Mounts</string>
     <string name="sectionquestMounts">Quest Mounts</string>
     <string name="sectionspecialMounts">Rare Mounts</string>
+    <string name="world_quest">World Quest</string>
 </resources>

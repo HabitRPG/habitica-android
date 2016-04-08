@@ -37,7 +37,7 @@ public class ItemsFragment extends BaseMainFragment {
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_party, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 

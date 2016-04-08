@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestCollect;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -29,6 +31,10 @@ public class QuestContent extends Item {
     @Column
     public String category;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "boss_id",
+            columnType = String.class,
+            foreignColumnName = "key")})
     public QuestBoss boss;
 
     HashMap<String, QuestCollect> collect;
@@ -97,6 +103,11 @@ public class QuestContent extends Item {
     }
 
     public void save() {
+
+        if (boss != null) {
+            boss.key = key;
+        }
+
         if (collect != null) {
             for (Map.Entry<String, QuestCollect> kv : collect.entrySet()) {
                 kv.getValue().quest_key = key;

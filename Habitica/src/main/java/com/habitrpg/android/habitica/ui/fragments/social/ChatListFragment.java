@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -50,7 +51,7 @@ import retrofit.client.Response;
 /**
  * Created by Negue on 14.09.2015.
  */
-public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Callback<List<ChatMessage>> {
+public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Callback<List<ChatMessage>> {
 
     private Context ctx;
     private String groupId;
@@ -60,7 +61,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private String userId;
     private boolean isTavern;
     private MainActivity activity;
-    private boolean registerEventBus = false;
 
     public void configure(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
 
@@ -100,14 +100,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         if (view == null)
             view = inflater.inflate(R.layout.fragment_chatlist, container, false);
-
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this);
-            registerEventBus = true;
-        } catch (EventBusException ignored) {
-
-        }
 
         if (apiHelper == null) {
             apiHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
@@ -313,15 +305,6 @@ public class ChatListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             }
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (registerEventBus) {
-            EventBus.getDefault().unregister(this);
-        }
-        ButterKnife.unbind(this);
-        super.onDestroyView();
     }
 
     @Override

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--  Prefs -->
-    <string name="SP_address">ServerAddress</string>
-    <string name="SP_address_default">https://habitica.com/</string>
-    <string name="SP_userID">UserID</string>
-    <string name="SP_APIToken">APIToken</string>
-    <string name="SP_username">Username</string>
-    <string name="SP_email">E-mail</string>
+    <string name="SP_address" translatable="false">ServerAddress</string>
+    <string name="SP_address_default" translatable="false">https://habitica.com/</string>
+    <string name="SP_userID" translatable="false">UserID</string>
+    <string name="SP_APIToken" translatable="false">APIToken</string>
+    <string name="SP_username" translatable="false">Username</string>
+    <string name="SP_email" translatable="false">E-mail</string>
 </resources>

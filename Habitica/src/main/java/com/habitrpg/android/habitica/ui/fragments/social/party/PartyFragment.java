@@ -38,7 +38,7 @@ public class PartyFragment extends BaseMainFragment {
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_party, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 
@@ -53,10 +53,8 @@ public class PartyFragment extends BaseMainFragment {
                 if (group == null) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                             .setMessage(activity.getString(R.string.no_party_message))
-                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    activity.getSupportFragmentManager().popBackStackImmediate();
-                                }
+                            .setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                                activity.getSupportFragmentManager().popBackStackImmediate();
                             });
                     builder.show();
                     tabLayout.removeAllTabs();
@@ -77,12 +75,9 @@ public class PartyFragment extends BaseMainFragment {
                 }
 
                 if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-                    contentCache.GetQuestContent(group.quest.key, new ContentCache.QuestContentCallback() {
-                        @Override
-                        public void GotQuest(QuestContent content) {
-                            if (groupInformationFragment != null) {
-                                groupInformationFragment.setQuestContent(content);
-                            }
+                    contentCache.GetQuestContent(group.quest.key, content -> {
+                        if (groupInformationFragment != null) {
+                            groupInformationFragment.setQuestContent(content);
                         }
                     });
                 }

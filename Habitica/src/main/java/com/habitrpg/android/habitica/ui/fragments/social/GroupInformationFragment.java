@@ -52,8 +52,6 @@ public class GroupInformationFragment extends Fragment {
 
     private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
 
-
-
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user, APIHelper mAPIHelper) {
 
         Bundle args = new Bundle();
@@ -77,6 +75,7 @@ public class GroupInformationFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_group_info, container, false);
 
         viewBinding = DataBindingUtil.bind(view);
+        viewBinding.setHideParticipantCard(false);
         if (user != null) {
             viewBinding.setUser(user);
         }
@@ -135,13 +134,18 @@ public class GroupInformationFragment extends Fragment {
         }
         bossHpBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.hp > 0) ? View.VISIBLE : View.GONE);
         bossRageBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.rage_value > 0) ? View.VISIBLE : View.GONE);
+
+        if (group.quest.members == null) {
+            viewBinding.setHideParticipantCard(true);
+        }
     }
 
     private void updateQuestMember(Group group) {
         questMemberView.removeAllViewsInLayout();
         if (group.quest == null || group.quest.key == null) return;
         Context context = getContext();
-        if (context == null) {
+        if (context == null && group.quest.members != null) {
+            viewBinding.setHideParticipantCard(true);
             return;
         }
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

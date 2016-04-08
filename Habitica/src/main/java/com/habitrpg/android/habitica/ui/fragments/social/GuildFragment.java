@@ -47,13 +47,11 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
                              Bundle savedInstanceState) {
         this.usesTabLayout = true;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_party, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 
         viewPager.setCurrentItem(0);
-
-        final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 
         setViewPagerAdapter();
 
