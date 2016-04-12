@@ -83,10 +83,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         int gp = (stats.getGp().intValue());
         int sp = (int) ((stats.getGp() - gp) * 100);
 
-        setHpBarData(stats);
-        setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
-        setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
-
         userPicture.setUser(user);
         userPicture.setPictureOn(image);
 
@@ -130,6 +126,10 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             lvlText.setCompoundDrawables(drawable, null, null, null);
         }
 
+        setHpBarData(stats.getHp().floatValue(), stats.getMaxHealth());
+        setXpBarData(stats.getExp().floatValue(), stats.getToNextLevel());
+        setMpBarData(stats.getMp().floatValue(), stats.getMaxMP());
+
         goldText.setText(String.valueOf(gp));
         silverText.setText(String.valueOf(sp));
 
@@ -144,10 +144,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         }
 
         setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
-    }
-
-    public void setHpBarData(Stats stats) {
-        setHpBarData(hpBar, stats, context);
     }
 
     public void setHpBarData(float value, int valueMax){
