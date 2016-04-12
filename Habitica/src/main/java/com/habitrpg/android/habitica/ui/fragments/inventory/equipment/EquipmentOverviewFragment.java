@@ -70,7 +70,6 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         viewBinding.setCurrentBattleGear(this.user.getItems().getGear().getEquipped());
         viewBinding.setCurrentCostume(this.user.getItems().getGear().getCostume());
         viewBinding.setUsingCostume(this.user.getPreferences().getCostume());
-        viewBinding.setUserSize(this.user.getPreferences().getSize());
 
         ButterKnife.bind(this, v);
 

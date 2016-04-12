@@ -10,21 +10,7 @@
         <variable
             name="equipmentNames"
             type="Map&lt;String, String>" />
-        <variable
-            name="userSize"
-            type="String" />
     </data>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/SectionTitle"
-            android:text="@{categorytitle}"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +40,7 @@
                     android:id="@+id/outfit_Armor"
                     bind:title="@{@string/outfit_armor}"
                     bind:value='@{equipmentNames.get(outfit.getArmor)}'
-                    bind:imageNamed='@{"shop_"+userSize + "_" + outfit.getArmor}'/>
+                    bind:imageNamed='@{"shop_"+outfit.getArmor}'/>
                 <include layout="@layout/item_image_row"
                     android:id="@+id/outfit_back"
                     bind:title="@{@string/outfit_back}"
@@ -77,5 +63,4 @@
                     bind:imageNamed='@{"shop_"+outfit.getShield}'/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-    </LinearLayout>
 </layout>

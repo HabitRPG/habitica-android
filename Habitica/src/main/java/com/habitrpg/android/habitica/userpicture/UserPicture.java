@@ -196,7 +196,7 @@ public class UserPicture {
             this.layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
             this.targets.add(target);
-            picasso.load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + layer + ".png").into(target);
+            picasso.load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + this.getFileName(layer)).into(target);
             layerNumber = layerNumber + 1;
         }
     }
@@ -287,6 +287,15 @@ public class UserPicture {
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
         }
+    }
+
+    private String getFileName(String imageName) {
+        if (imageName.equals("head_special_1")) {
+            return "ContributorOnly-Equip-CrystalHelmet.gif";
+        } else if (imageName.equals("armor_special_1")) {
+            return "ContributorOnly-Equip-CrystalArmor.gif";
+        }
+        return imageName+".png";
     }
 
 }

@@ -19,9 +19,6 @@
         <variable
             name="equipmentNames"
             type="Map&lt;String, String>" />
-        <variable
-            name="userSize"
-            type="String" />
     </data>
 
 
@@ -38,18 +35,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SectionTitle"
+                android:text="@string/battle_gear"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <include layout="@layout/equipment_overview_list"
                 android:id="@+id/battle_gear_group"
-                bind:categorytitle="@{@string/battle_gear}"
                 bind:outfit="@{currentBattleGear}"
-                bind:equipmentNames="@{equipmentNames}"
-                bind:userSize="@{userSize}" />
-            <include layout="@layout/equipment_overview_list"
-                android:id="@+id/costume_group"
-                bind:categorytitle="@{@string/costume}"
-                bind:outfit="@{currentCostume}"
-                bind:equipmentNames="@{equipmentNames}"
-                bind:userSize="@{userSize}" />
+                bind:equipmentNames="@{equipmentNames}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SectionTitle"
+                android:text="@string/costume"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,6 +68,10 @@
                     android:checked="@{usingCostume}"/>
 
             </LinearLayout>
+            <include layout="@layout/equipment_overview_list"
+                android:id="@+id/costume_group"
+                bind:outfit="@{currentCostume}"
+                bind:equipmentNames="@{equipmentNames}" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
