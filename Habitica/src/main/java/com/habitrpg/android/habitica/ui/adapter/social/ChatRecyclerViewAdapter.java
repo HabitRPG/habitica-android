@@ -41,9 +41,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Negue on 20.08.2015.
- */
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
     private static final int TYPE_DANIEL = 0;
     private static final int TYPE_NEW_MESSAGE = 1;
@@ -191,7 +188,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             switch (layoutType) {
                 case TYPE_DANIEL: {
-                    btnToggleInn.setOnClickListener(this);
+                    if (btnToggleInn != null) {
+                        btnToggleInn.setOnClickListener(this);
+                    }
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, ContextCompat.getColor(context, R.color.brand));
                     if(HabiticaApplication.User != null && HabiticaApplication.User.getPreferences().getSleep()){
@@ -204,7 +203,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 }
 
                 case TYPE_NEW_MESSAGE: {
-                    btnSendNewMessage.setOnClickListener(this);
+                    if (btnSendNewMessage != null) {
+                        btnSendNewMessage.setOnClickListener(this);
+                    }
                     int color = ContextCompat.getColor(context, R.color.brand);
 
                     ViewHelper.SetBackgroundTint(btnSendNewMessage, color);
@@ -216,8 +217,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 }
 
                 default: {
-                    btnOptions.setOnClickListener(this);
-                    tvLikes.setOnClickListener(this);
+                    if (btnOptions != null) {
+                        btnOptions.setOnClickListener(this);
+                    }
+                    if (tvLikes != null) {
+                        tvLikes.setOnClickListener(this);
+                    }
                 }
             }
         }
@@ -236,7 +241,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     msg.user = "system";
                 }
 
-                userLabel.setText(msg.user);
+                if (userLabel != null) {
+                    userLabel.setText(msg.user);
+                }
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
                 if (messageText != null) {
@@ -244,7 +251,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
                 }
 
-                agoLabel.setText(msg.getAgoString(res));
+                if (agoLabel != null) {
+                    agoLabel.setText(msg.getAgoString(res));
+                }
             }
         }
 
@@ -271,7 +280,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         }
 
         private void setLikeProperties(int likeCount) {
-            tvLikes.setText("+" + likeCount);
+            if (tvLikes != null) {
+                tvLikes.setText("+" + likeCount);
+            }
 
             int backgroundColorRes = 0;
             int foregroundColorRes = 0;
@@ -360,9 +371,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
                 if(!HabiticaApplication.User.getPreferences().getSleep()){
-                    btnToggleInn.setText(R.string.tavern_inn_checkOut);
+                    if (btnToggleInn != null) {
+                        btnToggleInn.setText(R.string.tavern_inn_checkOut);
+                    }
                 }else{
-                    btnToggleInn.setText(R.string.tavern_inn_rest);
+                    if (btnToggleInn != null) {
+                        btnToggleInn.setText(R.string.tavern_inn_rest);
+                    }
                 }
                 return;
             }

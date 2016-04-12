@@ -14,9 +14,6 @@ import com.habitrpg.android.habitica.prefs.TimePreference;
 
 import java.util.Calendar;
 
-/**
- * Created by franzejr on 28/11/15.
- */
 public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -63,8 +60,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
 
-        if (timeval == null) timeval = "19:00";
-
         String[] pieces = timeval.split(":");
         int hour = Integer.parseInt(pieces[0]);
         int minute = Integer.parseInt(pieces[1]);
@@ -87,7 +82,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     private void removeNotifications() {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
         alarmManager.cancel(displayIntent);
     }

@@ -66,8 +66,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-        view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.skill_task_item_card, parent, false);
         return new SkillTasksRecyclerViewAdapter.ViewHolder(view);
     }

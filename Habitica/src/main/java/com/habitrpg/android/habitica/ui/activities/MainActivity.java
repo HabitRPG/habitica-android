@@ -3,12 +3,10 @@ package com.habitrpg.android.habitica.ui.activities;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -60,7 +58,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
@@ -91,7 +88,6 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,7 +96,6 @@ import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -923,7 +918,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (prefs.getBoolean("use_reminder", false)) {
 
             String timeval = prefs.getString("reminder_time", "19:00");
-            if (timeval == null) timeval = "19:00";
 
             String[] pieces = timeval.split(":");
             int hour = Integer.parseInt(pieces[0]);

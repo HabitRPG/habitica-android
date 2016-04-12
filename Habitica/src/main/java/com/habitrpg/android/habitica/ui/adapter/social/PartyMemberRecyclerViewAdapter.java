@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Negue on 22.09.2015.
- */
 public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
@@ -107,7 +104,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
 
-            lvl.setText("LVL " + user.getStats().getLvl());
+            lvl.setText(context.getString(R.string.user_level, "LVL " + user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getCleanedClassName());
 

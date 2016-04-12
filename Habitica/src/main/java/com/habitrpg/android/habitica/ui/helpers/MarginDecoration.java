@@ -7,9 +7,6 @@ import android.view.View;
 
 import com.habitrpg.android.habitica.R;
 
-/**
- * Created by viirus on 13/01/16.
- */
 public class MarginDecoration extends RecyclerView.ItemDecoration {
     private int margin;
 

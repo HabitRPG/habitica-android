@@ -31,9 +31,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by viirus on 25/11/15.
- */
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;

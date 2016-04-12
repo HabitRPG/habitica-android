@@ -73,19 +73,6 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
         }
     }
 
-    private void loadGuilds() {
-        if(user == null){
-            return;
-        }
-
-        Where<Group> select = new Select()
-                .from(Group.class)
-                .where(Condition.column("type").eq("guild"));
-
-        this.guilds = select.queryList();
-        this.setGuildsOnListView();
-    }
-
     private void setGuildsOnListView() {
         if (this.guildsListView == null) {
             return;
@@ -94,7 +81,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
         this.guildsListView.removeAllViewsInLayout();
         LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (Group guild : this.guilds) {
-            TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, null);
+            TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.guildsListView, false);
             entry.setText(guild.name);
             entry.setOnClickListener(this);
             this.guildsListView.addView(entry);

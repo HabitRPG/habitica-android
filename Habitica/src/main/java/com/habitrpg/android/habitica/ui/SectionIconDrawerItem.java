@@ -1,44 +1,26 @@
 package com.habitrpg.android.habitica.ui;
+
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.mikepenz.fastadapter.utils.ViewHolderFactory;
-import com.mikepenz.iconics.typeface.IIcon;
-import com.mikepenz.materialdrawer.holder.ColorHolder;
-import com.mikepenz.materialdrawer.holder.ImageHolder;
 import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.AbstractDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialdrawer.model.interfaces.Typefaceable;
-import com.mikepenz.materialize.util.UIUtils;
 
 /**
  * Created by mikepenz on 03.02.15.
  */
 public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerItem, SectionIconDrawerItem.ViewHolder> implements Nameable<SectionIconDrawerItem>, Typefaceable<SectionIconDrawerItem> {
-    protected ImageHolder icon;
-
-    protected boolean iconTinted = false;
     private StringHolder name;
-    private boolean divider = true;
-
-    private ColorHolder textColor;
-
-    protected ColorHolder iconColor;
 
     private Typeface typeface = null;
 
@@ -57,32 +39,9 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         return this;
     }
 
-    public SectionIconDrawerItem withDivider(boolean divider) {
-        this.divider = divider;
-        return this;
-    }
-
-    public SectionIconDrawerItem withTextColor(int textColor) {
-        this.textColor = ColorHolder.fromColor(textColor);
-        return this;
-    }
-
-    public SectionIconDrawerItem withTextColorRes(int textColorRes) {
-        this.textColor = ColorHolder.fromColorRes(textColorRes);
-        return this;
-    }
-
     public SectionIconDrawerItem withTypeface(Typeface typeface) {
         this.typeface = typeface;
         return this;
-    }
-
-    public boolean hasDivider() {
-        return divider;
-    }
-
-    public ColorHolder getTextColor() {
-        return textColor;
     }
 
     public StringHolder getName() {
@@ -113,14 +72,6 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
     @Override
     public Typeface getTypeface() {
         return typeface;
-    }
-
-    public ImageHolder getIcon() {
-        return icon;
-    }
-
-    public ColorHolder getIconColor() {
-        return iconColor;
     }
 
     @Override

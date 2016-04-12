@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
-/**
- * Created by Negue on 24.11.2015.
- */
 public class GemsPurchaseFragment extends BaseMainFragment {
 
     private static final int GEMS_TO_ADD = 21;
@@ -69,16 +67,16 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         checkout.createPurchaseFlow(new RequestListener<Purchase>() {
             @Override
-            public void onSuccess(Purchase purchase) {
+            public void onSuccess(@NonNull Purchase purchase) {
                 if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
                     billingRequests.consume(purchase.token, new RequestListener<Object>() {
                         @Override
-                        public void onSuccess(Object o) {
+                        public void onSuccess(@NonNull Object o) {
                             EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
                         }
 
                         @Override
-                        public void onError(int i, Exception e) {
+                        public void onError(int i, @NonNull Exception e) {
                             Fabric.getLogger().e("Purchase", "Consume", e);
                         }
                     });
@@ -86,7 +84,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
 
             @Override
-            public void onError(int i, Exception e) {
+            public void onError(int i, @NonNull Exception e) {
                 Fabric.getLogger().e("Purchase", "Error", e);
             }
         });
@@ -94,7 +92,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         checkout.whenReady(new Checkout.Listener() {
             @Override
-            public void onReady(final BillingRequests billingRequests) {
+            public void onReady(@NonNull final BillingRequests billingRequests) {
                 GemsPurchaseFragment.this.billingRequests = billingRequests;
 
                 // if the user leaves the fragment before the checkout callback is done
@@ -106,7 +104,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
 
             @Override
-            public void onReady(BillingRequests billingRequests, String s, boolean b) {
+            public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
 
                 checkout.loadInventory().whenLoaded(products -> {
 
@@ -138,17 +136,17 @@ public class GemsPurchaseFragment extends BaseMainFragment {
     private void checkIfPendingPurchases(){
         billingRequests.getAllPurchases(ProductTypes.IN_APP, new RequestListener<Purchases>() {
             @Override
-            public void onSuccess(Purchases purchases) {
+            public void onSuccess(@NonNull Purchases purchases) {
                 for(Purchase purchase : purchases.list){
                     if(purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
-                            public void onSuccess(Object o) {
+                            public void onSuccess(@NonNull Object o) {
                                 EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
                             }
 
                             @Override
-                            public void onError(int i, Exception e) {
+                            public void onError(int i,@NonNull  Exception e) {
                                 Fabric.getLogger().e("Purchase", "Consume", e);
                             }
                         });
@@ -157,7 +155,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
 
             @Override
-            public void onError(int i, Exception e) {
+            public void onError(int i,@NonNull  Exception e) {
                 Fabric.getLogger().e("Purchase","getAllPurchases", e);
             }
         });
@@ -168,7 +166,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         // check if the user already bought and if it hasn't validated yet
         billingRequests.isPurchased(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, new RequestListener<Boolean>() {
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onSuccess(@NonNull Boolean aBoolean) {
                 if (!aBoolean) {
                     // no current product exist
                     final ActivityCheckout checkout = listener.getActivityCheckout();
@@ -180,7 +178,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
 
             @Override
-            public void onError(int i, Exception e) {
+            public void onError(int i,@NonNull  Exception e) {
                 Fabric.getLogger().e("Purchase", "Error", e);
             }
         });

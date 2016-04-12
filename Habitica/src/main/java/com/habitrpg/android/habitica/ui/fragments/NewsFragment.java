@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

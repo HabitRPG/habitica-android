@@ -325,11 +325,6 @@ startActivity(i);
 		return super.onOptionsItemSelected(item);
 	}
 
-
-	private void afterResults() {
-			mProgressBar.setVisibility(View.INVISIBLE);
-	}
-
     @Override
     public void success(UserAuthResponse userAuthResponse, Response response) {
         try {

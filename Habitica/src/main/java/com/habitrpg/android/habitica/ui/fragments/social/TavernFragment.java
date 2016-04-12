@@ -2,9 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +11,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

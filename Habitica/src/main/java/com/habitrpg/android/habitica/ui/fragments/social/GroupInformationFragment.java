@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -146,9 +145,10 @@ public class GroupInformationFragment extends Fragment {
             viewBinding.setHideParticipantCard(true);
             return;
         }
+        assert context != null;
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (HabitRPGUser member : group.members) {
-            final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, null);
+            final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, questMemberView, false);
             TextView questResponse = (TextView) itemView.findViewById(R.id.rsvpneeded);
             TextView userName = (TextView) itemView.findViewById(R.id.username);
             userName.setText(member.getProfile().getName());

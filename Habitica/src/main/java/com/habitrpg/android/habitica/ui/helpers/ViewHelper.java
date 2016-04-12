@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-/**
- * Created by Negue on 09.06.2015.
- */
 public class ViewHelper {
 
     public static void SetBackgroundTint(Button b, int tint) {

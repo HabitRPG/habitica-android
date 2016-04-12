@@ -19,9 +19,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by franzejr on 04/11/15.
- */
 public class AboutFragment extends Fragment {
 
     private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
@@ -107,10 +104,8 @@ public class AboutFragment extends Fragment {
     }
 
     private void sendEmail(String subject) {
-        Build grabInfo = new Build();
-        Build.VERSION getVersion = new Build.VERSION();
-        int version = getVersion.SDK_INT;
-        String device = grabInfo.DEVICE;
+        int version = Build.VERSION.SDK_INT;
+        String device = Build.DEVICE;
         String bodyOfEmail = "Device: " + device +
                              " \nAndroid Version: " + version +
                              " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +

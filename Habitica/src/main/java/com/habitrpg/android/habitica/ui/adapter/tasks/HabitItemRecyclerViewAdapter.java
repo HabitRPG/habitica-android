@@ -2,23 +2,16 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +31,6 @@ import com.habitrpg.android.habitica.databinding.RewardItemCardBinding;
 import com.habitrpg.android.habitica.databinding.TodoItemCardBinding;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskLongPressedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
@@ -56,14 +48,13 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import butterknife.Bind;
@@ -88,7 +79,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public int dailyResetOffset;
 
     private static final int TYPE_CELL = 1;
-    private RecyclerView.Adapter<ViewHolder> parentAdapter;
     private TagsHelper tagsHelper;
     private IAdditionalEntries additionalEntries;
 
@@ -182,21 +172,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         if (this.tagsHelper.howMany() == 0) {
             filteredObservableContent = observableContent;
         } else {
-            filteredObservableContent = new ObservableArrayList<Task>();
+            filteredObservableContent = new ObservableArrayList<>();
             filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
         }
 
-        ((Activity) context).runOnUiThread(() -> {
-            notifyDataSetChanged();
-
-            if (parentAdapter != null) {
-                parentAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    public void setParentAdapter(RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder> parentAdapter) {
-        this.parentAdapter = parentAdapter;
+        ((Activity) context).runOnUiThread(this::notifyDataSetChanged);
     }
 
     @Override
@@ -210,11 +190,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @Override
     public long getItemId(int position) {
         Task task = filteredObservableContent.get(position);
-        try {
-            return UUID.fromString(task.getId()).getMostSignificantBits();
-        } catch (IllegalArgumentException e) {
-            return UUID.randomUUID().getMostSignificantBits();
-        }
+        return task.getId().hashCode();
     }
 
     @Override
@@ -224,11 +200,9 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     @Override
     public ViewHolder<THabitItem> onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-
         switch (viewType) {
             case TYPE_CELL: {
-                view = LayoutInflater.from(parent.getContext())
+                View view = LayoutInflater.from(parent.getContext())
                         .inflate(layoutResource, parent, false);
 
                 switch (viewHolderClass.getSimpleName()) {
@@ -279,7 +253,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
             itemView.setOnClickListener(this);
             itemView.setClickable(true);
-            ViewGroup viewGroup = (ViewGroup)itemView;
 
             ButterKnife.bind(this, itemView);
 
@@ -422,7 +395,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
                 if (this.displayChecklist && this.Item.checklist != null) {
                     LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     for (ChecklistItem item : this.Item.checklist) {
-                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, null);
+                        LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.checklist_item_row, this.checklistView, false);
                         CheckBox checkbox = (CheckBox) itemView.findViewById(R.id.checkBox);
                         EmojiTextView textView = (EmojiTextView) itemView.findViewById(R.id.checkedTextView);
                         // Populate the data into the template view using the data object
@@ -586,7 +559,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         @NonNull
         private LinearLayout createContentViewForGearDialog() {
-            String price = String.format("%.0f", binding.getReward().value);
+            String price = String.format(Locale.getDefault(), "%.0f", binding.getReward().value);
             String content = binding.getReward().getNotes();
 
             // External ContentView
@@ -703,11 +676,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     @Override
     public void GotAdditionalItems(List<Task> items) {
         this.observableContent.addAll(items);
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 }

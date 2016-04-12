@@ -22,9 +22,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by Negue on 05.09.2015.
- */
 public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")

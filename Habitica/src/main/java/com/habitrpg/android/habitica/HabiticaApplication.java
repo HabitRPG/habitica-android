@@ -39,9 +39,6 @@ import java.util.Arrays;
 
 import io.fabric.sdk.android.Fabric;
 
-/**
- * Created by Negue on 14.06.2015.
- */
 public class HabiticaApplication extends MultiDexApplication {
 
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
@@ -218,7 +215,7 @@ public class HabiticaApplication extends MultiDexApplication {
         editor.clear();
         editor.putBoolean("use_reminder", use_reminder);
         editor.putString("reminder_time", reminder_time);
-        editor.commit();
+        editor.apply();
         startActivity(LoginActivity.class, context);
     }
 

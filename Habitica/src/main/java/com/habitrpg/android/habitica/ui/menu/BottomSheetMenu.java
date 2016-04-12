@@ -5,13 +5,8 @@ import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class BottomSheetMenu extends BottomSheetDialog implements View.OnClickListener {
 

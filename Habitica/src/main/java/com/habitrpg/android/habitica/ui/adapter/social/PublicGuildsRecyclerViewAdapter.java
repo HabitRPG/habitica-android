@@ -83,7 +83,6 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         }
 
         public void bind(Group guild) {
-            android.content.Context ctx = itemView.getContext();
             this.guild = guild;
             this.nameTextView.setText(guild.name);
             this.memberCountTextView.setText(String.valueOf(guild.memberCount));

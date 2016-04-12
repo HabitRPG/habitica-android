@@ -312,4 +312,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Rest in the Inn to prevent your undone Dailies from hurting you overnight! (Note: does not prevent you from receiving Boss damage.)</string>
     <string name="empty_items" formatted="false">You don\'t have any %s</string>
+    <string name="user_level">LVL</string>
 </resources>

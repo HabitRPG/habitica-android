@@ -15,9 +15,6 @@ import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Created by viirus on 28/11/15.
- */
 public class SkillTasksRecyclerViewFragment extends Fragment implements View.OnClickListener {
         public RecyclerView mRecyclerView;
         public RecyclerView.Adapter mAdapter;

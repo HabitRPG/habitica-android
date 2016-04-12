@@ -202,11 +202,9 @@ public class UserPicture {
     }
 
     private static String generateHashCode(String value) {
-
-        MessageDigest md = null;
         byte[] digest = new byte[0];
         try {
-            md = MessageDigest.getInstance("MD5");
+            MessageDigest md = MessageDigest.getInstance("MD5");
 
             md.update(value.getBytes());
             digest = md.digest();

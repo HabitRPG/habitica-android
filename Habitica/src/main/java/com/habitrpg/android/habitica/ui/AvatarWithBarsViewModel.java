@@ -119,8 +119,10 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
                 drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
         }
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-                drawable.getMinimumHeight());
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                    drawable.getMinimumHeight());
+        }
         lvlText.setCompoundDrawables(drawable, null, null, null);
 
         goldText.setText(String.valueOf(gp));

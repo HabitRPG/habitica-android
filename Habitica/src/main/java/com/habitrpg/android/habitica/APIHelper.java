@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -110,7 +109,6 @@ public class APIHelper implements ErrorHandler, Profiler {
 
         Type taskClassListType = new TypeToken<List<Task>>() {}.getType();
         Type skillListType = new TypeToken<List<Skill>>() {}.getType();
-        Type checklistType = new TypeToken<List<ChecklistItem>>() {}.getType();
         Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
         Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
         Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
@@ -218,7 +216,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     };
 
 
-    public void createNewTask(Task item, Callback cb) {
+    public void createNewTask(Task item, Callback<Task> cb) {
         this.apiService.createItem(item, cb);
     }
 
@@ -258,7 +256,7 @@ public class APIHelper implements ErrorHandler, Profiler {
 		this.apiService.connectSocial(auth, callback);
 	}
 
-    public void updateTask(Task item, Callback cb) {
+    public void updateTask(Task item, Callback<Task> cb) {
         this.apiService.updateTask(item.getId(), item, cb);
     }
 

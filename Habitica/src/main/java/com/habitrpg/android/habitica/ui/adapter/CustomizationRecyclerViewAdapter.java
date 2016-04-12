@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +41,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public double gemBalance;
 
     public void setCustomizationList(List<Customization> newCustomizationList) {
-        this.customizationList = new ArrayList<Object>();
+        this.customizationList = new ArrayList<>();
         CustomizationSet lastSet = new CustomizationSet();
         for (Customization customization : newCustomizationList) {
             if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.identifier)) {
