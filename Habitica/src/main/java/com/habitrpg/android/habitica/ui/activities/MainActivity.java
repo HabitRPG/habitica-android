@@ -486,19 +486,31 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         accountHeader.updateProfile(profile);
 
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && item.isEnabled()) {
-            IDrawerItem newItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_skills))
-                    .withEnabled(false)
-                    .withBadge(this.getString(R.string.unlock_lvl_11))
-                    .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            drawer.updateItem(newItem);
-        } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS && !item.isEnabled()) {
-            IDrawerItem newItem = new PrimaryDrawerItem()
-                    .withName(this.getString(R.string.sidebar_skills))
-                    .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            drawer.updateItem(newItem);
+        if (user.getPreferences().getDisableClasses()) {
+            if (item != null) {
+                drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+            }
+        } else {
+            IDrawerItem newItem = item;
+            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && item.isEnabled()) {
+                newItem = new PrimaryDrawerItem()
+                        .withName(this.getString(R.string.sidebar_skills))
+                        .withEnabled(false)
+                        .withBadge(this.getString(R.string.unlock_lvl_11))
+                        .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS && !item.isEnabled()) {
+                newItem = new PrimaryDrawerItem()
+                        .withName(this.getString(R.string.sidebar_skills))
+                        .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+            }
+            if (item == null) {
+                drawer.addItemAtPosition(newItem, 1);
+            } else {
+                drawer.updateItem(newItem);
+
+            }
         }
+
     }
 
     @Override

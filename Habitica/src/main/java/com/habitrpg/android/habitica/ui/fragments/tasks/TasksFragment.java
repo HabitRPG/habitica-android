@@ -249,38 +249,37 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                                                 if (user.getFlags().getArmoireEnabled())
                                                     itemKeys.add("armoire");
 
-                                                contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
-                                                    @Override
-                                                    public void GotObject(List<ItemData> obj) {
-                                                        ArrayList<Task> buyableItems = new ArrayList<>();
+                                                contentCache.GetItemDataList(itemKeys, obj -> {
+                                                    ArrayList<Task> buyableItems = new ArrayList<>();
+                                                    if (!isAdded()) {
+                                                        return;
+                                                    }
+                                                    for (ItemData item : obj) {
+                                                        Task reward = new Task();
+                                                        reward.text = item.text;
+                                                        reward.notes = item.notes;
+                                                        reward.value = item.value;
+                                                        reward.setType("reward");
+                                                        reward.specialTag = "item";
+                                                        reward.setId(item.key);
 
-                                                        for (ItemData item : obj) {
-                                                            Task reward = new Task();
-                                                            reward.text = item.text;
-                                                            reward.notes = item.notes;
-                                                            reward.value = item.value;
-                                                            reward.setType("reward");
-                                                            reward.specialTag = "item";
-                                                            reward.setId(item.key);
-
-                                                            if (item.key.equals("armoire")) {
-                                                                if (user.getFlags().getArmoireEmpty()) {
-                                                                    reward.notes = getResources().getString(R.string.armoireNotesEmpty);
-                                                                } else {
-                                                                    long gearCount = new Select().count()
-                                                                            .from(ItemData.class)
-                                                                            .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                                                    .and(Condition.column("owned").isNull())
-                                                                            ).count();
-                                                                    reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
-                                                                }
+                                                        if (item.key.equals("armoire")) {
+                                                            if (user.getFlags().getArmoireEmpty()) {
+                                                                reward.notes = getResources().getString(R.string.armoireNotesEmpty);
+                                                            } else {
+                                                                long gearCount = new Select().count()
+                                                                        .from(ItemData.class)
+                                                                        .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
+                                                                                .and(Condition.column("owned").isNull())
+                                                                        ).count();
+                                                                reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
                                                             }
-
-                                                            buyableItems.add(reward);
                                                         }
 
-                                                        callBack.GotAdditionalItems(buyableItems);
+                                                        buyableItems.add(reward);
                                                     }
+
+                                                    callBack.GotAdditionalItems(buyableItems);
                                                 });
                                             }
 
@@ -450,7 +449,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
-        Task task = (Task) event.task;
+        Task task = event.task;
         if (event.created) {
             this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
             updateTags(event.task.getTags());
