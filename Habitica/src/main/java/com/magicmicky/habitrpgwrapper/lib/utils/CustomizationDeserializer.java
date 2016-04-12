@@ -62,18 +62,11 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
             }
         } else {
 
-            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").isNot("background")).queryList();
+            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").is("background")).queryList();
 
             for (Customization customization : existingCustomizations) {
-                if(object.has(customization.getType())) {
-                    JsonObject nestedObject = object.get(customization.getType()).getAsJsonObject();
-                    if (customization.getCustomizationSet() != null) {
-                        if (nestedObject.has(customization.getCustomizationSet())) {
-                            nestedObject = nestedObject.get(customization.getCustomizationSet()).getAsJsonObject();
-                        } else {
-                            continue;
-                        }
-                    }
+                if(object.has(customization.getCustomizationSet())) {
+                    JsonObject nestedObject = object.get(customization.getCustomizationSet()).getAsJsonObject();
                     if (nestedObject.has(customization.getIdentifier())) {
                         customizations.add(this.parseBackground(customization, customization.getCustomizationSet(), customization.getIdentifier(), nestedObject.get(customization.getIdentifier()).getAsJsonObject()));
                         nestedObject.remove(customization.getIdentifier());
