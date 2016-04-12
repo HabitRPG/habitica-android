@@ -144,6 +144,7 @@ public class HabitRPGUser extends BaseModel {
 
     public void setItems(Items items) {
         this.items = items;
+        this.items.user_id = id;
     }
 
     public void setBalance(double balance) {
@@ -241,7 +242,6 @@ public class HabitRPGUser extends BaseModel {
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
         if (dailys != null) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
@@ -64,19 +65,19 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
 
                 switch (position) {
                     case 0: {
-                        fragment.setImage(getResources().getDrawable(R.drawable.intro_1));
+                        fragment.setImage(ResourcesCompat.getDrawable(getResources(), R.drawable.intro_1, null));
                         fragment.setTitle(getString(R.string.intro_1_title));
                         fragment.setDescription(getString(R.string.intro_1_description));
                         break;
                     }
                     case 1: {
-                        fragment.setImage(getResources().getDrawable(R.drawable.intro_2));
+                        fragment.setImage(ResourcesCompat.getDrawable(getResources(), R.drawable.intro_2, null));
                         fragment.setTitle(getString(R.string.intro_2_title));
                         fragment.setDescription(getString(R.string.intro_2_description));
                         break;
                     }
                     case 2: {
-                        fragment.setImage(getResources().getDrawable(R.drawable.intro_3));
+                        fragment.setImage(ResourcesCompat.getDrawable(getResources(), R.drawable.intro_3, null));
                         fragment.setTitle(getString(R.string.intro_3_title));
                         fragment.setDescription(getString(R.string.intro_3_description));
                         break;

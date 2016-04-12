@@ -186,14 +186,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
         }
 
-        ((Activity) context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
+        ((Activity) context).runOnUiThread(() -> {
+            notifyDataSetChanged();
 
-                if (parentAdapter != null) {
-                    parentAdapter.notifyDataSetChanged();
-                }
+            if (parentAdapter != null) {
+                parentAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -473,14 +470,11 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         }
 
 		public void expandCheckboxTouchArea(final View expandedView, final View checkboxView){
-			expandedView.post(new Runnable() {
-				@Override
-				public void run() {
-					Rect rect = new Rect();
-					expandedView.getHitRect(rect);
-					expandedView.setTouchDelegate(new TouchDelegate(rect, checkboxView));
-				}
-			});
+			expandedView.post(() -> {
+                Rect rect = new Rect();
+                expandedView.getHitRect(rect);
+                expandedView.setTouchDelegate(new TouchDelegate(rect, checkboxView));
+            });
 		}
     }
 
@@ -578,21 +572,15 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         private AlertDialog createGearDialog(LinearLayout contentViewForDialog) {
             return new AlertDialog.Builder(context)
-                    .setPositiveButton(R.string.reward_dialog_buy, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            BuyRewardCommand event = new BuyRewardCommand();
-                            event.Reward = Item;
-                            EventBus.getDefault().post(event);
-                        }
+                    .setPositiveButton(R.string.reward_dialog_buy, (dialog, which) -> {
+                        BuyRewardCommand event = new BuyRewardCommand();
+                        event.Reward = Item;
+                        EventBus.getDefault().post(event);
                     })
                     .setTitle(binding.getReward().getText())
                     .setView(contentViewForDialog)
-                    .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
+                    .setNegativeButton(R.string.reward_dialog_dismiss, (dialog, which) -> {
+                        dialog.dismiss();
                     }).create();
         }
 

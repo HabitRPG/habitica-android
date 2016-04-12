@@ -138,40 +138,37 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 } else if (item instanceof QuestContent) {
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.invite_party)));
                 }
-                menu.setSelectionRunnable(new BottomSheetMenuSelectionRunnable() {
-                    @Override
-                    public void selectedItemAt(Integer index) {
-                        if (!(item instanceof QuestContent) && index == 0) {
-                            SellItemCommand event = new SellItemCommand();
-                            event.item = item;
-                            EventBus.getDefault().post(event);
-                            if (item.getOwned() > 1) {
-                                item.setOwned(item.getOwned()-1);
-                                notifyItemChanged(getAdapterPosition());
-                            } else {
-                                itemList.remove(getAdapterPosition());
-                                notifyItemRemoved(getAdapterPosition());
-                            }
+                menu.setSelectionRunnable(index -> {
+                    if (!(item instanceof QuestContent) && index == 0) {
+                        SellItemCommand event = new SellItemCommand();
+                        event.item = item;
+                        EventBus.getDefault().post(event);
+                        if (item.getOwned() > 1) {
+                            item.setOwned(item.getOwned()-1);
+                            notifyItemChanged(getAdapterPosition());
+                        } else {
+                            itemList.remove(getAdapterPosition());
+                            notifyItemRemoved(getAdapterPosition());
+                        }
 
-                            return;
-                        }
-                        if (item instanceof Egg) {
-                            HatchingCommand event = new HatchingCommand();
-                            event.usingEgg = (Egg)item;
-                            EventBus.getDefault().post(event);
-                        } else if (item instanceof Food) {
-                            FeedCommand event = new FeedCommand();
-                            event.usingFood = (Food)item;
-                            EventBus.getDefault().post(event);
-                        } else if (item instanceof HatchingPotion) {
-                            HatchingCommand event = new HatchingCommand();
-                            event.usingHatchingPotion = (HatchingPotion)item;
-                            EventBus.getDefault().post(event);
-                        } else if (item instanceof QuestContent) {
-                            InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
-                            event.questKey = item.getKey();
-                            EventBus.getDefault().post(event);
-                        }
+                        return;
+                    }
+                    if (item instanceof Egg) {
+                        HatchingCommand event = new HatchingCommand();
+                        event.usingEgg = (Egg)item;
+                        EventBus.getDefault().post(event);
+                    } else if (item instanceof Food) {
+                        FeedCommand event = new FeedCommand();
+                        event.usingFood = (Food)item;
+                        EventBus.getDefault().post(event);
+                    } else if (item instanceof HatchingPotion) {
+                        HatchingCommand event = new HatchingCommand();
+                        event.usingHatchingPotion = (HatchingPotion)item;
+                        EventBus.getDefault().post(event);
+                    } else if (item instanceof QuestContent) {
+                        InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
+                        event.questKey = item.getKey();
+                        EventBus.getDefault().post(event);
                     }
                 });
                 menu.show();

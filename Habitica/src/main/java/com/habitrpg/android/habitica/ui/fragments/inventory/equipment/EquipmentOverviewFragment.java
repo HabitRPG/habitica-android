@@ -92,115 +92,32 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         costumeWeaponView = costumeGroupView.findViewById(R.id.outfit_weapon);
         costumeShieldView = costumeGroupView.findViewById(R.id.outfit_shield);
 
-        battleGearHeadView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("head", user.getItems().getGear().getEquipped().getHead(), false);
-            }
-        });
-        battleGearHeadAccessoryView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("headAccessory", user.getItems().getGear().getEquipped().getHeadAccessory(), false);
-            }
-        });
-        battleGearEyewearView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("eyewear", user.getItems().getGear().getEquipped().getEyeWear(), false);
-            }
-        });
-        battleGearArmorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("armor", user.getItems().getGear().getEquipped().getArmor(), false);
-            }
-        });
-        battleGearBackView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("back", user.getItems().getGear().getEquipped().getBack(), false);
-            }
-        });
-        battleGearBodyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("body", user.getItems().getGear().getEquipped().getBody(), false);
-            }
-        });
-        battleGearWeaponView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("weapon", user.getItems().getGear().getEquipped().getWeapon(), false);
-            }
-        });
-        battleGearShieldView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("shield", user.getItems().getGear().getEquipped().getShield(), false);
-            }
-        });
+        battleGearHeadView.setOnClickListener(v1 -> displayEquipmentDetailList("head", user.getItems().getGear().getEquipped().getHead(), false));
+        battleGearHeadAccessoryView.setOnClickListener(v1 -> displayEquipmentDetailList("headAccessory", user.getItems().getGear().getEquipped().getHeadAccessory(), false));
+        battleGearEyewearView.setOnClickListener(v1 -> displayEquipmentDetailList("eyewear", user.getItems().getGear().getEquipped().getEyeWear(), false));
+        battleGearArmorView.setOnClickListener(v1 -> displayEquipmentDetailList("armor", user.getItems().getGear().getEquipped().getArmor(), false));
+        battleGearBackView.setOnClickListener(v1 -> displayEquipmentDetailList("back", user.getItems().getGear().getEquipped().getBack(), false));
+        battleGearBodyView.setOnClickListener(v1 -> displayEquipmentDetailList("body", user.getItems().getGear().getEquipped().getBody(), false));
+        battleGearWeaponView.setOnClickListener(v1 -> displayEquipmentDetailList("weapon", user.getItems().getGear().getEquipped().getWeapon(), false));
+        battleGearShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getEquipped().getShield(), false));
 
 
-        costumeHeadView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("head", user.getItems().getGear().getCostume().getHead(), true);
-            }
-        });
-        costumeHeadAccessoryView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("headAccessory", user.getItems().getGear().getCostume().getHeadAccessory(), true);
-            }
-        });
-        costumeEyewearView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("eyewear", user.getItems().getGear().getCostume().getEyeWear(), true);
-            }
-        });
-        costumeArmorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("armor", user.getItems().getGear().getCostume().getArmor(), true);
-            }
-        });
-        costumeBackView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("back", user.getItems().getGear().getCostume().getBack(), true);
-            }
-        });
-        costumeBodyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("body", user.getItems().getGear().getCostume().getBody(), true);
-            }
-        });
-        costumeWeaponView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("weapon", user.getItems().getGear().getCostume().getWeapon(), true);
-            }
-        });
-        costumeShieldView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true);
-            }
-        });
+        costumeHeadView.setOnClickListener(v1 -> displayEquipmentDetailList("head", user.getItems().getGear().getCostume().getHead(), true));
+        costumeHeadAccessoryView.setOnClickListener(v1 -> displayEquipmentDetailList("headAccessory", user.getItems().getGear().getCostume().getHeadAccessory(), true));
+        costumeEyewearView.setOnClickListener(v1 -> displayEquipmentDetailList("eyewear", user.getItems().getGear().getCostume().getEyeWear(), true));
+        costumeArmorView.setOnClickListener(v1 -> displayEquipmentDetailList("armor", user.getItems().getGear().getCostume().getArmor(), true));
+        costumeBackView.setOnClickListener(v1 -> displayEquipmentDetailList("back", user.getItems().getGear().getCostume().getBack(), true));
+        costumeBodyView.setOnClickListener(v1 -> displayEquipmentDetailList("body", user.getItems().getGear().getCostume().getBody(), true));
+        costumeWeaponView.setOnClickListener(v1 -> displayEquipmentDetailList("weapon", user.getItems().getGear().getCostume().getWeapon(), true));
+        costumeShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true));
 
-        this.costumeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                UpdateUserCommand command = new UpdateUserCommand();
-                Map<String, Object> updateData = new HashMap<>();
-                updateData.put("preferences.costume", isChecked);
-                command.updateData = updateData;
+        this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            UpdateUserCommand command = new UpdateUserCommand();
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("preferences.costume", isChecked);
+            command.updateData = updateData;
 
-                EventBus.getDefault().post(command);
-            }
+            EventBus.getDefault().post(command);
         });
 
         if (this.nameMapping == null) {

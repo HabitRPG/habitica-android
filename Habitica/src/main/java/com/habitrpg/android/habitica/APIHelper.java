@@ -98,13 +98,10 @@ public class APIHelper implements ErrorHandler, Profiler {
         Crashlytics.getInstance().core.setUserName(cfg.getUser());
         Amplitude.getInstance().setUserId(cfg.getUser());
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request) {
-                request.addHeader("x-api-key", cfg.getApi());
-                request.addHeader("x-api-user", cfg.getUser());
-                request.addHeader("x-client", "habitica-android");
-            }
+        RequestInterceptor requestInterceptor = request -> {
+            request.addHeader("x-api-key", cfg.getApi());
+            request.addHeader("x-api-user", cfg.getUser());
+            request.addHeader("x-client", "habitica-android");
         };
 
         Type taskTagClassListType = new TypeToken<List<TaskTag>>() {
@@ -226,10 +223,8 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
     public void retrieveUser(final HabitRPGUserCallback callback) {
-        new Thread(new Runnable() {
-            public void run() {
-                apiService.getUser(callback);
-            }
+        new Thread(() -> {
+            apiService.getUser(callback);
         }).start();
     }
 
@@ -346,23 +341,19 @@ public class APIHelper implements ErrorHandler, Profiler {
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString){
-        HabiticaApplication.currentActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                if (!(HabiticaApplication.currentActivity).isFinishing()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                            .setTitle(resourceTitleString)
-                            .setMessage(resourceMessageString)
-                            .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
+        HabiticaApplication.currentActivity.runOnUiThread(() -> {
+            if (!(HabiticaApplication.currentActivity).isFinishing()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+                        .setTitle(resourceTitleString)
+                        .setMessage(resourceMessageString)
+                        .setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                        });
 
-                    if (!resourceTitleString.isEmpty()) {
-                        builder.setIcon(R.drawable.ic_warning_black);
-                    }
-
-                    builder.show();
+                if (!resourceTitleString.isEmpty()) {
+                    builder.setIcon(R.drawable.ic_warning_black);
                 }
+
+                builder.show();
             }
         });
     }

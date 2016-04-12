@@ -179,28 +179,22 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 priceLabel.setText(String.valueOf(customization.getPrice()));
 
                 AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setPositiveButton(R.string.purchase_button, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (customization.getPrice() > gemBalance) {
-                                    OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                    event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
-                                    EventBus.getDefault().post(event);
-                                    return;
-                                }
-                                UnlockPathCommand event = new UnlockPathCommand();
-                                event.path = customization.getPath();
-                                event.balanceDiff = customization.getPrice() / 4;
+                        .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
+                            if (customization.getPrice() > gemBalance) {
+                                OpenMenuItemCommand event = new OpenMenuItemCommand();
+                                event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
                                 EventBus.getDefault().post(event);
+                                return;
                             }
+                            UnlockPathCommand event = new UnlockPathCommand();
+                            event.path = customization.getPath();
+                            event.balanceDiff = customization.getPrice() / 4;
+                            EventBus.getDefault().post(event);
                         })
                         .setTitle(context.getString(R.string.purchase_customization))
                         .setView(dialogContent)
-                        .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
+                        .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
+                            dialog1.dismiss();
                         }).create();
                 dialog.show();
                 return;
@@ -261,37 +255,31 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 priceLabel.setText(String.valueOf(set.price));
 
                 AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setPositiveButton(R.string.purchase_button, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (set.price > gemBalance) {
-                                    OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                    event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
-                                    EventBus.getDefault().post(event);
-                                    return;
-                                }
-                                UnlockPathCommand event = new UnlockPathCommand();
-                                String path = "";
-                                for (Object obj : customizationList) {
-                                    if (obj.getClass().equals(Customization.class)) {
-                                        Customization customization = (Customization) obj;
-                                        if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
-                                            path = path + "," + customization.getPath();
-                                        }
+                        .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
+                            if (set.price > gemBalance) {
+                                OpenMenuItemCommand event = new OpenMenuItemCommand();
+                                event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
+                                EventBus.getDefault().post(event);
+                                return;
+                            }
+                            UnlockPathCommand event = new UnlockPathCommand();
+                            String path = "";
+                            for (Object obj : customizationList) {
+                                if (obj.getClass().equals(Customization.class)) {
+                                    Customization customization = (Customization) obj;
+                                    if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
+                                        path = path + "," + customization.getPath();
                                     }
                                 }
-                                event.path = path;
-                                event.balanceDiff = set.price / 4;
-                                EventBus.getDefault().post(event);
                             }
+                            event.path = path;
+                            event.balanceDiff = set.price / 4;
+                            EventBus.getDefault().post(event);
                         })
                         .setTitle(context.getString(R.string.purchase_set_title, set.text))
                         .setView(dialogContent)
-                        .setNegativeButton(R.string.reward_dialog_dismiss, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
+                        .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
+                            dialog1.dismiss();
                         }).create();
                 dialog.show();
         }

@@ -35,13 +35,7 @@ public class EmojiKeyboard {
 
         popup.setSizeForSoftKeyboard();
 
-        popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                changeEmojiKeyboardIcon(emojiButton, context, false);
-            }
-        });
+        popup.setOnDismissListener(() -> changeEmojiKeyboardIcon(emojiButton, context, false));
 
         popup.setOnSoftKeyboardOpenCloseListener(new EmojiPopup.OnSoftKeyboardOpenCloseListener() {
 
@@ -57,62 +51,50 @@ public class EmojiKeyboard {
             }
         });
 
-        popup.setOnEmojiconClickedListener(new EmojiGridView.OnEmojiconClickedListener() {
+        popup.setOnEmojiconClickedListener(emojicon -> {
+            if (emojiEditText == null || emojicon == null) {
+                return;
+            }
 
-            @Override
-            public void onEmojiconClicked(Emojicon emojicon) {
-                if (emojiEditText == null || emojicon == null) {
-                    return;
-                }
-
-                int start = emojiEditText.getSelectionStart();
-                int end = emojiEditText.getSelectionEnd();
-                if (start < 0) {
-                    emojiEditText.append(emojicon.getEmoji());
-                } else {
-                    emojiEditText.getText().replace(Math.min(start, end),
-                            Math.max(start, end), emojicon.getEmoji(), 0,
-                            emojicon.getEmoji().length());
-                }
+            int start = emojiEditText.getSelectionStart();
+            int end = emojiEditText.getSelectionEnd();
+            if (start < 0) {
+                emojiEditText.append(emojicon.getEmoji());
+            } else {
+                emojiEditText.getText().replace(Math.min(start, end),
+                        Math.max(start, end), emojicon.getEmoji(), 0,
+                        emojicon.getEmoji().length());
             }
         });
 
-        popup.setOnEmojiconBackspaceClickedListener(new EmojiPopup.OnEmojiconBackspaceClickedListener() {
-
-            @Override
-            public void onEmojiconBackspaceClicked(View v) {
-                KeyEvent event = new KeyEvent(
-                        0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-                emojiEditText.dispatchKeyEvent(event);
-            }
+        popup.setOnEmojiconBackspaceClickedListener(v -> {
+            KeyEvent event = new KeyEvent(
+                    0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
+            emojiEditText.dispatchKeyEvent(event);
         });
 
-        emojiButton.setOnClickListener(new View.OnClickListener() {
+        emojiButton.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            if(!popup.isShowing()){
 
-                if(!popup.isShowing()){
-
-                    if(popup.isKeyBoardOpen()){
-                        popup.showAtBottom();
-                        changeEmojiKeyboardIcon(emojiButton, context, true);
-                    }
-
-                    else{
-                        emojiEditText.setFocusableInTouchMode(true);
-                        emojiEditText.requestFocus();
-                        popup.showAtBottomPending();
-                        final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.showSoftInput(emojiEditText, InputMethodManager.SHOW_IMPLICIT);
-                        changeEmojiKeyboardIcon(emojiButton, context, true);
-                    }
+                if(popup.isKeyBoardOpen()){
+                    popup.showAtBottom();
+                    changeEmojiKeyboardIcon(emojiButton, context, true);
                 }
 
                 else{
-                    popup.dismiss();
-                    changeEmojiKeyboardIcon(emojiButton, context, false);
+                    emojiEditText.setFocusableInTouchMode(true);
+                    emojiEditText.requestFocus();
+                    popup.showAtBottomPending();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(emojiEditText, InputMethodManager.SHOW_IMPLICIT);
+                    changeEmojiKeyboardIcon(emojiButton, context, true);
                 }
+            }
+
+            else{
+                popup.dismiss();
+                changeEmojiKeyboardIcon(emojiButton, context, false);
             }
         });
     }

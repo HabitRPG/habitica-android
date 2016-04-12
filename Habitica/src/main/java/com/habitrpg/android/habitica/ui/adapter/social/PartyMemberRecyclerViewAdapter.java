@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -131,7 +132,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
                 default:
                     colorResourceID = R.color.task_gray;
             }
-            ViewHelper.SetBackgroundTint(classBackground, resources.getColor(colorResourceID));
+            ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(context, colorResourceID));
             userName.setText(user.getProfile().getName());
         }
     }

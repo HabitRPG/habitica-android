@@ -71,7 +71,7 @@ public class AboutActivity extends BaseActivity {
             }
         });
 
-        tabLayout.setTabsFromPagerAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
     }
 
     @Override

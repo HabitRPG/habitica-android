@@ -204,15 +204,12 @@ public class LoginActivity extends AppCompatActivity
 		}
 	};
 
-	private View.OnClickListener mForgotPWClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-            String url = getString(R.string.SP_address_default);
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-		}
-	};
+	private View.OnClickListener mForgotPWClick = v -> {
+String url = getString(R.string.SP_address_default);
+Intent i = new Intent(Intent.ACTION_VIEW);
+i.setData(Uri.parse(url));
+startActivity(i);
+    };
 
 
 	public static void expand(final View v) {
@@ -393,10 +390,8 @@ public class LoginActivity extends AppCompatActivity
 		new android.support.v7.app.AlertDialog.Builder(this)
 					.setTitle(R.string.login_validation_error_title)
 					.setMessage(resourceMessageString)
-					.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					})
+					.setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                    })
 					.setIcon(R.drawable.ic_warning_black)
 					.show();
 	}

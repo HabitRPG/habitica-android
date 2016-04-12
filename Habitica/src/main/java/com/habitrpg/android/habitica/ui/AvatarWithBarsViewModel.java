@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
@@ -135,7 +136,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             maxHP = 50;
         }
 
-        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ctx.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     public void setHpBarData(Stats stats) {
@@ -148,7 +149,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxHealth = valueMax;
         }
-        setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), context.getResources().getColor(R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), ContextCompat.getColor(context, R.color.hpColor), R.drawable.ic_header_heart);
     }
 
     public void setXpBarData(float value, int valueMax){
@@ -157,7 +158,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxExp = valueMax;
         }
-        setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), context.getResources().getColor(R.color.xpColor), R.drawable.ic_header_exp);
+        setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), ContextCompat.getColor(context, R.color.xpColor), R.drawable.ic_header_exp);
     }
 
     public void setMpBarData(float value, int valueMax){
@@ -166,7 +167,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxMana = valueMax;
         }
-        setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), context.getResources().getColor(R.color.mpColor), R.drawable.ic_header_magic);
+        setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), ContextCompat.getColor(context, R.color.mpColor), R.drawable.ic_header_magic);
     }
 
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values

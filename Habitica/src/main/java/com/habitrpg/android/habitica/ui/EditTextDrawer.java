@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +59,7 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer, EditTe
             this.view = view;
             ButterKnife.bind(this, view);
 
-            ViewHelper.SetBackgroundTint(btnAdd, view.getResources().getColor(R.color.brand));
+            ViewHelper.SetBackgroundTint(btnAdd, ContextCompat.getColor(view.getContext(), R.color.brand));
 
             btnAdd.setOnClickListener(this);
         }

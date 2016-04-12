@@ -207,9 +207,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         tags = bundle.getStringArrayList(TAG_IDS_KEY);
         tagsName = bundle.getStringArrayList(TAG_NAMES_KEY);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
-        userSelectedTags = new ArrayList<CharSequence>();
-        allTags = new ArrayList<CheckBox>();
-        userSelectedTagIds = new ArrayList<String>();
+        userSelectedTags = new ArrayList<>();
+        allTags = new ArrayList<>();
+        userSelectedTagIds = new ArrayList<>();
         if (taskType == null) {
             return;
         }
@@ -219,32 +219,20 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         btnDelete.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this, R.color.worse_10));
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(getString(R.string.taskform_delete_title))
-                        .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (task != null) {
-                            task.delete();
-                        }
-
-                        finish();
-                        dismissKeyboard();
-
-                        EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+        btnDelete.setOnClickListener(view -> new AlertDialog.Builder(view.getContext())
+                .setTitle(getString(R.string.taskform_delete_title))
+                .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                    if (task != null) {
+                        task.delete();
                     }
-                }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
-            }
-        });
+
+                    finish();
+                    dismissKeyboard();
+
+                    EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+                }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
+            dialog.dismiss();
+        }).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
@@ -296,14 +284,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (taskType.equals("todo")) {
             dueDatePickerLayout.removeView(dueDatePickerText);
             //Allows user to decide if they want to add a due date or not
-            dueDateCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (buttonView.isChecked()) {
-                        dueDatePickerLayout.addView(dueDatePickerText);
-                    } else {
-                        dueDatePickerLayout.removeView(dueDatePickerText);
-                    }
+            dueDateCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (buttonView.isChecked()) {
+                    dueDatePickerLayout.addView(dueDatePickerText);
+                } else {
+                    dueDatePickerLayout.removeView(dueDatePickerText);
                 }
             });
         } else {
@@ -355,13 +340,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         popup = new EmojiPopup(emojiToggle0.getRootView(), this, ContextCompat.getColor(this, R.color.brand));
 
         popup.setSizeForSoftKeyboard();
-        popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                changeEmojiKeyboardIcon(false);
-            }
-        });
+        popup.setOnDismissListener(() -> changeEmojiKeyboardIcon(false));
         popup.setOnSoftKeyboardOpenCloseListener(new EmojiPopup.OnSoftKeyboardOpenCloseListener() {
 
             @Override
@@ -376,37 +355,29 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
-        popup.setOnEmojiconClickedListener(new EmojiGridView.OnEmojiconClickedListener() {
-
-            @Override
-            public void onEmojiconClicked(Emojicon emojicon) {
-                EmojiEditText emojiEditText = null;
-                if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
-                    return;
-                } else {
-                    emojiEditText = (EmojiEditText) getCurrentFocus();
-                }
-                int start = emojiEditText.getSelectionStart();
-                int end = emojiEditText.getSelectionEnd();
-                if (start < 0) {
-                    emojiEditText.append(emojicon.getEmoji());
-                } else {
-                    emojiEditText.getText().replace(Math.min(start, end),
-                            Math.max(start, end), emojicon.getEmoji(), 0,
-                            emojicon.getEmoji().length());
-                }
+        popup.setOnEmojiconClickedListener(emojicon -> {
+            EmojiEditText emojiEditText = null;
+            if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
+                return;
+            } else {
+                emojiEditText = (EmojiEditText) getCurrentFocus();
+            }
+            int start = emojiEditText.getSelectionStart();
+            int end = emojiEditText.getSelectionEnd();
+            if (start < 0) {
+                emojiEditText.append(emojicon.getEmoji());
+            } else {
+                emojiEditText.getText().replace(Math.min(start, end),
+                        Math.max(start, end), emojicon.getEmoji(), 0,
+                        emojicon.getEmoji().length());
             }
         });
 
-        popup.setOnEmojiconBackspaceClickedListener(new EmojiPopup.OnEmojiconBackspaceClickedListener() {
-
-            @Override
-            public void onEmojiconBackspaceClicked(View v) {
-                if (isEmojiEditText(getCurrentFocus())) {
-                    KeyEvent event = new KeyEvent(
-                            0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-                    getCurrentFocus().dispatchKeyEvent(event);
-                }
+        popup.setOnEmojiconBackspaceClickedListener(v -> {
+            if (isEmojiEditText(getCurrentFocus())) {
+                KeyEvent event = new KeyEvent(
+                        0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
+                getCurrentFocus().dispatchKeyEvent(event);
             }
         });
 
@@ -450,11 +421,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH));
-            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setCalendar(Calendar.getInstance().getTime());
-                }
+            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), (dialog, which) -> {
+                setCalendar(Calendar.getInstance().getTime());
             });
             updateDateText();
         }
@@ -534,14 +502,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String checklist = newCheckListEditText.getText().toString();
-                ChecklistItem item = new ChecklistItem(checklist);
-                checklistAdapter.addItem(item);
-                newCheckListEditText.setText("");
-            }
+        button.setOnClickListener(v -> {
+            String checklist = newCheckListEditText.getText().toString();
+            ChecklistItem item = new ChecklistItem(checklist);
+            checklistAdapter.addItem(item);
+            newCheckListEditText.setText("");
         });
     }
 
@@ -554,14 +519,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             tagsCheckBox.setText(tagsName.get(i)); // set text Name
             tagsCheckBox.setId(i);
             //This is to check if the tag was selected by the user. Similar to onClickListener
-            tagsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (buttonView.isChecked()) {
-                        userSelectedTags.add(buttonView.getText());
-                    } else {
-                        userSelectedTags.remove(buttonView.getText());
-                    }
+            tagsCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (buttonView.isChecked()) {
+                    userSelectedTags.add(buttonView.getText());
+                } else {
+                    userSelectedTags.remove(buttonView.getText());
                 }
             });
             row.addView(tagsCheckBox);

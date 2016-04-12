@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.menu;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class BottomSheetMenuItem {
         TextView textView = (TextView)menuItemView.findViewById(R.id.textView);
         textView.setText(this.title);
         if (this.isDestructive) {
-            textView.setTextColor(context.getResources().getColor(R.color.worse_50));
+            textView.setTextColor(ContextCompat.getColor(context, R.color.worse_50));
         }
         return menuItemView;
     }

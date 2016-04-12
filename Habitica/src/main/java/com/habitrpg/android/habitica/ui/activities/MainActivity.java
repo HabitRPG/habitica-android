@@ -291,17 +291,14 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
                 mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
             }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateHeader();
-                    updateSidebar();
-                    saveLoginInformation();
-                    if (activeFragment != null) {
-                        activeFragment.updateUserData(user);
-                    } else {
-                        drawer.setSelectionAtPosition(1);
-                    }
+            runOnUiThread(() -> {
+                updateHeader();
+                updateSidebar();
+                saveLoginInformation();
+                if (activeFragment != null) {
+                    activeFragment.updateUserData(user);
+                } else {
+                    drawer.setSelectionAtPosition(1);
                 }
             });
 
@@ -309,31 +306,29 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
             if (!fromLocalDb) {
                 // Update the oldEntries
-                new Thread(new Runnable() {
-                    public void run() {
+                new Thread(() -> {
 
-                        // multiple crashes because user is null
-                        if (user != null) {
-                            ArrayList<Task> allTasks = new ArrayList<>();
-                            allTasks.addAll(user.getDailys());
-                            allTasks.addAll(user.getTodos());
-                            allTasks.addAll(user.getHabits());
-                            allTasks.addAll(user.getRewards());
+                    // multiple crashes because user is null
+                    if (user != null) {
+                        ArrayList<Task> allTasks = new ArrayList<>();
+                        allTasks.addAll(user.getDailys());
+                        allTasks.addAll(user.getTodos());
+                        allTasks.addAll(user.getHabits());
+                        allTasks.addAll(user.getRewards());
 
-                            loadAndRemoveOldTasks(user.getId(), allTasks);
+                        loadAndRemoveOldTasks(user.getId(), allTasks);
 
-                            ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
+                        ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
 
-                            for (Task t : allTasks) {
-                                if (t.checklist != null) {
-                                    allChecklistItems.addAll(t.checklist);
-                                }
+                        for (Task t : allTasks) {
+                            if (t.checklist != null) {
+                                allChecklistItems.addAll(t.checklist);
                             }
-
-                            loadAndRemoveOldChecklists(allChecklistItems);
-
-                            updateOwnedEquipment(user.getItems().getGear().owned);
                         }
+
+                        loadAndRemoveOldChecklists(allChecklistItems);
+
+                        updateOwnedEquipment(user.getItems().getGear().owned);
                     }
                 }).start();
             }
@@ -489,11 +484,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
         profile.withName(user.getProfile().getName());
         sideUserPicture.setUser(this.user);
-        sideUserPicture.setPictureWithRunnable(new UserPictureRunnable() {
-            public void run(Bitmap avatar) {
-                profile.withIcon(avatar);
-                accountHeader.updateProfile(profile);
-            }
+        sideUserPicture.setPictureWithRunnable(avatar -> {
+            profile.withIcon(avatar);
+            accountHeader.updateProfile(profile);
         });
         accountHeader.updateProfile(profile);
 
@@ -686,7 +679,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     @Subscribe
     public void onEvent(SellItemCommand event) {
-        String itemType = "";
         this.mAPIHelper.apiService.sellItem(event.item.getType(), event.item.getKey(), new Callback<HabitRPGUser>() {
             @Override
             public void success(HabitRPGUser habitRPGUser, Response response) {
@@ -719,11 +711,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.hatched_pet_title, event.usingHatchingPotion.getText(), event.usingEgg.getText()))
                         .setView(petWrapper)
-                        .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
+                        .setPositiveButton(R.string.close, (dialog1, which) -> {
+                            dialog1.dismiss();
                         })
                         .create();
                 dialog.show();
@@ -798,14 +787,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private void showSnackBarForDataReceived(final TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
-
-                    }
-                }, 3000L);
+                new Handler().postDelayed(() -> showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP), 3000L);
             }
         }
     }
@@ -882,12 +864,9 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             this.faintDialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.faint_header)
                     .setView(customView)
-                    .setPositiveButton(R.string.faint_button, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            faintDialog = null;
-                            mAPIHelper.reviveUser(new HabitRPGUserCallback(MainActivity.this));
-                        }
+                    .setPositiveButton(R.string.faint_button, (dialog, which) -> {
+                        faintDialog = null;
+                        mAPIHelper.reviveUser(new HabitRPGUserCallback(MainActivity.this));
                     })
                     .create();
 

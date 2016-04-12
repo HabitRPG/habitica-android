@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import android.content.res.Resources;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,14 +72,14 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
         Skill skill;
 
-        Resources resources;
+        Context context;
 
         public SkillViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
 
-            resources = itemView.getResources();
+            context = itemView.getContext();
 
             priceButton.setOnClickListener(this);
         }
@@ -87,16 +88,16 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             this.skill = skill;
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
-            priceButton.setText(String.format(resources.getString(R.string.mana_price_button), skill.mana));
+            priceButton.setText(String.format(context.getResources().getString(R.string.mana_price_button), skill.mana));
 
             if (skill.mana > mana) {
                 priceButton.setEnabled(false);
                 priceButton.setBackgroundResource(R.color.task_gray);
-                skillNameTextView.setTextColor(resources.getColor(R.color.task_gray));
-                skillNotesTextView.setTextColor(resources.getColor(R.color.task_gray));
+                skillNameTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray));
+                skillNotesTextView.setTextColor(ContextCompat.getColor(context, R.color.task_gray));
             } else {
-                skillNameTextView.setTextColor(resources.getColor(android.R.color.black));
-                skillNotesTextView.setTextColor(resources.getColor(android.R.color.black));
+                skillNameTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+                skillNotesTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
                 priceButton.setEnabled(true);
             }
         }

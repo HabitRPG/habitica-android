@@ -9,6 +9,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -134,7 +135,7 @@ public class SectionIconDrawerItem extends AbstractDrawerItem<SectionIconDrawerI
         viewHolder.view.setEnabled(false);
 
         //define the text color
-        viewHolder.name.setTextColor(ctx.getResources().getColor(R.color.white));
+        viewHolder.name.setTextColor(ContextCompat.getColor(ctx, R.color.white));
 
         //set the text for the name
         StringHolder.applyTo(this.getName(), viewHolder.name);

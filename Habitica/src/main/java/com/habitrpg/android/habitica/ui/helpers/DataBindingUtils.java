@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
@@ -47,7 +49,7 @@ public class DataBindingUtils {
     @BindingAdapter("bind:cardColor")
     public static void setCardColor(CardView cardView, int color) {
         if (color > 0) {
-            color = cardView.getResources().getColor(color);
+            color = ContextCompat.getColor(cardView.getContext(), color);
         }
         cardView.setCardBackgroundColor(color);
     }
@@ -55,7 +57,7 @@ public class DataBindingUtils {
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(CheckBox view, int color) {
         if (color > 0) {
-            color = view.getResources().getColor(color);
+            color = ContextCompat.getColor(view.getContext(), color);
         }
         ViewHelper.SetBackgroundTint(view, color);
     }
@@ -63,7 +65,7 @@ public class DataBindingUtils {
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(Button view, int color) {
         if (color > 0) {
-            color = view.getResources().getColor(color);
+            color = ContextCompat.getColor(view.getContext(), color);
         }
         ViewHelper.SetBackgroundTint(view, color);
     }
@@ -71,7 +73,7 @@ public class DataBindingUtils {
     @BindingAdapter("app:backgroundColor")
     public static void setBackgroundTintColor(View view, int color) {
         if (color > 0) {
-            color = view.getResources().getColor(color);
+            color = ContextCompat.getColor(view.getContext(), color);
         }
         view.setBackgroundColor(color);
     }
@@ -79,7 +81,7 @@ public class DataBindingUtils {
     @BindingAdapter("app:foregroundColor")
     public static void setForegroundTintColor(TextView view, int color) {
         if (color > 0) {
-            color = view.getResources().getColor(color);
+            color = ContextCompat.getColor(view.getContext(), color);
         }
         view.setTextColor(color);
     }
@@ -100,8 +102,10 @@ public class DataBindingUtils {
 
     @BindingAdapter("app:rounded_background")
     public static void setRoundedBackground(View view, int color) {
-        Drawable drawable = view.getResources().getDrawable(R.drawable.layout_rounded_bg);
-        drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        Drawable drawable = ResourcesCompat.getDrawable(view.getResources(), R.drawable.layout_rounded_bg, null);
+        if (drawable != null) {
+            drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        }
         if (Build.VERSION.SDK_INT < 16) {
             view.setBackgroundDrawable(drawable);
         } else {
@@ -112,7 +116,7 @@ public class DataBindingUtils {
     @BindingAdapter("app:rounded_background_int")
     public static void setRoundedBackgroundInt(View view, int color) {
         if (color != 0) {
-            setRoundedBackground(view, view.getResources().getColor(color));
+            setRoundedBackground(view, ContextCompat.getColor(view.getContext(), color));
         }
     }
 

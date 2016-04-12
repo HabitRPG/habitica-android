@@ -71,12 +71,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final View finalView = view;
-        finalView.post(new Runnable() {
-            @Override
-            public void run() {
-                setGridSpanCount(finalView.getWidth());
-            }
-        });
+        finalView.post(() -> setGridSpanCount(finalView.getWidth()));
     }
 
     @Override
@@ -100,16 +95,13 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = new Runnable() {
-            @Override
-            public void run() {
-                List<Mount> items = new Select().from(Mount.class).where(Condition.CombinedCondition
-                        .begin(Condition.column("animal").eq(animalType))
-                        .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
-                adapter.setItemList(items);
-                animals = items;
-                adapter.setOwnedMapping(user.getItems().getMounts());
-            }
+        Runnable itemsRunnable = () -> {
+            List<Mount> items = new Select().from(Mount.class).where(Condition.CombinedCondition
+                    .begin(Condition.column("animal").eq(animalType))
+                    .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
+            adapter.setItemList(items);
+            animals = items;
+            adapter.setOwnedMapping(user.getItems().getMounts());
         };
         itemsRunnable.run();
 

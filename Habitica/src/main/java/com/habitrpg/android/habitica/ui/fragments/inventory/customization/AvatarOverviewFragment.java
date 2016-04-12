@@ -83,62 +83,17 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         this.setSize(this.user.getPreferences().getSize());
         avatarSizeSpinner.setOnItemSelectedListener(this);
 
-        avatarShirtView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("shirt", null);
-            }
-        });
+        avatarShirtView.setOnClickListener(v1 -> displayCustomizationFragment("shirt", null));
 
-        avatarSkinView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("skin", null);
-            }
-        });
+        avatarSkinView.setOnClickListener(v1 -> displayCustomizationFragment("skin", null));
 
-        avatarHairColorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "color");
-            }
-        });
-        avatarHairBangsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "bangs");
-            }
-        });
-        avatarHairBaseView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "base");
-            }
-        });
-        avatarHairFlowerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "flower");
-            }
-        });
-        avatarHairBeardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "beard");
-            }
-        });
-        avatarHairMustacheView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("hair", "mustache");
-            }
-        });
-        avatarBackgroundView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayCustomizationFragment("background", null);
-            }
-        });
+        avatarHairColorView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "color"));
+        avatarHairBangsView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "bangs"));
+        avatarHairBaseView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "base"));
+        avatarHairFlowerView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "flower"));
+        avatarHairBeardView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "beard"));
+        avatarHairMustacheView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "mustache"));
+        avatarBackgroundView.setOnClickListener(v1 -> displayCustomizationFragment("background", null));
 
         return v;
     }

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         ButterKnife.bind(this, v);
 
         btnPurchaseGems.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnPurchaseGems, container.getResources().getColor(R.color.brand));
+        ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(container.getContext(), R.color.brand));
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
@@ -107,17 +108,14 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             @Override
             public void onReady(BillingRequests billingRequests, String s, boolean b) {
 
-                checkout.loadInventory().whenLoaded(new Inventory.Listener() {
-                    @Override
-                    public void onLoaded(Inventory.Products products) {
+                checkout.loadInventory().whenLoaded(products -> {
 
-                        Inventory.Product gems = products.get(ProductTypes.IN_APP);
+                    Inventory.Product gems = products.get(ProductTypes.IN_APP);
 
-                        java.util.List<Sku> skus = gems.getSkus();
+                    java.util.List<Sku> skus = gems.getSkus();
 
-                        for (Sku sku : skus){
-                            updateBuyButtonText(sku.price);
-                        }
+                    for (Sku sku : skus){
+                        updateBuyButtonText(sku.price);
                     }
                 });
 

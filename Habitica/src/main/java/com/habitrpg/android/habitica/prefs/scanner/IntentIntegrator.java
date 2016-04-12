@@ -303,24 +303,18 @@ public class IntentIntegrator {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(activity);
         downloadDialog.setTitle(title);
         downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String packageName = targetApplications.get(0);
-                Uri uri = Uri.parse("market://details?id=" + packageName);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                try {
-                    activity.startActivity(intent);
-                } catch (ActivityNotFoundException anfe) {
-                    // Hmm, market is not installed
-                    Log.w(TAG, "Google Play is not installed; cannot install " + packageName, anfe);
-                }
+        downloadDialog.setPositiveButton(buttonYes, (dialogInterface, i) -> {
+            String packageName = targetApplications.get(0);
+            Uri uri = Uri.parse("market://details?id=" + packageName);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            try {
+                activity.startActivity(intent);
+            } catch (ActivityNotFoundException anfe) {
+                // Hmm, market is not installed
+                Log.w(TAG, "Google Play is not installed; cannot install " + packageName, anfe);
             }
         });
-        downloadDialog.setNegativeButton(buttonNo, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        downloadDialog.setNegativeButton(buttonNo, (dialogInterface, i) -> {
         });
         return downloadDialog.show();
     }

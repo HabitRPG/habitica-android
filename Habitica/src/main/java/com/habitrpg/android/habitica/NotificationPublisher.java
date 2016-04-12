@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -73,7 +74,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         builder.setContentIntent(intent);
 
         if (currentapiVersion >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setColor(context.getResources().getColor(R.color.brand_300));
+            builder.setColor(ContextCompat.getColor(context, R.color.brand_300));
         }
 
         if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN){

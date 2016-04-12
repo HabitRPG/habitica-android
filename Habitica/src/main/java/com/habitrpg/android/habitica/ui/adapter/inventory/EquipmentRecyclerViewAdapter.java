@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,14 +74,14 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     ItemData gear;
 
-    Resources resources;
+    Context context;
 
     public GearViewHolder(View itemView) {
         super(itemView);
 
         ButterKnife.bind(this, itemView);
 
-        resources = itemView.getResources();
+        context = itemView.getContext();
         itemView.setOnClickListener(this);
     }
 
@@ -90,7 +92,7 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
         if (gear.key.equals(equippedGear)) {
             this.equippedIndicator.setVisibility(View.VISIBLE);
-            this.gearContainer.setBackgroundColor(resources.getColor(R.color.brand_700));
+            this.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.brand_700));
         } else {
             this.equippedIndicator.setVisibility(View.GONE);
             this.gearContainer.setBackgroundResource(R.drawable.selection_highlight);

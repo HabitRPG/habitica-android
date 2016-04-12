@@ -58,12 +58,7 @@ public class MainDrawerBuilder {
                 .addProfiles(
                         new ProfileDrawerItem()
                 )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
+                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
                 .withSelectionListEnabledForSingleProfile(false);
     }
 
@@ -102,87 +97,84 @@ public class MainDrawerBuilder {
 
                 )
                 .withStickyFooterDivider(false)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        BaseMainFragment fragment = null;
-                        Class newActivityClass = null;
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    BaseMainFragment fragment = null;
+                    Class newActivityClass = null;
 
-                        int identifier = (int) drawerItem.getIdentifier();
-                        switch (identifier) {
-                            case SIDEBAR_TASKS: {
-                                fragment = new TasksFragment();
-                                break;
-                            }
-                            case SIDEBAR_SKILLS: {
-                                fragment = new SkillsFragment();
-                                break;
-                            }
-                            case SIDEBAR_PARTY: {
-                                fragment = new PartyFragment();
-                                break;
-                            }
-                            case SIDEBAR_GUILDS: {
-                                fragment = new GuildsOverviewFragment();
-                                break;
-                            }
-                            case SIDEBAR_TAVERN: {
-                                fragment = new TavernFragment();
-                                break;
-                            }
-                            case SIDEBAR_AVATAR: {
-                                fragment = new AvatarOverviewFragment();
-                                break;
-                            }
-                            case SIDEBAR_EQUIPMENT: {
-                                fragment = new EquipmentOverviewFragment();
-                                break;
-                            }
-                            case SIDEBAR_ITEMS: {
-                                fragment = new ItemsFragment();
-                                break;
-                            }
-                            case SIDEBAR_STABLE: {
-                                fragment = new StableFragment();
-                                break;
-                            }
-                            case SIDEBAR_PURCHASE: {
-                                fragment = new GemsPurchaseFragment();
-                                break;
-                            }
-                            case SIDEBAR_NEWS: {
-                                fragment= new NewsFragment();
-                                break;
-                            }
-                            case SIDEBAR_SETTINGS: {
-                                newActivityClass = PrefsActivity.class;
-                                break;
-                            }
-                            case SIDEBAR_HELP: {
-                                fragment = new FAQOverviewFragment();
-                                break;
-                            }
-                            case SIDEBAR_ABOUT: {
-                                newActivityClass = AboutActivity.class;
-                                break;
-                            }
+                    int identifier = (int) drawerItem.getIdentifier();
+                    switch (identifier) {
+                        case SIDEBAR_TASKS: {
+                            fragment = new TasksFragment();
+                            break;
                         }
-
-                        if (fragment != null) {
-                            fragment.fragmentSidebarPosition = position;
-                            activity.displayFragment(fragment);
-                            return false;
+                        case SIDEBAR_SKILLS: {
+                            fragment = new SkillsFragment();
+                            break;
                         }
-                        if (newActivityClass != null) {
-                            Intent passUserId = new Intent(activity, newActivityClass);
-                            passUserId.putExtra("userId", activity.getUserID());
-                            activity.startActivity(passUserId);
-                            return false;
+                        case SIDEBAR_PARTY: {
+                            fragment = new PartyFragment();
+                            break;
                         }
-
-
-                        return true;
+                        case SIDEBAR_GUILDS: {
+                            fragment = new GuildsOverviewFragment();
+                            break;
+                        }
+                        case SIDEBAR_TAVERN: {
+                            fragment = new TavernFragment();
+                            break;
+                        }
+                        case SIDEBAR_AVATAR: {
+                            fragment = new AvatarOverviewFragment();
+                            break;
+                        }
+                        case SIDEBAR_EQUIPMENT: {
+                            fragment = new EquipmentOverviewFragment();
+                            break;
+                        }
+                        case SIDEBAR_ITEMS: {
+                            fragment = new ItemsFragment();
+                            break;
+                        }
+                        case SIDEBAR_STABLE: {
+                            fragment = new StableFragment();
+                            break;
+                        }
+                        case SIDEBAR_PURCHASE: {
+                            fragment = new GemsPurchaseFragment();
+                            break;
+                        }
+                        case SIDEBAR_NEWS: {
+                            fragment= new NewsFragment();
+                            break;
+                        }
+                        case SIDEBAR_SETTINGS: {
+                            newActivityClass = PrefsActivity.class;
+                            break;
+                        }
+                        case SIDEBAR_HELP: {
+                            fragment = new FAQOverviewFragment();
+                            break;
+                        }
+                        case SIDEBAR_ABOUT: {
+                            newActivityClass = AboutActivity.class;
+                            break;
+                        }
                     }
+
+                    if (fragment != null) {
+                        fragment.fragmentSidebarPosition = position;
+                        activity.displayFragment(fragment);
+                        return false;
+                    }
+                    if (newActivityClass != null) {
+                        Intent passUserId = new Intent(activity, newActivityClass);
+                        passUserId.putExtra("userId", activity.getUserID());
+                        activity.startActivity(passUserId);
+                        return false;
+                    }
+
+
+                    return true;
                 });
 
         return builder;

@@ -210,22 +210,18 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onEvent(final FlagChatMessageCommand cmd) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
-                            @Override
-                            public void success(Void aVoid, Response response) {
-                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
-                            }
+                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> {
+                    apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id, new Callback<Void>() {
+                        @Override
+                        public void success(Void aVoid, Response response) {
+                            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
+                        }
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                            }
-                        });                    }
-                })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });                    })
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
                 });
         builder.show();
     }

@@ -145,33 +145,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             floatingMenu = (FloatingActionMenu) view;
         }
         FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
-        habit_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewTaskActivity("habit");
-            }
-        });
+        habit_fab.setOnClickListener(v1 -> openNewTaskActivity("habit"));
         FloatingActionButton daily_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_daily);
-        daily_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewTaskActivity("daily");
-            }
-        });
+        daily_fab.setOnClickListener(v1 -> openNewTaskActivity("daily"));
         FloatingActionButton todo_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_todo);
-        todo_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewTaskActivity("todo");
-            }
-        });
+        todo_fab.setOnClickListener(v1 -> openNewTaskActivity("todo"));
         FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
-        reward_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewTaskActivity("reward");
-            }
-        });
+        reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
 
         this.activity.filterDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.END);
 
@@ -252,66 +232,63 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         layoutOfType = R.layout.reward_item_card;
                         adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, TasksFragment.this.tagsHelper,
                                 layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, activity, 0,
-                                new HabitItemRecyclerViewAdapter.IAdditionalEntries() {
-                                    @Override
-                                    public void GetAdditionalEntries(final IReceiveNewEntries callBack) {
+                                callBack -> {
 
-                                        // request buyable gear
-                                        if (mAPIHelper != null) {
-                                            mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
-                                                @Override
-                                                public void success(List<ItemData> itemDatas, Response response) {
+                                    // request buyable gear
+                                    if (mAPIHelper != null) {
+                                        mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
+                                            @Override
+                                            public void success(List<ItemData> itemDatas, Response response) {
 
-                                                    // get itemdata list
-                                                    ArrayList<String> itemKeys = new ArrayList<>();
-                                                    for (ItemData item : itemDatas) {
-                                                        itemKeys.add(item.key);
-                                                    }
-                                                    itemKeys.add("potion");
-                                                    if (user.getFlags().getArmoireEnabled())
-                                                        itemKeys.add("armoire");
+                                                // get itemdata list
+                                                ArrayList<String> itemKeys = new ArrayList<>();
+                                                for (ItemData item : itemDatas) {
+                                                    itemKeys.add(item.key);
+                                                }
+                                                itemKeys.add("potion");
+                                                if (user.getFlags().getArmoireEnabled())
+                                                    itemKeys.add("armoire");
 
-                                                    contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
-                                                        @Override
-                                                        public void GotObject(List<ItemData> obj) {
-                                                            ArrayList<Task> buyableItems = new ArrayList<>();
+                                                contentCache.GetItemDataList(itemKeys, new ContentCache.GotContentEntryCallback<List<ItemData>>() {
+                                                    @Override
+                                                    public void GotObject(List<ItemData> obj) {
+                                                        ArrayList<Task> buyableItems = new ArrayList<>();
 
-                                                            for (ItemData item : obj) {
-                                                                Task reward = new Task();
-                                                                reward.text = item.text;
-                                                                reward.notes = item.notes;
-                                                                reward.value = item.value;
-                                                                reward.setType("reward");
-                                                                reward.specialTag = "item";
-                                                                reward.setId(item.key);
+                                                        for (ItemData item : obj) {
+                                                            Task reward = new Task();
+                                                            reward.text = item.text;
+                                                            reward.notes = item.notes;
+                                                            reward.value = item.value;
+                                                            reward.setType("reward");
+                                                            reward.specialTag = "item";
+                                                            reward.setId(item.key);
 
-                                                                if (item.key.equals("armoire")) {
-                                                                    if (user.getFlags().getArmoireEmpty()) {
-                                                                        reward.notes = getResources().getString(R.string.armoireNotesEmpty);
-                                                                    } else {
-                                                                        long gearCount = new Select().count()
-                                                                                .from(ItemData.class)
-                                                                                .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                                                        .and(Condition.column("owned").isNull())
-                                                                                ).count();
-                                                                        reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
-                                                                    }
+                                                            if (item.key.equals("armoire")) {
+                                                                if (user.getFlags().getArmoireEmpty()) {
+                                                                    reward.notes = getResources().getString(R.string.armoireNotesEmpty);
+                                                                } else {
+                                                                    long gearCount = new Select().count()
+                                                                            .from(ItemData.class)
+                                                                            .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
+                                                                                    .and(Condition.column("owned").isNull())
+                                                                            ).count();
+                                                                    reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
                                                                 }
-
-                                                                buyableItems.add(reward);
                                                             }
 
-                                                            callBack.GotAdditionalItems(buyableItems);
+                                                            buyableItems.add(reward);
                                                         }
-                                                    });
-                                                }
 
-                                                @Override
-                                                public void failure(RetrofitError error) {
+                                                        callBack.GotAdditionalItems(buyableItems);
+                                                    }
+                                                });
+                                            }
 
-                                                }
-                                            });
-                                        }
+                                            @Override
+                                            public void failure(RetrofitError error) {
+
+                                            }
+                                        });
                                     }
                                 });
 
@@ -373,12 +350,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 if (fragm != null) {
                     final HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
                     adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.loadContent(true);
-                        }
-                    });
+                    AsyncTask.execute(() -> adapter.loadContent(true));
                 }
             }
         }

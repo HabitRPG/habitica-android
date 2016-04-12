@@ -72,13 +72,7 @@ public class GroupFormActivity extends BaseActivity {
         popup = new EmojiPopup(emojiButton.getRootView(), this, ContextCompat.getColor(this, R.color.brand));
 
         popup.setSizeForSoftKeyboard();
-        popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                changeEmojiKeyboardIcon(false);
-            }
-        });
+        popup.setOnDismissListener(() -> changeEmojiKeyboardIcon(false));
         popup.setOnSoftKeyboardOpenCloseListener(new EmojiPopup.OnSoftKeyboardOpenCloseListener() {
 
             @Override
@@ -93,37 +87,29 @@ public class GroupFormActivity extends BaseActivity {
             }
         });
 
-        popup.setOnEmojiconClickedListener(new EmojiGridView.OnEmojiconClickedListener() {
-
-            @Override
-            public void onEmojiconClicked(Emojicon emojicon) {
-                EmojiEditText emojiEditText = null;
-                if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
-                    return;
-                } else {
-                    emojiEditText = (EmojiEditText) getCurrentFocus();
-                }
-                int start = emojiEditText.getSelectionStart();
-                int end = emojiEditText.getSelectionEnd();
-                if (start < 0) {
-                    emojiEditText.append(emojicon.getEmoji());
-                } else {
-                    emojiEditText.getText().replace(Math.min(start, end),
-                            Math.max(start, end), emojicon.getEmoji(), 0,
-                            emojicon.getEmoji().length());
-                }
+        popup.setOnEmojiconClickedListener(emojicon -> {
+            EmojiEditText emojiEditText = null;
+            if (getCurrentFocus() == null || !isEmojiEditText(getCurrentFocus()) || emojicon == null) {
+                return;
+            } else {
+                emojiEditText = (EmojiEditText) getCurrentFocus();
+            }
+            int start = emojiEditText.getSelectionStart();
+            int end = emojiEditText.getSelectionEnd();
+            if (start < 0) {
+                emojiEditText.append(emojicon.getEmoji());
+            } else {
+                emojiEditText.getText().replace(Math.min(start, end),
+                        Math.max(start, end), emojicon.getEmoji(), 0,
+                        emojicon.getEmoji().length());
             }
         });
 
-        popup.setOnEmojiconBackspaceClickedListener(new EmojiPopup.OnEmojiconBackspaceClickedListener() {
-
-            @Override
-            public void onEmojiconBackspaceClicked(View v) {
-                if (isEmojiEditText(getCurrentFocus())) {
-                    KeyEvent event = new KeyEvent(
-                            0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-                    getCurrentFocus().dispatchKeyEvent(event);
-                }
+        popup.setOnEmojiconBackspaceClickedListener(v -> {
+            if (isEmojiEditText(getCurrentFocus())) {
+                KeyEvent event = new KeyEvent(
+                        0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
+                getCurrentFocus().dispatchKeyEvent(event);
             }
         });
 

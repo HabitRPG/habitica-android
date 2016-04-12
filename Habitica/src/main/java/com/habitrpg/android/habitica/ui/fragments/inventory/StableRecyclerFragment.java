@@ -112,12 +112,7 @@ public class StableRecyclerFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final View finalView = view;
-        finalView.post(new Runnable() {
-            @Override
-            public void run() {
-                setGridSpanCount(finalView.getWidth());
-            }
-        });
+        finalView.post(() -> setGridSpanCount(finalView.getWidth()));
     }
 
     @Override

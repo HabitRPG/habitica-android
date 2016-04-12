@@ -81,12 +81,7 @@ public class UserPicture {
             BitmapUtils.saveToFile(currentCacheFileName, res);
             if (this.imageView != null) {
                 final Bitmap image = res;
-                imageView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        imageView.setImageBitmap(image);
-                    }
-                });
+                imageView.post(() -> imageView.setImageBitmap(image));
             } else {
                 this.runnable.run(res);
             }

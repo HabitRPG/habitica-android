@@ -21,16 +21,9 @@ public class DatePickerFragment extends DialogFragment {
         int day = c.get(Calendar.DAY_OF_MONTH);
         // Create a new instance of TimePickerDialog and return it
         Dialog d = new DatePickerDialog(getActivity(), (OnDateSetListener) getTargetFragment(), year, month, day);
-        d.setOnDismissListener(new OnDismissListener() {
-
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-            }
+        d.setOnDismissListener(dialog -> {
         });
-        d.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-            }
+        d.setOnCancelListener(dialog -> {
         });
         return d;
     }

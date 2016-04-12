@@ -118,16 +118,13 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 	}
 
     private void resetAnimatingStatusWithDelay(final View child) {
-        child.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				isAnimating = false;
-                FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) child).getChildAt(0);
-                if (isOffScreen && fab != null) {
-                    fab.hideMenu(false);
-                }
-            }
-		}, FAB_ANIMATION_DURATION);
+        child.postDelayed(() -> {
+            isAnimating = false;
+FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) child).getChildAt(0);
+if (isOffScreen && fab != null) {
+fab.hideMenu(false);
+}
+}, FAB_ANIMATION_DURATION);
     }
 
     private void slideFabOffScreen(View view){
