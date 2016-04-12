@@ -113,8 +113,6 @@
   <string name="no_party_message">你沒有加入任何隊伍。如想加入隊伍，請訪問網頁版。</string>
   <string name="forgot_pw_btn">忘記密碼</string>
   <string name="forgot_pw_tv">忘記了您的密碼？請訪問網頁版。</string>
-  <string name="tavern.inn.checkOut">離開客棧</string>
-  <string name="tavern.inn.rest">在客棧休息</string>
   <string name="reward.dialog.buy">購買</string>
   <string name="reward.dialog.dismiss">解散</string>
   <string name="party">隊伍</string>
@@ -269,12 +267,10 @@
   <string name="feed_to_pet">餵食寵物</string>
   <string name="hatch_egg">孵化寵物蛋</string>
   <string name="invite_party">隊伍邀請</string>
-  <string name="dialog_feeding" formatted="false">餵食 %s 寵物</string>
   <string name="use_animal">用</string>
   <string name="feed">餵</string>
   <string name="hatch_with" formatted="false">用 %s 孵化寵物</string>
   <string name="close">關閉</string>
   <string name="share">分享</string>
-  <string name="notification_pet_fed" formatted="false">你餵了你的 %s!</string>
   <string name="notification_purchase" formatted="false">%s 被買下來了</string>
 </resources>

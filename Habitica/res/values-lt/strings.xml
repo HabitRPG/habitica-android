@@ -113,8 +113,6 @@
   <string name="no_party_message">Tu nesi grupėje. Norėdama(s) prisidėti prie grupės, apsilankyk svetainėje.</string>
   <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
   <string name="forgot_pw_tv">Pamiršote Slaptažodį? Naudokite mobilią Svetainę.</string>
-  <string name="tavern.inn.checkOut">Išeiti iš Užeigos</string>
-  <string name="tavern.inn.rest">Pailsėti Užeigoje</string>
   <string name="reward.dialog.buy">Pirkti</string>
   <string name="reward.dialog.dismiss">Atšaukti</string>
   <string name="party">Grupė</string>
@@ -269,12 +267,10 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="feed_to_pet">Maitinti Gyvūnui</string>
   <string name="hatch_egg">Išperėti kiaušinį</string>
   <string name="invite_party">Pakviesti Grupę</string>
-  <string name="dialog_feeding" formatted="false">Pamaitinti %s su </string>
   <string name="use_animal">Panaudoti</string>
   <string name="feed">Maitinti</string>
   <string name="hatch_with" formatted="false">Užauginti gyvūną su %s</string>
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
-  <string name="notification_pet_fed" formatted="false">Pamaitinai savo %s!</string>
   <string name="notification_purchase" formatted="false">%s nupirkta</string>
 </resources>

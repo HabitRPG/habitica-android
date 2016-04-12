@@ -113,8 +113,6 @@
   <string name="no_party_message">Você não está em um grupo. Para entrar em um grupo, por favor visite o site.</string>
   <string name="forgot_pw_btn">Esqueci a senha</string>
   <string name="forgot_pw_tv">Esqueceu a senha? Por favor use o Site móvel.</string>
-  <string name="tavern.inn.checkOut">Sair da Pousada</string>
-  <string name="tavern.inn.rest">Descansar na Pousada</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Desfazer</string>
   <string name="party">Grupo</string>
@@ -269,12 +267,10 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="feed_to_pet">Alimentar mascote</string>
   <string name="hatch_egg">Chocar com ovo</string>
   <string name="invite_party">Convidar equipe</string>
-  <string name="dialog_feeding" formatted="false">Alimentar %s com</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with" formatted="false">Chocar mascote com %s</string>
   <string name="close">Fechar</string>
   <string name="share">Compartilhar</string>
-  <string name="notification_pet_fed" formatted="false">Você alimentou seu %s!</string>
   <string name="notification_purchase" formatted="false">%s foi comprado</string>
 </resources>

@@ -113,8 +113,6 @@
   <string name="no_party_message">Nie jesteś w drużynie. Żeby dołączyć do drużyny odwiedź stronę internetową.</string>
   <string name="forgot_pw_btn">Zapomniane hasło</string>
   <string name="forgot_pw_tv">Zapomniane hasło? Użyj mobilnej strony internetowej.</string>
-  <string name="tavern.inn.checkOut">Wymelduj się z Gospody</string>
-  <string name="tavern.inn.rest">Odpoczywaj w Gospodzie</string>
   <string name="reward.dialog.buy">Kup</string>
   <string name="reward.dialog.dismiss">Anuluj</string>
   <string name="party">Drużyna</string>
@@ -252,4 +250,11 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="ago_hours" formatted="false">%d godzin temu</string>
   <string name="ago_1hour">1 godzinę temu</string>
   <string name="today">Dzisiaj</string>
+  <string name="sidebar_items">Przedmioty</string>
+  <string name="eggs">Jaja</string>
+  <string name="hatching_potions">Eliksiry wyklucia</string>
+  <string name="food">Jedzonko</string>
+  <string name="quests">Misje</string>
+  <string name="pets">Zwierzaki</string>
+  <string name="mounts">Wierzchowce</string>
 </resources>

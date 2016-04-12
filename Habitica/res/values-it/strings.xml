@@ -113,8 +113,6 @@
   <string name="no_party_message">Non sei in una squadra. Per unirti ad una squadra, per favore visita il sito web di Habitica.</string>
   <string name="forgot_pw_btn">Password dimenticata</string>
   <string name="forgot_pw_tv">Hai dimenticato la password? Per favore usa il sito web di Habitica.</string>
-  <string name="tavern.inn.checkOut">Esci dalla Locanda</string>
-  <string name="tavern.inn.rest">Riposa nella Locanda</string>
   <string name="reward.dialog.buy">Compra</string>
   <string name="reward.dialog.dismiss">Annulla</string>
   <string name="party">Squadra</string>
@@ -262,10 +260,12 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="sell" formatted="false">Vendi (%s Oro)</string>
   <string name="feed_to_pet">Dai ad animale</string>
   <string name="invite_party">Invita squadra</string>
-  <string name="dialog_feeding" formatted="false">Nutri %s con</string>
   <string name="use_animal">Usa</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
-  <string name="notification_pet_fed" formatted="false">Hai nutrito il tuo %s!</string>
   <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
+  <string name="sectionpets">Animali base</string>
+  <string name="sectionspecialPets">Animali rari</string>
+  <string name="sectionmounts">Cavalcature base</string>
+  <string name="sectionspecialMounts">Cavalcature rare</string>
 </resources>

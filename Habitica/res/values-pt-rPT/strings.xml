@@ -112,8 +112,6 @@
   <string name="no_party_message">Tu não estás numa equipa. Para te juntares a uma equipa, por favor visita o website.</string>
   <string name="forgot_pw_btn">Password esquecida</string>
   <string name="forgot_pw_tv">Esqueceste a password? Por favor utiliza a versão móvel do Website</string>
-  <string name="tavern.inn.checkOut">Sai da taberna</string>
-  <string name="tavern.inn.rest">Descansa na taberna</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Destituir</string>
   <string name="party">Equipa</string>
@@ -258,22 +256,30 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="quests">Missões</string>
   <string name="pets">Animais de estimação</string>
   <string name="mounts">Montadas</string>
-  <string name="armoireEquipment" formatted="false">Encontraste uma peça rara de Equipamento na Sala de Armas: %s! Fenomenal!</string>
-  <string name="armoireExp">Lutas com a Sala de Armas e ganhas experiência. Boa!</string>
-  <string name="armoireNotesFull" formatted="false">Abre a Sala de Armas para receberes aleatoriamente uma peça de Equipamento, Experiência ou comida! Número de peças de Equipamento que restam por encontrar: %d</string>
-  <string name="armoireLastItem">Encontraste a última peça rara de Equipamento na Sala de Armas Encantada.</string>
-  <string name="armoireNotesEmpty">A Sala de Armas terá novos Equipamentos na primeira semana de cada mês. Até lá, continua a clicar para receberes Experiência e comida!</string>
+  <string name="armoireEquipment" formatted="false">Encontraste uma peça rara de Equipamento no Armário: %s! Fenomenal!</string>
+  <string name="armoireFood" formatted="false">Vasculhas o Armário e encontras %1$s %2$s. Que é que isto está aqui a fazer?</string>
+  <string name="armoireExp">Lutas com o Armário e ganhas experiência. Boa!</string>
+  <string name="armoireNotesFull" formatted="false">Abre o Armário para receberes aleatoriamente uma peça de Equipamento, Experiência ou comida! Número de peças de Equipamento que restam por encontrar: %d</string>
+  <string name="armoireLastItem">Encontraste a última peça rara de Equipamento no Armário Encantado.</string>
+  <string name="armoireNotesEmpty">O Armário terá novos Equipamentos na primeira semana de cada mês. Até lá, continua a clicar para receberes Experiência e comida!</string>
   <string name="sell" formatted="false">Vender (%s Ouro)</string>
   <string name="hatch_with_potion">Eclodir ovo com poção</string>
   <string name="feed_to_pet">Alimentar o animal</string>
   <string name="hatch_egg">Eclodir com ovo</string>
   <string name="invite_party">Convidar a equipa</string>
-  <string name="dialog_feeding" formatted="false">Alimentar %s com </string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with" formatted="false">Eclodir animal com %s</string>
+  <string name="hatched_pet_title" formatted="false">Um %1$s %2$s eclodiu do ovo!</string>
   <string name="close">Fechar</string>
   <string name="share">Partilhar</string>
-  <string name="notification_pet_fed" formatted="false">Alimentaste o teu %s!</string>
   <string name="notification_purchase" formatted="false">Compraste %s</string>
+  <string name="sectionpets">Animais de Estimação Base</string>
+  <string name="sectionpremiumPets">Animais de Estimação de Poções Mágicas</string>
+  <string name="sectionquestPets">Animais de Estimação de Missões</string>
+  <string name="sectionspecialPets">Animais de Estimação Raros</string>
+  <string name="sectionmounts">Montadas Base</string>
+  <string name="sectionpremiumMounts">Montadas de Poções Mágicas</string>
+  <string name="sectionquestMounts">Montadas de Missões</string>
+  <string name="sectionspecialMounts">Montadas Raras</string>
 </resources>

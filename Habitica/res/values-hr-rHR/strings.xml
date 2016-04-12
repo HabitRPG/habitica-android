@@ -112,8 +112,6 @@
   <string name="no_party_message">Nisi u grupi. Za pridruživanje grupi, posjetite stranicu.</string>
   <string name="forgot_pw_btn">Zaboravili Lozinku</string>
   <string name="forgot_pw_tv">Zaboravili Lozinku? Molimo koristite mobilnu Stranicu.</string>
-  <string name="tavern.inn.checkOut">Odjavi se iz Krčme</string>
-  <string name="tavern.inn.rest">Odmaraj se u Krčmi</string>
   <string name="reward.dialog.buy">Kupi</string>
   <string name="reward.dialog.dismiss">Zanemari</string>
   <string name="party">Partija</string>
@@ -259,6 +257,7 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="pets">Ljubimci</string>
   <string name="mounts">Životinje za jahanje</string>
   <string name="armoireEquipment" formatted="false">Našao si komad rijetke Opreme u Ormaru: %s!! Zakon!</string>
+  <string name="armoireFood" formatted="false">Premećeš po Ormaru i nalaziš %1$s %2$s. Što to radi ovdje?</string>
   <string name="armoireExp">Hrvaš se s Ormarom i zarađuješ iskustvo. Evo ti ovo!</string>
   <string name="armoireNotesFull" formatted="false">Otvori Ormar za nasumično dobivanje Opreme, Iskustva ili hrane! Ostalo komada opreme: %d</string>
   <string name="armoireLastItem">Našao si zadnji komad rijetke Opreme u Začaranom Ormaru.</string>
@@ -268,12 +267,19 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="feed_to_pet">Nahrani ljubimca</string>
   <string name="hatch_egg">Izlegni s jajetom</string>
   <string name="invite_party">Pozovi grupu</string>
-  <string name="dialog_feeding" formatted="false">Nahrani %s sa</string>
   <string name="use_animal">Koristi</string>
   <string name="feed">Nahrani</string>
   <string name="hatch_with" formatted="false">Izlegni ljubimca sa %s</string>
+  <string name="hatched_pet_title" formatted="false">%1$s %2$s se izlegao/la!</string>
   <string name="close">Zatvori</string>
   <string name="share">Podijeli</string>
-  <string name="notification_pet_fed" formatted="false">Hraniš svog/svoju %s!</string>
   <string name="notification_purchase" formatted="false">%s je kupljen/a</string>
+  <string name="sectionpets">Bazni Ljubimci</string>
+  <string name="sectionpremiumPets">Ljubimci Čarobnog Napitka</string>
+  <string name="sectionquestPets">Ljubimci s Pothvata</string>
+  <string name="sectionspecialPets">Rijetki Ljubimci</string>
+  <string name="sectionmounts">Životinje za jahanje</string>
+  <string name="sectionpremiumMounts">Životinje za jahanje Čarobnog Napitka </string>
+  <string name="sectionquestMounts">Životinje za jahanje s Pothvata</string>
+  <string name="sectionspecialMounts">Rijetke Životinje za jahanje</string>
 </resources>

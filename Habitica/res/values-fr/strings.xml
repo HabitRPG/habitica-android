@@ -113,8 +113,6 @@
   <string name="no_party_message">Vous ne faites pas partie d\'une équipe. Pour rejoindre une équipe, veuillez visiter le site.</string>
   <string name="forgot_pw_btn">Mot de passe oublié</string>
   <string name="forgot_pw_tv">Mot de passe oublié ? Veuillez vous rendre sur la version mobile du site.</string>
-  <string name="tavern.inn.checkOut">Quitter l\'Auberge</string>
-  <string name="tavern.inn.rest">Se reposer à l\'Auberge</string>
   <string name="reward.dialog.buy">Acheter</string>
   <string name="reward.dialog.dismiss">Annuler</string>
   <string name="party">Équipe</string>
@@ -270,14 +268,12 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="feed_to_pet">Donner au Familier</string>
   <string name="hatch_egg">Faire éclore avec l\'oeuf</string>
   <string name="invite_party">Inviter l\'Équipe</string>
-  <string name="dialog_feeding" formatted="false">Nourrir %s avec </string>
   <string name="use_animal">Utiliser</string>
   <string name="feed">Nourrir</string>
   <string name="hatch_with" formatted="false">Faire éclore le Familier avec %s</string>
   <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un·e %1$s %2$s !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
-  <string name="notification_pet_fed" formatted="false">Vous avez nourri votre %s!</string>
   <string name="notification_purchase" formatted="false">%s acheté</string>
   <string name="sectionpets">Familiers de Base</string>
   <string name="sectionpremiumPets">Familiers Magiques</string>

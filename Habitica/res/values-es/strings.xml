@@ -113,8 +113,6 @@
   <string name="no_party_message">No formas parte de ningún grupo. Para unirte a uno, entra en la página web.</string>
   <string name="forgot_pw_btn">He olvidado la contraseña</string>
   <string name="forgot_pw_tv">¿No recuerdas tu contraseña? Entra en el sitio web para móviles.</string>
-  <string name="tavern.inn.checkOut">Salir de la taberna</string>
-  <string name="tavern.inn.rest">Descansar en la taberna</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Descartar</string>
   <string name="party">Grupo</string>
@@ -252,4 +250,37 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="ago_hours" formatted="false">Hace %d horas</string>
   <string name="ago_1hour">Hace 1 hora</string>
   <string name="today">Hoy</string>
+  <string name="sidebar_items">Artículos</string>
+  <string name="eggs">Huevos</string>
+  <string name="hatching_potions">Pociones de nacimiento</string>
+  <string name="food">Comida</string>
+  <string name="quests">Misiones</string>
+  <string name="pets">Mascotas</string>
+  <string name="mounts">Monturas</string>
+  <string name="armoireEquipment" formatted="false">¡Genial! Has encontrado una prenda insólita en el ropero: %s.</string>
+  <string name="armoireFood" formatted="false">Rebuscando en el ropero, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
+  <string name="armoireExp">Te peleas con el ropero y ganas experiencia. ¡Ahí lo llevas!</string>
+  <string name="armoireNotesFull" formatted="false">Abre el ropero para recibir prendas especiales, experiencia o comida al azar. Prendas que te faltan por conseguir: %d.</string>
+  <string name="armoireLastItem">Has encontrado la última prenda insólita del ropero encantado.</string>
+  <string name="armoireNotesEmpty">El ropero dispone de nuevas prendas la primera semana de cada mes. Hasta entonces, sigue haciendo clic en él para ganar experiencia y comida.</string>
+  <string name="sell" formatted="false">Vender (%s de oro)</string>
+  <string name="hatch_with_potion">Mezclar con poción</string>
+  <string name="feed_to_pet">Alimentar a mascota</string>
+  <string name="hatch_egg">Mezclar con huevo</string>
+  <string name="invite_party">Invitar al grupo</string>
+  <string name="use_animal">Usar</string>
+  <string name="feed">Alimentar</string>
+  <string name="hatch_with" formatted="false">Criar mascota con %s</string>
+  <string name="hatched_pet_title" formatted="false">¡Ha nacido un/a %2$s %1$s!</string>
+  <string name="close">Cerrar</string>
+  <string name="share">Compartir</string>
+  <string name="notification_purchase" formatted="false">Has comprado %s</string>
+  <string name="sectionpets">Mascotas básicas</string>
+  <string name="sectionpremiumPets">Mascotas de pociones mágicas</string>
+  <string name="sectionquestPets">Mascotas de misiones</string>
+  <string name="sectionspecialPets">Mascotas insólitas</string>
+  <string name="sectionmounts">Monturas básicas</string>
+  <string name="sectionpremiumMounts">Monturas de pociones mágicas</string>
+  <string name="sectionquestMounts">Monturas de misiones</string>
+  <string name="sectionspecialMounts">Monturas insólitas</string>
 </resources>

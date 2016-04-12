@@ -113,8 +113,6 @@
   <string name="no_party_message">你没有加入任何队伍。如想加入队伍，请访问网页版。</string>
   <string name="forgot_pw_btn">忘记密码</string>
   <string name="forgot_pw_tv">忘记了您的密码？请访问网页版。</string>
-  <string name="tavern.inn.checkOut">离开客栈</string>
-  <string name="tavern.inn.rest">在客栈休息</string>
   <string name="reward.dialog.buy">购买</string>
   <string name="reward.dialog.dismiss">解散</string>
   <string name="party">队伍</string>
@@ -260,6 +258,7 @@
   <string name="pets">宠物</string>
   <string name="mounts">坐骑</string>
   <string name="armoireEquipment" formatted="false">您在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
+  <string name="armoireFood" formatted="false">你在魔法衣橱里找到了%1$s %2$s。它是用来做什么的？</string>
   <string name="armoireExp">你和大衣柜展开了殊死搏斗，并赢得了经验，尝尝这个吧！</string>
   <string name="armoireNotesFull" formatted="false">拉开 魔法衣橱 来获得随机的特殊装备，经验或者食物！剩余的装备：%d</string>
   <string name="armoireLastItem">您在魔法衣橱里找到了最后一件稀有装备。</string>
@@ -269,12 +268,19 @@
   <string name="feed_to_pet">喂养宠物</string>
   <string name="hatch_egg">孵化宠物蛋</string>
   <string name="invite_party">邀请队伍</string>
-  <string name="dialog_feeding" formatted="false">喂养%s用</string>
   <string name="use_animal">使用</string>
   <string name="feed">喂食</string>
   <string name="hatch_with" formatted="false">用%s孵化宠物</string>
+  <string name="hatched_pet_title" formatted="false">你孵化了一个 %1$s %2$s！</string>
   <string name="close">关闭</string>
   <string name="share">分享</string>
-  <string name="notification_pet_fed" formatted="false">你喂食了你的%s！</string>
   <string name="notification_purchase" formatted="false">已购买 %s</string>
+  <string name="sectionpets">基本宠物</string>
+  <string name="sectionpremiumPets">神奇药水宠物</string>
+  <string name="sectionquestPets">剧情任务宠物</string>
+  <string name="sectionspecialPets">稀有宠物</string>
+  <string name="sectionmounts">基本坐骑</string>
+  <string name="sectionpremiumMounts">神奇药水坐骑</string>
+  <string name="sectionquestMounts">剧情任务坐骑</string>
+  <string name="sectionspecialMounts">稀有坐骑</string>
 </resources>
