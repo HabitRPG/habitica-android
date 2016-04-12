@@ -382,9 +382,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(final CreateTagCommand event) {
+        UiUtils.dismissKeyboard(activity);
         final Tag t = new Tag();
         t.setName(event.tagName);
-
         if (mAPIHelper != null) {
             mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
                 @Override
