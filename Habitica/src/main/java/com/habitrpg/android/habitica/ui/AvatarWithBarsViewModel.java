@@ -96,34 +96,39 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-        lvlText.setText("Lvl " + user.getStats().getLvl() + " - " + userClass);
-        Drawable drawable;
-        switch (stats.get_class()) {
-            case warrior:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+        if (user.getPreferences().getDisableClasses()) {
+            lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
+            lvlText.setCompoundDrawables(null, null, null, null);
+        } else {
+            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass));
+            Drawable drawable;
+            switch (stats.get_class()) {
+                case warrior:
+                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
-                break;
-            case rogue:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
-                break;
-            case wizard:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
+                    break;
+                case rogue:
+                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
+                    break;
+                case wizard:
+                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
 
-                break;
-            case healer:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
+                    break;
+                case healer:
+                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
 
-                break;
-            case base:
-            default:
-                drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
+                    break;
+                case base:
+                default:
+                    drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 
+            }
+            if (drawable != null) {
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                        drawable.getMinimumHeight());
+            }
+            lvlText.setCompoundDrawables(drawable, null, null, null);
         }
-        if (drawable != null) {
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-                    drawable.getMinimumHeight());
-        }
-        lvlText.setCompoundDrawables(drawable, null, null, null);
 
         goldText.setText(String.valueOf(gp));
         silverText.setText(String.valueOf(sp));
