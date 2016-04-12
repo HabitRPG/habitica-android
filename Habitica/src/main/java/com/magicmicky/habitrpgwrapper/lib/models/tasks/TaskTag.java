@@ -36,6 +36,14 @@ public class TaskTag extends BaseModel {
             saveForeignKeyModel = false)
     public ForeignKeyContainer<Task> task;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Tag getTag() {
         return tag.toModel();
     }

@@ -120,11 +120,16 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     private static final int MIN_LEVEL_FOR_SKILLS = 11;
 
-    @Bind(R.id.floating_menu_wrapper) FrameLayout floatingMenuWrapper;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.detail_tabs) TabLayout detail_tabs;
-    @Bind(R.id.avatar_with_bars) View avatar_with_bars;
-    @Bind(R.id.overlayFrameLayout) FrameLayout overlayFrameLayout;
+    @Bind(R.id.floating_menu_wrapper)
+    FrameLayout floatingMenuWrapper;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.detail_tabs)
+    TabLayout detail_tabs;
+    @Bind(R.id.avatar_with_bars)
+    View avatar_with_bars;
+    @Bind(R.id.overlayFrameLayout)
+    FrameLayout overlayFrameLayout;
 
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
@@ -203,7 +208,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         //a state can arise in which the active fragment no longer has a
         //reference to the tabLayout (and all its adapters are null).
         //Recreate the fragment as a result.
-        if (activeFragment != null && activeFragment.tabLayout == null){
+        if (activeFragment != null && activeFragment.tabLayout == null) {
             activeFragment = null;
             drawer.setSelectionAtPosition(1);
         }
@@ -314,14 +319,21 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         loadAndRemoveOldTasks(user.getId(), allTasks);
 
                         ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
-
                         for (Task t : allTasks) {
                             if (t.checklist != null) {
                                 allChecklistItems.addAll(t.checklist);
                             }
                         }
-
                         loadAndRemoveOldChecklists(allChecklistItems);
+
+
+                        ArrayList<TaskTag> allTaskTags = new ArrayList<>();
+                        for (Task t : allTasks) {
+                            if (t.tags != null) {
+                                allTaskTags.addAll(t.tags);
+                            }
+                        }
+                        loadAndRemoveOldTaskTags(allTaskTags);
 
                         updateOwnedEquipment(user.getItems().getGear().owned);
                     }
@@ -423,6 +435,52 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
                     @Override
                     public boolean hasResult(BaseTransaction<List<ChecklistItem>> baseTransaction, List<ChecklistItem> items) {
+                        return items != null && items.size() > 0;
+                    }
+                });
+            }
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
+
+    }
+
+    private void loadAndRemoveOldTaskTags(final List<TaskTag> onlineEntries) {
+        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
+
+        for (TaskTag item : onlineEntries) {
+            onlineTaskTagItemIdList.add(item.getId());
+        }
+
+        From<TaskTag> query = new Select().from(TaskTag.class);
+        try {
+            if (query.count() != onlineEntries.size()) {
+
+                // Load Database Checklist items
+                query.async().queryList(new TransactionListener<List<TaskTag>>() {
+                    @Override
+                    public void onResultReceived(List<TaskTag> items) {
+
+                        ArrayList<TaskTag> checkListItemsToDelete = new ArrayList<>();
+
+                        for (TaskTag ttag : items) {
+                            if (!onlineTaskTagItemIdList.contains(ttag.getId())) {
+                                checkListItemsToDelete.add(ttag);
+                            }
+                        }
+
+                        for (TaskTag ttag : checkListItemsToDelete) {
+                            ttag.async().delete();
+                        }
+                    }
+
+                    @Override
+                    public boolean onReady(BaseTransaction<List<TaskTag>> baseTransaction) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasResult(BaseTransaction<List<TaskTag>> baseTransaction, List<TaskTag> items) {
                         return items != null && items.size() > 0;
                     }
                 });
@@ -625,7 +683,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         } else {
                             snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
                         }
-                    } else if(!event.Reward.getId().equals("potion")) {
+                    } else if (!event.Reward.getId().equals("potion")) {
                         EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                     }
 
@@ -711,7 +769,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             @Override
             public void onUserReceived(HabitRPGUser user) {
                 FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                ImageView petImageView = (ImageView)petWrapper.findViewById(R.id.pet_imageview);
+                ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
 
                 DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
 
@@ -878,7 +936,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                     .create();
 
 
-
             this.faintDialog.show();
         }
     }
@@ -964,7 +1021,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             eventProperties.put("eventAction", "tutorial");
             eventProperties.put("eventCategory", "behaviour");
             eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier()+"-android");
+            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
             eventProperties.put("eventValue", step.getIdentifier());
             eventProperties.put("complete", false);
         } catch (JSONException exception) {
@@ -986,7 +1043,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             eventProperties.put("eventAction", "tutorial");
             eventProperties.put("eventCategory", "behaviour");
             eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier()+"-android");
+            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
             eventProperties.put("eventValue", step.getIdentifier());
             eventProperties.put("complete", true);
         } catch (JSONException exception) {
@@ -1009,7 +1066,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
     }
 
-    public String getUserID(){
+    public String getUserID() {
         if (this.user != null) {
             return user.getId();
         } else {

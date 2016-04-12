@@ -22,21 +22,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiGridView;
 import com.github.data5tream.emojilib.EmojiPopup;
-import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
@@ -74,7 +70,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String TASK_ID_KEY = "taskId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String TAG_IDS_KEY = "tagsId";
-    public static final String TAG_NAMES_KEY = "tagsName";
+    public static final String TAG_NAMES_KEY = "TagNames";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
 
     private String taskType;
@@ -84,11 +80,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
-    private List<String> tags;
-    private List<String> tagsName; //added this
+    private List<String> tagIds;
+    private List<String> TagNames; //added this
     private CheckListAdapter checklistAdapter;
     private List<CharSequence> userSelectedTags;
-    private List<CheckBox> allTags;
+    private List<CheckBox> tagCheckBoxList;
     private List<String> userSelectedTagIds;
 
     @Bind(R.id.task_value_edittext)
@@ -204,11 +200,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
-        tags = bundle.getStringArrayList(TAG_IDS_KEY);
-        tagsName = bundle.getStringArrayList(TAG_NAMES_KEY);
+        tagIds = bundle.getStringArrayList(TAG_IDS_KEY);
+        TagNames = bundle.getStringArrayList(TAG_NAMES_KEY);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         userSelectedTags = new ArrayList<>();
-        allTags = new ArrayList<>();
+        tagCheckBoxList = new ArrayList<>();
         userSelectedTagIds = new ArrayList<>();
         if (taskType == null) {
             return;
@@ -246,10 +242,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskAttributeSpinner.setAdapter(attributeAdapter);
         taskAttributeSpinner.setSelection(0);
 
-        //Filling in the tags check boxes
-        //If tags list is empty, we don't allow user to select a tag.
-        //If they have tags, we allow them to add tags
-        if (tags.isEmpty()) {
+        //Filling in the tagIds check boxes
+        //If tagIds list is empty, we don't allow user to select a tag.
+        //If they have tagIds, we allow them to add tagIds
+        if (tagIds.isEmpty()) {
             mainWrapper.removeView(tagsWrapper);
         } else {
             createTagsCheckBoxes();
@@ -512,11 +508,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
 
     private void createTagsCheckBoxes() {
-        for (int i = 0; i < tagsName.size(); i++) {
+        for (int i = 0; i < TagNames.size(); i++) {
             TableRow row = new TableRow(tagsContainerLinearLayout.getContext());
             row.setId(i);
             CheckBox tagsCheckBox = new CheckBox(tagsContainerLinearLayout.getContext());
-            tagsCheckBox.setText(tagsName.get(i)); // set text Name
+            tagsCheckBox.setText(TagNames.get(i)); // set text Name
             tagsCheckBox.setId(i);
             //This is to check if the tag was selected by the user. Similar to onClickListener
             tagsCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -528,7 +524,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             });
             row.addView(tagsCheckBox);
             tagsContainerLinearLayout.addView(row);
-            allTags.add(tagsCheckBox);
+            tagCheckBoxList.add(tagsCheckBox);
         }
 
 
@@ -570,7 +566,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
             for (int i = 0; i < 7; i++) {
-                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, null);
+                View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer, false);
                 TextView tv = (TextView) weekdayRow.findViewById(R.id.label);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
                 checkbox.setChecked(true);
@@ -579,7 +575,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 this.frequencyContainer.addView(weekdayRow);
             }
         } else {
-            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, null);
+            View dayRow = getLayoutInflater().inflate(R.layout.row_number_picker, this.frequencyContainer, false);
             this.frequencyPicker = (NumberPicker) dayRow.findViewById(R.id.numberPicker);
             this.frequencyPicker.setMinValue(1);
             this.frequencyPicker.setMaxValue(366);
@@ -634,13 +630,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskValue.setText(String.format(Locale.getDefault(), "%.2f", task.value));
 
         for (TaskTag tt : task.getTags()) {
-            int tagNameLocation = tags.indexOf(tt.getTag().getId());
-            if (tagsName.size() > tagNameLocation && tagNameLocation > 0) {
-                for (CheckBox box : allTags) {
-                    if (tagsName.get(tagNameLocation) == box.getText()) {
-                        box.setChecked(true);
-                    }
-                }
+            int position = tagIds.indexOf(tt.getTag().getId());
+            if (tagCheckBoxList.size() > position) {
+                tagCheckBoxList.get(position).setChecked(true);
             }
         }
 
@@ -727,13 +719,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
 
-        //To add tags, I must first make a TaskTag, then grab information on which Tag they want to associate with the task
+        //To add tagIds, I must first make a TaskTag, then grab information on which Tag they want to associate with the task
         //After that, I need to make a List<TaskTag> so I can do task.setTags(List<TaskTag>)
         if (!userSelectedTags.isEmpty()) {
             for (CharSequence names : userSelectedTags) {
-                int tagIdLocation = tagsName.indexOf(names);
+                int tagIdLocation = TagNames.indexOf(names);
                 if (tagIdLocation > 0) {
-                    userSelectedTagIds.add(tags.get(tagIdLocation)); //used for the SQL command
+                    userSelectedTagIds.add(tagIds.get(tagIdLocation)); //used for the SQL command
                 }
             }
         }

@@ -77,6 +77,7 @@ public class DateDeserializerTest {
         JsonElement dateElement = this.deserializer.serialize(new Date(referenceTimestamp), Date.class, this.serializationContext);
         assertThat(dateElement.getAsString(), is("2015-09-28T13:00:00.000Z"));
     }
+
     @Test
     public void validateEmptySerialize() {
         JsonElement dateElement = this.deserializer.serialize(null, Date.class, this.serializationContext);
