@@ -142,6 +142,8 @@
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/brand_100</item>
+        <item name="android:textColorPrimary">@color/brand</item>
+        <item name="colorPrimaryDark">@color/brand</item>
     </style>
 
     <style name="SectionTitle">

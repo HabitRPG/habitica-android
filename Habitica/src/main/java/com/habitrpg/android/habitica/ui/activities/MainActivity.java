@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -38,6 +39,7 @@ import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
+import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -125,6 +127,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
 
     private static final int MIN_LEVEL_FOR_SKILLS = 11;
+    private static final int SELECT_CLASS_RESULT = 11;
 
     @Bind(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
@@ -633,12 +636,28 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         checkout.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == SELECT_CLASS_RESULT) {
+            if (data.getBooleanExtra("optingOut", false)) {
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("preferences.disableClasses", true);
+                updateData.put("flags.classSelected", true);
+                mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
+            } else {
+                String selectedClass = data.getStringExtra("selectedClass");
+                if (selectedClass != null) {
+                    Map<String, Object> updateData = new HashMap<>();
+                    updateData.put("class", selectedClass);
+                    mAPIHelper.apiService.changeClass(updateData, new HabitRPGUserCallback(this));
+                }
+            }
+        }
     }
 
     @Override
     public void onDestroy() {
-        if (checkout != null)
+        if (checkout != null) {
             checkout.stop();
+        }
 
         EventBus.getDefault().unregister(this);
         super.onDestroy();
@@ -969,6 +988,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
         if (suppressedModals != null) {
             if (suppressedModals.getLevelUp()) {
+                checkClassSelection();
                 return;
             }
         }
@@ -982,13 +1002,25 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             this.dialogUserPicture.setPictureOn(avatarView);
         }
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog alert = new AlertDialog.Builder(this)
                 .setTitle(R.string.levelup_header)
                 .setView(customView)
-                .setPositiveButton(R.string.levelup_button, null)
+                .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
+                    checkClassSelection();
+                })
                 .create();
 
-        dialog.show();
+        alert.show();
+    }
+
+    private void checkClassSelection() {
+        if (user.getStats().getLvl() > 10 &&
+                !user.getPreferences().getDisableClasses() &&
+                !user.getFlags().getClassSelected()) {
+            SelectClassEvent event = new SelectClassEvent();
+            event.isInitialSelection = true;
+            displayClassSelectionActivity(event);
+        }
     }
 
     @Override
@@ -1032,6 +1064,24 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
             }
         }
+    }
+
+    @Subscribe
+    public void displayClassSelectionActivity(SelectClassEvent event) {
+        Bundle bundle = new Bundle();
+        bundle.putString("size", user.getPreferences().getSize());
+        bundle.putString("skin", user.getPreferences().getSkin());
+        bundle.putString("shirt", user.getPreferences().getShirt());
+        bundle.putInt("hairBangs", user.getPreferences().getHair().getBangs());
+        bundle.putInt("hairBase", user.getPreferences().getHair().getBase());
+        bundle.putString("hairColor", user.getPreferences().getHair().getColor());
+        bundle.putInt("hairMustache", user.getPreferences().getHair().getMustache());
+        bundle.putInt("hairBeard", user.getPreferences().getHair().getBeard());
+        bundle.putBoolean("isInitialSelection", event.isInitialSelection);
+
+        Intent intent = new Intent(this, ClassSelectionActivity.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, SELECT_CLASS_RESULT);
     }
 
     private void displayTutorialStep(TutorialStep step, String text) {

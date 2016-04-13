@@ -121,6 +121,9 @@ public interface ApiService {
     @POST("/user/class/cast/{skill}")
     void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, Callback<HabitRPGUser> habitRPGUserCallback);
 
+    @POST("/user/class/change")
+    void changeClass(@Body Map<String, Object> updateDictionary, Callback<HabitRPGUser> cb);
+
     /* Group API */
 
     @GET("/groups")
