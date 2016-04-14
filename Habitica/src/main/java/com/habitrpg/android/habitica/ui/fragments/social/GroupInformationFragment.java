@@ -145,7 +145,10 @@ public class GroupInformationFragment extends Fragment {
             viewBinding.setHideParticipantCard(true);
             return;
         }
-        assert context != null;
+        if (group.quest.members == null) {
+            viewBinding.setHideParticipantCard(true);
+            return;
+        }
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (HabitRPGUser member : group.members) {
             final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, questMemberView, false);

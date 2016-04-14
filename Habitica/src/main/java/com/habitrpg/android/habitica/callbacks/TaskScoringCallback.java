@@ -80,9 +80,11 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
                             .querySingle(new TransactionListener() {
                                 @Override
                                 public void onResultReceived(Object result) {
-                                    Item item = (Item)result;
-                                    item.setOwned(item.getOwned()+1);
-                                    item.save();
+                                    if (result != null) {
+                                        Item item = (Item)result;
+                                        item.setOwned(item.getOwned()+1);
+                                        item.save();
+                                    }
                                 }
 
                                 @Override
