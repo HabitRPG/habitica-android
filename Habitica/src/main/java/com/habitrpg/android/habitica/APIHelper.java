@@ -167,7 +167,6 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(requestInterceptor)
                 .setConverter(new GsonConverter(gson))
-
                 .build();
         this.apiService = adapter.create(ApiService.class);
 

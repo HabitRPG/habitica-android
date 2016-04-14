@@ -3,12 +3,14 @@
     android:title="@string/PS_contact_title" >
 
     <PreferenceCategory
-        android:title="@string/pref_account_header">
+        android:title="@string/pref_account_header"
+        android:key="account_prefs">
 
         <PreferenceScreen
             android:key="accountDetails"
             android:title="@string/account_details"
-            android:summary="Check your account details">
+            android:summary="Check your account details"
+            android:order="1">
 
             <PreferenceCategory android:title="Account Details">
 
@@ -48,10 +50,14 @@
 
         </PreferenceScreen>
 
+        <Preference
+            android:key="choose_class"
+            android:order="2"/>
 
         <Preference android:title="@string/logout"
             android:key="logout"
-            android:summary="Log out of your account"/>
+            android:summary="@string/logout_description"
+            android:order="99"/>
     </PreferenceCategory>
 
     <PreferenceCategory

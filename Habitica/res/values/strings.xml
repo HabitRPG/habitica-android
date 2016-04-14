@@ -40,13 +40,9 @@
     <string name="confirmpassword">Confirm password</string>
 
     <string name="logout">Logout</string>
+    <string name="logout_description">Log out of your account</string>
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
-	<string name="user_dead_title">You\'re dead!</string>
-	<string name="user_dead_mess">You weren\'t vigilant enough, and get lost between some bad habits and some difficult dailies.
-		You are going to revive, but will loose a level, your gold and a random piece of equipment.
-		Try to be more careful with your dailies, and manage those bad habits!
-	</string>
 
     <string name="string_revive">Revive</string>
     <string name="please_connect">Please connect through the application before using a widget</string>
@@ -329,5 +325,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
+    <string name="change_class">Change your class</string>
+    <string name="change_class_description">Change your class and refund your attribute points for 3 gems. </string>
+    <string name="enable_class">Enable Class System</string>
 
 </resources>
