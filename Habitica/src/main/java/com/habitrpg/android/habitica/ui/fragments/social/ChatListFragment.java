@@ -98,6 +98,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         }
 
+        // Receive Events
+        try {
+            EventBus.getDefault().register(this);
+        } catch (EventBusException ignored) {
+
+        }
+
         if (view == null)
             view = inflater.inflate(R.layout.fragment_chatlist, container, false);
 
