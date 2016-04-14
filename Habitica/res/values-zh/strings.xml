@@ -113,6 +113,8 @@
   <string name="no_party_message">你没有加入任何队伍。如想加入队伍，请访问网页版。</string>
   <string name="forgot_pw_btn">忘记密码</string>
   <string name="forgot_pw_tv">忘记了您的密码？请访问网页版。</string>
+  <string name="tavern.inn.checkOut">重启每日任务</string>
+  <string name="tavern.inn.rest">暂停每日任务</string>
   <string name="reward.dialog.buy">购买</string>
   <string name="reward.dialog.dismiss">解散</string>
   <string name="party">队伍</string>
@@ -268,12 +270,14 @@
   <string name="feed_to_pet">喂养宠物</string>
   <string name="hatch_egg">孵化宠物蛋</string>
   <string name="invite_party">邀请队伍</string>
+  <string name="dialog_feeding" formatted="false">喂养%1$s %2$s用：</string>
   <string name="use_animal">使用</string>
   <string name="feed">喂食</string>
   <string name="hatch_with" formatted="false">用%s孵化宠物</string>
   <string name="hatched_pet_title" formatted="false">你孵化了一个 %1$s %2$s！</string>
   <string name="close">关闭</string>
   <string name="share">分享</string>
+  <string name="notification_pet_fed" formatted="false">你喂食了你的%1$s %2$s！</string>
   <string name="notification_purchase" formatted="false">已购买 %s</string>
   <string name="sectionpets">基本宠物</string>
   <string name="sectionpremiumPets">神奇药水宠物</string>
@@ -283,4 +287,9 @@
   <string name="sectionpremiumMounts">神奇药水坐骑</string>
   <string name="sectionquestMounts">剧情任务坐骑</string>
   <string name="sectionspecialMounts">稀有坐骑</string>
+  <string name="world_quest">世界任务</string>
+  <string name="inn_description">在客栈休息让你未完成的每日任务不会伤害你！(注意：它不能阻止来自任务怪物的伤害。)</string>
+  <string name="empty_items" formatted="false">你没有拥有任何的%s</string>
+  <string name="user_level" formatted="false">等级 %s</string>
+  <string name="user_level_with_class" formatted="false">等级 %1$s - %2$s</string>
 </resources>

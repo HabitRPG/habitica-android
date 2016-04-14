@@ -113,6 +113,8 @@
   <string name="no_party_message">Vous ne faites pas partie d\'une équipe. Pour rejoindre une équipe, veuillez visiter le site.</string>
   <string name="forgot_pw_btn">Mot de passe oublié</string>
   <string name="forgot_pw_tv">Mot de passe oublié ? Veuillez vous rendre sur la version mobile du site.</string>
+  <string name="tavern.inn.checkOut">Réactiver vos Quotidiennes</string>
+  <string name="tavern.inn.rest">Suspendre vos Quotidiennes</string>
   <string name="reward.dialog.buy">Acheter</string>
   <string name="reward.dialog.dismiss">Annuler</string>
   <string name="party">Équipe</string>
@@ -249,7 +251,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="ago_minutes" formatted="false">il y a %d minutes</string>
   <string name="ago_hours" formatted="false">il y a %d heures</string>
   <string name="ago_1hour">il y a 1 heure</string>
-  <string name="today">Today</string>
+  <string name="today">Aujourd\'hui</string>
   <string name="sidebar_items">Objets</string>
   <string name="eggs">Oeufs</string>
   <string name="hatching_potions">Potions d\'éclosion</string>
@@ -268,12 +270,14 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="feed_to_pet">Donner au Familier</string>
   <string name="hatch_egg">Faire éclore avec l\'oeuf</string>
   <string name="invite_party">Inviter l\'Équipe</string>
+  <string name="dialog_feeding" formatted="false">Nourrissez %1$s %2$s avec :</string>
   <string name="use_animal">Utiliser</string>
   <string name="feed">Nourrir</string>
   <string name="hatch_with" formatted="false">Faire éclore le Familier avec %s</string>
   <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un·e %1$s %2$s !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
+  <string name="notification_pet_fed" formatted="false">Vous avez nourri votre %1$s %2$s !</string>
   <string name="notification_purchase" formatted="false">%s acheté</string>
   <string name="sectionpets">Familiers de Base</string>
   <string name="sectionpremiumPets">Familiers Magiques</string>
@@ -283,4 +287,9 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="sectionpremiumMounts">Montures Magiques</string>
   <string name="sectionquestMounts">Montures de Quête</string>
   <string name="sectionspecialMounts">Montures rares</string>
+  <string name="world_quest">Quête mondiale</string>
+  <string name="inn_description">Reposez-vous à l\'auberge pour éviter les dégâts causés par les Quotidiennes que vous n\'avez pas réalisées ! (N.B. : cela ne vous immunise pas contre les dégâts causés par les Boss.)</string>
+  <string name="empty_items" formatted="false">Vous n\'avez pas de %s</string>
+  <string name="user_level" formatted="false">Niveau %s</string>
+  <string name="user_level_with_class" formatted="false">Niveaux %1$s - %2$s</string>
 </resources>

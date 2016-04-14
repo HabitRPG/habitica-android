@@ -113,6 +113,8 @@
   <string name="no_party_message">Non sei in una squadra. Per unirti ad una squadra, per favore visita il sito web di Habitica.</string>
   <string name="forgot_pw_btn">Password dimenticata</string>
   <string name="forgot_pw_tv">Hai dimenticato la password? Per favore usa il sito web di Habitica.</string>
+  <string name="tavern.inn.checkOut">Riattiva le tue Daily</string>
+  <string name="tavern.inn.rest">Sospendi le tue Daily</string>
   <string name="reward.dialog.buy">Compra</string>
   <string name="reward.dialog.dismiss">Annulla</string>
   <string name="party">Squadra</string>
@@ -265,7 +267,15 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="share">Condividi</string>
   <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
   <string name="sectionpets">Animali base</string>
+  <string name="sectionpremiumPets">Animali Pozione Magica</string>
+  <string name="sectionquestPets">Animali Missione</string>
   <string name="sectionspecialPets">Animali rari</string>
   <string name="sectionmounts">Cavalcature base</string>
+  <string name="sectionpremiumMounts">Calvalcature Pozione Magica</string>
+  <string name="sectionquestMounts">Cavalcature Missione</string>
   <string name="sectionspecialMounts">Cavalcature rare</string>
+  <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
+  <string name="empty_items" formatted="false">Non hai alcun %s</string>
+  <string name="user_level" formatted="false">LIV. %s</string>
+  <string name="user_level_with_class" formatted="false">LIV. %1$s - %2$s</string>
 </resources>

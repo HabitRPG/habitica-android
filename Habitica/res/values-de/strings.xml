@@ -112,6 +112,8 @@ Versuche Deine täglichen Aufgaben sorgfältiger zu erledigen und bekomme Deine 
   <string name="no_party_message">Du bist nicht in einer Gruppe. Besuche die Website, um einer Gruppe beizutreten.</string>
   <string name="forgot_pw_btn">Passwort vergessen</string>
   <string name="forgot_pw_tv">Passwort vergessen? Bitte die mobile Website benutzen.</string>
+  <string name="tavern.inn.checkOut">Reaktiviere deine täglichen Aufgaben</string>
+  <string name="tavern.inn.rest">Pausiere deine täglichen Aufgaben</string>
   <string name="reward.dialog.buy">Kaufen</string>
   <string name="reward.dialog.dismiss">Als gelesen markieren</string>
   <string name="party">Gruppe</string>
@@ -267,12 +269,14 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="feed_to_pet">An Haustier verfüttern</string>
   <string name="hatch_egg">Mit Ei ausbrüten</string>
   <string name="invite_party">Gruppe einladen</string>
+  <string name="dialog_feeding" formatted="false">Füttere %1$s %2$s mit:</string>
   <string name="use_animal">Nutzen</string>
   <string name="feed">Verfüttern</string>
   <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
   <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
+  <string name="notification_pet_fed" formatted="false">Du hast dein/e/n %1$s %2$s gefüttert!</string>
   <string name="notification_purchase" formatted="false">%s gekauft</string>
   <string name="sectionpets">Normale Haustiere</string>
   <string name="sectionpremiumPets">Magische Haustiere</string>
@@ -282,4 +286,9 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="sectionpremiumMounts">Magische Reittiere</string>
   <string name="sectionquestMounts">Quest Reittiere</string>
   <string name="sectionspecialMounts">Seltene Reittiere</string>
+  <string name="world_quest">Weltenquest</string>
+  <string name="inn_description">Ruhe dich im Gasthaus aus damit deine täglichen Aufgaben dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
+  <string name="empty_items" formatted="false">Du hast kein/e %s</string>
+  <string name="user_level" formatted="false">Lvl %s</string>
+  <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
 </resources>

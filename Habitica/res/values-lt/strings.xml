@@ -113,6 +113,8 @@
   <string name="no_party_message">Tu nesi grupėje. Norėdama(s) prisidėti prie grupės, apsilankyk svetainėje.</string>
   <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
   <string name="forgot_pw_tv">Pamiršote Slaptažodį? Naudokite mobilią Svetainę.</string>
+  <string name="tavern.inn.checkOut">Atnaujinti Kasdienes Užduotis</string>
+  <string name="tavern.inn.rest">Sustabdyti Kasdienes Užduotis</string>
   <string name="reward.dialog.buy">Pirkti</string>
   <string name="reward.dialog.dismiss">Atšaukti</string>
   <string name="party">Grupė</string>
@@ -258,19 +260,36 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="pets">Maži Augintiniai</string>
   <string name="mounts">Suaugę Augintiniai</string>
   <string name="armoireEquipment" formatted="false">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
+  <string name="armoireFood" formatted="false">Betyrinėjant Drabužinę randi %1$s %2$s. Ką tai čia veikia?</string>
   <string name="armoireExp">Besigrumiant su Drabužine, gauni patirties!</string>
   <string name="armoireNotesFull" formatted="false">Atidaryk Drabužinę ir gauk retos Aprangos dalį, Patirties ar maisto! Nerasto aprangos dalys: %d</string>
   <string name="armoireLastItem">Radai paskutinę retos aprangos dalį Užburtoje Drabužinėje.</string>
   <string name="armoireNotesEmpty">Drabužinėje atsiranda naujų daiktų pirmą kiekvieno mėnesio savaitę. Iki tol, gali toliau joje ieškoti Patirties ir Maisto!</string>
   <string name="sell" formatted="false">Parduoti (%s Augso)</string>
   <string name="hatch_with_potion">Užauginti su eliksyru</string>
-  <string name="feed_to_pet">Maitinti Gyvūnui</string>
+  <string name="feed_to_pet">Maitinti gyvūnui</string>
   <string name="hatch_egg">Išperėti kiaušinį</string>
-  <string name="invite_party">Pakviesti Grupę</string>
-  <string name="use_animal">Panaudoti</string>
+  <string name="invite_party">Pakviesti grupę</string>
+  <string name="dialog_feeding" formatted="false">Pašerti %1$s %2$s su:</string>
+  <string name="use_animal">Naudoti</string>
   <string name="feed">Maitinti</string>
   <string name="hatch_with" formatted="false">Užauginti gyvūną su %s</string>
+  <string name="hatched_pet_title" formatted="false">Užauginai %1$s %2$s!</string>
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
+  <string name="notification_pet_fed" formatted="false">Pašėrei savo %1$s %2$s!</string>
   <string name="notification_purchase" formatted="false">%s nupirkta</string>
+  <string name="sectionpets">Paprasti Augintiniai</string>
+  <string name="sectionpremiumPets">Stebuklingų Eliksyrų Augintiniai</string>
+  <string name="sectionquestPets">Misijų Augintiniai</string>
+  <string name="sectionspecialPets">Reti Augintiniai</string>
+  <string name="sectionmounts">Paprasti Augintiniai</string>
+  <string name="sectionpremiumMounts">Stebuklingų Eliksyrų Augintiniai</string>
+  <string name="sectionquestMounts">Misijų Augintiniai</string>
+  <string name="sectionspecialMounts">Reti Augintiniai</string>
+  <string name="world_quest">Pasaulinė Misija</string>
+  <string name="inn_description">Pailsėk Smuklėje, kad tavo nepabaigtos Kasdienės Užduotys nepadarytų tau žalos nakties metu! (Pastaba: pabaisos vistiek padarys tau žalos.)</string>
+  <string name="empty_items" formatted="false">Nebeturi %s</string>
+  <string name="user_level" formatted="false">Lygis %s</string>
+  <string name="user_level_with_class" formatted="false">Lygis %1$s - %2$s</string>
 </resources>

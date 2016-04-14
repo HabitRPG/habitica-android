@@ -112,6 +112,8 @@
   <string name="no_party_message">パーティーに参加していません。パーティーに参加する方法を website で確認してください。</string>
   <string name="forgot_pw_btn">パスワードがわからない</string>
   <string name="forgot_pw_tv">パスワードを忘れた? 携帯電話用のWebsiteへアクセスしてください。</string>
+  <string name="tavern.inn.checkOut">日課を再開する</string>
+  <string name="tavern.inn.rest">日課を中断する</string>
   <string name="reward.dialog.buy">買う</string>
   <string name="reward.dialog.dismiss">中止</string>
   <string name="party">パーティー</string>
@@ -256,7 +258,7 @@
   <string name="food">えさ</string>
   <string name="quests">クエスト</string>
   <string name="pets">ペット</string>
-  <string name="mounts">乗用獣</string>
+  <string name="mounts">騎獣</string>
   <string name="armoireEquipment" formatted="false">戸棚で貴重なアイテム、 %s を見つけました!　すごい!</string>
   <string name="armoireFood" formatted="false">戸棚をひっかきまわして%1$s%2$sを見つけました。何でこんなとこにあるんでしょう?</string>
   <string name="armoireExp">戸棚と格闘して経験値を増やしました。どうぞっ!</string>
@@ -268,19 +270,26 @@
   <string name="feed_to_pet">ペットにえさをやる</string>
   <string name="hatch_egg">たまごをかえす</string>
   <string name="invite_party">パーティーに招待する</string>
+  <string name="dialog_feeding" formatted="false">%1$s %2$s にえさをやる :</string>
   <string name="use_animal">つかう</string>
   <string name="feed">えさやり</string>
   <string name="hatch_with" formatted="false">%s でペットをかえす</string>
   <string name="hatched_pet_title" formatted="false">%1$s%2$sが生まれました!</string>
   <string name="close">閉じる</string>
   <string name="share">共有する</string>
+  <string name="notification_pet_fed" formatted="false">%1$s%2$sにえさをやりました!</string>
   <string name="notification_purchase" formatted="false">%s は購入済み</string>
   <string name="sectionpets">普通のペット</string>
   <string name="sectionpremiumPets">魔法の薬のペット</string>
   <string name="sectionquestPets">クエスト ペット</string>
   <string name="sectionspecialPets">貴重なペット</string>
-  <string name="sectionmounts">基本の乗用獣</string>
-  <string name="sectionpremiumMounts">魔法の薬の乗用獣</string>
-  <string name="sectionquestMounts">クエストの乗用獣</string>
-  <string name="sectionspecialMounts">貴重な乗用獣</string>
+  <string name="sectionmounts">基本の騎獣</string>
+  <string name="sectionpremiumMounts">魔法の薬の騎獣</string>
+  <string name="sectionquestMounts">クエストの騎獣</string>
+  <string name="sectionspecialMounts">貴重な騎獣</string>
+  <string name="world_quest">世界のクエスト</string>
+  <string name="inn_description">宿で休んでいる間は、日課をやらずに夜が明けてもダメージを受けません! ( 注 : ボスから受けるダメージは避けられません。)</string>
+  <string name="empty_items" formatted="false">%s がありません</string>
+  <string name="user_level" formatted="false">レベル %s</string>
+  <string name="user_level_with_class" formatted="false">レベル %1$s - %2$s</string>
 </resources>
