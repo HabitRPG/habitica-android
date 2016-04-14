@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
@@ -127,7 +128,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
 
     private static final int MIN_LEVEL_FOR_SKILLS = 11;
-    private static final int SELECT_CLASS_RESULT = 11;
+    public static final int SELECT_CLASS_RESULT = 11;
 
     @Bind(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
@@ -637,7 +638,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         super.onActivityResult(requestCode, resultCode, data);
         checkout.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SELECT_CLASS_RESULT) {
-            if (data.getBooleanExtra("optingOut", false)) {
+            if (data.getBooleanExtra("optedOut", false)) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.disableClasses", true);
                 updateData.put("flags.classSelected", true);
@@ -645,9 +646,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             } else {
                 String selectedClass = data.getStringExtra("selectedClass");
                 if (selectedClass != null) {
-                    Map<String, Object> updateData = new HashMap<>();
-                    updateData.put("class", selectedClass);
-                    mAPIHelper.apiService.changeClass(updateData, new HabitRPGUserCallback(this));
+                    mAPIHelper.apiService.changeClass(selectedClass, new MergeUserCallback(this, this.user));
                 }
             }
         }

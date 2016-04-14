@@ -122,7 +122,7 @@ public interface ApiService {
     void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, Callback<HabitRPGUser> habitRPGUserCallback);
 
     @POST("/user/class/change")
-    void changeClass(@Body Map<String, Object> updateDictionary, Callback<HabitRPGUser> cb);
+    void changeClass(@Query("class") String className, Callback<HabitRPGUser> cb);
 
     /* Group API */
 

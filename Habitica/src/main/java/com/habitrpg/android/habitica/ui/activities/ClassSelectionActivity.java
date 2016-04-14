@@ -137,7 +137,7 @@ public class ClassSelectionActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.opt_out_class), (dialog, which) -> {
                     Intent intent = new Intent();
                     intent.putExtra("optedOut", true);
-                    setResult(RESULT_OK, intent);
+                    setResult(MainActivity.SELECT_CLASS_RESULT, intent);
                     finish();
                 }).create();
         alert.show();
@@ -153,7 +153,7 @@ public class ClassSelectionActivity extends BaseActivity {
 
                     Intent intent = new Intent();
                     intent.putExtra("selectedClass", classIdentifier);
-                    setResult(RESULT_OK, intent);
+                    setResult(MainActivity.SELECT_CLASS_RESULT, intent);
                     finish();
                 });
         AlertDialog alert = builder.create();
