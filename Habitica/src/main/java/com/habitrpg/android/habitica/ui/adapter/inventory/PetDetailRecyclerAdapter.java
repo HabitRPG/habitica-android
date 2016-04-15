@@ -113,7 +113,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
                 return false;
             }
             if (ownedMountMapping != null && animal != null) {
-                if (ownedMountMapping.containsKey(animal.getKey()) && ownedMountMapping.get(animal.getKey())) {
+                if (ownedMountMapping.get(animal.getKey()) != null) {
                     return true;
                 }
             }
