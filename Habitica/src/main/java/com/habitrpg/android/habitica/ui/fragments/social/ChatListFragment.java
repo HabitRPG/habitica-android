@@ -75,6 +75,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         if (savedInstanceState != null) {
           if (savedInstanceState.containsKey("groupId")) {
             this.groupId = savedInstanceState.getString("groupId");
