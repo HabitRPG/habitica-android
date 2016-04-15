@@ -70,6 +70,7 @@ public class GroupInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_group_info, container, false);
+        questCollectViewAdapter = new QuestCollectRecyclerViewAdapter();
 
         viewBinding = DataBindingUtil.bind(view);
         viewBinding.setHideParticipantCard(false);
@@ -84,7 +85,6 @@ public class GroupInformationFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         collectionStats.setLayoutManager(new LinearLayoutManager(getContext()));
-        questCollectViewAdapter = new QuestCollectRecyclerViewAdapter();
         collectionStats.setAdapter(questCollectViewAdapter);
         bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
@@ -125,10 +125,13 @@ public class GroupInformationFragment extends Fragment {
         if (group == null || quest == null) {
             return;
         }
-        questCollectViewAdapter.setQuestContent(quest);
-        if (group.quest.getProgress() != null) {
-            questCollectViewAdapter.setQuestProgress(group.quest.getProgress());
+        if (questCollectViewAdapter != null) {
+            questCollectViewAdapter.setQuestContent(quest);
+            if (group.quest.getProgress() != null) {
+                questCollectViewAdapter.setQuestProgress(group.quest.getProgress());
+            }
         }
+
         bossHpBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.hp > 0) ? View.VISIBLE : View.GONE);
         bossRageBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.rage_value > 0) ? View.VISIBLE : View.GONE);
 
