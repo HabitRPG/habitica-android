@@ -1,7 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
@@ -12,12 +17,15 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 
 public class BaseFragment extends DialogFragment {
+
+    private boolean registerEventBus = false;
 
     public String tutorialStepIdentifier;
     public String tutorialText;
@@ -44,6 +52,30 @@ public class BaseFragment extends DialogFragment {
                 Amplitude.getInstance().logEvent("navigate", eventProperties);
             }
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        // Receive Events
+        try {
+            EventBus.getDefault().register(this);
+            registerEventBus = true;
+        } catch (EventBusException ignored) {
+
+        }
+
+        return null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (registerEventBus) {
+            EventBus.getDefault().unregister(this);
+        }
+
+        super.onDestroyView();
     }
 
     public String getDisplayedClassName() {

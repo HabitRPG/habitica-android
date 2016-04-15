@@ -100,8 +100,19 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         this.layoutResource = layoutResource;
         this.viewHolderClass = viewHolderClass;
         this.dailyResetOffset = dailyResetOffset;
+    }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        EventBus.getDefault().unregister(this);
+
     }
 
     @Subscribe

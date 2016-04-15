@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,9 +46,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by Negue on 14.09.2015.
- */
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Callback<List<ChatMessage>> {
 
     private Context ctx;
@@ -95,13 +90,6 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
               this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
             }
           }
-
-        }
-
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this);
-        } catch (EventBusException ignored) {
 
         }
 

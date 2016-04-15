@@ -22,8 +22,6 @@ import org.greenrobot.eventbus.EventBusException;
 
 public abstract class BaseMainFragment extends BaseFragment {
 
-    private boolean registerEventBus = false;
-
     public MainActivity activity;
     public TabLayout tabLayout;
     public FrameLayout floatingMenuWrapper;
@@ -67,6 +65,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
             String userId = savedInstanceState.getString("userId");
             this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
@@ -89,14 +88,6 @@ public abstract class BaseMainFragment extends BaseFragment {
             floatingMenuWrapper.removeAllViews();
         }
 
-        // Receive Events
-        try {
-            EventBus.getDefault().register(this);
-            registerEventBus = true;
-        } catch (EventBusException ignored) {
-
-        }
-
         setHasOptionsMenu(true);
 
         activity.setActiveFragment(this);
@@ -104,14 +95,6 @@ public abstract class BaseMainFragment extends BaseFragment {
         return null;
     }
 
-    @Override
-    public void onDestroyView() {
-        if (registerEventBus) {
-            EventBus.getDefault().unregister(this);
-        }
-
-        super.onDestroyView();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
