@@ -81,24 +81,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         super.onPause();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.SELECT_CLASS_RESULT) {
-            if (data.getBooleanExtra("optedOut", false)) {
-                Map<String, Object> updateData = new HashMap<>();
-                updateData.put("preferences.disableClasses", true);
-                updateData.put("flags.classSelected", true);
-                apiHelper.apiService.updateUser(updateData, this);
-            } else {
-                String selectedClass = data.getStringExtra("selectedClass");
-                if (selectedClass != null) {
-                    apiHelper.apiService.changeClass(selectedClass, this);
-                }
-            }
-        }
-    }
-
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
@@ -131,7 +113,11 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             bundle.putString("hairColor", user.getPreferences().getHair().getColor());
             bundle.putInt("hairMustache", user.getPreferences().getHair().getMustache());
             bundle.putInt("hairBeard", user.getPreferences().getHair().getBeard());
-            bundle.putBoolean("isInitialSelection", false);
+            if (!user.getFlags().getClassSelected()) {
+                bundle.putBoolean("isInitialSelection", true);
+            } else {
+                bundle.putBoolean("isInitialSelection", false);
+            }
 
             Intent intent = new Intent(getActivity(), ClassSelectionActivity.class);
             intent.putExtras(bundle);

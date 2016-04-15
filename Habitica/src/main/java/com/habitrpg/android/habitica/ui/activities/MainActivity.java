@@ -572,6 +572,10 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         });
         accountHeader.updateProfile(profile);
 
+        if (user.getPreferences() == null || user.getFlags() == null) {
+            return;
+        }
+
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
         if (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected()) {
             if (item != null) {
@@ -638,16 +642,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         super.onActivityResult(requestCode, resultCode, data);
         checkout.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SELECT_CLASS_RESULT) {
-            if (data.getBooleanExtra("optedOut", false)) {
-                Map<String, Object> updateData = new HashMap<>();
-                updateData.put("preferences.disableClasses", true);
-                updateData.put("flags.classSelected", true);
-                mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(this));
-            } else {
-                String selectedClass = data.getStringExtra("selectedClass");
-                if (selectedClass != null) {
-                    mAPIHelper.apiService.changeClass(selectedClass, new MergeUserCallback(this, this.user));
-                }
+            if (this.mAPIHelper != null) {
+                this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
             }
         }
     }

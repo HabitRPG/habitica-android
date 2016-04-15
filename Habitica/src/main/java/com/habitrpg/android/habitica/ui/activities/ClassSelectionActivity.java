@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +8,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.Gear;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -16,12 +21,20 @@ import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class ClassSelectionActivity extends BaseActivity {
+public class ClassSelectionActivity extends BaseActivity implements Callback<HabitRPGUser> {
 
     Boolean isInitialSelection;
+    Boolean classWasUnset = false;
+    Boolean shouldFinish = false;
 
     @Bind(R.id.healerImageView)
     ImageView healerImageView;
@@ -32,6 +45,10 @@ public class ClassSelectionActivity extends BaseActivity {
     @Bind(R.id.warriorImageView)
     ImageView warriorImageView;
 
+    APIHelper apiHelper;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_class_selection;
@@ -40,6 +57,8 @@ public class ClassSelectionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.apiHelper = HabiticaApplication.ApiHelper;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -96,6 +115,10 @@ public class ClassSelectionActivity extends BaseActivity {
         UserPicture warriorUserPicture = new UserPicture(this);
         warriorUserPicture.setUser(warrior);
         warriorUserPicture.setPictureOn(warriorImageView);
+
+        if (!isInitialSelection) {
+            apiHelper.apiService.changeClass(this);
+        }
     }
 
     public HabitRPGUser makeUser(Preferences preferences, Outfit outfit) {
@@ -129,34 +152,69 @@ public class ClassSelectionActivity extends BaseActivity {
 
     @OnClick(R.id.optOutWrapper)
     public void optOutSelected() {
+        if (!this.isInitialSelection && !this.classWasUnset) {
+            return;
+        }
         AlertDialog alert = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.opt_out_confirmation))
                 .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .setPositiveButton(getString(R.string.opt_out_class), (dialog, which) -> {
-                    Intent intent = new Intent();
-                    intent.putExtra("optedOut", true);
-                    setResult(MainActivity.SELECT_CLASS_RESULT, intent);
-                    finish();
+                    optOutOfClasses();
                 }).create();
         alert.show();
     }
 
     private void displayConfirmationDialogForClass(String className, String classIdentifier) {
+        if (!this.isInitialSelection && !this.classWasUnset) {
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.class_confirmation, className))
                 .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
-
-                    Intent intent = new Intent();
-                    intent.putExtra("selectedClass", classIdentifier);
-                    setResult(MainActivity.SELECT_CLASS_RESULT, intent);
-                    finish();
+                    selectClass(classIdentifier);
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void optOutOfClasses() {
+        shouldFinish = true;
+        this.displayProgressDialog();
+        Map<String, Object> updateData = new HashMap<>();
+        updateData.put("preferences.disableClasses", true);
+        updateData.put("flags.classSelected", true);
+        apiHelper.apiService.updateUser(updateData, this);
+    }
+
+    private void selectClass(String selectedClass) {
+        shouldFinish = true;
+        this.displayProgressDialog();
+        apiHelper.apiService.changeClass(selectedClass, this);
+    }
+
+    @Override
+    public void success(HabitRPGUser habitRPGUser, Response response) {
+        this.classWasUnset = true;
+        if (shouldFinish) {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            setResult(MainActivity.SELECT_CLASS_RESULT);
+            finish();
+        }
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+        shouldFinish = false;
+    }
+
+    private void displayProgressDialog() {
+        progressDialog = ProgressDialog.show(this, getString(R.string.changing_class_progress), null, true);
     }
 }
