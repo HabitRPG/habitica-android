@@ -76,6 +76,8 @@ public class StableFragment extends BaseMainFragment {
             }
         });
 
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null && viewPager != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 }

@@ -125,6 +125,8 @@ public class TavernFragment extends BaseMainFragment implements Callback<Group> 
             }
         });
 
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 }

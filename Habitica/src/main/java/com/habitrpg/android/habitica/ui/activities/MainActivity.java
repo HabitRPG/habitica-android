@@ -544,19 +544,19 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         accountHeader.updateProfile(profile);
 
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if (user.getPreferences().getDisableClasses()) {
+        if (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected()) {
             if (item != null) {
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }
         } else {
             IDrawerItem newItem = item;
-            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && item.isEnabled()) {
+            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withEnabled(false)
                         .withBadge(this.getString(R.string.unlock_lvl_11))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS && !item.isEnabled()) {
+            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);

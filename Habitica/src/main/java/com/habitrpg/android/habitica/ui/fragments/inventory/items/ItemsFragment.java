@@ -103,8 +103,9 @@ public class ItemsFragment extends BaseMainFragment {
                 return "";
             }
         });
-
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null && viewPager != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 
     @Subscribe

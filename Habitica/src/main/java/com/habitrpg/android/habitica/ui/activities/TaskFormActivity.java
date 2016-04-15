@@ -631,7 +631,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         for (TaskTag tt : task.getTags()) {
             int position = tagIds.indexOf(tt.getTag().getId());
-            if (tagCheckBoxList.size() > position) {
+            if (tagCheckBoxList.size() > position && position >= 0) {
                 tagCheckBoxList.get(position).setChecked(true);
             }
         }

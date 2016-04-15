@@ -76,8 +76,10 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
             Picasso.with(view.getContext())
                     .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + key + ".png")
                     .into(image);
-            name.setText(quest.getCollect().get(key).text);
-            count.setText(progress.collect.get(key) + " / " + quest.getCollect().get(key).count);
+            if (quest.getCollect().get(key) != null) {
+                name.setText(quest.getCollect().get(key).text);
+                count.setText(progress.collect.get(key) + " / " + quest.getCollect().get(key).count);
+            }
         }
     }
 }
