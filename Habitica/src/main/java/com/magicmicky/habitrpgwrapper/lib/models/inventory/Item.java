@@ -51,6 +51,9 @@ public abstract class Item extends BaseModel {
     }
 
     public Integer getOwned() {
+        if (owned == null) {
+            return 0;
+        }
         return owned;
     }
 
