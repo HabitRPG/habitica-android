@@ -2,10 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,24 +11,15 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
-import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
@@ -39,13 +27,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 
 public class StableRecyclerFragment extends BaseFragment {
     @Bind(R.id.recyclerView)
@@ -73,8 +58,6 @@ public class StableRecyclerFragment extends BaseFragment {
 
             recyclerView.setEmptyView(emptyView);
             emptyView.setText(getString(R.string.empty_items, itemTypeText));
-
-            android.support.v4.app.FragmentActivity context = getActivity();
 
             layoutManager = new GridLayoutManager(getActivity(), 2);
             layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -177,7 +160,10 @@ public class StableRecyclerFragment extends BaseFragment {
                 }
                 switch (itemType) {
                     case "pets":
-                        if (user.getItems().getPets() != null && user.getItems().getPets().containsKey(animal.getKey()) && user.getItems().getPets().get(animal.getKey()) != null) {
+                        if (user.getItems().getPets() != null
+                                && user.getItems().getPets().containsKey(animal.getKey())
+                                && user.getItems().getPets().get(animal.getKey()) != null
+                                && user.getItems().getPets().get(animal.getKey()) > 0) {
                             if (lastAnimal.getNumberOwned() == 0) {
                                 lastAnimal.setColor(animal.getColor());
                             }
@@ -185,7 +171,10 @@ public class StableRecyclerFragment extends BaseFragment {
                         }
                         break;
                     case "mounts":
-                        if (user.getItems().getMounts() != null && user.getItems().getMounts().containsKey(animal.getKey()) && user.getItems().getMounts().get(animal.getKey()) != null) {
+                        if (user.getItems().getMounts() != null
+                                && user.getItems().getMounts().containsKey(animal.getKey())
+                                && user.getItems().getMounts().get(animal.getKey()) != null
+                                && user.getItems().getMounts().get(animal.getKey())) {
                             if (lastAnimal.getNumberOwned() == 0) {
                                 lastAnimal.setColor(animal.getColor());
                             }

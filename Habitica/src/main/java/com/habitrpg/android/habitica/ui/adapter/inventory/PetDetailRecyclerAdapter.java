@@ -99,13 +99,17 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             itemView.setOnClickListener(this);
         }
 
-        public Boolean  isOwned() {
+        public int  getOwnedStatus() {
             if (ownedMapping != null && animal != null) {
-                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey()) != 0) {
-                    return true;
+                if (ownedMapping.containsKey(animal.getKey())) {
+                    return ownedMapping.get(animal.getKey());
                 }
             }
-            return false;
+            return 0;
+        }
+
+        public boolean isOwned() {
+            return this.getOwnedStatus() > 0;
         }
 
         public Boolean isMountOwned() {
@@ -125,7 +129,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             this.titleView.setText(item.getColorText());
             this.trainedProgressbar.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
-            if (this.isOwned()) {
+            if (this.getOwnedStatus() > 0) {
                 if (this.isMountOwned()) {
                     this.trainedProgressbar.setVisibility(View.GONE);
                 } else {
@@ -134,7 +138,11 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
                 DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
             } else {
                 this.trainedProgressbar.setVisibility(View.GONE);
-                DataBindingUtils.loadImage(this.imageView, "PixelPaw");
+                if (this.getOwnedStatus() == 0) {
+                    DataBindingUtils.loadImage(this.imageView, "PixelPaw");
+                } else {
+                    DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
+                }
                 this.imageView.setAlpha(0.4f);
             }
         }
