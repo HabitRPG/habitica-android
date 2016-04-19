@@ -113,6 +113,8 @@
   <string name="no_party_message">No formas parte de ningún grupo. Para unirte a uno, entra en la página web.</string>
   <string name="forgot_pw_btn">He olvidado la contraseña</string>
   <string name="forgot_pw_tv">¿No recuerdas tu contraseña? Entra en el sitio web para móviles.</string>
+  <string name="tavern.inn.checkOut">Reactivar tareas diarias</string>
+  <string name="tavern.inn.rest">Pausar tareas diarias</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Descartar</string>
   <string name="party">Grupo</string>
@@ -268,12 +270,14 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="feed_to_pet">Alimentar a mascota</string>
   <string name="hatch_egg">Mezclar con huevo</string>
   <string name="invite_party">Invitar al grupo</string>
+  <string name="dialog_feeding" formatted="false">Dar de comer a %2$s %1$s:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with" formatted="false">Criar mascota con %s</string>
   <string name="hatched_pet_title" formatted="false">¡Ha nacido un/a %2$s %1$s!</string>
   <string name="close">Cerrar</string>
   <string name="share">Compartir</string>
+  <string name="notification_pet_fed" formatted="false">¡Tu %2$s %1$s ha comido!</string>
   <string name="notification_purchase" formatted="false">Has comprado %s</string>
   <string name="sectionpets">Mascotas básicas</string>
   <string name="sectionpremiumPets">Mascotas de pociones mágicas</string>
@@ -283,4 +287,9 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="sectionpremiumMounts">Monturas de pociones mágicas</string>
   <string name="sectionquestMounts">Monturas de misiones</string>
   <string name="sectionspecialMounts">Monturas insólitas</string>
+  <string name="world_quest">Misión mundial</string>
+  <string name="inn_description">Descansa en la posada para que tus tareas diarias sin completar no te hagan daño por la noche. (Nota: No evita que el jefe te dañe).</string>
+  <string name="empty_items" formatted="false">No tienes %s</string>
+  <string name="user_level" formatted="false">Nivel %s</string>
+  <string name="user_level_with_class" formatted="false">Nivel %1$s - %2$s</string>
 </resources>

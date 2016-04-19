@@ -31,9 +31,9 @@
   <string name="login_btn">Accedi</string>
   <string name="register_btn">Registrati</string>
   <string name="username">Nome utente</string>
-  <string name="email_username">Email o nome utente</string>
+  <string name="email_username">E-mail o nome utente</string>
   <string name="password">Password</string>
-  <string name="emailAddress">Indirizzo email</string>
+  <string name="emailAddress">Indirizzo e-mail</string>
   <string name="confirmpassword">Conferma password</string>
   <string name="logout">Esci</string>
   <string name="account_details">Dettagli account</string>
@@ -165,11 +165,11 @@
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
-  <string name="intro_1_description">Unisciti ad oltre 1,100,000 persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
+  <string name="intro_1_description">Unisciti ad oltre 1.100.000 persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
   <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
   <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
-  <string name="intro_3_description">Tieni traccia dei tuoi obiettivi con l\'aiuto dei tuoi amici. Supportatevi a vicenda nella vita e nelle battaglie migliorando insieme!</string>
+  <string name="intro_3_description">Tieni traccia dei tuoi obiettivi con l\'aiuto dei tuoi amici. Supportatevi a vicenda nella vita e nelle battaglie per migliorare insieme!</string>
   <string name="intro_finish_button">Inizia</string>
   <string name="previous_button">Indietro</string>
   <string name="next_button">Avanti</string>
@@ -187,7 +187,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="setup_group_teams">Team</string>
   <string name="setup_group_chores">Faccende di casa</string>
   <string name="setup_group_creativity">Creatività</string>
-  <string name="setup_task_work_1">Controlla le email</string>
+  <string name="setup_task_work_1">Controlla le e-mail</string>
   <string name="setup_task_work_2">La cosa più importante da fare oggi</string>
   <string name="setup_task_work_3">Progetto di lavoro</string>
   <string name="setup_task_exercise_1">10 min cardio</string>
