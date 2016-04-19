@@ -21,6 +21,7 @@ import com.github.data5tream.emojilib.EmojiGridView;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.github.data5tream.emojilib.emoji.Emojicon;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import butterknife.Bind;
@@ -199,14 +200,14 @@ public class GroupFormActivity extends BaseActivity {
     @Override
     public boolean onSupportNavigateUp() {
         finish();
-        dismissKeyboard();
+        UiUtils.dismissKeyboard(this);
         return true;
     }
 
     @Override
     public void onBackPressed() {
         finish();
-        dismissKeyboard();
+        UiUtils.dismissKeyboard(this);
     }
 
     private void finishActivitySuccessfuly() {
@@ -218,14 +219,6 @@ public class GroupFormActivity extends BaseActivity {
         resultIntent.putExtras(bundle);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
-        dismissKeyboard();
-    }
-
-    private void dismissKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        View currentFocus = getCurrentFocus();
-        if (currentFocus != null) {
-            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-        }
+        UiUtils.dismissKeyboard(this);
     }
 }

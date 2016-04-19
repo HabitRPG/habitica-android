@@ -329,5 +329,15 @@ To start, which parts of your life do you want to improve?</string>
     <string name="change_class_description">Change your class and refund your attribute points for 3 gems. </string>
     <string name="enable_class">Enable Class System</string>
     <string name="changing_class_progress">Changing Class</string>
+    <string name="by_email">By Email</string>
+    <string name="invite_existing_users">Invite Existing Users</string>
+    <string name="send">Send</string>
+    <string name="invite">Invite</string>
+    <string name="invite_id_description">If you have friends already using Habitica, invite them by User ID here.</string>
+    <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
+    <string name="add_invites">Add Invites</string>
+    <string name="user_id">User ID</string>
+    <string name="email">Email</string>
+    <string name="invite_users">Invite to Party</string>
 
 </resources>
