@@ -577,7 +577,8 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         }
 
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected()) {
+        if ((user.getPreferences() != null && user.getPreferences().getDisableClasses())
+                || (user.getFlags() != null && !user.getFlags().getClassSelected())) {
             if (item != null) {
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }

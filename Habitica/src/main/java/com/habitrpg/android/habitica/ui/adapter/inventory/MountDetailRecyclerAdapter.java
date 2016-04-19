@@ -109,7 +109,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
                 DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
             } else {
                 DataBindingUtils.loadImage(this.imageView, "PixelPaw");
-                this.imageView.setAlpha(0.4f);
+                this.imageView.setAlpha(0.3f);
             }
         }
 

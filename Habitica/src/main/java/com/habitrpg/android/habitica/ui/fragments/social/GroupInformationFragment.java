@@ -106,9 +106,11 @@ public class GroupInformationFragment extends Fragment {
             updateQuestMember(group);
         }
 
-        updateQuestProgress(group, quest);
-
         this.group = group;
+
+        if (isAdded()) {
+            updateQuestProgress(group, quest);
+        }
     }
 
     public void setQuestContent(QuestContent quest) {

@@ -143,7 +143,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
                 } else {
                     DataBindingUtils.loadImage(this.imageView, "Pet-" + itemType + "-" + item.getColor());
                 }
-                this.imageView.setAlpha(0.4f);
+                this.imageView.setAlpha(0.3f);
             }
         }
 

@@ -96,8 +96,6 @@ public class ItemRecyclerFragment extends BaseFragment {
                     adapter.feedingPet = this.feedingPet;
                 }
                 recyclerView.setAdapter(adapter);
-                this.loadItems();
-
             }
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
@@ -119,6 +117,12 @@ public class ItemRecyclerFragment extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.loadItems();
     }
 
     @Override
@@ -146,6 +150,9 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     private void loadItems() {
         From from = null;
+        if (this.itemType == null) {
+            return;
+        }
         switch (this.itemType) {
             case "eggs":
                 from = new Select().from(Egg.class);

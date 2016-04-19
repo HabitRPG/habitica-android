@@ -54,10 +54,12 @@ public class TavernFragment extends BaseMainFragment implements Callback<Group> 
     @Override
     public void success(Group group, Response response) {
         this.tavern = group;
-        if (group.quest != null) {
+        if (group.quest != null && this.isAdded()) {
             this.viewPager.getAdapter().notifyDataSetChanged();
-            this.tabLayout.setVisibility(View.VISIBLE);
-            this.tabLayout.setupWithViewPager(this.viewPager);
+            if (this.tabLayout != null) {
+                this.tabLayout.setVisibility(View.VISIBLE);
+                this.tabLayout.setupWithViewPager(this.viewPager);
+            }
 
             ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
 

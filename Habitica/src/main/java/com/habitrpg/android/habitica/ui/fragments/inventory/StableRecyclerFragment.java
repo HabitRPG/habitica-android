@@ -79,8 +79,6 @@ public class StableRecyclerFragment extends BaseFragment {
                 adapter.activity = (MainActivity)this.getActivity();
                 adapter.itemType = this.itemType;
                 recyclerView.setAdapter(adapter);
-                this.loadItems();
-
             }
         }
 
@@ -94,6 +92,7 @@ public class StableRecyclerFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.loadItems();
         final View finalView = view;
         finalView.post(() -> setGridSpanCount(finalView.getWidth()));
     }
@@ -119,6 +118,9 @@ public class StableRecyclerFragment extends BaseFragment {
 
     private void loadItems() {
         Runnable itemsRunnable = () -> {
+            if (itemType == null) {
+                return;
+            }
             List<Object> items = new ArrayList<>();
 
             Where<? extends Animal> query = null;
