@@ -64,7 +64,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -88,6 +93,7 @@ import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -326,7 +332,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         }
                         loadAndRemoveOldChecklists(allChecklistItems);
 
-
                         ArrayList<TaskTag> allTaskTags = new ArrayList<>();
                         for (Task t : allTasks) {
                             if (t.tags != null) {
@@ -335,7 +340,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         }
                         loadAndRemoveOldTaskTags(allTaskTags);
 
-                        updateOwnedEquipment(user.getItems().getGear().owned);
+                        updateOwnedDataForUser(user);
                     }
                 }).start();
             }
@@ -491,26 +496,46 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     }
 
-    private void updateOwnedEquipment(List<ItemData> owned) {
-        HashMap<String, ItemData> ownedMap = new HashMap<>();
-        for (ItemData item : owned) {
-            ownedMap.put(item.key, item);
-        }
+    private void updateOwnedDataForUser(HabitRPGUser user) {
+        List<BaseModel> updates = new ArrayList<>();
+        updates.addAll(this.updateOwnedData(Egg.class, user.getItems().getEggs()));
+        updates.addAll(this.updateOwnedData(Food.class, user.getItems().getFood()));
+        updates.addAll(this.updateOwnedData(HatchingPotion.class, user.getItems().getHatchingPotions()));
+        updates.addAll(this.updateOwnedData(QuestContent.class, user.getItems().getQuests()));
 
+        updates.addAll(this.updateOwnedData(user.getItems().getGear().owned));
+        if (!updates.isEmpty()) {
+            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(updates)));
+        }
+    }
+
+    private <T extends Item> List<T> updateOwnedData(Class<T> itemClass, HashMap<String, Integer> ownedMapping) {
+        List<T> items = new Select().from(itemClass).queryList();
+        List<T> updates = new ArrayList<>();
+        for (T item : items) {
+            if (ownedMapping.containsKey(item.getKey()) && !item.getOwned().equals(ownedMapping.get(item.getKey()))) {
+                item.setOwned(ownedMapping.get(item.getKey()));
+                updates.add(item);
+            } else if (!ownedMapping.containsKey(item.getKey()) && item.getOwned() > 0) {
+                item.setOwned(0);
+                updates.add(item);
+            }
+        }
+        return updates;
+    }
+    private List<ItemData> updateOwnedData(HashMap<String, Boolean> ownedMapping) {
         List<ItemData> items = new Select().from(ItemData.class).queryList();
         List<ItemData> updates = new ArrayList<>();
         for (ItemData item : items) {
-            if (ownedMap.containsKey(item.key) && !Boolean.TRUE.equals(item.owned)) {
+            if (ownedMapping.containsKey(item.key) && !Boolean.TRUE.equals(item.owned)) {
                 item.owned = true;
                 updates.add(item);
-            } else if (!ownedMap.containsKey(item.key) && Boolean.TRUE.equals(item.owned)) {
+            } else if (!ownedMapping.containsKey(item.key) && Boolean.TRUE.equals(item.owned)) {
                 item.owned = null;
                 updates.add(item);
             }
         }
-        if (!updates.isEmpty()) {
-            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(updates)));
-        }
+        return updates;
     }
 
     private void updateUserAvatars() {

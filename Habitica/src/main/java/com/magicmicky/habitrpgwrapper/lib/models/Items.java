@@ -43,10 +43,10 @@ public class Items extends BaseModel {
     @Column
     private Date lastDrop_date;
 
-    public List<Egg> eggs;
-    public List<Food> food;
-    public List<HatchingPotion> hatchingPotions;
-    public List<QuestContent> quests;
+    public HashMap<String, Integer> eggs;
+    public HashMap<String, Integer> food;
+    public HashMap<String, Integer> hatchingPotions;
+    public HashMap<String, Integer> quests;
 
     HashMap<String, Integer> pets;
     HashMap<String, Boolean> mounts;
@@ -114,35 +114,35 @@ public class Items extends BaseModel {
         this.user_id = user_id;
     }
 
-    public List<Egg> getEggs() {
+    public HashMap<String, Integer> getEggs() {
         return eggs;
     }
 
-    public void setEggs(List<Egg> eggs) {
+    public void setEggs(HashMap<String, Integer> eggs) {
         this.eggs = eggs;
     }
 
-    public List<Food> getFood() {
+    public HashMap<String, Integer> getFood() {
         return food;
     }
 
-    public void setFood(List<Food> food) {
+    public void setFood(HashMap<String, Integer> food) {
         this.food = food;
     }
 
-    public List<HatchingPotion> getHatchingPotions() {
+    public HashMap<String, Integer> getHatchingPotions() {
         return hatchingPotions;
     }
 
-    public void setHatchingPotions(List<HatchingPotion> hatchingPotions) {
+    public void setHatchingPotions(HashMap<String, Integer> hatchingPotions) {
         this.hatchingPotions = hatchingPotions;
     }
 
-    public List<QuestContent> getQuests() {
+    public HashMap<String, Integer> getQuests() {
         return quests;
     }
 
-    public void setQuests(List<QuestContent> quests) {
+    public void setQuests(HashMap<String, Integer> quests) {
         this.quests = quests;
     }
 
@@ -167,14 +167,6 @@ public class Items extends BaseModel {
     @Override
     public void save() {
         gear.user_id = user_id;
-
-        List<BaseModel> items = new ArrayList<>();
-        items.addAll(this.quests);
-        items.addAll(this.eggs);
-        items.addAll(this.food);
-        items.addAll(this.hatchingPotions);
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(items)));
-
         super.save();
     }
 }

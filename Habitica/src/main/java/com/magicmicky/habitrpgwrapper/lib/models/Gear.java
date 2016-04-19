@@ -10,6 +10,7 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class Gear extends BaseModel {
             foreignColumnName = "user_id")})
     private Outfit costume;
 
-    public List<ItemData> owned;
+    public HashMap<String, Boolean> owned;
 
     public Outfit getCostume() {
         return costume;
