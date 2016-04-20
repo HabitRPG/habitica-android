@@ -1,19 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
     <item
         android:id="@+id/menu.chat.copy.as.todo"
         android:icon="@drawable/ic_action_launch"
-
         android:title="@string/copy_as_todo" />
     <item
         android:id="@+id/menu.chat.send.pm"
         android:icon="@drawable/ic_action_chat"
-
         android:title="@string/send_pm" />
     <group>
-
         <item
             android:id="@+id/menu.chat.flag"
             android:icon="@drawable/ic_action_warning"
