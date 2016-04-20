@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,16 +16,22 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.StableRecyclerFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class PartyInviteActivity extends BaseActivity {
 
+    public static final int RESULT_SEND_INVITES = 100;
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
 
     @Bind(R.id.view_pager)
     ViewPager viewPager;
+
+    List<PartyInviteFragment> fragments = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -56,10 +63,25 @@ public class PartyInviteActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send_invites) {
+            setResult(RESULT_SEND_INVITES, createResultIntent());
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Intent createResultIntent() {
+        Intent intent = new Intent();
+        PartyInviteFragment fragment = fragments.get(viewPager.getCurrentItem());
+        if (viewPager.getCurrentItem() == 0) {
+            intent.putExtra("isEmail", true);
+            intent.putExtra("emails", fragment.getValues());
+        } else {
+            intent.putExtra("isEmail", false);
+            intent.putExtra("userIds", fragment.getValues());
+        }
+        return intent;
     }
 
     public void setViewPagerAdapter() {
@@ -71,8 +93,12 @@ public class PartyInviteActivity extends BaseActivity {
             public Fragment getItem(int position) {
 
                 PartyInviteFragment fragment = new PartyInviteFragment();
-
                 fragment.isEmailInvite = position == 0;
+                if (fragments.size() > position) {
+                    fragments.set(position, fragment);
+                } else {
+                    fragments.add(fragment);
+                }
 
                 return fragment;
             }

@@ -52,8 +52,8 @@
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
-    <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/brand_500</item>
+    <style name="PopupTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/brand_700</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

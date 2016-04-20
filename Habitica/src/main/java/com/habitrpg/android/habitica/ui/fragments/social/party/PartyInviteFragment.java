@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,5 +58,16 @@ public class PartyInviteFragment extends BaseFragment {
             editText.setHint(R.string.user_id);
         }
         invitationWrapper.addView(editText);
+    }
+
+    public String[] getValues() {
+        List<String> values = new ArrayList<>();
+        for (int i = 0; i < invitationWrapper.getChildCount();i++) {
+            EditText valueEditText = (EditText)invitationWrapper.getChildAt(i);
+            if (valueEditText.getText().toString().length() > 0) {
+                values.add(valueEditText.getText().toString());
+            }
+        }
+        return values.toArray(new String[values.size()]);
     }
 }

@@ -24,6 +24,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -115,11 +121,46 @@ public class PartyFragment extends BaseMainFragment {
         switch (id) {
             case R.id.menu_invite_item:
                 Intent intent = new Intent(getActivity(), PartyInviteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, PartyInviteActivity.RESULT_SEND_INVITES);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == PartyInviteActivity.RESULT_SEND_INVITES) {
+            Map<String, Object> inviteData = new HashMap<>();
+            inviteData.put("inviter", this.user.getProfile().getName());
+            if (data.getBooleanExtra("isEmail", false)) {
+                String[] emails = data.getStringArrayExtra("emails");
+                List<HashMap<String, String>> invites = new ArrayList<>();
+                for (String email : emails) {
+                    HashMap<String, String> invite = new HashMap<>();
+                    invite.put("name", "");
+                    invite.put("email", email);
+                    invites.add(invite);
+                }
+                inviteData.put("emails", invites);
+            } else {
+                String[] userIDs = data.getStringArrayExtra("userIDs");
+                List<String> invites = new ArrayList<>();
+                Collections.addAll(invites, userIDs);
+                inviteData.put("uuids", invites);
+            }
+            this.mAPIHelper.apiService.inviteToGroup(this.group.id, inviteData, new Callback<Void>() {
+                @Override
+                public void success(Void group, Response response) {
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+        }
     }
 
     public void setViewPagerAdapter() {

@@ -163,6 +163,9 @@ public interface ApiService {
     @POST("/groups/{gid}/chat/seen")
     void seenMessages(@Path("gid") String groupId, Callback<String> cb);
 
+    @POST("/groups/{gid}/invite")
+    void inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData, Callback<Void> groupCallback);
+
     @POST("/user/batch-update")
     void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
 
