@@ -22,6 +22,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
@@ -46,6 +47,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.magicmicky.habitrpgwrapper.lib.utils.ChatMessageDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ContentDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.CustomizationDeserializer;
@@ -153,6 +155,7 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .registerTypeAdapter(questContentListType, new QuestListDeserializer())
                 .registerTypeAdapter(petListType, new PetListDeserializer())
                 .registerTypeAdapter(mountListType, new MountListDeserializer())
+                .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
