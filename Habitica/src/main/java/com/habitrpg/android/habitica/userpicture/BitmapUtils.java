@@ -49,6 +49,23 @@ public class BitmapUtils {
         }
     }
 
+    public static File saveToShareableFile(String directory, String filename, Bitmap bmp) {
+        try {
+            File myDir = new File(directory);
+            boolean res = myDir.mkdirs();
+
+            filename = directory + "/" + filename;
+
+            FileOutputStream out = new FileOutputStream(filename);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+            return new File(filename);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     public static boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
         return status.equals(Environment.MEDIA_MOUNTED);

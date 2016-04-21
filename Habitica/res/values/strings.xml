@@ -339,5 +339,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="user_id">User ID</string>
     <string name="email">Email</string>
     <string name="invite_users">Invite to Party</string>
+    <string name="share_using">Share using</string>
+    <string name="share_levelup" formatted="false">I just reached level %s on habitica.com !</string>
+    <string name="share_hatched" formatted="false">I hatched a %1$s %2$s on habitica.com</string>
 
 </resources>

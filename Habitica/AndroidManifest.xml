@@ -116,6 +116,16 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.habitrpg.android.habitica.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

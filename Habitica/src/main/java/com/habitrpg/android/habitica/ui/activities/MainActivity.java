@@ -5,13 +5,22 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +50,7 @@ import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
+import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -60,7 +70,9 @@ import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
@@ -105,6 +117,9 @@ import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -812,12 +827,26 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
 
                 DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
-
+                String potionName = event.usingHatchingPotion.getText();
+                String eggName = event.usingEgg.getText();
                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(getString(R.string.hatched_pet_title, event.usingHatchingPotion.getText(), event.usingEgg.getText()))
+                        .setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
                         .setView(petWrapper)
-                        .setPositiveButton(R.string.close, (dialog1, which) -> {
-                            dialog1.dismiss();
+                        .setPositiveButton(R.string.close, (hatchingDialog, which) -> {
+                            hatchingDialog.dismiss();
+                        })
+                        .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
+                            ShareEvent event = new ShareEvent();
+                            event.sharedMessage = getString(R.string.share_hatched, potionName, eggName);
+                            Bitmap animalBitmap = ((BitmapDrawable)petImageView.getDrawable()).getBitmap();
+                            Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
+                            Canvas canvas = new Canvas(sharedImage);
+                            canvas.drawColor(getResources().getColor(R.color.brand_300));
+                            canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
+                                    new Rect(30, 0, animalBitmap.getWidth() + 30, animalBitmap.getHeight()), new Paint());
+                            event.shareImage = sharedImage;
+                            EventBus.getDefault().post(event);
+                            hatchingDialog.dismiss();
                         })
                         .create();
                 dialog.show();
@@ -825,7 +854,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
             @Override
             public void onUserFail() {
-
             }
         }, this.user));
     }
@@ -1004,6 +1032,17 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
                     checkClassSelection();
                 })
+                .setNeutralButton(R.string.share, (dialog, which) -> {
+                    ShareEvent event = new ShareEvent();
+                    event.sharedMessage = getString(R.string.share_levelup, level);
+                    UserPicture picture = new UserPicture(this, true, true);
+                    picture.setUser(this.user);
+                    picture.setPictureWithRunnable(avatarBitmap -> {
+                        event.shareImage = avatarBitmap;
+                        EventBus.getDefault().post(event);
+                        dialog.dismiss();
+                    });
+                })
                 .create();
 
         alert.show();
@@ -1143,5 +1182,21 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         } else {
             return "";
         }
+    }
+
+    @Subscribe
+    public void shareEvent(ShareEvent event) {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("*/*");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage);
+        File f = BitmapUtils.saveToShareableFile(getFilesDir() + "/shared_images", "share.png", event.shareImage);
+        Uri fileUri = FileProvider.getUriForFile(this, "com.habitrpg.android.habitica.fileprovider", f);
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        List<ResolveInfo> resInfoList = this.getPackageManager().queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -14,6 +15,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -126,6 +128,10 @@ public class UserPicture {
 
         // no => generate it
         generateImage(layerNames);
+    }
+
+    public Uri getCachedFileUri() {
+        return Uri.parse(BitmapUtils.getSavePath() + "/" + currentCacheFileName);
     }
 
     private void clearRunning() {
