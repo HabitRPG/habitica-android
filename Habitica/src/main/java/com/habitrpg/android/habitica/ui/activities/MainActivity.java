@@ -837,7 +837,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                         })
                         .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                             ShareEvent event = new ShareEvent();
-                            event.sharedMessage = getString(R.string.share_hatched, potionName, eggName);
+                            event.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet";
                             Bitmap animalBitmap = ((BitmapDrawable)petImageView.getDrawable()).getBitmap();
                             Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
                             Canvas canvas = new Canvas(sharedImage);
@@ -1034,7 +1034,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
                 })
                 .setNeutralButton(R.string.share, (dialog, which) -> {
                     ShareEvent event = new ShareEvent();
-                    event.sharedMessage = getString(R.string.share_levelup, level);
+                    event.sharedMessage = getString(R.string.share_levelup, level) + " https://habitica.com/social/level-up";
                     UserPicture picture = new UserPicture(this, true, true);
                     picture.setUser(this.user);
                     picture.setPictureWithRunnable(avatarBitmap -> {
