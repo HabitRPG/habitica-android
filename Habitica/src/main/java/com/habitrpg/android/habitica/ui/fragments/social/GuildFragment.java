@@ -91,9 +91,11 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         switch (id) {
             case R.id.menu_guild_join:
                 this.mAPIHelper.apiService.joinGroup(this.guild.id, this);
+                this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
                 this.mAPIHelper.apiService.leaveGroup(this.guild.id, this);
+                this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
                 this.displayEditForm();
@@ -236,21 +238,17 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
 
     @Override
     public void success(Group group, Response response) {
-        if (group == null) {
-            this.tabLayout.removeAllTabs();
-            return;
-        }
-        this.guild = group;
+        if (group != null) {
+            if (this.guildInformationFragment != null) {
+                this.guildInformationFragment.setGroup(group);
+            }
 
-        if (this.guildInformationFragment != null) {
-            this.guildInformationFragment.setGroup(group);
-        }
+            if (this.chatListFragment != null) {
+                this.chatListFragment.seenGroupId = group.id;
+            }
 
-        if (this.chatListFragment != null) {
-            this.chatListFragment.seenGroupId = group.id;
+            this.guild = group;
         }
-
-        this.guild = group;
         this.activity.supportInvalidateOptionsMenu();
     }
 

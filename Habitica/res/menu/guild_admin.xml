@@ -5,8 +5,7 @@
     <item
         android:id="@+id/menu.guild.edit"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom"
-        android:title="@string/action_edit"
-        abc:showAsAction="ifRoom"/>
+        app:showAsAction="never"
+        android:title="@string/action_edit" />
 
 </menu>
