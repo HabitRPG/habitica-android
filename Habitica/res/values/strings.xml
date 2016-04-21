@@ -342,4 +342,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="share_using">Share using</string>
     <string name="share_levelup" formatted="false">I got to level %s in Habitica by improving my real-life habits!</string>
     <string name="share_hatched" formatted="false">I just hatched a %1$s %2$s pet in Habitica by completing my real-life tasks!</string>
+    <string name="share_raised" formatted="false">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
 </resources>

@@ -868,8 +868,38 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             @Override
             public void success(FeedResponse feedResponse, Response response) {
                 MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
+                MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned()-1);
                 MainActivity.this.setUserData(false);
                 showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
+                if (feedResponse.value == -1) {
+                    FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
+                    ImageView mountImageView = (ImageView) mountWrapper.findViewById(R.id.pet_imageview);
+
+                    DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
+                    String colorName = event.usingPet.getColorText();
+                    String animalName = event.usingPet.getAnimalText();
+                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(getString(R.string.hatched_pet_title, colorName, animalName))
+                            .setView(mountWrapper)
+                            .setPositiveButton(R.string.close, (hatchingDialog, which) -> {
+                                hatchingDialog.dismiss();
+                            })
+                            .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
+                                ShareEvent event = new ShareEvent();
+                                event.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
+                                Bitmap animalBitmap = ((BitmapDrawable)mountImageView.getDrawable()).getBitmap();
+                                Bitmap sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888);
+                                Canvas canvas = new Canvas(sharedImage);
+                                canvas.drawColor(getResources().getColor(R.color.brand_300));
+                                canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
+                                        new Rect(9, 0, animalBitmap.getWidth() + 9, animalBitmap.getHeight()), new Paint());
+                                event.shareImage = sharedImage;
+                                EventBus.getDefault().post(event);
+                                hatchingDialog.dismiss();
+                            })
+                            .create();
+                    dialog.show();
+                }
             }
 
             @Override
