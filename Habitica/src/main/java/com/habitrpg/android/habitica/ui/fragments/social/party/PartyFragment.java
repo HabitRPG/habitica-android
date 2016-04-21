@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,6 +85,8 @@ public class PartyFragment extends BaseMainFragment {
                     chatListFragment.seenGroupId = group.id;
                 }
 
+                PartyFragment.this.activity.supportInvalidateOptionsMenu();
+
                 if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
                     contentCache.GetQuestContent(group.quest.key, content -> {
                         if (groupInformationFragment != null) {
@@ -108,7 +110,13 @@ public class PartyFragment extends BaseMainFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_party, menu);
+        if (this.group != null) {
+            if (this.group.leaderID.equals(this.user.getId())) {
+                inflater.inflate(R.menu.menu_party_admin, menu);
+            } else {
+                inflater.inflate(R.menu.menu_party, menu);
+            }
+        }
     }
 
     @Override
@@ -123,43 +131,110 @@ public class PartyFragment extends BaseMainFragment {
                 Intent intent = new Intent(getActivity(), PartyInviteActivity.class);
                 startActivityForResult(intent, PartyInviteActivity.RESULT_SEND_INVITES);
                 return true;
+            case R.id.menu_guild_edit:
+                this.displayEditForm();
+                return true;
+            case R.id.menu_guild_leave:
+                this.mAPIHelper.apiService.leaveGroup(this.group.id, new Callback<Group>() {
+                    @Override
+                    public void success(Group group, Response response) {
+                        getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void displayEditForm() {
+        Bundle bundle = new Bundle();
+        bundle.putString("groupID",this.group.id);
+        bundle.putString("name",this.group.name);
+        bundle.putString("description",this.group.description);
+        bundle.putString("leader",this.group.leaderID);
+
+        Intent intent = new Intent(activity, GroupFormActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == PartyInviteActivity.RESULT_SEND_INVITES) {
-            Map<String, Object> inviteData = new HashMap<>();
-            inviteData.put("inviter", this.user.getProfile().getName());
-            if (data.getBooleanExtra("isEmail", false)) {
-                String[] emails = data.getStringArrayExtra("emails");
-                List<HashMap<String, String>> invites = new ArrayList<>();
-                for (String email : emails) {
-                    HashMap<String, String> invite = new HashMap<>();
-                    invite.put("name", "");
-                    invite.put("email", email);
-                    invites.add(invite);
+        switch(requestCode) {
+            case (GroupFormActivity.GROUP_FORM_ACTIVITY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    boolean needsSaving = false;
+                    Bundle bundle = data.getExtras();
+                    if (this.group.name != null && !this.group.name.equals(bundle.getString("name"))) {
+                        this.group.name = bundle.getString("name");
+                        needsSaving = true;
+                    }
+                    if (this.group.description != null && !this.group.description.equals(bundle.getString("description"))) {
+                        this.group.description = bundle.getString("description");
+                        needsSaving = true;
+                    }
+                    if (this.group.leaderID != null && !this.group.leaderID.equals(bundle.getString("leader"))) {
+                        this.group.leaderID = bundle.getString("leader");
+                        needsSaving = true;
+                    }
+                    if (this.group.privacy != null && !this.group.privacy.equals(bundle.getString("privacy"))) {
+                        this.group.privacy = bundle.getString("privacy");
+                        needsSaving = true;
+                    }
+                    if (needsSaving) {
+                        this.mAPIHelper.apiService.updateGroup(this.group.id, this.group, new Callback<Void>() {
+                            @Override
+                            public void success(Void aVoid, Response response) {
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+                        this.groupInformationFragment.setGroup(group);
+                    }
                 }
-                inviteData.put("emails", invites);
-            } else {
-                String[] userIDs = data.getStringArrayExtra("userIDs");
-                List<String> invites = new ArrayList<>();
-                Collections.addAll(invites, userIDs);
-                inviteData.put("uuids", invites);
+                break;
             }
-            this.mAPIHelper.apiService.inviteToGroup(this.group.id, inviteData, new Callback<Void>() {
-                @Override
-                public void success(Void group, Response response) {
+            case (PartyInviteActivity.RESULT_SEND_INVITES) : {
+                Map<String, Object> inviteData = new HashMap<>();
+                inviteData.put("inviter", this.user.getProfile().getName());
+                if (data.getBooleanExtra("isEmail", false)) {
+                    String[] emails = data.getStringArrayExtra("emails");
+                    List<HashMap<String, String>> invites = new ArrayList<>();
+                    for (String email : emails) {
+                        HashMap<String, String> invite = new HashMap<>();
+                        invite.put("name", "");
+                        invite.put("email", email);
+                        invites.add(invite);
+                    }
+                    inviteData.put("emails", invites);
+                } else {
+                    String[] userIDs = data.getStringArrayExtra("userIDs");
+                    List<String> invites = new ArrayList<>();
+                    Collections.addAll(invites, userIDs);
+                    inviteData.put("uuids", invites);
                 }
+                this.mAPIHelper.apiService.inviteToGroup(this.group.id, inviteData, new Callback<Void>() {
+                    @Override
+                    public void success(Void group, Response response) {
+                    }
 
-                @Override
-                public void failure(RetrofitError error) {
+                    @Override
+                    public void failure(RetrofitError error) {
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 

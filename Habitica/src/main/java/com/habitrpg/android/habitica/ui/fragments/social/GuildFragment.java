@@ -24,7 +24,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class GuildFragment extends BaseMainFragment implements Callback<Group> {
-    private final int GROUP_FORM_ACTIVITY = 11;
 
     private Group guild;
     public boolean isMember;
@@ -190,14 +189,14 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
         Intent intent = new Intent(activity, GroupFormActivity.class);
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivityForResult(intent, GROUP_FORM_ACTIVITY);
+        startActivityForResult(intent, GroupFormActivity.GROUP_FORM_ACTIVITY);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case (GROUP_FORM_ACTIVITY) : {
+            case (GroupFormActivity.GROUP_FORM_ACTIVITY) : {
                 if (resultCode == Activity.RESULT_OK) {
                     boolean needsSaving = false;
                     Bundle bundle = data.getExtras();

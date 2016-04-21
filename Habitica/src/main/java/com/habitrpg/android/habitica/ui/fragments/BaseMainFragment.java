@@ -109,5 +109,4 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         super.onSaveInstanceState(outState);
     }
-
 }

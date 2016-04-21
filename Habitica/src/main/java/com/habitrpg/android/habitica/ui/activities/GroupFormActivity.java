@@ -28,6 +28,8 @@ import butterknife.Bind;
 
 public class GroupFormActivity extends BaseActivity {
 
+    public static final int GROUP_FORM_ACTIVITY = 11;
+
     String groupID;
     String groupName;
     String groupDescription;
