@@ -69,7 +69,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         bind:parsemarkdown="@{todo.notes}"
-                        android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}"
+                        android:maxLines="3" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

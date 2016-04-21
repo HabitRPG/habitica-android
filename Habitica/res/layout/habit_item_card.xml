@@ -82,7 +82,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{habit.notes}"
-                        android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"/>
+                        android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"
+                        android:maxLines="3" />
                 </LinearLayout>
                 <View
                     android:id="@+id/rightBorderView"
