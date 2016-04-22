@@ -30,6 +30,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -62,12 +63,6 @@ public class LoginActivity extends AppCompatActivity
 	public String mTmpApiToken;
 	public Boolean isRegistering;
     private Menu menu;
-
-    @BindString(R.string.SP_address_default)
-    String apiAddress;
-
-	//private String apiAddress;
-	//private String apiAddress = "http://192.168.2.155:8080/"; // local testing
 
     private CallbackManager callbackManager;
 
@@ -141,7 +136,7 @@ public class LoginActivity extends AppCompatActivity
 
 		HostConfig hc= PrefsActivity.fromContext(this);
         if(hc ==null) {
-            hc =  new HostConfig(apiAddress, "80", "", "");
+            hc =  new HostConfig(BuildConfig.BASE_URL, BuildConfig.PORT, "", "");
         }
 		mApiHelper = new APIHelper(hc);
 
@@ -205,7 +200,7 @@ public class LoginActivity extends AppCompatActivity
 	};
 
 	private View.OnClickListener mForgotPWClick = v -> {
-String url = getString(R.string.SP_address_default);
+String url = BuildConfig.BASE_URL;
 Intent i = new Intent(Intent.ACTION_VIEW);
 i.setData(Uri.parse(url));
 startActivity(i);
@@ -352,7 +347,7 @@ startActivity(i);
         SharedPreferences.Editor editor = prefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
                 .putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),getString(R.string.SP_address_default))
+                .putString(getString(R.string.SP_address),BuildConfig.BASE_URL)
                 .commit();
         if(!ans) {
             throw new Exception("PB_string_commit");

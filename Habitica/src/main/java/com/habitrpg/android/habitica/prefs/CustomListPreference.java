@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class CustomListPreference extends ListPreference {
             }
             if (value == null || !value.startsWith("http")) {
                 Log.v("Commiting", "changing values to default");
-                value = mContext.getString(R.string.SP_address_default);
+                value = BuildConfig.BASE_URL;
             }
 
             Log.d("Commiting", "putting string: " + value);
