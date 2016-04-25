@@ -104,7 +104,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
 
-            lvl.setText(context.getString(R.string.user_level, "LVL " + user.getStats().getLvl()));
+            lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
             classLabel.setText(user.getStats().getCleanedClassName());
 
