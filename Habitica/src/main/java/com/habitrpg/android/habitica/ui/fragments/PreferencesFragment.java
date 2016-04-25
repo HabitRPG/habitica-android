@@ -196,6 +196,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 classSelectionPreference.setSummary(getString(R.string.change_class_description));
             }
             classSelectionPreference.setVisible(true);
+        } else {
+            classSelectionPreference.setTitle(getString(R.string.enable_class));
+            classSelectionPreference.setVisible(true);
         }
     }
 
