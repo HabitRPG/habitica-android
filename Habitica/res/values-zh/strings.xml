@@ -38,11 +38,6 @@
   <string name="logout">注销</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
-  <string name="user_dead_title">你死了！</string>
-  <string name="user_dead_mess">你对自己不够警惕，迷失在了一些坏习惯和困难的每日任务中。
-		你会重生，但是会下降一级，丢失你所有的金币还有一件随机的装备。
-		记得多注意你的每日任务，还有克制一下坏习惯！
-	</string>
   <string name="string_revive">重生</string>
   <string name="please_connect">请在使用widget之前连接应用</string>
   <string name="about.title">关于</string>

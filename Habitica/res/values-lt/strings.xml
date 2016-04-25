@@ -38,11 +38,6 @@
   <string name="logout">Atsijungti</string>
   <string name="account_details">Paskyros Duomenys</string>
   <string name="LoginActivityName">Sveiki</string>
-  <string name="user_dead_title">Tavo veikėjas numirė!</string>
-  <string name="user_dead_mess">Nebuvai pakankamai budrus(i), ir pasimetei tarp prastų įpročių bei sudėtingų dienos užduočių.
-		Atsigausi, bet prarasi lygį, auksą ir kažkurią aprangos dalį.
-		Bandyk būt atsargesnis(ė) su savo užduotim ir atidžiau prižiūrėk savo blogus įpročius
-	</string>
   <string name="string_revive">Prisikelti</string>
   <string name="please_connect">Prašome prisijungti su programa prieš naudojant valdiklį</string>
   <string name="about.title">Apie</string>

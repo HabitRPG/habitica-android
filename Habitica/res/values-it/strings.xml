@@ -38,11 +38,6 @@
   <string name="logout">Esci</string>
   <string name="account_details">Dettagli account</string>
   <string name="LoginActivityName">Benvenuto</string>
-  <string name="user_dead_title">Sei morto!</string>
-  <string name="user_dead_mess">Non hai prestato abbastanza attenzione, e hai perso la tua via tra cattive abitudini e alcune difficili Daily.
-		Ora rinascerai, ma perderai un livello, il tuo oro e un pezzo a caso del tuo equipaggiamento.
-		Prova ad essere più prudente con le tue Daily, ed occhio a quelle cattive abitudini!
-	</string>
   <string name="string_revive">Rianima</string>
   <string name="please_connect">Dovresti connetterti attraverso l\'applicazione prima di usare un widget</string>
   <string name="about.title">Info</string>
@@ -94,7 +89,7 @@
   <string name="levelup_detail">Raggiungendo obiettivi nella vita reale, sei salito al Livello %1$d!</string>
   <string name="levelup_health">Sei stato completamente curato!</string>
   <string name="levelup_button">Urrà!</string>
-  <string name="faint_subtitle">Non disperarti!\</string>
+  <string name="faint_subtitle">Non disperarti!</string>
   <string name="faint_penalty_body">Hai perso un livello, il tuo oro e un pezzo di equipaggiamento, ma puoi riottenere ogni cosa lavorando sodo! Buona fortuna - vedrai che ci riuscirai.</string>
   <string name="faint_header">Hai finito i punti salute!</string>
   <string name="faint_button"><![CDATA[Ripristina Salute e riprova]]></string>
@@ -228,7 +223,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="post">Invia</string>
   <string name="todo_due" formatted="false">Scade: %s</string>
   <string name="daily_streak" formatted="false">serie: %d</string>
-  <string name="todo_has_duedate">L\'attività ha una scadenza</string>
+  <string name="todo_has_duedate">L\' attività ha una scadenza</string>
   <string name="battle_gear">Assetto da battaglia</string>
   <string name="costume">Costume</string>
   <string name="outfit_head">Testa</string>
@@ -259,12 +254,25 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="quests">Missioni</string>
   <string name="pets">Animali</string>
   <string name="mounts">Cavalcature</string>
+  <string name="armoireEquipment" formatted="false">Hai trovato dell\'Equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
+  <string name="armoireFood" formatted="false">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
+  <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
+  <string name="armoireNotesFull" formatted="false">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
+  <string name="armoireLastItem">Hai trovato l\'ultimo oggetto raro disponibile nello Scrigno Incantato.</string>
+  <string name="armoireNotesEmpty">Nello Scrigno Incantato compariranno nuovi oggetti la prima settimana di ogni mese. Fino ad allora, continua a cliccare sullo Scrigno per ottenere Esperienza e Cibo!</string>
   <string name="sell" formatted="false">Vendi (%s Oro)</string>
+  <string name="hatch_with_potion">Schiudi con pozione</string>
   <string name="feed_to_pet">Dai ad animale</string>
+  <string name="hatch_egg">Schiudi con uovo</string>
   <string name="invite_party">Invita squadra</string>
+  <string name="dialog_feeding" formatted="false">Dai da mangiare a %1$s %2$s:</string>
   <string name="use_animal">Usa</string>
+  <string name="feed">Dai da mangiare</string>
+  <string name="hatch_with" formatted="false">Fai nascere un animale con %s</string>
+  <string name="hatched_pet_title" formatted="false">E\' nato un %2$s %1$s!</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
+  <string name="notification_pet_fed" formatted="false">Hai dato da mangiare al tuo %1$s %2$s!</string>
   <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
   <string name="sectionpets">Animali base</string>
   <string name="sectionpremiumPets">Animali Pozione Magica</string>
@@ -274,6 +282,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="sectionpremiumMounts">Calvalcature Pozione Magica</string>
   <string name="sectionquestMounts">Cavalcature Missione</string>
   <string name="sectionspecialMounts">Cavalcature rare</string>
+  <string name="world_quest">World Quest</string>
   <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
   <string name="empty_items" formatted="false">Non hai alcun %s</string>
   <string name="user_level" formatted="false">LIV. %s</string>

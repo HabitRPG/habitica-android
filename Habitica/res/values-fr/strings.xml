@@ -38,11 +38,6 @@
   <string name="logout">Déconnexion</string>
   <string name="account_details">Détails du compte</string>
   <string name="LoginActivityName">Bienvenue</string>
-  <string name="user_dead_title">Vous êtes mort·e !</string>
-  <string name="user_dead_mess">Vous n\'avez pas été assez vigilant·e, et vous êtes perdu·e entre les mauvaises habitudes et des tâches quotidiennes difficiles.
-⇥⇥Vous allez reprendre vie, mais perdrez un niveau, votre or et une pièce d\'équipement aléatoire.
-⇥⇥Essayez de prêter plus d\'attention à vos tâches quotidiennes, et gérez vos mauvaises habitudes !
-⇥</string>
   <string name="string_revive">Résurrection</string>
   <string name="please_connect">Veuillez vous connecter à l\'application avant d\'utiliser un widget</string>
   <string name="about.title">À propos</string>
@@ -168,7 +163,7 @@
   <string name="intro_1_description">Rejoignez plus de 1100000 personnes qui s\'amusent en accomplissant des choses ! Créez un avatar et suivez la piste des tâches de votre vraie vie.</string>
   <string name="intro_2_title">Progrès dans le jeu = Progrès dans la vie</string>
   <string name="intro_2_description">Débloquez du contenu dans le jeu en accomplissant vos tâches dans la vie réelle. Recevez des armures, des animaux, et plus, pour vous récompenser d\'avoir atteint vos buts !</string>
-  <string name="intro_3_title">Socialisez et battez-vous contre des monstres</string>
+  <string name="intro_3_title">Réunissez-vous et battez-vous contre des monstres</string>
   <string name="intro_3_description">Restez sur les rails de l\'accomplissement de vos buts avez l\'aide de vos amis. Épaulez-vous dans la vie et dans la bataille en vous améliorant ensemble !</string>
   <string name="intro_finish_button">Commencer</string>
   <string name="previous_button">Précédent</string>
@@ -253,14 +248,14 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="ago_1hour">il y a 1 heure</string>
   <string name="today">Aujourd\'hui</string>
   <string name="sidebar_items">Objets</string>
-  <string name="eggs">Oeufs</string>
+  <string name="eggs">Œufs</string>
   <string name="hatching_potions">Potions d\'éclosion</string>
   <string name="food">Nourriture</string>
   <string name="quests">Quêtes</string>
   <string name="pets">Familiers</string>
   <string name="mounts">Montures</string>
   <string name="armoireEquipment" formatted="false">Vous avez trouvé une pièce d\'Équipement rare dans l\'Armoire : %s! Génial !</string>
-  <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez : %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
+  <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
   <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'Expérience. Prends ça !</string>
   <string name="armoireNotesFull" formatted="false">Ouvrez l\'Armoire pour recevoir au hasard de l\'Équipement spécial, de l\'Expérience ou de la nourriture ! Pièces d\'Équipement restantes : %d</string>
   <string name="armoireLastItem">Vous avez trouvé la dernière pièce d\'Équipement rare dans l\'Armoire Enchantée.</string>
@@ -268,7 +263,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="sell" formatted="false">Vendre (%s Pièces d\'or)</string>
   <string name="hatch_with_potion">Faire éclore avec la Potion</string>
   <string name="feed_to_pet">Donner au Familier</string>
-  <string name="hatch_egg">Faire éclore avec l\'oeuf</string>
+  <string name="hatch_egg">Faire éclore avec l\'œuf</string>
   <string name="invite_party">Inviter l\'Équipe</string>
   <string name="dialog_feeding" formatted="false">Nourrissez %1$s %2$s avec :</string>
   <string name="use_animal">Utiliser</string>
@@ -279,17 +274,17 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="share">Partager</string>
   <string name="notification_pet_fed" formatted="false">Vous avez nourri votre %1$s %2$s !</string>
   <string name="notification_purchase" formatted="false">%s acheté</string>
-  <string name="sectionpets">Familiers de Base</string>
-  <string name="sectionpremiumPets">Familiers Magiques</string>
-  <string name="sectionquestPets">Familiers de Quête</string>
+  <string name="sectionpets">Familiers basiques</string>
+  <string name="sectionpremiumPets">Familiers magiques</string>
+  <string name="sectionquestPets">Familiers de quête</string>
   <string name="sectionspecialPets">Familiers rares</string>
-  <string name="sectionmounts">Montures de Base</string>
-  <string name="sectionpremiumMounts">Montures Magiques</string>
-  <string name="sectionquestMounts">Montures de Quête</string>
+  <string name="sectionmounts">Montures basiques</string>
+  <string name="sectionpremiumMounts">Montures magiques</string>
+  <string name="sectionquestMounts">Montures de quête</string>
   <string name="sectionspecialMounts">Montures rares</string>
   <string name="world_quest">Quête mondiale</string>
   <string name="inn_description">Reposez-vous à l\'auberge pour éviter les dégâts causés par les Quotidiennes que vous n\'avez pas réalisées ! (N.B. : cela ne vous immunise pas contre les dégâts causés par les Boss.)</string>
   <string name="empty_items" formatted="false">Vous n\'avez pas de %s</string>
   <string name="user_level" formatted="false">Niveau %s</string>
-  <string name="user_level_with_class" formatted="false">Niveaux %1$s - %2$s</string>
+  <string name="user_level_with_class" formatted="false">Niveau %1$s - %2$s</string>
 </resources>

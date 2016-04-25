@@ -38,11 +38,6 @@
   <string name="logout">Cerrar sesión</string>
   <string name="account_details">Detalles de la cuenta</string>
   <string name="LoginActivityName">Te damos la bienvenida</string>
-  <string name="user_dead_title">¡Has muerto!</string>
-  <string name="user_dead_mess">No has estado lo suficientemente pendiente y has perdido la vida arrastrado por malos hábitos y tareas difíciles.
-		Vas a revivir, pero perderás un nivel, todo tu oro y una pieza de equipamiento al azar.
-		¡Trata de prestar más atención a tus tareas diarias y acaba con las malas costumbres!
-	</string>
   <string name="string_revive">Revivir</string>
   <string name="please_connect">Antes de usar un widget, conéctate a través de la aplicación</string>
   <string name="about.title">Información</string>

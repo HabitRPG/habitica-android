@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Schließe positive Gewohnheiten ab, um Gold und Erfahrung zu erhalten! Negative Gewohnheiten fügen Deinem Avatar beim Antippen Schaden zu, versuche diese also im echten Leben zu vermeiden!</string>
-  <string name="tutorial_dailies">Besiege Deine täglichen Aufgaben um Gold und Erfahrung zu erhalten. Vorsicht! Tägliche Aufgaben fügen Dir Schaden zu, wenn Du sie nicht rechtzeitig schaffst.</string>
-  <string name="tutorial_todos">Erledige Deine To-Dos im echten Leben und hake diese ab, um GOLD und ERFAHRUNG zu erhalten und so Belohnungen und neue Features freizuschalten!</string>
-  <string name="tutorial_rewards">Dies sind Deine Belohnungen! Erwerbe Gold, indem Du reale Gewohnheiten, tägliche Aufgaben und To-Dos abschließt. Gib dieses hinterher für Belohnungen im Spiel oder selbsterstellte Belohnungen in der Realität aus!</string>
-  <string name="tutorial_equipment">Wenn Du Ausrüstung kaufst, taucht diese hier auf. Deine Kampfausrüstung beeinflusst Deine Spielerstatistiken und Dein Kostüm (falls aktiviert) beeinflusst Dein Aussehen.</string>
-  <string name="tutorial_items">Verdiene die Items indem Du Aufgaben erledigst und Stufen steigst. Tippe auf ein Item um es zu benutzen!</string>
-  <string name="tutorial_pets">Wenn Du Aufgaben abschließt, hast Du eine Chance, Eier und Schlüftränke zu finden. Kombiniere sie, um Haustiere auszubrüten.</string>
-  <string name="tutorial_skills">Fähigkeiten erlauben es Dir, mächtige Effekte auszulösen. Tippe auf einen Skill, um ihn zu benutzen. Dies kostet Mana (der blaue Balken), das Du generierst, indem Du Dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
-  <string name="tutorial_party">Hier können Du und Deine Freunde euch gegenseitig motivieren und mit euren Aufgaben Monster bekämpfen!</string>
-  <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen und für alle Altersklassen geeignetem Chat! Hier kannst Du über Produktivität diskutieren und Fragen stellen. Viel Spaß!</string>
-  <string name="tutorial_classes">Wähle aus, ob Du ein Krieger, Magier, Heiler oder Schurke werden möchtest. Jede Klasse hat einzigarte Ausrüstungsgegenstände und Fähigkeiten. Tippe auf (?) um mehr zu erfahren!</string>
+  <string name="tutorial_habits">Schließe positive Gewohnheiten ab, um Gold und Erfahrung zu erhalten! Negative Gewohnheiten fügen deinem Avatar beim Antippen Schaden zu, versuche diese also im echten Leben zu vermeiden!</string>
+  <string name="tutorial_dailies">Besiege deine täglichen Aufgaben um Gold und Erfahrung zu erhalten. Vorsicht! Tägliche Aufgaben fügen dir Schaden zu, wenn du sie nicht rechtzeitig schaffst.</string>
+  <string name="tutorial_todos">Erledige deine To-Dos im echten Leben und hake diese ab, um GOLD und ERFAHRUNG zu erhalten und so Belohnungen und neue Features freizuschalten!</string>
+  <string name="tutorial_rewards">Dies sind deine Belohnungen! Erwerbe Gold, indem du reale Gewohnheiten, tägliche Aufgaben und To-Dos abschließt. Gib dieses hinterher für Belohnungen im Spiel oder selbsterstellte Belohnungen in der Realität aus!</string>
+  <string name="tutorial_equipment">Wenn du Ausrüstung kaufst, taucht diese hier auf. Deine Kampfausrüstung beeinflusst deine Spielerstatistiken und dein Kostüm (falls aktiviert) beeinflusst dein Aussehen.</string>
+  <string name="tutorial_items">Verdiene die Items indem du Aufgaben erledigst und Stufen steigst. Tippe auf ein Item um es zu benutzen!</string>
+  <string name="tutorial_pets">Wenn du Aufgaben abschließt, hast du eine Chance, Eier und Tränke zu finden. Kombiniere sie, um Haustiere auszubrüten.</string>
+  <string name="tutorial_skills">Fähigkeiten erlauben es dir, mächtige Effekte auszulösen. Tippe auf einen Skill, um ihn zu benutzen. Dies kostet Mana (der blaue Balken), das du generierst, indem du dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
+  <string name="tutorial_party">Hier können du und deine Freunde euch gegenseitig motivieren und mit euren Aufgaben Monster bekämpfen!</string>
+  <string name="tutorial_tavern">Willkommen in der Taverne, einem öffentlichen und für alle Altersklassen geeignetem Chat! Hier kannst du über Produktivität diskutieren und Fragen stellen. Viel Spaß!</string>
+  <string name="tutorial_classes">Wähle aus, ob du ein Krieger, Magier, Heiler oder Schurke werden möchtest. Jede Klasse hat einzigartige Ausrüstungsgegenstände und Fähigkeiten. Tippe auf (?) um mehr zu erfahren!</string>
 </resources>

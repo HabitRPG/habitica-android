@@ -38,11 +38,6 @@
   <string name="logout">Sair</string>
   <string name="account_details">Detalhes da Conta</string>
   <string name="LoginActivityName">Bem-vindo</string>
-  <string name="user_dead_title">Você está morto!</string>
-  <string name="user_dead_mess">Você não foi vigilante o suficiente, e se perdeu entre alguns maus hábitos e algumas diárias difíceis.
-⇥⇥Você estará revivendo, mas vai perder um nível, seu ouro e uma peça de equipamento aleatória.
-⇥⇥Tente ser mais cuidadoso com suas diárias, e administre aqueles maus hábitos
-⇥</string>
   <string name="string_revive">Reviver</string>
   <string name="please_connect">Por favor conecte-se pela aplicação antes de usar um widget</string>
   <string name="about.title">Sobre</string>
@@ -113,6 +108,8 @@
   <string name="no_party_message">Você não está em um grupo. Para entrar em um grupo, por favor visite o site.</string>
   <string name="forgot_pw_btn">Esqueci a senha</string>
   <string name="forgot_pw_tv">Esqueceu a senha? Por favor use o Site móvel.</string>
+  <string name="tavern.inn.checkOut">Retornar a suas metas diárias.</string>
+  <string name="tavern.inn.rest">Suspender suas metas diárias.</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Desfazer</string>
   <string name="party">Grupo</string>
@@ -153,7 +150,7 @@
   <string name="quest.begin">Iniciar Missão</string>
   <string name="quest.cancel">Cancelar Convite</string>
   <string name="quest.abort">Abortar Missão</string>
-  <string name="quest.leave">Abandonar missão</string>
+  <string name="quest.leave">Abandonar Missão</string>
   <string name="quest.pending">Pendente</string>
   <string name="quest.accepted">Aceito</string>
   <string name="quest.rejected">Rejeitado</string>
@@ -258,6 +255,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="pets">Animais de estimação</string>
   <string name="mounts">Montarias</string>
   <string name="armoireEquipment" formatted="false">Você encontrou uma peça de um Equipamento raro no Armário: %s Incrível!</string>
+  <string name="armoireFood" formatted="false">Você abriu a caixa e encontrou %1$s %2$s. O que isso está fazendo aqui?</string>
   <string name="armoireExp">Você lutou com o Armário e ganhou Experiência. Toma essa!</string>
   <string name="armoireNotesFull" formatted="false">Abra o Armário para receber aleatoriamente um Equipamento especial, Experiência, ou comida! Peças de Equipamentos restantes: %d</string>
   <string name="armoireLastItem">Você encontrou a ultima peça de um Equipamento raro no Armário Encantado.</string>
@@ -267,10 +265,26 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="feed_to_pet">Alimentar mascote</string>
   <string name="hatch_egg">Chocar com ovo</string>
   <string name="invite_party">Convidar equipe</string>
+  <string name="dialog_feeding" formatted="false">Alimentar %1$s %2$s com:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with" formatted="false">Chocar mascote com %s</string>
+  <string name="hatched_pet_title" formatted="false">Você chocou um %1$s %2$s!</string>
   <string name="close">Fechar</string>
   <string name="share">Compartilhar</string>
+  <string name="notification_pet_fed" formatted="false">Você alimentou seu %1$s %2$s!</string>
   <string name="notification_purchase" formatted="false">%s foi comprado</string>
+  <string name="sectionpets">Mascotes Básicos</string>
+  <string name="sectionpremiumPets">Mascotes de Poções Mágicas</string>
+  <string name="sectionquestPets">Mascotes de Missões</string>
+  <string name="sectionspecialPets">Macotes Raros</string>
+  <string name="sectionmounts">Montarias Básicas</string>
+  <string name="sectionpremiumMounts">Montarias de Poções Mágicas</string>
+  <string name="sectionquestMounts">Montarias de Missões</string>
+  <string name="sectionspecialMounts">Montarias Raras</string>
+  <string name="world_quest">Missões Globais</string>
+  <string name="inn_description">Descanse na Pousada para prevenir suas metas incompletas de le causarem dano de um dia para o outro! (Nota: Não le previne de receber dano do Boss)</string>
+  <string name="empty_items" formatted="false">Você não tem nenhum %s</string>
+  <string name="user_level" formatted="false">Level %s</string>
+  <string name="user_level_with_class" formatted="false">Level %1$s - %2$s</string>
 </resources>

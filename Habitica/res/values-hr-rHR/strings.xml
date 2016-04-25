@@ -38,10 +38,6 @@
   <string name="logout">Odjavi se</string>
   <string name="account_details">Detalji o računu</string>
   <string name="LoginActivityName">Dobrodošli</string>
-  <string name="user_dead_title">Mrtav/va si!</string>
-  <string name="user_dead_mess">Nisi bio dovoljno oprezan i izgubio si se između nekih loših navika i nekih teških Dailyja.
-       Oživjet ćeš, ali pasti za jednu razinu, svoje zlato i nasumičan komad opreme.
-        Pokušaj biti oprezniji sa svojim dailiesima i riješi onebloše navike!</string>
   <string name="string_revive">Oživi</string>
   <string name="please_connect">Molimo spojite se kroz aplikaciju prije korištenja widgeta</string>
   <string name="about.title">O nama</string>
@@ -112,6 +108,8 @@
   <string name="no_party_message">Nisi u grupi. Za pridruživanje grupi, posjetite stranicu.</string>
   <string name="forgot_pw_btn">Zaboravili Lozinku</string>
   <string name="forgot_pw_tv">Zaboravili Lozinku? Molimo koristite mobilnu Stranicu.</string>
+  <string name="tavern.inn.checkOut">Reaktiviraj svoje Dailies-e</string>
+  <string name="tavern.inn.rest">Pauziraj svoje Dailies-e</string>
   <string name="reward.dialog.buy">Kupi</string>
   <string name="reward.dialog.dismiss">Zanemari</string>
   <string name="party">Partija</string>
@@ -267,12 +265,14 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="feed_to_pet">Nahrani ljubimca</string>
   <string name="hatch_egg">Izlegni s jajetom</string>
   <string name="invite_party">Pozovi grupu</string>
+  <string name="dialog_feeding" formatted="false">Nahrani %1$s %2$s s:</string>
   <string name="use_animal">Koristi</string>
   <string name="feed">Nahrani</string>
   <string name="hatch_with" formatted="false">Izlegni ljubimca sa %s</string>
   <string name="hatched_pet_title" formatted="false">%1$s %2$s se izlegao/la!</string>
   <string name="close">Zatvori</string>
   <string name="share">Podijeli</string>
+  <string name="notification_pet_fed" formatted="false">Nahranio/la si svoju/ga %1$s %2$s!</string>
   <string name="notification_purchase" formatted="false">%s je kupljen/a</string>
   <string name="sectionpets">Bazni Ljubimci</string>
   <string name="sectionpremiumPets">Ljubimci Čarobnog Napitka</string>
@@ -282,4 +282,9 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="sectionpremiumMounts">Životinje za jahanje Čarobnog Napitka </string>
   <string name="sectionquestMounts">Životinje za jahanje s Pothvata</string>
   <string name="sectionspecialMounts">Rijetke Životinje za jahanje</string>
+  <string name="world_quest">Svjetski Pothvat</string>
+  <string name="inn_description">Odmori se u Krčmi da spriječiš prekonoćnu ozljedu od neizvršenih Dailies-a! (Napomena: ne sprječava od primanja ozljeda od Šefova.)</string>
+  <string name="empty_items" formatted="false">Nemaš %s</string>
+  <string name="user_level" formatted="false">LVL %s</string>
+  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
 </resources>

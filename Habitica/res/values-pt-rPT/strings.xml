@@ -38,10 +38,6 @@
   <string name="logout">Sair</string>
   <string name="account_details">Detalhes da conta</string>
   <string name="LoginActivityName">Bem-vindo</string>
-  <string name="user_dead_title">Estás morto!</string>
-  <string name="user_dead_mess">Não foste vigilante o suficiente e, ficaste perdido entre alguns maus hábitos e tarefas diárias difíceis.
-  Vais ser reanimado, mas vais perder um nível, o teu ouro e uma peça aleatória de equipamento.
-  Tenta ter mais cuidado com as tuas tarefas diárias e gere bem esses maus hábitos!</string>
   <string name="string_revive">Reanimar</string>
   <string name="please_connect">Por favor liga-te através da aplicação antes de utilizar o widget</string>
   <string name="about.title">Acerca</string>
@@ -112,6 +108,8 @@
   <string name="no_party_message">Tu não estás numa equipa. Para te juntares a uma equipa, por favor visita o website.</string>
   <string name="forgot_pw_btn">Password esquecida</string>
   <string name="forgot_pw_tv">Esqueceste a password? Por favor utiliza a versão móvel do Website</string>
+  <string name="tavern.inn.checkOut">Reactive as suas Tarefas Diárias</string>
+  <string name="tavern.inn.rest">Suspenda temporariamente as suas Tarefes Diárias</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Destituir</string>
   <string name="party">Equipa</string>
@@ -267,12 +265,14 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="feed_to_pet">Alimentar o animal</string>
   <string name="hatch_egg">Eclodir com ovo</string>
   <string name="invite_party">Convidar a equipa</string>
+  <string name="dialog_feeding" formatted="false">Alimente %1$s %2$s com:</string>
   <string name="use_animal">Usar</string>
   <string name="feed">Alimentar</string>
   <string name="hatch_with" formatted="false">Eclodir animal com %s</string>
   <string name="hatched_pet_title" formatted="false">Um %1$s %2$s eclodiu do ovo!</string>
   <string name="close">Fechar</string>
   <string name="share">Partilhar</string>
+  <string name="notification_pet_fed" formatted="false">Você alimentou %1$s %2$s!</string>
   <string name="notification_purchase" formatted="false">Compraste %s</string>
   <string name="sectionpets">Animais de Estimação Base</string>
   <string name="sectionpremiumPets">Animais de Estimação de Poções Mágicas</string>
@@ -282,4 +282,9 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="sectionpremiumMounts">Montadas de Poções Mágicas</string>
   <string name="sectionquestMounts">Montadas de Missões</string>
   <string name="sectionspecialMounts">Montadas Raras</string>
+  <string name="world_quest">Missão mundial</string>
+  <string name="inn_description">Descanse na Taverna para prevenir que Tarefas Diárias o magoem de um dia para o outro! (Nota: não previne dano que receba de um Chefão.) </string>
+  <string name="empty_items" formatted="false">Você não tem quaisquer %s</string>
+  <string name="user_level" formatted="false">Nível %s</string>
+  <string name="user_level_with_class" formatted="false">Nível %1$s - %2$s</string>
 </resources>
