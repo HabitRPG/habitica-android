@@ -72,7 +72,7 @@ public class AvatarSetupFragment extends BaseFragment {
             }
         });
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new MarginDecoration(this.activity));
+        this.recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
         this.recyclerView.setAdapter(this.adapter);
         this.loadCustomizations();

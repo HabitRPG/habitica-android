@@ -97,7 +97,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         if (this.category != null) {
             select = select.and(Condition.column("category").eq(this.category));
         }
-        if (this.type.equals("background")) {
+        if (this.type != null && this.type.equals("background")) {
             select.orderBy(OrderBy.columns("customizationSetName").descending());
         } else {
             select.orderBy(true, "customizationSet");

@@ -75,6 +75,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_avatar_overview, container, false);
 
+        if (this.user == null) {
+            return v;
+        }
+
         viewBinding = DataBindingUtil.bind(v);
         viewBinding.setPreferences(this.user.getPreferences());
 

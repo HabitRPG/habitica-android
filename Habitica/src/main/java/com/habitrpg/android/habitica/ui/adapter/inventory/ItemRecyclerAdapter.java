@@ -91,7 +91,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             } else {
                 petKey = hatchingItem.getKey() + "-" + item.getKey();
             }
-            return ownedPets.containsKey(petKey) && ownedPets.get(petKey) != null;
+            return ownedPets != null && ownedPets.containsKey(petKey) && ownedPets.get(petKey) > 0;
         }
 
         public void bind(Item item) {

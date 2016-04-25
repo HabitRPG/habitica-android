@@ -15,13 +15,13 @@ public abstract class PlayerMinStats extends BasicStats {
     @ForeignKey(references = {@ForeignKeyReference(columnName = "trainingstats_id",
             columnType = String.class,
             foreignColumnName = "id")})
-    public BasicStats training;//stats.training
+    public BasicStats training;
 
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "buffs_id",
             columnType = String.class,
             foreignColumnName = "id")})
-    public Buffs buffs;//stats.buffs
+    public Buffs buffs;
 
     @Column
     public int points, lvl;

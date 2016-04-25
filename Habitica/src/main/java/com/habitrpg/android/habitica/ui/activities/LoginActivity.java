@@ -332,7 +332,7 @@ startActivity(i);
         } else {
             JSONObject eventProperties = new JSONObject();
             try {
-                eventProperties.put("eventAction", "lofin");
+                eventProperties.put("eventAction", "login");
                 eventProperties.put("eventCategory", "behaviour");
                 eventProperties.put("hitType", "event");
             } catch (JSONException exception) {

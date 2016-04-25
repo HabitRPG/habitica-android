@@ -47,14 +47,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private static final int TYPE_MESSAGE = 2;
 
     private List<ChatMessage> messages;
-    private Context viewContext;
     private String uuid;
     private String groupId;
     private boolean isTavern;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, Context viewContext, String uuid, String groupId, boolean isTavern) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String uuid, String groupId, boolean isTavern) {
         this.messages = messages;
-        this.viewContext = viewContext;
         this.uuid = uuid;
         this.groupId = groupId;
         this.isTavern = isTavern;
@@ -94,7 +92,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(rLayout, parent, false);
 
-        return new ChatRecyclerViewHolder(view, viewType, viewContext, uuid, groupId);
+        return new ChatRecyclerViewHolder(view, viewType, uuid, groupId);
     }
 
     @Override
@@ -174,7 +172,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Context context;
         Resources res;
 
-        public ChatRecyclerViewHolder(View itemView, int layoutType, Context viewContext, String currentUserId, String groupId) {
+        public ChatRecyclerViewHolder(View itemView, int layoutType, String currentUserId, String groupId) {
             super(itemView);
             this.layoutType = layoutType;
             this.uuid = currentUserId;
@@ -182,7 +180,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             ButterKnife.bind(this, itemView);
 
-            context = viewContext;
+            context = itemView.getContext();
 
             res = context.getResources();
 

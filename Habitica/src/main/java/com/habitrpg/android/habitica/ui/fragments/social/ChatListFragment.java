@@ -129,7 +129,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(new ArrayList<ChatMessage>(), ctx, userId, groupId, isTavern);
+        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(new ArrayList<ChatMessage>(), userId, groupId, isTavern);
 
         mRecyclerView.setAdapter(tavernAdapter);
 
@@ -157,7 +157,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         currentChatMessages = chatMessages;
 
         //Load unparsed messages first
-        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, userId, groupId, isTavern);
 
         if(mRecyclerView != null) {
             mRecyclerView.setAdapter(tavernAdapter);
@@ -325,7 +325,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         protected void onPostExecute(Void result) {
-            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, ctx, userId, groupId, isTavern);
+            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, userId, groupId, isTavern);
 
             if(mRecyclerView != null) {
                 mRecyclerView.setAdapter(tavernAdapter);
