@@ -1,11 +1,8 @@
 language: android
-jdk:
-  - oraclejdk7
-  - oraclejdk8
+jdk: oraclejdk8
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA7_HOME
 
 android:
   components:
