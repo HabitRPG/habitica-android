@@ -39,3 +39,13 @@ Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-a
 5. Create new Pull Request
    * Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
 
+## Build Instructions
+
+### Config File
+
+Setup Habitica build config file by simply copying the example habitica properties file.
+
+    $ cp habitica.properties.example habitica.properties
+
+Note: this is the default production `habitica.properties` file for habitica.com. If you
+want to use a local habitica server, please modify the values in the properties file accordingly.

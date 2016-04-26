@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 
 import butterknife.Bind;
@@ -26,7 +27,7 @@ public class NewsFragment extends BaseMainFragment {
 
         ButterKnife.bind(this, view);
 
-        newsWebview.loadUrl("https://habitica.com/static/new-stuff");
+        newsWebview.loadUrl(BuildConfig.BASE_URL + "/static/new-stuff");
 
         return view;
     }

@@ -188,6 +188,25 @@ if (propFile.canRead()) {
     android.buildTypes.release.signingConfig = null
 }
 
+// Add Habitica Properties to buildConfigField
+final File HRPG_PROPS_FILE = new File('habitica.properties')
+if (HRPG_PROPS_FILE.canRead()) {
+    def Properties HRPG_PROPS = new Properties()
+    HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
+
+    if (HRPG_PROPS != null) {
+        android.buildTypes.all { buildType ->
+            HRPG_PROPS.any { property ->
+                buildType.buildConfigField "String", property.key, "\"${property.value}\""
+            }
+        }
+    } else {
+        throw new InvalidUserDataException('habitica.properties found but some entries are missing')
+    }
+} else {
+    throw new MissingResourceException('habitica.properties not found')
+}
+
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'

@@ -8,6 +8,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
@@ -76,8 +77,8 @@ public class PrefsActivity extends BaseActivity implements
     public static HostConfig fromContext(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         HostConfig config;
-        String httpPort = "80";
-        String address = prefs.getString(ctx.getString(R.string.SP_address), ctx.getString(R.string.SP_address_default));
+        String httpPort = BuildConfig.PORT;
+        String address = prefs.getString(ctx.getString(R.string.SP_address), BuildConfig.BASE_URL);
         String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
         String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
         config = new HostConfig(address, httpPort, api, userID);

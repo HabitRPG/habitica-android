@@ -2,7 +2,6 @@
 <resources>
     <!--  Prefs -->
     <string name="SP_address" translatable="false">ServerAddress</string>
-    <string name="SP_address_default" translatable="false">https://habitica.com/</string>
     <string name="SP_userID" translatable="false">UserID</string>
     <string name="SP_APIToken" translatable="false">APIToken</string>
     <string name="SP_username" translatable="false">Username</string>
