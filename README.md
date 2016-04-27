@@ -39,6 +39,13 @@ Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-a
 5. Create new Pull Request
    * Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
 
+### Code Style Guidelines
+We follow the code style guidelines outlined in [Android Code Style Guidelines for Contributors](https://source.android.com/source/code-style.html).
+
+You can install our code style scheme to Intellij and/or Android Studio via this shell command:
+
+    $ ./install-codestyle.sh
+
 ## Build Instructions
 
 ### Config File
