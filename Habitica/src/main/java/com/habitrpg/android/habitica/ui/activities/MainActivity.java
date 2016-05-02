@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.sqlite.SQLiteDoneException;
@@ -87,6 +88,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -226,6 +228,7 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 600000) {
             if (this.mAPIHelper != null) {
                 this.mAPIHelper.retrieveUser(new HabitRPGUserCallback(this));
+                this.checkMaintenance();
             }
         }
 
@@ -1227,5 +1230,46 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
             this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
+    }
+
+    private void checkMaintenance() {
+        this.mAPIHelper.maintenanceService.getMaintenanceStatus(new Callback<MaintenanceResponse>() {
+            @Override
+            public void success(MaintenanceResponse maintenanceResponse, Response response) {
+                if (maintenanceResponse.activeMaintenance) {
+                    Intent intent = createMaintenanceIntent(maintenanceResponse, false);
+                    startActivity(intent);
+                } else {
+                    if (maintenanceResponse.minBuild != null) {
+                        PackageInfo packageInfo = null;
+                        try {
+                            packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                            if (packageInfo.versionCode < maintenanceResponse.minBuild) {
+                                Intent intent = createMaintenanceIntent(maintenanceResponse, true);
+                                startActivity(intent);
+                            }
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {
+        Intent intent = new Intent(this, MaintenanceActivity.class);
+        Bundle data = new Bundle();
+        data.putString("title", maintenanceResponse.title);
+        data.putString("imageUrl", maintenanceResponse.imageUrl);
+        data.putString("description", maintenanceResponse.description);
+        data.putBoolean("deprecationNotice", isDeprecationNotice);
+        intent.putExtras(data);
+        return intent;
     }
 }

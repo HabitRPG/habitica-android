@@ -115,6 +115,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
+        <activity android:name=".ui.activities.MaintenanceActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
         <provider

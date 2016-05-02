@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.InAppPurchasesApiService;
+import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.api.TypeAdapter.TagsAdapter;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -89,6 +90,7 @@ public class APIHelper implements ErrorHandler, Profiler {
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     private final InAppPurchasesApiService inAppPurchasesService;
+    public final MaintenanceApiService maintenanceService;
     private HostConfig cfg;
 
     //private OnHabitsAPIResult mResultListener;
@@ -162,7 +164,6 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .create();
 
         Server server = new Server(cfg.getAddress());
-
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(server.toString())
                 .setErrorHandler(this)
@@ -174,7 +175,6 @@ public class APIHelper implements ErrorHandler, Profiler {
         this.apiService = adapter.create(ApiService.class);
 
         server = new Server(cfg.getAddress(), false);
-
         adapter = new RestAdapter.Builder()
                 .setEndpoint(server.toString())
                 .setErrorHandler(this)
@@ -182,10 +182,16 @@ public class APIHelper implements ErrorHandler, Profiler {
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(requestInterceptor)
                 .setConverter(new GsonConverter(gson))
-
                 .build();
-
         this.inAppPurchasesService = adapter.create(InAppPurchasesApiService.class);
+
+        adapter = new RestAdapter.Builder()
+                .setEndpoint("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setRequestInterceptor(requestInterceptor)
+                .setConverter(new GsonConverter(gson))
+                .build();
+        this.maintenanceService = adapter.create(MaintenanceApiService.class);
     }
 
     private static final TypeAdapter<Boolean> booleanAsIntAdapter = new TypeAdapter<Boolean>() {
