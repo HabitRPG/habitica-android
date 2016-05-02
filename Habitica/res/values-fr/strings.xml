@@ -36,6 +36,7 @@
   <string name="emailAddress">Adresse e-mail</string>
   <string name="confirmpassword">Confirmez votre mot de passe</string>
   <string name="logout">Déconnexion</string>
+  <string name="logout_description">Déconnexion de votre compte</string>
   <string name="account_details">Détails du compte</string>
   <string name="LoginActivityName">Bienvenue</string>
   <string name="string_revive">Résurrection</string>
@@ -256,19 +257,19 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="mounts">Montures</string>
   <string name="armoireEquipment" formatted="false">Vous avez trouvé une pièce d\'Équipement rare dans l\'Armoire : %s! Génial !</string>
   <string name="armoireFood" formatted="false">Vous farfouillez dans l\'Armoire et trouvez %1$s %2$s. Qu\'est-ce que ça fait là ?</string>
-  <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'Expérience. Prends ça !</string>
-  <string name="armoireNotesFull" formatted="false">Ouvrez l\'Armoire pour recevoir au hasard de l\'Équipement spécial, de l\'Expérience ou de la nourriture ! Pièces d\'Équipement restantes : %d</string>
-  <string name="armoireLastItem">Vous avez trouvé la dernière pièce d\'Équipement rare dans l\'Armoire Enchantée.</string>
-  <string name="armoireNotesEmpty">L\'Armoire contiendra de nouvelles pièces d\'Équipement la première semaine de chaque mois. D\'ici là, continuez à cliquer pour obtenir de l\'Expérience et de la Nourriture!</string>
-  <string name="sell" formatted="false">Vendre (%s Pièces d\'or)</string>
-  <string name="hatch_with_potion">Faire éclore avec la Potion</string>
-  <string name="feed_to_pet">Donner au Familier</string>
+  <string name="armoireExp">Vous luttez contre l\'Armoire et gagnez de l\'expérience. Prends ça !</string>
+  <string name="armoireNotesFull" formatted="false">Ouvrez l\'Armoire pour recevoir au hasard de l\'équipement spécial, de l\'expérience ou de la nourriture ! Pièces d\'équipement restantes : %d</string>
+  <string name="armoireLastItem">Vous avez trouvé la dernière pièce d\'équipement rare dans l\'Armoire enchantée.</string>
+  <string name="armoireNotesEmpty">L\'Armoire contiendra de nouvelles pièces d\'équipement la première semaine de chaque mois. D\'ici là, continuez à cliquer pour obtenir de l\'expérience et de la nourriture!</string>
+  <string name="sell" formatted="false">Vendre (%s pièces d\'or)</string>
+  <string name="hatch_with_potion">Faire éclore avec la potion</string>
+  <string name="feed_to_pet">Donner au familier</string>
   <string name="hatch_egg">Faire éclore avec l\'œuf</string>
-  <string name="invite_party">Inviter l\'Équipe</string>
+  <string name="invite_party">Inviter l\'équipe</string>
   <string name="dialog_feeding" formatted="false">Nourrissez %1$s %2$s avec :</string>
   <string name="use_animal">Utiliser</string>
   <string name="feed">Nourrir</string>
-  <string name="hatch_with" formatted="false">Faire éclore le Familier avec %s</string>
+  <string name="hatch_with" formatted="false">Faire éclore le familier avec %s</string>
   <string name="hatched_pet_title" formatted="false">Vous avez fait éclore un·e %1$s %2$s !</string>
   <string name="close">Fermer</string>
   <string name="share">Partager</string>
@@ -283,8 +284,41 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="sectionquestMounts">Montures de quête</string>
   <string name="sectionspecialMounts">Montures rares</string>
   <string name="world_quest">Quête mondiale</string>
-  <string name="inn_description">Reposez-vous à l\'auberge pour éviter les dégâts causés par les Quotidiennes que vous n\'avez pas réalisées ! (N.B. : cela ne vous immunise pas contre les dégâts causés par les Boss.)</string>
+  <string name="inn_description">Reposez-vous à l\'auberge pour éviter les dégâts causés par les quotidiennes que vous n\'avez pas réalisées ! (Note : cela ne vous immunise pas contre les dégâts causés par les boss.)</string>
   <string name="empty_items" formatted="false">Vous n\'avez pas de %s</string>
   <string name="user_level" formatted="false">Niveau %s</string>
   <string name="user_level_with_class" formatted="false">Niveau %1$s - %2$s</string>
+  <string name="warrior">Guerrier</string>
+  <string name="rogue">Voleur</string>
+  <string name="mage">Mage</string>
+  <string name="healer">Guérisseur</string>
+  <string name="warrior_description">Les Guerriers font plus de \"coups critiques\" et ils sont plus puissants, tandis qu\'ils reçoivent aléatoirement des bonus d\'Or, d\'Expérience, et de chance d\'obtenir du butin en achevant une tâche. Ils infligent également de lourds dommages aux boss. Jouez un Guerrier si vous êtes motivé par des récompenses aléatoires de style jackpot, ou si vous voulez distribuez des gnons dans les Quêtes de boss!</string>
+  <string name="mage_description">Les Mages apprennent vite, gagnant Expérience et Niveaux plus rapidement que les autres classes. Ils reçoivent également de grandes réserves de Mana pour utiliser les capacités spéciales. Jouez un Mage si vous aimez l\'aspect tactique du jeu, ou si vous êtes très motivé à monter beaucoup de niveaux et débloquer des options avancées!</string>
+  <string name="rogue_description">Les Voleurs adorent amasser des richesses, récupérant plus d\'Or que qui que ce soit d\'autre, et sont doués pour trouver des objets par hasard. Leur légendaire capacité de Furtivité leur permet d\'esquiver les conséquences des Quotidiennes manquées. Jouez un Voleur si vous êtes fortement motivé par les Récompenses et les Succès, à la recherche de butin et de badges!</string>
+  <string name="healer_description">Les Guérisseurs sont imperméable aux dégâts et étendent cette protection aux autres. Les Quotidiennes manquées et les mauvaises Habitudes ne les affectent pas tant que ça et ils ont des moyens pour retrouver la Santé après un échec. Jouez un Guérisseur si vous aimez assister les membres de votre équipe, ou si l\'idée de tromper la mort par le dur labeur vous inspire!</string>
+  <string name="select_class">Sélectionner une classe</string>
+  <string name="opt_out_class">Désactiver</string>
+  <string name="opt_out_description">Les classes vous ennuient ? Vous voulez choisir plus tard ? N\'en prenez pas - vous serez un combattant sans capacités spéciales. Vous pouvez vous renseigner plus tard sur le système de classe sur le wiki et activer les classes à tout moment.</string>
+  <string name="class_confirmation" formatted="false">Êtes vous sûr de vouloir devenir un-e %s?</string>
+  <string name="choose_class">Choisissez une classe</string>
+  <string name="dialog_go_back">Revenir</string>
+  <string name="opt_out_confirmation">Êtes-vous sûr-e de vouloir désactiver votre compte?</string>
+  <string name="change_class">Changez votre classe</string>
+  <string name="change_class_description">Changez votre classe et remboursez les points d\'attributs pour 3 gemmes.</string>
+  <string name="enable_class">Activer le système de classes</string>
+  <string name="changing_class_progress">Changer de classe</string>
+  <string name="by_email">Par email</string>
+  <string name="invite_existing_users">Inviter des utilisateurs existants</string>
+  <string name="send">Envoyer</string>
+  <string name="invite">Inviter des amis</string>
+  <string name="invite_id_description">Si vous avez des amis qui jouent déjà à Habitica, invitez-les en utilisant leurs ID d\'utilisateur.</string>
+  <string name="invite_email_description">Si un ami rejoint Habitica via votre email, il sera automatiquement invité à rejoindre votre équipe !</string>
+  <string name="add_invites">Ajouter des invitations</string>
+  <string name="user_id">ID d\'utilisateur</string>
+  <string name="email">Email</string>
+  <string name="invite_users">Inviter dans l\'équiper</string>
+  <string name="share_using">Partager avec</string>
+  <string name="share_levelup" formatted="false">J\'ai atteint le niveau %s à Habitica en améliorants mes habitudes</string>
+  <string name="share_hatched" formatted="false">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes</string>
+  <string name="share_raised" formatted="false">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
 </resources>

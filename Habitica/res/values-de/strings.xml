@@ -36,6 +36,7 @@
   <string name="emailAddress">E-Mail-Adresse</string>
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
+  <string name="logout_description">Logge dich aus</string>
   <string name="account_details">Kontodetails</string>
   <string name="LoginActivityName">Wilkommen</string>
   <string name="string_revive">Wiederbeleben</string>
@@ -99,10 +100,10 @@
   <string name="used_skill" formatted="false">Du hast %1$s für %2$d Mana benutzt.</string>
   <string name="new_checklist_item">Unteraufgabe</string>
   <string name="add_checklist_item">Hinzufügen</string>
-  <string name="reminder_title">Denke daran deine täglichen Aufgaben abzuhaken!</string>
+  <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
   <string name="skill_progress_title">Fertigkeiten benutzen</string>
   <string name="coming_soon">demnächst</string>
-  <string name="chat_flag_confirmation">Möchtest du diesen Beitrag wirklich melden?</string>
+  <string name="chat_flag_confirmation">Möchtest Du diesen Beitrag wirklich melden?</string>
   <string name="flag_confirm">Verletzung der Community-Richtlinien melden</string>
   <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
   <string name="no_party_message">Du bist nicht in einer Gruppe. Besuche die Website, um einer Gruppe beizutreten.</string>
@@ -171,7 +172,7 @@
   <string name="skip_button">Überspringen</string>
   <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während du Ziele im echten Leben erreichst wirst du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
-  <string name="avatar_setup_description">Als erstes benötigst du einen Avater der dich repräsentiert! Dinge die du im echten Leben tust beeinflussen deine Lebenspunkte, dein Level und dein Gold.</string>
+  <string name="avatar_setup_description">Als erstes benötigst Du einen Avater der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
   <string name="task_setup_description">Großartig! Jetzt lass uns deine Aufgaben anlegen, damit du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
 
 Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
@@ -287,4 +288,37 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="empty_items" formatted="false">Du hast kein/e %s</string>
   <string name="user_level" formatted="false">Lvl %s</string>
   <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
+  <string name="warrior">Krieger</string>
+  <string name="rogue">Schurke</string>
+  <string name="mage">Magier</string>
+  <string name="healer">Heiler</string>
+  <string name="warrior_description">Krieger verursachen mehr und stärkere \"kritische Treffer\", die zufällige Boni auf Gold, Erfahrung und Beute beim Erfüllen einer Aufgabe geben. Sie sind auch sehr stark gegen Bossmonster. Spiele einen Krieger, wenn dich die Chance auf Belohnungen im Lottogewinn-Stil besonders reizt und du besonders effektiv gegen Bossmonster sein willst.</string>
+  <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn du motiviert wirst durch schnellen Level-Ausfstieg und das Freischalten fortgeschrittener Funktionen.</string>
+  <string name="rogue_description">Schurken lieben es Reichtümer anzuhäufen, indem sie mehr Gold als andere verdienen und geschickt darin sind, neue Gegenstände zu finden. Ihre typische Fähigkeit sich im verborgenen zu bewegen erlaubt dir gelegentlich die Folgen verpasster täglicher Aufgaben zu vermeiden. Spiele einen Schurken, wenn dich Spielbelohnungen und Erfolge besonders reizen und du nach Beute und Abzeichen trachtest!</string>
+  <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wieder herzustellen. Spiele einen Heiler, wenn du gerne Anderen in einer Gruppe hilfst, oder wenn es dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
+  <string name="select_class">Klasse wählen</string>
+  <string name="opt_out_class">Später entscheiden</string>
+  <string name="opt_out_description">Du willst keine Klasse oder möchtest dich später entscheiden? Entscheide dich später und du wirst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und deine Klasse jederzeit aktivieren.</string>
+  <string name="class_confirmation" formatted="false">Bist du sicher, dass du %s werden willst?</string>
+  <string name="choose_class">Klasse wählen</string>
+  <string name="dialog_go_back">Zurück</string>
+  <string name="opt_out_confirmation">Bist du sicher, dass du dich noch nicht entscheiden willst?</string>
+  <string name="change_class">Deine Klasse ändern</string>
+  <string name="change_class_description">Ändere deine Klasse und erhalte deine Attributspunkte für 3 Edelsteine zurück.</string>
+  <string name="enable_class">Klassensystem freischalten</string>
+  <string name="changing_class_progress">Klasse ändern</string>
+  <string name="by_email">Per E-mail</string>
+  <string name="invite_existing_users">Nutzer einladen</string>
+  <string name="send">Senden</string>
+  <string name="invite">Freunde einladen</string>
+  <string name="invite_id_description">Wenn deine Freunde bereits Habitica verwenden, lade sie hier mit Hilfe ihrer Benutzer-ID ein.</string>
+  <string name="invite_email_description">Wenn Freunde Habitica mit Hilfe deiner E-Mail beitreten, werden sie automatisch zu deiner Gruppe eingeladen!</string>
+  <string name="add_invites">Einladungen hinzufügen</string>
+  <string name="user_id">Benutzer-ID</string>
+  <string name="email">E-mail</string>
+  <string name="invite_users">Zur Gruppe einladen</string>
+  <string name="share_using">Teilen via</string>
+  <string name="share_levelup" formatted="false">Mit dem Verbessern meiner Real-Life Gewohnheiten habe ich Level %s in Habitica erreicht!</string>
+  <string name="share_hatched" formatted="false">Durch das Erfüllen meiner Real-Life Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
+  <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
 </resources>
