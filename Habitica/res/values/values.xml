@@ -15,6 +15,13 @@
         <item>@string/hard</item>
     </string-array>
 
+    <string-array name="task_attributes">
+        <item>@string/physical</item>
+        <item>@string/mental</item>
+        <item>@string/social</item>
+        <item>@string/other</item>
+    </string-array>
+
     <string-array name="daily_frequencies">
         <item>@string/frequency_weekly</item>
         <item>@string/frequency_daily</item>

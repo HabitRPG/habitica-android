@@ -7,6 +7,7 @@
     <color name="brand_300">#6133B4</color>
     <color name="brand_400">#9A62FF</color>
     <color name="brand_500">#BDA8FF</color>
+    <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
@@ -91,4 +92,12 @@
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_stroke">#32000000</color>
+
+    <!-- Preferences -->
+    <color name="preference_fallback_accent_color">@color/colorAccent</color>
+    <!-- buttons -->
+    <color name="btn_success">#ff5cb85c</color>
+    <color name="btn_warning">#fff0ad4e</color>
+    <color name="btn_danger">#ffd9534f</color>
+
 </resources>

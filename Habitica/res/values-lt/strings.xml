@@ -38,11 +38,6 @@
   <string name="logout">Atsijungti</string>
   <string name="account_details">Paskyros Duomenys</string>
   <string name="LoginActivityName">Sveiki</string>
-  <string name="user_dead_title">Tavo veikėjas numirė!</string>
-  <string name="user_dead_mess">Nebuvai pakankamai budrus(i), ir pasimetei tarp prastų įpročių bei sudėtingų dienos užduočių.
-		Atsigausi, bet prarasi lygį, auksą ir kažkurią aprangos dalį.
-		Bandyk būt atsargesnis(ė) su savo užduotim ir atidžiau prižiūrėk savo blogus įpročius
-	</string>
   <string name="string_revive">Prisikelti</string>
   <string name="please_connect">Prašome prisijungti su programa prieš naudojant valdiklį</string>
   <string name="about.title">Apie</string>
@@ -65,6 +60,7 @@
   <string name="notes">Užrašai</string>
   <string name="text">Tekstas</string>
   <string name="difficulty">Sunkumas</string>
+  <string name="tags">Žymės</string>
   <string name="trivial">Labai Lengva</string>
   <string name="easy">Lengva</string>
   <string name="medium">Vidutiniška</string>
@@ -74,6 +70,11 @@
   <string name="negative_habit_form">Neigiamas ( - )</string>
   <string name="checklist">Sąrašas</string>
   <string name="actions">Veiksmai</string>
+  <string name="attributes">Savybės</string>
+  <string name="physical">Fizinė</string>
+  <string name="mental">Protinė</string>
+  <string name="social">Socialinė</string>
+  <string name="other">Kita</string>
   <string name="frequency">Dažnumas</string>
   <string name="frequency_weekly">Specifinėmis Savaitės Dienomis</string>
   <string name="frequency_daily">Kas X Dienų</string>
@@ -103,12 +104,12 @@
   <string name="coming_soon">Jau Greitai</string>
   <string name="chat_flag_confirmation">Ar tikrai norite pranešti apie šią žinutę dėl pažeidimo?</string>
   <string name="flag_confirm">Žymėti Žinutę</string>
-  <string name="unlock_lvl_10">Atidenk 10 lygyje</string>
+  <string name="unlock_lvl_11">Atsidengia pasiekus 11 lygį</string>
   <string name="no_party_message">Tu nesi grupėje. Norėdama(s) prisidėti prie grupės, apsilankyk svetainėje.</string>
   <string name="forgot_pw_btn">Pamiršau Slaptažodį</string>
   <string name="forgot_pw_tv">Pamiršote Slaptažodį? Naudokite mobilią Svetainę.</string>
-  <string name="tavern.inn.checkOut">Išeiti iš Užeigos</string>
-  <string name="tavern.inn.rest">Pailsėti Užeigoje</string>
+  <string name="tavern.inn.checkOut">Atnaujinti Kasdienes Užduotis</string>
+  <string name="tavern.inn.rest">Sustabdyti Kasdienes Užduotis</string>
   <string name="reward.dialog.buy">Pirkti</string>
   <string name="reward.dialog.dismiss">Atšaukti</string>
   <string name="party">Grupė</string>
@@ -144,12 +145,22 @@
   <string name="purchase_button">Pirkti</string>
   <string name="purchase_set_title" formatted="false">Pirkti rinkinį %s</string>
   <string name="due_date">Baigimo Terminas</string>
+  <string name="quest.accept">Sutikti</string>
+  <string name="quest.reject">Atmesti</string>
+  <string name="quest.begin">Pradėti Misiją</string>
+  <string name="quest.cancel">Atšaukti Pakvietimą</string>
+  <string name="quest.abort">Atšaukti Misiją</string>
+  <string name="quest.leave">Palikti Misiją</string>
+  <string name="quest.pending">Laukiama</string>
+  <string name="quest.accepted">Sutiko</string>
+  <string name="quest.rejected">Atsisakė</string>
+  <string name="quest.participants">Dalyviai</string>
   <string name="version_info" formatted="false">Versija: %s (%d)</string>
-  <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+  <string name="sidebar_help">Pagalba &amp; DUK</string>
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
   <string name="intro_1_title">Sveiki užsukę į Habitica</string>
-  <string name="intro_1_description">Prisidėkite prie virš 1,100,000 žmonių besilinksminančių atliekant savo darbus. Susikurk veikėją ir sek savo gyvenimo užduotis.</string>
+  <string name="intro_1_description">Prisidėk prie virš 1,100,000 žmonių, kurie linksminasi darydami savo darbus. Susikurk veikėją ir sek savo gyvenimo užduotis.</string>
   <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
   <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
   <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
@@ -192,4 +203,88 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="setup_task_creativity_1">Mokytis amato</string>
   <string name="setup_task_creativity_2">Dirbti prie kūrybinio projekto</string>
   <string name="setup_task_creativity_3">Baigti kūrybinį projektą</string>
+  <string name="gem.purchase.support">Nori padėti Habitica gyvuoti? Gali paremti programuotojus perkant brangakmenius!\n\nBrangakmeniai leidžia pirkti smagius priedus savo paskyrai, pvz: \n\n - Smagūs kostiumai tavo veikėjui\n - Nepakartojami fonai\n - Smagios misijos, kuriose galima rasti kiaušinių\n - Galimybė pasikeisti klasę nepasiekus 100 lygio\n\nDėkojame, kad padedate Habitica klestėti. Jūsų parama mums tikrai daug reiškia!</string>
+  <string name="my_guilds">Mano Gildijos</string>
+  <string name="public_guilds">Viešos Gildijos</string>
+  <string name="guild">Gildija</string>
+  <string name="leave">Palikti</string>
+  <string name="join">Prisijungti</string>
+  <string name="leader">Vadas</string>
+  <string name="gems">Brangakmeniai</string>
+  <string name="copy_as_todo">Kopijuoti kaip Užduotį</string>
+  <string name="send_pm">Siųsti Žinutę</string>
+  <string name="flag">Žymėti</string>
+  <string name="delete">Trinti</string>
+  <string name="name">Pavadinimas</string>
+  <string name="description">Aprašymas</string>
+  <string name="add_tag">Pridėti Žymę</string>
+  <string name="privacy">Privatumas</string>
+  <string name="write_message">Rašyti Žinutę</string>
+  <string name="post">Siųsti</string>
+  <string name="todo_due" formatted="false">Terminas: %s</string>
+  <string name="daily_streak" formatted="false">dabartinė serija: %d</string>
+  <string name="todo_has_duedate">Užduotis turi Terminą</string>
+  <string name="battle_gear">Kovinė Apranga</string>
+  <string name="costume">Kostiumas</string>
+  <string name="outfit_head">Galva</string>
+  <string name="outfit_headAccessory">Galvos Aksesuaras</string>
+  <string name="outfit_eyewear">Akiniai</string>
+  <string name="outfit_armor">Šarvai</string>
+  <string name="outfit_back">Nugara</string>
+  <string name="outfit_body">Kūnas</string>
+  <string name="outfit_shield">Skydas</string>
+  <string name="outfit_weapon">Ginklas</string>
+  <string name="wear_costume">Užsidėti Kostiumą</string>
+  <string name="equipped">Užsidėta</string>
+  <string name="quest_cancel_message">Ar tikrai nori atšaukti misiją? Visi pakvietimai bus nutraukti. Misijos savininkas atgaus misijos rankraštį.</string>
+  <string name="quest.invitation">Misijos Pakvietimas</string>
+  <string name="quest_begin_message">Ar tikrai nori pradėti misiją? Kai ji prasidės, kiti grupės nariai nebegalės prisijungti.</string>
+  <string name="quest.invitation.text">Tave pakvietė dalyvauti misijoje!</string>
+  <string name="ago_1day">Liko 1 diena</string>
+  <string name="ago_days" formatted="false">prieš %d dieną(as)</string>
+  <string name="ago_1Minute">prieš 1 minutę</string>
+  <string name="ago_minutes" formatted="false">prieš %d minutę(es)</string>
+  <string name="ago_hours" formatted="false">prieš %d valandą(as)</string>
+  <string name="ago_1hour">prieš 1 valandą</string>
+  <string name="today">Šiandien</string>
+  <string name="sidebar_items">Daiktai</string>
+  <string name="eggs">Kiaušiniai</string>
+  <string name="hatching_potions">Perėjimosi Eliksyrai</string>
+  <string name="food">Maistas</string>
+  <string name="quests">Misijos</string>
+  <string name="pets">Maži Augintiniai</string>
+  <string name="mounts">Suaugę Augintiniai</string>
+  <string name="armoireEquipment" formatted="false">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
+  <string name="armoireFood" formatted="false">Betyrinėjant Drabužinę randi %1$s %2$s. Ką tai čia veikia?</string>
+  <string name="armoireExp">Besigrumiant su Drabužine, gauni patirties!</string>
+  <string name="armoireNotesFull" formatted="false">Atidaryk Drabužinę ir gauk retos Aprangos dalį, Patirties ar maisto! Nerasto aprangos dalys: %d</string>
+  <string name="armoireLastItem">Radai paskutinę retos aprangos dalį Užburtoje Drabužinėje.</string>
+  <string name="armoireNotesEmpty">Drabužinėje atsiranda naujų daiktų pirmą kiekvieno mėnesio savaitę. Iki tol, gali toliau joje ieškoti Patirties ir Maisto!</string>
+  <string name="sell" formatted="false">Parduoti (%s Augso)</string>
+  <string name="hatch_with_potion">Užauginti su eliksyru</string>
+  <string name="feed_to_pet">Maitinti gyvūnui</string>
+  <string name="hatch_egg">Išperėti kiaušinį</string>
+  <string name="invite_party">Pakviesti grupę</string>
+  <string name="dialog_feeding" formatted="false">Pašerti %1$s %2$s su:</string>
+  <string name="use_animal">Naudoti</string>
+  <string name="feed">Maitinti</string>
+  <string name="hatch_with" formatted="false">Užauginti gyvūną su %s</string>
+  <string name="hatched_pet_title" formatted="false">Užauginai %1$s %2$s!</string>
+  <string name="close">Uždaryti</string>
+  <string name="share">Dalintis</string>
+  <string name="notification_pet_fed" formatted="false">Pašėrei savo %1$s %2$s!</string>
+  <string name="notification_purchase" formatted="false">%s nupirkta</string>
+  <string name="sectionpets">Paprasti Augintiniai</string>
+  <string name="sectionpremiumPets">Stebuklingų Eliksyrų Augintiniai</string>
+  <string name="sectionquestPets">Misijų Augintiniai</string>
+  <string name="sectionspecialPets">Reti Augintiniai</string>
+  <string name="sectionmounts">Paprasti Augintiniai</string>
+  <string name="sectionpremiumMounts">Stebuklingų Eliksyrų Augintiniai</string>
+  <string name="sectionquestMounts">Misijų Augintiniai</string>
+  <string name="sectionspecialMounts">Reti Augintiniai</string>
+  <string name="world_quest">Pasaulinė Misija</string>
+  <string name="inn_description">Pailsėk Smuklėje, kad tavo nepabaigtos Kasdienės Užduotys nepadarytų tau žalos nakties metu! (Pastaba: pabaisos vistiek padarys tau žalos.)</string>
+  <string name="empty_items" formatted="false">Nebeturi %s</string>
+  <string name="user_level" formatted="false">Lygis %s</string>
+  <string name="user_level_with_class" formatted="false">Lygis %1$s - %2$s</string>
 </resources>

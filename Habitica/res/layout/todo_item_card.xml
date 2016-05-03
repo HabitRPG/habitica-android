@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
         <import type="android.view.View"/>
@@ -8,6 +9,9 @@
         <variable
             name="todo"
             type="Task" />
+        <variable
+            name="duedate"
+            type="String" />
         <variable
             name="displayChecklist"
             type="Boolean" />
@@ -52,20 +56,26 @@
                     android:paddingEnd="16dp"
                     android:paddingBottom="@dimen/task_top_bottom_padding"
                     android:paddingTop="@dimen/task_top_bottom_padding">
-                    <CheckedTextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{todo.text}" />
+                        bind:parsemarkdown="@{todo.text}" />
 
-                    <TextView
+                    <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{todo.notes}"
-                        android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}" />
+                        bind:parsemarkdown="@{todo.notes}"
+                        android:visibility="@{todo.notes != null ? View.VISIBLE : View.GONE}"
+                        android:maxLines="3" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{todo.duedate != null ? View.VISIBLE : View.GONE}"
+                        android:text="@{@string/todo_due(duedate)}"/>
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"
                     android:id="@+id/checklistIndicatorWrapper"
@@ -113,10 +123,10 @@
 
         </LinearLayout>
         <View
-            android:id="@+id/bottomBorderView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hairline_height"
-            android:background="@color/cell_separator"/>
+            android:background="@color/cell_separator"
+            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,10 +138,6 @@
             android:layout_height="10dp"
             android:background="@color/checklist_separator"
             android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/hairline_height"
-            android:background="@color/cell_separator"
-            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+
     </LinearLayout>
 </layout>

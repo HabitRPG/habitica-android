@@ -1,0 +1,1 @@
+ALTER TABLE ItemData ADD COLUMN owned bool;

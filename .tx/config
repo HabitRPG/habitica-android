@@ -1,0 +1,26 @@
+[main]
+host = https://www.transifex.com
+lang_map = pt_BR: pt-rBR, zh_TW: zh-rTW, hr_HR: hr-rHR, pt_PT: pt-rPT
+
+[habitica-android.store_stringsxml]
+file_filter = translations/store_strings-<lang>.xml
+source_lang = en
+type = ANDROID
+
+[habitica-android.stringssidebarxml]
+file_filter = Habitica/res/values-<lang>/strings.sidebar.xml
+source_file = Habitica/res/values/strings.sidebar.xml
+source_lang = en
+type = ANDROID
+
+[habitica-android.stringstutorialxml]
+file_filter = Habitica/res/values-<lang>/strings.tutorial.xml
+source_file = Habitica/res/values/strings.tutorial.xml
+source_lang = en
+type = ANDROID
+
+[habitica-android.stringsxml]
+file_filter = Habitica/res/values-<lang>/strings.xml
+source_file = Habitica/res/values/strings.xml
+source_lang = en
+type = ANDROID

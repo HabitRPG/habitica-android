@@ -1,4 +1,9 @@
 language: android
+jdk: oraclejdk8
+before_install:
+  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+
 android:
   components:
     # Uncomment the lines below if you want to
@@ -21,4 +26,7 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
-script: ./gradlew assembleDebug
+script:
+    - cp habitica.properties.example habitica.properties
+    - ./gradlew assembleDebug
+    - ./gradlew testDebugUnitTest

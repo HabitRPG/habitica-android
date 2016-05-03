@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">タスク</string>
+  <string name="sidebar.skills">特殊能力</string>
+  <string name="sidebar.section.social">コミュニティー</string>
+  <string name="sidebar.tavern">キャンプ場</string>
+  <string name="sidebar.party">パーティー</string>
+  <string name="sidebar.purchaseGems">ジェムの購入</string>
+  <string name="sidebar.guilds">ギルド</string>
+  <string name="sidebar.challenges">チャレンジ</string>
+  <string name="sidebar.section.inventory">所持品</string>
+  <string name="sidebar.avatar">アバター</string>
+  <string name="sidebar.equipment">装備</string>
+  <string name="sidebar.stable">動物小屋</string>
+  <string name="sidebar.news">お知らせ</string>
+  <string name="sidebar.settings">設定</string>
+  <string name="sidebar.about">Habitica について</string>
+</resources>

@@ -42,13 +42,9 @@
     <string name="confirmpassword">Confirm password</string>
 
     <string name="logout">Logout</string>
+    <string name="logout_description">Log out of your account</string>
     <string name="account_details">Account Details</string>
     <string name="LoginActivityName">Welcome</string>
-	<string name="user_dead_title">You\'re dead!</string>
-	<string name="user_dead_mess">You weren\'t vigilant enough, and get lost between some bad habits and some difficult dailies.
-		You are going to revive, but will loose a level, your gold and a random piece of equipment.
-		Try to be more careful with your dailies, and manage those bad habits!
-	</string>
 
     <string name="string_revive">Revive</string>
     <string name="please_connect">Please connect through the application before using a widget</string>
@@ -77,6 +73,7 @@
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
+    <string name="tags">Tags</string>
     <string name="trivial">Trivial</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
@@ -86,6 +83,12 @@
     <string name="negative_habit_form">Negative ( - )</string>
     <string name="checklist">Checklist</string>
     <string name="actions">Actions</string>
+
+    <string name="attributes">Attributes</string>
+    <string name="physical">Physical</string>
+    <string name="mental">Mental</string>
+    <string name="social">Social</string>
+    <string name="other">Other</string>
 
     <string name="frequency">Frequency</string>
     <string name="frequency_weekly">On Certain Days of the Week</string>
@@ -126,8 +129,8 @@
     <string name="no_party_message">You are not in a party. To join a party, please visit the website.</string>
     <string name="forgot_pw_btn">Forgot Password</string>
     <string name="forgot_pw_tv">Forgot Password? Please use the mobile Website.</string>
-    <string name="tavern.inn.checkOut">Check Out of Inn</string>
-    <string name="tavern.inn.rest">Rest in the Inn</string>
+    <string name="tavern.inn.checkOut">Reactivate your Dailies</string>
+    <string name="tavern.inn.rest">Pause your Dailies</string>
     <string name="reward.dialog.buy">Buy</string>
     <string name="reward.dialog.dismiss">Dismiss</string>
     <string name="party">Party</string>
@@ -163,10 +166,19 @@
     <string name="purchase_button">Purchase</string>
     <string name="purchase_set_title" formatted="false">Purchase set %s</string>
     <string name="due_date">Due Date</string>
-
+    <string name="quest.accept">Accept</string>
+    <string name="quest.reject">Reject</string>
+    <string name="quest.begin">Begin Quest</string>
+    <string name="quest.cancel">Cancel Invitation</string>
+    <string name="quest.abort">Abort Quest</string>
+    <string name="quest.leave">Leave Quest</string>
+    <string name="quest.pending">Pending</string>
+    <string name="quest.accepted">Accepted</string>
+    <string name="quest.rejected">Rejected</string>
+    <string name="quest.participants">Participants</string>
     <string name="version_info" formatted="false">Version %s (%d)</string>
 
-    <string name="sidebar_help"><![CDATA[Help & FAQ]]></string>
+    <string name="sidebar_help">Help &amp; FAQ</string>
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
     <string name="intro_1_title">Welcome to Habitica</string>
@@ -215,4 +227,122 @@ To start, which parts of your life do you want to improve?</string>
     <string name="setup_task_creativity_3">Finish creative project</string>
 
     <string name="gem.purchase.support">Want to help us keep Habitica running? You can support the developers by buying gems!\n\nGems allow you to buy fun extras for your account, including: \n\n - Cool costumes for your avatar\n - Awesome backgrounds\n - Fun quests that reward you with pet eggs\n - The ability to change your class before level 100\n\nThank you so much for helping us make Habitica the best it can be. Your support means a lot to us!</string>
+    <string name="my_guilds">My Guilds</string>
+    <string name="public_guilds">Public Guilds</string>
+    <string name="guild">Guild</string>
+    <string name="leave">Leave</string>
+    <string name="join">Join</string>
+    <string name="leader">Leader</string>
+    <string name="gems">Gems</string>
+    <string name="copy_as_todo">Copy as ToDo</string>
+    <string name="send_pm">Send PM</string>
+    <string name="flag">Flag</string>
+    <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="add_tag">Add Tag</string>
+    <string name="privacy">Privacy</string>
+    <string name="write_message">Write Message</string>
+    <string name="post">Post</string>
+
+    <string name="todo_due" formatted="false">Due: %s</string>
+    <string name="daily_streak" formatted="false">current streak: %d</string>
+    <string name="todo_has_duedate">Task has Due Date</string>
+    <string name="battle_gear">Battle Gear</string>
+    <string name="costume">Costume</string>
+    <string name="outfit_head">Head</string>
+    <string name="outfit_headAccessory">Head Accessory</string>
+    <string name="outfit_eyewear">Eyewear</string>
+    <string name="outfit_armor">Armor</string>
+    <string name="outfit_back">Back</string>
+    <string name="outfit_body">Body</string>
+    <string name="outfit_shield">Shield</string>
+    <string name="outfit_weapon">Weapon</string>
+    <string name="wear_costume">Wear Costume</string>
+    <string name="equipped">Equipped</string>
+    <string name="quest_cancel_message">Are you sure you want to cancel this quest? All invitation acceptances will be lost. The quest owner will retain possession of the quest scroll.</string>
+    <string name="quest.invitation">Quest Invitation</string>
+    <string name="quest_begin_message">Are you sure you want to begin the quest? Once it is active, no additional party members can join the quest.</string>
+    <string name="quest.invitation.text">You have been invited to participate in a quest!</string>
+    <string name="ago_1day">1 day ago</string>
+    <string name="ago_days" formatted="false">%d days ago</string>
+    <string name="ago_1Minute">1 minute ago</string>
+    <string name="ago_minutes" formatted="false">%d minutes ago</string>
+    <string name="ago_hours" formatted="false">%d hours ago</string>
+    <string name="ago_1hour">1 hour ago</string>
+    <string name="today">Today</string>
+    <string name="sidebar_items">Items</string>
+    <string name="eggs">Eggs</string>
+    <string name="hatching_potions">Hatching Potions</string>
+    <string name="food">Food</string>
+    <string name="quests">Quests</string>
+    <string name="pets">Pets</string>
+    <string name="mounts">Mounts</string>
+
+    <string name="armoireEquipment" formatted="false">You found a piece of rare Equipment in the Armoire: %s! Awesome!</string>
+    <string name="armoireFood" formatted="false">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
+    <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
+    <string name="armoireNotesFull" formatted="false">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
+    <string name="armoireLastItem">You\'ve found the last piece of rare Equipment in the Enchanted Armoire.</string>
+    <string name="armoireNotesEmpty">The Armoire will have new Equipment in the first week of every month. Until then, keep clicking for Experience and Food!</string>
+    <string name="sell" formatted="false">Sell (%s Gold)</string>
+    <string name="hatch_with_potion">Hatch with potion</string>
+    <string name="feed_to_pet">Feed to pet</string>
+    <string name="hatch_egg">Hatch with egg</string>
+    <string name="invite_party">Invite party</string>
+    <string name="dialog_feeding" formatted="false">Feed %1$s %2$s with:</string>
+    <string name="use_animal">Use</string>
+    <string name="feed">Feed</string>
+    <string name="hatch_with" formatted="false">Hatch pet with %s</string>
+    <string name="hatched_pet_title" formatted="false">You hatched a %1$s %2$s!</string>
+    <string name="close">Close</string>
+    <string name="share">Share</string>
+    <string name="notification_pet_fed" formatted="false">You fed your %1$s %2$s!</string>
+    <string name="notification_purchase" formatted="false">%s was purchased</string>
+    <string name="sectionpets">Base Pets</string>
+    <string name="sectionpremiumPets">Magic Potion Pets</string>
+    <string name="sectionquestPets">Quest Pets</string>
+    <string name="sectionspecialPets">Rare Pets</string>
+    <string name="sectionmounts">Base Mounts</string>
+    <string name="sectionpremiumMounts">Magic Potion Mounts</string>
+    <string name="sectionquestMounts">Quest Mounts</string>
+    <string name="sectionspecialMounts">Rare Mounts</string>
+    <string name="world_quest">World Quest</string>
+    <string name="inn_description">Rest in the Inn to prevent your undone Dailies from hurting you overnight! (Note: does not prevent you from receiving Boss damage.)</string>
+    <string name="empty_items" formatted="false">You don\'t have any %s</string>
+    <string name="user_level" formatted="false">LVL %s</string>
+    <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+    <string name="warrior">Warrior</string>
+    <string name="rogue">Rogue</string>
+    <string name="mage">Mage</string>
+    <string name="healer">Healer</string>
+    <string name="warrior_description">Warriors score more and better \"critical hits\", which randomly give bonus Gold, Experience, and drop chance for scoring a task. They also deal heavy damage to boss monsters. Play a Warrior if you find motivation from unpredictable jackpot-style rewards, or want to dish out the hurt in boss Quests!</string>
+    <string name="mage_description">Mages learn swiftly, gaining Experience and Levels faster than other classes. They also get a great deal of Mana for using special abilities. Play a Mage if you enjoy the tactical game aspects of Habit, or if you are strongly motivated by leveling up and unlocking advanced features!</string>
+    <string name="rogue_description">Rogues love to accumulate wealth, gaining more Gold than anyone else, and are adept at finding random items. Their iconic Stealth ability lets them duck the consequences of missed Dailies. Play a Rogue if you find strong motivation from Rewards and Achievements, striving for loot and badges!</string>
+    <string name="healer_description">Healers stand impervious against harm, and extend that protection to others. Missed Dailies and bad Habits don\'t faze them much, and they have ways to recover Health from failure. Play a Healer if you enjoy assisting others in your Party, or if the idea of cheating Death through hard work inspires you!</string>
+    <string name="select_class">Select Class</string>
+    <string name="opt_out_class">Opt Out</string>
+    <string name="opt_out_description">Can\'t be bothered with classes? Want to choose later? Opt out - you\'ll be a warrior with no special abilities. You can read about the class system later on the wiki and enable classes at any time.</string>
+    <string name="class_confirmation" formatted="false">Are you sure you want to be a %s?</string>
+    <string name="choose_class">Choose Class</string>
+    <string name="dialog_go_back">Go Back</string>
+    <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
+    <string name="change_class">Change your class</string>
+    <string name="change_class_description">Change your class and refund your attribute points for 3 gems. </string>
+    <string name="enable_class">Enable Class System</string>
+    <string name="changing_class_progress">Changing Class</string>
+    <string name="by_email">By Email</string>
+    <string name="invite_existing_users">Invite Existing Users</string>
+    <string name="send">Send</string>
+    <string name="invite">Invite Friends</string>
+    <string name="invite_id_description">If you have friends already using Habitica, invite them by User ID here.</string>
+    <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
+    <string name="add_invites">Add Invites</string>
+    <string name="user_id">User ID</string>
+    <string name="email">Email</string>
+    <string name="invite_users">Invite to Party</string>
+    <string name="share_using">Share using</string>o
+    <string name="share_levelup" formatted="false">I got to level %s in Habitica by improving my real-life habits!</string>
+    <string name="share_hatched" formatted="false">I just hatched a %1$s %2$s pet in Habitica by completing my real-life tasks!</string>
+    <string name="share_raised" formatted="false">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
 </resources>

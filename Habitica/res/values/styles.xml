@@ -9,6 +9,7 @@
         <item name="elevation">0dp</item>
 
         <item name="android:windowContentOverlay">@null</item>
+        <item name="actionMenuTextColor">@color/white</item>
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 
@@ -36,6 +37,9 @@
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">
@@ -44,18 +48,12 @@
 
     </style>
 
-    <style name="PreferencesTheme" parent="AppThemeWithActionBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
-    <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/brand_500</item>
+    <style name="PopupTheme" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@android:color/white</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -68,14 +66,45 @@
         <item name="android:textSize">@dimen/card_small_text</item>
         <item name="android:textColor">@color/card_text</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">2</item>
     </style>
 
     <style name="CardTitle" parent="@style/CardText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:textColor">@color/card_title_text</item>
+    </style>
+
+    <style name="CardContent">
+        <item name="android:padding">@dimen/card_padding</item>
+    </style>
+
+    <style name="CardContent.Compact" parent="CardContent">
+        <item name="android:padding">@dimen/card_padding_compact</item>
+    </style>
+
+    <style name="CardView.Default" parent="CardView.Light">
+        <item name="android:layout_margin">@dimen/card_margin</item>
+    </style>
+
+    <style name="RowWrapper">
+        <item name="android:padding">@dimen/row_padding</item>
+        <item name="android:background">@drawable/selection_highlight</item>
+    </style>
+
+    <style name="RowText">
+        <item name="android:textSize">@dimen/row_text_size</item>
+        <item name="android:textColor">@color/card_text</item>
+    </style>
+
+    <style name="RowTitle">
+        <item name="android:textSize">@dimen/row_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/card_title_text</item>
+        <item name="android:paddingBottom">@dimen/row_title_bottommargin</item>
+    </style>
+
+    <style name="RowText.unimportant" parent="RowText">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
     <style name="MyOwnListSeperatorTextViewStyle">
@@ -83,7 +112,7 @@
         <item name="android:drawablePadding">4dp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingLeft">4dp</item>
-        <item name="android:textAllCaps" tools:targetApi="14">true</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -111,4 +140,43 @@
         <item name="android:textColor">@color/brand_100</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/brand_100</item>
+        <item name="android:textColorPrimary">@color/brand</item>
+        <item name="colorPrimaryDark">@color/brand</item>
+    </style>
+
+    <style name="SectionTitle">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">@dimen/section_leftright_padding</item>
+        <item name="android:paddingRight">@dimen/section_leftright_padding</item>
+        <item name="android:paddingTop">@dimen/section_top_padding</item>
+    </style>
+
+    <style name="MenuSectionTitle">
+        <item name="android:background">@color/brand</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BottomMenu">
+        <item name="android:divider">?android:listDivider</item>
+        <item name="android:showDividers">middle</item>
+    </style>
+    
+    <style name="BottomMenuItem">
+        <item name="android:padding">@dimen/bottom_menu_padding</item>
+        <item name="android:background">@drawable/selection_highlight</item>
+    </style>
+
+    <style name="BottomMenuItemText">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+    </style>
+
+    <style name="EmptyView">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+        <item name="android:padding">@dimen/section_top_padding</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

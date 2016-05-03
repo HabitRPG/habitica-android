@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">任務</string>
+  <string name="sidebar.skills">技能</string>
+  <string name="sidebar.section.social">社交</string>
+  <string name="sidebar.tavern">酒館</string>
+  <string name="sidebar.party">隊伍</string>
+  <string name="sidebar.purchaseGems">購買寶石</string>
+  <string name="sidebar.guilds">公會</string>
+  <string name="sidebar.challenges">挑戰</string>
+  <string name="sidebar.section.inventory">物品欄</string>
+  <string name="sidebar.avatar">頭像</string>
+  <string name="sidebar.equipment">裝備</string>
+  <string name="sidebar.stable">馬廄</string>
+  <string name="sidebar.news">新聞</string>
+  <string name="sidebar.settings">設定</string>
+  <string name="sidebar.about">關於</string>
+</resources>

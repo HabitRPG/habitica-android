@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Habitica</string>
+  <string name="action_refresh">Aggiorna</string>
+  <string name="XP_default">Esperienza</string>
+  <string name="HP_default">Salute</string>
+  <string name="MP_default">Mana</string>
+  <string name="ERR_pb_barcode">Le preferenze non possono essere importate dal codice a barre</string>
+  <!--Prefs-->
+  <string name="PS_settings_title">Impostazioni</string>
+  <string name="SP_address_hint">Il tuo server</string>
+  <string name="SP_userID_title">ID utente</string>
+  <string name="SP_userID_summary">Il tuo ID utente</string>
+  <string name="SP_APIToken_title">API Token</string>
+  <string name="SP_APIToken_summary">Il tuo API Token</string>
+  <string name="PS_contact_title">Contattami</string>
+  <string name="unknown_error">Si è verificato un errore...</string>
+  <string name="pref_account_header">Account</string>
+  <string name="pref_reminder_header">Notifica giornaliera</string>
+  <string name="pref_reminder_checkbox">Attiva notifica</string>
+  <string name="pref_reminder_picker">Imposta ora notifica</string>
+  <!--Adding tasks-->
+  <string name="task_value">Valore</string>
+  <string name="new_todo">Nuova to-do</string>
+  <string name="new_reward">Nuova ricompensa</string>
+  <string name="new_daily">Nuova daily</string>
+  <string name="new_habit">Nuova habit</string>
+  <string name="action_edit">Modifica</string>
+  <string name="action_delete">Elimina</string>
+  <string name="action_cancel">Annulla</string>
+  <string name="login_btn">Accedi</string>
+  <string name="register_btn">Registrati</string>
+  <string name="username">Nome utente</string>
+  <string name="email_username">E-mail o nome utente</string>
+  <string name="password">Password</string>
+  <string name="emailAddress">Indirizzo e-mail</string>
+  <string name="confirmpassword">Conferma password</string>
+  <string name="logout">Esci</string>
+  <string name="account_details">Dettagli account</string>
+  <string name="LoginActivityName">Benvenuto</string>
+  <string name="string_revive">Rianima</string>
+  <string name="please_connect">Dovresti connetterti attraverso l\'applicazione prima di usare un widget</string>
+  <string name="about.title">Info</string>
+  <string name="about.libraries">Librerie</string>
+  <string name="about.versionhistory">Cronologia versioni</string>
+  <string name="about.habitica_open_source">Habitica è disponibile come software open source su Github</string>
+  <string name="about.rate_our_app">Valuta la nostra app</string>
+  <string name="about.give_us_feedback">Invia suggerimenti</string>
+  <string name="about.bugreport">Segnala un bug</string>
+  <string name="about.source_code">Codice sorgente</string>
+  <!--Network Errors-->
+  <string name="network_error_title">Errore di connessione</string>
+  <string name="network_error_no_network_body">Non sei connesso ad internet.</string>
+  <string name="internal_error_api">Sembra esserci un problema col server. Riprova più tardi.</string>
+  <string name="authentication_error_title">Errore di autenticazione</string>
+  <string name="authentication_error_body">Il tuo nome utente e/o password non è corretto.</string>
+  <string name="login_validation_error_title">Errore di validazione</string>
+  <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
+  <string name="save_changes">Salva</string>
+  <string name="notes">Note</string>
+  <string name="text">Testo</string>
+  <string name="difficulty">Difficoltà</string>
+  <string name="tags">Etichette</string>
+  <string name="trivial">Triviale</string>
+  <string name="easy">Facile</string>
+  <string name="medium">Medio</string>
+  <string name="hard">Difficile</string>
+  <string name="start_date">Data di partenza</string>
+  <string name="positive_habit_form">Positiva ( + )</string>
+  <string name="negative_habit_form">Negativa ( - )</string>
+  <string name="checklist">Checklist</string>
+  <string name="actions">Azioni</string>
+  <string name="attributes">Attributi</string>
+  <string name="physical">Fisica</string>
+  <string name="mental">Mentale</string>
+  <string name="social">Sociale</string>
+  <string name="other">Altro</string>
+  <string name="frequency">Frequenza</string>
+  <string name="frequency_weekly">Certi giorni della settimana</string>
+  <string name="frequency_daily">Ogni X giorni</string>
+  <string name="monday">Lunedì</string>
+  <string name="tuesday">Martedì</string>
+  <string name="wednesday">Mercoledì</string>
+  <string name="thursday">Giovedì</string>
+  <string name="friday">Venerdì</string>
+  <string name="saturday">Sabato</string>
+  <string name="sunday">Domenica</string>
+  <string name="levelup_header">Sei salito di livello!</string>
+  <string name="levelup_detail">Raggiungendo obiettivi nella vita reale, sei salito al Livello %1$d!</string>
+  <string name="levelup_health">Sei stato completamente curato!</string>
+  <string name="levelup_button">Urrà!</string>
+  <string name="faint_subtitle">Non disperarti!</string>
+  <string name="faint_penalty_body">Hai perso un livello, il tuo oro e un pezzo di equipaggiamento, ma puoi riottenere ogni cosa lavorando sodo! Buona fortuna - vedrai che ci riuscirai.</string>
+  <string name="faint_header">Hai finito i punti salute!</string>
+  <string name="faint_button"><![CDATA[Ripristina Salute e riprova]]></string>
+  <string name="filter">Filtro</string>
+  <string name="profile_image">Immagine profilo</string>
+  <string name="mana_price_button" formatted="false">%d MP</string>
+  <string name="used_skill" formatted="false">Hai usato %1$s per %2$d mana.</string>
+  <string name="new_checklist_item">Nuovo elemento checklist</string>
+  <string name="add_checklist_item">Aggiungi</string>
+  <string name="reminder_title">Ricorda di completare le tue Daily!</string>
+  <string name="skill_progress_title">Usando abilità</string>
+  <string name="coming_soon">Presto disponibile</string>
+  <string name="chat_flag_confirmation">Vuoi davvero segnalare questo messaggio per violazione?</string>
+  <string name="flag_confirm">Segnala messaggio</string>
+  <string name="unlock_lvl_11">Sblocca al liv. 11</string>
+  <string name="no_party_message">Non sei in una squadra. Per unirti ad una squadra, per favore visita il sito web di Habitica.</string>
+  <string name="forgot_pw_btn">Password dimenticata</string>
+  <string name="forgot_pw_tv">Hai dimenticato la password? Per favore usa il sito web di Habitica.</string>
+  <string name="tavern.inn.checkOut">Riattiva le tue Daily</string>
+  <string name="tavern.inn.rest">Sospendi le tue Daily</string>
+  <string name="reward.dialog.buy">Compra</string>
+  <string name="reward.dialog.dismiss">Annulla</string>
+  <string name="party">Squadra</string>
+  <string name="chat">Chat</string>
+  <string name="members">Membri</string>
+  <string name="habits">Habit</string>
+  <string name="dailies">Daily</string>
+  <string name="todos">To-do</string>
+  <string name="rewards">Ricompense</string>
+  <string name="taskform.delete.title">Sei sicuro?</string>
+  <string name="taskform.delete.message">Vuoi davvero eliminare?</string>
+  <string name="yes">Sì</string>
+  <string name="no">No</string>
+  <string name="quest">Missione</string>
+  <string name="avatar_body">Corpo</string>
+  <string name="avatar_hair">Capelli</string>
+  <string name="avatar_shirt">Maglia</string>
+  <string name="avatar_skin">Pelle</string>
+  <string name="avatar_ears">Orecchie animali</string>
+  <string name="avatar_base">Base</string>
+  <string name="avatar_color">Colore</string>
+  <string name="avatar_beard">Barba</string>
+  <string name="avatar_mustache">Baffi</string>
+  <string name="avatar_flower">Fiore</string>
+  <string name="avatar_bangs">Frangia</string>
+  <string name="avatar_nothing">Niente impostato</string>
+  <string name="avatar_size">Corporatura</string>
+  <string name="avatar_size_slim">Snello</string>
+  <string name="avatar_size_broad">Robusto</string>
+  <string name="avatar_background">Sfondo</string>
+  <string name="purchase_customization">Compra personalizzazione</string>
+  <string name="purchase_set_button" formatted="false">Sblocca set per %d gemme</string>
+  <string name="purchase_button">Compra</string>
+  <string name="purchase_set_title" formatted="false">Compra set  %s</string>
+  <string name="due_date">Data di scadenza</string>
+  <string name="quest.accept">Accetta</string>
+  <string name="quest.reject">Rifiuta</string>
+  <string name="quest.begin">Inizia missione</string>
+  <string name="quest.cancel">Annulla invito</string>
+  <string name="quest.abort">Annulla missione</string>
+  <string name="quest.leave">Abbandona Missione</string>
+  <string name="quest.pending">In attesa</string>
+  <string name="quest.accepted">Accettata</string>
+  <string name="quest.rejected">Rifiutata</string>
+  <string name="quest.participants">Partecipanti</string>
+  <string name="version_info" formatted="false">Versione %s (%d)</string>
+  <string name="sidebar_help">Aiuto &amp; FAQ</string>
+  <string name="complete_tutorial">Capito!</string>
+  <string name="dismiss_tutorial">Ricordamelo ancora</string>
+  <string name="intro_1_title">Benvenuto in Habitica</string>
+  <string name="intro_1_description">Unisciti ad oltre 1.100.000 persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
+  <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
+  <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
+  <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
+  <string name="intro_3_description">Tieni traccia dei tuoi obiettivi con l\'aiuto dei tuoi amici. Supportatevi a vicenda nella vita e nelle battaglie per migliorare insieme!</string>
+  <string name="intro_finish_button">Inizia</string>
+  <string name="previous_button">Indietro</string>
+  <string name="next_button">Avanti</string>
+  <string name="skip_button">Salta</string>
+  <string name="setup_welcome_description">Benvenuto in Habitica, dove progredire nel gioco migliorerà la tua vita! Man mano che raggiungerai obiettivi nella vita reale, sbloccherai equipaggiamento, animali, missioni e altro.</string>
+  <string name="setup_welcome_title">Benvenuto</string>
+  <string name="avatar_setup_description">Per prima cosa, hai bisogno di un avatar che ti rappresenti! Ciò che fai nella vita reale avranno effetto su salute, esperienza e oro del tuo avatar.</string>
+  <string name="task_setup_description">Splendido! Ora sistemiamo le tue attività in modo che tu possa cominciare a guadagnare oro ed esperienza.
+
+Per cominciare, quali parti della tua vita vuoi migliorare?</string>
+  <string name="setup_group_work">Lavoro</string>
+  <string name="setup_group_exercise">Esercizio fisico</string>
+  <string name="setup_group_heathWellness">Salute + Benessere</string>
+  <string name="setup_group_school">Scuola</string>
+  <string name="setup_group_teams">Team</string>
+  <string name="setup_group_chores">Faccende di casa</string>
+  <string name="setup_group_creativity">Creatività</string>
+  <string name="setup_task_work_1">Controlla le e-mail</string>
+  <string name="setup_task_work_2">La cosa più importante da fare oggi</string>
+  <string name="setup_task_work_3">Progetto di lavoro</string>
+  <string name="setup_task_exercise_1">10 min cardio</string>
+  <string name="setup_task_exercise_2">Stretching</string>
+  <string name="setup_task_exercise_3">Imposta una tabella per l\'allenamento</string>
+  <string name="setup_task_healthWellness_1">Mangia cibo salutare</string>
+  <string name="setup_task_healthWellness_2">Lavati i denti</string>
+  <string name="setup_task_healthWellness_3">Pianifica il controllo</string>
+  <string name="setup_task_school_1">Studia/Procrastina</string>
+  <string name="setup_task_school_2">Fai i compiti</string>
+  <string name="setup_task_school_3">Finisci il progetto scolastico</string>
+  <string name="setup_task_teams_1">Contatta il team</string>
+  <string name="setup_task_teams_2">Aggiorna il team sullo stato del progetto</string>
+  <string name="setup_task_teams_3">Completa progetto di gruppo</string>
+  <string name="setup_task_chores_1">Pulisci 10 minuti</string>
+  <string name="setup_task_chores_2">Lava i piatti</string>
+  <string name="setup_task_chores_3">Riordina l\'armadio</string>
+  <string name="setup_task_creativity_1">Studia un artista</string>
+  <string name="setup_task_creativity_2">Lavora su un progetto creativo</string>
+  <string name="setup_task_creativity_3">Completa un progetto creativo</string>
+  <string name="gem.purchase.support">Vuoi aiutare a tenere Habitica attivo? Puoi sostenere gli sviluppatori comprando delle gemme!\n\nLe gemme ti permettono di comprare dei simpatici extra per il tuo account, inclusi: \n\n - Originali costumi per il tuo avatar\n - Sfondi magnifici\n - Divertenti missioni che ti premiano con uova di animali\n - La possibilità di cambiare classe prima del livello 10\n\nGrazie infinite per aiutarci a rendere Habitica sempre migliore. Il tuo supporto significa molto per noi!</string>
+  <string name="my_guilds">Le mie Gilde</string>
+  <string name="public_guilds">Gilde pubbliche</string>
+  <string name="guild">Gilda</string>
+  <string name="leave">Abbandona</string>
+  <string name="join">Partecipa</string>
+  <string name="leader">Leader</string>
+  <string name="gems">Gemme</string>
+  <string name="copy_as_todo">Copia come ToDo</string>
+  <string name="send_pm">Invia messaggio</string>
+  <string name="flag">Segnala</string>
+  <string name="delete">Elimina</string>
+  <string name="name">Nome</string>
+  <string name="description">Descrizione</string>
+  <string name="add_tag">Aggiungi etichetta</string>
+  <string name="privacy">Privacy</string>
+  <string name="write_message">Scrivi messaggio</string>
+  <string name="post">Invia</string>
+  <string name="todo_due" formatted="false">Scade: %s</string>
+  <string name="daily_streak" formatted="false">serie: %d</string>
+  <string name="todo_has_duedate">L\' attività ha una scadenza</string>
+  <string name="battle_gear">Assetto da battaglia</string>
+  <string name="costume">Costume</string>
+  <string name="outfit_head">Testa</string>
+  <string name="outfit_headAccessory">Accessorio da testa</string>
+  <string name="outfit_eyewear">Occhi</string>
+  <string name="outfit_armor">Armatura</string>
+  <string name="outfit_back">Schiena</string>
+  <string name="outfit_body">Corpo</string>
+  <string name="outfit_shield">Scudo</string>
+  <string name="outfit_weapon">Arma</string>
+  <string name="wear_costume">Indossa Costume</string>
+  <string name="equipped">Equipaggiato</string>
+  <string name="quest_cancel_message">Vuoi davvero annullare questa missione? Tutti gli inviti accettati andranno persi. Il proprietario della missione tornerà in possesso della Pergamena.</string>
+  <string name="quest.invitation">Invito Missione</string>
+  <string name="quest_begin_message">Vuoi davvero iniziare la missione? Una volta attiva, nessun altro membro della squadra potrà unirsi alla missione.</string>
+  <string name="quest.invitation.text">Sei stato invitato a partecipare ad una missione!</string>
+  <string name="ago_1day">1 giorno fa</string>
+  <string name="ago_days" formatted="false">%d giorni fa</string>
+  <string name="ago_1Minute">1 minuto fa</string>
+  <string name="ago_minutes" formatted="false">%d minuti fa</string>
+  <string name="ago_hours" formatted="false">%d ore fa</string>
+  <string name="ago_1hour">1 ora fa</string>
+  <string name="today">Oggi</string>
+  <string name="sidebar_items">Oggetti</string>
+  <string name="eggs">Uova</string>
+  <string name="hatching_potions">Pozioni di schiusura</string>
+  <string name="food">Cibo</string>
+  <string name="quests">Missioni</string>
+  <string name="pets">Animali</string>
+  <string name="mounts">Cavalcature</string>
+  <string name="armoireEquipment" formatted="false">Hai trovato dell\'Equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
+  <string name="armoireFood" formatted="false">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
+  <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
+  <string name="armoireNotesFull" formatted="false">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
+  <string name="armoireLastItem">Hai trovato l\'ultimo oggetto raro disponibile nello Scrigno Incantato.</string>
+  <string name="armoireNotesEmpty">Nello Scrigno Incantato compariranno nuovi oggetti la prima settimana di ogni mese. Fino ad allora, continua a cliccare sullo Scrigno per ottenere Esperienza e Cibo!</string>
+  <string name="sell" formatted="false">Vendi (%s Oro)</string>
+  <string name="hatch_with_potion">Schiudi con pozione</string>
+  <string name="feed_to_pet">Dai ad animale</string>
+  <string name="hatch_egg">Schiudi con uovo</string>
+  <string name="invite_party">Invita squadra</string>
+  <string name="dialog_feeding" formatted="false">Dai da mangiare a %1$s %2$s:</string>
+  <string name="use_animal">Usa</string>
+  <string name="feed">Dai da mangiare</string>
+  <string name="hatch_with" formatted="false">Fai nascere un animale con %s</string>
+  <string name="hatched_pet_title" formatted="false">E\' nato un %2$s %1$s!</string>
+  <string name="close">Chiudi</string>
+  <string name="share">Condividi</string>
+  <string name="notification_pet_fed" formatted="false">Hai dato da mangiare al tuo %1$s %2$s!</string>
+  <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
+  <string name="sectionpets">Animali base</string>
+  <string name="sectionpremiumPets">Animali Pozione Magica</string>
+  <string name="sectionquestPets">Animali Missione</string>
+  <string name="sectionspecialPets">Animali rari</string>
+  <string name="sectionmounts">Cavalcature base</string>
+  <string name="sectionpremiumMounts">Calvalcature Pozione Magica</string>
+  <string name="sectionquestMounts">Cavalcature Missione</string>
+  <string name="sectionspecialMounts">Cavalcature rare</string>
+  <string name="world_quest">World Quest</string>
+  <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
+  <string name="empty_items" formatted="false">Non hai alcun %s</string>
+  <string name="user_level" formatted="false">LIV. %s</string>
+  <string name="user_level_with_class" formatted="false">LIV. %1$s - %2$s</string>
+</resources>

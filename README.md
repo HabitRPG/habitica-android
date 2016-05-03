@@ -1,7 +1,6 @@
 # Habitica for Android
 
 [![Join the chat at https://gitter.im/HabitRPG/habitrpg-android](https://badges.gitter.im/HabitRPG/habitrpg-android.svg)](https://gitter.im/HabitRPG/habitrpg-android?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/HabitRPG/habitrpg-android.svg?branch=develop)](https://travis-ci.org/HabitRPG/habitrpg-android)
 
 [Habitica](https://habitica.com) is an open source habit building program which treats your life like a Role Playing Game. Level up as you succeed, lose HP as you fail, earn money to buy weapons and armor. This repository is related to the Android Native Application.
 
@@ -40,3 +39,20 @@ Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-a
 5. Create new Pull Request
    * Don't forget to include your Habitica User ID, so that we can count your contributrion towards your contributor tier
 
+### Code Style Guidelines
+We follow the code style guidelines outlined in [Android Code Style Guidelines for Contributors](https://source.android.com/source/code-style.html).
+
+You can install our code style scheme to Intellij and/or Android Studio via this shell command:
+
+    $ ./install-codestyle.sh
+
+## Build Instructions
+
+### Config File
+
+Setup Habitica build config file by simply copying the example habitica properties file.
+
+    $ cp habitica.properties.example habitica.properties
+
+Note: this is the default production `habitica.properties` file for habitica.com. If you
+want to use a local habitica server, please modify the values in the properties file accordingly.

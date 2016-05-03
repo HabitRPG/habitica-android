@@ -10,7 +10,7 @@
         android:minHeight="60dp"
         android:orientation="vertical"
         android:clickable="true"
-        android:background="@drawable/btn_habit_background">
+        android:background="@drawable/selection_highlight">
         <View
             android:id="@+id/purchaseOverlay"
             android:layout_width="match_parent"

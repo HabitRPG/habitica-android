@@ -9,7 +9,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.21.5'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.4.4'
     }
 }
 
@@ -26,6 +28,11 @@ repositories {
         url "http://dl.bintray.com/florent37/maven"
     }
 
+    // Markdown
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+
     maven {
         url "https://jitpack.io"
     }
@@ -33,9 +40,8 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'io.reactivex:rxjava:1.0.10'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
-    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.3.0@aar') {
@@ -45,21 +51,25 @@ dependencies {
     // View Elements Binding :)
     compile 'com.jakewharton:butterknife:7.0.1'
 
-    compile('com.mikepenz:materialdrawer:4.3.8@aar') {
+    compile('com.mikepenz:materialdrawer:5.0.9@aar') {
         transitive = true
     }
-    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
 
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:gridlayout-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:gridlayout-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:preference-v14:23.3.0'
+    compile 'com.android.support:multidex:1.0.1'
 
     // Image Loading/Caching
     compile 'com.squareup.picasso:picasso:2.5.2'
 
-    // Icons
-    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+    // Emojis
+    compile 'com.github.data5tream:emoji-lib:0.0.2.1'
+
+    // Markdown
+    compile 'com.commonsware.cwac:anddown:0.2.4'
 
     // Changelog Fragment, minSDK 17
     compile 'com.github.porokoro.paperboy:paperboy:2.1.0'
@@ -70,28 +80,37 @@ dependencies {
     }
 
     // a better fab alternative
-    compile 'com.github.clans:fab:1.6.1'
+    compile 'com.github.clans:fab:1.6.2'
 
     // ORM
     provided 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
     compile "com.raizlabs.android:DBFlow-Core:2.2.1"
     compile "com.raizlabs.android:DBFlow:2.2.1"
 
-    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 
     // IAP Handling / Verification
     compile 'org.solovyev.android:checkout:0.7.5@aar'
 
-    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
-    //Material Dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar')
+    compile('com.facebook.android:facebook-android-sdk:4.10.0') {
+        transitive = true
+    }
 
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.2'
+    compile 'com.trello:rxlifecycle:0.5.0'
+
     compile 'com.amplitude:android-sdk:2.5.0'
+
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.robolectric:shadows-multidex:3.0'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+
 }
 
 android {
@@ -115,25 +134,37 @@ android {
             debuggable true
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
+            multiDexEnabled true
         }
         release {
             signingConfig signingConfigs.release
             debuggable false
+            multiDexEnabled true
         }
     }
 
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
+        robolectric {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDir file('src/test/java/')
+            res.srcDirs = ['res']
+        }
         release.setRoot('build-types/release')
         instrumentTest.setRoot('tests')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -156,3 +187,26 @@ if (propFile.canRead()) {
     println 'signing.properties not found'
     android.buildTypes.release.signingConfig = null
 }
+
+// Add Habitica Properties to buildConfigField
+final File HRPG_PROPS_FILE = new File('habitica.properties')
+if (HRPG_PROPS_FILE.canRead()) {
+    def Properties HRPG_PROPS = new Properties()
+    HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
+
+    if (HRPG_PROPS != null) {
+        android.buildTypes.all { buildType ->
+            HRPG_PROPS.any { property ->
+                buildType.buildConfigField "String", property.key, "\"${property.value}\""
+            }
+        }
+    } else {
+        throw new InvalidUserDataException('habitica.properties found but some entries are missing')
+    }
+} else {
+    throw new MissingResourceException('habitica.properties not found')
+}
+
+apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.android.application' //or apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'

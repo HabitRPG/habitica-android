@@ -1,28 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/PS_contact_title" >
+
     <PreferenceCategory
-        android:title="@string/pref_account_header">
-    <EditTextPreference
-        android:key="accountDetails"
-        android:title="@string/account_details"
-        android:summary="Check your account details" />
+        android:title="@string/pref_account_header"
+        android:key="account_prefs">
 
+        <PreferenceScreen
+            android:key="accountDetails"
+            android:title="@string/account_details"
+            android:summary="Check your account details"
+            android:order="1">
 
-    <Preference android:title="@string/logout"
-        android:key="logout"
-        android:summary="Log out of your account"/>
+            <PreferenceCategory android:title="Account Details">
+
+                <Preference
+                    android:key="@string/SP_username"
+                    android:title="Login Name"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="Login Name" />
+
+                <Preference
+                    android:key="@string/SP_email"
+                    android:title="E-mail"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="E-mail" />
+
+                <Preference
+                    android:key="@string/SP_userID"
+                    android:title="@string/SP_userID_title"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_userID_summary"/>
+
+                <Preference
+                    android:key="@string/SP_APIToken"
+                    android:title="@string/SP_APIToken_title"
+                    android:selectable="true"
+                    android:persistent="false"
+                    android:shouldDisableView="false"
+                    android:summary="@string/SP_APIToken_summary"/>
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
+        <Preference
+            android:key="choose_class"
+            android:order="2"/>
+
+        <Preference android:title="@string/logout"
+            android:key="logout"
+            android:summary="@string/logout_description"
+            android:order="99"/>
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/pref_reminder_header">
+
         <CheckBoxPreference
             android:key="use_reminder"
             android:defaultValue="false"
             android:title="@string/pref_reminder_checkbox"/>
+
         <com.habitrpg.android.habitica.prefs.TimePreference
             android:key="reminder_time"
             android:defaultValue="19:30"
             android:title="@string/pref_reminder_picker" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

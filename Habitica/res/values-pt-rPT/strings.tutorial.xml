@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="tutorial_habits">Completa os teus Hábitos Positivos para ganhar ouro e experiência! Hábitos Negativos vão magoar o teu avatar se carregares neles, por isso evita-os na vida real!</string>
+  <string name="tutorial_dailies">Derrotando repetidamente as tuas tarefas diárias para ganhar ouro e experiência. Perigo! As tarefas diárias irão magoar o teu avatar se não as completares a tempo.</string>
+  <string name="tutorial_todos">Completa as tuas tarefas na vida real, depois verifica-as por OURO e EXPERIÊNCIA para que possas ganhar Recompensas e desbloquear novas habilidades!</string>
+  <string name="tutorial_rewards">Estas são as tuas recompensas! Ganha ouro por completar hábitos do mundo real, tarefas diárias e listas de tarefas. Depois gasta-as nas Recompensas de jogo ou em Recompensas do mundo real personalizáveis!</string>
+  <string name="tutorial_equipment">Quando compras equipamento, ele aparece aqui. O teu Equipamento de Batalha afeta as tuas estatísticas, e o teu fato (se accionado) afecta o que o teu avatar pode vestir.</string>
+  <string name="tutorial_items">Ganha itens ao completar as tarefas e aumentar de nível. Carrega num item para usá-lo!</string>
+  <string name="tutorial_pets">Ao completar as tuas tarefas do mundo real, tu terás a hipótese de aleatóriamente encontrar ovos e poções. Combina-os para gerar animais</string>
+  <string name="tutorial_skills">Atributos são habilidades especiais que te dão efeitos poderosos! Carrega num atributo para utilizá-lo. Ele vai gastar Mana (a barra azul), que ganhas por te ligares todos os dias e completar as tuas tarefas da vida real. Verifica as FAQ no menu para mais informação!</string>
+  <string name="tutorial_party">Isto é onde tu e os teus amigos podem responsabilizar-se mutuamente pelos vossos objectivos e lutar contra monstros com as vossas tarefas!</string>
+  <string name="tutorial_tavern">Bem vindo a taberna, uma sala de conversação publica para todas as idades! Aqui podes falar de produtividade e colocar questões. Diverte-te!</string>
+  <string name="tutorial_classes">Escolhe tornares-te um Guerreiro, um Feiticeiro, um Curandeiro ou um bandido! Cada classe tem equipamento e atributos únicos. Carrega em (?) para saber mais!</string>
+</resources>

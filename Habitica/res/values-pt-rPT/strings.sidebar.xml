@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">Tarefas</string>
+  <string name="sidebar.skills">Habilidades</string>
+  <string name="sidebar.section.social">Social</string>
+  <string name="sidebar.tavern">Taberna</string>
+  <string name="sidebar.party">Equipa</string>
+  <string name="sidebar.purchaseGems">Comprar Gemas</string>
+  <string name="sidebar.guilds">Grupos</string>
+  <string name="sidebar.challenges">Desafios</string>
+  <string name="sidebar.section.inventory">Inventário</string>
+  <string name="sidebar.avatar">Avatar</string>
+  <string name="sidebar.equipment">Equipamento</string>
+  <string name="sidebar.stable">Estábulo</string>
+  <string name="sidebar.news">Noticias</string>
+  <string name="sidebar.settings">Definições</string>
+  <string name="sidebar.about">Acerca</string>
+</resources>
