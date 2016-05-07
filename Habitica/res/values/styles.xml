@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
@@ -39,7 +38,7 @@
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
 
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="AppThemeWithActionBar" parent="AppTheme">
@@ -142,8 +141,6 @@
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/brand_100</item>
-        <item name="android:textColorPrimary">@color/brand</item>
-        <item name="colorPrimaryDark">@color/brand</item>
     </style>
 
     <style name="SectionTitle">
