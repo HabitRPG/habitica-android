@@ -1,13 +1,16 @@
 package com.habitrpg.android.habitica;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -16,6 +19,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -24,6 +28,43 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     public static String NOTIFICATION_ID = "notification-id";
     public static String CHECK_DAILIES = "check-dailies";
+
+    public static void scheduleNotifications(Context context) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        if (prefs.getBoolean("use_reminder", false)) {
+
+            String timeval = prefs.getString("reminder_time", "19:00");
+
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            int minute = Integer.parseInt(pieces[1]);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+            long trigger_time = cal.getTimeInMillis();
+
+            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
+
+            if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
+    }
+
+    public static void removeNotifications(Context context) {
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
+        alarmManager.cancel(displayIntent);
+    }
+
     private Context context;
 
     public void onReceive(Context context, Intent intent) {
