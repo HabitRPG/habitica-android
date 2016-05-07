@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
@@ -40,16 +41,64 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
     @Override
     public GuildViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_public_guild, parent, false);
+        GuildViewHolder guildViewHolder = new GuildViewHolder(view);
+        guildViewHolder.itemView.setOnClickListener(v -> {
+            Group guild = (Group) v.getTag();
+            GuildFragment guildFragment = new GuildFragment();
+            guildFragment.setGuild(guild);
+            guildFragment.isMember = isInGroup(guild);
+            DisplayFragmentEvent event = new DisplayFragmentEvent();
+            event.fragment = guildFragment;
+            EventBus.getDefault().post(event);
+        });
+        guildViewHolder.joinLeaveButton.setOnClickListener(v -> {
+            Group guild = (Group) v.getTag();
+            boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
+            if (isMember) {
+                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.leaveGroup(guild.id, new Callback<Void>() {
+                    @Override
+                    public void success(Void nope, Response response) {
+                        memberGuildIDs.remove(guild.id);
+                        int indexOfGroup = publicGuildList.indexOf(guild);
+                        notifyItemChanged(indexOfGroup);
+                    }
 
-        return new GuildViewHolder(view);
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(guildViewHolder.itemView.getContext(), R.string.unknown_error, Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+            } else {
+                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.joinGroup(guild.id, new Callback<Group>() {
+                    @Override
+                    public void success(Group group, Response response) {
+                        memberGuildIDs.add(group.id);
+                        int indexOfGroup = publicGuildList.indexOf(group);
+                        notifyItemChanged(indexOfGroup);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(guildViewHolder.itemView.getContext(), R.string.unknown_error, Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+            }
+
+        });
+        return guildViewHolder;
     }
 
     @Override
     public void onBindViewHolder(GuildViewHolder holder, int position) {
-        holder.bind(publicGuildList.get(position));
+        Group guild = publicGuildList.get(position);
+        boolean isInGroup = isInGroup(guild);
+        holder.bind(guild, isInGroup);
+        holder.itemView.setTag(guild);
+        holder.joinLeaveButton.setTag(guild);
     }
 
     @Override
@@ -57,7 +106,11 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         return this.publicGuildList == null ? 0 : this.publicGuildList.size();
     }
 
-    class GuildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, Callback<Group> {
+    private boolean isInGroup(Group guild) {
+        return this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
+    }
+
+    static class GuildViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.nameTextView)
         TextView nameTextView;
@@ -71,57 +124,20 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         @Bind(R.id.joinleaveButton)
         Button joinLeaveButton;
 
-        Group guild;
-        Boolean isMember;
-
         public GuildViewHolder(View itemView) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
-            joinLeaveButton.setOnClickListener(this);
         }
 
-        public void bind(Group guild) {
-            this.guild = guild;
+        public void bind(Group guild, boolean isInGroup) {
             this.nameTextView.setText(guild.name);
             this.memberCountTextView.setText(String.valueOf(guild.memberCount));
             this.descriptionTextView.setText(guild.description);
-            if (PublicGuildsRecyclerViewAdapter.this.memberGuildIDs != null && PublicGuildsRecyclerViewAdapter.this.memberGuildIDs.contains(guild.id)) {
-                this.isMember = true;
+            if (isInGroup) {
                 this.joinLeaveButton.setText(R.string.leave);
             } else {
-                this.isMember = false;
                 this.joinLeaveButton.setText(R.string.join);
             }
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (v == this.joinLeaveButton) {
-                if (this.isMember) {
-                    PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.leaveGroup(this.guild.id, this);
-                } else {
-                    PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.joinGroup(this.guild.id, this);
-                }
-            } else {
-                GuildFragment guildFragment = new GuildFragment();
-                guildFragment.setGuild(this.guild);
-                guildFragment.isMember = this.isMember;
-                DisplayFragmentEvent event = new DisplayFragmentEvent();
-                event.fragment = guildFragment;
-                EventBus.getDefault().post(event);
-            }
-        }
-
-        @Override
-        public void success(Group group, Response response) {
-            this.bind(guild);
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-
         }
     }
 }
