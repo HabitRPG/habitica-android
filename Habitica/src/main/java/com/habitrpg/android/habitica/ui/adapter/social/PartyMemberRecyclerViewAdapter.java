@@ -21,7 +21,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
@@ -56,19 +56,19 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.avatar)
+        @BindView(R.id.avatar)
         ImageView imageView;
 
-        @Bind(R.id.username)
+        @BindView(R.id.username)
         TextView userName;
 
-        @Bind(R.id.user_lvl)
+        @BindView(R.id.user_lvl)
         TextView lvl;
 
-        @Bind(R.id.class_label)
+        @BindView(R.id.class_label)
         TextView classLabel;
 
-        @Bind(R.id.class_background_layout)
+        @BindView(R.id.class_background_layout)
         View classBackground;
 
         ValueBarBinding hpBar;

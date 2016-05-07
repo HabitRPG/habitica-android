@@ -24,17 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentOverviewFragment extends BaseMainFragment implements TransactionListener<List<ItemData>> {
 
     FragmentEquipmentOverviewBinding viewBinding;
 
-    @Bind(R.id.battle_gear_group)
+    @BindView(R.id.battle_gear_group)
     View battleGearGroupView;
 
-    @Bind(R.id.costume_group)
+    @BindView(R.id.costume_group)
     View costumeGroupView;
 
     View battleGearHeadView;
@@ -55,7 +55,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
     View costumeWeaponView;
     View costumeShieldView;
 
-    @Bind(R.id.costume_switch)
+    @BindView(R.id.costume_switch)
     Switch costumeSwitch;
 
     HashMap<String, String> nameMapping;

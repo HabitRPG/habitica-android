@@ -14,7 +14,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOverviewRecyclerAdapter.FAQArticleViewHolder> {
@@ -47,7 +47,7 @@ public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOvervie
 
     class FAQArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.textView)
+        @BindView(R.id.textView)
         TextView textView;
 
         FAQArticle article;

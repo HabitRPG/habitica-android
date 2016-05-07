@@ -16,11 +16,11 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQOverviewFragment extends BaseMainFragment {
-        @Bind(R.id.recyclerView)
+        @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
 
         FAQOverviewRecyclerAdapter adapter;

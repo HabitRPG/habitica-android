@@ -16,23 +16,23 @@ import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, Callback<ContentResult> {
 
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager pager;
 
-    @Bind(R.id.view_pager_indicator)
+    @BindView(R.id.view_pager_indicator)
     CirclePageIndicator indicator;
 
-    @Bind(R.id.skipButton)
+    @BindView(R.id.skipButton)
     Button skipButton;
 
-    @Bind(R.id.finishButton)
+    @BindView(R.id.finishButton)
     Button finishButton;
 
     @Override

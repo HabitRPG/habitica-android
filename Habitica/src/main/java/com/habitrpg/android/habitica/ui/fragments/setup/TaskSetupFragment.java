@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TaskSetupFragment extends BaseFragment {
@@ -33,7 +33,7 @@ public class TaskSetupFragment extends BaseFragment {
 
     private Object[][] tasks;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     TaskSetupAdapter adapter;

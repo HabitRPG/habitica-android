@@ -42,7 +42,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -66,34 +66,34 @@ public class LoginActivity extends AppCompatActivity
 
     private CallbackManager callbackManager;
 
-	@Bind(R.id.login_btn)
+	@BindView(R.id.login_btn)
 	Button mLoginNormalBtn;
 
-	@Bind(R.id.PB_AsyncTask)
+	@BindView(R.id.PB_AsyncTask)
 	ProgressBar mProgressBar;
 
-    @Bind(R.id.username)
+    @BindView(R.id.username)
     EditText mUsernameET;
 
-    @Bind(R.id.password)
+    @BindView(R.id.password)
     EditText mPasswordET;
 
-    @Bind(R.id.email)
+    @BindView(R.id.email)
     EditText mEmail;
 
-    @Bind(R.id.confirm_password)
+    @BindView(R.id.confirm_password)
     EditText mConfirmPassword;
 
-    @Bind(R.id.email_row)
+    @BindView(R.id.email_row)
     TableRow mEmailRow;
 
-    @Bind(R.id.confirm_password_row)
+    @BindView(R.id.confirm_password_row)
     TableRow mConfirmPasswordRow;
 
-    @Bind(R.id.login_button)
+    @BindView(R.id.login_button)
     LoginButton mFacebookLoginBtn;
 
-    @Bind(R.id.forgot_pw_tv)
+    @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
 
 	protected void onCreate(Bundle savedInstanceState) {

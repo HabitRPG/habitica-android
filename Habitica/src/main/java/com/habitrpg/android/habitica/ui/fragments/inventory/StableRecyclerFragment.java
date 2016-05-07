@@ -29,14 +29,14 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StableRecyclerFragment extends BaseFragment {
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
 
-    @Bind(R.id.empty_view)
+    @BindView(R.id.empty_view)
     public TextView emptyView;
 
     public StableRecyclerAdapter adapter;

@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder> {
@@ -51,13 +51,13 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
 
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.checkedTextView)
+        @BindView(R.id.checkedTextView)
         TextView textView;
 
-        @Bind(R.id.checkBoxHolder)
+        @BindView(R.id.checkBoxHolder)
         RelativeLayout checkBoxHolder;
 
-        @Bind(R.id.checkBox)
+        @BindView(R.id.checkBox)
         CheckBox checkBox;
 
         String[] taskGroup;

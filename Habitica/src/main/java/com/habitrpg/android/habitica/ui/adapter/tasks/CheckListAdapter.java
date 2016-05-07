@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -79,10 +79,10 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
     public class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
-        @Bind(R.id.item_edittext)
+        @BindView(R.id.item_edittext)
         EmojiEditText checkListTextView;
 
-        @Bind(R.id.delete_item_button)
+        @BindView(R.id.delete_item_button)
         Button deleteButton;
 
         public ItemViewHolder(View itemView) {

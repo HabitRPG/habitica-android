@@ -11,21 +11,21 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TutorialView extends FrameLayout implements View.OnClickListener {
 
-    @Bind(R.id.tutorialTextView)
+    @BindView(R.id.tutorialTextView)
     TextView tutorialTextView;
 
-    @Bind(R.id.background)
+    @BindView(R.id.background)
     RelativeLayout background;
 
-    @Bind(R.id.dismissButton)
+    @BindView(R.id.dismissButton)
     Button dismissButton;
 
-    @Bind(R.id.completeButton)
+    @BindView(R.id.completeButton)
     Button completeButton;
 
     public TutorialStep step;

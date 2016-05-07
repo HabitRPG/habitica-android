@@ -14,12 +14,12 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class PrefsActivity extends BaseActivity implements
         PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override

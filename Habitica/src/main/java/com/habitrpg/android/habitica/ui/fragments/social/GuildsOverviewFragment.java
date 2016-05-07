@@ -20,7 +20,7 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -28,13 +28,13 @@ import retrofit.client.Response;
 
 public class GuildsOverviewFragment extends BaseMainFragment implements Callback<ArrayList<Group>>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.my_guilds_listview)
+    @BindView(R.id.my_guilds_listview)
     LinearLayout  guildsListView;
 
-    @Bind(R.id.publicGuildsButton)
+    @BindView(R.id.publicGuildsButton)
     Button publicGuildsButton;
 
-    @Bind(R.id.chat_refresh_layout)
+    @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private List<Group> guilds;

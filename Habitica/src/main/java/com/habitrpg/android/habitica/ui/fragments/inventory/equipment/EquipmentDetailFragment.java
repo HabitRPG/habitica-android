@@ -17,7 +17,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentDetailFragment extends BaseMainFragment {
@@ -26,7 +26,7 @@ public class EquipmentDetailFragment extends BaseMainFragment {
     public String equippedGear;
     public Boolean isCostume;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     EquipmentRecyclerViewAdapter adapter;

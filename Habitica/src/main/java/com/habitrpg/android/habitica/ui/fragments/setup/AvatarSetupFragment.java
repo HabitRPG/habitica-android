@@ -23,7 +23,7 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AvatarSetupFragment extends BaseFragment {
@@ -34,10 +34,10 @@ public class AvatarSetupFragment extends BaseFragment {
     public int width;
 
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.avatarView)
+    @BindView(R.id.avatarView)
     ImageView avatarView;
 
     CustomizationSetupAdapter adapter;

@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder> {
@@ -61,16 +61,16 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
 
     class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.skill_image)
+        @BindView(R.id.skill_image)
         ImageView skillImageView;
 
-        @Bind(R.id.skill_text)
+        @BindView(R.id.skill_text)
         TextView skillNameTextView;
 
-        @Bind(R.id.skill_notes)
+        @BindView(R.id.skill_notes)
         TextView skillNotesTextView;
 
-        @Bind(R.id.price_button)
+        @BindView(R.id.price_button)
         Button priceButton;
 
         Skill skill;

@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -253,10 +253,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
         public HabitItem Item;
 
-        @Bind(R.id.checkedTextView)
+        @BindView(R.id.checkedTextView)
         TextView titleTextView;
 
-        @Bind(R.id.notesTextView)
+        @BindView(R.id.notesTextView)
         TextView notesTextView;
 
         public ViewHolder(View itemView) {
@@ -297,10 +297,10 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class HabitViewHolder extends ViewHolder<Task> {
 
-        @Bind(R.id.btnPlus)
+        @BindView(R.id.btnPlus)
         Button btnPlus;
 
-        @Bind(R.id.btnMinus)
+        @BindView(R.id.btnMinus)
         Button btnMinus;
 
         HabitItemCardBinding binding;
@@ -343,16 +343,16 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
 
     public class ChecklistedViewHolder extends ViewHolder<Task> implements CompoundButton.OnCheckedChangeListener {
 
-        @Bind(R.id.checkBoxHolder)
+        @BindView(R.id.checkBoxHolder)
         RelativeLayout checkboxHolder;
 
-        @Bind(R.id.checkBox)
+        @BindView(R.id.checkBox)
         CheckBox checkbox;
 
-        @Bind(R.id.checklistView)
+        @BindView(R.id.checklistView)
         LinearLayout checklistView;
 
-        @Bind(R.id.checklistIndicatorWrapper)
+        @BindView(R.id.checklistIndicatorWrapper)
         RelativeLayout checklistIndicatorWrapper;
 
         public Boolean displayChecklist;
@@ -522,7 +522,7 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
     public class RewardViewHolder extends ViewHolder<Task> {
         RewardItemCardBinding binding;
 
-        @Bind(R.id.btnReward)
+        @BindView(R.id.btnReward)
         Button btnReward;
 
         public RewardViewHolder(View itemView) {

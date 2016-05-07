@@ -24,7 +24,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Callback;
@@ -37,9 +37,9 @@ public class GroupInformationFragment extends Fragment {
     private View view;
     FragmentGroupInfoBinding viewBinding;
     APIHelper mAPIHelper;
-    @Bind(R.id.questMemberView)
+    @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
-    @Bind(R.id.collectionStats)
+    @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
     private Group group;
     private HabitRPGUser user;

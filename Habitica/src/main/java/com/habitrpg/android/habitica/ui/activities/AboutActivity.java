@@ -17,14 +17,14 @@ import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class AboutActivity extends BaseActivity {
 
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     ViewPager pager;
 
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
     @Override

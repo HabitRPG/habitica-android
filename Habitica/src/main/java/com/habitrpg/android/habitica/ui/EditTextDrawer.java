@@ -14,7 +14,7 @@ import com.mikepenz.materialdrawer.model.BaseViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer, EditTextDrawer.ViewHolder> {
@@ -48,10 +48,10 @@ public class EditTextDrawer extends BasePrimaryDrawerItem<EditTextDrawer, EditTe
 
         View view;
 
-        @Bind(R.id.editText)
+        @BindView(R.id.editText)
         EditText editText;
 
-        @Bind(R.id.btnAdd)
+        @BindView(R.id.btnAdd)
         Button btnAdd;
 
         private ViewHolder(View view) {

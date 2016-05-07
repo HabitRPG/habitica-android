@@ -28,20 +28,20 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager pager;
 
-    @Bind(R.id.skipButton)
+    @BindView(R.id.skipButton)
     Button skipButton;
 
-    @Bind(R.id.nextButton)
+    @BindView(R.id.nextButton)
     Button nextButton;
 
-    @Bind (R.id.previousButton)
+    @BindView(R.id.previousButton)
     Button previousButton;
 
     AvatarSetupFragment avatarSetupFragment;
