@@ -29,8 +29,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class SkillsFragment extends BaseMainFragment {
 
@@ -61,13 +59,10 @@ public class SkillsFragment extends BaseMainFragment {
     RecyclerView mRecyclerView;
 
     SkillsRecyclerViewAdapter adapter;
-    Unbinder unbinder;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        unbinder = ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         mRecyclerView.setAdapter(adapter);
@@ -142,13 +137,6 @@ public class SkillsFragment extends BaseMainFragment {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-
     }
 
 }
