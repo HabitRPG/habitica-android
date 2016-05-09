@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
+import com.github.data5tream.emojilib.EmojiTextView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.squareup.picasso.Picasso;
+
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
@@ -16,11 +21,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.github.data5tream.emojilib.EmojiTextView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.squareup.picasso.Picasso;
 
 public class DataBindingUtils {
 

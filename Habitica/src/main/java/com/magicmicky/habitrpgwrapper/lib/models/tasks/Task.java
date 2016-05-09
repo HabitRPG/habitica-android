@@ -1,6 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -42,9 +43,11 @@ public class Task extends BaseModel {
     @Column
     @PrimaryKey
     @NotNull
+    @SerializedName("_id")
     String id;
 
     @Column
+    @SerializedName("userId")
     public String user_id;
 
     @Column

@@ -1,6 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.annotation.Column;

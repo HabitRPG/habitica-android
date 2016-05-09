@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,16 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-public class TavernFragment extends BaseMainFragment implements Callback<Group> {
+public class TavernFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
     Group tavern;
@@ -46,34 +42,28 @@ public class TavernFragment extends BaseMainFragment implements Callback<Group> 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.mAPIHelper != null) {
-            mAPIHelper.apiService.getGroup("habitrpg", this);
-        }
-    }
+        if (this.apiHelper != null) {
+            apiHelper.apiService.getGroup("habitrpg")
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(group -> {
+                TavernFragment.this.tavern = group;
+                if (group.quest != null && TavernFragment.this.isAdded()) {
+                    TavernFragment.this.viewPager.getAdapter().notifyDataSetChanged();
+                    if (TavernFragment.this.tabLayout != null) {
+                        TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
+                        TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
+                    }
 
-    @Override
-    public void success(Group group, Response response) {
-        this.tavern = group;
-        if (group.quest != null && this.isAdded()) {
-            this.viewPager.getAdapter().notifyDataSetChanged();
-            if (this.tabLayout != null) {
-                this.tabLayout.setVisibility(View.VISIBLE);
-                this.tabLayout.setupWithViewPager(this.viewPager);
-            }
+                    ContentCache contentCache = new ContentCache(apiHelper.apiService);
 
-            ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
-
-            contentCache.GetQuestContent(group.quest.key, content -> {
-                if (questInfoFragment != null) {
-                    questInfoFragment.setQuestContent(content);
+                    contentCache.GetQuestContent(group.quest.key, content -> {
+                        if (questInfoFragment != null) {
+                            questInfoFragment.setQuestContent(content);
+                        }
+                    });
                 }
-            });
+            }, throwable -> {});
         }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
     }
 
     public void setViewPagerAdapter() {
@@ -92,12 +82,12 @@ public class TavernFragment extends BaseMainFragment implements Callback<Group> 
                 switch (position) {
                     case 0: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, "habitrpg", mAPIHelper, user, activity, true);
+                        chatListFragment.configure(activity, "habitrpg", apiHelper, user, activity, true);
                         fragment = chatListFragment;
                         break;
                     }
                     case 1: {
-                        fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user, mAPIHelper);
+                        fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user, apiHelper);
                         break;
                     }
                     default:

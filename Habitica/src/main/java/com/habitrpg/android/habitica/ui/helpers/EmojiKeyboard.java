@@ -1,18 +1,15 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiPopup;
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
-
-import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiGridView;
-import com.github.data5tream.emojilib.EmojiPopup;
-import com.github.data5tream.emojilib.emoji.Emojicon;
-import com.habitrpg.android.habitica.R;
 
 /**
  * @author data5tream

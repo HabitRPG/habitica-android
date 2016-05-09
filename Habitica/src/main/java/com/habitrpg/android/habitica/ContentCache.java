@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 
 public class ContentCache {
     public interface GotContentEntryCallback<T extends Object> {
@@ -83,89 +79,70 @@ public class ContentCache {
     }
 
     private <T extends Object> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
-        apiService.getContent(new Callback<ContentResult>() {
-            @Override
-            public void success(ContentResult contentResult, Response response) {
-                switch (typeOfSearch) {
-                    case "quest": {
-                        Collection<QuestContent> questList = contentResult.quests;
+        apiService.getContent().subscribe(contentResult -> {
+            switch (typeOfSearch) {
+                case "quest": {
+                    Collection<QuestContent> questList = contentResult.quests;
 
-                        for (QuestContent quest : questList) {
-                            if (quest.getKey() == searchKey) {
-                                gotEntry.GotObject((T) quest);
-                            }
+                    for (QuestContent quest : questList) {
+                        if (quest.getKey() == searchKey) {
+                            gotEntry.GotObject((T) quest);
                         }
-
-                        break;
                     }
-                    case "item": {
-                        T searchedItem = null;
 
-                        if (searchKey == "potion") {
-                            searchedItem = (T) contentResult.potion;
-                        } else if (searchKey == "armoire") {
-                            searchedItem = (T) contentResult.armoire;
-                        } else {
-                            Collection<ItemData> itemList = contentResult.gear.flat;
-
-                            for (ItemData item : itemList) {
-                                if (item.key.equals(searchKey)) {
-                                    searchedItem = (T) item;
-                                }
-                            }
-                        }
-
-                        gotEntry.GotObject((T) searchedItem);
-
-                        break;
-                    }
+                    break;
                 }
+                case "item": {
+                    T searchedItem = null;
 
-                saveContentResultToDb(contentResult);
+                    if (searchKey == "potion") {
+                        searchedItem = (T) contentResult.potion;
+                    } else if (searchKey == "armoire") {
+                        searchedItem = (T) contentResult.armoire;
+                    } else {
+                        Collection<ItemData> itemList = contentResult.gear.flat;
+
+                        for (ItemData item : itemList) {
+                            if (item.key.equals(searchKey)) {
+                                searchedItem = (T) item;
+                            }
+                        }
+                    }
+
+                    gotEntry.GotObject((T) searchedItem);
+
+                    break;
+                }
             }
 
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+            saveContentResultToDb(contentResult);
+        }, throwable -> {});
     }
 
     private <T extends Object> void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<T>> gotEntry) {
-        apiService.getContent(new Callback<ContentResult>() {
-            @Override
-            public void success(ContentResult contentResult, Response response) {
+        apiService.getContent().subscribe(contentResult -> {
+            switch (typeOfSearch) {
+                case "item": {
+                    List<T> resultList = new ArrayList<T>();
 
-                switch (typeOfSearch) {
-                    case "item": {
-                        List<T> resultList = new ArrayList<T>();
+                    List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
+                    itemList.add(contentResult.potion);
+                    itemList.add(contentResult.armoire);
 
-                        List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
-                        itemList.add(contentResult.potion);
-                        itemList.add(contentResult.armoire);
-
-                        for (ItemData item : itemList) {
-                            if (searchKeys.contains(item.key)) {
-                                resultList.add((T) item);
-                            }
+                    for (ItemData item : itemList) {
+                        if (searchKeys.contains(item.key)) {
+                            resultList.add((T) item);
                         }
-
-                        gotEntry.GotObject(resultList);
-
-                        break;
                     }
+
+                    gotEntry.GotObject(resultList);
+
+                    break;
                 }
-
-                saveContentResultToDb(contentResult);
             }
 
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+            saveContentResultToDb(contentResult);
+        }, throwable -> {});
     }
 
 

@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,18 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.StableFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.StableRecyclerFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PartyInviteActivity extends BaseActivity {
 

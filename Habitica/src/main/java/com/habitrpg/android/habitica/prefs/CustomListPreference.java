@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.prefs;
 
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
+
 import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
@@ -11,17 +12,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.R;
 
 import java.util.ArrayList;
 

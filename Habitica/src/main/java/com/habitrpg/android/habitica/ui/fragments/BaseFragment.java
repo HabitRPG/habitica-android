@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -20,6 +12,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.Date;
 

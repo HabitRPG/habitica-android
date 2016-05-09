@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,24 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.DividerItemDecoration;
-import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class PublicGuildsFragment extends BaseMainFragment implements Callback<ArrayList<Group>> {
+public class PublicGuildsFragment extends BaseMainFragment {
 
-    ArrayList<String> memberGuildIDs;
-    ArrayList <Group> guilds;
+    List<String> memberGuildIDs;
+    List <Group> guilds;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -45,7 +42,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements Callback<A
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             viewAdapter = new PublicGuildsRecyclerViewAdapter();
             viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
-            viewAdapter.apiHelper = this.mAPIHelper;
+            viewAdapter.apiHelper = this.apiHelper;
             recyclerView.setAdapter(viewAdapter);
             if (this.guilds != null) {
                 this.viewAdapter.setPublicGuildList(this.guilds);
@@ -61,21 +58,15 @@ public class PublicGuildsFragment extends BaseMainFragment implements Callback<A
     }
 
     private void fetchGuilds() {
-        if (this.mAPIHelper != null) {
-            this.mAPIHelper.apiService.listGroups("public", this);
+        if (this.apiHelper != null) {
+            this.apiHelper.apiService.listGroups("publicGuilds")
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(groups -> {
+                PublicGuildsFragment.this.guilds = groups;
+                if (PublicGuildsFragment.this.viewAdapter!= null) {
+                    PublicGuildsFragment.this.viewAdapter.setPublicGuildList(groups);
+                }
+            }, throwable -> {});
         }
-    }
-
-    @Override
-    public void success(ArrayList<Group> groups, Response response) {
-        this.guilds = groups;
-        if (this.viewAdapter!= null) {
-            this.viewAdapter.setPublicGuildList(groups);
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
     }
 }

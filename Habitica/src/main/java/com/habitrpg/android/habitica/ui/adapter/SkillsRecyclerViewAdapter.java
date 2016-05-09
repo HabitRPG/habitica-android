@@ -1,5 +1,12 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.Skill;
+
+import org.greenrobot.eventbus.EventBus;
+
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -9,14 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
-import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 

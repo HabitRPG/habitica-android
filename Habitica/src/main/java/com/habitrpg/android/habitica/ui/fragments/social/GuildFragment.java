@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,17 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
+import rx.functions.Action1;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-public class GuildFragment extends BaseMainFragment implements Callback<Group> {
+public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     private Group guild;
     public boolean isMember;
@@ -39,8 +37,9 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
             this.guildInformationFragment.setGroup(guild);
         }
         if (this.guild.chat == null) {
-            if (this.mAPIHelper != null) {
-                mAPIHelper.apiService.getGroup(this.guild.id, this);
+            if (this.apiHelper != null) {
+                apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                        .subscribe(this, throwable -> {});
             }
         }
     }
@@ -64,8 +63,9 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.mAPIHelper != null && this.guild != null) {
-            mAPIHelper.apiService.getGroup(this.guild.id, this);
+        if (this.apiHelper != null && this.guild != null) {
+            apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                    .subscribe(this, throwable -> {});
         }
     }
 
@@ -89,20 +89,15 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.mAPIHelper.apiService.joinGroup(this.guild.id, this);
+                this.apiHelper.apiService.joinGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                        .subscribe(this, throwable -> {});
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.mAPIHelper.apiService.leaveGroup(this.guild.id, new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
-                        getActivity().supportInvalidateOptionsMenu();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
+                this.apiHelper.apiService.leaveGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
+                        .subscribe(aVoid -> {
+                            this.activity.supportInvalidateOptionsMenu();
+                        }, throwable -> {});
                 this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
@@ -130,12 +125,12 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
 
                 switch (position) {
                     case 0: {
-                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user, mAPIHelper);
+                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user, apiHelper);
                         break;
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, GuildFragment.this.guild.id, mAPIHelper, user, activity, false);
+                        chatListFragment.configure(activity, GuildFragment.this.guild.id, apiHelper, user, activity, false);
                         fragment = chatListFragment;
                         break;
                     }
@@ -226,16 +221,9 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.mAPIHelper.apiService.updateGroup(this.guild.id, this.guild, new Callback<Void>() {
-                            @Override
-                            public void success(Void aVoid, Response response) {
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-
-                            }
-                        });
+                        this.apiHelper.apiService.updateGroup(this.guild.id, this.guild)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(aVoid -> {}, throwable -> {});
                         this.guildInformationFragment.setGroup(guild);
                     }
                 }
@@ -245,7 +233,7 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
     }
 
     @Override
-    public void success(Group group, Response response) {
+    public void call(Group group) {
         if (group != null) {
             if (this.guildInformationFragment != null) {
                 this.guildInformationFragment.setGroup(group);
@@ -258,9 +246,5 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
             this.guild = group;
         }
         this.activity.supportInvalidateOptionsMenu();
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
     }
 }

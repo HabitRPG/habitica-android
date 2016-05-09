@@ -1,31 +1,21 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import android.util.Log;
-
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.functions.Action1;
 
 /**
  * Created by magicmicky on 02/04/15.
  */
-public class TaskUpdateCallback implements Callback<Task> {
+public class TaskUpdateCallback implements Action1<Task> {
 
     @Override
-    public void success(Task task, Response response) {
+    public void call(Task task) {
         task.save();
 
         EventBus.getDefault().post(new TaskUpdatedEvent(task));
     }
-
-    @Override
-    public void failure(RetrofitError error) {
-        Log.w("HabitUpdate", "Error", error);
-    }
-
 }

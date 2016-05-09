@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+
 import com.magicmicky.habitrpgwrapper.lib.models.ContentGear;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
@@ -40,6 +41,10 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         result.potion = context.deserialize(object.get("potion"), ItemData.class);
         result.armoire = context.deserialize(object.get("armoire"), ItemData.class);
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
+
+        items.add(result.potion);
+        items.add(result.armoire);
+        items.addAll(result.gear.flat);
 
         result.quests = context.deserialize(object.get("quests"), new TypeToken<List<QuestContent>>() {}.getType());
         result.eggs = context.deserialize(object.get("eggs"), new TypeToken<List<Egg>>() {}.getType());
@@ -115,7 +120,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             mount.setAnimalGroup("questMounts");
             items.add(mount);
         }
-
 
         result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {}.getType());
 

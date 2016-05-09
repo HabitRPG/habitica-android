@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.menu;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -7,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
 
 public class BottomSheetMenuItem {
 

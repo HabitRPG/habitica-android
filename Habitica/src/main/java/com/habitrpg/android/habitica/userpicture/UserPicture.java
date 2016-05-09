@@ -1,5 +1,9 @@
 package com.habitrpg.android.habitica.userpicture;
 
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,11 +15,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

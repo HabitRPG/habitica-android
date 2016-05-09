@@ -1,18 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
@@ -25,6 +14,17 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -99,7 +99,9 @@ public class SkillsFragment extends BaseMainFragment {
             startActivityForResult(intent, TASK_SELECTION_ACTIVITY);
         } else {
             displayProgressDialog();
-            mAPIHelper.apiService.useSkill(skill.key, skill.target, new SkillCallback(activity, skill));
+            apiHelper.apiService.useSkill(skill.key, skill.target)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new SkillCallback(activity, skill), throwable -> {});
         }
     }
 
@@ -109,7 +111,9 @@ public class SkillsFragment extends BaseMainFragment {
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), activity.getString(R.string.used_skill, skill.text, skill.mana), UiUtils.SnackbarDisplayType.NORMAL);
-        mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
+        apiHelper.apiService.getUser()
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new MergeUserCallback(activity, user), throwable -> {});
     }
 
     @Override
@@ -119,7 +123,9 @@ public class SkillsFragment extends BaseMainFragment {
             case (TASK_SELECTION_ACTIVITY) : {
                 if (resultCode == Activity.RESULT_OK) {
                     displayProgressDialog();
-                    mAPIHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"), new SkillCallback(activity, selectedSkill));
+                    apiHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"))
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(new SkillCallback(activity, selectedSkill), throwable -> {});
                 }
                 break;
             }

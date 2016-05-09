@@ -1,32 +1,22 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.HatchingCommand;
+import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.events.commands.HatchingCommand;
-import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.PetDetailRecyclerFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class ItemsFragment extends BaseMainFragment {
 
@@ -110,19 +100,13 @@ public class ItemsFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(InvitePartyToQuestCommand event) {
-        this.mAPIHelper.apiService.inviteToQuest("party", event.questKey, new Callback<Group>() {
-            @Override
-            public void success(Group group, Response response) {
-                OpenMenuItemCommand event = new OpenMenuItemCommand();
-                event.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
-                EventBus.getDefault().post(event);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        this.apiHelper.apiService.inviteToQuest("party", event.questKey)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(group -> {
+                    OpenMenuItemCommand event1 = new OpenMenuItemCommand();
+                    event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
+                    EventBus.getDefault().post(event1);
+                }, throwable -> {});
     }
 
     @Subscribe

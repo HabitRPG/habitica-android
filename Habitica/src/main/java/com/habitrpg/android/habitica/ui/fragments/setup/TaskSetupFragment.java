@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
+import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,11 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
-import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Date;

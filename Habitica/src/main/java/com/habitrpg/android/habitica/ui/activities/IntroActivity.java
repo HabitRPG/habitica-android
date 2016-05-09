@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
+import com.viewpagerindicator.CirclePageIndicator;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,19 +15,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
-import com.viewpagerindicator.CirclePageIndicator;
-
 import butterknife.BindView;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, Callback<ContentResult> {
+public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.view_pager)
     ViewPager pager;
@@ -52,7 +48,9 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
 
         HostConfig hostConfig = PrefsActivity.fromContext(this);
         APIHelper apiHelper = new APIHelper(hostConfig);
-        apiHelper.apiService.getContent(this);
+        apiHelper.apiService.getContent()
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(contentResult -> {}, throwable -> {});
     }
 
     private void setupIntro() {
@@ -124,16 +122,6 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
-    }
-
-    @Override
-    public void success(ContentResult contentResult, Response response) {
-
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
 
     }
 }

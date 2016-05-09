@@ -1,9 +1,10 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Negue on 16.09.2015.
@@ -33,9 +34,9 @@ public class Group extends BaseModel {
 
     public String privacy;
 
-    public ArrayList<ChatMessage> chat;
+    public List<ChatMessage> chat;
 
-    public ArrayList<HabitRPGUser> members;
+    public List<HabitRPGUser> members;
 
     public int challengeCount;
 

@@ -1,5 +1,12 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -12,14 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
-    private ArrayList<HabitRPGUser> memberList;
+    private List<HabitRPGUser> memberList;
     public Context context;
-    public void setMemberList(ArrayList<HabitRPGUser> memberList) {
+    public void setMemberList(List<HabitRPGUser> memberList) {
         this.memberList = memberList;
         this.notifyDataSetChanged();
     }

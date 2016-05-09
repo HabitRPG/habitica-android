@@ -1,6 +1,25 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.content.DialogInterface;
+import com.amplitude.api.Amplitude;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -22,43 +41,20 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.amplitude.api.Amplitude;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import butterknife.BindView;
-import butterknife.BindString;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.functions.Action1;
 
 /**
  * @author Mickael Goubin
  */
 public class LoginActivity extends AppCompatActivity
-	implements Callback<UserAuthResponse>,HabitRPGUserCallback.OnUserReceived {
+	implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
 	private final static String TAG_ADDRESS="address";
 	private final static String TAG_USERID="user";
 	private final static String TAG_APIKEY="key";
 
-	private APIHelper mApiHelper;
+	private APIHelper apiHelper;
 	public String mTmpUserToken;
 	public String mTmpApiToken;
 	public Boolean isRegistering;
@@ -98,7 +94,7 @@ public class LoginActivity extends AppCompatActivity
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.login_screen);
+		setContentView(R.layout.activity_login);
 
         //Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
@@ -120,7 +116,9 @@ public class LoginActivity extends AppCompatActivity
 			@Override
 			public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                mApiHelper.connectSocial(accessToken.getUserId(), accessToken.getToken(), LoginActivity.this);
+                apiHelper.connectSocial(accessToken.getUserId(), accessToken.getToken())
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
             }
 
             @Override
@@ -138,7 +136,7 @@ public class LoginActivity extends AppCompatActivity
         if(hc ==null) {
             hc =  new HostConfig(BuildConfig.BASE_URL, BuildConfig.PORT, "", "");
         }
-		mApiHelper = new APIHelper(hc);
+		apiHelper = new APIHelper(hc);
 
         this.isRegistering = true;
 
@@ -156,17 +154,17 @@ public class LoginActivity extends AppCompatActivity
 	private void resetLayout() {
 		if (this.isRegistering) {
             if (this.mEmailRow.getVisibility() == View.GONE) {
-                expand(this.mEmailRow);
+                show(this.mEmailRow);
             }
             if (this.mConfirmPasswordRow.getVisibility() == View.GONE) {
-                expand(this.mConfirmPasswordRow);
+                show(this.mConfirmPasswordRow);
             }
         } else {
             if (this.mEmailRow.getVisibility() == View.VISIBLE) {
-                collapse(this.mEmailRow);
+                hide(this.mEmailRow);
             }
             if (this.mConfirmPasswordRow.getVisibility() == View.VISIBLE) {
-                collapse(this.mConfirmPasswordRow);
+                hide(this.mConfirmPasswordRow);
             }
         }
 	}
@@ -185,7 +183,9 @@ public class LoginActivity extends AppCompatActivity
 					showValidationError(R.string.login_validation_error_fieldsmissing);
 					return;
 				}
-                mApiHelper.registerUser(username,email,password, cpassword, LoginActivity.this);
+                apiHelper.registerUser(username,email,password, cpassword)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
             } else {
                 String username,password;
                 username = String.valueOf(mUsernameET.getText()).trim();
@@ -194,7 +194,9 @@ public class LoginActivity extends AppCompatActivity
 					showValidationError(R.string.login_validation_error_fieldsmissing);
 					return;
 				}
-                mApiHelper.connectUser(username,password, LoginActivity.this);
+                apiHelper.connectUser(username,password)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
             }
 		}
 	};
@@ -207,11 +209,11 @@ startActivity(i);
     };
 
 
-	public static void expand(final View v) {
+	public static void show(final View v) {
 		v.setVisibility(View.VISIBLE);
 	}
 
-	public static void collapse(final View v) {
+	public static void hide(final View v) {
         v.setVisibility(View.GONE);
     }
 
@@ -320,8 +322,45 @@ startActivity(i);
 		return super.onOptionsItemSelected(item);
 	}
 
+    private void saveTokens(String api, String user) throws Exception {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
+                .putString(getString(R.string.SP_userID), user)
+                .putString(getString(R.string.SP_address),BuildConfig.BASE_URL)
+                .commit();
+        if(!ans) {
+            throw new Exception("PB_string_commit");
+        }
+    }
+
     @Override
-    public void success(UserAuthResponse userAuthResponse, Response response) {
+    public void onUserReceived(HabitRPGUser user) {
+        try {
+            saveTokens(mTmpApiToken, mTmpUserToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.startMainActivity();
+    }
+
+    private void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+	private void showValidationError(int resourceMessageString) {
+		mProgressBar.setVisibility(View.GONE);
+		new android.support.v7.app.AlertDialog.Builder(this)
+					.setTitle(R.string.login_validation_error_title)
+					.setMessage(resourceMessageString)
+					.setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                    })
+					.setIcon(R.drawable.ic_warning_black)
+					.show();
+	}
+
+    @Override
+    public void call(UserAuthResponse userAuthResponse) {
         try {
             saveTokens(userAuthResponse.getToken(), userAuthResponse.getId());
         } catch (Exception e) {
@@ -341,48 +380,4 @@ startActivity(i);
             this.startMainActivity();
         }
     }
-
-    private void saveTokens(String api, String user) throws Exception {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        SharedPreferences.Editor editor = prefs.edit();
-        boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
-                .putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),BuildConfig.BASE_URL)
-                .commit();
-        if(!ans) {
-            throw new Exception("PB_string_commit");
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
-        try {
-            saveTokens(mTmpApiToken, mTmpUserToken);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.startMainActivity();
-    }
-
-    @Override
-    public void onUserFail() {
-        mProgressBar.setVisibility(View.GONE);
-        showSnackbar(getString(R.string.unknown_error));
-    }
-
-	private void showValidationError(int resourceMessageString) {
-		mProgressBar.setVisibility(View.GONE);
-		new android.support.v7.app.AlertDialog.Builder(this)
-					.setTitle(R.string.login_validation_error_title)
-					.setMessage(resourceMessageString)
-					.setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                    })
-					.setIcon(R.drawable.ic_warning_black)
-					.show();
-	}
 }

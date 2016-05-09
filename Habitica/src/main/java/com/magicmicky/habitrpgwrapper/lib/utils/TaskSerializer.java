@@ -1,10 +1,11 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 
@@ -21,11 +22,11 @@ public class TaskSerializer implements JsonSerializer<Task> {
         obj.addProperty("priority", task.getPriority());
         obj.addProperty("attribute", task.getAttribute());
         obj.addProperty("type", task.getType());
-        JsonObject tagsObj = new JsonObject();
+        JsonArray tagsList = new JsonArray();
         for (TaskTag tag : task.getTags()) {
-            tagsObj.addProperty(tag.getTag().getId(), true);
+            tagsList.add(tag.getTag().getId());
         }
-        obj.add("tags", tagsObj);
+        obj.add("tags", tagsList);
         switch (task.getType()) {
             case "habit":
                 obj.addProperty("up", task.getUp());

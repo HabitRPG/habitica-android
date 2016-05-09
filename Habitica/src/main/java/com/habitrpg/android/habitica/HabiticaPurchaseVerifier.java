@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Transaction;
@@ -12,6 +8,11 @@ import org.solovyev.android.checkout.BasePurchaseVerifier;
 import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.RequestListener;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,16 +48,19 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 validationRequest.transaction.receipt = purchase.data;
                 validationRequest.transaction.signature = purchase.signature;
 
-                PurchaseValidationResult purchaseValidationResult = HabiticaApplication.ApiHelper.validatePurchase(validationRequest);
+                try {
+                    PurchaseValidationResult purchaseValidationResult = HabiticaApplication.ApiHelper.validatePurchase(validationRequest);
+                    if (purchaseValidationResult.ok) {
+                        purchasedOrderList.add(purchase.orderId);
 
-                if (purchaseValidationResult.ok) {
-                    purchasedOrderList.add(purchase.orderId);
+                        verifiedPurchases.add(purchase);
 
-                    verifiedPurchases.add(purchase);
-
-                    requestListener.onSuccess(verifiedPurchases);
-                } else {
-                    requestListener.onError(purchases.indexOf(purchase), new Exception(purchaseValidationResult.data.toString()));
+                        requestListener.onSuccess(verifiedPurchases);
+                    } else {
+                        requestListener.onError(purchases.indexOf(purchase), new Exception(purchaseValidationResult.data.toString()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

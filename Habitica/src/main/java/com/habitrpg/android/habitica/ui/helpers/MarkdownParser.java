@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import android.text.Html;
-
 import com.commonsware.cwac.anddown.AndDown;
 import com.github.data5tream.emojilib.EmojiParser;
+
+import android.text.Html;
 
 /**
  * @author data5tream

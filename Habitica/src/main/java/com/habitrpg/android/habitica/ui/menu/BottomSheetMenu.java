@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.menu;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.habitrpg.android.habitica.R;
 
 public class BottomSheetMenu extends BottomSheetDialog implements View.OnClickListener {
 

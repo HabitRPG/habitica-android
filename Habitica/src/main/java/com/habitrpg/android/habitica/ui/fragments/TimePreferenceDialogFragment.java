@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.prefs.TimePreference;
+
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,8 +9,6 @@ import android.support.v7.preference.PreferenceDialogFragmentCompat;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.View;
 import android.widget.TimePicker;
-
-import com.habitrpg.android.habitica.prefs.TimePreference;
 
 import java.util.Locale;
 

@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
@@ -24,6 +15,15 @@ import org.solovyev.android.checkout.Purchase;
 import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.OnClick;

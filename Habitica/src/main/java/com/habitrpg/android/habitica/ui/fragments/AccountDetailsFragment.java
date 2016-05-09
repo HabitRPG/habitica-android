@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.support.v7.preference.Preference;
 import android.widget.Toast;
-
-import com.habitrpg.android.habitica.R;
 
 import java.util.Arrays;
 import java.util.List;

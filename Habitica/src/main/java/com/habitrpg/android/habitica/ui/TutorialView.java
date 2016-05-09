@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +10,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

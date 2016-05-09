@@ -1,5 +1,27 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiPopup;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
+import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.greenrobot.eventbus.EventBus;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,28 +52,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiPopup;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
-import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
-import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;

@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.squareup.picasso.Picasso;
 
 import android.content.Intent;
@@ -17,24 +16,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class MaintenanceActivity extends BaseActivity {
 
-    @Bind(R.id.titleTextView)
+    @BindView(R.id.titleTextView)
     TextView titleTextView;
 
-    @Bind(R.id.imageView)
+    @BindView(R.id.imageView)
     ImageView imageView;
 
-    @Bind(R.id.descriptionTextView)
+    @BindView(R.id.descriptionTextView)
     EmojiTextView descriptionTextView;
 
-    @Bind(R.id.playStoreButton)
+    @BindView(R.id.playStoreButton)
     Button playStoreButton;
     private APIHelper apiHelper;
     private Boolean isDeprecationNotice;
@@ -69,17 +65,10 @@ public class MaintenanceActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (!isDeprecationNotice) {
-            this.apiHelper.maintenanceService.getMaintenanceStatus(new Callback<MaintenanceResponse>() {
-                @Override
-                public void success(MaintenanceResponse maintenanceResponse, Response response) {
-                    if (!maintenanceResponse.activeMaintenance) {
-                        finish();
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
+            this.apiHelper.maintenanceService.getMaintenanceStatus()
+            .subscribe(maintenanceResponse -> {
+                if (!maintenanceResponse.activeMaintenance) {
+                    finish();
                 }
             });
         }

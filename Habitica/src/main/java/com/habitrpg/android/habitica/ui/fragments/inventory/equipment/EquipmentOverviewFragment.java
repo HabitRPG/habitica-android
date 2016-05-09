@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
@@ -19,6 +11,13 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Switch;
 
 import java.util.HashMap;
 import java.util.List;

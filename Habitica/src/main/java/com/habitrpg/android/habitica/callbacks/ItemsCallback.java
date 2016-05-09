@@ -3,11 +3,9 @@ package com.habitrpg.android.habitica.callbacks;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.functions.Action1;
 
-public class ItemsCallback implements Callback<Items> {
+public class ItemsCallback implements Action1<Items> {
 
     private final HabitRPGUserCallback.OnUserReceived mCallback;
 
@@ -19,16 +17,9 @@ public class ItemsCallback implements Callback<Items> {
     }
 
     @Override
-    public void success(Items items, Response response) {
+    public void call(Items items) {
         this.user.setItems(items);
-
         this.user.async().save();
-
         mCallback.onUserReceived(this.user);
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        mCallback.onUserFail();
     }
 }

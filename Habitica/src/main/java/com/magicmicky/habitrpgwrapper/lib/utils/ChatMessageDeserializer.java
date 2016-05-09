@@ -6,10 +6,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+
 import com.magicmicky.habitrpgwrapper.lib.models.Backer;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.Contributor;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

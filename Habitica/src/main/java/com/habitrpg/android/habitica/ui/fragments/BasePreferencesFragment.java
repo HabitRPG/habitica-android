@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.R;
+
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
-
-import com.habitrpg.android.habitica.R;
 
 public abstract class BasePreferencesFragment extends PreferenceFragmentCompat {
 

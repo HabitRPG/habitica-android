@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -7,8 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
 
 /**
  * Simple utilities class for UI related stuff.

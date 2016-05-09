@@ -1,5 +1,13 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -8,14 +16,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
-
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 /**
  * The service that should update the simple widget
@@ -43,7 +43,7 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
         HostConfig hc = PrefsActivity.fromContext(this);
         if (hc != null && hc.getApi() != null && !hc.getApi().equals("") && hc.getUser() != null && !hc.getUser().equals("")) {
             this.apiHelper = new APIHelper(hc);
-            apiHelper.retrieveUser(new HabitRPGUserCallback(this));
+            apiHelper.retrieveUser(true).subscribe(new HabitRPGUserCallback(this));
             for (int widgetId : allWidgetIds) {
                 RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);
                 appWidgetManager.updateAppWidget(widgetId, remoteViews);
@@ -115,10 +115,5 @@ public class UpdateWidgetService extends Service implements HabitRPGUserCallback
     public void onUserReceived(HabitRPGUser user) {
         this.updateData(user, appWidgetManager);
 
-    }
-
-    @Override
-    public void onUserFail() {
-        //TODO
     }
 }

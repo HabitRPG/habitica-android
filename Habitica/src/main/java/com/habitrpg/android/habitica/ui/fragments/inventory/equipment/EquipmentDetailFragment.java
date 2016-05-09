@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
@@ -14,6 +7,13 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 

@@ -47,7 +47,7 @@
             android:id="@+id/username_row"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center">
+                style="@style/LoginRow">
 
             <ImageView
                 android:layout_width="17dp"
@@ -71,7 +71,8 @@
         <TableRow
             android:id="@+id/email_row"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="@style/LoginRow">
 
             <ImageView
                 android:layout_width="17dp"
@@ -94,7 +95,8 @@
         <TableRow
             android:id="@+id/password_row"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="@style/LoginRow">
 
             <ImageView
                 android:layout_width="17dp"
@@ -118,7 +120,8 @@
         <TableRow
             android:id="@+id/confirm_password_row"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="@style/LoginRow">
 
             <ImageView
                 android:layout_width="17dp"

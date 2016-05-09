@@ -22,11 +22,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.functions.Action1;
 
-public class ClassSelectionActivity extends BaseActivity implements Callback<HabitRPGUser> {
+public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
 
     Boolean isInitialSelection;
     Boolean classWasUnset = false;
@@ -113,7 +111,11 @@ public class ClassSelectionActivity extends BaseActivity implements Callback<Hab
         warriorUserPicture.setPictureOn(warriorImageView);
 
         if (!isInitialSelection) {
-            apiHelper.apiService.changeClass(this);
+            apiHelper.apiService.changeClass()
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(user -> {
+                classWasUnset = true;
+            }, throwable -> {});
         }
     }
 
@@ -184,18 +186,25 @@ public class ClassSelectionActivity extends BaseActivity implements Callback<Hab
         Map<String, Object> updateData = new HashMap<>();
         updateData.put("preferences.disableClasses", true);
         updateData.put("flags.classSelected", true);
-        apiHelper.apiService.updateUser(updateData, this);
+        apiHelper.apiService.updateUser(updateData)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(this, throwable -> {});
     }
 
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.changeClass(selectedClass, this);
+        apiHelper.apiService.changeClass(selectedClass)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(this, throwable -> {});
+    }
+
+    private void displayProgressDialog() {
+        progressDialog = ProgressDialog.show(this, getString(R.string.changing_class_progress), null, true);
     }
 
     @Override
-    public void success(HabitRPGUser habitRPGUser, Response response) {
-        this.classWasUnset = true;
+    public void call(HabitRPGUser user) {
         if (shouldFinish) {
             if (progressDialog != null) {
                 progressDialog.dismiss();
@@ -203,14 +212,5 @@ public class ClassSelectionActivity extends BaseActivity implements Callback<Hab
             setResult(MainActivity.SELECT_CLASS_RESULT);
             finish();
         }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        shouldFinish = false;
-    }
-
-    private void displayProgressDialog() {
-        progressDialog = ProgressDialog.show(this, getString(R.string.changing_class_progress), null, true);
     }
 }

@@ -1,5 +1,46 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
+import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.EditTextDrawer;
+import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.Debounce;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,56 +63,10 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.ui.EditTextDrawer;
-import com.habitrpg.android.habitica.ui.UiUtils;
-import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.Debounce;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
-import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class TasksFragment extends BaseMainFragment implements OnCheckedChangeListener {
 
@@ -111,7 +106,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
-        contentCache = new ContentCache(mAPIHelper.apiService);
+        contentCache = new ContentCache(apiHelper.apiService);
     }
 
     @Override
@@ -167,9 +162,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
@@ -196,8 +188,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         refreshItem.setActionView(iv);
 
-        if (mAPIHelper != null) {
-            mAPIHelper.retrieveUser(new HabitRPGUserCallback(activity));
+        if (apiHelper != null) {
+            apiHelper.retrieveUser(true)
+                    .subscribe(
+                            new HabitRPGUserCallback(activity),
+                            throwable -> stopAnimatingRefreshItem()
+                    );
         }
     }
 
@@ -235,59 +231,52 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                                 callBack -> {
 
                                     // request buyable gear
-                                    if (mAPIHelper != null) {
-                                        mAPIHelper.apiService.getInventoryBuyableGear(new Callback<List<ItemData>>() {
-                                            @Override
-                                            public void success(List<ItemData> itemDatas, Response response) {
+                                    if (apiHelper != null) {
+                                        apiHelper.apiService.getInventoryBuyableGear()
+                                                .compose(apiHelper.configureApiCallObserver())
+                                                .subscribe(itemDatas -> {
+                                            // get itemdata list
+                                            ArrayList<String> itemKeys = new ArrayList<>();
+                                            for (ItemData item : itemDatas) {
+                                                itemKeys.add(item.key);
+                                            }
+                                            itemKeys.add("potion");
+                                            if (user.getFlags().getArmoireEnabled())
+                                                itemKeys.add("armoire");
 
-                                                // get itemdata list
-                                                ArrayList<String> itemKeys = new ArrayList<>();
-                                                for (ItemData item : itemDatas) {
-                                                    itemKeys.add(item.key);
+                                            contentCache.GetItemDataList(itemKeys, obj -> {
+                                                ArrayList<Task> buyableItems = new ArrayList<>();
+                                                if (!isAdded()) {
+                                                    return;
                                                 }
-                                                itemKeys.add("potion");
-                                                if (user.getFlags().getArmoireEnabled())
-                                                    itemKeys.add("armoire");
+                                                for (ItemData item : obj) {
+                                                    Task reward = new Task();
+                                                    reward.text = item.text;
+                                                    reward.notes = item.notes;
+                                                    reward.value = item.value;
+                                                    reward.setType("reward");
+                                                    reward.specialTag = "item";
+                                                    reward.setId(item.key);
 
-                                                contentCache.GetItemDataList(itemKeys, obj -> {
-                                                    ArrayList<Task> buyableItems = new ArrayList<>();
-                                                    if (!isAdded()) {
-                                                        return;
-                                                    }
-                                                    for (ItemData item : obj) {
-                                                        Task reward = new Task();
-                                                        reward.text = item.text;
-                                                        reward.notes = item.notes;
-                                                        reward.value = item.value;
-                                                        reward.setType("reward");
-                                                        reward.specialTag = "item";
-                                                        reward.setId(item.key);
-
-                                                        if (item.key.equals("armoire")) {
-                                                            if (user.getFlags().getArmoireEmpty()) {
-                                                                reward.notes = getResources().getString(R.string.armoireNotesEmpty);
-                                                            } else {
-                                                                long gearCount = new Select().count()
-                                                                        .from(ItemData.class)
-                                                                        .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                                                .and(Condition.column("owned").isNull())
-                                                                        ).count();
-                                                                reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
-                                                            }
+                                                    if (item.key.equals("armoire")) {
+                                                        if (user.getFlags().getArmoireEmpty()) {
+                                                            reward.notes = getResources().getString(R.string.armoireNotesEmpty);
+                                                        } else {
+                                                            long gearCount = new Select().count()
+                                                                    .from(ItemData.class)
+                                                                    .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
+                                                                            .and(Condition.column("owned").isNull())
+                                                                    ).count();
+                                                            reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
                                                         }
-
-                                                        buyableItems.add(reward);
                                                     }
 
-                                                    callBack.GotAdditionalItems(buyableItems);
-                                                });
-                                            }
+                                                    buyableItems.add(reward);
+                                                }
 
-                                            @Override
-                                            public void failure(RetrofitError error) {
-
-                                            }
-                                        });
+                                                callBack.GotAdditionalItems(buyableItems);
+                                            });
+                                        }, throwable -> {});
                                     }
                                 });
 
@@ -335,13 +324,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        if (refreshItem != null) {
-            View actionView = refreshItem.getActionView();
-            if (actionView != null) {
-                actionView.clearAnimation();
-            }
-            refreshItem.setActionView(null);
-        }
+        stopAnimatingRefreshItem();
         if (this.user != null) {
             fillTagFilterDrawer(user.getTags());
 
@@ -385,24 +368,20 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         UiUtils.dismissKeyboard(activity);
         final Tag t = new Tag();
         t.setName(event.tagName);
-        if (mAPIHelper != null) {
-            mAPIHelper.apiService.createTag(t, new Callback<List<Tag>>() {
-                @Override
-                public void success(List<Tag> tags, Response response) {
-                    // Since we get a list of all tags, we just save them all
-                    for (Tag onlineTag : tags) {
-                        onlineTag.user_id = user.getId();
-                        onlineTag.async().save();
-                    }
+        if (apiHelper != null) {
+            apiHelper.apiService.createTag(t)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(tags -> {
+                        // Since we get a list of all tags, we just save them all
+                        for (Tag onlineTag : tags) {
+                            onlineTag.user_id = user.getId();
+                            onlineTag.async().save();
+                        }
 
-                    fillTagFilterDrawer(tags);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + error.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
-                }
-            });
+                        fillTagFilterDrawer(tags);
+                    }, throwable -> {
+                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
+                    });
         }
     }
 
@@ -434,12 +413,16 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
-        mAPIHelper.updateTaskDirection(event.Task.getId(), event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up, new TaskScoringCallback(activity, event.Task.getId()));
+        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {});
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
-        mAPIHelper.updateTaskDirection(event.Habit.getId(), event.Up ? TaskDirection.up : TaskDirection.down, new TaskScoringCallback(activity, event.Habit.getId()));
+        apiHelper.apiService.postTaskDirection(event.Habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(activity, event.Habit.getId()), throwable -> {});
     }
 
     @Subscribe
@@ -451,11 +434,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     public void onEvent(final TaskSaveEvent event) {
         Task task = event.task;
         if (event.created) {
-            this.mAPIHelper.createNewTask(task, new TaskCreationCallback());
+            this.apiHelper.apiService.createItem(task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskCreationCallback(), throwable -> {});
             updateTags(event.task.getTags());
             floatingMenu.close(true);
         } else {
-            this.mAPIHelper.updateTask(task, new TaskUpdateCallback());
+            this.apiHelper.apiService.updateTask(task.getId(), task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskUpdateCallback(), throwable -> {});
         }
     }
 
@@ -566,5 +553,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
         }
         return this.tagIds;
+    }
+
+    public void stopAnimatingRefreshItem() {
+        if (refreshItem != null) {
+            View actionView = refreshItem.getActionView();
+            if (actionView != null) {
+                actionView.clearAnimation();
+            }
+            refreshItem.setActionView(null);
+        }
     }
 }

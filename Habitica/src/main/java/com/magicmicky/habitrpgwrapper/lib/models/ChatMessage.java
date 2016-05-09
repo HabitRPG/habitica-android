@@ -1,8 +1,8 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
-import android.content.res.Resources;
-
 import com.habitrpg.android.habitica.R;
+
+import android.content.res.Resources;
 
 import java.util.Date;
 import java.util.HashMap;

@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica;
 
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,11 +15,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 

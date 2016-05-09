@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.habitrpg.android.habitica.R;
 
 public class MarginDecoration extends RecyclerView.ItemDecoration {
     private int margin;

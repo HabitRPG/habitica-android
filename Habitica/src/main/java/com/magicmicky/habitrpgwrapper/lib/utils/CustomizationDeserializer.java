@@ -1,18 +1,16 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
-import android.annotation.SuppressLint;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import android.annotation.SuppressLint;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;

@@ -11,15 +11,15 @@ public class Server {
         this(addr, true);
     }
 
-    public Server(String addr, boolean attachPrefix)
+    public Server(String addr, boolean attachSuffix)
     {
-        if(attachPrefix){
-            if(addr.endsWith("/api/v2") || addr.endsWith("/api/v2/"))
+        if(attachSuffix){
+            if(addr.endsWith("/api/v3") || addr.endsWith("/api/v3/"))
                 this.addr=addr;
             else if(addr.endsWith("/"))
-                this.addr=addr + "api/v2";
+                this.addr=addr + "api/v3/";
             else
-                this.addr = addr + "/api/v2";
+                this.addr = addr + "/api/v3/";
         }
         else
         {

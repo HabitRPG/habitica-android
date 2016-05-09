@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.BuildConfig;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
-import com.habitrpg.android.habitica.BuildConfig;
 
 /**
  * http://stackoverflow.com/a/29945693/1315039

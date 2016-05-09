@@ -1,26 +1,19 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Items;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class MergeUserCallback implements Callback<HabitRPGUser> {
-
-    private final HabitRPGUserCallback.OnUserReceived mCallback;
+public class MergeUserCallback extends HabitRPGUserCallback {
 
     private HabitRPGUser user;
 
     public MergeUserCallback(HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
-        this.mCallback = callback;
+        super(callback);
         this.user = user;
     }
 
     @Override
-    public void success(HabitRPGUser user, Response response) {
+    public void call(HabitRPGUser user) {
         if (user.getItems() != null) {
             this.user.setItems(user.getItems());
         }
@@ -36,11 +29,6 @@ public class MergeUserCallback implements Callback<HabitRPGUser> {
 
         this.user.async().save();
 
-        mCallback.onUserReceived(this.user);
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        mCallback.onUserFail();
+        callBack.onUserReceived(this.user);
     }
 }

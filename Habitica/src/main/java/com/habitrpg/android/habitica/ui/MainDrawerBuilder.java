@@ -1,35 +1,31 @@
 package com.habitrpg.android.habitica.ui;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.widget.Toolbar;
 
 public class MainDrawerBuilder {
 

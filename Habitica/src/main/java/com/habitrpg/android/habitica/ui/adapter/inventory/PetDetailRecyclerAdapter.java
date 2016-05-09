@@ -1,28 +1,25 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuSelectionRunnable;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -158,7 +155,6 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
                 menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
             }
             menu.setSelectionRunnable(index -> {
-                Log.e("EEEEEEE", index.toString());
                 if (index == 0) {
                     EquipCommand event = new EquipCommand();
                     event.type = "pet";

@@ -1,5 +1,16 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -11,17 +22,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by Negue on 14.06.2015.

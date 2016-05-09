@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
@@ -18,7 +10,6 @@ import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuSelectionRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
@@ -27,6 +18,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.HashMap;
 import java.util.List;

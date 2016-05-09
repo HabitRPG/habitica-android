@@ -1,18 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.Button;
-
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -24,6 +17,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 import java.util.Map;
@@ -104,7 +105,8 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             if (this.user != null) {
                 setupViewpager();
             } else {
-                this.apiHelper.retrieveUser(new HabitRPGUserCallback(this));
+                this.apiHelper.apiService.getUser()
+                        .subscribe(new HabitRPGUserCallback(this), throwable -> {});
             }
         }
     }
@@ -142,7 +144,8 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiHelper.apiService.updateUser(event.updateData, new HabitRPGUserCallback(this));
+        this.apiHelper.apiService.updateUser(event.updateData)
+            .subscribe(new MergeUserCallback(this, user), throwable -> {});
     }
 
     @Override
@@ -151,7 +154,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             if (this.pager.getCurrentItem() == 1) {
                 List<Map<String, Object>> operations = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;
-                this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
+                //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
             }
             this.pager.setCurrentItem(this.pager.getCurrentItem()+1);
         } else if (v == this.previousButton) {
@@ -215,11 +218,6 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } catch (JSONException exception) {
         }
         Amplitude.getInstance().logEvent("setup", eventProperties);
-    }
-
-    @Override
-    public void onUserFail() {
-
     }
 
     private void startMainActivity() {

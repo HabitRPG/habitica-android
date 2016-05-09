@@ -6,6 +6,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -17,175 +18,185 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import rx.Observable;
+
 
 /**
  * Created by MagicMicky on 10/06/2014.
  */
 public interface ApiService {
-    @GET("/status")
-    void getStatus(Callback<Status> statusCallback);
+    @GET("status")
+    Observable<Status> getStatus();
 
-    @GET("/content")
-    void getContent(Callback<ContentResult> contentResultCallback);
+    @GET("content")
+    Observable<ContentResult> getContent();
 
     /* user API */
 
-    @GET("/user/")
-    void getUser(Callback<HabitRPGUser> habitRPGUserCallback);
+    @GET("user/")
+    Observable<HabitRPGUser> getUser();
 
-    @PUT("/user/")
-    void updateUser(@Body Map<String, Object> updateDictionary, Callback<HabitRPGUser> habitRPGUserCallback);
+    @PUT("user/")
+    Observable<HabitRPGUser> updateUser(@Body Map<String, Object> updateDictionary);
 
-    @GET("/user/inventory/buy")
-    void getInventoryBuyableGear(Callback<List<ItemData>> buyableGearCallback);
+    @GET("user/inventory/buy")
+    Observable<List<ItemData>> getInventoryBuyableGear();
 
-    @POST("/user/inventory/equip/{type}/{key}")
-    void equipItem(@Path("type") String type, @Path("key") String itemKey, Callback<Items> gearCallback);
+    @POST("user/equip/{type}/{key}")
+    Observable<Items> equipItem(@Path("type") String type, @Path("key") String itemKey);
 
-    @POST("/user/inventory/buy/{key}")
-    void buyItem(@Path("key") String itemKey, Callback<BuyResponse> voidCallback);
+    @POST("user/buy/{key}")
+    Observable<BuyResponse> buyItem(@Path("key") String itemKey);
 
-    @POST("/user/inventory/sell/{type}/{key}")
-    void sellItem(@Path("type") String itemType, @Path("key") String itemKey, Callback<HabitRPGUser> voidCallback);
+    @POST("user/sell/{type}/{key}")
+    Observable<HabitRPGUser> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
 
-    @POST("/user/inventory/feed/{pet}/{food}")
-    void feedPet(@Path("pet") String petKey, @Path("food") String foodKey, Callback<FeedResponse> feedingCallback);
+    @POST("user/feed/{pet}/{food}")
+    Observable<FeedResponse> feedPet(@Path("pet") String petKey, @Path("food") String foodKey);
 
-    @POST("/user/inventory/hatch/{egg}/{hatchingPotion}")
-    void hatchPet(@Path("egg") String eggKey, @Path("hatchingPotion") String hatchingPotionKey, Callback<Items> itemsCallback);
-
-
-    @POST("/user/unlock")
-    void unlockPath(@Query("path") String path, Callback<UnlockResponse> unlockResponseCallback);
-
-    @GET("/user/tasks/{id}")
-    void getTask(@Path("id") String id, Callback<Task> habitItemCallback);
-
-    @POST("/user/tasks/{id}/{direction}")
-    void postTaskDirection(@Path("id") String id, @Path("direction") String direction, Callback<TaskDirectionData> taskDirectionCallback);
-
-    @POST("/user/tasks")
-    void createItem(@Body Task item, Callback<Task> habitItemCallback);
+    @POST("user/hatch/{egg}/{hatchingPotion}")
+    Observable<Items> hatchPet(@Path("egg") String eggKey, @Path("hatchingPotion") String hatchingPotionKey);
 
 
-    @PUT("/user/tasks/{id}")
-    void updateTask(@Path("id") String id, @Body Task item, Callback<Task> habitItemCallback);
+    @GET("tasks/user")
+    Observable<TaskList> getTasks();
+
+    @POST("user/unlock")
+    Observable<UnlockResponse> unlockPath(@Query("path") String path);
+
+    @GET("tasks/{id}")
+    Observable<Task> getTask(@Path("id") String id);
+
+    @POST("tasks/{id}/score/{direction}")
+    Observable<TaskDirectionData> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
+
+    @POST("tasks/user")
+    Observable<Task> createItem(@Body Task item);
+
+    @PUT("tasks/{id}")
+    Observable<Task> updateTask(@Path("id") String id, @Body Task item);
+
+    @DELETE("tasks/{id}")
+    Observable<Void> deleteTask(@Path("id") String id);
 
 
-    @DELETE("/user/tasks/{id}")
-    void deleteTask(@Path("id") String id, Callback<Void> voidCallback);
+    @POST("tags")
+    Observable<List<Tag>> createTag(@Body Tag tag);
+
+    @PUT("tags/{id}")
+    Observable<Tag> updateTag(@Path("id") String id, @Body Tag tag);
+
+    @DELETE("tags/{id}")
+    Observable<Void> deleteTag(@Path("id") String id);
 
 
-    @POST("/user/tags")
-    void createTag(@Body Tag tag, Callback<List<Tag>> multiTagCallback);
+    @POST("user/auth/local/register")
+    Observable<UserAuthResponse> registerUser(@Body UserAuth auth);
+
+    @POST("user/auth/local/login")
+    Observable<UserAuthResponse> connectLocal(@Body UserAuth auth);
+
+    @POST("user/auth/social")
+    Observable<UserAuthResponse> connectSocial(@Body UserAuthSocial auth);
 
 
-    @PUT("/user/tags/{id}")
-    void updateTag(@Path("id") String id, @Body Tag tag, Callback<Tag> multiTagCallback);
+    @POST("user/sleep")
+    Observable<Void> sleep();
 
+    @POST("user/revive")
+    Observable<HabitRPGUser> revive();
 
-    @DELETE("/user/tags/{id}")
-    void deleteTag(@Path("id") String id, Callback<Void> voidCallback);
+    @POST("user/class/cast/{skill}")
+    Observable<HabitRPGUser> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId);
 
-    @POST("/register")
-    void registerUser(@Body UserAuth auth, Callback<UserAuthResponse> callback);
+    @POST("user/class/cast/{skill}")
+    Observable<HabitRPGUser> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType);
 
-    @POST("/user/auth/local")
-    void connectLocal(@Body UserAuth auth, Callback<UserAuthResponse> callback);
+    @POST("user/change-class")
+    Observable<HabitRPGUser> changeClass();
 
-    @POST("/user/auth/social")
-    void connectSocial(@Body UserAuthSocial auth, Callback<UserAuthResponse> callback);
+    @POST("user/change-class")
+    Observable<HabitRPGUser> changeClass(@Query("class") String className);
 
-    @POST("/user/sleep")
-    void sleep(Callback<Void> voidCallback);
-
-    @POST("/user/revive")
-    void revive(Callback<HabitRPGUser> habitRPGUserCallback);
-
-    @POST("/user/class/cast/{skill}")
-    void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId, Callback<HabitRPGUser> habitRPGUserCallback);
-
-    @POST("/user/class/cast/{skill}")
-    void useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, Callback<HabitRPGUser> habitRPGUserCallback);
-
-    @POST("/user/class/change")
-    void changeClass(Callback<HabitRPGUser> cb);
-
-    @POST("/user/class/change")
-    void changeClass(@Query("class") String className, Callback<HabitRPGUser> cb);
+    @POST("user/disable-classes")
+    Observable<HabitRPGUser> disableClasses();
 
     /* Group API */
 
-    @GET("/groups")
-    void listGroups(@Query("type") String type, Callback<ArrayList<Group>> cb);
+    @GET("groups")
+    Observable<List<Group>> listGroups(@Query("type") String type);
 
-    @GET("/groups/{gid}")
-    void getGroup(@Path("gid") String groupId, Callback<Group> cb);
+    @GET("groups/{gid}")
+    Observable<Group> getGroup(@Path("gid") String groupId);
 
-    @POST("/groups/{id}")
-    void updateGroup(@Path("id") String id, @Body Group item, Callback<Void> habitItemCallback);
+    @POST("groups/{id}")
+    Observable<Void> updateGroup(@Path("id") String id, @Body Group item);
 
-    @GET("/groups/{gid}/chat")
-    void listGroupChat(@Path("gid") String groupId, Callback<List<ChatMessage>> cb);
+    @GET("groups/{gid}/chat")
+    Observable<List<ChatMessage>> listGroupChat(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/join")
-    void joinGroup(@Path("gid") String groupId, Callback<Group> cb);
+    @POST("groups/{gid}/join")
+    Observable<Group> joinGroup(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/leave")
-    void leaveGroup(@Path("gid") String groupId, Callback<Void> cb);
+    @POST("groups/{gid}/leave")
+    Observable<Void> leaveGroup(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/chat")
-    void postGroupChat(@Path("gid") String groupId, @Query("message") String message, Callback<PostChatMessageResult> cb);
+    @POST("groups/{gid}/chat")
+    Observable<PostChatMessageResult> postGroupChat(@Path("gid") String groupId, @Body HashMap<String, String> message);
 
-    @DELETE("/groups/{gid}/chat/{messageId}")
-    void deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId, Callback<Void> cb);
+    @DELETE("groups/{gid}/chat/{messageId}")
+    Observable<Void> deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId);
+
+    @GET("groups/{gid}/members")
+    Observable<List<HabitRPGUser>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields);
+
+    @GET("groups/{gid}/members")
+    Observable<List<HabitRPGUser>> getGroupMembers(@Path("gid") String groupId, @Query("includeAllPublicFields") Boolean includeAllPublicFields, @Query("lastId") String lastId);
 
     // Like returns the full chat list
-    @POST("/groups/{gid}/chat/{mid}/like")
-    void likeMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<List<Void>> cb);
+    @POST("groups/{gid}/chat/{mid}/like")
+    Observable<List<Void>> likeMessage(@Path("gid") String groupId, @Path("mid") String mid);
 
-    @POST("/groups/{gid}/chat/{mid}/flag")
-    void flagMessage(@Path("gid") String groupId, @Path("mid") String mid, Callback<Void> cb);
+    @POST("groups/{gid}/chat/{mid}/flag")
+    Observable<Void> flagMessage(@Path("gid") String groupId, @Path("mid") String mid);
 
-    @POST("/groups/{gid}/chat/seen")
-    void seenMessages(@Path("gid") String groupId, Callback<String> cb);
+    @POST("groups/{gid}/chat/seen")
+    Observable<Void> seenMessages(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/invite")
-    void inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData, Callback<Void> groupCallback);
+    @POST("groups/{gid}/invite")
+    Observable<Void> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
 
-    @POST("/user/batch-update")
-    void batchOperation(@Body List<Map<String,Object>> operations, Callback<HabitRPGUser> cb);
+    @POST("groups/{gid}/quests/accept")
+    Observable<Void> acceptQuest(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/questAccept")
-    void acceptQuest(@Path("gid") String groupId, Callback<Void> cb);
+    @POST("groups/{gid}/quests/reject")
+    Observable<Void> rejectQuest(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/questReject")
-    void rejectQuest(@Path("gid") String groupId, Callback<Void> cb);
+    @POST("groups/{gid}/quests/cancel")
+    Observable<Void> cancelQuest(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/questCancel")
-    void cancelQuest(@Path("gid") String groupId, Callback<Void> cb);
+    @POST("groups/{gid}/quests/force-start")
+    Observable<Quest> forceStartQuest(@Path("gid") String groupId, @Body Group group);
 
-    @POST("/groups/{gid}/questAccept?force=true")
-    void forceStartQuest(@Path("gid") String groupId, @Body Group group, Callback<Group> cb);
+    @POST("groups/{gid}/quests/invite/{questKey}")
+    Observable<Quest> inviteToQuest(@Path("gid") String groupId, @Path("questKey") String questKey);
 
-    @POST("/groups/{gid}/questAccept")
-    void inviteToQuest(@Path("gid") String groupId, @Query("key") String questKey, Callback<Group> cb);
-    @POST("/groups/{gid}/questAbort")
-    void abortQuest(@Path("gid") String groupId, Callback<Group> cb);
+    @POST("groups/{gid}/quests/abort")
+    Observable<Quest> abortQuest(@Path("gid") String groupId);
 
-    @POST("/groups/{gid}/questLeave")
-    void leaveQuest(@Path("gid") String groupId, Callback<Void> cb);
+    @POST("groups/{gid}/quests/leave")
+    Observable<Void> leaveQuest(@Path("gid") String groupId);
 }

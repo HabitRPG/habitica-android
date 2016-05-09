@@ -1,5 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
+import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,25 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class PartyFragment extends BaseMainFragment {
@@ -43,6 +39,7 @@ public class PartyFragment extends BaseMainFragment {
     private PartyMemberListFragment partyMemberListFragment;
     private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
+    private ContentCache contentCache;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,57 +52,64 @@ public class PartyFragment extends BaseMainFragment {
 
         viewPager.setCurrentItem(0);
 
-        final ContentCache contentCache = new ContentCache(mAPIHelper.apiService);
+        contentCache = new ContentCache(apiHelper.apiService);
 
         // Get the full group data
-        mAPIHelper.apiService.getGroup("party", new Callback<Group>() {
-            @Override
-            public void success(Group group, Response response) {
-                if (group == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                            .setMessage(activity.getString(R.string.no_party_message))
-                            .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                                activity.getSupportFragmentManager().popBackStackImmediate();
-                            });
-                    builder.show();
-                    tabLayout.removeAllTabs();
-                    return;
-                }
-                PartyFragment.this.group = group;
+        apiHelper.apiService.getGroup("party")
+                .compose(this.apiHelper.configureApiCallObserver())
+                .subscribe(group -> {
+                    if (group == null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                                .setMessage(activity.getString(R.string.no_party_message))
+                                .setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                                    activity.getSupportFragmentManager().popBackStackImmediate();
+                                });
+                        builder.show();
+                        tabLayout.removeAllTabs();
+                        return;
+                    }
+                    PartyFragment.this.group = group;
 
-                if (partyMemberListFragment != null) {
-                    partyMemberListFragment.setMemberList(group.members);
-                }
+                    updateGroupUI();
 
-                if (groupInformationFragment != null) {
-                    groupInformationFragment.setGroup(group);
-                }
-
-                if(chatListFragment != null){
-                    chatListFragment.seenGroupId = group.id;
-                }
-
-                PartyFragment.this.activity.supportInvalidateOptionsMenu();
-
-                if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-                    contentCache.GetQuestContent(group.quest.key, content -> {
-                        if (groupInformationFragment != null) {
-                            groupInformationFragment.setQuestContent(content);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        });
+                    apiHelper.apiService.getGroupMembers(group.id, true)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(members -> {
+                                PartyFragment.this.group.members = members;
+                                updateGroupUI();
+                            },
+                            throwable -> {});
+        }, throwable -> {});
 
         setViewPagerAdapter();
         this.tutorialStepIdentifier = "party";
         this.tutorialText = getString(R.string.tutorial_party);
 
         return v;
+    }
+
+    private void updateGroupUI() {
+        if (partyMemberListFragment != null) {
+            partyMemberListFragment.setMemberList(group.members);
+        }
+
+        if (groupInformationFragment != null) {
+            groupInformationFragment.setGroup(group);
+        }
+
+        if(chatListFragment != null){
+            chatListFragment.seenGroupId = group.id;
+        }
+
+        PartyFragment.this.activity.supportInvalidateOptionsMenu();
+
+        if (group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
+            contentCache.GetQuestContent(group.quest.key, content -> {
+                if (groupInformationFragment != null) {
+                    groupInformationFragment.setQuestContent(content);
+                }
+            });
+        }
     }
 
     @Override
@@ -135,17 +139,10 @@ public class PartyFragment extends BaseMainFragment {
                 this.displayEditForm();
                 return true;
             case R.id.menu_guild_leave:
-                this.mAPIHelper.apiService.leaveGroup(this.group.id, new Callback<Void>() {
-                    @Override
-                    public void success(Void aVoid, Response response) {
+                this.apiHelper.apiService.leaveGroup(this.group.id).compose(apiHelper.configureApiCallObserver())
+                        .subscribe(group -> {
                         getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
+                }, throwable -> {});
                 return true;
         }
 
@@ -190,16 +187,9 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.mAPIHelper.apiService.updateGroup(this.group.id, this.group, new Callback<Void>() {
-                            @Override
-                            public void success(Void aVoid, Response response) {
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-
-                            }
-                        });
+                        this.apiHelper.apiService.updateGroup(this.group.id, this.group)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(aVoid -> {}, throwable -> {});
                         this.groupInformationFragment.setGroup(group);
                     }
                 }
@@ -224,16 +214,9 @@ public class PartyFragment extends BaseMainFragment {
                     Collections.addAll(invites, userIDs);
                     inviteData.put("uuids", invites);
                 }
-                this.mAPIHelper.apiService.inviteToGroup(this.group.id, inviteData, new Callback<Void>() {
-                    @Override
-                    public void success(Void group, Response response) {
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                    }
-                });
+                this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(aVoid -> {}, throwable -> {});
             }
         }
     }
@@ -259,12 +242,12 @@ public class PartyFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user, mAPIHelper);
+                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user, apiHelper);
                         break;
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, "party", mAPIHelper, user, activity, false);
+                        chatListFragment.configure(activity, "party", apiHelper, user, activity, false);
                         fragment = chatListFragment;
                         break;
                     }

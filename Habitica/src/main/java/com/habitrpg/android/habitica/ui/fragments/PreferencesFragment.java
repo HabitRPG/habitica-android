@@ -1,5 +1,18 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.NotificationPublisher;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.prefs.TimePreference;
+import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,35 +20,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceCategory;
-
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.NotificationPublisher;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.prefs.TimePreference;
-import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class PreferencesFragment extends BasePreferencesFragment implements
-        SharedPreferences.OnSharedPreferenceChangeListener, Callback<HabitRPGUser> {
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private Context context;
     private TimePreference timePreference;
@@ -200,15 +189,5 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             classSelectionPreference.setTitle(getString(R.string.enable_class));
             classSelectionPreference.setVisible(true);
         }
-    }
-
-    @Override
-    public void success(HabitRPGUser habitRPGUser, Response response) {
-
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
     }
 }

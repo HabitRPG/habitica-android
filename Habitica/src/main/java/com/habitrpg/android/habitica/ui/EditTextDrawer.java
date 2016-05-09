@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.ui;
 
-import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -13,6 +8,11 @@ import com.mikepenz.materialdrawer.model.BasePrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.BaseViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

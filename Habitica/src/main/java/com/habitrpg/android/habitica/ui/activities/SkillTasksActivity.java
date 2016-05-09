@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.SkillTasksRecyclerViewFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +13,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.SkillTasksRecyclerViewFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.HashMap;
 import java.util.Map;

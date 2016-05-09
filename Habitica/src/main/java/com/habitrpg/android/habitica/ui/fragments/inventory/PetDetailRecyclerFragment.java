@@ -1,5 +1,18 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import org.greenrobot.eventbus.Subscribe;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,27 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.From;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PetDetailRecyclerFragment extends BaseMainFragment {
     public RecyclerView recyclerView;

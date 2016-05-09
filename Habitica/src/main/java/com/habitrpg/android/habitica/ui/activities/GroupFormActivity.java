@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.github.data5tream.emojilib.EmojiEditText;
+import com.github.data5tream.emojilib.EmojiPopup;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
-
-import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiGridView;
-import com.github.data5tream.emojilib.EmojiPopup;
-import com.github.data5tream.emojilib.emoji.Emojicon;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.UiUtils;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import butterknife.BindView;
 

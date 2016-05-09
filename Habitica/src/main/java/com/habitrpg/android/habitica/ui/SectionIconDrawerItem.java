@@ -1,5 +1,12 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+import com.mikepenz.fastadapter.utils.ViewHolderFactory;
+import com.mikepenz.materialdrawer.holder.StringHolder;
+import com.mikepenz.materialdrawer.model.AbstractDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.mikepenz.materialdrawer.model.interfaces.Typefaceable;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.LayoutRes;
@@ -8,13 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.mikepenz.fastadapter.utils.ViewHolderFactory;
-import com.mikepenz.materialdrawer.holder.StringHolder;
-import com.mikepenz.materialdrawer.model.AbstractDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-import com.mikepenz.materialdrawer.model.interfaces.Typefaceable;
 
 /**
  * Created by mikepenz on 03.02.15.

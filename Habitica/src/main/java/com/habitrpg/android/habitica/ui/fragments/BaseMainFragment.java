@@ -1,5 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,19 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 public abstract class BaseMainFragment extends BaseFragment {
 
     public MainActivity activity;
     public TabLayout tabLayout;
     public FrameLayout floatingMenuWrapper;
-    public APIHelper mAPIHelper;
+    public APIHelper apiHelper;
     protected HabitRPGUser user;
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;
@@ -75,8 +75,8 @@ public abstract class BaseMainFragment extends BaseFragment {
             }
         }
 
-        if (mAPIHelper == null) {
-            mAPIHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
+        if (apiHelper == null) {
+            apiHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
         }
 
         if (floatingMenuWrapper != null) {

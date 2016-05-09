@@ -1,13 +1,10 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import android.util.Log;
-
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -15,14 +12,12 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import rx.functions.Action1;
 
 /**
  * Created by magicmicky on 18/02/15.
  */
-public class TaskScoringCallback implements Callback<TaskDirectionData> {
+public class TaskScoringCallback implements Action1<TaskDirectionData> {
     private final OnTaskScored mCallback;
     private final String taskId;
 
@@ -32,7 +27,7 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
     }
 
     @Override
-    public void success(final TaskDirectionData taskDirectionData, Response response) {
+    public void call(TaskDirectionData taskDirectionData) {
         new Select().from(Task.class).where(Condition.column("id").eq(taskId))
                 .async()
                 .querySingle(new TransactionListener<Task>() {
@@ -102,15 +97,7 @@ public class TaskScoringCallback implements Callback<TaskDirectionData> {
         }
     }
 
-    @Override
-    public void failure(RetrofitError error) {
-        this.mCallback.onTaskScoringFailed();
-        Log.w("TaskScoring", "Task scoring failed", error);
-    }
-
     public interface OnTaskScored {
         void onTaskDataReceived(TaskDirectionData data, Task task);
-
-        void onTaskScoringFailed();
     }
 }

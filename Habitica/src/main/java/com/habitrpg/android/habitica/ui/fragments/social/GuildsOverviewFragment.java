@@ -1,5 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,23 +14,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class GuildsOverviewFragment extends BaseMainFragment implements Callback<ArrayList<Group>>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class GuildsOverviewFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.my_guilds_listview)
     LinearLayout  guildsListView;
@@ -68,8 +62,16 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
     }
 
     private void fetchGuilds() {
-        if (this.mAPIHelper != null && this.mAPIHelper.apiService != null) {
-            this.mAPIHelper.apiService.listGroups("guilds", this);
+        if (this.apiHelper != null && this.apiHelper.apiService != null) {
+            this.apiHelper.apiService.listGroups("guilds")
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(groups -> {
+                GuildsOverviewFragment.this.guilds = groups;
+                GuildsOverviewFragment.this.setGuildsOnListView();
+                if (swipeRefreshLayout != null) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, throwable -> {});
         }
     }
 
@@ -87,20 +89,6 @@ public class GuildsOverviewFragment extends BaseMainFragment implements Callback
             this.guildsListView.addView(entry);
             this.guildIDs.add(guild.id);
         }
-    }
-
-    @Override
-    public void success(ArrayList<Group> groups, Response response) {
-        this.guilds = groups;
-        this.setGuildsOnListView();
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
     }
 
     @Override

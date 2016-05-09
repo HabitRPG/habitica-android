@@ -1,21 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -33,6 +17,22 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.List;

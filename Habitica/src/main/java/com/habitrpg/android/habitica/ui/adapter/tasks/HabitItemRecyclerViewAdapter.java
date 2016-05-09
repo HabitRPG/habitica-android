@@ -1,28 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import android.app.Activity;
-import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
-import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.TouchDelegate;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.DailyItemCardBinding;
@@ -52,10 +29,32 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
+import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.TouchDelegate;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

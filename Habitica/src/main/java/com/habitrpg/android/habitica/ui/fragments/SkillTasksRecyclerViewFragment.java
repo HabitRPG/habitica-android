@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,12 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class SkillTasksRecyclerViewFragment extends Fragment implements View.OnClickListener {
         public RecyclerView mRecyclerView;
@@ -39,6 +39,7 @@ public class SkillTasksRecyclerViewFragment extends Fragment implements View.OnC
 
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
             mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
             android.support.v4.app.FragmentActivity context = getActivity();

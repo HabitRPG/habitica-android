@@ -1,6 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
@@ -26,7 +27,8 @@ public class UserParty extends BaseModel {
     private Quest quest;
 
     @Column
-    private String order;//Order to display ppl
+    @SerializedName("order")
+    private String partyOrder;//Order to display ppl
 
     @Column
     private String orderAscending;//Order type
@@ -35,22 +37,28 @@ public class UserParty extends BaseModel {
 
     }
 
-    public UserParty(String id, Quest quest, String order, String orderAscending) {
+    public UserParty(String id, Quest quest, String partyOrder, String orderAscending) {
         this.id = id;
         this.quest = quest;
-        this.order = order;
+        this.partyOrder = partyOrder;
         this.orderAscending = orderAscending;
     }
 
-
-    public String getOrder() {
-        return order;
+    public String getId() {
+        return id;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setId(String id) {
+        this.id = id;
     }
 
+    public String getPartyOrder() {
+        return partyOrder;
+    }
+
+    public void setPartyOrder(String partyOrder) {
+        this.partyOrder = partyOrder;
+    }
 
     public String getOrderAscending() {
         return orderAscending;

@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,23 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener, Callback<ContentResult> {
+public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener {
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -63,8 +59,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.mAPIHelper != null) {
-            this.mAPIHelper.apiService.getContent(this);
+        if (this.apiHelper != null) {
+            this.apiHelper.apiService.getContent()
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(contentResult -> {}, throwable -> {});
         }
 
     }
@@ -136,20 +134,12 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         if (!this.user.getPreferences().getSize().equals(newSize)) {
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.size", newSize);
-            mAPIHelper.apiService.updateUser(updateData, new HabitRPGUserCallback(activity));
+            apiHelper.apiService.updateUser(updateData)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new MergeUserCallback(activity, user), throwable -> {});
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
-
-    @Override
-    public void success(ContentResult contentResult, Response response) {
-
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-
-    }
 }

@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.setup;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
 
 import java.util.ArrayList;
 import java.util.List;

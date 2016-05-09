@@ -1,16 +1,16 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import com.habitrpg.android.habitica.R;
+import com.magicmicky.habitrpgwrapper.lib.models.QuestProgress;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.squareup.picasso.Picasso;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.QuestProgress;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

@@ -1,5 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -15,28 +24,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class GroupInformationFragment extends Fragment {
 
 
     private View view;
     FragmentGroupInfoBinding viewBinding;
-    APIHelper mAPIHelper;
+    APIHelper apiHelper;
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
     @BindView(R.id.collectionStats)
@@ -57,7 +54,7 @@ public class GroupInformationFragment extends Fragment {
         fragment.setArguments(args);
         fragment.group = group;
         fragment.user = user;
-        fragment.mAPIHelper = mAPIHelper;
+        fragment.apiHelper = mAPIHelper;
         return fragment;
     }
 
@@ -150,7 +147,7 @@ public class GroupInformationFragment extends Fragment {
             viewBinding.setHideParticipantCard(true);
             return;
         }
-        if (group.quest.members == null) {
+        if (group.quest.members == null || group.members == null) {
             viewBinding.setHideParticipantCard(true);
             return;
         }
@@ -182,39 +179,27 @@ public class GroupInformationFragment extends Fragment {
 
     @OnClick(R.id.btnQuestAccept)
     public void onQuestAccept() {
-        mAPIHelper.apiService.acceptQuest(group.id, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                user.getParty().getQuest().RSVPNeeded = false;
-                group.quest.members.put(user.getId(), true);
-                setGroup(group);
-                viewBinding.setUser(user);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        apiHelper.apiService.acceptQuest(group.id)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+            user.getParty().getQuest().RSVPNeeded = false;
+            group.quest.members.put(user.getId(), true);
+            setGroup(group);
+            viewBinding.setUser(user);
+        }, throwable -> {});
     }
 
 
     @OnClick(R.id.btnQuestReject)
     public void onQuestReject() {
-        mAPIHelper.apiService.rejectQuest(group.id, new Callback<Void>() {
-            @Override
-            public void success(Void aVoid, Response response) {
-                user.getParty().getQuest().RSVPNeeded = false;
+        apiHelper.apiService.rejectQuest(group.id)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+            user.getParty().getQuest().RSVPNeeded = false;
                 group.quest.members.put(user.getId(), false);
                 setGroup(group);
                 viewBinding.setUser(user);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+            }, throwable -> {});
     }
 
 
@@ -223,18 +208,12 @@ public class GroupInformationFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to leave the active quest? All your quest progress will be lost.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    mAPIHelper.apiService.leaveQuest(group.id, new Callback<Void>() {
-                        @Override
-                        public void success(Void aVoid, Response response) {
-                            group.quest.members.remove(user.getId());
-                            setGroup(group);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
+                    apiHelper.apiService.leaveQuest(group.id)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(aVoid -> {
+                        group.quest.members.remove(user.getId());
+                        setGroup(group);
+                    }, throwable -> {});
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });
@@ -247,17 +226,12 @@ public class GroupInformationFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_begin_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    mAPIHelper.apiService.forceStartQuest(group.id, group, new Callback<Group>() {
-                        @Override
-                        public void success(Group group1, Response response) {
-                            setGroup(group1);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
+                    apiHelper.apiService.forceStartQuest(group.id, group)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(quest -> {
+                                group.quest = quest;
+                                setGroup(group);
+                            }, throwable -> {});
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -269,18 +243,12 @@ public class GroupInformationFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    mAPIHelper.apiService.cancelQuest(group.id, new Callback<Void>() {
-                        @Override
-                        public void success(Void aVoid, Response response) {
-                            setGroup(group);
-                            setQuestContent(null);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
+                    apiHelper.apiService.cancelQuest(group.id)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(aVoid -> {
+                        setGroup(group);
+                        setQuestContent(null);
+                    }, throwable -> {});
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -292,18 +260,13 @@ public class GroupInformationFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    mAPIHelper.apiService.abortQuest(group.id, new Callback<Group>() {
-                        @Override
-                        public void success(Group group1, Response response) {
-                            setGroup(group1);
-                            setQuestContent(null);
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
+                    apiHelper.apiService.abortQuest(group.id)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(quest -> {
+                                group.quest = quest;
+                                setGroup(group);
+                                setQuestContent(null);
+                    }, throwable -> {});
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });

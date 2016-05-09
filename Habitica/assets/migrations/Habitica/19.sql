@@ -1,0 +1,1 @@
+ALTER TABLE UserParty ADD COLUMN 'partyOrder' varchar(255);

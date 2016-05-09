@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.habitrpg.android.habitica.R;
+
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -11,8 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-
-import com.habitrpg.android.habitica.R;
 
 /**
  * Define a simple custom widget for the habitrpg client
