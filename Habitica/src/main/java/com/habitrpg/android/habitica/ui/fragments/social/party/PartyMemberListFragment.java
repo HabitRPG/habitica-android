@@ -16,8 +16,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 /**
  * Created by Negue on 15.09.2015.
@@ -37,7 +36,7 @@ public class PartyMemberListFragment extends Fragment {
 
     private View view;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
     @Nullable
@@ -53,8 +52,6 @@ public class PartyMemberListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this, view);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(ctx));
         viewAdapter = new PartyMemberRecyclerViewAdapter();
         viewAdapter.context = this.ctx;
@@ -68,13 +65,6 @@ public class PartyMemberListFragment extends Fragment {
     public void setMemberList(ArrayList<HabitRPGUser> members) {
         this.members = members;
         viewAdapter.setMemberList(members);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-
     }
 
 }

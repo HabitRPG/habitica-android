@@ -12,18 +12,18 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IntroFragment extends BaseFragment {
 
-    @Bind(R.id.titleTextView)
+    @BindView(R.id.titleTextView)
     TextView titleTextView;
 
-    @Bind(R.id.descriptionTextView)
+    @BindView(R.id.descriptionTextView)
     TextView descriptionTextView;
 
-    @Bind(R.id.imageView)
+    @BindView(R.id.imageView)
     ImageView imageView;
 
     Drawable image;

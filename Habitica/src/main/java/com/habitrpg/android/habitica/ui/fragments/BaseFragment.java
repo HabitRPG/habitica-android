@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +23,17 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class BaseFragment extends DialogFragment {
 
     private boolean registerEventBus = false;
 
     public String tutorialStepIdentifier;
     public String tutorialText;
+
+    private Unbinder unbinder;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -69,11 +74,19 @@ public class BaseFragment extends DialogFragment {
         return null;
     }
 
+    @CallSuper
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        unbinder = ButterKnife.bind(this, view);
+    }
+
     @Override
     public void onDestroyView() {
         if (registerEventBus) {
             EventBus.getDefault().unregister(this);
         }
+        unbinder.unbind();
 
         super.onDestroyView();
     }

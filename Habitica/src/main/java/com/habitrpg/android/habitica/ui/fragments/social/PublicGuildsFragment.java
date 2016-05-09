@@ -16,7 +16,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -27,7 +27,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements Callback<A
     ArrayList<String> memberGuildIDs;
     ArrayList <Group> guilds;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     private View view;

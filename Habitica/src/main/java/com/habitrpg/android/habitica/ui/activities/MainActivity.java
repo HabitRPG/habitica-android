@@ -130,7 +130,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -145,15 +145,15 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
     private static final int MIN_LEVEL_FOR_SKILLS = 11;
     public static final int SELECT_CLASS_RESULT = 11;
 
-    @Bind(R.id.floating_menu_wrapper)
+    @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.detail_tabs)
+    @BindView(R.id.detail_tabs)
     TabLayout detail_tabs;
-    @Bind(R.id.avatar_with_bars)
+    @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
-    @Bind(R.id.overlayFrameLayout)
+    @BindView(R.id.overlayFrameLayout)
     FrameLayout overlayFrameLayout;
 
     // Checkout needs to be in the Activity..

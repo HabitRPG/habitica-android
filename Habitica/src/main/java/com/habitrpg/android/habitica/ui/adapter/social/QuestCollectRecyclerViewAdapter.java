@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestCollectRecyclerViewAdapter.QuestCollectViewHolder> {
@@ -55,13 +55,13 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
     }
 
     class QuestCollectViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
 
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
 
-        @Bind(R.id.count)
+        @BindView(R.id.count)
         TextView count;
 
         View view;

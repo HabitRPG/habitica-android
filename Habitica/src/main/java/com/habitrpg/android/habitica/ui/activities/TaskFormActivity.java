@@ -63,7 +63,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
@@ -87,102 +87,102 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<CheckBox> tagCheckBoxList;
     private List<String> userSelectedTagIds;
 
-    @Bind(R.id.task_value_edittext)
+    @BindView(R.id.task_value_edittext)
     EditText taskValue;
 
-    @Bind(R.id.task_value_layout)
+    @BindView(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
 
-    @Bind(R.id.task_checklist_wrapper)
+    @BindView(R.id.task_checklist_wrapper)
     LinearLayout checklistWrapper;
 
-    @Bind(R.id.task_difficulty_wrapper)
+    @BindView(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
 
-    @Bind(R.id.task_attribute_wrapper)
+    @BindView(R.id.task_attribute_wrapper)
     LinearLayout attributeWrapper;
 
-    @Bind(R.id.task_main_wrapper)
+    @BindView(R.id.task_main_wrapper)
     LinearLayout mainWrapper;
 
-    @Bind(R.id.task_text_edittext)
+    @BindView(R.id.task_text_edittext)
     EmojiEditText taskText;
 
-    @Bind(R.id.task_notes_edittext)
+    @BindView(R.id.task_notes_edittext)
     EmojiEditText taskNotes;
 
-    @Bind(R.id.task_difficulty_spinner)
+    @BindView(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
 
-    @Bind(R.id.task_attribute_spinner)
+    @BindView(R.id.task_attribute_spinner)
     Spinner taskAttributeSpinner;
 
-    @Bind(R.id.btn_delete_task)
+    @BindView(R.id.btn_delete_task)
     Button btnDelete;
 
-    @Bind(R.id.task_startdate_layout)
+    @BindView(R.id.task_startdate_layout)
     LinearLayout startDateLayout;
 
-    @Bind(R.id.task_task_wrapper)
+    @BindView(R.id.task_task_wrapper)
     LinearLayout taskWrapper;
 
-    @Bind(R.id.task_positive_checkbox)
+    @BindView(R.id.task_positive_checkbox)
     CheckBox positiveCheckBox;
 
-    @Bind(R.id.task_negative_checkbox)
+    @BindView(R.id.task_negative_checkbox)
     CheckBox negativeCheckBox;
 
-    @Bind(R.id.task_actions_wrapper)
+    @BindView(R.id.task_actions_wrapper)
     LinearLayout actionsLayout;
 
-    @Bind(R.id.task_weekdays_wrapper)
+    @BindView(R.id.task_weekdays_wrapper)
     LinearLayout weekdayWrapper;
 
-    @Bind(R.id.task_frequency_spinner)
+    @BindView(R.id.task_frequency_spinner)
     Spinner dailyFrequencySpinner;
 
-    @Bind(R.id.task_frequency_container)
+    @BindView(R.id.task_frequency_container)
     LinearLayout frequencyContainer;
 
-    @Bind(R.id.checklist_recycler_view)
+    @BindView(R.id.checklist_recycler_view)
     RecyclerView recyclerView;
 
-    @Bind(R.id.new_checklist)
+    @BindView(R.id.new_checklist)
     EmojiEditText newCheckListEditText;
 
-    @Bind(R.id.add_checklist_button)
+    @BindView(R.id.add_checklist_button)
     Button button;
 
-    @Bind(R.id.emoji_toggle_btn0)
+    @BindView(R.id.emoji_toggle_btn0)
     ImageButton emojiToggle0;
 
-    @Bind(R.id.emoji_toggle_btn1)
+    @BindView(R.id.emoji_toggle_btn1)
     ImageButton emojiToggle1;
 
 
     ImageButton emojiToggle2;
 
-    @Bind(R.id.task_duedate_layout)
+    @BindView(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
 
-    @Bind(R.id.task_duedate_picker_layout)
+    @BindView(R.id.task_duedate_picker_layout)
     LinearLayout dueDatePickerLayout;
 
-    @Bind(R.id.duedate_checkbox)
+    @BindView(R.id.duedate_checkbox)
     CheckBox dueDateCheckBox;
 
-    @Bind(R.id.startdate_text_edittext)
+    @BindView(R.id.startdate_text_edittext)
     EditText startDatePickerText;
     DateEditTextListener startDateListener;
 
-    @Bind(R.id.duedate_text_edittext)
+    @BindView(R.id.duedate_text_edittext)
     EditText dueDatePickerText;
     DateEditTextListener dueDateListener;
 
-    @Bind(R.id.task_tags_wrapper)
+    @BindView(R.id.task_tags_wrapper)
     LinearLayout tagsWrapper;
 
-    @Bind(R.id.task_tags_checklist)
+    @BindView(R.id.task_tags_checklist)
     LinearLayout tagsContainerLinearLayout;
 
     EmojiPopup popup;

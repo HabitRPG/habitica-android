@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -24,10 +24,10 @@ public class PartyInviteFragment extends BaseFragment {
 
     public boolean isEmailInvite;
 
-    @Bind(R.id.inviteDescription)
+    @BindView(R.id.inviteDescription)
     TextView inviteDescription;
 
-    @Bind(R.id.invitationWrapper)
+    @BindView(R.id.invitationWrapper)
     LinearLayout invitationWrapper;
 
     @Nullable

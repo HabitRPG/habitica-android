@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -59,16 +59,16 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
     class GuildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, Callback<Group> {
 
-        @Bind(R.id.nameTextView)
+        @BindView(R.id.nameTextView)
         TextView nameTextView;
 
-        @Bind(R.id.memberCountTextView)
+        @BindView(R.id.memberCountTextView)
         TextView memberCountTextView;
 
-        @Bind(R.id.descriptionTextView)
+        @BindView(R.id.descriptionTextView)
         TextView descriptionTextView;
 
-        @Bind(R.id.joinleaveButton)
+        @BindView(R.id.joinleaveButton)
         Button joinLeaveButton;
 
         Group guild;

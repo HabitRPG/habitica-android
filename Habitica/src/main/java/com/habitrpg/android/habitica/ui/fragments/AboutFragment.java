@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class AboutFragment extends Fragment {
 
@@ -27,8 +28,9 @@ public class AboutFragment extends Fragment {
     String versionName = "";
     int versionCode = 0;
     String userId = "";
+    Unbinder unbinder;
 
-    @Bind(R.id.versionInfo)
+    @BindView(R.id.versionInfo)
     public TextView versionInfo;
 
     @OnClick(R.id.sourceCodeLink)
@@ -82,7 +84,7 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         Activity activity = getActivity();
         try {
@@ -122,7 +124,6 @@ public class AboutFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
-
+        unbinder.unbind();
     }
 }

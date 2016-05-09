@@ -24,7 +24,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -36,13 +36,13 @@ public class ClassSelectionActivity extends BaseActivity implements Callback<Hab
     Boolean classWasUnset = false;
     Boolean shouldFinish = false;
 
-    @Bind(R.id.healerImageView)
+    @BindView(R.id.healerImageView)
     ImageView healerImageView;
-    @Bind(R.id.mageImageView)
+    @BindView(R.id.mageImageView)
     ImageView mageImageView;
-    @Bind(R.id.rogueImageView)
+    @BindView(R.id.rogueImageView)
     ImageView rogueImageView;
-    @Bind(R.id.warriorImageView)
+    @BindView(R.id.warriorImageView)
     ImageView warriorImageView;
 
     APIHelper apiHelper;

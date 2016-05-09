@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<EquipmentRecyclerViewAdapter.GearViewHolder> {
@@ -56,19 +56,19 @@ public int getItemCount() {
 
 class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    @Bind(R.id.gear_container)
+    @BindView(R.id.gear_container)
     View gearContainer;
 
-    @Bind(R.id.gear_text)
+    @BindView(R.id.gear_text)
     TextView gearNameTextView;
 
-    @Bind(R.id.gear_notes)
+    @BindView(R.id.gear_notes)
     TextView gearNotesTextView;
 
-    @Bind(R.id.gear_image)
+    @BindView(R.id.gear_image)
     ImageView imageView;
 
-    @Bind(R.id.equippedIndicator)
+    @BindView(R.id.equippedIndicator)
     View equippedIndicator;
 
     ItemData gear;

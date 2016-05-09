@@ -22,7 +22,7 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -34,7 +34,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     public String category;
     public String activeCustomization;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
     CustomizationRecyclerViewAdapter adapter;

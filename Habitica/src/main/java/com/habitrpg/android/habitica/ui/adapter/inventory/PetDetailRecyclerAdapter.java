@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecyclerAdapter.PetViewHolder> {
@@ -76,16 +76,16 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
     class PetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Pet animal;
 
-        @Bind(R.id.card_view)
+        @BindView(R.id.card_view)
         CardView cardView;
 
-        @Bind(R.id.imageView)
+        @BindView(R.id.imageView)
         ImageView imageView;
 
-        @Bind(R.id.titleTextView)
+        @BindView(R.id.titleTextView)
         TextView titleView;
 
-        @Bind(R.id.trainedProgressBar)
+        @BindView(R.id.trainedProgressBar)
         ProgressBar trainedProgressbar;
 
         Resources resources;

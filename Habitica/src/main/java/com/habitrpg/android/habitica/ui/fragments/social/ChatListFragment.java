@@ -40,7 +40,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -104,10 +104,10 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         return view;
     }
 
-    @Bind(R.id.chat_list)
+    @BindView(R.id.chat_list)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.chat_refresh_layout)
+    @BindView(R.id.chat_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     LinearLayoutManager layoutManager;

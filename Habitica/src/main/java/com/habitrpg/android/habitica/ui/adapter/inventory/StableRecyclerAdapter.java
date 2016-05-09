@@ -21,7 +21,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -79,16 +79,16 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class StableViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Animal animal;
 
-        @Bind(R.id.card_view)
+        @BindView(R.id.card_view)
         CardView cardView;
 
-        @Bind(R.id.imageView)
+        @BindView(R.id.imageView)
         ImageView imageView;
 
-        @Bind(R.id.titleTextView)
+        @BindView(R.id.titleTextView)
         TextView titleView;
 
-        @Bind(R.id.ownedTextView)
+        @BindView(R.id.ownedTextView)
         TextView ownedTextView;
 
         Resources resources;
@@ -143,10 +143,10 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     class SectionViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.label)
+        @BindView(R.id.label)
         TextView label;
 
-        @Bind(R.id.purchaseSetButton)
+        @BindView(R.id.purchaseSetButton)
         Button purchaseSetButton;
 
         Context context;

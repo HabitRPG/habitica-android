@@ -34,17 +34,17 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ItemRecyclerFragment extends BaseFragment {
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
 
-    @Bind(R.id.empty_view)
+    @BindView(R.id.empty_view)
     public TextView emptyView;
 
-    @Bind(R.id.titleTextView)
+    @BindView(R.id.titleTextView)
     public TextView titleView;
     public ItemRecyclerAdapter adapter;
     public String itemType;

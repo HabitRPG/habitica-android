@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class GroupFormActivity extends BaseActivity {
 
@@ -36,19 +36,19 @@ public class GroupFormActivity extends BaseActivity {
     String groupPrivacy;
     String groupLeader;
 
-    @Bind(R.id.group_name_edittext)
+    @BindView(R.id.group_name_edittext)
     EditText groupNameEditText;
 
-    @Bind(R.id.group_description_edittext)
+    @BindView(R.id.group_description_edittext)
     EmojiEditText groupDescriptionEditText;
 
-    @Bind(R.id.emoji_toggle_btn)
+    @BindView(R.id.emoji_toggle_btn)
     ImageButton emojiButton;
 
-    @Bind(R.id.privacyWrapper)
+    @BindView(R.id.privacyWrapper)
     LinearLayout privacyWrapper;
 
-    @Bind(R.id.privacySpinner)
+    @BindView(R.id.privacySpinner)
     Spinner privacySpinner;
 
     EmojiPopup popup;

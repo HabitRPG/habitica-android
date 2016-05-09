@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -122,16 +122,16 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.card_view)
+        @BindView(R.id.card_view)
              CardView cardView;
 
-        @Bind(R.id.linearLayout)
+        @BindView(R.id.linearLayout)
         RelativeLayout linearLayout;
 
-        @Bind(R.id.imageView)
+        @BindView(R.id.imageView)
         ImageView imageView;
 
-        @Bind(R.id.purchaseOverlay)
+        @BindView(R.id.purchaseOverlay)
         View purchaseOverlay;
 
         Customization customization;
@@ -220,10 +220,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         private CustomizationSet set;
 
-        @Bind(R.id.label)
+        @BindView(R.id.label)
         TextView label;
 
-        @Bind(R.id.purchaseSetButton)
+        @BindView(R.id.purchaseSetButton)
         Button purchaseSetButton;
 
         Context context;

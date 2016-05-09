@@ -9,14 +9,14 @@ import android.webkit.WebView;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewsFragment extends BaseMainFragment {
 
     private View view;
 
-    @Bind(R.id.news_webview)
+    @BindView(R.id.news_webview)
     WebView newsWebview;
 
     @Override

@@ -17,14 +17,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class SkillTasksActivity extends BaseActivity {
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     public ViewPager viewPager;
 
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     public TabLayout tabLayout;
 
     Map<Integer, SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new HashMap<>();

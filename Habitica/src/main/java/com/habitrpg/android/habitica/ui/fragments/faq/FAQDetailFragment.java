@@ -12,14 +12,14 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQDetailFragment extends BaseMainFragment {
-    @Bind(R.id.questionTextView)
+    @BindView(R.id.questionTextView)
     TextView questionTextView;
 
-    @Bind(R.id.answerTextView)
+    @BindView(R.id.answerTextView)
     TextView answerTextView;
 
     private FAQArticle article;

@@ -25,8 +25,7 @@ import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
@@ -38,7 +37,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
     private BillingRequests billingRequests;
 
-    @Bind(R.id.btn_purchase_gems)
+    @BindView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
 
     @Override
@@ -55,8 +54,6 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View v = inflater.inflate(R.layout.fragment_gem_purchase, container, false);
-
-        ButterKnife.bind(this, v);
 
         btnPurchaseGems.setEnabled(false);
         ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(container.getContext(), R.color.brand));
@@ -183,12 +180,6 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
         });
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     public interface Listener {

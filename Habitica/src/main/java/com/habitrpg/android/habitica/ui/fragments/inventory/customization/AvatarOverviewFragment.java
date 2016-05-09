@@ -18,7 +18,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -28,34 +28,34 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
     FragmentAvatarOverviewBinding viewBinding;
 
-    @Bind(R.id.avatar_size_spinner)
+    @BindView(R.id.avatar_size_spinner)
     Spinner avatarSizeSpinner;
 
-    @Bind(R.id.avatar_shirt)
+    @BindView(R.id.avatar_shirt)
     View avatarShirtView;
 
-    @Bind(R.id.avatar_skin)
+    @BindView(R.id.avatar_skin)
     View avatarSkinView;
 
-    @Bind(R.id.avatar_hair_color)
+    @BindView(R.id.avatar_hair_color)
     View avatarHairColorView;
 
-    @Bind(R.id.avatar_hair_base)
+    @BindView(R.id.avatar_hair_base)
     View avatarHairBaseView;
 
-    @Bind(R.id.avatar_hair_bangs)
+    @BindView(R.id.avatar_hair_bangs)
     View avatarHairBangsView;
 
-    @Bind(R.id.avatar_hair_flower)
+    @BindView(R.id.avatar_hair_flower)
     View avatarHairFlowerView;
 
-    @Bind(R.id.avatar_hair_beard)
+    @BindView(R.id.avatar_hair_beard)
     View avatarHairBeardView;
 
-    @Bind(R.id.avatar_hair_mustache)
+    @BindView(R.id.avatar_hair_mustache)
     View avatarHairMustacheView;
 
-    @Bind(R.id.avatar_background)
+    @BindView(R.id.avatar_background)
     View avatarBackgroundView;
 
 

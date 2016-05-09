@@ -38,7 +38,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
@@ -128,44 +128,44 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         private String groupId;
 
         // Toggle Inn State
-        @Bind(R.id.btn_toggle_inn)
+        @BindView(R.id.btn_toggle_inn)
         @Nullable
         Button btnToggleInn;
 
         // New Msg
-        @Bind(R.id.edit_new_message_text)
+        @BindView(R.id.edit_new_message_text)
         @Nullable
         EmojiEditText textNewMessage;
 
-        @Bind(R.id.btn_send_message)
+        @BindView(R.id.btn_send_message)
         @Nullable
         Button btnSendNewMessage;
 
-        @Bind(R.id.btn_options)
+        @BindView(R.id.btn_options)
         @Nullable
         ImageView btnOptions;
 
-        @Bind(R.id.user_background_layout)
+        @BindView(R.id.user_background_layout)
         @Nullable
         LinearLayout userBackground;
 
-        @Bind(R.id.like_background_layout)
+        @BindView(R.id.like_background_layout)
         @Nullable
         LinearLayout likeBackground;
 
-        @Bind(R.id.user_label)
+        @BindView(R.id.user_label)
         @Nullable
         TextView userLabel;
 
-        @Bind(R.id.message_text)
+        @BindView(R.id.message_text)
         @Nullable
         EmojiTextView messageText;
 
-        @Bind(R.id.ago_label)
+        @BindView(R.id.ago_label)
         @Nullable
         TextView agoLabel;
 
-        @Bind(R.id.tvLikes)
+        @BindView(R.id.tvLikes)
         @Nullable
         TextView tvLikes;
 
