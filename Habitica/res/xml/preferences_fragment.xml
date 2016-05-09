@@ -83,5 +83,4 @@
             android:title="@string/pref_dailies_show_due"/>
     </PreferenceCategory>
 
-
 </PreferenceScreen>

@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.TouchDelegate;
@@ -192,8 +191,6 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
         // Filter Due Dailies
         boolean showDueOnly = PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean("show_due", false);
-
-        Log.i("MT: ", "showDueOnly: " + showDueOnly);
 
         if (showDueOnly) {
             ObservableArrayList<Task> filtered2 = new ObservableArrayList<>();

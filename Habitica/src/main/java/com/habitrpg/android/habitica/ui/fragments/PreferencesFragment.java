@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
-import android.util.Log;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -172,8 +171,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         } else if (key.equals("reminder_time")) {
             removeNotifications();
             scheduleNotifications();
-        } else if (key.equals("show_due")) {
-            Log.i("MT: ", "Inside Pref: " + sharedPreferences.getBoolean(key, true));
         }
     }
 
