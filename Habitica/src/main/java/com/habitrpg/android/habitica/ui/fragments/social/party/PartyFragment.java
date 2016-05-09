@@ -135,9 +135,9 @@ public class PartyFragment extends BaseMainFragment {
                 this.displayEditForm();
                 return true;
             case R.id.menu_guild_leave:
-                this.mAPIHelper.apiService.leaveGroup(this.group.id, new Callback<Group>() {
+                this.mAPIHelper.apiService.leaveGroup(this.group.id, new Callback<Void>() {
                     @Override
-                    public void success(Group group, Response response) {
+                    public void success(Void aVoid, Response response) {
                         getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
                     }
 

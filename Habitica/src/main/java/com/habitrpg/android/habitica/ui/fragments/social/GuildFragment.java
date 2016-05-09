@@ -93,7 +93,16 @@ public class GuildFragment extends BaseMainFragment implements Callback<Group> {
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.mAPIHelper.apiService.leaveGroup(this.guild.id, this);
+                this.mAPIHelper.apiService.leaveGroup(this.guild.id, new Callback<Void>() {
+                    @Override
+                    public void success(Void aVoid, Response response) {
+                        getActivity().supportInvalidateOptionsMenu();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                    }
+                });
                 this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
