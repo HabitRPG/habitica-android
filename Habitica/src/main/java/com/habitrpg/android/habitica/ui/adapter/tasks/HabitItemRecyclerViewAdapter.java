@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -186,6 +187,18 @@ public class HabitItemRecyclerViewAdapter<THabitItem extends Task>
             filteredObservableContent = new ObservableArrayList<>();
             filteredObservableContent.addAll(this.tagsHelper.filter(observableContent));
         }
+
+        // Filter Due Dailies
+        boolean showDueOnly = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("show_due", false);
+
+        if (showDueOnly) {
+            ObservableArrayList<Task> filtered2 = new ObservableArrayList<>();
+            filtered2.addAll(this.tagsHelper.filterDue(filteredObservableContent, dailyResetOffset));
+            filteredObservableContent = filtered2;
+        }
+
+        // End Filter Due Dailies
 
         ((Activity) context).runOnUiThread(this::notifyDataSetChanged);
     }
