@@ -1,8 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -24,7 +21,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -37,11 +33,9 @@ import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
@@ -72,7 +66,6 @@ import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
-import com.habitrpg.android.habitica.userpicture.UserPictureRunnable;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
@@ -118,8 +111,6 @@ import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -188,9 +179,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
         this.hostConfig = PrefsActivity.fromContext(this);
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
-
-        //Check if reminder alarm is set
-        scheduleReminder(this);
 
         HabiticaApplication.ApiHelper = this.mAPIHelper = new APIHelper(hostConfig);
 
@@ -1099,35 +1087,6 @@ public class MainActivity extends BaseActivity implements HabitRPGUserCallback.O
 
     public FrameLayout getFloatingMenuWrapper() {
         return floatingMenuWrapper;
-    }
-
-    private void scheduleReminder(Context context) {
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (prefs.getBoolean("use_reminder", false)) {
-
-            String timeval = prefs.getString("reminder_time", "19:00");
-
-            String[] pieces = timeval.split(":");
-            int hour = Integer.parseInt(pieces[0]);
-            int minute = Integer.parseInt(pieces[1]);
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-            cal.set(Calendar.MINUTE, minute);
-            long trigger_time = cal.getTimeInMillis();
-
-            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-
-            if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-            }
-        }
     }
 
     @Subscribe

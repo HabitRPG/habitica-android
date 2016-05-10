@@ -1,34 +1,23 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceCategory;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -127,50 +116,19 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         return super.onPreferenceTreeClick(preference);
     }
 
-    private void scheduleNotifications() {
-
-        String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
-
-        String[] pieces = timeval.split(":");
-        int hour = Integer.parseInt(pieces[0]);
-        int minute = Integer.parseInt(pieces[1]);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.set(Calendar.MINUTE, minute);
-        long trigger_time = cal.getTimeInMillis();
-
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-
-        if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
-    }
-
-    private void removeNotifications() {
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
-        alarmManager.cancel(displayIntent);
-    }
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("use_reminder")) {
             boolean use_reminder = sharedPreferences.getBoolean(key, false);
             timePreference.setEnabled(use_reminder);
             if (use_reminder) {
-                scheduleNotifications();
+                NotificationPublisher.scheduleNotifications(getActivity());
             } else {
-                removeNotifications();
+                NotificationPublisher.removeNotifications(getActivity());
             }
         } else if (key.equals("reminder_time")) {
-            removeNotifications();
-            scheduleNotifications();
+            NotificationPublisher.removeNotifications(getActivity());
+            NotificationPublisher.scheduleNotifications(getActivity());
         }
     }
 
