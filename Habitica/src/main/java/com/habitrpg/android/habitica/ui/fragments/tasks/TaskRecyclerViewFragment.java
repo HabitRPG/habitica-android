@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.DividerItemDecoration;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
@@ -24,15 +24,15 @@ import android.view.ViewGroup;
  * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
 public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
-    public RecyclerView mRecyclerView;
-    public RecyclerView.Adapter mAdapter;
+    public RecyclerView recyclerView;
+    public RecyclerView.Adapter recyclerAdapter;
     private String classType;
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
 
     // TODO needs a bit of cleanup
-    public void SetInnerAdapter(HabitItemRecyclerViewAdapter adapter, String classType) {
+    public void SetInnerAdapter(BaseTasksRecyclerViewAdapter adapter, String classType) {
         this.classType = classType;
-        mAdapter = adapter;
+        recyclerAdapter = adapter;
     }
 
     private View view;
@@ -42,18 +42,18 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
-            layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+            layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
             if (layoutManager == null) {
                 layoutManager = new LinearLayoutManager(context);
 
-                mRecyclerView.setLayoutManager(layoutManager);
+                recyclerView.setLayoutManager(layoutManager);
             }
-            mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
 
         if (savedInstanceState != null){
@@ -91,7 +91,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         outState.putString(CLASS_TYPE_KEY, this.classType);
     }
 
-    public static TaskRecyclerViewFragment newInstance(HabitItemRecyclerViewAdapter adapter, String classType) {
+    public static TaskRecyclerViewFragment newInstance(BaseTasksRecyclerViewAdapter adapter, String classType) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
 

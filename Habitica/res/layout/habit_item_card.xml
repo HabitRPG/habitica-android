@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
-        <import type="android.view.View"/>
-
-        <variable
-            name="habit"
-            type="Task" />
-    </data>
-
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -24,12 +12,12 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:visibility="@{habit.up ? View.VISIBLE : View.GONE}"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                        android:id="@+id/btnPlusWrapper">
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:backgroundColor="@{habit.getLightTaskColor}"/>
+                        android:id="@+id/btnPlusBackground"/>
                     <Button
                         android:id="@+id/btnPlus"
                         android:layout_width="match_parent"
@@ -41,12 +29,12 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:visibility="@{habit.down ? View.VISIBLE : View.GONE}"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:id="@+id/btnMinusWrapper">
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:backgroundColor="@{habit.up ? habit.getMediumTaskColor : habit.getLightTaskColor}"/>
+                        android:id="@+id/btnMinusBackground"/>
                     <Button
                         android:id="@+id/btnMinus"
                         android:layout_width="match_parent"
@@ -73,27 +61,22 @@
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        bind:parsemarkdown="@{habit.text}" />
+                        android:layout_height="wrap_content" />
 
                     <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        bind:parsemarkdown="@{habit.notes}"
-                        android:visibility="@{habit.notes != null ? View.VISIBLE : View.GONE}"
                         android:maxLines="3" />
                 </LinearLayout>
                 <View
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{habit.getLightTaskColor}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
-</layout>

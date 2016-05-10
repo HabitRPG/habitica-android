@@ -8,5 +8,5 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 public class HabitScoreEvent {
     public boolean Up = false;
 
-    public Task Habit;
+    public Task habit;
 }

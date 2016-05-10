@@ -22,7 +22,11 @@ import com.habitrpg.android.habitica.ui.EditTextDrawer;
 import com.habitrpg.android.habitica.ui.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitItemRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -85,7 +89,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
     private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
     private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
-    private ContentCache contentCache;
 
     private boolean displayingTaskForm;
     private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
@@ -106,7 +109,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
-        contentCache = new ContentCache(apiHelper.apiService);
     }
 
     @Override
@@ -206,12 +208,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             public Fragment getItem(int position) {
                 int layoutOfType;
                 TaskRecyclerViewFragment fragment;
-                HabitItemRecyclerViewAdapter adapter;
+                BaseTasksRecyclerViewAdapter adapter;
 
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, activity, 0), Task.TYPE_HABIT);
+                        fragment = TaskRecyclerViewFragment.newInstance(new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, activity), Task.TYPE_HABIT);
 
                         break;
                     case 1:
@@ -220,71 +222,19 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         if (user != null) {
                             dailyResetOffset = user.getPreferences().getDayStart();
                         }
-                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, activity, dailyResetOffset);
+                        adapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, activity, dailyResetOffset);
 
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_DAILY);
                         break;
                     case 3:
                         layoutOfType = R.layout.reward_item_card;
-                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_REWARD, TasksFragment.this.tagsHelper,
-                                layoutOfType, HabitItemRecyclerViewAdapter.RewardViewHolder.class, activity, 0,
-                                callBack -> {
-
-                                    // request buyable gear
-                                    if (apiHelper != null) {
-                                        apiHelper.apiService.getInventoryBuyableGear()
-                                                .compose(apiHelper.configureApiCallObserver())
-                                                .subscribe(itemDatas -> {
-                                            // get itemdata list
-                                            ArrayList<String> itemKeys = new ArrayList<>();
-                                            for (ItemData item : itemDatas) {
-                                                itemKeys.add(item.key);
-                                            }
-                                            itemKeys.add("potion");
-                                            if (user.getFlags().getArmoireEnabled())
-                                                itemKeys.add("armoire");
-
-                                            contentCache.GetItemDataList(itemKeys, obj -> {
-                                                ArrayList<Task> buyableItems = new ArrayList<>();
-                                                if (!isAdded()) {
-                                                    return;
-                                                }
-                                                for (ItemData item : obj) {
-                                                    Task reward = new Task();
-                                                    reward.text = item.text;
-                                                    reward.notes = item.notes;
-                                                    reward.value = item.value;
-                                                    reward.setType("reward");
-                                                    reward.specialTag = "item";
-                                                    reward.setId(item.key);
-
-                                                    if (item.key.equals("armoire")) {
-                                                        if (user.getFlags().getArmoireEmpty()) {
-                                                            reward.notes = getResources().getString(R.string.armoireNotesEmpty);
-                                                        } else {
-                                                            long gearCount = new Select().count()
-                                                                    .from(ItemData.class)
-                                                                    .where(Condition.CombinedCondition.begin(Condition.column("klass").eq("armoire"))
-                                                                            .and(Condition.column("owned").isNull())
-                                                                    ).count();
-                                                            reward.notes = getResources().getString(R.string.armoireNotesFull, gearCount);
-                                                        }
-                                                    }
-
-                                                    buyableItems.add(reward);
-                                                }
-
-                                                callBack.GotAdditionalItems(buyableItems);
-                                            });
-                                        }, throwable -> {});
-                                    }
-                                });
+                        adapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, TasksFragment.this.tagsHelper, layoutOfType, activity, user, apiHelper);
 
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, activity, 0), Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(new TodosRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, activity), Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
@@ -330,9 +280,11 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
-                    final HabitItemRecyclerViewAdapter adapter = (HabitItemRecyclerViewAdapter) fragm.mAdapter;
-                    adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
-                    AsyncTask.execute(() -> adapter.loadContent(true));
+                    if (fragm.recyclerAdapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
+                        final DailiesRecyclerViewHolder adapter = (DailiesRecyclerViewHolder) fragm.recyclerAdapter;
+                        adapter.dailyResetOffset = this.user.getPreferences().getDayStart();
+                        AsyncTask.execute(() -> adapter.loadContent(true));
+                    }
                 }
             }
         }
@@ -420,9 +372,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.Habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
+        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Habit.getId()), throwable -> {});
+                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {});
     }
 
     @Subscribe

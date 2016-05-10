@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
-    <data>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
-        <import type="android.view.View"/>
-
-        <variable
-            name="daily"
-            type="Task" />
-        <variable
-            name="displayChecklist"
-            type="Boolean" />
-        <variable
-            name="offset"
-            type="int" />
-    </data>
-
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -29,14 +12,12 @@
             <RelativeLayout
                 android:id="@+id/checkBoxHolder"
                 android:layout_width="@dimen/button_width"
-                android:layout_height="match_parent"
-                app:backgroundColor="@{daily.isDisplayedActive(offset) ? daily.getLightTaskColor : @color/task_gray}">
+                android:layout_height="match_parent">
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="@dimen/checkbox_size"
                     android:layout_height="@dimen/checkbox_size"
                     android:layout_centerInParent="true"
-                    android:checked="@{daily.completed}"
                     android:gravity="center"
                     android:button="@drawable/daily_checkbox"
                     android:layout_gravity="center_horizontal" />
@@ -63,37 +44,30 @@
                         android:id="@+id/checkedTextView"
                         style="@style/CardTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        bind:parsemarkdown="@{daily.text}" />
+                        android:layout_height="wrap_content" />
                     <com.github.data5tream.emojilib.EmojiTextView
                         android:id="@+id/notesTextView"
                         style="@style/CardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        bind:parsemarkdown="@{daily.notes}"
-                        android:visibility="@{daily.notes != null ? View.VISIBLE : View.GONE}"
                         android:maxLines="3" />
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{daily.streak > 0 ? View.VISIBLE : View.GONE}"
-                        android:text="@{@string/daily_streak(daily.streak)}"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <RelativeLayout android:orientation="vertical"
                     android:id="@+id/checklistIndicatorWrapper"
                     android:layout_width="@dimen/checklist_wrapper_width"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.isChecklistDisplayActive(offset) ? daily.getLightTaskColor : @color/task_gray}"
-                    android:visibility="@{daily.checklist.size > 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true">
                     <TextView
+                            android:id="@+id/checkListCompletedTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(daily.getCompletedChecklistCount)}"
                         android:textColor="@color/white"
                         android:gravity="center"
                         android:layout_above="@+id/checklistDivider"/>
@@ -104,9 +78,9 @@
                         android:background="@color/white"
                         android:layout_centerInParent="true"/>
                     <TextView
+                            android:id="@+id/checkListAllTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(daily.checklist.size)}"
                         android:textColor="@color/white"
                         android:gravity="center"
                         android:layout_below="@+id/checklistDivider"/>
@@ -115,8 +89,6 @@
                     android:id="@+id/rightBorderView"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    app:backgroundColor="@{daily.isDisplayedActive(offset) ?  daily.getLightTaskColor : @color/task_gray}"
-                    android:visibility="@{daily.checklist.size == 0 ? View.VISIBLE : View.GONE}"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
@@ -125,21 +97,19 @@
 
         </LinearLayout>
         <View
+                android:id="@+id/checklistSeparator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hairline_height"
-            android:background="@color/cell_separator"
-            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+            android:background="@color/cell_separator" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checklistView"
-            android:orientation="vertical"
-            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+            android:orientation="vertical" />
         <View
+                android:id="@+id/checklistBottomSpace"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/checklist_separator"
-            android:visibility="@{displayChecklist != null &amp;&amp; displayChecklist ? View.VISIBLE : View.GONE}" />
+            android:background="@color/checklist_separator" />
 
     </LinearLayout>
-</layout>
