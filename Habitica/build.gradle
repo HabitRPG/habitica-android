@@ -151,6 +151,15 @@ android {
         }
     }
 
+    productFlavors {
+        dev {
+            minSdkVersion 21
+        }
+        prod {
+            minSdkVersion 15
+        }
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -173,6 +182,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "2g" // Use gig increments depending on needs
+        incremental true
     }
 }
 
@@ -213,6 +228,12 @@ if (HRPG_PROPS_FILE.canRead()) {
     }
 } else {
     throw new MissingResourceException('habitica.properties not found')
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
 }
 
 apply plugin: 'com.getkeepsafe.dexcount'
