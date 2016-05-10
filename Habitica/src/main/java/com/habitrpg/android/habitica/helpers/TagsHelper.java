@@ -46,4 +46,15 @@ public class TagsHelper {
 
         return filtered;
     }
+
+    public List<Task> filterDue(List<Task> tasks, int offset) {
+        if (tasks.size() > 0 && !tasks.get(0).getType().equals(Task.TYPE_DAILY)) return tasks;
+        List<Task> filtered = new ArrayList<Task>();
+        for (Task t : tasks) {
+            if (t.getType().equals(Task.TYPE_DAILY))
+            if (t.isDisplayedActive(offset))
+                filtered.add(t);
+        }
+        return filtered;
+    }
 }
