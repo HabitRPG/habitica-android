@@ -211,11 +211,61 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 int layoutOfType;
                 TaskRecyclerViewFragment fragment;
                 HabitItemRecyclerViewAdapter adapter;
+                HabitItemRecyclerViewAdapter.SortTasksCallback sortCallback = new HabitItemRecyclerViewAdapter.SortTasksCallback() {
+                    @Override
+                    public void onMove(Task task, int from, int to) {
+                        if (mAPIHelper != null){
+                            List<Map<String, Object>> operations = new ArrayList<>(1);
+                            if (task.getType().equals(Task.TYPE_TODO)){
+                                from = user.getTodos().indexOf(task);
+                                if (to != 0) to = toIndex(to);
+                                operations.add(sortOperation(task.getId(), from, to));
+                            }else {
+                                operations.add(sortOperation(task.getId(), from, to));
+                            }
+                            mAPIHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(activity));
+                        }
+                    }
+
+                    private Map<String, Object> sortOperation(String id, int from, int to){
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("id", id);
+
+                        Map<String, Object> query = new HashMap<>();
+                        query.put("from", from);
+                        query.put("to", to);
+
+                        Map<String, Object> operation = new HashMap<>();
+                        operation.put("op", "sortTask");
+                        operation.put("params", params);
+                        operation.put("query", query);
+
+                        return operation;
+                    }
+
+                    private int toIndex(int to){
+                        int toIndex = 0;
+                        if (to > 0){
+                            boolean shouldBreak = false;
+                            for (toIndex = 0; toIndex<user.getTodos().size(); toIndex++){
+                                Task otherTask = user.getTodos().get(toIndex);
+                                if (!otherTask.getCompleted()){
+                                    to--;
+                                    if (shouldBreak) break;
+                                    if (to == 0) shouldBreak = true;
+                                }
+                            }
+                        }
+                        return toIndex;
+                    }
+                };
 
                 switch (position) {
                     case 0:
                         layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, activity, 0), Task.TYPE_HABIT);
+                        HabitItemRecyclerViewAdapter habitAdapter = new HabitItemRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper,
+                                layoutOfType, HabitItemRecyclerViewAdapter.HabitViewHolder.class, activity, 0, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(habitAdapter, Task.TYPE_HABIT);
 
                         break;
                     case 1:
@@ -224,7 +274,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         if (user != null) {
                             dailyResetOffset = user.getPreferences().getDayStart();
                         }
-                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.DailyViewHolder.class, activity, dailyResetOffset);
+                        adapter = new HabitItemRecyclerViewAdapter(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType,
+                                HabitItemRecyclerViewAdapter.DailyViewHolder.class, activity, dailyResetOffset, sortCallback);
 
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_DAILY);
                         break;
@@ -289,13 +340,16 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                                             }
                                         });
                                     }
-                                });
+                                }, null);
 
                         fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_REWARD);
                         break;
                     default:
                         layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, activity, 0), Task.TYPE_TODO);
+                        HabitItemRecyclerViewAdapter defaultAdapter = new HabitItemRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper,
+                                layoutOfType, HabitItemRecyclerViewAdapter.TodoViewHolder.class, activity, 0, sortCallback);
+
+                        fragment = TaskRecyclerViewFragment.newInstance(defaultAdapter, Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);
