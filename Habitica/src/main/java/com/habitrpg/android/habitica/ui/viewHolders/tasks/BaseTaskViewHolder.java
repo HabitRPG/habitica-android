@@ -58,8 +58,25 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
     public void bindHolder(Task newTask, int position) {
         this.task = newTask;
         if (this.canContainMarkdown()) {
-            this.titleTextView.setText(this.task.parsedText);
-            this.notesTextView.setText(this.task.parsedNotes);
+            if (this.task.parsedText != null) {
+                this.titleTextView.setText(this.task.parsedText);
+                this.notesTextView.setText(this.task.parsedNotes);
+            } else {
+                this.titleTextView.setText(this.task.getText());
+                this.notesTextView.setText(this.task.getNotes());
+                Observable.just(this.task)
+                        .map(task1 -> {
+                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
+                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
+                            return task;
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(task2 -> {
+                            this.titleTextView.setText(this.task.parsedText);
+                            this.notesTextView.setText(this.task.parsedNotes);
+                        });
+            }
         } else {
             this.titleTextView.setText(this.task.getText());
             this.notesTextView.setText(this.task.getNotes());
