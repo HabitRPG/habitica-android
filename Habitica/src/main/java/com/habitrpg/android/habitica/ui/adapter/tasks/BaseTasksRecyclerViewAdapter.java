@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -31,6 +32,7 @@ import java.util.List;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
@@ -173,6 +175,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
 
     public void loadContent(boolean forced) {
         if (this.content == null || forced) {
+            List<Task> tasks = new ArrayList<>();
             Observable.defer(() -> Observable.just(new Select().from(Task.class)
                     .where(Condition.column("type").eq(this.taskType))
                     .and(Condition.CombinedCondition
@@ -181,9 +184,15 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     )
                     .orderBy(OrderBy.columns("position", "dateCreated").descending())
                     .queryList()))
+                    .flatMap(Observable::from)
+                    .map(task -> {
+                        task.parsedText = MarkdownParser.parseMarkdown(task.getText());
+                        task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
+                        return task;
+                    })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::setTasks, throwable -> {});
+                    .subscribe(tasks::add, throwable -> {}, () -> setTasks(tasks));
         }
     }
 

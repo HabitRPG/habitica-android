@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implements CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.checkBoxHolder)
-    RelativeLayout checkboxHolder;
+    ViewGroup checkboxHolder;
 
     @BindView(R.id.checkBox)
     CheckBox checkbox;
@@ -42,7 +42,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     View checklistBottomSpace;
 
     @BindView(R.id.checklistIndicatorWrapper)
-    RelativeLayout checklistIndicatorWrapper;
+    ViewGroup checklistIndicatorWrapper;
 
     @BindView(R.id.checkListCompletedTextView)
     TextView checklistCompletedTextView;

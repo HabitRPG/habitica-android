@@ -7,10 +7,10 @@ import rx.Observable;
 
 public interface MaintenanceApiService {
 
-    @GET("/maintenance-android.json")
+    @GET("maintenance-android.json")
     Observable<MaintenanceResponse> getMaintenanceStatus();
 
-    @GET("/deprecation-android.json")
+    @GET("deprecation-android.json")
     Observable<MaintenanceResponse> getDepricationStatus();
 
 }

@@ -8,6 +8,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.os.Trace;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -44,12 +45,21 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
         this.rewardButton.setText(this.priceFormat.format(this.task.value));
 
-        if (this.task.specialTag != null && this.task.specialTag.equals("item")) {
+        if (this.isItem()) {
             this.rewardImageView.setVisibility(View.VISIBLE);
             DataBindingUtils.loadImage(this.rewardImageView, "shop_" + this.task.getId());
         } else {
             this.rewardImageView.setVisibility(View.GONE);
         }
+    }
+
+    private boolean isItem() {
+        return this.task.specialTag != null && this.task.specialTag.equals("item");
+    }
+
+    @Override
+    public boolean canContainMarkdown() {
+        return !isItem();
     }
 
     @OnClick(R.id.btnReward)

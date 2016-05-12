@@ -13,6 +13,6 @@ import retrofit2.http.Query;
  * Created by Negue on 27.11.2015.
  */
 public interface InAppPurchasesApiService {
-    @POST("/iap/android/verify")
+    @POST("iap/android/verify")
     Call<PurchaseValidationResult> validatePurchase(@Query("_id") String id, @Query("apiToken") String apiToken, @Body PurchaseValidationRequest request);
 }

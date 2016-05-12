@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
 
 public class ContentCache {
     public interface GotContentEntryCallback<T extends Object> {
@@ -78,92 +83,60 @@ public class ContentCache {
         }
     }
 
-    private <T extends Object> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
-        apiService.getContent().subscribe(contentResult -> {
-            switch (typeOfSearch) {
-                case "quest": {
-                    Collection<QuestContent> questList = contentResult.quests;
+    private <T> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
+        apiService.getContent()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(contentResult -> {
+                    switch (typeOfSearch) {
+                        case "quest": {
+                            Collection<QuestContent> questList = contentResult.quests;
 
-                    for (QuestContent quest : questList) {
-                        if (quest.getKey() == searchKey) {
-                            gotEntry.GotObject((T) quest);
-                        }
-                    }
-
-                    break;
-                }
-                case "item": {
-                    T searchedItem = null;
-
-                    if (searchKey == "potion") {
-                        searchedItem = (T) contentResult.potion;
-                    } else if (searchKey == "armoire") {
-                        searchedItem = (T) contentResult.armoire;
-                    } else {
-                        Collection<ItemData> itemList = contentResult.gear.flat;
-
-                        for (ItemData item : itemList) {
-                            if (item.key.equals(searchKey)) {
-                                searchedItem = (T) item;
+                            for (QuestContent quest : questList) {
+                                if (quest.getKey().equals(searchKey)) {
+                                    gotEntry.GotObject((T) quest);
+                                }
                             }
+
+                            break;
+                        }
+                        case "item": {
+                            T searchedItem = null;
+
+                            if (searchKey.equals("potion")) {
+                                searchedItem = (T) contentResult.potion;
+                            } else if (searchKey == "armoire") {
+                                searchedItem = (T) contentResult.armoire;
+                            } else {
+                                Collection<ItemData> itemList = contentResult.gear.flat;
+
+                                for (ItemData item : itemList) {
+                                    if (item.key.equals(searchKey)) {
+                                        searchedItem = (T) item;
+                                    }
+                                }
+                            }
+
+                            gotEntry.GotObject(searchedItem);
+
+                            break;
                         }
                     }
-
-                    gotEntry.GotObject((T) searchedItem);
-
-                    break;
-                }
-            }
-
-            saveContentResultToDb(contentResult);
-        }, throwable -> {});
+                }, throwable -> {});
     }
 
-    private <T extends Object> void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<T>> gotEntry) {
-        apiService.getContent().subscribe(contentResult -> {
-            switch (typeOfSearch) {
-                case "item": {
-                    List<T> resultList = new ArrayList<T>();
-
+    private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
+        List<ItemData> resultList = new ArrayList<>();
+        apiService.getContent()
+                .flatMap(contentResult -> {
                     List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);
                     itemList.add(contentResult.armoire);
-
-                    for (ItemData item : itemList) {
-                        if (searchKeys.contains(item.key)) {
-                            resultList.add((T) item);
-                        }
-                    }
-
-                    gotEntry.GotObject(resultList);
-
-                    break;
-                }
-            }
-
-            saveContentResultToDb(contentResult);
-        }, throwable -> {});
-    }
-
-
-    private void saveContentResultToDb(ContentResult contentResult) {
-        Collection<QuestContent> questList = contentResult.quests;
-
-        for (QuestContent quest : questList) {
-            quest.save();
-
-            if (quest.boss != null) {
-                quest.boss.key = quest.getKey();
-                quest.boss.async().save();
-            }
-        }
-
-        Collection<ItemData> itemList = new ArrayList<>(contentResult.gear.flat);
-        itemList.add(contentResult.armoire);
-        itemList.add(contentResult.potion);
-
-        for (ItemData item : itemList) {
-            item.async().save();
-        }
+                    return Observable.from(itemList);
+                })
+                .filter(item -> searchKeys.contains(item.key))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(resultList::add, throwable -> {}, () -> gotEntry.GotObject(resultList));
     }
 }

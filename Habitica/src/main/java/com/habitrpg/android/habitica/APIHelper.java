@@ -110,11 +110,11 @@ public class APIHelper implements Action1<Throwable> {
     private final Retrofit retrofitAdapter;
     private HostConfig cfg;
 
-
     final Observable.Transformer apiCallTransformer =
             observable -> ((Observable)observable).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
             .doOnError(this);
+
     private AlertDialog displayedAlert;
 
     //private OnHabitsAPIResult mResultListener;

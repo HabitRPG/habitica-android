@@ -8,7 +8,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +16,10 @@ import android.widget.TextView;
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -54,9 +57,14 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     public void bindHolder(Task newTask, int position) {
         this.task = newTask;
-        this.titleTextView.setText(MarkdownParser.parseMarkdown(this.task.getText()));
+        if (this.canContainMarkdown()) {
+            this.titleTextView.setText(this.task.parsedText);
+            this.notesTextView.setText(this.task.parsedNotes);
+        } else {
+            this.titleTextView.setText(this.task.getText());
+            this.notesTextView.setText(this.task.getNotes());
+        }
         if (this.task.getNotes().length() > 0) {
-            this.notesTextView.setText(MarkdownParser.parseMarkdown(this.task.getNotes()));
             this.notesTextView.setVisibility(View.VISIBLE);
         } else {
             this.notesTextView.setVisibility(View.GONE);
@@ -77,5 +85,9 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
         event.Task = task;
 
         EventBus.getDefault().post(event);
+    }
+
+    public boolean canContainMarkdown() {
+        return true;
     }
 }

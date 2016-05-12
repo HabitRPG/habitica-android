@@ -1,115 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
-        <LinearLayout
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <RelativeLayout
+        <FrameLayout
                 android:id="@+id/checkBoxHolder"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent">
-                <CheckBox
+            <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="@dimen/checkbox_size"
                     android:layout_height="@dimen/checkbox_size"
-                    android:layout_centerInParent="true"
                     android:gravity="center"
                     android:button="@drawable/daily_checkbox"
-                    android:layout_gravity="center_horizontal" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="@dimen/task_top_bottom_padding"
-                    android:paddingTop="@dimen/task_top_bottom_padding"
-                    android:id="@+id/linearLayout"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@+id/checklistIndicatorWrapper"
-                    android:layout_toStartOf="@+id/checklistIndicatorWrapper">
-                    <com.github.data5tream.emojilib.EmojiTextView
-                        android:id="@+id/checkedTextView"
-                        style="@style/CardTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <com.github.data5tream.emojilib.EmojiTextView
-                        android:id="@+id/notesTextView"
-                        style="@style/CardText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="3" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <RelativeLayout android:orientation="vertical"
-                    android:id="@+id/checklistIndicatorWrapper"
-                    android:layout_width="@dimen/checklist_wrapper_width"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true">
-                    <TextView
-                            android:id="@+id/checkListCompletedTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_above="@+id/checklistDivider"/>
-                    <View
-                        android:id="@+id/checklistDivider"
-                        android:layout_width="@dimen/checklist_divider_width"
-                        android:layout_height="@dimen/hairline_height"
-                        android:background="@color/white"
-                        android:layout_centerInParent="true"/>
-                    <TextView
-                            android:id="@+id/checkListAllTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_below="@+id/checklistDivider"/>
-                </RelativeLayout>
-                <View
-                    android:id="@+id/rightBorderView"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
+                    android:layout_gravity="center" />
+        </FrameLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="@dimen/task_top_bottom_padding"
+                android:paddingTop="@dimen/task_top_bottom_padding"
+                android:id="@+id/linearLayout"
+                android:layout_weight="1">
+            <com.github.data5tream.emojilib.EmojiTextView
+                    android:id="@+id/checkedTextView"
+                    style="@style/CardTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            <com.github.data5tream.emojilib.EmojiTextView
+                    android:id="@+id/notesTextView"
+                    style="@style/CardText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3" />
+            <TextView
+                    android:id="@+id/streakTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical"
+                      android:id="@+id/checklistIndicatorWrapper"
+                      android:layout_width="@dimen/checklist_wrapper_width"
+                      android:layout_height="match_parent"
+                      android:gravity="center">
+            <TextView
+                    android:id="@+id/checkListCompletedTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+            <View
+                    android:id="@+id/checklistDivider"
+                    android:layout_width="@dimen/checklist_divider_width"
+                    android:layout_height="@dimen/hairline_height"
+                    android:background="@color/white"/>
+            <TextView
+                    android:id="@+id/checkListAllTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
         </LinearLayout>
         <View
-                android:id="@+id/checklistSeparator"
+                android:id="@+id/rightBorderView"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+    </LinearLayout>
+    <View
+            android:id="@+id/checklistSeparator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hairline_height"
             android:background="@color/cell_separator" />
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checklistView"
             android:orientation="vertical" />
-        <View
-                android:id="@+id/checklistBottomSpace"
+    <View
+            android:id="@+id/checklistBottomSpace"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/checklist_separator" />
 
-    </LinearLayout>
+</LinearLayout>

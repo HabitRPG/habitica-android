@@ -106,6 +106,9 @@ public class Task extends BaseModel {
     // used for buyable items
     public String specialTag;
 
+    public CharSequence parsedText;
+    public CharSequence parsedNotes;
+
     /**
      * @return the id
      */

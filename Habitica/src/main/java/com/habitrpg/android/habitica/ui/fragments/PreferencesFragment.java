@@ -177,17 +177,19 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     public void setUser(HabitRPGUser user) {
         this.user = user;
-        if (user.getFlags().getClassSelected()) {
-            if (user.getPreferences().getDisableClasses()) {
-                classSelectionPreference.setTitle(getString(R.string.enable_class));
+        if (user != null && user.getFlags() != null) {
+            if (user.getFlags().getClassSelected()) {
+                if (user.getPreferences().getDisableClasses()) {
+                    classSelectionPreference.setTitle(getString(R.string.enable_class));
+                } else {
+                    classSelectionPreference.setTitle(getString(R.string.change_class));
+                    classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                }
+                classSelectionPreference.setVisible(true);
             } else {
-                classSelectionPreference.setTitle(getString(R.string.change_class));
-                classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                classSelectionPreference.setTitle(getString(R.string.enable_class));
+                classSelectionPreference.setVisible(true);
             }
-            classSelectionPreference.setVisible(true);
-        } else {
-            classSelectionPreference.setTitle(getString(R.string.enable_class));
-            classSelectionPreference.setVisible(true);
         }
     }
 }
