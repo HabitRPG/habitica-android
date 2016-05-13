@@ -216,7 +216,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         super.onResume();
 
         //resync, if last sync was more than 10 minutes ago
-        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 600000) {
+        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {});
