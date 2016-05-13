@@ -1,8 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.github.porokoro.paperboy.ItemTypeBuilder;
-import com.github.porokoro.paperboy.PaperboyBuilder;
-import com.github.porokoro.paperboy.ViewTypes;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
@@ -49,7 +46,7 @@ public class AboutActivity extends BaseActivity {
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 3);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 2);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         pager.setOffscreenPageLimit(1);
@@ -116,22 +113,7 @@ public class AboutActivity extends BaseActivity {
                             .withAboutVersionShown(true)
                             .withAboutVersionShownCode(true)
                             .withAboutVersionShownName(true)
-                            .withSlideInAnimation(true)
                             .supportFragment();
-                case 2:
-                    PaperboyBuilder builder = new PaperboyBuilder(AboutActivity.this)
-                            .setViewType(ViewTypes.HEADER)
-                            .setFile("paperboy/changelog.json");
-
-
-                    builder.addItemType(new ItemTypeBuilder(AboutActivity.this, 1000, "Note", "n")
-                            .setColorRes(R.color.changelog_note)
-                            .setTitleSingular("Note")
-                            .setTitlePlural("Notes")
-                            .setSortOrder(3)
-                            .build());
-
-                    return builder.buildFragment();
                 default:
                     return null;
             }
