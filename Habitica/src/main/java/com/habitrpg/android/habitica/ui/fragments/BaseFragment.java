@@ -86,7 +86,9 @@ public class BaseFragment extends DialogFragment {
         if (registerEventBus) {
             EventBus.getDefault().unregister(this);
         }
-        unbinder.unbind();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
 
         super.onDestroyView();
     }
