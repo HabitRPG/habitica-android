@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -159,9 +160,9 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
             }
             Integer position = ((ViewGroup) v.getParent()).indexOfChild(v);
             if (task.checklist.size() > position && isChecked != task.checklist.get(position).getCompleted()) {
-                TaskSaveEvent event = new TaskSaveEvent();
-                task.checklist.get(position).setCompleted(isChecked);
+                ChecklistCheckedCommand event = new ChecklistCheckedCommand();
                 event.task = task;
+                event.item = task.getChecklist().get(position);
                 EventBus.getDefault().post(event);
             }
         }

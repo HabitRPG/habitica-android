@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
@@ -368,6 +369,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {});
+    }
+
+    @Subscribe
+    public void onEvent(ChecklistCheckedCommand event) {
+        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskUpdateCallback(), throwable -> {});
     }
 
     @Subscribe
