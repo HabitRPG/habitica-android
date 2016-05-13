@@ -36,6 +36,7 @@
   <string name="emailAddress">Adres e-mail</string>
   <string name="confirmpassword">Potwierdź hasło</string>
   <string name="logout">Wyloguj</string>
+  <string name="logout_description">Wyloguj się</string>
   <string name="account_details">Szczegóły konta</string>
   <string name="LoginActivityName">Witaj</string>
   <string name="string_revive">Odrodzenie</string>
@@ -108,6 +109,8 @@
   <string name="no_party_message">Nie jesteś w drużynie. Żeby dołączyć do drużyny odwiedź stronę internetową.</string>
   <string name="forgot_pw_btn">Zapomniane hasło</string>
   <string name="forgot_pw_tv">Zapomniane hasło? Użyj mobilnej strony internetowej.</string>
+  <string name="tavern.inn.checkOut">Reaktywuj swoje codzienne</string>
+  <string name="tavern.inn.rest">Zapauzuj swoje codzienne</string>
   <string name="reward.dialog.buy">Kup</string>
   <string name="reward.dialog.dismiss">Anuluj</string>
   <string name="party">Drużyna</string>
@@ -252,4 +255,70 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="quests">Misje</string>
   <string name="pets">Zwierzaki</string>
   <string name="mounts">Wierzchowce</string>
+  <string name="armoireEquipment" formatted="false">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
+  <string name="armoireFood" formatted="false">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
+  <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
+  <string name="armoireNotesFull" formatted="false">Otwórz Skrzynię żeby losowo otrzymać specjalne Wyposażenie, Doświadczenie lub jedzenie! Pozostało elementów : %d</string>
+  <string name="armoireLastItem">Znalazłeś ostatni element rzadkiego Wyposażenia w Zaklętej Skrzyni.</string>
+  <string name="armoireNotesEmpty">Skrzynia otrzyma nowe Wyposażenie w pierwszym tygodniu każdego miesiąca. Do tego czasu klikaj aby otrzymać Doświadczenie i Jedzenie!</string>
+  <string name="sell" formatted="false">Sprzedaj (%s Złoto)</string>
+  <string name="hatch_with_potion">Wykluj za pomocą mikstury</string>
+  <string name="feed_to_pet">Nakarm chowańca</string>
+  <string name="hatch_egg">Wykluj za pomocą jaja</string>
+  <string name="invite_party">Zaproś drużynę</string>
+  <string name="dialog_feeding" formatted="false">Nakarm %1$s %2$s</string>
+  <string name="use_animal">Użyj</string>
+  <string name="feed">Nakarm</string>
+  <string name="hatch_with" formatted="false">Wykluj za pomocą %s</string>
+  <string name="hatched_pet_title" formatted="false">Wyklułeś/as %1$s %2$s!</string>
+  <string name="close">Zamknij</string>
+  <string name="share">Podziel się</string>
+  <string name="notification_pet_fed" formatted="false">Nakarmiłeś/aś %1$s %2$s!</string>
+  <string name="notification_purchase" formatted="false">%s zakupiony</string>
+  <string name="sectionpets">Podstawowe chowańce</string>
+  <string name="sectionpremiumPets">Magiczne chowańce</string>
+  <string name="sectionquestPets">Chowańce z misji</string>
+  <string name="sectionspecialPets">Rzadkie chowańce</string>
+  <string name="sectionmounts">Podstawowe wierzchowce</string>
+  <string name="sectionpremiumMounts">Magiczne wierzchowce</string>
+  <string name="sectionquestMounts">Wierzchowce z misji</string>
+  <string name="sectionspecialMounts">Rzadkie wierzchowce</string>
+  <string name="world_quest">Zadanie ogólnoświatowe</string>
+  <string name="inn_description">Odpoczywaj w Karczmie aby zapobiec obrażeniu z niewykonanych zadań codziennych w ciągu nocy! (Notatka: nie zapobiega przed obrażeniami otrzymanymi od Bossa ogólnoświatowego.)</string>
+  <string name="empty_items" formatted="false">Nie posiadasz %s</string>
+  <string name="user_level" formatted="false">LVL %s</string>
+  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+  <string name="warrior">Wojownik</string>
+  <string name="rogue">Łotrzyk</string>
+  <string name="mage">Mag</string>
+  <string name="healer">Uzdrowiciel</string>
+  <string name="warrior_description">Wojownicy mają częstsze i lepsze \"uderzenia krytyczne\", które losowo dają Złoto, Doświadczenie, i szansę na zrzut za odznaczenie zadania. Zadają także ciężkie obrażenia bossom. Graj jako Wojownik jeśli motywują cię nieprzewidywalne nagrody, lub jeśli chcesz niszczyć bossów w Misjach!</string>
+  <string name="mage_description">Magowie uczą się sprawnie, zyskując Doświadczenie i Poziomy szybciej niż inne klasy. Dostają także dużo Many na specjalne umiejętności. Graj jako Mag jeśli lubisz elementy gry taktycznej w Habit, lub jeśli jesteś silnie motywowany przez zdobywanie poziomów i odblokowywanie zaawansowanych aspektów gry!</string>
+  <string name="rogue_description">Łotrzyki uwielbiają akumulować bogactwa, zyskując więcej Złota niż inni, oraz są adeptami w znajdowaniu losowych rzeczy. Ich umiejętność skradania pozwala im uniknąć konsekwencji pominięcia Codziennych. Graj jako Łotrzyk jeśli motywują cie Nagrody i Osiągnięcia, walczenie o skarby i odznaki!</string>
+  <string name="healer_description">Medycy są odporni na obrażenia, i przedłużają tą ochronę na innych. Pominięte Codzienne i złe Nawyki nie robią na nich wrażenia, mają także sposoby na odzyskanie Zdrowia po porażce. Graj jako Medyk jeśli lubisz pomagać innym w Drużynie, lub jeśli koncepcja oszukania Śmierci dzięki ciężkiej pracy jest dla ciebie inspirująca!</string>
+  <string name="select_class">Wybierz klasę postaci</string>
+  <string name="opt_out_class">Wycofaj się</string>
+  <string name="opt_out_description">Nie zależy ci na klasach? Chcesz wybrać później? Wycofaj się - będziesz wojownikiem bez specjalnych umiejętności. Możesz przeczytać o systemie klas później na wiki i włączyć klasy w każdej chwili.</string>
+  <string name="class_confirmation" formatted="false">Jesteś pewien, że chcesz być %s?</string>
+  <string name="choose_class">Wybierz klasę postaci</string>
+  <string name="dialog_go_back">Wróć</string>
+  <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
+  <string name="change_class">Zmień swoją klasę</string>
+  <string name="change_class_description">Zmień klasę i odzyskaj punkty atrybutów za 3 kryształy.</string>
+  <string name="enable_class">Odblokuj System Klas</string>
+  <string name="changing_class_progress">Zmiana Klasy</string>
+  <string name="by_email">Przez e-mail</string>
+  <string name="invite_existing_users">Zaproś istniejących użytkowników</string>
+  <string name="send">Wyślij</string>
+  <string name="invite">Zaproś znajomych</string>
+  <string name="invite_id_description">Jeśli Twoi znajomi używają już Habitiki, zaproś ich za pomocą ID Użytkownika tutaj.</string>
+  <string name="invite_email_description">Jeśli przyjaciel dołączył do Habitiki przez Twojego maila, zostanie automatycznie dodany do Twojej drużyny!</string>
+  <string name="add_invites">Dodaj zaproszenia</string>
+  <string name="user_id">ID Użytkownika</string>
+  <string name="email">Email</string>
+  <string name="invite_users">Zaproś do drużyny</string>
+  <string name="share_using">Udostępnij używanie</string>
+  <string name="share_levelup" formatted="false">Ulepszając życiowe nawyki, osiągnąłem %s level w Habitice!</string>
+  <string name="share_hatched" formatted="false">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="share_raised" formatted="false">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
 </resources>

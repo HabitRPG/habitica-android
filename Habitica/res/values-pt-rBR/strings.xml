@@ -36,6 +36,7 @@
   <string name="emailAddress">Endereço de e-mail</string>
   <string name="confirmpassword">Confirmar senha</string>
   <string name="logout">Sair</string>
+  <string name="logout_description">Sair da sua conta</string>
   <string name="account_details">Detalhes da Conta</string>
   <string name="LoginActivityName">Bem-vindo</string>
   <string name="string_revive">Reviver</string>
@@ -287,4 +288,38 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="empty_items" formatted="false">Você não tem nenhum %s</string>
   <string name="user_level" formatted="false">Level %s</string>
   <string name="user_level_with_class" formatted="false">Level %1$s - %2$s</string>
+  <string name="warrior">Guerreiro</string>
+  <string name="rogue">Andarilho</string>
+  <string name="mage">Mago</string>
+  <string name="healer">Curandeiro</string>
+  <string name="warrior_description">Guerreiros dão mais e melhores \"danos críticos\", que aleatoriamente dão Ouro, Experiência e Itens de bônus ao marcar uma tarefa. Eles também dão grandes danos a monstros. Jogue como guerreiro se você acha motivadoras recompensas imprevisíveis, como um caça-níqueis, ou quer arrasar nas missões de batalha!</string>
+  <string name="mage_description">Magos aprendem rapidamente, ganhando Experiência e Nívels, mais rápido que as outras classes. Eles também recebem bastante Mana, para usar Habilidades especiais. Jogue como mago se você gosta dos aspectos táticos do jogo ou se você é fortemente motivado por subir de níveis e desbloquear recursos avançados!</string>
+  <string name="rogue_description">Andarilhos adoram acumular riqueza, ganhar mais ouro que qualquer um e são adeptos de achar itens aleatórios. Suas icônicas habilidades furtivas os permite evitar as consequências de Atividades Diárias não realizadas. Jogue como andarilho se você encontra forte motivação nas Recompensas e Conquistas, esforçando-se por saques e medalhas!</string>
+  <string name="healer_description">Curandeiros são impassíveis ao danos e estendem esta proteção ao Grupo. Atividades Diárias não realizadas e mals hábitos não os afetam muito e eles têm formas de recuperar Saúde. Joque como curandeiro se você gosta de ajudar seu Grupo ou se a ideia de enganar a morte com trabalho duro te inspira!</string>
+  <string name="select_class">Escolha sua Classe</string>
+  <string name="opt_out_class">Cancelar</string>
+  <string name="opt_out_description">Não quer se preocupar com classes? Quer escolher depois? Cancelar - você será um guerreiro sem habilidades especiais. Você pode ler sobre o sistema de classes mais tarde na wiki e habilitá-las a qualquer momento.</string>
+  <string name="class_confirmation" formatted="false">Você tem certeza que quer ser um %s?</string>
+  <string name="choose_class">Escolha a sua classe</string>
+  <string name="dialog_go_back">Voltar</string>
+  <string name="opt_out_confirmation">Você tem certeza que quer cancelar?</string>
+  <string name="change_class">Mude sua classe</string>
+  <string name="change_class_description">Mudar sua classe e redistribuir seus atributos por 3 gemas</string>
+  <string name="enable_class">Habilitar Sistema de Classes</string>
+  <string name="changing_class_progress">Mudando de Classe</string>
+  <string name="by_email">Por E-mail</string>
+  <string name="invite_existing_users">Convide usuários existentes</string>
+  <string name="send">Enviar</string>
+  <string name="invite">Convidar amigos</string>
+  <string name="invite_id_description">Se você tem amigos que já usam o Habitica, convide-os através do ID de usuário aqui.</string>
+  <string name="invite_email_description">Se um amigo entra no Habitica pelo seu e-mail, ele automaticamente é convidado ao seu grupo.</string>
+  <string name="add_invites">Adicionar convites</string>
+  <string name="user_id">ID de usuário
+</string>
+  <string name="email">E-mail</string>
+  <string name="invite_users">Convidar para o Grupo</string>
+  <string name="share_using">Compartilhar</string>
+  <string name="share_levelup" formatted="false">Eu cheguei ao nível %s no Habitica melhorando os hábitos da minha vida real.</string>
+  <string name="share_hatched" formatted="false">Eu acabei de ganhar um filhote de %1$s %2$s no Habitica por completar minhas tarefas da vida real!</string>
+  <string name="share_raised" formatted="false">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
 </resources>

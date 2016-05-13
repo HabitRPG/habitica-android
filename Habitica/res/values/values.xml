@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources> 
-    <string-array name="prefs_items_array">
-        <item>HabitRPG</item>
-    </string-array>
-
-    <string-array name="prefs_items_values">
-        <item>https://habitrpg.com/</item>
-    </string-array>
-
+<resources>
     <string-array name="task_difficulties">
         <item>@string/trivial</item>
         <item>@string/easy</item>
