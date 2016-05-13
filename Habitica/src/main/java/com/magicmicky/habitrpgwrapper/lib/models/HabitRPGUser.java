@@ -274,6 +274,10 @@ public class HabitRPGUser extends BaseModel {
 
         Preferences prefs = this.getPreferences();
 
+        if (prefs.getChair() != null) {
+            layerNames.add(prefs.getChair());
+        }
+
         Outfit outfit;
         if (prefs.getCostume()) {
             outfit = this.getItems().getGear().getCostume();

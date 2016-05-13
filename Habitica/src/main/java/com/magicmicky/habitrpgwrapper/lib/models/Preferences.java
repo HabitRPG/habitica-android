@@ -25,7 +25,7 @@ public class Preferences extends BaseModel {
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
 
     @Column
-    private String allocationMode, shirt, skin, size, background;
+    private String allocationMode, shirt, skin, size, background, chair;
 
     @Column
     private int dayStart, timezoneOffset;
@@ -43,26 +43,6 @@ public class Preferences extends BaseModel {
     public SuppressedModals suppressModals;
 
     public Preferences() {
-    }
-
-    public Preferences(boolean costume, boolean toolbarCollapsed, boolean advancedCollapsed, boolean tagsCollapsed,
-                       boolean newTaskEdit, boolean disableClasses, boolean stickyHeader, boolean sleep, boolean hideHeader,
-                       String allocationMode, String shirt, String skin, String size, int dayStart, int timezoneOffset, Hair hair) {
-        this.costume = costume;
-        this.toolbarCollapsed = toolbarCollapsed;
-        this.advancedCollapsed = advancedCollapsed;
-        this.tagsCollapsed = tagsCollapsed;
-        this.newTaskEdit = newTaskEdit;
-        this.disableClasses = disableClasses;
-        this.stickyHeader = stickyHeader;
-        this.sleep = sleep;
-        this.hideHeader = hideHeader;
-        this.allocationMode = allocationMode;
-        this.shirt = shirt;
-        this.skin = skin;
-        this.size = size;
-        this.dayStart = dayStart;
-        this.timezoneOffset = timezoneOffset;
     }
 
     public String getBackground() {
@@ -207,6 +187,25 @@ public class Preferences extends BaseModel {
 
     public void setSuppressModals(SuppressedModals suppressModals) {
         this.suppressModals = suppressModals;
+    }
+
+    public String getChair() {
+        if (chair != null) {
+            return "chair_"+chair;
+        }
+        return chair;
+    }
+
+    public void setChair(String chair) {
+        this.chair = chair;
+    }
+
+    public boolean isSleep() {
+        return sleep;
+    }
+
+    public boolean isDisableClasses() {
+        return disableClasses;
     }
 
     @Override
