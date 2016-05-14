@@ -71,16 +71,16 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_avatar_overview, container, false);
+        View view = inflater.inflate(R.layout.fragment_avatar_overview, container, false);
 
         if (this.user == null) {
-            return v;
+            return view;
         }
 
-        viewBinding = DataBindingUtil.bind(v);
+        viewBinding = DataBindingUtil.bind(view);
         viewBinding.setPreferences(this.user.getPreferences());
 
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, view);
 
         this.setSize(this.user.getPreferences().getSize());
         avatarSizeSpinner.setOnItemSelectedListener(this);
@@ -97,7 +97,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         avatarHairMustacheView.setOnClickListener(v1 -> displayCustomizationFragment("hair", "mustache"));
         avatarBackgroundView.setOnClickListener(v1 -> displayCustomizationFragment("background", null));
 
-        return v;
+        return view;
     }
 
     private void displayCustomizationFragment(String type, String category) {

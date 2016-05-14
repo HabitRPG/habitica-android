@@ -25,7 +25,7 @@ public class NewsFragment extends BaseMainFragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_news, container, false);
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         newsWebview.loadUrl(BuildConfig.BASE_URL + "/static/new-stuff");
 

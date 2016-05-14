@@ -44,9 +44,9 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, view);
         adapter = new CustomizationRecyclerViewAdapter();
 
         layoutManager = new GridLayoutManager(activity, 2);
@@ -72,7 +72,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         this.adapter.hairColor = this.user.getPreferences().getHair().getColor();
         this.adapter.gemBalance = user.getBalance() * 4;
 
-        return v;
+        return view;
     }
 
     private void loadCustomizations() {

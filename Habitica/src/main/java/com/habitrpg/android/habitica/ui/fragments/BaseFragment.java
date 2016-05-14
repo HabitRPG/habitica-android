@@ -33,7 +33,7 @@ public class BaseFragment extends DialogFragment {
     public String tutorialStepIdentifier;
     public String tutorialText;
 
-    private Unbinder unbinder;
+    public Unbinder unbinder;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -78,7 +78,10 @@ public class BaseFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
+
+        if (unbinder == null) {
+            unbinder = ButterKnife.bind(this, view);
+        }
     }
 
     @Override

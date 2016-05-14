@@ -37,7 +37,7 @@ public class PublicGuildsFragment extends BaseMainFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            ButterKnife.bind(this, view);
+            unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             viewAdapter = new PublicGuildsRecyclerViewAdapter();

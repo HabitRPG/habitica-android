@@ -47,7 +47,7 @@ public class TaskSetupFragment extends BaseFragment {
 
         this.setTasks();
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         this.adapter = new TaskSetupAdapter();
         this.adapter.setTaskList(this.taskGroups);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));

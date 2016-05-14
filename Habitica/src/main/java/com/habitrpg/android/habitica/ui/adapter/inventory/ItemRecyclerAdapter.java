@@ -146,7 +146,9 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                             item.setOwned(item.getOwned()-1);
                             notifyItemChanged(getAdapterPosition());
                         } else {
-                            itemList.remove(getAdapterPosition());
+                            if (getAdapterPosition() >= 0) {
+                                itemList.remove(getAdapterPosition());
+                            }
                             notifyItemRemoved(getAdapterPosition());
                         }
 

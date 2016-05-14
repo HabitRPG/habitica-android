@@ -38,7 +38,7 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         this.adapter = new EquipmentRecyclerViewAdapter();
         this.adapter.equippedGear = this.equippedGear;

@@ -45,7 +45,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_guilds_overview, container, false);
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
         swipeRefreshLayout.setOnRefreshListener(this);
         this.publicGuildsButton.setOnClickListener(this);
         if (this.guilds != null) {

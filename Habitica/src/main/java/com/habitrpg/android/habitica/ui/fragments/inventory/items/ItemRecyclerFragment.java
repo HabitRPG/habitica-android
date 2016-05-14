@@ -62,7 +62,7 @@ public class ItemRecyclerFragment extends BaseFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_items, container, false);
 
-            ButterKnife.bind(this, view);
+            unbinder = ButterKnife.bind(this, view);
 
             recyclerView.setEmptyView(emptyView);
             emptyView.setText(getString(R.string.empty_items, itemTypeText));

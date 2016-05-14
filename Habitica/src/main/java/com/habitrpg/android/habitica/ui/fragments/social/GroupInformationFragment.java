@@ -24,11 +24,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GroupInformationFragment extends Fragment {
+public class GroupInformationFragment extends BaseFragment {
 
 
     private View view;
@@ -79,7 +89,7 @@ public class GroupInformationFragment extends Fragment {
             setGroup(group);
         }
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         collectionStats.setLayoutManager(new LinearLayoutManager(getContext()));
         collectionStats.setAdapter(questCollectViewAdapter);

@@ -196,27 +196,29 @@ public class PartyFragment extends BaseMainFragment {
                 break;
             }
             case (PartyInviteActivity.RESULT_SEND_INVITES) : {
-                Map<String, Object> inviteData = new HashMap<>();
-                inviteData.put("inviter", this.user.getProfile().getName());
-                if (data.getBooleanExtra("isEmail", false)) {
-                    String[] emails = data.getStringArrayExtra("emails");
-                    List<HashMap<String, String>> invites = new ArrayList<>();
-                    for (String email : emails) {
-                        HashMap<String, String> invite = new HashMap<>();
-                        invite.put("name", "");
-                        invite.put("email", email);
-                        invites.add(invite);
+                if (resultCode == Activity.RESULT_OK) {
+                    Map<String, Object> inviteData = new HashMap<>();
+                    inviteData.put("inviter", this.user.getProfile().getName());
+                    if (data.getBooleanExtra("isEmail", false)) {
+                        String[] emails = data.getStringArrayExtra("emails");
+                        List<HashMap<String, String>> invites = new ArrayList<>();
+                        for (String email : emails) {
+                            HashMap<String, String> invite = new HashMap<>();
+                            invite.put("name", "");
+                            invite.put("email", email);
+                            invites.add(invite);
+                        }
+                        inviteData.put("emails", invites);
+                    } else {
+                        String[] userIDs = data.getStringArrayExtra("userIDs");
+                        List<String> invites = new ArrayList<>();
+                        Collections.addAll(invites, userIDs);
+                        inviteData.put("uuids", invites);
                     }
-                    inviteData.put("emails", invites);
-                } else {
-                    String[] userIDs = data.getStringArrayExtra("userIDs");
-                    List<String> invites = new ArrayList<>();
-                    Collections.addAll(invites, userIDs);
-                    inviteData.put("uuids", invites);
+                    this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(aVoid -> {}, throwable -> {});
                 }
-                this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(aVoid -> {}, throwable -> {});
             }
         }
     }

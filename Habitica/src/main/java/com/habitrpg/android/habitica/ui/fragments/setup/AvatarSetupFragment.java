@@ -52,7 +52,7 @@ public class AvatarSetupFragment extends BaseFragment {
             view = inflater.inflate(R.layout.fragment_setup_avatar, container, false);
         }
 
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         this.adapter = new CustomizationSetupAdapter();
         if (this.user != null) {
             this.adapter.userSize = this.user.getPreferences().getSize();

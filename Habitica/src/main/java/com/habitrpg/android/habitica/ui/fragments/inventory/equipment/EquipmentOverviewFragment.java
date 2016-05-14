@@ -70,7 +70,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         viewBinding.setCurrentCostume(this.user.getItems().getGear().getCostume());
         viewBinding.setUsingCostume(this.user.getPreferences().getCostume());
 
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, v);
 
         battleGearHeadView = battleGearGroupView.findViewById(R.id.outfit_head);
         battleGearHeadAccessoryView = battleGearGroupView.findViewById(R.id.outfit_head_accessory);

@@ -29,9 +29,9 @@ public class FAQOverviewFragment extends BaseMainFragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             super.onCreateView(inflater, container, savedInstanceState);
-            View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            ButterKnife.bind(this, v);
+            unbinder = ButterKnife.bind(this, view);
             adapter = new FAQOverviewRecyclerAdapter();
             adapter.activity = activity;
             recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -39,7 +39,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
             recyclerView.setAdapter(adapter);
             this.loadArticles();
 
-            return v;
+            return view;
         }
 
         private void loadArticles() {

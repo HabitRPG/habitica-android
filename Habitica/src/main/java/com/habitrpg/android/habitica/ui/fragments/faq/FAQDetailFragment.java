@@ -28,16 +28,16 @@ public class FAQDetailFragment extends BaseMainFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_faq_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_faq_detail, container, false);
 
-        ButterKnife.bind(this, v);
+        unbinder = ButterKnife.bind(this, view);
 
         if (this.article != null) {
             this.questionTextView.setText(this.article.getQuestion());
             this.answerTextView.setText(MarkdownParser.parseMarkdown(this.article.getAnswer()));
         }
         this.answerTextView.setMovementMethod(LinkMovementMethod.getInstance());
-        return v;
+        return view;
     }
 
     public void setArticle(FAQArticle article) {
