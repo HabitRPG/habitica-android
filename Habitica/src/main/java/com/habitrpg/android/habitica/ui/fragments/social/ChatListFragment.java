@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
@@ -51,7 +51,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     private APIHelper apiHelper;
     private HabitRPGUser user;
     private String userId;
-    private boolean isTavern;
+    public boolean isTavern;
     private MainActivity activity;
 
     public void configure(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {

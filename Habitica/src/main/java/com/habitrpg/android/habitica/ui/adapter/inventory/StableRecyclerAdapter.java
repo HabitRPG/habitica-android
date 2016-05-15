@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.fragments.inventory.MountDetailRecyclerFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.PetDetailRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
 

@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import android.app.Activity;

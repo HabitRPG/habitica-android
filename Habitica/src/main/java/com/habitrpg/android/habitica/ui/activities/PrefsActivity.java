@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.fragments.AccountDetailsFragment;
-import com.habitrpg.android.habitica.ui.fragments.PreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;

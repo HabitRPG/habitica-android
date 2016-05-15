@@ -1,6 +1,7 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.preferences;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.fragments.preferences.BasePreferencesFragment;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.preferences;
 
 import com.habitrpg.android.habitica.prefs.TimePreference;
 

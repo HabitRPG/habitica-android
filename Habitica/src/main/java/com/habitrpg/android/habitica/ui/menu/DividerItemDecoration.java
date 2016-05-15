@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui;
+package com.habitrpg.android.habitica.ui.menu;
 
 import android.content.Context;
 import android.content.res.TypedArray;

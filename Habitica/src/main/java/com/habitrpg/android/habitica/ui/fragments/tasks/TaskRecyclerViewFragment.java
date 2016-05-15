@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.ui.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;

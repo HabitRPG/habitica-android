@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;

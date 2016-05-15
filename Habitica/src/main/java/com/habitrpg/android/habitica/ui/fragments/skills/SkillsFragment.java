@@ -1,13 +1,14 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.skills;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
-import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.raizlabs.android.dbflow.sql.builder.Condition;

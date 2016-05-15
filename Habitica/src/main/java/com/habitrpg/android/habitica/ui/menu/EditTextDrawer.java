@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui;
+package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;

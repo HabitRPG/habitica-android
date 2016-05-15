@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments;
+package com.habitrpg.android.habitica.ui.fragments.skills;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;

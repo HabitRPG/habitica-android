@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import org.greenrobot.eventbus.EventBus;

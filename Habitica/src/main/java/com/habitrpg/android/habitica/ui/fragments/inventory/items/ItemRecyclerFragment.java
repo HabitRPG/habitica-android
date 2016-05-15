@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
-import com.habitrpg.android.habitica.ui.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
@@ -61,40 +61,39 @@ public class ItemRecyclerFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_items, container, false);
-
-            unbinder = ButterKnife.bind(this, view);
-
-            recyclerView.setEmptyView(emptyView);
-            emptyView.setText(getString(R.string.empty_items, itemTypeText));
-
-            android.support.v4.app.FragmentActivity context = getActivity();
-
-            layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-            if (layoutManager == null) {
-                layoutManager = new LinearLayoutManager(context);
-
-                recyclerView.setLayoutManager(layoutManager);
-            }
-
-            adapter = (ItemRecyclerAdapter)recyclerView.getAdapter();
-            if (adapter == null) {
-                adapter = new ItemRecyclerAdapter();
-                adapter.context = this.getActivity();
-                adapter.isHatching = this.isHatching;
-                adapter.isFeeding = this.isFeeding;
-                adapter.fragment = this;
-                adapter.ownedPets = this.ownedPets;
-                if (this.hatchingItem != null) {
-                    adapter.hatchingItem = this.hatchingItem;
-                }
-                if (this.feedingPet != null) {
-                    adapter.feedingPet = this.feedingPet;
-                }
-                recyclerView.setAdapter(adapter);
-            }
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
+        unbinder = ButterKnife.bind(this, view);
+
+        recyclerView.setEmptyView(emptyView);
+        emptyView.setText(getString(R.string.empty_items, itemTypeText));
+
+        android.support.v4.app.FragmentActivity context = getActivity();
+
+        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+        if (layoutManager == null) {
+            layoutManager = new LinearLayoutManager(context);
+
+            recyclerView.setLayoutManager(layoutManager);
+        }
+
+        adapter = (ItemRecyclerAdapter)recyclerView.getAdapter();
+        if (adapter == null) {
+            adapter = new ItemRecyclerAdapter();
+            adapter.context = this.getActivity();
+            adapter.isHatching = this.isHatching;
+            adapter.isFeeding = this.isFeeding;
+            adapter.fragment = this;
+            adapter.ownedPets = this.ownedPets;
+            if (this.hatchingItem != null) {
+                adapter.hatchingItem = this.hatchingItem;
+            }
+            if (this.feedingPet != null) {
+                adapter.feedingPet = this.feedingPet;
+            }
+            recyclerView.setAdapter(adapter);
+        }
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         if (savedInstanceState != null){
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");

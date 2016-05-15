@@ -51,7 +51,7 @@ public class DateDeserializerTest {
             }
         };
 
-        this.referenceTimestamp = new Long("1443445200000");
+        this.referenceTimestamp = Long.valueOf("1443445200000");
     }
 
     @Test

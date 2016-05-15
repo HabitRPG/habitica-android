@@ -31,9 +31,9 @@ import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.TutorialView;
-import com.habitrpg.android.habitica.ui.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -128,8 +128,8 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import rx.functions.Action1;
 
-import static com.habitrpg.android.habitica.ui.UiUtils.SnackbarDisplayType;
-import static com.habitrpg.android.habitica.ui.UiUtils.showSnackbar;
+import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
+import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
         TaskScoringCallback.OnTaskScored,

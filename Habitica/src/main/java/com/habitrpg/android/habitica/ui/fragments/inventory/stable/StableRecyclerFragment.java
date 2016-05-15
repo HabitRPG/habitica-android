@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.inventory;
+package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;

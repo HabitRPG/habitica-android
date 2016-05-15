@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui;
+package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
@@ -7,9 +7,9 @@ import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
-import com.habitrpg.android.habitica.ui.fragments.SkillsFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
+import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;

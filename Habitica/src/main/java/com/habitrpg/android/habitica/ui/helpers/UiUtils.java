@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui;
+package com.habitrpg.android.habitica.ui.helpers;
 
 import com.habitrpg.android.habitica.R;
 

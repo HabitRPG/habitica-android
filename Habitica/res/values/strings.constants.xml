@@ -6,5 +6,5 @@
     <string name="SP_APIToken" translatable="false">APIToken</string>
     <string name="SP_username" translatable="false">Username</string>
     <string name="SP_email" translatable="false">E-mail</string>
-    <string name="base_url" translatable="false">https://habitica.com</string>
+    <string name="base_url" translatable="false">https://v3.habitica.com</string>
 </resources>

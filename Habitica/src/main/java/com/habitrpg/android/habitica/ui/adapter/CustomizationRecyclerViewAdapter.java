@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.CustomizationSet;

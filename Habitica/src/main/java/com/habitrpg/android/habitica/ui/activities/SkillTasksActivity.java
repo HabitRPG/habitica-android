@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.SkillTasksRecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 

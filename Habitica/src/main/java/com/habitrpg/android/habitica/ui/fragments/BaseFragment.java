@@ -91,6 +91,7 @@ public class BaseFragment extends DialogFragment {
         }
         if (unbinder != null) {
             unbinder.unbind();
+            unbinder = null;
         }
 
         super.onDestroyView();

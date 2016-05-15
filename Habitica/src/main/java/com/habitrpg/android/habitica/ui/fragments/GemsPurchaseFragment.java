@@ -19,6 +19,7 @@ import org.solovyev.android.checkout.Sku;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,10 +54,15 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_gem_purchase, container, false);
+        return inflater.inflate(R.layout.fragment_gem_purchase, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         btnPurchaseGems.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(container.getContext(), R.color.brand));
+        ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(getContext(), R.color.brand));
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
@@ -116,8 +122,6 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
             }
         });
-
-        return v;
     }
 
     private void updateBuyButtonText(String price){
