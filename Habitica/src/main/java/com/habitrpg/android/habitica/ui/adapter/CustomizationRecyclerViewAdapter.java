@@ -61,6 +61,20 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.notifyDataSetChanged();
     }
 
+    public void updateOwnership(List<String> ownedCustomizations) {
+        int position = 0;
+        for (Object obj : customizationList) {
+            if (obj.getClass().equals(Customization.class)) {
+                Customization customization = (Customization)obj;
+                if (customization.getPurchased() != ownedCustomizations.contains(customization.getId())) {
+                    customization.setPurchased(ownedCustomizations.contains(customization.getId()));
+                    notifyItemChanged(position);
+                }
+            }
+            position++;
+        }
+    }
+
     public void setActiveCustomization(String activeCustomization) {
         this.activeCustomization = activeCustomization;
         this.notifyDataSetChanged();
@@ -118,6 +132,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             }
             return 1;
         }
+    }
+
+    public List<Object> getCustomizationList() {
+        return this.customizationList;
     }
 
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -271,6 +289,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                                     }
                                 }
                             }
+                            path = path.substring(1);
                             event.path = path;
                             event.balanceDiff = set.price / 4;
                             EventBus.getDefault().post(event);

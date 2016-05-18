@@ -110,7 +110,7 @@ class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         if (isCostume) {
             command.type = "costume";
         } else {
-            command.type = "gear";
+            command.type = "equipped";
         }
         EventBus.getDefault().post(command);
         if (this.gear.key.equals(equippedGear)) {

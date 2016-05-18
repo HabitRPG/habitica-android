@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.content.Context;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 /**
  * Created by Negue on 15.09.2015.
  */
-public class PartyMemberListFragment extends Fragment {
+public class PartyMemberListFragment extends BaseFragment {
 
     private Context ctx;
     private List<HabitRPGUser> members;

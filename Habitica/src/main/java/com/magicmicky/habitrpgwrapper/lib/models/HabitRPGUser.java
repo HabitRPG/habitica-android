@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -78,6 +79,8 @@ public class HabitRPGUser extends BaseModel {
     private Flags flags;
 
     private Purchases purchased;
+
+    private TasksOrder tasksOrder;
 
     public Preferences getPreferences() {
         return preferences;
@@ -234,6 +237,14 @@ public class HabitRPGUser extends BaseModel {
         this.flags = flags;
     }
 
+    public TasksOrder getTasksOrder() {
+        return tasksOrder;
+    }
+
+    public void setTasksOrder(TasksOrder tasksOrder) {
+        this.tasksOrder = tasksOrder;
+    }
+
     @Override
     public void save() {
         // We need to set the user_id to all other objects
@@ -278,11 +289,13 @@ public class HabitRPGUser extends BaseModel {
             layerNames.add(prefs.getChair());
         }
 
-        Outfit outfit;
-        if (prefs.getCostume()) {
-            outfit = this.getItems().getGear().getCostume();
-        } else {
-            outfit = this.getItems().getGear().getEquipped();
+        Outfit outfit = null;
+        if (this.getItems() != null) {
+            if (prefs.getCostume()) {
+                outfit = this.getItems().getGear().getCostume();
+            } else {
+                outfit = this.getItems().getGear().getEquipped();
+            }
         }
 
         if (outfit != null) {

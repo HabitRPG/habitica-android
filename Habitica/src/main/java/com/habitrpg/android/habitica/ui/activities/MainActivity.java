@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -60,6 +61,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
@@ -104,6 +106,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -151,8 +154,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
-    public Drawer drawer;
-    public Drawer filterDrawer;
+    private Drawer drawer;
+    private Drawer filterDrawer;
     protected HostConfig hostConfig;
     public HabitRPGUser user;
     private AccountHeader accountHeader;
@@ -1229,5 +1232,50 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void call(Throwable throwable) {
 
+    }
+
+    public void unlockDrawer(int gravity) {
+        if (this.drawer != null) {
+            this.drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, gravity);
+        }
+    }
+
+    public void lockDrawer(int gravity) {
+        if (this.drawer != null) {
+            this.drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, gravity);
+        }
+    }
+
+    public void closeDrawer(int gravity) {
+        Drawer drawer;
+        if (gravity == GravityCompat.START) {
+            drawer = this.drawer;
+        } else {
+            drawer = this.filterDrawer;
+        }
+        if (drawer != null) {
+            drawer.closeDrawer();
+        }
+    }
+
+    public void openDrawer(int gravity) {
+        Drawer drawer;
+        if (gravity == GravityCompat.START) {
+            drawer = this.drawer;
+        } else {
+            drawer = this.filterDrawer;
+        }
+        if (drawer != null) {
+            drawer.openDrawer();
+        }
+    }
+
+    public void fillFilterDrawer(List<IDrawerItem> items) {
+        if (this.filterDrawer != null) {
+            this.filterDrawer.removeAllItems();
+            for (IDrawerItem item : items) {
+                this.filterDrawer.addItem(item);
+            }
+        }
     }
 }

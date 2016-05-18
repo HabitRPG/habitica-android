@@ -15,6 +15,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -123,10 +124,10 @@ public interface ApiService {
     Observable<HabitRPGUser> revive();
 
     @POST("user/class/cast/{skill}")
-    Observable<HabitRPGUser> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId);
+    Observable<SkillResponse> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType, @Query("targetId") String targetId);
 
     @POST("user/class/cast/{skill}")
-    Observable<HabitRPGUser> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType);
+    Observable<SkillResponse> useSkill(@Path("skill") String skillName, @Query("targetType") String targetType);
 
     @POST("user/change-class")
     Observable<HabitRPGUser> changeClass();

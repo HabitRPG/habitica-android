@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observable;
 
 public class SkillsFragment extends BaseMainFragment {
 
@@ -99,10 +101,7 @@ public class SkillsFragment extends BaseMainFragment {
             Intent intent = new Intent(activity, SkillTasksActivity.class);
             startActivityForResult(intent, TASK_SELECTION_ACTIVITY);
         } else {
-            displayProgressDialog();
-            apiHelper.apiService.useSkill(skill.key, skill.target)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new SkillCallback(activity, skill), throwable -> {});
+            useSkill(skill);
         }
     }
 
@@ -123,14 +122,27 @@ public class SkillsFragment extends BaseMainFragment {
         switch(requestCode) {
             case (TASK_SELECTION_ACTIVITY) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    displayProgressDialog();
-                    apiHelper.apiService.useSkill(selectedSkill.key, selectedSkill.target, data.getStringExtra("task_id"))
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(new SkillCallback(activity, selectedSkill), throwable -> {});
+                    useSkill(selectedSkill, data.getStringExtra("task_id"));
                 }
                 break;
             }
         }
+    }
+
+    private void useSkill(Skill skill) {
+        useSkill(skill, null);
+    }
+
+    private void useSkill(Skill skill, String taskId) {
+        displayProgressDialog();
+        Observable<SkillResponse> observable;
+        if (taskId != null) {
+            observable = apiHelper.apiService.useSkill(skill.key, skill.target, taskId);
+        } else {
+            observable = apiHelper.apiService.useSkill(skill.key, skill.target);
+        }
+        observable.compose(apiHelper.configureApiCallObserver())
+                .subscribe(new SkillCallback(activity, user, skill), throwable -> {});
     }
 
     private void displayProgressDialog() {

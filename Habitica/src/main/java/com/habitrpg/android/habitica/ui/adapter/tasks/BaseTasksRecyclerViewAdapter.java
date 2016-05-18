@@ -167,7 +167,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
             filteredContent = content;
         } else {
             filteredContent = new ObservableArrayList<>();
-            filteredContent.addAll(this.tagsHelper.filter(filteredContent));
+            filteredContent.addAll(this.tagsHelper.filter(content));
         }
 
         ((Activity) context).runOnUiThread(this::notifyDataSetChanged);

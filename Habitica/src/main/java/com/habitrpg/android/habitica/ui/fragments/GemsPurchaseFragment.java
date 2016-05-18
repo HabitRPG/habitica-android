@@ -66,62 +66,64 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
-        checkout.destroyPurchaseFlow();
+        if (checkout != null) {
+            checkout.destroyPurchaseFlow();
 
-        checkout.createPurchaseFlow(new RequestListener<Purchase>() {
-            @Override
-            public void onSuccess(@NonNull Purchase purchase) {
-                if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
-                    billingRequests.consume(purchase.token, new RequestListener<Object>() {
-                        @Override
-                        public void onSuccess(@NonNull Object o) {
-                            EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
-                        }
+            checkout.createPurchaseFlow(new RequestListener<Purchase>() {
+                @Override
+                public void onSuccess(@NonNull Purchase purchase) {
+                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
+                            @Override
+                            public void onSuccess(@NonNull Object o) {
+                                EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
+                            }
 
-                        @Override
-                        public void onError(int i, @NonNull Exception e) {
-                            Fabric.getLogger().e("Purchase", "Consume", e);
+                            @Override
+                            public void onError(int i, @NonNull Exception e) {
+                                Fabric.getLogger().e("Purchase", "Consume", e);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onError(int i, @NonNull Exception e) {
+                    Fabric.getLogger().e("Purchase", "Error", e);
+                }
+            });
+
+
+            checkout.whenReady(new Checkout.Listener() {
+                @Override
+                public void onReady(@NonNull final BillingRequests billingRequests) {
+                    GemsPurchaseFragment.this.billingRequests = billingRequests;
+
+                    // if the user leaves the fragment before the checkout callback is done
+                    if(btnPurchaseGems != null) {
+                        btnPurchaseGems.setEnabled(true);
+
+                    }
+                    checkIfPendingPurchases();
+                }
+
+                @Override
+                public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
+
+                    checkout.loadInventory().whenLoaded(products -> {
+
+                        Inventory.Product gems = products.get(ProductTypes.IN_APP);
+
+                        java.util.List<Sku> skus = gems.getSkus();
+
+                        for (Sku sku : skus){
+                            updateBuyButtonText(sku.price);
                         }
                     });
-                }
-            }
-
-            @Override
-            public void onError(int i, @NonNull Exception e) {
-                Fabric.getLogger().e("Purchase", "Error", e);
-            }
-        });
-
-
-        checkout.whenReady(new Checkout.Listener() {
-            @Override
-            public void onReady(@NonNull final BillingRequests billingRequests) {
-                GemsPurchaseFragment.this.billingRequests = billingRequests;
-
-                // if the user leaves the fragment before the checkout callback is done
-                if(btnPurchaseGems != null) {
-                    btnPurchaseGems.setEnabled(true);
 
                 }
-                checkIfPendingPurchases();
-            }
-
-            @Override
-            public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
-
-                checkout.loadInventory().whenLoaded(products -> {
-
-                    Inventory.Product gems = products.get(ProductTypes.IN_APP);
-
-                    java.util.List<Sku> skus = gems.getSkus();
-
-                    for (Sku sku : skus){
-                        updateBuyButtonText(sku.price);
-                    }
-                });
-
-            }
-        });
+            });
+        }
     }
 
     private void updateBuyButtonText(String price){

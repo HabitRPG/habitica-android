@@ -77,9 +77,11 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -358,14 +360,26 @@ public class APIHelper implements Action1<Throwable> {
             Observable<TaskList> tasksObservable = apiService.getTasks();
 
             userObservable = Observable.zip(userObservable, tasksObservable, (habitRPGUser, tasks) -> {
-                habitRPGUser.setHabits(tasks.habits);
-                habitRPGUser.setDailys(tasks.dailies);
-                habitRPGUser.setTodos(tasks.todos);
-                habitRPGUser.setRewards(tasks.rewards);
+                habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
+                habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
+                habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
+                habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
                 return habitRPGUser;
             });
         }
         return userObservable.compose(configureApiCallObserver());
+    }
+
+    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder){
+        List<Task> taskList = new ArrayList<>();
+        int position = 0;
+        for (String taskId : taskOrder) {
+            Task task = taskMap.get(taskId);
+            task.position = position;
+            taskList.add(task);
+            position++;
+        }
+        return taskList;
     }
 
     public class ErrorResponse{

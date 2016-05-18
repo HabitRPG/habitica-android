@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -127,7 +128,17 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         super.updateUserData(user);
         this.adapter.gemBalance = user.getBalance() * 4;
         this.updateActiveCustomization();
-        this.loadCustomizations();
+        if (adapter.getCustomizationList() != null) {
+            List<String> ownedCustomizations = new ArrayList<>();
+            for (Customization customization : user.getPurchased().customizations) {
+                if (customization.getType().equals(this.type)) {
+                    ownedCustomizations.add(customization.getId());
+                }
+            }
+            adapter.updateOwnership(ownedCustomizations);
+        } else {
+            this.loadCustomizations();
+        }
     }
 
     private void updateActiveCustomization() {

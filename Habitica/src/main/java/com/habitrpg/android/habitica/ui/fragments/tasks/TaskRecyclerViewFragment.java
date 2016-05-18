@@ -25,7 +25,7 @@ import android.view.ViewGroup;
  */
 public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
     public RecyclerView recyclerView;
-    public RecyclerView.Adapter recyclerAdapter;
+    public BaseTasksRecyclerViewAdapter recyclerAdapter;
     private String classType;
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
 

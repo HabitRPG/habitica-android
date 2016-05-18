@@ -53,33 +53,32 @@ public class StableRecyclerFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        }
+        unbinder = ButterKnife.bind(this, view);
 
-            unbinder = ButterKnife.bind(this, view);
+        recyclerView.setEmptyView(emptyView);
+        emptyView.setText(getString(R.string.empty_items, itemTypeText));
 
-            recyclerView.setEmptyView(emptyView);
-            emptyView.setText(getString(R.string.empty_items, itemTypeText));
-
-            layoutManager = new GridLayoutManager(getActivity(), 2);
-            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (adapter.getItemViewType(position) == 0) {
-                        return layoutManager.getSpanCount();
-                    } else {
-                        return 1;
-                    }
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == 0) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
                 }
-            });
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
-
-            adapter = (StableRecyclerAdapter)recyclerView.getAdapter();
-            if (adapter == null) {
-                adapter = new StableRecyclerAdapter();
-                adapter.activity = (MainActivity)this.getActivity();
-                adapter.itemType = this.itemType;
-                recyclerView.setAdapter(adapter);
             }
+        });
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+
+        adapter = (StableRecyclerAdapter)recyclerView.getAdapter();
+        if (adapter == null) {
+            adapter = new StableRecyclerAdapter();
+            adapter.activity = (MainActivity)this.getActivity();
+            adapter.itemType = this.itemType;
+            recyclerView.setAdapter(adapter);
         }
 
         if (savedInstanceState != null){
