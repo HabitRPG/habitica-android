@@ -99,11 +99,11 @@ public class ItemRecyclerFragment extends BaseFragment {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");
         }
 
-        if (this.isHatching) {
+        if (this.isHatching != null && this.isHatching) {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.titleView.setText(getString(R.string.hatch_with, this.hatchingItem.getText()));
             this.titleView.setVisibility(View.VISIBLE);
-        } else if (this.isFeeding) {
+        } else if (this.isFeeding != null && this.isFeeding) {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.titleView.setText(getString(R.string.dialog_feeding, this.feedingPet.getColorText(), this.feedingPet.getAnimalText()));
             this.titleView.setVisibility(View.VISIBLE);

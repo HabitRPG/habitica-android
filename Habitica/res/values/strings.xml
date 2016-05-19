@@ -326,7 +326,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
     <string name="change_class">Change your class</string>
-    <string name="change_class_description">Change your class and refund your attribute points for 3 gems. </string>
+    <string name="change_class_description">Change your class and refund your attribute points for 3 gems.</string>
     <string name="enable_class">Enable Class System</string>
     <string name="changing_class_progress">Changing Class</string>
     <string name="by_email">By Email</string>
@@ -344,4 +344,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="share_hatched" formatted="false">I just hatched a %1$s %2$s pet in Habitica by completing my real-life tasks!</string>
     <string name="share_raised" formatted="false">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
     <string name="open_in_store">Open in play store</string>
+    <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
 </resources>

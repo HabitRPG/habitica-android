@@ -183,10 +183,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        Map<String, Object> updateData = new HashMap<>();
-        updateData.put("preferences.disableClasses", true);
-        updateData.put("flags.classSelected", true);
-        apiHelper.apiService.updateUser(updateData)
+        apiHelper.apiService.disableClasses()
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(this, throwable -> {});
     }

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 
 import java.util.Calendar;
@@ -110,7 +111,21 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
             Intent intent = new Intent(getActivity(), ClassSelectionActivity.class);
             intent.putExtras(bundle);
-            startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT);
+
+            if (user.getFlags().getClassSelected()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.change_class_confirmation))
+                        .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .setPositiveButton(getString(R.string.change_class), (dialog, which) -> {
+                            startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT);
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else {
+                startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT);
+            }
             return true;
         }
         return super.onPreferenceTreeClick(preference);
@@ -177,18 +192,20 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     public void setUser(HabitRPGUser user) {
         this.user = user;
-        if (user != null && user.getFlags() != null) {
-            if (user.getFlags().getClassSelected()) {
-                if (user.getPreferences().getDisableClasses()) {
-                    classSelectionPreference.setTitle(getString(R.string.enable_class));
+        if (user != null && user.getFlags() != null && user.getStats() != null) {
+            if (user.getStats().getLvl() >= 10) {
+                if (user.getFlags().getClassSelected()) {
+                    if (user.getPreferences().getDisableClasses()) {
+                        classSelectionPreference.setTitle(getString(R.string.enable_class));
+                    } else {
+                        classSelectionPreference.setTitle(getString(R.string.change_class));
+                        classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                    }
+                    classSelectionPreference.setVisible(true);
                 } else {
-                    classSelectionPreference.setTitle(getString(R.string.change_class));
-                    classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                    classSelectionPreference.setTitle(getString(R.string.enable_class));
+                    classSelectionPreference.setVisible(true);
                 }
-                classSelectionPreference.setVisible(true);
-            } else {
-                classSelectionPreference.setTitle(getString(R.string.enable_class));
-                classSelectionPreference.setVisible(true);
             }
         }
     }
