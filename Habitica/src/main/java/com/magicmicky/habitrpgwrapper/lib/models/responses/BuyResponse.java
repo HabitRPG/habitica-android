@@ -10,9 +10,9 @@ public class BuyResponse {
 
     public Items items;
 
-    public Stats stats;
-
-    public Flags flags;
-
     public HashMap<String, String> armoire;
+
+    public Integer lvl;
+    public Double gp, exp, mp, hp;
+
 }

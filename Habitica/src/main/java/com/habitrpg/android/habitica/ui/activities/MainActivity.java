@@ -726,29 +726,43 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
             apiHelper.apiService.buyItem(event.Reward.getId()).compose(apiHelper.configureApiCallObserver())
                     .subscribe(buyResponse -> {
-                String snackbarMessage = event.Reward.getText() + " successfully purchased!";
+                        String snackbarMessage = event.Reward.getText() + " successfully purchased!";
 
-                if (event.Reward.getId().equals("armoire")) {
-                    if (buyResponse.armoire.get("type").equals("gear")) {
-                        snackbarMessage = getApplicationContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
-                    } else if (buyResponse.armoire.get("type").equals("food")) {
-                        snackbarMessage = getApplicationContext().getString(R.string.armoireFood, buyResponse.armoire.get("dropArticle"), buyResponse.armoire.get("dropText"));
-                    } else {
-                        snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
-                    }
-                } else if (!event.Reward.getId().equals("potion")) {
-                    EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
-                }
+                        if (event.Reward.getId().equals("armoire")) {
+                            if (buyResponse.armoire.get("type").equals("gear")) {
+                                snackbarMessage = getApplicationContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
+                            } else if (buyResponse.armoire.get("type").equals("food")) {
+                                snackbarMessage = getApplicationContext().getString(R.string.armoireFood, buyResponse.armoire.get("dropArticle"), buyResponse.armoire.get("dropText"));
+                            } else {
+                                snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
+                            }
+                        } else if (!event.Reward.getId().equals("potion")) {
+                            EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
+                        }
+                        if (buyResponse.items != null) {
+                            user.setItems(buyResponse.items);
+                        }
+                        if (buyResponse.hp != null) {
+                            user.getStats().setHp(buyResponse.hp);
+                        }
+                        if (buyResponse.exp != null) {
+                            user.getStats().setExp(buyResponse.exp);
+                        }
+                        if (buyResponse.mp != null) {
+                            user.getStats().setMp(buyResponse.mp);
+                        }
+                        if (buyResponse.gp != null) {
+                            user.getStats().setGp(buyResponse.gp);
+                        }
+                        if (buyResponse.lvl != null) {
+                            user.getStats().setLvl(buyResponse.lvl);
+                        }
 
-                user.setItems(buyResponse.items);
-                user.setStats(buyResponse.stats);
-                user.setFlags(buyResponse.flags);
+                        user.async().save();
+                        MainActivity.this.setUserData(true);
 
-                user.async().save();
-                MainActivity.this.setUserData(true);
-
-                showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
-            }, throwable -> {});
+                        showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
+                    }, throwable -> {});
         } else {
             // user created Rewards
             apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
@@ -764,8 +778,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onEvent(final DeleteTaskCommand cmd) {
         apiHelper.apiService.deleteTask(cmd.TaskIdToDelete).compose(apiHelper.configureApiCallObserver())
                 .subscribe(aVoid -> {
-            EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
-        }, throwable -> {});
+                    EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
+                }, throwable -> {});
     }
 
     @Subscribe
@@ -885,10 +899,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             this.apiHelper.apiService.getContent()
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(contentResult -> {
-                isloadingContent = false;
-                ContentReloadedEvent event1 = new ContentReloadedEvent();
-                EventBus.getDefault().post(event1);
-            }, throwable -> {});
+                        isloadingContent = false;
+                        ContentReloadedEvent event1 = new ContentReloadedEvent();
+                        EventBus.getDefault().post(event1);
+                    }, throwable -> {});
         }
     }
 
