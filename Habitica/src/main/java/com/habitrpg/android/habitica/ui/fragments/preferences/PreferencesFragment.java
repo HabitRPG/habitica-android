@@ -112,7 +112,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             Intent intent = new Intent(getActivity(), ClassSelectionActivity.class);
             intent.putExtras(bundle);
 
-            if (user.getFlags().getClassSelected()) {
+            if (user.getFlags().getClassSelected() && user.getPreferences().getDisableClasses()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.change_class_confirmation))
                         .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {

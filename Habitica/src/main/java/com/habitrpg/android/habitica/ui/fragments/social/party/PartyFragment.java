@@ -55,31 +55,35 @@ public class PartyFragment extends BaseMainFragment {
         contentCache = new ContentCache(apiHelper.apiService);
 
         // Get the full group data
-        apiHelper.apiService.getGroup("party")
-                .compose(this.apiHelper.configureApiCallObserver())
-                .subscribe(group -> {
-                    if (group == null) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                                .setMessage(activity.getString(R.string.no_party_message))
-                                .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                                    activity.getSupportFragmentManager().popBackStackImmediate();
-                                });
-                        builder.show();
-                        tabLayout.removeAllTabs();
-                        return;
-                    }
-                    PartyFragment.this.group = group;
+        if (this.user.getParty() != null && this.user.getParty().id != null) {
+            apiHelper.apiService.getGroup("party")
+                    .compose(this.apiHelper.configureApiCallObserver())
+                    .subscribe(group -> {
+                        if (group == null) {
+                            return;
+                        }
+                        PartyFragment.this.group = group;
 
-                    updateGroupUI();
+                        updateGroupUI();
 
-                    apiHelper.apiService.getGroupMembers(group.id, true)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(members -> {
-                                PartyFragment.this.group.members = members;
-                                updateGroupUI();
-                            },
-                            throwable -> {});
-        }, throwable -> {});
+                        apiHelper.apiService.getGroupMembers(group.id, true)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(members -> {
+                                            PartyFragment.this.group.members = members;
+                                            updateGroupUI();
+                                        },
+                                        throwable -> {});
+                    }, throwable -> {});
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                    .setMessage(activity.getString(R.string.no_party_message))
+                    .setNeutralButton(android.R.string.ok, (dialog, which) -> {
+                        activity.getSupportFragmentManager().popBackStackImmediate();
+                    });
+            builder.show();
+            tabLayout.removeAllTabs();
+        }
+
 
         setViewPagerAdapter();
         this.tutorialStepIdentifier = "party";
