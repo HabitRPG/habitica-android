@@ -20,7 +20,7 @@ import java.util.List;
 
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
-public class Tag extends BaseModel{
+public class Tag extends BaseModel {
 
     @Column
     @PrimaryKey
@@ -71,4 +71,13 @@ public class Tag extends BaseModel{
         this.id = id;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (o.getClass().equals(Tag.class)) {
+            Tag otherTag = (Tag)o;
+            return this.getId().equals(otherTag.getId());
+        }
+        return super.equals(o);
+    }
 }

@@ -300,8 +300,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
-        bundle.putStringArrayList(TaskFormActivity.TAG_IDS_KEY, new ArrayList<>(this.getTagIds()));
-        bundle.putStringArrayList(TaskFormActivity.TAG_NAMES_KEY, new ArrayList<>(this.getTagNames()));
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
@@ -350,8 +348,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
-        bundle.putStringArrayList(TaskFormActivity.TAG_IDS_KEY, new ArrayList<>(this.getTagIds()));
-        bundle.putStringArrayList(TaskFormActivity.TAG_NAMES_KEY, new ArrayList<>(this.getTagNames()));
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
         intent.putExtras(bundle);
@@ -455,32 +451,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public String getDisplayedClassName() {
         return null;
-    }
-
-    private ArrayList<String>getTagNames() {
-        if (this.tagNames == null) {
-            this.tagNames = new ArrayList<>();
-        }
-        if (this.user != null && this.user.getTags().size() != this.tagNames.size()) {
-            this.tagNames.clear();
-            for (Tag tag : this.user.getTags()) {
-                this.tagNames.add(tag.getName());
-            }
-        }
-        return this.tagNames;
-    }
-
-    private ArrayList<String>getTagIds() {
-        if (this.tagIds == null) {
-            this.tagIds = new ArrayList<>();
-        }
-        if (this.user != null && this.user.getTags().size() != this.tagIds.size()) {
-            this.tagIds.clear();
-            for (Tag tag : this.user.getTags()) {
-                this.tagIds.add(tag.getId());
-            }
-        }
-        return this.tagIds;
     }
 
     public void stopAnimatingRefreshItem() {
