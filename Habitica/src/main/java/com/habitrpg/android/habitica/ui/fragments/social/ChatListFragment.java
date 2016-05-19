@@ -184,7 +184,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
         apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id).compose(apiHelper.configureApiCallObserver())
-                .subscribe(voids -> {});
+                .subscribe(voids -> {}, throwable -> {});
     }
 
     @Subscribe
