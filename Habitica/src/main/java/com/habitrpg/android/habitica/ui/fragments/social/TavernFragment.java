@@ -47,7 +47,7 @@ public class TavernFragment extends BaseMainFragment {
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(group -> {
                 TavernFragment.this.tavern = group;
-                if (group.quest != null && TavernFragment.this.isAdded()) {
+                if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
                     TavernFragment.this.viewPager.getAdapter().notifyDataSetChanged();
                     if (TavernFragment.this.tabLayout != null) {
                         TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
@@ -99,7 +99,7 @@ public class TavernFragment extends BaseMainFragment {
 
             @Override
             public int getCount() {
-                if (tavern != null && tavern.quest != null) {
+                if (tavern != null && tavern.quest != null && tavern.quest.key != null) {
                     return 2;
                 }
                 return 1;
