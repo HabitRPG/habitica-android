@@ -545,10 +545,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         List<ItemData> items = new Select().from(ItemData.class).queryList();
         List<ItemData> updates = new ArrayList<>();
         for (ItemData item : items) {
-            if (ownedMapping.containsKey(item.key) && !Boolean.TRUE.equals(item.owned)) {
-                item.owned = true;
+            if (ownedMapping.containsKey(item.key) && item.owned != ownedMapping.get(item.key) ) {
+                item.owned = ownedMapping.get(item.key);
                 updates.add(item);
-            } else if (!ownedMapping.containsKey(item.key) && Boolean.TRUE.equals(item.owned)) {
+            } else if (!ownedMapping.containsKey(item.key) && item.owned != null) {
                 item.owned = null;
                 updates.add(item);
             }
