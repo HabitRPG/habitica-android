@@ -26,7 +26,7 @@ public class TodoViewHolder extends ChecklistedViewHolder {
             this.checklistIndicatorWrapper.setBackgroundResource(this.task.getLightTaskColor());
         }
         if (task.duedate != null) {
-            this.duedateTextView.setText(itemView.getContext().getString(R.string.todo_due, task.streak));
+            this.duedateTextView.setText(itemView.getContext().getString(R.string.todo_due, task.duedate));
             this.duedateTextView.setVisibility(View.VISIBLE);
         } else {
             this.duedateTextView.setVisibility(View.GONE);

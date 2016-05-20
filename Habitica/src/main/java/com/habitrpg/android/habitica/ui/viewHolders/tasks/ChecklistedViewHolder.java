@@ -125,9 +125,11 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
         } else {
             this.setDisplayChecklist(true);
         }
-        RecyclerView recyclerView = (RecyclerView)this.checklistView.getParent().getParent();
-        LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-        layoutManager.scrollToPositionWithOffset(this.getAdapterPosition(), 15);
+        if (this.displayChecklist) {
+            RecyclerView recyclerView = (RecyclerView)this.checklistView.getParent().getParent();
+            LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+            layoutManager.scrollToPositionWithOffset(this.getAdapterPosition(), 15);
+        }
     }
 
     public void expandCheckboxTouchArea(final View expandedView, final View checkboxView){
@@ -151,7 +153,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 EventBus.getDefault().post(event);
                 task.completed =event.completed;
                 task.save();
-
             }
         } else {
             View v = (View) buttonView.getParent();

@@ -23,7 +23,6 @@ public class DailiesRecyclerViewHolder extends BaseTasksRecyclerViewAdapter<Dail
 
     @Override
     public void onBindViewHolder(DailyViewHolder holder, int position) {
-        holder.displayChecklist = false;
         super.onBindViewHolder(holder, position);
     }
 }
