@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -89,26 +90,22 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
 
         if (this.pager.getAdapter() == null) {
             if (this.user != null) {
                 setupViewpager();
             } else {
                 this.apiHelper.apiService.getUser()
+                        .compose(this.apiHelper.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {});
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void setupViewpager() {
@@ -145,15 +142,21 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
         this.apiHelper.apiService.updateUser(event.updateData)
-            .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                .compose(this.apiHelper.configureApiCallObserver())
+                .subscribe(new MergeUserCallback(this, user), throwable -> {});
     }
 
     @Override
     public void onClick(View v) {
         if (v == this.nextButton) {
             if (this.pager.getCurrentItem() == 1) {
-                List<Map<String, Object>> operations = this.taskSetupFragment.createSampleTasks();
+                List<Map<String, Object>> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;
+                this.apiHelper.apiService.createItems(newTasks)
+                        .compose(this.apiHelper.configureApiCallObserver())
+                        .subscribe(tasks -> {
+                            onUserReceived(user);
+                        }, throwable -> {});
                 //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
             }
             this.pager.setCurrentItem(this.pager.getCurrentItem()+1);

@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -106,20 +107,19 @@ public class TaskSetupFragment extends BaseFragment {
             }
             i++;
         }
-        List<Map<String, Object>> operations = new ArrayList<>();
+        List<Map<String, Object>> tasks = new ArrayList<>();
         for (Object[] task : this.tasks) {
             if (groups.contains((String) task[0])) {
-                Map<String, Object> operation = new HashMap<>();
-                operation.put("op", "addTask");
+                Map<String, Object> taskObject = new HashMap<>();
                 if (task.length == 5) {
-                    operation.put("body", this.makeTaskObject((String) task[1], (String) task[2], (Boolean) task[3], (Boolean) task[4]));
+                    taskObject = this.makeTaskObject((String) task[1], (String) task[2], (Boolean) task[3], (Boolean) task[4]);
                 } else {
-                    operation.put("body", this.makeTaskObject((String) task[1], (String) task[2], null, null));
+                    taskObject = this.makeTaskObject((String) task[1], (String) task[2], null, null);
                 }
-                operations.add(operation);
+                tasks.add(taskObject);
             }
         }
-        return operations;
+        return tasks;
     }
 
     private Map<String, Object> makeTaskObject(String type, String text, Boolean up, Boolean down) {
