@@ -305,7 +305,7 @@
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいいですか?</string>
   <string name="change_class">クラスを変更する</string>
-  <string name="change_class_description">クラスを変更し、割りあて可能なポイントが元に戻ります。要 3 ジェム。</string>
+  <string name="change_class_description">3 ジェム払って、クラスを変更し、属性値を回収します。</string>
   <string name="enable_class">クラス システムを有効にする</string>
   <string name="changing_class_progress">クラスの変更</string>
   <string name="by_email">メールで</string>

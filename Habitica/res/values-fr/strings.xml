@@ -304,7 +304,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="dialog_go_back">Revenir</string>
   <string name="opt_out_confirmation">Êtes-vous sûr-e de vouloir désactiver votre compte?</string>
   <string name="change_class">Changez votre classe</string>
-  <string name="change_class_description">Changez votre classe et remboursez les points d\'attributs pour 3 gemmes.</string>
+  <string name="change_class_description">Changez de classe et remboursez les points d\'attributs pour 3 gemmes.</string>
   <string name="enable_class">Activer le système de classes</string>
   <string name="changing_class_progress">Changer de classe</string>
   <string name="by_email">Par email</string>

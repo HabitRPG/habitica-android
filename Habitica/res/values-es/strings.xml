@@ -304,7 +304,6 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="dialog_go_back">Volver</string>
   <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
   <string name="change_class">Cambiar de clase</string>
-  <string name="change_class_description">Cambia de clase y recupera tus puntos de atributos por 3 gemas.</string>
   <string name="enable_class">Activar sistema de clases</string>
   <string name="changing_class_progress">Cambio de clase</string>
   <string name="by_email">Por correo electrónico</string>

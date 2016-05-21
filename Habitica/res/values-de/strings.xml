@@ -8,13 +8,13 @@
   <string name="ERR_pb_barcode">Einstellungen konnten nicht vom Barcode geladen werden</string>
   <!--Prefs-->
   <string name="PS_settings_title">Einstellungen</string>
-  <string name="SP_address_hint">Deine benutzerdefinierten Server</string>
+  <string name="SP_address_hint">Dein benutzerdefinierter Server</string>
   <string name="SP_userID_title">Benutzer-ID</string>
   <string name="SP_userID_summary">Deine Benutzer-ID</string>
   <string name="SP_APIToken_title">API-Token</string>
   <string name="SP_APIToken_summary">Dein API-Token</string>
   <string name="PS_contact_title">Kontakt</string>
-  <string name="unknown_error">Ein Fehler ist aufgetreten ...</string>
+  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
@@ -31,14 +31,14 @@
   <string name="login_btn">Login</string>
   <string name="register_btn">Registrieren</string>
   <string name="username">Benutzername</string>
-  <string name="email_username">Email oder Benutzername</string>
+  <string name="email_username">E-Mail oder Benutzername</string>
   <string name="password">Passwort</string>
   <string name="emailAddress">E-Mail-Adresse</string>
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
-  <string name="logout_description">Logge dich aus</string>
+  <string name="logout_description">Logge Dich aus</string>
   <string name="account_details">Kontodetails</string>
-  <string name="LoginActivityName">Wilkommen</string>
+  <string name="LoginActivityName">Willkommen</string>
   <string name="string_revive">Wiederbeleben</string>
   <string name="please_connect">Baue eine Verbindung mit Hilfe der App auf, bevor Du ein Widget benutzt</string>
   <string name="about.title">Über</string>
@@ -87,12 +87,12 @@
   <string name="saturday">Samstag</string>
   <string name="sunday">Sonntag</string>
   <string name="levelup_header">Du bist ein Level aufgestiegen!</string>
-  <string name="levelup_detail">Das Erfüllen deiner Lebensziele hat dich auf Level %1$d!</string>
+  <string name="levelup_detail">Das Erfüllen Deiner Lebensziele hat Dich auf Level %1$d steigen lassen!</string>
   <string name="levelup_health">Du wurdest vollständig geheilt!</string>
   <string name="levelup_button">Hurra!</string>
   <string name="faint_subtitle">Nicht verzweifeln!</string>
-  <string name="faint_penalty_body">Du hast einen Level, dein Gold und einen Teil deiner Ausrüstung verloren, aber du kannst alles durch harte Arbeit wieder zurückbekommen! Viel Glück -- du schaffst das.</string>
-  <string name="faint_header">Du hast alle deine Lebenspunkte verloren!</string>
+  <string name="faint_penalty_body">Du hast einen Level, Dein Gold und einen Teil Deiner Ausrüstung verloren, aber Du kannst alles durch harte Arbeit wieder zurückbekommen! Viel Glück -- Du schaffst das.</string>
+  <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>
   <string name="faint_button"><![CDATA[Lebenspunkte wiederherstellen & nochmal versuchen]]></string>
   <string name="filter">Filtern</string>
   <string name="profile_image">Profilbild</string>
@@ -109,8 +109,8 @@
   <string name="no_party_message">Du bist nicht in einer Gruppe. Besuche die Website, um einer Gruppe beizutreten.</string>
   <string name="forgot_pw_btn">Passwort vergessen</string>
   <string name="forgot_pw_tv">Passwort vergessen? Bitte die mobile Website benutzen.</string>
-  <string name="tavern.inn.checkOut">Reaktiviere deine täglichen Aufgaben</string>
-  <string name="tavern.inn.rest">Pausiere deine täglichen Aufgaben</string>
+  <string name="tavern.inn.checkOut">Reaktiviere Deine täglichen Aufgaben</string>
+  <string name="tavern.inn.rest">Pausiere Deine täglichen Aufgaben</string>
   <string name="reward.dialog.buy">Kaufen</string>
   <string name="reward.dialog.dismiss">Als gelesen markieren</string>
   <string name="party">Gruppe</string>
@@ -120,7 +120,7 @@
   <string name="dailies">Tägliche Aufgaben</string>
   <string name="todos">To-Dos</string>
   <string name="rewards">Belohnungen</string>
-  <string name="taskform.delete.title">Bist du sicher?</string>
+  <string name="taskform.delete.title">Bist Du sicher?</string>
   <string name="taskform.delete.message">Wirklich löschen?</string>
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
@@ -161,21 +161,21 @@
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
   <string name="intro_1_title">Willkommen in Habitica</string>
-  <string name="intro_1_description">Mach mit bei über 1.100.000 Menschen, die Spaß haben während Sie Sachen erledigen. Erstelle deinen Avatar und erfülle Aufgaben aus deinem echten Leben.</string>
+  <string name="intro_1_description">Mach mit bei über 1.100.000 Menschen, die Spaß haben während Sie Sachen erledigen. Erstelle Deinen Avatar und erfülle Aufgaben aus Deinem echten Leben.</string>
   <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
-  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei indem du Aufgaben im echten Leben erledigst. Verdiene dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung deiner Ziele!</string>
+  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
   <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
-  <string name="intro_3_description">Behalte deine Ziele im Auge mit Hilfe deiner Freunde. Unterstützt euch gegenseitig im Leben und im Kampf während ihr euch gemeinsam verbessert!</string>
+  <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf während Ihr Euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Anfangen</string>
   <string name="previous_button">Zurück</string>
   <string name="next_button">Nächstes</string>
   <string name="skip_button">Überspringen</string>
-  <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während du Ziele im echten Leben erreichst wirst du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
+  <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
   <string name="avatar_setup_description">Als erstes benötigst Du einen Avater der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
-  <string name="task_setup_description">Großartig! Jetzt lass uns deine Aufgaben anlegen, damit du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
+  <string name="task_setup_description">Großartig! Jetzt lass uns Deine Aufgaben anlegen, damit Du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
 
-Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
+Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
   <string name="setup_group_heathWellness">Gesundheit + Wellness</string>
@@ -204,7 +204,7 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
   <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
   <string name="setup_task_creativity_3">Kreatives Projekt fertigstellen</string>
-  <string name="gem.purchase.support">Du möchtest helfen, Habitica am Laufen zu halten? Unterstütze die Entwickler, indem du Edelsteine kaufst!\n\nMit Edelsteinen kannst du lustige Extras kaufen, zum Beispiel:\n\n - Coole Kostüme für deinen Avatar\n - Hübsche Hintergründe\n - Spannende Quests, um Haustiere freizuschalten\n - Die Möglichkeit, deine Klasse schon vor Level 100 zu wechseln\n\nVielen Vielen Dank, dass du hilfst, Habitica großartig zu machen. Deine Unterstützung bedeutet uns sehr viel!</string>
+  <string name="gem.purchase.support">Du möchtest helfen, Habitica am Laufen zu halten? Unterstütze die Entwickler, indem Du Edelsteine kaufst!\n\nMit Edelsteinen kannst Du lustige Extras kaufen, zum Beispiel:\n\n - Coole Kostüme für Deinen Avatar\n - Hübsche Hintergründe\n - Spannende Quests, um Haustiere freizuschalten\n - Die Möglichkeit, Deine Klasse schon vor Level 100 zu wechseln\n\nVielen Vielen Dank, dass Du hilfst, Habitica großartig zu machen. Deine Unterstützung bedeutet uns sehr viel!</string>
   <string name="my_guilds">Meine Gilden</string>
   <string name="public_guilds">Öffentliche Gilden</string>
   <string name="guild">Gilde</string>
@@ -237,9 +237,9 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="outfit_weapon">Waffe</string>
   <string name="wear_costume">Kostüm tragen</string>
   <string name="equipped">Ausgerüstet</string>
-  <string name="quest_cancel_message">Bist du sicher, dass du diese Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
+  <string name="quest_cancel_message">Bist Du sicher, dass Du diese Quest abbrechen willst? Alle angenommenen Einladungen gehen verloren. Der Questbesitzer erhält die Questschriftrolle zurück.</string>
   <string name="quest.invitation">Questeinladung</string>
-  <string name="quest_begin_message">Bist du sicher, dass du die Quest beginnen willst? Sobald sie aktiv ist, können keine zusätzlichen Gruppenmitglieder beitreten.</string>
+  <string name="quest_begin_message">Bist Du sicher, dass Du die Quest beginnen willst? Sobald sie aktiv ist, können keine zusätzlichen Gruppenmitglieder beitreten.</string>
   <string name="quest.invitation.text">Du wurdest eingeladen, an einer Quest teilzunehmen!</string>
   <string name="ago_1day">Vor einem Tag</string>
   <string name="ago_days" formatted="false">Vor %d Tagen</string>
@@ -273,7 +273,7 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
   <string name="share">Teilen</string>
-  <string name="notification_pet_fed" formatted="false">Du hast dein/e/n %1$s %2$s gefüttert!</string>
+  <string name="notification_pet_fed" formatted="false">Du hast Dein/e/n %1$s %2$s gefüttert!</string>
   <string name="notification_purchase" formatted="false">%s gekauft</string>
   <string name="sectionpets">Normale Haustiere</string>
   <string name="sectionpremiumPets">Magische Haustiere</string>
@@ -284,7 +284,7 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="sectionquestMounts">Quest Reittiere</string>
   <string name="sectionspecialMounts">Seltene Reittiere</string>
   <string name="world_quest">Weltenquest</string>
-  <string name="inn_description">Ruhe dich im Gasthaus aus damit deine täglichen Aufgaben dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
+  <string name="inn_description">Ruhe Dich im Gasthaus aus damit Deine täglichen Aufgaben Dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
   <string name="empty_items" formatted="false">Du hast kein/e %s</string>
   <string name="user_level" formatted="false">Lvl %s</string>
   <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
@@ -292,27 +292,27 @@ Für den Anfang: welche Bereiche deines Lebens möchtest du verbessern?</string>
   <string name="rogue">Schurke</string>
   <string name="mage">Magier</string>
   <string name="healer">Heiler</string>
-  <string name="warrior_description">Krieger verursachen mehr und stärkere \"kritische Treffer\", die zufällige Boni auf Gold, Erfahrung und Beute beim Erfüllen einer Aufgabe geben. Sie sind auch sehr stark gegen Bossmonster. Spiele einen Krieger, wenn dich die Chance auf Belohnungen im Lottogewinn-Stil besonders reizt und du besonders effektiv gegen Bossmonster sein willst.</string>
-  <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn du motiviert wirst durch schnellen Level-Ausfstieg und das Freischalten fortgeschrittener Funktionen.</string>
-  <string name="rogue_description">Schurken lieben es Reichtümer anzuhäufen, indem sie mehr Gold als andere verdienen und geschickt darin sind, neue Gegenstände zu finden. Ihre typische Fähigkeit sich im verborgenen zu bewegen erlaubt dir gelegentlich die Folgen verpasster täglicher Aufgaben zu vermeiden. Spiele einen Schurken, wenn dich Spielbelohnungen und Erfolge besonders reizen und du nach Beute und Abzeichen trachtest!</string>
-  <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wieder herzustellen. Spiele einen Heiler, wenn du gerne Anderen in einer Gruppe hilfst, oder wenn es dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
+  <string name="warrior_description">Krieger verursachen mehr und stärkere \"kritische Treffer\", die zufällige Boni auf Gold, Erfahrung und Beute beim Erfüllen einer Aufgabe geben. Sie sind auch sehr stark gegen Bossmonster. Spiele einen Krieger, wenn Dich die Chance auf Belohnungen im Lottogewinn-Stil besonders reizt und Du besonders effektiv gegen Bossmonster sein willst.</string>
+  <string name="mage_description">Magier lernen rasch und erhalten schneller Erfahrung und Level als andere Klassen. Sie bekommen zudem eine große Menge Mana, um ihre Spezialfähigkeiten einzusetzen. Spiele einen Magier, wenn Dir die taktischen Aspekte des Spiels Spaß bereiten, oder wenn Du motiviert wirst durch schnellen Level-Aufstieg und das Freischalten fortgeschrittener Funktionen.</string>
+  <string name="rogue_description">Schurken lieben es Reichtümer anzuhäufen, indem sie mehr Gold als andere verdienen und geschickt darin sind, neue Gegenstände zu finden. Ihre typische Fähigkeit sich im verborgenen zu bewegen erlaubt Dir gelegentlich, die Folgen verpasster täglicher Aufgaben zu vermeiden. Spiele einen Schurken, wenn Dich Spielbelohnungen und Erfolge besonders reizen und Du nach Beute und Abzeichen trachtest!</string>
+  <string name="healer_description">Heiler stehen Schaden unbeeindruckt gegenüber und erweitern diesen Schutz auf andere. Verpasste tägliche Aufgaben und schlechte Angewohnheiten schaden ihnen nicht viel und sie haben Mittel und Wege Lebenspunkte wieder herzustellen. Spiele einen Heiler, wenn Du gerne Anderen in einer Gruppe hilfst, oder wenn es Dich besonders reizt, dem Tod durch harte Arbeit zu entkommen!</string>
   <string name="select_class">Klasse wählen</string>
   <string name="opt_out_class">Später entscheiden</string>
-  <string name="opt_out_description">Du willst keine Klasse oder möchtest dich später entscheiden? Entscheide dich später und du wirst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und deine Klasse jederzeit aktivieren.</string>
-  <string name="class_confirmation" formatted="false">Bist du sicher, dass du %s werden willst?</string>
+  <string name="opt_out_description">Du willst keine Klasse oder möchtest Dich später entscheiden? Entscheide Dich später und werde zunächst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und Deine Klasse jederzeit aktivieren.</string>
+  <string name="class_confirmation" formatted="false">Bist Du sicher, dass Du %s werden willst?</string>
   <string name="choose_class">Klasse wählen</string>
   <string name="dialog_go_back">Zurück</string>
-  <string name="opt_out_confirmation">Bist du sicher, dass du dich noch nicht entscheiden willst?</string>
+  <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
   <string name="change_class">Deine Klasse ändern</string>
-  <string name="change_class_description">Ändere deine Klasse und erhalte deine Attributspunkte für 3 Edelsteine zurück.</string>
+  <string name="change_class_description">Ändere Deine Klasse und erhalte Deine Attributspunkte für 3 Edelsteine zurück.</string>
   <string name="enable_class">Klassensystem freischalten</string>
   <string name="changing_class_progress">Klasse ändern</string>
   <string name="by_email">Per E-mail</string>
   <string name="invite_existing_users">Nutzer einladen</string>
   <string name="send">Senden</string>
   <string name="invite">Freunde einladen</string>
-  <string name="invite_id_description">Wenn deine Freunde bereits Habitica verwenden, lade sie hier mit Hilfe ihrer Benutzer-ID ein.</string>
-  <string name="invite_email_description">Wenn Freunde Habitica mit Hilfe deiner E-Mail beitreten, werden sie automatisch zu deiner Gruppe eingeladen!</string>
+  <string name="invite_id_description">Wenn Deine Freunde bereits Habitica verwenden, lade sie hier mit Hilfe ihrer Benutzer-ID ein.</string>
+  <string name="invite_email_description">Wenn Freunde Habitica mit Hilfe Deiner E-Mail beitreten, werden sie automatisch zu Deiner Gruppe eingeladen!</string>
   <string name="add_invites">Einladungen hinzufügen</string>
   <string name="user_id">Benutzer-ID</string>
   <string name="email">E-mail</string>

@@ -55,7 +55,7 @@ public class PartyFragment extends BaseMainFragment {
         contentCache = new ContentCache(apiHelper.apiService);
 
         // Get the full group data
-        if (this.user.getParty() != null && this.user.getParty().id != null) {
+        if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
             apiHelper.apiService.getGroup("party")
                     .compose(this.apiHelper.configureApiCallObserver())
                     .subscribe(group -> {

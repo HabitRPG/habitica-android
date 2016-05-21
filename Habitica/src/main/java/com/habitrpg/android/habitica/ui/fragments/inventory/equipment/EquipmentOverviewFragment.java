@@ -65,6 +65,10 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_equipment_overview, container, false);
 
+        if (this.user == null) {
+            return v;
+        }
+
         viewBinding = DataBindingUtil.bind(v);
         viewBinding.setCurrentBattleGear(this.user.getItems().getGear().getEquipped());
         viewBinding.setCurrentCostume(this.user.getItems().getGear().getCostume());

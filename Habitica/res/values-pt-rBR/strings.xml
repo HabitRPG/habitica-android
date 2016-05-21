@@ -109,7 +109,7 @@
   <string name="no_party_message">Você não está em um grupo. Para entrar em um grupo, por favor visite o site.</string>
   <string name="forgot_pw_btn">Esqueci a senha</string>
   <string name="forgot_pw_tv">Esqueceu a senha? Por favor use o Site móvel.</string>
-  <string name="tavern.inn.checkOut">Retornar a suas metas diárias.</string>
+  <string name="tavern.inn.checkOut">Reativar suas metas diárias.</string>
   <string name="tavern.inn.rest">Suspender suas metas diárias.</string>
   <string name="reward.dialog.buy">Comprar</string>
   <string name="reward.dialog.dismiss">Desfazer</string>
@@ -304,7 +304,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="dialog_go_back">Voltar</string>
   <string name="opt_out_confirmation">Você tem certeza que quer cancelar?</string>
   <string name="change_class">Mude sua classe</string>
-  <string name="change_class_description">Mudar sua classe e redistribuir seus atributos por 3 gemas</string>
   <string name="enable_class">Habilitar Sistema de Classes</string>
   <string name="changing_class_progress">Mudando de Classe</string>
   <string name="by_email">Por E-mail</string>

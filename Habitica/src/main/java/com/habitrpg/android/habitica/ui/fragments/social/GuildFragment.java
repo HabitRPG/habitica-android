@@ -110,12 +110,6 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
 
-        UserParty party = user.getParty();
-
-        if (party == null) {
-            return;
-        }
-
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
 
             @Override
