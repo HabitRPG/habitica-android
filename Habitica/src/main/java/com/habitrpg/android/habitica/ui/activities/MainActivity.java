@@ -515,6 +515,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void updateOwnedDataForUser(HabitRPGUser user) {
+        if (user == null || user.getItems() == null) {
+            return;
+        }
         List<BaseModel> updates = new ArrayList<>();
         updates.addAll(this.updateOwnedData(Egg.class, user.getItems().getEggs()));
         updates.addAll(this.updateOwnedData(Food.class, user.getItems().getFood()));
@@ -528,8 +531,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private <T extends Item> List<T> updateOwnedData(Class<T> itemClass, HashMap<String, Integer> ownedMapping) {
-        List<T> items = new Select().from(itemClass).queryList();
         List<T> updates = new ArrayList<>();
+        if (ownedMapping == null) {
+            return updates;
+        }
+        List<T> items = new Select().from(itemClass).queryList();
         for (T item : items) {
             if (ownedMapping.containsKey(item.getKey()) && !item.getOwned().equals(ownedMapping.get(item.getKey()))) {
                 item.setOwned(ownedMapping.get(item.getKey()));
@@ -542,8 +548,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return updates;
     }
     private List<ItemData> updateOwnedData(HashMap<String, Boolean> ownedMapping) {
-        List<ItemData> items = new Select().from(ItemData.class).queryList();
         List<ItemData> updates = new ArrayList<>();
+        if (ownedMapping == null) {
+            return updates;
+        }
+        List<ItemData> items = new Select().from(ItemData.class).queryList();
         for (ItemData item : items) {
             if (ownedMapping.containsKey(item.key) && item.owned != ownedMapping.get(item.key) ) {
                 item.owned = ownedMapping.get(item.key);
