@@ -66,11 +66,12 @@ public class MaintenanceActivity extends BaseActivity {
         super.onResume();
         if (!isDeprecationNotice) {
             this.apiHelper.maintenanceService.getMaintenanceStatus()
-            .subscribe(maintenanceResponse -> {
-                if (!maintenanceResponse.activeMaintenance) {
-                    finish();
-                }
-            });
+                    .compose(this.apiHelper.configureApiCallObserver())
+                    .subscribe(maintenanceResponse -> {
+                        if (!maintenanceResponse.activeMaintenance) {
+                            finish();
+                        }
+                    }, throwable -> {});
         }
     }
 
