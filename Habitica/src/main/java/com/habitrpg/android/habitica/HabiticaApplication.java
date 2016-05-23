@@ -4,6 +4,7 @@ import com.amplitude.api.Amplitude;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -58,6 +59,8 @@ public class HabiticaApplication extends MultiDexApplication {
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
         Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+
+        Fresco.initialize(this);
     }
 
     private void setupLeakCanary() {

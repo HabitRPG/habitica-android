@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/avatar_with_bars_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,16 +19,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/IMG_ProfilePicture"
+        <com.habitrpg.android.habitica.ui.AvatarView
+            android:id="@+id/avatarView"
             android:layout_width="@dimen/avatar_header_width"
             android:layout_height="@dimen/avatar_header_height"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"
-            android:scaleType="fitStart"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/profile_image" />
+            android:layout_marginRight="16dp"
+            app:showBackground="true"
+            app:showMount="true"
+            app:showPet="true" />
 
         <LinearLayout
             android:id="@+id/LL_header"

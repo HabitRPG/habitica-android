@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 
@@ -20,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -31,7 +29,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     private ValueBarBinding xpBar;
     private ValueBarBinding mpBar;
 
-    private ImageView image;
+    private AvatarView mAvatarView;
 
     private android.content.res.Resources res;
 
@@ -39,7 +37,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     private TextView lvlText, goldText, silverText, gemsText;
     private HabitRPGUser userObject;
-    private UserPicture userPicture;
 
     private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
 
@@ -59,7 +56,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         gemsText = (TextView) v.findViewById(R.id.gems_tv);
         View hpBarView = v.findViewById(R.id.hpBar);
 
-        image = (ImageView) v.findViewById(R.id.IMG_ProfilePicture);
+        mAvatarView = (AvatarView) v.findViewById(R.id.avatarView);
         hpBar = DataBindingUtil.bind(hpBarView);
         xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
@@ -70,7 +67,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
-        this.userPicture = new UserPicture(this.context);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -83,8 +79,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         int gp = (stats.getGp().intValue());
         int sp = (int) ((stats.getGp() - gp) * 100);
 
-        userPicture.setUser(user);
-        userPicture.setPictureOn(image);
+        mAvatarView.setUser(user);
 
         if (stats.get_class() != null) {
             userClass += stats.getCleanedClassName();
