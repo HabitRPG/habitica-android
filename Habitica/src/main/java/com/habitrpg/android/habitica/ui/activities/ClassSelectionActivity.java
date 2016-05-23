@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.Gear;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Hair;
@@ -15,7 +15,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,14 +29,14 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     Boolean classWasUnset = false;
     Boolean shouldFinish = false;
 
-    @BindView(R.id.healerImageView)
-    ImageView healerImageView;
-    @BindView(R.id.mageImageView)
-    ImageView mageImageView;
-    @BindView(R.id.rogueImageView)
-    ImageView rogueImageView;
-    @BindView(R.id.warriorImageView)
-    ImageView warriorImageView;
+    @BindView(R.id.healerAvatarView)
+    AvatarView healerAvatarView;
+    @BindView(R.id.mageAvatarView)
+    AvatarView mageAvatarView;
+    @BindView(R.id.rogueAvatarView)
+    AvatarView rogueAvatarView;
+    @BindView(R.id.warriorAvatarView)
+    AvatarView warriorAvatarView;
 
     APIHelper apiHelper;
 
@@ -77,18 +76,14 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         healerOutfit.setShield("shield_healer_5");
         healerOutfit.setWeapon("weapon_healer_6");
         HabitRPGUser healer = this.makeUser(preferences, healerOutfit);
-        UserPicture healerUserPicture = new UserPicture(this);
-        healerUserPicture.setUser(healer);
-        healerUserPicture.setPictureOn(healerImageView);
+        healerAvatarView.setUser(healer);
 
         Outfit mageOutfit = new Outfit();
         mageOutfit.setArmor("armor_wizard_5");
         mageOutfit.setHead("head_wizard_5");
         mageOutfit.setWeapon("weapon_wizard_6");
         HabitRPGUser mage = this.makeUser(preferences, mageOutfit);
-        UserPicture mageUserPicture = new UserPicture(this);
-        mageUserPicture.setUser(mage);
-        mageUserPicture.setPictureOn(mageImageView);
+        mageAvatarView.setUser(mage);
 
         Outfit rogueOutfit = new Outfit();
         rogueOutfit.setArmor("armor_rogue_5");
@@ -96,9 +91,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         rogueOutfit.setShield("shield_rogue_6");
         rogueOutfit.setWeapon("weapon_rogue_6");
         HabitRPGUser rogue = this.makeUser(preferences, rogueOutfit);
-        UserPicture rogueUserPicture = new UserPicture(this);
-        rogueUserPicture.setUser(rogue);
-        rogueUserPicture.setPictureOn(rogueImageView);
+        rogueAvatarView.setUser(rogue);
 
         Outfit warriorOutfit = new Outfit();
         warriorOutfit.setArmor("armor_warrior_5");
@@ -106,9 +99,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         warriorOutfit.setShield("shield_warrior_5");
         warriorOutfit.setWeapon("weapon_warrior_6");
         HabitRPGUser warrior = this.makeUser(preferences, warriorOutfit);
-        UserPicture warriorUserPicture = new UserPicture(this);
-        warriorUserPicture.setUser(warrior);
-        warriorUserPicture.setPictureOn(warriorImageView);
+        warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
             apiHelper.apiService.changeClass()
