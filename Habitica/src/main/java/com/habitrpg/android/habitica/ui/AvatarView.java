@@ -224,6 +224,7 @@ public class AvatarView extends View {
                 case MOUNT_HEAD:
                     offset = new PointF(25.0f, 18.0f); // full hero box
                     break;
+                case CHAIR:
                 case BACK:
                 case SKIN:
                 case SHIRT:
@@ -419,25 +420,26 @@ public class AvatarView extends View {
     public enum LayerType {
         BACKGROUND(0),
         MOUNT_BODY(1),
-        BACK(2),
-        SKIN(3),
-        SHIRT(4),
-        ARMOR(5),
-        BODY(6),
-        HEAD_0(7),
-        HAIR_BASE(8),
-        HAIR_BANGS(9),
-        HAIR_MUSTACHE(10),
-        HAIR_BEARD(11),
-        EYEWEAR(12),
-        HEAD(13),
-        HEAD_ACCESSORY(14),
-        HAIR_FLOWER(15),
-        SHIELD(16),
-        WEAPON(17),
-        MOUNT_HEAD(18),
-        ZZZ(19),
-        PET(20);
+        CHAIR(2),
+        BACK(3),
+        SKIN(4),
+        SHIRT(5),
+        ARMOR(6),
+        BODY(7),
+        HEAD_0(8),
+        HAIR_BASE(9),
+        HAIR_BANGS(10),
+        HAIR_MUSTACHE(11),
+        HAIR_BEARD(12),
+        EYEWEAR(13),
+        HEAD(14),
+        HEAD_ACCESSORY(15),
+        HAIR_FLOWER(16),
+        SHIELD(17),
+        WEAPON(18),
+        MOUNT_HEAD(19),
+        ZZZ(20),
+        PET(21);
 
         final int order;
 

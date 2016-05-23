@@ -377,6 +377,10 @@ public class HabitRPGUser extends BaseModel {
         Preferences prefs = getPreferences();
         Outfit outfit = (prefs.getCostume()) ? getItems().getGear().getCostume() : getItems().getGear().getEquipped();
 
+        if (!TextUtils.isEmpty(prefs.getChair())) {
+            layerMap.put(AvatarView.LayerType.CHAIR, prefs.getChair());
+        }
+
         if (outfit != null) {
             if (!TextUtils.isEmpty(outfit.getBack())) {
                 layerMap.put(AvatarView.LayerType.BACK, outfit.getBack());
