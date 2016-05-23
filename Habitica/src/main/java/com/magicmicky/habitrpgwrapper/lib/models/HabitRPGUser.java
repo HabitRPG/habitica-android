@@ -3,6 +3,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -15,8 +16,12 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
@@ -364,5 +369,70 @@ public class HabitRPGUser extends BaseModel {
         }
 
         return layerNames;
+    }
+
+    public EnumMap<AvatarView.LayerType, String> getAvatarLayerMap() {
+        EnumMap<AvatarView.LayerType, String> layerMap = new EnumMap<>(AvatarView.LayerType.class);
+
+        Preferences prefs = getPreferences();
+        Outfit outfit = (prefs.getCostume()) ? getItems().getGear().getCostume() : getItems().getGear().getEquipped();
+
+        if (outfit != null) {
+            if (!TextUtils.isEmpty(outfit.getBack())) {
+                layerMap.put(AvatarView.LayerType.BACK, outfit.getBack());
+            }
+            if (outfit.isAvailable(outfit.getArmor())) {
+                layerMap.put(AvatarView.LayerType.ARMOR, prefs.getSize() + "_" + outfit.getArmor());
+            }
+            if (outfit.isAvailable(outfit.getBody())) {
+                layerMap.put(AvatarView.LayerType.BODY, outfit.getBody());
+            }
+            if (outfit.isAvailable(outfit.getEyeWear())) {
+                layerMap.put(AvatarView.LayerType.EYEWEAR, outfit.getEyeWear());
+            }
+            if (outfit.isAvailable(outfit.getHead())) {
+                layerMap.put(AvatarView.LayerType.HEAD, outfit.getHead());
+            }
+            if (outfit.isAvailable(outfit.getHeadAccessory())) {
+                layerMap.put(AvatarView.LayerType.HEAD_ACCESSORY, outfit.getHeadAccessory());
+            }
+            if (outfit.isAvailable(outfit.getShield())) {
+                layerMap.put(AvatarView.LayerType.SHIELD, outfit.getShield());
+            }
+            if (outfit.isAvailable(outfit.getWeapon())) {
+                layerMap.put(AvatarView.LayerType.WEAPON, outfit.getWeapon());
+            }
+        }
+
+        layerMap.put(AvatarView.LayerType.SKIN, "skin_" + prefs.getSkin() + ((prefs.getSleep()) ? "_sleep" : ""));
+        layerMap.put(AvatarView.LayerType.SHIRT, prefs.getSize() + "_shirt_" + prefs.getShirt());
+        layerMap.put(AvatarView.LayerType.HEAD_0, "head_0");
+
+        Hair hair = prefs.getHair();
+        if (hair != null) {
+            String hairColor = hair.getColor();
+
+            if (hair.isAvailable(hair.getBase())) {
+                layerMap.put(AvatarView.LayerType.HAIR_BASE, "hair_base_" + hair.getBase() + "_" + hairColor);
+            }
+            if (hair.isAvailable(hair.getBangs())) {
+                layerMap.put(AvatarView.LayerType.HAIR_BANGS, "hair_bangs_" + hair.getBangs() + "_" + hairColor);
+            }
+            if (hair.isAvailable(hair.getMustache())) {
+                layerMap.put(AvatarView.LayerType.HAIR_MUSTACHE, "hair_mustache_" + hair.getMustache() + "_" + hairColor);
+            }
+            if (hair.isAvailable(hair.getBeard())) {
+                layerMap.put(AvatarView.LayerType.HAIR_BEARD, "hair_beard_" + hair.getBeard() + "_" + hairColor);
+            }
+            if (hair.isAvailable(hair.getFlower())) {
+                layerMap.put(AvatarView.LayerType.HAIR_FLOWER, "hair_flower_" + hair.getFlower());
+            }
+        }
+
+        if (prefs.getSleep()) {
+            layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
+        }
+
+        return layerMap;
     }
 }

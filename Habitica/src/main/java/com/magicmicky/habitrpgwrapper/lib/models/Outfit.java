@@ -9,6 +9,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.text.TextUtils;
+
 /**
  * Created by viirus on 20/07/15.
  */
@@ -54,4 +56,7 @@ public class Outfit extends BaseModel {
     public String getWeapon() {return weapon;}
     public void setWeapon(String weapon) {this.weapon = weapon;}
 
+    public boolean isAvailable(String outfit) {
+        return !TextUtils.isEmpty(outfit) && !outfit.endsWith("base_0");
+    }
 }
