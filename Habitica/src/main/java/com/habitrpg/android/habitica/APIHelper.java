@@ -72,6 +72,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -375,9 +376,11 @@ public class APIHelper implements Action1<Throwable> {
         int position = 0;
         for (String taskId : taskOrder) {
             Task task = taskMap.get(taskId);
-            task.position = position;
-            taskList.add(task);
-            position++;
+            if (task != null) {
+                task.position = position;
+                taskList.add(task);
+                position++;
+            }
         }
         return taskList;
     }
