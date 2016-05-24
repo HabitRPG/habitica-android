@@ -304,7 +304,7 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="dialog_go_back">Zurück</string>
   <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
   <string name="change_class">Deine Klasse ändern</string>
-  <string name="change_class_description">Ändere Deine Klasse und erhalte Deine Attributspunkte für 3 Edelsteine zurück.</string>
+  <string name="change_class_description">Ändere Deine Klasse und erhalte Deine Attributspunkte für 3 Edelsteine zurück. Du kannst die Punkte über die Webseite zuteilen</string>
   <string name="enable_class">Klassensystem freischalten</string>
   <string name="changing_class_progress">Klasse ändern</string>
   <string name="by_email">Per E-mail</string>
@@ -321,4 +321,6 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="share_levelup" formatted="false">Mit dem Verbessern meiner Real-Life Gewohnheiten habe ich Level %s in Habitica erreicht!</string>
   <string name="share_hatched" formatted="false">Durch das Erfüllen meiner Real-Life Aufgaben habe ich ein %1$s %2$s Haustier in Habitica ausgebrütet!</string>
   <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
+  <string name="open_in_store">Im Play Store öffnen</string>
+  <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
 </resources>
