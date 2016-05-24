@@ -51,27 +51,33 @@ public class StableRecyclerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        boolean setupViews = false;
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            setupViews = true;
         }
+
         unbinder = ButterKnife.bind(this, view);
 
-        recyclerView.setEmptyView(emptyView);
-        emptyView.setText(getString(R.string.empty_items, itemTypeText));
+        if (setupViews) {
+            recyclerView.setEmptyView(emptyView);
+            emptyView.setText(getString(R.string.empty_items, itemTypeText));
 
-        layoutManager = new GridLayoutManager(getActivity(), 2);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (adapter.getItemViewType(position) == 0) {
-                    return layoutManager.getSpanCount();
-                } else {
-                    return 1;
+            layoutManager = new GridLayoutManager(getActivity(), 2);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (adapter.getItemViewType(position) == 0) {
+                        return layoutManager.getSpanCount();
+                    } else {
+                        return 1;
+                    }
                 }
-            }
-        });
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+            });
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+        }
+
 
         adapter = (StableRecyclerAdapter)recyclerView.getAdapter();
         if (adapter == null) {
