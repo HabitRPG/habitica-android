@@ -122,7 +122,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (this.isHatching) {
+        if (this.isHatching != null && this.isHatching) {
             ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.height = ViewGroup.LayoutParams.MATCH_PARENT;

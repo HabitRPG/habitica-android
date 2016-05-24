@@ -72,7 +72,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         if (this.isMember) {
-            if (this.user.getId().equals(this.guild.leaderID)) {
+            if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
                 this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
             } else {
                 this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
@@ -173,7 +173,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
             }
         });
 
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 
     private void displayEditForm() {

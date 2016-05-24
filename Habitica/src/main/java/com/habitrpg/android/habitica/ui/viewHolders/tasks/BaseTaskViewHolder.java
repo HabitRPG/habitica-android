@@ -81,7 +81,7 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
             this.titleTextView.setText(this.task.getText());
             this.notesTextView.setText(this.task.getNotes());
         }
-        if (this.task.getNotes().length() > 0) {
+        if (this.task.getNotes() != null && this.task.getNotes().length() > 0) {
             this.notesTextView.setVisibility(View.VISIBLE);
         } else {
             this.notesTextView.setVisibility(View.GONE);

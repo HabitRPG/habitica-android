@@ -182,7 +182,11 @@ public class GroupInformationFragment extends BaseFragment {
                 questResponse.setText(R.string.quest_rejected);
                 questResponse.setTextColor(ContextCompat.getColor(context, R.color.worse_10));
             }
-            questMemberView.post(() -> questMemberView.addView(itemView));
+            questMemberView.post(() -> {
+                if (questMemberView != null) {
+                    questMemberView.addView(itemView);
+                }
+            });
         }
     }
 

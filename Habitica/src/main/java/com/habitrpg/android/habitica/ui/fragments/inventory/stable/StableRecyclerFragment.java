@@ -31,6 +31,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class StableRecyclerFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
@@ -122,9 +125,9 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = () -> {
+        Observable.defer(() -> {
             if (itemType == null) {
-                return;
+                throw new IllegalArgumentException();
             }
             List<Object> items = new ArrayList<>();
 
@@ -138,13 +141,13 @@ public class StableRecyclerFragment extends BaseFragment {
                     break;
             }
             if (query == null) {
-                return;
+                throw new IllegalArgumentException();
             }
             List<? extends Animal> unsortedAnimals = query.queryList();
             if (unsortedAnimals.size() == 0) {
                 ReloadContentEvent event = new ReloadContentEvent();
                 EventBus.getDefault().post(event);
-                return;
+                return Observable.just(items);
             }
             String lastSectionTitle = "";
 
@@ -165,34 +168,40 @@ public class StableRecyclerFragment extends BaseFragment {
                     items.add(animal.getAnimalGroup());
                     lastSectionTitle = animal.getAnimalGroup();
                 }
-                switch (itemType) {
-                    case "pets":
-                        if (user.getItems().getPets() != null
-                                && user.getItems().getPets().containsKey(animal.getKey())
-                                && user.getItems().getPets().get(animal.getKey()) != null
-                                && user.getItems().getPets().get(animal.getKey()) > 0) {
-                            if (lastAnimal.getNumberOwned() == 0) {
-                                lastAnimal.setColor(animal.getColor());
+                if (user != null && user.getItems() != null) {
+                    switch (itemType) {
+                        case "pets":
+                            if (user.getItems().getPets() != null
+                                    && user.getItems().getPets().containsKey(animal.getKey())
+                                    && user.getItems().getPets().get(animal.getKey()) != null
+                                    && user.getItems().getPets().get(animal.getKey()) > 0) {
+                                if (lastAnimal.getNumberOwned() == 0) {
+                                    lastAnimal.setColor(animal.getColor());
+                                }
+                                lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
-                            lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
-                        }
-                        break;
-                    case "mounts":
-                        if (user.getItems().getMounts() != null
-                                && user.getItems().getMounts().containsKey(animal.getKey())
-                                && user.getItems().getMounts().get(animal.getKey()) != null
-                                && user.getItems().getMounts().get(animal.getKey())) {
-                            if (lastAnimal.getNumberOwned() == 0) {
-                                lastAnimal.setColor(animal.getColor());
+                            break;
+                        case "mounts":
+                            if (user.getItems().getMounts() != null
+                                    && user.getItems().getMounts().containsKey(animal.getKey())
+                                    && user.getItems().getMounts().get(animal.getKey()) != null
+                                    && user.getItems().getMounts().get(animal.getKey())) {
+                                if (lastAnimal.getNumberOwned() == 0) {
+                                    lastAnimal.setColor(animal.getColor());
+                                }
+                                lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
-                            lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
-            adapter.setItemList(items);
-        };
-        itemsRunnable.run();
+            return Observable.just(items);
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(items -> {
+                    adapter.setItemList(items);
+                }, throwable -> {});
     }
 
     @Subscribe

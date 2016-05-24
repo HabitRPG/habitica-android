@@ -147,7 +147,10 @@ public class UserPicture {
     private List<String> getLayerNames() {
         List<String> layerNames = this.user.getAvatarLayerNames();
 
-        String mountName = this.user.getItems().getCurrentMount();
+        String mountName = null;
+        if (this.user.getItems() != null) {
+            mountName = this.user.getItems().getCurrentMount();
+        }
 
         if (mountName != null && !mountName.isEmpty() && hasPetMount) {
             layerNames.add(0, "Mount_Body_" + mountName);
@@ -157,7 +160,10 @@ public class UserPicture {
             this.userHasMount = false;
         }
 
-        String petName = this.user.getItems().getCurrentPet();
+        String petName = null;
+        if (this.user.getItems() != null) {
+            petName = this.user.getItems().getCurrentPet();
+        }
 
         if (petName != null && !petName.isEmpty() && hasPetMount) {
             layerNames.add("Pet-" + petName);
