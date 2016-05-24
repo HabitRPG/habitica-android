@@ -41,7 +41,6 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     public void loadEquipmentRewards() {
         if (apiHelper != null) {
             apiHelper.apiService.getInventoryBuyableGear()
-                    .compose(apiHelper.configureApiCallObserver())
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
@@ -84,6 +83,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                             });
                         });
                     })
+                    .compose(apiHelper.configureApiCallObserver())
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);
                         notifyDataSetChanged();

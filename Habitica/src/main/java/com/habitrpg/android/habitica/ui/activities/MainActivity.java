@@ -988,7 +988,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void displayDeathDialogIfNeeded() {
 
-        if (user.getStats().getHp() > 0) {
+        if (user.getStats().getHp() == null || user.getStats().getHp() > 0) {
             return;
         }
 

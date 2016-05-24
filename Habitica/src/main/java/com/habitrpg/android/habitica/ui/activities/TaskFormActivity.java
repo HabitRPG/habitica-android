@@ -76,11 +76,13 @@ import rx.schedulers.Schedulers;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
+    public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
 
     private String taskType;
     private String taskId;
+    private String userId;
     private Task task;
 
     private String allocationMode;
@@ -204,6 +206,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
+        userId = bundle.getString(USER_ID_KEY);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         tagCheckBoxList = new ArrayList<>();
         selectedTags = new ArrayList<>();
@@ -375,7 +378,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
         }
 
-        Observable.defer(() -> Observable.just(new Select().from(Tag.class).queryList()))
+        Observable.defer(() -> Observable.just(new Select().from(Tag.class)
+                .where(Condition.column("user_id").eq(this.userId))
+                .queryList())
+        )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

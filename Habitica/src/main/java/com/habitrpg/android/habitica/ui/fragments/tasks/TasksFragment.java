@@ -300,6 +300,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
+        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user.getId());
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
@@ -347,6 +348,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
+        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user.getId());
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
