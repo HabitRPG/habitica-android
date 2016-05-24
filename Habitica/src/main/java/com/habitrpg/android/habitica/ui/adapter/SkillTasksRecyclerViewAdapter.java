@@ -140,7 +140,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
                                     .begin(Condition.column("completed").eq(false))
                                     .or(Condition.column("type").eq("daily"))
                     )
-                    .orderBy(OrderBy.columns("dateCreated").descending())
+                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
                     .queryList());
         }
 
