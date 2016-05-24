@@ -314,7 +314,8 @@ public class PartyFragment extends BaseMainFragment {
 
             }
         });
-
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 }

@@ -22,52 +22,52 @@ public class BasicStats extends BaseModel {
     String id;
 
     @Column
-    public float con, str, per;
+    public Float con, str, per;
 
     @Column
     @SerializedName("int")
-    public float _int;
+    public Float _int;
 
-    public BasicStats() {
-        this(0,0,0,0);
-    }
-    public BasicStats(int con, int str, int per, int _int) {
-        this.con = con;
-        this.str = str;
-        this.per = per;
-        this._int = _int;
-    }
-
-    public float getCon() {
+    public Float getCon() {
         return con;
     }
 
-    public void setCon(float con) {
+    public void setCon(Float con) {
         this.con = con;
     }
 
-    public float getStr() {
+    public Float getStr() {
         return str;
     }
 
-    public void setStr(float str) {
+    public void setStr(Float str) {
         this.str = str;
     }
 
-    public float getPer() {
+    public Float getPer() {
         return per;
     }
 
-    public void setPer(float per) {
+    public void setPer(Float per) {
         this.per = per;
     }
 
-    public float get_int() {
+    public Float get_int() {
         return _int;
     }
 
-    public void set_int(float _int) {
+    public void set_int(Float _int) {
         this._int = _int;
+    }
+
+    public void merge(BasicStats stats) {
+        if (stats == null) {
+            return;
+        }
+        this.con = stats.con != null ? stats.con : this.con;
+        this.str = stats.str != null ? stats.str : this.str;
+        this.per = stats.per != null ? stats.per : this.per;
+        this._int = stats._int != null ? stats._int : this._int;
     }
 }
 

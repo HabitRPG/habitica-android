@@ -1,6 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.repacked.antlr.v4.runtime.atn.BasicState;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
@@ -25,7 +26,7 @@ public abstract class PlayerMinStats extends BasicStats {
     public Buffs buffs;
 
     @Column
-    public int points, lvl;
+    public Integer points, lvl;
 
     @Column
     @SerializedName("class")
@@ -52,19 +53,19 @@ public abstract class PlayerMinStats extends BasicStats {
         this.buffs = buffs;
     }
 
-    public int getPoints() {
+    public Integer getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(Integer points) {
         this.points = points;
     }
 
-    public int getLvl() {
+    public Integer getLvl() {
         return lvl;
     }
 
-    public void setLvl(int lvl) {
+    public void setLvl(Integer lvl) {
         this.lvl = lvl;
     }
 
@@ -121,5 +122,21 @@ public abstract class PlayerMinStats extends BasicStats {
         buffs.id = id;
 
         super.save();
+    }
+
+    public void merge(PlayerMinStats stats) {
+        if (stats == null) {
+            return;
+        }
+        super.merge(stats);
+        this.training.merge(stats.getTraining());
+        this.buffs.merge(stats.buffs);
+        this.points = stats.points != null ? stats.points : this.points;
+        this.lvl = stats.lvl != null ? stats.lvl : this.lvl;
+        this._class = stats._class != null ? stats._class : this._class;
+        this.gp = stats.gp != null ? stats.gp : this.gp;
+        this.exp = stats.exp != null ? stats.exp : this.exp;
+        this.hp = stats.hp != null ? stats.hp : this.hp;
+        this.mp = stats.mp != null ? stats.mp : this.mp;
     }
 }

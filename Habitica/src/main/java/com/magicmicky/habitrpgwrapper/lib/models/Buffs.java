@@ -11,32 +11,41 @@ import com.raizlabs.android.dbflow.annotation.Table;
 public class Buffs extends BasicStats {
 
     @Column
-    private boolean snowball;
+    private Boolean snowball;
 
     @Column
-    private boolean streaks;
+    private Boolean streaks;
 
     public Buffs() {
         this(false,false);
     }
-    public Buffs(boolean snowball, boolean streaks) {
+    public Buffs(Boolean snowball, Boolean streaks) {
         this.snowball = snowball;
         this.streaks = streaks;
     }
 
-    public boolean getSnowball() {
+    public Boolean getSnowball() {
         return snowball;
     }
 
-    public void setSnowball(boolean snowball) {
+    public void setSnowball(Boolean snowball) {
         this.snowball = snowball;
     }
 
-    public boolean getStreaks() {
+    public Boolean getStreaks() {
         return streaks;
     }
 
-    public void setStreaks(boolean streaks) {
+    public void setStreaks(Boolean streaks) {
         this.streaks = streaks;
+    }
+
+    public void merge(Buffs stats) {
+        if (stats == null) {
+            return;
+        }
+        super.merge(stats);
+        this.snowball = stats.snowball != null ? stats.snowball : this.snowball;
+        this.streaks = stats.streaks != null ? stats.streaks : this.streaks;
     }
 }

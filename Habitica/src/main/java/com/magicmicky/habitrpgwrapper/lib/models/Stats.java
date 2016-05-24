@@ -12,37 +12,44 @@ import com.raizlabs.android.dbflow.annotation.Table;
 public class Stats extends PlayerMinStats{
 
     @Column
-    private int toNextLevel, maxHealth, maxMP;
+    private Integer toNextLevel, maxHealth, maxMP;
 
 
-    public int getToNextLevel() {
+    public Integer getToNextLevel() {
         return toNextLevel;
     }
 
-    public void setToNextLevel(int toNextLevel) {
+    public void setToNextLevel(Integer toNextLevel) {
         if (toNextLevel != 0) {
             this.toNextLevel = toNextLevel;
-
         }
     }
 
-    public int getMaxHealth() {
+    public Integer getMaxHealth() {
         return maxHealth;
     }
 
-    public void setMaxHealth(int maxHealth) {
+    public void setMaxHealth(Integer maxHealth) {
         this.maxHealth = maxHealth;
     }
 
-    public int getMaxMP() {
+    public Integer getMaxMP() {
         return maxMP;
     }
 
-    public void setMaxMP(int maxMP) {
+    public void setMaxMP(Integer maxMP) {
         if (maxMP != 0) {
             this.maxMP = maxMP;
         }
     }
 
-
+    public void merge(Stats stats) {
+        if (stats == null) {
+            return;
+        }
+        super.merge(stats);
+        this.toNextLevel = stats.toNextLevel != null ? stats.toNextLevel : this.toNextLevel;
+        this.maxHealth = stats.maxHealth != null ? stats.maxHealth : this.maxHealth;
+        this.maxMP = stats.maxMP != null ? stats.maxMP : this.maxMP;
+    }
 }

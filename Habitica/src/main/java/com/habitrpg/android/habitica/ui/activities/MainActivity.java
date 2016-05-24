@@ -306,9 +306,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void setUserData(boolean fromLocalDb) {
         if (user != null) {
-            Calendar mCalendar = new GregorianCalendar();
-            TimeZone mTimeZone = mCalendar.getTimeZone();
-            long offset = -TimeUnit.MINUTES.convert(mTimeZone.getOffset(mCalendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
+            Calendar calendar = new GregorianCalendar();
+            TimeZone timeZone = calendar.getTimeZone();
+            long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
             if (offset != user.getPreferences().getTimezoneOffset()) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
@@ -947,9 +947,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (lvl > user.getStats().getLvl()) {
             displayLevelUpDialog(lvl);
 
-            this.apiHelper.apiService.revive()
+            this.apiHelper.retrieveUser(true)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
             user.getStats().setLvl(lvl);
 
             showSnackbar(this, floatingMenuWrapper, message.toString(), SnackbarDisplayType.NORMAL);

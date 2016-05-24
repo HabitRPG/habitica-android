@@ -37,7 +37,7 @@ public class SkillCallback implements Action1<SkillResponse> {
             this.user.setFlags(user.getFlags());
         }
         if (user.getStats() != null) {
-            this.user.setStats(user.getStats());
+            this.user.getStats().merge(user.getStats());
         }
 
         this.user.async().save();
