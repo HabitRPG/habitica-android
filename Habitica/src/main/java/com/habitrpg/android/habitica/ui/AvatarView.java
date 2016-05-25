@@ -37,10 +37,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AvatarView extends View {
     public static final String IMAGE_URI_ROOT = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/";
     private static final String TAG = "AvatarView";
-    private static final Map<String, String> sFilenameMap;
-    private static final Rect sFullHeroRect = new Rect(0, 0, 140, 147);
-    private static final Rect sCompactHeroRect = new Rect(0, 0, 114, 114);
-    private static final Rect sHeroOnlyRect = new Rect(0, 0, 90, 90);
+    private static final Map<String, String> FILENAME_MAP;
+    private static final Rect FULL_HERO_RECT = new Rect(0, 0, 140, 147);
+    private static final Rect COMPACT_HERO_RECT = new Rect(0, 0, 114, 114);
+    private static final Rect HERO_ONLY_RECT = new Rect(0, 0, 90, 90);
 
     static {
         Map<String, String> tempMap = new HashMap<>();
@@ -48,24 +48,24 @@ public class AvatarView extends View {
         tempMap.put("armor_special_1", "ContributorOnly-Equip-CrystalArmor.gif");
         tempMap.put("weapon_special_critical", "weapon_special_critical.gif");
         tempMap.put("Pet-Wolf-Cerberus", "Pet-Wolf-Cerberus.gif");
-        sFilenameMap = Collections.unmodifiableMap(tempMap);
+        FILENAME_MAP = Collections.unmodifiableMap(tempMap);
     }
 
-    private boolean mShowBackground = true;
-    private boolean mShowMount = true;
-    private boolean mShowPet = true;
-    private boolean mHasBackground;
-    private boolean mHasMount;
-    private boolean mHasPet;
-    private boolean mIsOrphan;
-    private MultiDraweeHolder<GenericDraweeHierarchy> mMultiDraweeHolder = new MultiDraweeHolder<>();
-    private HabitRPGUser mUser;
-    private RectF mAvatarRectF;
-    private Matrix mMatrix = new Matrix();
-    private AtomicInteger mNumberLayersInProcess = new AtomicInteger(0);
-    private Consumer<Bitmap> mAvatarImageConsumer;
-    private Bitmap mAvatarBitmap;
-    private Canvas mAvatarCanvas;
+    private boolean showBackground = true;
+    private boolean showMount = true;
+    private boolean showPet = true;
+    private boolean hasBackground;
+    private boolean hasMount;
+    private boolean hasPet;
+    private boolean isOrphan;
+    private MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder = new MultiDraweeHolder<>();
+    private HabitRPGUser user;
+    private RectF avatarRectF;
+    private Matrix matrix = new Matrix();
+    private AtomicInteger numberLayersInProcess = new AtomicInteger(0);
+    private Consumer<Bitmap> avatarImageConsumer;
+    private Bitmap avatarBitmap;
+    private Canvas avatarCanvas;
 
     public AvatarView(Context context) {
         super(context);
@@ -85,10 +85,10 @@ public class AvatarView extends View {
     public AvatarView(Context context, boolean showBackground, boolean showMount, boolean showPet) {
         super(context);
 
-        mShowBackground = showBackground;
-        mShowMount = showMount;
-        mShowPet = showPet;
-        mIsOrphan = true;
+        this.showBackground = showBackground;
+        this.showMount = showMount;
+        this.showPet = showPet;
+        isOrphan = true;
     }
 
     private void init(AttributeSet attrs, int defStyle) {
@@ -97,19 +97,19 @@ public class AvatarView extends View {
                 attrs, R.styleable.AvatarView, defStyle, 0);
 
         try {
-            mShowBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true);
-            mShowMount = a.getBoolean(R.styleable.AvatarView_showMount, true);
-            mShowPet = a.getBoolean(R.styleable.AvatarView_showPet, true);
+            showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true);
+            showMount = a.getBoolean(R.styleable.AvatarView_showMount, true);
+            showPet = a.getBoolean(R.styleable.AvatarView_showPet, true);
         } finally {
             a.recycle();
         }
     }
 
     private void showLayers(@NonNull Map<LayerType, String> layerMap) {
-        if (mMultiDraweeHolder.size() > 0) return;
+        if (multiDraweeHolder.size() > 0) return;
         int i = 0;
 
-        mNumberLayersInProcess.set(layerMap.size());
+        numberLayersInProcess.set(layerMap.size());
 
         for (Map.Entry<LayerType, String> entry : layerMap.entrySet()) {
             final LayerType layerKey = entry.getKey();
@@ -122,7 +122,7 @@ public class AvatarView extends View {
 
             DraweeHolder<GenericDraweeHierarchy> draweeHolder = DraweeHolder.create(hierarchy, getContext());
             draweeHolder.getTopLevelDrawable().setCallback(this);
-            mMultiDraweeHolder.add(draweeHolder);
+            multiDraweeHolder.add(draweeHolder);
 
             DraweeController controller = Fresco.newDraweeControllerBuilder()
                     .setUri(IMAGE_URI_ROOT + getFileName(layerName))
@@ -133,7 +133,7 @@ public class AvatarView extends View {
                                 ImageInfo imageInfo,
                                 Animatable anim) {
                             if (imageInfo != null) {
-                                mMultiDraweeHolder.get(layerNumber).getTopLevelDrawable().setBounds(getLayerBounds(layerKey, layerName, imageInfo));
+                                multiDraweeHolder.get(layerNumber).getTopLevelDrawable().setBounds(getLayerBounds(layerKey, layerName, imageInfo));
                                 onLayerComplete();
                             }
                         }
@@ -144,41 +144,41 @@ public class AvatarView extends View {
                             onLayerComplete();
                         }
                     })
-                    .setAutoPlayAnimations(!mIsOrphan)
+                    .setAutoPlayAnimations(!isOrphan)
                     .build();
             draweeHolder.setController(controller);
         }
 
-        if (mIsOrphan) mMultiDraweeHolder.onAttach();
+        if (isOrphan) multiDraweeHolder.onAttach();
     }
 
     private Map<LayerType, String> getLayerMap() {
-        assert mUser != null;
-        return getLayerMap(mUser, true);
+        assert user != null;
+        return getLayerMap(user, true);
     }
 
     private Map<LayerType, String> getLayerMap(@NonNull HabitRPGUser user, boolean resetHasAttributes) {
         EnumMap<LayerType, String> layerMap = user.getAvatarLayerMap();
 
-        if (resetHasAttributes) mHasBackground = mHasMount = mHasPet = false;
+        if (resetHasAttributes) hasBackground = hasMount = hasPet = false;
 
         String mountName = user.getItems().getCurrentMount();
-        if (mShowMount && !TextUtils.isEmpty(mountName)) {
+        if (showMount && !TextUtils.isEmpty(mountName)) {
             layerMap.put(LayerType.MOUNT_BODY, "Mount_Body_" + mountName);
             layerMap.put(LayerType.MOUNT_HEAD, "Mount_Head_" + mountName);
-            if (resetHasAttributes) mHasMount = true;
+            if (resetHasAttributes) hasMount = true;
         }
 
         String petName = user.getItems().getCurrentPet();
-        if (mShowPet && !TextUtils.isEmpty(petName)) {
+        if (showPet && !TextUtils.isEmpty(petName)) {
             layerMap.put(LayerType.PET, "Pet-" + petName);
-            if (resetHasAttributes) mHasPet = true;
+            if (resetHasAttributes) hasPet = true;
         }
 
         String backgroundName = user.getPreferences().getBackground();
-        if (mShowBackground && !TextUtils.isEmpty(backgroundName)) {
+        if (showBackground && !TextUtils.isEmpty(backgroundName)) {
             layerMap.put(LayerType.BACKGROUND, "background_" + backgroundName);
-            if (resetHasAttributes) mHasBackground = true;
+            if (resetHasAttributes) hasBackground = true;
         }
         return layerMap;
     }
@@ -191,16 +191,16 @@ public class AvatarView extends View {
         // lookup layer specific offset
         switch (layerName) {
             case "weapon_special_critical":
-                if (mShowMount || mShowPet) {
+                if (showMount || showPet) {
                     // full hero box
-                    if (mHasMount) {
+                    if (hasMount) {
                         offset = new PointF(13.0f, 12.0f);
-                    } else if (mHasPet) {
+                    } else if (hasPet) {
                         offset = new PointF(13.0f, 24.5f + 12.0f);
                     } else {
                         offset = new PointF(13.0f, 28.0f + 12.0f);
                     }
-                } else if (mShowBackground) {
+                } else if (showBackground) {
                     // compact hero box
                     offset = new PointF(-12.0f, 18.0f + 12.0f);
                 } else {
@@ -216,7 +216,7 @@ public class AvatarView extends View {
         if (offset == null) {
             switch (layerType) {
                 case BACKGROUND:
-                    if (!(mShowMount || mShowPet)) {
+                    if (!(showMount || showPet)) {
                         offset = new PointF(-25.0f, 0.0f); // compact hero box
                     }
                     break;
@@ -242,22 +242,22 @@ public class AvatarView extends View {
                 case SHIELD:
                 case WEAPON:
                 case ZZZ:
-                    if (mShowMount || mShowPet) {
+                    if (showMount || showPet) {
                         // full hero box
-                        if (mHasMount) {
+                        if (hasMount) {
                             offset = new PointF(25.0f, 0);
-                        } else if (mHasPet) {
+                        } else if (hasPet) {
                             offset = new PointF(25.0f, 24.5f);
                         } else {
                             offset = new PointF(25.0f, 28.0f);
                         }
-                    } else if (mShowBackground) {
+                    } else if (showBackground) {
                         // compact hero box
                         offset = new PointF(0.0f, 18.0f);
                     }
                     break;
                 case PET:
-                    offset = new PointF(0, sFullHeroRect.height() - layerImageInfo.getHeight());
+                    offset = new PointF(0, FULL_HERO_RECT.height() - layerImageInfo.getHeight());
                     break;
                 default:
                     break;
@@ -271,32 +271,32 @@ public class AvatarView extends View {
         }
 
         // resize bounds to fit and keep original aspect ratio
-        mMatrix.mapRect(boundsF);
+        matrix.mapRect(boundsF);
         boundsF.round(bounds);
 
         return bounds;
     }
 
     private String getFileName(@NonNull String imageName) {
-        if (sFilenameMap.containsKey(imageName)) {
-            return sFilenameMap.get(imageName);
+        if (FILENAME_MAP.containsKey(imageName)) {
+            return FILENAME_MAP.get(imageName);
         }
 
         return imageName + ".png";
     }
 
     private void onLayerComplete() {
-        if (mNumberLayersInProcess.decrementAndGet() == 0) {
-            if (mAvatarImageConsumer != null) {
-                mAvatarImageConsumer.accept(getAvatarImage());
+        if (numberLayersInProcess.decrementAndGet() == 0) {
+            if (avatarImageConsumer != null) {
+                avatarImageConsumer.accept(getAvatarImage());
             }
         }
     }
 
     public void onAvatarImageReady(@NonNull Consumer<Bitmap> consumer) {
-        mAvatarImageConsumer = consumer;
-        if (mMultiDraweeHolder.size() > 0 && mNumberLayersInProcess.get() == 0) {
-            mAvatarImageConsumer.accept(getAvatarImage());
+        avatarImageConsumer = consumer;
+        if (multiDraweeHolder.size() > 0 && numberLayersInProcess.get() == 0) {
+            avatarImageConsumer.accept(getAvatarImage());
         } else {
             initAvatarRectMatrix();
             showLayers(getLayerMap());
@@ -304,56 +304,56 @@ public class AvatarView extends View {
     }
 
     public void setUser(@NonNull HabitRPGUser user) {
-        HabitRPGUser oldUser = mUser;
-        mUser = user;
+        HabitRPGUser oldUser = this.user;
+        this.user = user;
 
         if (oldUser != null) {
             Map<LayerType, String> currentLayerMap = getLayerMap(oldUser, false);
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
             if (!currentLayerMap.equals(newLayerMap)) {
-                mMultiDraweeHolder.clear();
-                mNumberLayersInProcess.set(0);
+                multiDraweeHolder.clear();
+                numberLayersInProcess.set(0);
             }
         }
         invalidate();
     }
 
     private Rect getOriginalRect() {
-        return (mShowMount || mShowPet) ? sFullHeroRect : ((mShowBackground) ? sCompactHeroRect : sHeroOnlyRect);
+        return (showMount || showPet) ? FULL_HERO_RECT : ((showBackground) ? COMPACT_HERO_RECT : HERO_ONLY_RECT);
     }
 
     private Bitmap getAvatarImage() {
-        assert mUser != null;
-        assert mAvatarRectF != null;
+        assert user != null;
+        assert avatarRectF != null;
         Rect canvasRect = new Rect();
-        mAvatarRectF.round(canvasRect);
-        mAvatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888);
-        mAvatarCanvas = new Canvas(mAvatarBitmap);
-        draw(mAvatarCanvas);
+        avatarRectF.round(canvasRect);
+        avatarBitmap = Bitmap.createBitmap(canvasRect.width(), canvasRect.height(), Bitmap.Config.ARGB_8888);
+        avatarCanvas = new Canvas(avatarBitmap);
+        draw(avatarCanvas);
 
-        return mAvatarBitmap;
+        return avatarBitmap;
     }
 
     private void initAvatarRectMatrix() {
-        if (mAvatarRectF == null) {
+        if (avatarRectF == null) {
             Rect srcRect = getOriginalRect();
 
-            if (mIsOrphan) {
-                mAvatarRectF = new RectF(srcRect);
+            if (isOrphan) {
+                avatarRectF = new RectF(srcRect);
 
                 // change scale to not be 1:1
                 // a quick fix as fresco AnimatedDrawable/ScaleTypeDrawable
                 // will not translate matrix properly
-                mMatrix.setScale(1.2f, 1.2f);
-                mMatrix.mapRect(mAvatarRectF);
+                matrix.setScale(1.2f, 1.2f);
+                matrix.mapRect(avatarRectF);
             } else {
                 // full hero box when showMount and showPet is enabled (140w * 147h)
                 // compact hero box when only showBackground is enabled (114w * 114h)
                 // hero only box when all show settings disabled (90w * 90h)
-                mAvatarRectF = new RectF(0, 0, getWidth(), getHeight());
-                mMatrix.setRectToRect(new RectF(srcRect), mAvatarRectF, Matrix.ScaleToFit.START); // TODO support other ScaleToFit
-                mAvatarRectF = new RectF(srcRect);
-                mMatrix.mapRect(mAvatarRectF);
+                avatarRectF = new RectF(0, 0, getWidth(), getHeight());
+                matrix.setRectToRect(new RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START); // TODO support other ScaleToFit
+                avatarRectF = new RectF(srcRect);
+                matrix.mapRect(avatarRectF);
             }
         }
     }
@@ -365,56 +365,56 @@ public class AvatarView extends View {
         initAvatarRectMatrix();
 
         // draw only when user is set
-        if (mUser == null) return;
+        if (user == null) return;
 
         // request image layers if not yet processed
-        if (mMultiDraweeHolder.size() == 0) {
+        if (multiDraweeHolder.size() == 0) {
             showLayers(getLayerMap());
         }
 
         // manually call onAttach/onDetach if view is without parent as they will never be called otherwise
-        if (mIsOrphan) mMultiDraweeHolder.onAttach();
-        mMultiDraweeHolder.draw(canvas);
+        if (isOrphan) multiDraweeHolder.onAttach();
+        multiDraweeHolder.draw(canvas);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mMultiDraweeHolder.onDetach();
+        multiDraweeHolder.onDetach();
     }
 
     @Override
     public void onStartTemporaryDetach() {
         super.onStartTemporaryDetach();
-        mMultiDraweeHolder.onDetach();
+        multiDraweeHolder.onDetach();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mMultiDraweeHolder.onAttach();
+        multiDraweeHolder.onAttach();
     }
 
     @Override
     public void onFinishTemporaryDetach() {
         super.onFinishTemporaryDetach();
-        mMultiDraweeHolder.onAttach();
+        multiDraweeHolder.onAttach();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return mMultiDraweeHolder.onTouchEvent(event) || super.onTouchEvent(event);
+        return multiDraweeHolder.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
     @Override
     protected boolean verifyDrawable(Drawable who) {
-        return mMultiDraweeHolder.verifyDrawable(who) || super.verifyDrawable(who);
+        return multiDraweeHolder.verifyDrawable(who) || super.verifyDrawable(who);
     }
 
     @Override
     public void invalidateDrawable(@NonNull Drawable drawable) {
         invalidate();
-        if (mAvatarCanvas != null) draw(mAvatarCanvas);
+        if (avatarCanvas != null) draw(avatarCanvas);
     }
 
     public enum LayerType {

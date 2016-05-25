@@ -29,7 +29,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     private ValueBarBinding xpBar;
     private ValueBarBinding mpBar;
 
-    private AvatarView mAvatarView;
+    private AvatarView avatarView;
 
     private android.content.res.Resources res;
 
@@ -56,7 +56,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         gemsText = (TextView) v.findViewById(R.id.gems_tv);
         View hpBarView = v.findViewById(R.id.hpBar);
 
-        mAvatarView = (AvatarView) v.findViewById(R.id.avatarView);
+        avatarView = (AvatarView) v.findViewById(R.id.avatarView);
         hpBar = DataBindingUtil.bind(hpBarView);
         xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
         mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
@@ -79,7 +79,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         int gp = (stats.getGp().intValue());
         int sp = (int) ((stats.getGp() - gp) * 100);
 
-        mAvatarView.setUser(user);
+        avatarView.setUser(user);
 
         if (stats.get_class() != null) {
             userClass += stats.getCleanedClassName();

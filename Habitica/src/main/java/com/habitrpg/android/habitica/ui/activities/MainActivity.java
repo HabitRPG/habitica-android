@@ -164,8 +164,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private APIHelper apiHelper;
     private AlertDialog faintDialog;
 
-    private AvatarView mSideAvatarView;
-    private AvatarView mDialogAvatarView;
+    private AvatarView sideAvatarView;
+    private AvatarView dialogAvatarView;
 
     private Date lastSync;
 
@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1, false);
-        mSideAvatarView = new AvatarView(this, true, false, false);
+        sideAvatarView = new AvatarView(this, true, false, false);
 
         if (this.filterDrawer == null) {
             filterDrawer = new DrawerBuilder()
@@ -578,8 +578,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
         profile.withName(user.getProfile().getName());
-        mSideAvatarView.setUser(user);
-        mSideAvatarView.onAvatarImageReady(avatarImage -> {
+        sideAvatarView.setUser(user);
+        sideAvatarView.onAvatarImageReady(avatarImage -> {
             profile.withIcon(avatarImage);
             accountHeader.updateProfile(profile);
         });
@@ -992,8 +992,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 hpBar.setPartyMembers(true);
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
 
-                mDialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
-                mDialogAvatarView.setUser(user);
+                dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
+                dialogAvatarView.setUser(user);
             }
 
             this.faintDialog = new AlertDialog.Builder(this)
@@ -1025,8 +1025,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (customView != null) {
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
-            mDialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
-            mDialogAvatarView.setUser(user);
+            dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
+            dialogAvatarView.setUser(user);
         }
 
         final ShareEvent event = new ShareEvent();
