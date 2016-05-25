@@ -190,10 +190,10 @@ public class Preferences extends BaseModel {
     }
 
     public String getChair() {
-        if (chair != null) {
+        if (chair != null && !chair.equals("none")) {
             return "chair_"+chair;
         }
-        return chair;
+        return null;
     }
 
     public void setChair(String chair) {
