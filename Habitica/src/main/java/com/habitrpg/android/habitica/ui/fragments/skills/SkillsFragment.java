@@ -142,7 +142,9 @@ public class SkillsFragment extends BaseMainFragment {
             observable = apiHelper.apiService.useSkill(skill.key, skill.target);
         }
         observable.compose(apiHelper.configureApiCallObserver())
-                .subscribe(new SkillCallback(activity, user, skill), throwable -> {});
+                .subscribe(new SkillCallback(activity, user, skill), throwable -> {
+                    removeProgressDialog();
+                });
     }
 
     private void displayProgressDialog() {
