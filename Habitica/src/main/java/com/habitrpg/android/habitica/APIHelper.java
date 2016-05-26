@@ -352,6 +352,8 @@ public class APIHelper implements Action1<Throwable> {
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
+        } else {
+            Crashlytics.logException(throwable);
         }
     }
 
