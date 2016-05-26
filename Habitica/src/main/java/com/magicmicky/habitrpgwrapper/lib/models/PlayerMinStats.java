@@ -54,7 +54,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Integer getPoints() {
-        return points;
+        return points != null ? points : Integer.valueOf(0);
     }
 
     public void setPoints(Integer points) {
@@ -62,7 +62,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Integer getLvl() {
-        return lvl;
+        return lvl != null ? lvl : Integer.valueOf(0);
     }
 
     public void setLvl(Integer lvl) {
@@ -85,7 +85,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Double getGp() {
-        return gp;
+        return gp != null ? gp : Double.valueOf(0);
     }
 
     public void setGp(Double gp) {
@@ -93,7 +93,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Double getExp() {
-        return exp;
+        return exp != null ? exp : Double.valueOf(0);
     }
 
     public void setExp(Double exp) {
@@ -101,7 +101,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Double getMp() {
-        return mp;
+        return mp != null ? mp : Double.valueOf(0);
     }
 
     public void setMp(Double mp) {
@@ -109,7 +109,7 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public Double getHp() {
-        return hp;
+        return hp != null ? hp : Double.valueOf(0);
     }
 
     public void setHp(Double hp) {

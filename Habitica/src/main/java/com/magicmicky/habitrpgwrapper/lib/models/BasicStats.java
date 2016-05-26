@@ -29,7 +29,7 @@ public class BasicStats extends BaseModel {
     public Float _int;
 
     public Float getCon() {
-        return con;
+        return con != null ? con : Float.valueOf(0);
     }
 
     public void setCon(Float con) {
@@ -37,7 +37,7 @@ public class BasicStats extends BaseModel {
     }
 
     public Float getStr() {
-        return str;
+        return str != null ? str : Float.valueOf(0);
     }
 
     public void setStr(Float str) {
@@ -45,7 +45,7 @@ public class BasicStats extends BaseModel {
     }
 
     public Float getPer() {
-        return per;
+        return per != null ? per : Float.valueOf(0);
     }
 
     public void setPer(Float per) {
@@ -53,7 +53,7 @@ public class BasicStats extends BaseModel {
     }
 
     public Float get_int() {
-        return _int;
+        return _int != null ? _int : Float.valueOf(0);
     }
 
     public void set_int(Float _int) {

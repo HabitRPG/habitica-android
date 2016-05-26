@@ -25,7 +25,7 @@ public class Buffs extends BasicStats {
     }
 
     public Boolean getSnowball() {
-        return snowball;
+        return snowball != null ? snowball: Boolean.FALSE;
     }
 
     public void setSnowball(Boolean snowball) {
@@ -33,7 +33,7 @@ public class Buffs extends BasicStats {
     }
 
     public Boolean getStreaks() {
-        return streaks;
+        return streaks != null ? streaks : Boolean.FALSE;
     }
 
     public void setStreaks(Boolean streaks) {

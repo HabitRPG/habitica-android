@@ -16,7 +16,7 @@ public class Stats extends PlayerMinStats{
 
 
     public Integer getToNextLevel() {
-        return toNextLevel;
+        return toNextLevel != null ? toNextLevel : Integer.valueOf(0);
     }
 
     public void setToNextLevel(Integer toNextLevel) {
@@ -26,7 +26,7 @@ public class Stats extends PlayerMinStats{
     }
 
     public Integer getMaxHealth() {
-        return maxHealth;
+        return maxHealth != null ? maxHealth : Integer.valueOf(0);
     }
 
     public void setMaxHealth(Integer maxHealth) {
@@ -34,7 +34,7 @@ public class Stats extends PlayerMinStats{
     }
 
     public Integer getMaxMP() {
-        return maxMP;
+        return maxMP != null ? maxMP : Integer.valueOf(0);
     }
 
     public void setMaxMP(Integer maxMP) {
