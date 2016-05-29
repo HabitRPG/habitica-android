@@ -6,10 +6,12 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.receivers.TodoReceiver;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -24,7 +26,9 @@ import com.raizlabs.android.dbflow.sql.language.Set;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -92,6 +96,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private List<Tag> tags;
     private CheckListAdapter checklistAdapter;
     private List<CheckBox> tagCheckBoxList;
+
+    private TaskAlarmManager taskAlarmManager;
 
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
@@ -214,6 +220,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (taskType == null) {
             return;
         }
+
+        taskAlarmManager = TaskAlarmManager.getInstance(this);
 
         dueDateListener = new DateEditTextListener(dueDatePickerText);
         startDateListener = new DateEditTextListener(startDatePickerText);
