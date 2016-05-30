@@ -138,8 +138,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
-        int maxHP = stats.getMaxHealth();
-        if (maxHP == 0) {
+        Integer maxHP = stats.getMaxHealth();
+        if ((maxHP == null) || maxHP.equals(0)) {
             maxHP = 50;
         }
 
