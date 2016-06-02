@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.receivers.TodoReceiver;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 
@@ -17,10 +18,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -106,24 +109,26 @@ public class TaskAlarmManager {
     @Subscribe
     public void onEvent(TaskCreatedEvent evnt) {
         Task task = (Task) evnt.task;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(task.getDueDate());
+        List<RemindersItem> reminders = task.getReminders();
 
-        this.addAlarmForTask(task, cal);
+        for (RemindersItem reminder : reminders) {
+            this.addAlarmForTaskReminder(task, reminder);
+        }
     }
 
     @Subscribe
     public void onEvent(TaskUpdatedEvent evnt) {
         Task task = (Task) evnt.task;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(task.getDueDate());
+        List<RemindersItem> reminders = task.getReminders();
 
-        this.addAlarmForTask(task, cal);
+        for (RemindersItem reminder : reminders) {
+            this.addAlarmForTaskReminder(task, reminder);
+        }
     }
 
-    public void addAlarmForTask(Task task, Calendar cal) {
+    public void addAlarmForTaskReminder(Task task, RemindersItem reminder) {
         if (task.getType().equals("todo")) {
-            this.addAlarmForTodo(task, cal);
+            this.addAlarmForTodo(task, reminder);
         }
     }
 
@@ -135,8 +140,12 @@ public class TaskAlarmManager {
         }
     }
 
-    private void addAlarmForTodo(Task task, Calendar cal) {
+    private void addAlarmForTodo(Task task, RemindersItem reminder) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(reminder.getStartDate());
+        //@TODO: Set Time
         cal.add(Calendar.SECOND, 60);
+
         Intent intent = new Intent(context, TodoReceiver.class);
         intent.putExtra(TASK_NAME_INTENT_KEY, task.getText());
         intent.putExtra(TASK_ID_INTENT_KEY, task.getId());

@@ -80,6 +80,7 @@
     <string name="positive_habit_form">Positive ( + )</string>
     <string name="negative_habit_form">Negative ( - )</string>
     <string name="checklist">Checklist</string>
+    <string name="reminders">Reminders</string>
     <string name="actions">Actions</string>
 
     <string name="attributes">Attributes</string>
