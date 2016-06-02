@@ -33,7 +33,7 @@ abstract public class BaseFragmentTests<F extends Fragment> {
     public F fragment;
     private ActivityController<FragmentControllerActivity> activityController;
     private FragmentControllerActivity activity;
-
+/*
     @Before
     public void setUp() {
         activityController = Robolectric.buildActivity(FragmentControllerActivity.class);
@@ -59,7 +59,7 @@ abstract public class BaseFragmentTests<F extends Fragment> {
     public void tearDown() {
         this.activityController.pause().stop().destroy();
     }
-
+*/
     private static class FragmentControllerActivity extends MainActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
