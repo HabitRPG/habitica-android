@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dip"
     android:paddingEnd="24dip"
     android:paddingStart="24dip"
     android:paddingRight="24dip">
-    <ImageView
+    <com.habitrpg.android.habitica.ui.AvatarView
         android:layout_width="@dimen/avatar_small_width"
         android:layout_height="@dimen/avatar_small_height"
         android:id="@+id/avatarView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        app:showBackground="false"
+        app:showMount="false"
+        app:showPet="false" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -19,7 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.List;
 
@@ -38,11 +37,10 @@ public class AvatarSetupFragment extends BaseFragment {
     RecyclerView recyclerView;
 
     @BindView(R.id.avatarView)
-    ImageView avatarView;
+    AvatarView avatarView;
 
     CustomizationSetupAdapter adapter;
     GridLayoutManager layoutManager;
-    UserPicture userPicture;
 
     @Nullable
     @Override
@@ -77,7 +75,6 @@ public class AvatarSetupFragment extends BaseFragment {
         this.recyclerView.setAdapter(this.adapter);
         this.loadCustomizations();
 
-        userPicture = new UserPicture(this.activity, true, true);
         if (this.user != null) {
             this.updateAvatar();
         }
@@ -115,8 +112,8 @@ public class AvatarSetupFragment extends BaseFragment {
 
     public void setUser(HabitRPGUser user) {
         this.user = user;
-        if (this.userPicture != null) {
-            this.updateAvatar();
+        if (avatarView != null) {
+            updateAvatar();
         }
         if (this.adapter != null) {
             this.adapter.user = user;
@@ -125,8 +122,7 @@ public class AvatarSetupFragment extends BaseFragment {
     }
 
     private void updateAvatar() {
-        this.userPicture.setUser(this.user);
-        this.userPicture.setPictureOn(this.avatarView);
+        avatarView.setUser(user);
     }
 
 }

@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.content.Context;
@@ -12,11 +12,9 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -56,8 +54,8 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     class MemberViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.avatar)
-        ImageView imageView;
+        @BindView(R.id.avatarView)
+        AvatarView avatarView;
 
         @BindView(R.id.username)
         TextView userName;
@@ -74,7 +72,6 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         ValueBarBinding hpBar;
 
         Resources resources;
-        UserPicture userPicture;
 
         public MemberViewHolder(View itemView) {
             super(itemView);
@@ -87,20 +84,12 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             hpBar.setPartyMembers(true);
 
             resources = itemView.getResources();
-            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-            if (dpWidth >= 320) {
-                userPicture = new UserPicture(itemView.getContext(), true, true);
-            } else {
-                userPicture = new UserPicture(itemView.getContext(), false, false);
-            }
         }
 
         public void bind(HabitRPGUser user) {
             android.content.Context ctx = itemView.getContext();
 
-            userPicture.setUser(user);
-            userPicture.setPictureOn(imageView);
+            avatarView.setUser(user);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
 

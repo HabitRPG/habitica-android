@@ -75,4 +75,8 @@ public class Hair extends BaseModel {
     public int getFlower() { return flower; }
 
     public void setFlower(int flower) { this.flower = flower; }
+
+    public boolean isAvailable(int hairId) {
+        return hairId > 0;
+    }
 }

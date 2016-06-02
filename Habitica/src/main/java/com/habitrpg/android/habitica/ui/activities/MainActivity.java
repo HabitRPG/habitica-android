@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -38,7 +39,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
-import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -164,8 +164,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private APIHelper apiHelper;
     private AlertDialog faintDialog;
 
-    private UserPicture sideUserPicture;
-    private UserPicture dialogUserPicture;
+    private AvatarView sideAvatarView;
+    private AvatarView dialogAvatarView;
 
     private Date lastSync;
 
@@ -199,8 +199,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1, false);
-        this.sideUserPicture = new UserPicture(this, true, false);
-        this.dialogUserPicture = new UserPicture(this, false, false);
+        sideAvatarView = new AvatarView(this, true, false, false);
 
         if (this.filterDrawer == null) {
             filterDrawer = new DrawerBuilder()
@@ -588,9 +587,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
         profile.withName(user.getProfile().getName());
-        sideUserPicture.setUser(this.user);
-        sideUserPicture.setPictureWithRunnable(avatar -> {
-            profile.withIcon(avatar);
+        sideAvatarView.setUser(user);
+        sideAvatarView.onAvatarImageReady(avatarImage -> {
+            profile.withIcon(avatarImage);
             accountHeader.updateProfile(profile);
         });
         accountHeader.updateProfile(profile);
@@ -1002,9 +1001,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 hpBar.setPartyMembers(true);
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
 
-                ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-                this.dialogUserPicture.setUser(this.user);
-                this.dialogUserPicture.setPictureOn(avatarView);
+                dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
+                dialogAvatarView.setUser(user);
             }
 
             this.faintDialog = new AlertDialog.Builder(this)
@@ -1036,10 +1034,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (customView != null) {
             TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
             detailView.setText(this.getString(R.string.levelup_detail, level));
-            ImageView avatarView = (ImageView) customView.findViewById(R.id.avatarView);
-            this.dialogUserPicture.setUser(this.user);
-            this.dialogUserPicture.setPictureOn(avatarView);
+            dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
+            dialogAvatarView.setUser(user);
         }
+
+        final ShareEvent event = new ShareEvent();
+        event.sharedMessage = getString(R.string.share_levelup, level) + " https://habitica.com/social/level-up";
+        AvatarView avatarView = new AvatarView(this, true, true, true);
+        avatarView.setUser(user);
+        avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
 
         AlertDialog alert = new AlertDialog.Builder(this)
                 .setTitle(R.string.levelup_header)
@@ -1048,15 +1051,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     checkClassSelection();
                 })
                 .setNeutralButton(R.string.share, (dialog, which) -> {
-                    ShareEvent event = new ShareEvent();
-                    event.sharedMessage = getString(R.string.share_levelup, level) + " https://habitica.com/social/level-up";
-                    UserPicture picture = new UserPicture(this, true, true);
-                    picture.setUser(this.user);
-                    picture.setPictureWithRunnable(avatarBitmap -> {
-                        event.shareImage = avatarBitmap;
-                        EventBus.getDefault().post(event);
-                        dialog.dismiss();
-                    });
+                    EventBus.getDefault().post(event);
+                    dialog.dismiss();
                 })
                 .create();
 
