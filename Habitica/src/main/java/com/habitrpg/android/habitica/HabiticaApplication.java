@@ -78,6 +78,7 @@ public class HabiticaApplication extends MultiDexApplication {
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
+        component.inject(this);
     }
 
     private void setupLeakCanary() {

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.components;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
@@ -140,4 +141,6 @@ public interface AppComponent {
     void inject(GemsPurchaseFragment gemsPurchaseFragment);
 
     void inject(NewsFragment newsFragment);
+
+    void inject(HabiticaApplication habiticaApplication);
 }
