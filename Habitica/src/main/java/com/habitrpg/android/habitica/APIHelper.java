@@ -23,9 +23,14 @@ import android.support.v7.app.AlertDialog;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -159,9 +164,12 @@ public class APIHelper implements Action1<Throwable> {
 
     @Override
     public void call(Throwable throwable) {
-        if (throwable.getClass().equals(ConnectException.class)) {
+        final Class<?> throwableClass = throwable.getClass();
+        if (throwableClass.equals(ConnectException.class) || throwableClass.isAssignableFrom(SSLException.class)) {
             this.showConnectionProblemDialog(R.string.internal_error_api);
-        } else if (throwable.getClass().equals(HttpException.class)) {
+        } else if (throwableClass.equals(SocketTimeoutException.class) || throwableClass.equals(UnknownHostException.class)) {
+            this.showConnectionProblemDialog(R.string.network_error_no_network_body);
+        } else if (throwableClass.equals(HttpException.class)) {
             HttpException error = (HttpException)throwable;
             retrofit2.Response<?> response = error.response();
             ErrorResponse res = null;
