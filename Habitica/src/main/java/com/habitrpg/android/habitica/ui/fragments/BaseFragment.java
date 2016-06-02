@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.ui.activities.BaseActivity;
+import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -65,7 +67,7 @@ public abstract class BaseFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        injectFragment(((MainActivity)getActivity()).getHabiticaApplication().getComponent());
+        injectFragment(((BaseActivity)getActivity()).getHabiticaApplication().getComponent());
 
         // Receive Events
         try {

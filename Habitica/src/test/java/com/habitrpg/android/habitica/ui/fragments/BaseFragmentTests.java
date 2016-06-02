@@ -33,7 +33,7 @@ abstract public class BaseFragmentTests<F extends Fragment> {
     public F fragment;
     private ActivityController<FragmentControllerActivity> activityController;
     private FragmentControllerActivity activity;
-/*
+
     @Before
     public void setUp() {
         activityController = Robolectric.buildActivity(FragmentControllerActivity.class);
@@ -44,6 +44,11 @@ abstract public class BaseFragmentTests<F extends Fragment> {
                 .get();
     }
 
+    @Test
+    public void dummyTest() {
+
+    }
+/*
     @Test
     public void fragmentLifecycleTest() throws Exception {
         assertNull(this.fragment.getView());
