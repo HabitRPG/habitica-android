@@ -2,9 +2,12 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.github.data5tream.emojilib.EmojiTextView;
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.squareup.picasso.Picasso;
 
 import android.content.Intent;
@@ -16,8 +19,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MaintenanceActivity extends BaseActivity {
 
@@ -32,7 +39,10 @@ public class MaintenanceActivity extends BaseActivity {
 
     @BindView(R.id.playStoreButton)
     Button playStoreButton;
-    private APIHelper apiHelper;
+
+    @Inject
+    public MaintenanceApiService maintenanceService;
+
     private Boolean isDeprecationNotice;
 
     @Override
@@ -57,16 +67,20 @@ public class MaintenanceActivity extends BaseActivity {
         } else {
             this.playStoreButton.setVisibility(View.GONE);
         }
-        HostConfig hostConfig = PrefsActivity.fromContext(this);
-        apiHelper = new APIHelper(hostConfig);
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!isDeprecationNotice) {
-            this.apiHelper.maintenanceService.getMaintenanceStatus()
-                    .compose(this.apiHelper.configureApiCallObserver())
+            this.maintenanceService.getMaintenanceStatus()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(maintenanceResponse -> {
                         if (!maintenanceResponse.activeMaintenance) {
                             finish();

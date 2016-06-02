@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
@@ -118,6 +119,12 @@ public class GroupFormActivity extends BaseActivity {
         if (this.groupID != null) {
             this.fillForm();
         }
+    }
+
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     private void fillForm() {

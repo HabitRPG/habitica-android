@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +32,11 @@ public class NewsFragment extends BaseMainFragment {
         newsWebview.loadUrl(address + "/static/new-stuff");
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
 }

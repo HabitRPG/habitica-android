@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -65,6 +66,11 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

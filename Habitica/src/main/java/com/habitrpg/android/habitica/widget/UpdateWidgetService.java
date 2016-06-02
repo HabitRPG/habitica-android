@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.widget;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.language.Update;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -17,6 +19,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import javax.inject.Inject;
+
 /**
  * The service that should update the simple widget
  *
@@ -26,30 +30,30 @@ import android.widget.RemoteViews;
 public class UpdateWidgetService extends Service implements HabitRPGUserCallback.OnUserReceived {
     private static final String LOG = ".simplewidget.service";
     private AppWidgetManager appWidgetManager;
-    private APIHelper apiHelper;
+
+    @Inject
+    public APIHelper apiHelper;
+
+    public UpdateWidgetService() {
+        super();
+        ((HabiticaApplication)getApplication()).getComponent().inject(this);
+    }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        Log.i(LOG, "Service onStart Called");
-
         this.appWidgetManager = AppWidgetManager.getInstance(this);
         int[] allWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
         ComponentName thisWidget = new ComponentName(this,
                 SimpleWidget.class);
         int[] allWidgetIds2 = appWidgetManager.getAppWidgetIds(thisWidget);
-        Log.w(LOG, "From Intent" + String.valueOf(allWidgetIds.length));
-        Log.w(LOG, "Direct" + String.valueOf(allWidgetIds2.length));
 
-        HostConfig hc = PrefsActivity.fromContext(this);
-        if (hc != null && hc.getApi() != null && !hc.getApi().equals("") && hc.getUser() != null && !hc.getUser().equals("")) {
-            this.apiHelper = new APIHelper(hc);
+        if (apiHelper != null) {
             apiHelper.retrieveUser(true).subscribe(new HabitRPGUserCallback(this));
             for (int widgetId : allWidgetIds) {
                 RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);
                 appWidgetManager.updateAppWidget(widgetId, remoteViews);
             }
         } else {
-            Log.w(LOG, "HostConfig is null");
             for (int widgetId : allWidgetIds) {
                 RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.simple_widget);
                 RemoteViews textConnect = new RemoteViews(this.getPackageName(), R.layout.simple_textview);

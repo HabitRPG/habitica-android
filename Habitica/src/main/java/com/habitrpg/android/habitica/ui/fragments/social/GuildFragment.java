@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -58,6 +59,11 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         setViewPagerAdapter();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

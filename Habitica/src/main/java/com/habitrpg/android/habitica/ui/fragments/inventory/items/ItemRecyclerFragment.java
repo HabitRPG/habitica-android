@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
@@ -112,6 +113,11 @@ public class ItemRecyclerFragment extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

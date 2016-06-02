@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -98,6 +99,11 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         avatarBackgroundView.setOnClickListener(v1 -> displayCustomizationFragment("background", null));
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void displayCustomizationFragment(String type, String category) {

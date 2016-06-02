@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 
@@ -55,6 +56,11 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         return inflater.inflate(R.layout.fragment_gem_purchase, container, false);
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

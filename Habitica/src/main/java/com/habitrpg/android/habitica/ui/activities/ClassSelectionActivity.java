@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.Gear;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -15,9 +16,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -108,6 +106,11 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
                 classWasUnset = true;
             }, throwable -> {});
         }
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     public HabitRPGUser makeUser(Preferences preferences, Outfit outfit) {

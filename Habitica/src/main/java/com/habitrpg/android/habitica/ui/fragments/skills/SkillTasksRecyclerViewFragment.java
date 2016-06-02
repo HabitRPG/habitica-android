@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.skills;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -15,7 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SkillTasksRecyclerViewFragment extends Fragment implements View.OnClickListener {
+public class SkillTasksRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
         public RecyclerView mRecyclerView;
         public RecyclerView.Adapter mAdapter;
         private String classType;
@@ -35,7 +37,12 @@ public class SkillTasksRecyclerViewFragment extends Fragment implements View.OnC
             return view;
         }
 
-        LinearLayoutManager layoutManager = null;
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
+    }
+
+    LinearLayoutManager layoutManager = null;
 
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

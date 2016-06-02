@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
@@ -60,6 +61,11 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

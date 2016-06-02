@@ -1,5 +1,9 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 /**
  * The configuration of the host<br />
  * Currently, the Port isn't used at all.
@@ -10,6 +14,15 @@ public class HostConfig {
     private String port;
     private String api;
     private String user;
+
+    public HostConfig(SharedPreferences sharedPreferences, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        this.port = BuildConfig.PORT;
+        this.address = BuildConfig.DEBUG ? BuildConfig.BASE_URL : context.getString(R.string.base_url);
+        this.api = prefs.getString(context.getString(R.string.SP_APIToken), null);
+        this.user = prefs.getString(context.getString(R.string.SP_userID), null);
+    }
+
     /**
      * Create a new HostConfig
      * @param address the address of the server

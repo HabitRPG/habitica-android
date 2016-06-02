@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -90,6 +91,11 @@ public class PartyFragment extends BaseMainFragment {
         this.tutorialText = getString(R.string.tutorial_party);
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void updateGroupUI() {

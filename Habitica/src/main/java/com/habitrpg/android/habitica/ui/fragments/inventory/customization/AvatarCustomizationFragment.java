@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
@@ -74,6 +75,11 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         this.adapter.gemBalance = user.getBalance() * 4;
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void loadCustomizations() {

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -38,6 +39,11 @@ public class SkillTasksActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadTaskLists();
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     public void loadTaskLists() {

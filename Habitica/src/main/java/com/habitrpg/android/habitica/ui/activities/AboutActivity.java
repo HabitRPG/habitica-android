@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.AboutFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -69,6 +70,10 @@ public class AboutActivity extends BaseActivity {
         });
 
         tabLayout.setupWithViewPager(pager);
+    }
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

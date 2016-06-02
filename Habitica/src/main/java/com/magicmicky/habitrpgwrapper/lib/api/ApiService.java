@@ -6,6 +6,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -25,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -206,4 +209,8 @@ public interface ApiService {
 
     @POST("groups/{gid}/quests/leave")
     Observable<Void> leaveQuest(@Path("gid") String groupId);
+
+    @POST("/iap/android/verify")
+    Call<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
+
 }

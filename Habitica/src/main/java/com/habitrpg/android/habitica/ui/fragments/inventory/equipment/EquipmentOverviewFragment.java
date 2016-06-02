@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -129,6 +130,11 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         }
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void displayEquipmentDetailList(String type, String equipped, Boolean isCostume) {

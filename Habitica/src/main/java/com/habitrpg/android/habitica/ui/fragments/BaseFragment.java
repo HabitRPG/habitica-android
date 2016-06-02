@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import com.amplitude.api.Amplitude;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -26,7 +28,7 @@ import java.util.Date;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BaseFragment extends DialogFragment {
+public abstract class BaseFragment extends DialogFragment {
 
     private boolean registerEventBus = false;
 
@@ -63,6 +65,8 @@ public class BaseFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        injectFragment(((MainActivity)getActivity()).getHabiticaApplication().getComponent());
+
         // Receive Events
         try {
             EventBus.getDefault().register(this);
@@ -73,6 +77,8 @@ public class BaseFragment extends DialogFragment {
 
         return null;
     }
+
+    public abstract void injectFragment(AppComponent component);
 
     @CallSuper
     @Override

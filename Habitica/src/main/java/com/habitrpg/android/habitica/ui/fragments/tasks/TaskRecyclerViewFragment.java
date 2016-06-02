@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
@@ -84,6 +85,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     LinearLayoutManager layoutManager = null;

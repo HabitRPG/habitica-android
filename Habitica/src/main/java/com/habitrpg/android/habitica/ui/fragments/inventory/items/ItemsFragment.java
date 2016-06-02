@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
@@ -36,6 +37,11 @@ public class ItemsFragment extends BaseMainFragment {
         setViewPagerAdapter();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     public void setViewPagerAdapter() {

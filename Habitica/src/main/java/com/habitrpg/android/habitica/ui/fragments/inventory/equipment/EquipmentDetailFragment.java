@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -52,6 +53,11 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         this.loadGear();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void loadGear() {

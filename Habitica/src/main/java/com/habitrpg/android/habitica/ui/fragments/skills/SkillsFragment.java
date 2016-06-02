@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.skills;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.SkillCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -56,6 +57,11 @@ public class SkillsFragment extends BaseMainFragment {
         this.tutorialText = getString(R.string.tutorial_skills);
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @BindView(R.id.recyclerView)

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -14,6 +15,8 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -31,6 +34,9 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
     @BindView(R.id.finishButton)
     Button finishButton;
 
+    @Inject
+    public APIHelper apiHelper;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_intro;
@@ -40,17 +46,22 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getHabiticaApplication().getComponent().inject(this);
+
         setupIntro();
         indicator.setViewPager(pager);
 
         this.skipButton.setOnClickListener(this);
         this.finishButton.setOnClickListener(this);
 
-        HostConfig hostConfig = PrefsActivity.fromContext(this);
-        APIHelper apiHelper = new APIHelper(hostConfig);
         apiHelper.apiService.getContent()
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(contentResult -> {}, throwable -> {});
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     private void setupIntro() {

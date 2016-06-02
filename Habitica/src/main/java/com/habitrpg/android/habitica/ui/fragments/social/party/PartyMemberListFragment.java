@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -47,6 +48,11 @@ public class PartyMemberListFragment extends BaseFragment {
             view = inflater.inflate(R.layout.fragment_party_memberlist, container, false);
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

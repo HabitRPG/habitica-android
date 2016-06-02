@@ -15,12 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import javax.inject.Inject;
+
 public abstract class BaseMainFragment extends BaseFragment {
+
+    @Inject
+    public APIHelper apiHelper;
 
     public MainActivity activity;
     public TabLayout tabLayout;
     public FrameLayout floatingMenuWrapper;
-    public APIHelper apiHelper;
     protected HabitRPGUser user;
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;
@@ -73,10 +77,6 @@ public abstract class BaseMainFragment extends BaseFragment {
             } else {
                 tabLayout.setVisibility(View.GONE);
             }
-        }
-
-        if (apiHelper == null) {
-            apiHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
         }
 
         if (floatingMenuWrapper != null) {

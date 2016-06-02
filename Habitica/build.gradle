@@ -63,6 +63,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
 
+    //Dependency Injection
+    compile 'com.google.dagger:dagger:2.2'
+    apt 'com.google.dagger:dagger-compiler:2.2'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     compile('com.mikepenz:materialdrawer:5.2.6@aar') {
         transitive = true

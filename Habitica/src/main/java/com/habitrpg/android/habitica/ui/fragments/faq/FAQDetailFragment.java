@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
@@ -38,6 +39,10 @@ public class FAQDetailFragment extends BaseMainFragment {
         }
         this.answerTextView.setMovementMethod(LinkMovementMethod.getInstance());
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
     }
 
     public void setArticle(FAQArticle article) {

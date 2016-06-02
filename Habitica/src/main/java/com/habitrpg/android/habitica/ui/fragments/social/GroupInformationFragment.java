@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
@@ -97,6 +98,11 @@ public class GroupInformationFragment extends BaseFragment {
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

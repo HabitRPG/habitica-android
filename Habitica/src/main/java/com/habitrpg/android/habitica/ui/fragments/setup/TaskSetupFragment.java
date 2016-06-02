@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -54,6 +55,11 @@ public class TaskSetupFragment extends BaseFragment {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.setAdapter(this.adapter);
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     private void setTasks() {

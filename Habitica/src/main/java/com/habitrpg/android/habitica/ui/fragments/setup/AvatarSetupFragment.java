@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
@@ -79,6 +80,11 @@ public class AvatarSetupFragment extends BaseFragment {
             this.updateAvatar();
         }
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

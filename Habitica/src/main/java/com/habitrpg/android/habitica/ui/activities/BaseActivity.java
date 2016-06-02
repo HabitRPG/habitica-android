@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.components.AppComponent;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,9 +23,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectActivity(getHabiticaApplication().getComponent());
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
     }
+
+    protected abstract void injectActivity(AppComponent component);
 
     protected void setupToolbar(Toolbar toolbar) {
         if (toolbar != null) {
@@ -43,5 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         destroyed = true;
         super.onDestroy();
+    }
+
+    public HabiticaApplication getHabiticaApplication() {
+        return (HabiticaApplication)getApplication();
     }
 }

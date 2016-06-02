@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import android.graphics.drawable.Drawable;
@@ -51,6 +52,11 @@ public class IntroFragment extends BaseFragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     public void setImage(Drawable image) {

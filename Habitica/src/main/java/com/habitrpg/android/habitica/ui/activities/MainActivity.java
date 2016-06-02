@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
@@ -39,9 +40,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
+import com.habitrpg.android.habitica.userpicture.UserPicture;
+import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -61,7 +63,6 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
@@ -128,6 +129,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import rx.functions.Action1;
 
@@ -156,12 +159,18 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public ActivityCheckout checkout = null;
     private Drawer drawer;
     private Drawer filterDrawer;
+
+    @Inject
     protected HostConfig hostConfig;
+    @Inject
+    public APIHelper apiHelper;
+    @Inject
+    public MaintenanceApiService maintenanceService;
+
     public HabitRPGUser user;
     private AccountHeader accountHeader;
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
-    private APIHelper apiHelper;
     private AlertDialog faintDialog;
 
     private AvatarView sideAvatarView;
@@ -181,14 +190,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.hostConfig = PrefsActivity.fromContext(this);
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig))
             return;
 
         //Check if reminder alarm is set
         scheduleReminder(this);
-
-        HabiticaApplication.ApiHelper = this.apiHelper = new APIHelper(hostConfig);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -211,6 +217,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         setupCheckout();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     @Override
@@ -269,7 +280,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         this.activeFragment = fragment;
         fragment.setArguments(getIntent().getExtras());
-        fragment.apiHelper = apiHelper;
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
@@ -1214,7 +1224,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void checkMaintenance() {
-        this.apiHelper.maintenanceService.getMaintenanceStatus()
+        this.maintenanceService.getMaintenanceStatus()
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(maintenanceResponse -> {
                     if (maintenanceResponse.activeMaintenance) {

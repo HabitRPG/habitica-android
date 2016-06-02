@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.github.data5tream.emojilib.EmojiEditText;
 import com.github.data5tream.emojilib.EmojiPopup;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
@@ -391,6 +392,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         },
                         throwable -> {}
                 );
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     private boolean isEmojiEditText(View view) {

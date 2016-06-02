@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
@@ -124,6 +125,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         this.usesTabLayout = true;
         this.displayingTaskForm = false;
         super.onCreateView(inflater, container, savedInstanceState);
@@ -152,6 +154,11 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         loadTaskLists();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

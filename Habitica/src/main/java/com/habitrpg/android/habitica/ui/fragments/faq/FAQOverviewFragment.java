@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -42,7 +43,12 @@ public class FAQOverviewFragment extends BaseMainFragment {
             return view;
         }
 
-        private void loadArticles() {
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
+    }
+
+    private void loadArticles() {
             if(user == null || adapter == null){
                 return;
             }

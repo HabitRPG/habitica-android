@@ -9,9 +9,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -26,7 +26,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -41,6 +40,8 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
@@ -48,13 +49,16 @@ import rx.functions.Action1;
 /**
  * @author Mickael Goubin
  */
-public class LoginActivity extends AppCompatActivity
+public class LoginActivity extends BaseActivity
 	implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
 	private final static String TAG_ADDRESS="address";
 	private final static String TAG_USERID="user";
 	private final static String TAG_APIKEY="key";
 
-	private APIHelper apiHelper;
+    @Inject
+	public APIHelper apiHelper;
+    @Inject
+    public SharedPreferences sharedPrefs;
 	public String mTmpUserToken;
 	public String mTmpApiToken;
 	public Boolean isRegistering;
@@ -92,9 +96,13 @@ public class LoginActivity extends AppCompatActivity
     @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
 
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_login;
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
 
         //Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
@@ -132,12 +140,6 @@ public class LoginActivity extends AppCompatActivity
 			}
 		});
 
-		HostConfig hc= PrefsActivity.fromContext(this);
-        if(hc ==null) {
-            hc =  new HostConfig(BuildConfig.BASE_URL, BuildConfig.PORT, "", "");
-        }
-		apiHelper = new APIHelper(hc);
-
         this.isRegistering = true;
 
         JSONObject eventProperties = new JSONObject();
@@ -151,7 +153,12 @@ public class LoginActivity extends AppCompatActivity
         Amplitude.getInstance().logEvent("navigate", eventProperties);
     }
 
-	private void resetLayout() {
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
+    }
+
+    private void resetLayout() {
 		if (this.isRegistering) {
             if (this.mEmailRow.getVisibility() == View.GONE) {
                 show(this.mEmailRow);
@@ -323,11 +330,10 @@ startActivity(i);
 	}
 
     private void saveTokens(String api, String user) throws Exception {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-        SharedPreferences.Editor editor = prefs.edit();
+        this.apiHelper.updateAuthenticationCredentials(user, api);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
                 .putString(getString(R.string.SP_userID), user)
-                .putString(getString(R.string.SP_address),BuildConfig.BASE_URL)
                 .commit();
         if(!ans) {
             throw new Exception("PB_string_commit");

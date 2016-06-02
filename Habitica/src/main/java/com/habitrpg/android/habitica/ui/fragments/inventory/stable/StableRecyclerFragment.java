@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -95,6 +96,11 @@ public class StableRecyclerFragment extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

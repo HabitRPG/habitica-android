@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 
 import android.content.Intent;
@@ -39,6 +40,11 @@ public class PartyInviteActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
 
         setViewPagerAdapter();
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
 

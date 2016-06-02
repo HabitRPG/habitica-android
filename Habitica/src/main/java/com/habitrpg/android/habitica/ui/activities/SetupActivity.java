@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -30,6 +31,8 @@ import android.widget.Button;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
@@ -49,7 +52,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
 
-    private APIHelper apiHelper;
+    @Inject
+    public APIHelper apiHelper;
+    @Inject
     protected HostConfig hostConfig;
     HabitRPGUser user;
     Boolean completedSetup;
@@ -62,13 +67,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.hostConfig = PrefsActivity.fromContext(this);
-
-        this.apiHelper = new APIHelper(hostConfig);
-
         this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
-
 
         this.skipButton.setOnClickListener(this);
         this.nextButton.setOnClickListener(this);
@@ -84,6 +83,11 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } catch (JSONException exception) {
         }
         Amplitude.getInstance().logEvent("setup", eventProperties);
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

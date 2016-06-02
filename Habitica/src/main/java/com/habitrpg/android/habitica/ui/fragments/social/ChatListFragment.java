@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
@@ -48,7 +51,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     private Context ctx;
     private String groupId;
     public String seenGroupId;
-    private APIHelper apiHelper;
+
+    @Inject
+    public APIHelper apiHelper;
     private HabitRPGUser user;
     private String userId;
     public boolean isTavern;
@@ -94,11 +99,12 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         if (view == null)
             view = inflater.inflate(R.layout.fragment_chatlist, container, false);
 
-        if (apiHelper == null) {
-            apiHelper = new APIHelper(PrefsActivity.fromContext(getContext()));
-        }
-
         return view;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @BindView(R.id.chat_list)

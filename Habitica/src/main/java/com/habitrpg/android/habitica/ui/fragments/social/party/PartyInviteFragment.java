@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import android.os.Bundle;
@@ -46,6 +47,11 @@ public class PartyInviteFragment extends BaseFragment {
         addInviteField();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @OnClick(R.id.addInviteButton)

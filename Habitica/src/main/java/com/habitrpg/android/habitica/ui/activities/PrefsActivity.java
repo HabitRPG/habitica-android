@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 
@@ -36,6 +37,11 @@ public class PrefsActivity extends BaseActivity implements
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new PreferencesFragment())
                 .commit();
+    }
+
+    @Override
+    protected void injectActivity(AppComponent component) {
+        component.inject(this);
     }
 
     @Override

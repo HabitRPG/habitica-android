@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import android.os.Bundle;
@@ -29,6 +30,11 @@ public class StableFragment extends BaseMainFragment {
         setViewPagerAdapter();
 
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     public void setViewPagerAdapter() {

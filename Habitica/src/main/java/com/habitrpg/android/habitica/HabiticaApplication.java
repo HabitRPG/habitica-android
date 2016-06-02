@@ -4,7 +4,11 @@ import com.amplitude.api.Amplitude;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.habitrpg.android.habitica.components.DaggerAppComponent;
+import com.habitrpg.android.habitica.modules.ApiModule;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -36,6 +40,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
+import dagger.Lazy;
 import io.fabric.sdk.android.Fabric;
 
 public class HabiticaApplication extends MultiDexApplication {
@@ -44,6 +51,10 @@ public class HabiticaApplication extends MultiDexApplication {
     public static HabitRPGUser User;
     public static APIHelper ApiHelper;
     public static Activity currentActivity = null;
+    private AppComponent component;
+
+    @Inject
+    Lazy<APIHelper> lazyApiHelper;
 
     public static HabiticaApplication getInstance(Context context) {
         return (HabiticaApplication) context.getApplicationContext();
@@ -52,6 +63,7 @@ public class HabiticaApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        setupDagger();
         setupLeakCanary();
         setupFlowManager();
         setupFacebookSdk();
@@ -59,8 +71,13 @@ public class HabiticaApplication extends MultiDexApplication {
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
         Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
-
         Fresco.initialize(this);
+    }
+
+    private void setupDagger() {
+        component = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build();
     }
 
     private void setupLeakCanary() {
@@ -217,6 +234,7 @@ public class HabiticaApplication extends MultiDexApplication {
         editor.putBoolean("use_reminder", use_reminder);
         editor.putString("reminder_time", reminder_time);
         editor.apply();
+        getInstance(context).lazyApiHelper.get().updateAuthenticationCredentials(null, null);
         startActivity(LoginActivity.class, context);
     }
 
@@ -283,4 +301,8 @@ public class HabiticaApplication extends MultiDexApplication {
     }
 
     // endregion
+
+    public AppComponent getComponent() {
+        return component;
+    }
 }

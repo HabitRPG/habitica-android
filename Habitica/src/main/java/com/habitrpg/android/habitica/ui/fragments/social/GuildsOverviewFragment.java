@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
@@ -52,6 +53,11 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
             this.setGuildsOnListView();
         }
         return v;
+    }
+
+    @Override
+    public void injectFragment(AppComponent component) {
+        component.inject(this);
     }
 
     @Override
