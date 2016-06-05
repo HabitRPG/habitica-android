@@ -42,7 +42,7 @@ public class TodoReceiver  extends BroadcastReceiver {
         PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
         Notification noti = new Notification.Builder(context)
-                .setContentTitle("Your todo " + taskTitle + " is due!")
+                .setContentTitle(taskTitle)
                 .setContentText(taskTitle).setSmallIcon(R.drawable.ic_gryphon)
                 .setContentIntent(pIntent)
                 .build();
