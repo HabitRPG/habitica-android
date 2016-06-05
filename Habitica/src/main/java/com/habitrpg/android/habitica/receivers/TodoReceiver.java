@@ -50,7 +50,5 @@ public class TodoReceiver  extends BroadcastReceiver {
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
         notificationManager.notify((int) System.currentTimeMillis(), noti);
-
-        taskAlarmManager.removeAlarmForTask(taskId);
     }
 }

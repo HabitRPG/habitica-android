@@ -5,13 +5,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.receivers.TodoReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,68 +37,12 @@ public class TaskAlarmManager {
     private static TaskAlarmManager instance = null;
 
     private Context context;
-    private Map<String, String> savedAlarms;
 
-    public static final String TASK_ALARMS_PREFERENCE_KEY = "TaskAlarms";
-    public static final String TASK_ALARMS_KEY = "task_alarms";
     public static final String TASK_ID_INTENT_KEY = "TASK_ID";
     public static final String TASK_NAME_INTENT_KEY = "TASK_NAME";
 
-    private class TaskAlarm {
-        private String taskId;
-        private int alarmId;
-        private String taskText;
-        private Date taskDueDate;
-
-        public TaskAlarm(String taskId, int alarmId) {
-            this.taskId = taskId;
-            this.alarmId = alarmId;
-        }
-
-        public void setTaskId (String taskId) {
-            this.taskId = taskId;
-        }
-
-        public String getTaskId () {
-            return this.taskId;
-        }
-
-        public void setTaskText (String taskText) {
-            this.taskText = taskText;
-        }
-
-        public String getTaskText () {
-            return this.taskText;
-        }
-
-        public void setTaskDueDate (Date taskDueDate) {
-            this.taskDueDate = taskDueDate;
-        }
-
-        public Date getTaskDueDate () {
-            return this.taskDueDate;
-        }
-
-        public void setAlarmId (int alarmId) {
-            this.alarmId = alarmId;
-        }
-
-        public int getAlarmId () {
-            return this.alarmId;
-        }
-
-        public String toStirng() {
-            Gson gson = new Gson();
-            String json = gson.toJson(this);
-            return json;
-        }
-    }
-
     private TaskAlarmManager(Context context) {
         this.context = context;
-        this.savedAlarms = this.loadAlarmsFromPreferences();
-        this.savedAlarms = new HashMap<String, String>();
-        this.saveAlarmsToPreferences(this.savedAlarms);
         EventBus.getDefault().register(this);
     }
 
@@ -107,20 +55,9 @@ public class TaskAlarmManager {
     }
 
     @Subscribe
-    public void onEvent(TaskCreatedEvent evnt) {
+    public void onEvent(TaskSaveEvent evnt) {
         Task task = (Task) evnt.task;
         List<RemindersItem> reminders = task.getReminders();
-
-        for (RemindersItem reminder : reminders) {
-            this.addAlarmForTaskReminder(task, reminder);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(TaskUpdatedEvent evnt) {
-        Task task = (Task) evnt.task;
-        List<RemindersItem> reminders = task.getReminders();
-
         for (RemindersItem reminder : reminders) {
             this.addAlarmForTaskReminder(task, reminder);
         }
@@ -132,102 +69,51 @@ public class TaskAlarmManager {
         }
     }
 
-    public void removeAlarmForTask(String taskId) {
-        String taskAlarmJson = this.savedAlarms.get(taskId);
-        if (taskAlarmJson != null) {
-            this.savedAlarms.remove(taskId);
-            this.saveAlarmsToPreferences(this.savedAlarms);
-        }
-    }
-
     private void addAlarmForTodo(Task task, RemindersItem reminder) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(reminder.getStartDate());
-        //@TODO: Set Time
-        cal.add(Calendar.SECOND, 60);
 
         Intent intent = new Intent(context, TodoReceiver.class);
         intent.putExtra(TASK_NAME_INTENT_KEY, task.getText());
         intent.putExtra(TASK_ID_INTENT_KEY, task.getId());
 
-        String taskAlarmJson = this.savedAlarms.get(task.getId());
-
-        int _id;
-        if (taskAlarmJson == null) {
-            _id = (int) System.currentTimeMillis();
-            TaskAlarm taskAlarm = new TaskAlarm(task.getId(), _id);
-            taskAlarm.setTaskText((task.getText()));
-            taskAlarm.setTaskDueDate(task.getDueDate());
-            this.savedAlarms.put(task.getId(), taskAlarm.toStirng());
-        } else {
-            Gson gson = new Gson();
-            TaskAlarm taskAlarm = gson.fromJson(taskAlarmJson, TaskAlarm.class);
-            taskAlarm.setTaskDueDate(task.getDueDate());
-            _id = taskAlarm.getAlarmId();
+        Integer alarmId = reminder.getAlarmId();
+        if (alarmId == null) {
+            alarmId = (int) System.currentTimeMillis();
+            reminder.setAlarmId(alarmId);
         }
 
-        PendingIntent sender = PendingIntent.getBroadcast(context, _id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 
-        this.saveAlarmsToPreferences(this.savedAlarms);
+        reminder.async().save();
     }
 
     public void scheduleAllSavedAlarms() {
-        Iterator it = this.savedAlarms.entrySet().iterator();
-        Gson gson = new Gson();
-        Calendar cal = Calendar.getInstance();
+        List<RemindersItem> reminders = new Select()
+                .from(RemindersItem.class)
+                .where(Condition.column("time").greaterThan(new Date()))
+                .orderBy(true, "time")
+                .queryList();
 
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        for (RemindersItem remindersItem : reminders) {
+            Task reminderItemTask = remindersItem.getTask();
+            Integer alarmId = remindersItem.getAlarmId();
 
-            TaskAlarm taskAlarm = gson.fromJson(pair.getValue().toString(), TaskAlarm.class);
-            int _id = taskAlarm.getAlarmId();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(remindersItem.getStartDate());
 
             Intent intent = new Intent(context, TodoReceiver.class);
-            intent.putExtra(TASK_NAME_INTENT_KEY, taskAlarm.getTaskText());
-            intent.putExtra(TASK_ID_INTENT_KEY, taskAlarm.getTaskId());
+            intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.getText());
+            intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.getId());
 
-            PendingIntent sender = PendingIntent.getBroadcast(context, _id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            cal.setTime(taskAlarm.getTaskDueDate());
             am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
-
-            it.remove(); // avoids a ConcurrentModificationException
         }
     }
 
-    private void saveAlarmsToPreferences(Map<String, String> inputMap) {
-        SharedPreferences pSharedPref = context.getApplicationContext().getSharedPreferences(TASK_ALARMS_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        if (pSharedPref != null){
-            JSONObject jsonObject = new JSONObject(inputMap);
-            String jsonString = jsonObject.toString();
-            SharedPreferences.Editor editor = pSharedPref.edit();
-            editor.remove(TASK_ALARMS_KEY).commit();
-            editor.putString(TASK_ALARMS_KEY, jsonString);
-            editor.commit();
-        }
-    }
-
-    private Map<String, String> loadAlarmsFromPreferences() {
-        Map<String, String> outputMap = new HashMap<String, String>();
-        SharedPreferences pSharedPref = context.getApplicationContext().getSharedPreferences(TASK_ALARMS_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        try{
-            if (pSharedPref != null){
-                String jsonString = pSharedPref.getString(TASK_ALARMS_KEY, (new JSONObject()).toString());
-                JSONObject jsonObject = new JSONObject(jsonString);
-                Iterator<String> keysItr = jsonObject.keys();
-                while(keysItr.hasNext()) {
-                    String key = keysItr.next();
-                    String value = (String) jsonObject.get(key);
-                    outputMap.put(key, value);
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return outputMap;
-    }
 }

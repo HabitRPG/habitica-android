@@ -28,6 +28,9 @@ public class RemindersItem extends BaseModel {
     private Date time;
 
     @Column
+    private Integer alarmId;
+
+    @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
@@ -41,6 +44,13 @@ public class RemindersItem extends BaseModel {
     }
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getAlarmId() {
+        return this.alarmId;
+    }
+    public void setAlarmId(Integer alarmId) {
+        this.alarmId = alarmId;
     }
 
     public Date getStartDate() {

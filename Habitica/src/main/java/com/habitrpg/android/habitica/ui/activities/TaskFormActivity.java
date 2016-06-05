@@ -76,6 +76,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -596,6 +597,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             time.setMinutes(Integer.parseInt(reminderTimeSplit[1]));
 
             RemindersItem item = new RemindersItem();
+            UUID randomUUID = UUID.randomUUID();
+            item.setId(randomUUID.toString());
             item.setStartDate(startDate);
             item.setTime(time);
 
