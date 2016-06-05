@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.github.data5tream.emojilib.EmojiEditText;
 import com.habitrpg.android.habitica.R;
@@ -17,6 +19,7 @@ import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,18 +96,21 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
             ButterKnife.bind(this, itemView);
             deleteButton.setOnClickListener(this);
 
-            reminderItemTextView.addTextChangedListener(new TextWatcher() {
+            reminderItemTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //@TODO: Convert To Date
-//                    mItems.get(getAdapterPosition()).setStartDate(reminderItemTextView.getText().toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
+                public void onClick(View v) {
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            reminderItemTextView.setText( selectedHour + ":" + selectedMinute);
+                        }
+                    }, hour, minute, true);
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
                 }
             });
         }
