@@ -172,8 +172,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.add_checklist_button)
     Button button;
 
-//    @BindView(R.id.new_reminder_time_picker)
-//    TimePicker newRemindersTimePicker;
+    @BindView(R.id.task_reminders_wrapper)
+    LinearLayout remindersWrapper;
 
     @BindView(R.id.new_reminder_edittext)
     EditText newRemindersEditText;
@@ -282,6 +282,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             taskWrapper.removeView(startDateLayout);
 
             mainWrapper.removeView(checklistWrapper);
+            mainWrapper.removeView(remindersWrapper);
 
             positiveCheckBox.setChecked(true);
             negativeCheckBox.setChecked(true);
@@ -319,6 +320,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         } else {
 
             mainWrapper.removeView(checklistWrapper);
+            mainWrapper.removeView(remindersWrapper);
 
             difficultyWrapper.setVisibility(View.GONE);
             attributeWrapper.setVisibility(View.GONE);
