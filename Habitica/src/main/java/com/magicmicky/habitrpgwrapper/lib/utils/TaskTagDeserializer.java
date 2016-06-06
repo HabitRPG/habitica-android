@@ -17,9 +17,15 @@ public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
     @Override
     public List<TaskTag> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         List<TaskTag> taskTags = new ArrayList<>();
-        List<Tag> allTags = new Select()
-                .from(Tag.class)
-                .queryList();
+        List<Tag> allTags;
+        try {
+            allTags = new Select()
+                    .from(Tag.class)
+                    .queryList();
+        } catch (RuntimeException e) {
+            //Tests don't have a database
+            allTags = new ArrayList<>();
+        }
 
         for (JsonElement tagElement : json.getAsJsonArray()) {
             String tagId = tagElement.getAsString();

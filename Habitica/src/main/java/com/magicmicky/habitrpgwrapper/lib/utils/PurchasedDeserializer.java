@@ -30,8 +30,13 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
         List<Customization> customizations = new ArrayList<Customization>();
         Purchases purchases = new Purchases();
 
-        List<Customization> existingCustomizations = new Select().from(Customization.class).queryList();
-
+        List<Customization> existingCustomizations;
+        try {
+            existingCustomizations = new Select().from(Customization.class).queryList();
+        } catch (RuntimeException e) {
+            //Tests don't have a database
+            existingCustomizations = new ArrayList<>();
+        }
         for (Customization customization : existingCustomizations) {
             if(object.has(customization.getType())) {
                 JsonObject nestedObject = object.get(customization.getType()).getAsJsonObject();

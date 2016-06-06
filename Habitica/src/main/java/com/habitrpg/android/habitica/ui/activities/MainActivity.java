@@ -232,6 +232,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
+                        .compose(apiHelper.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {});
                 this.checkMaintenance();
             }
@@ -672,6 +673,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (resultCode == SELECT_CLASS_RESULT) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
+                        .compose(apiHelper.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {});
             }
         }

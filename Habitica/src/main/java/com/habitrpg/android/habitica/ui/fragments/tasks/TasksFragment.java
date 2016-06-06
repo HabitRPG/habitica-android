@@ -196,6 +196,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         if (apiHelper != null) {
             apiHelper.retrieveUser(true)
+                    .compose(apiHelper.configureApiCallObserver())
                     .subscribe(
                             new HabitRPGUserCallback(activity),
                             throwable -> stopAnimatingRefreshItem()

@@ -81,59 +81,7 @@ public class ApiModule {
 
     @Provides
     public GsonConverterFactory providesGsonConverterFactory() {
-        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {}.getType();
-        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
-        Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
-        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
-        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
-        Type itemDataListType = new TypeToken<List<ItemData>>() {}.getType();
-        Type eggListType = new TypeToken<List<Egg>>() {}.getType();
-        Type foodListType = new TypeToken<List<Food>>() {}.getType();
-        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {}.getType();
-        Type questContentListType = new TypeToken<List<QuestContent>>() {}.getType();
-        Type petListType = new TypeToken<HashMap<String, Pet>>() {}.getType();
-        Type mountListType = new TypeToken<HashMap<String, Mount>>() {}.getType();
-
-        //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
-        Gson gson = new GsonBuilder()
-                .setExclusionStrategies(new CheckListItemExcludeStrategy())
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getDeclaredClass().equals(ModelAdapter.class);
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
-                .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
-                .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
-                .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
-                .registerTypeAdapter(skillListType, new SkillDeserializer())
-                .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
-                .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
-                .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
-                .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
-                .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
-                .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
-                .registerTypeAdapter(Group.class, new GroupSerialization())
-                .registerTypeAdapter(Date.class, new DateDeserializer())
-                .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
-                .registerTypeAdapter(eggListType, new EggListDeserializer())
-                .registerTypeAdapter(foodListType, new FoodListDeserializer())
-                .registerTypeAdapter(hatchingPotionListType, new HatchingPotionListDeserializer())
-                .registerTypeAdapter(questContentListType, new QuestListDeserializer())
-                .registerTypeAdapter(petListType, new PetListDeserializer())
-                .registerTypeAdapter(mountListType, new MountListDeserializer())
-                .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
-                .registerTypeAdapter(Task.class, new TaskSerializer())
-                .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
-                .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                .create();
-        return GsonConverterFactory.create(gson);
+        return APIHelper.createGsonFactory();
     }
 
     @Provides
