@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import android.os.Bundle;
@@ -104,7 +105,7 @@ public class TaskSetupFragment extends BaseFragment {
         };
     }
 
-    public List<Map<String, Object>> createSampleTasks() {
+    public List<Task> createSampleTasks() {
         List<String> groups = new ArrayList<>();
         int i = 0;
         for (Boolean checked : this.adapter.checkedList) {
@@ -113,10 +114,10 @@ public class TaskSetupFragment extends BaseFragment {
             }
             i++;
         }
-        List<Map<String, Object>> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         for (Object[] task : this.tasks) {
             if (groups.contains((String) task[0])) {
-                Map<String, Object> taskObject = new HashMap<>();
+                Task taskObject;
                 if (task.length == 5) {
                     taskObject = this.makeTaskObject((String) task[1], (String) task[2], (Boolean) task[3], (Boolean) task[4]);
                 } else {
@@ -128,29 +129,29 @@ public class TaskSetupFragment extends BaseFragment {
         return tasks;
     }
 
-    private Map<String, Object> makeTaskObject(String type, String text, Boolean up, Boolean down) {
-        Map<String, Object> task = new HashMap<>();
-        task.put("text", text);
-        task.put("priority", 1);
-        task.put("type", type);
+    private Task makeTaskObject(String type, String text, Boolean up, Boolean down) {
+        Task task = new Task();
+        task.text = text;
+        task.priority = 1.0f;
+        task.type = type;
 
         if (type.equals("habit")) {
-            task.put("up", up);
-            task.put("down", down);
+            task.up = up;
+            task.down = down;
         }
 
         if (type.equals("daily")) {
-            task.put("frequency", "weekly");
-            task.put("startDate", new Date());
-            Map<String, Boolean> repeat= new HashMap<>();
-            repeat.put("m", true);
-            repeat.put("t", true);
-            repeat.put("w", true);
-            repeat.put("th", true);
-            repeat.put("f", true);
-            repeat.put("s", true);
-            repeat.put("su", true);
-            task.put("repeat", repeat);
+            task.frequency = "weekly";
+            task.startDate = new Date();
+            Days days = new Days();
+            days.setM(true);
+            days.setT(true);
+            days.setW(true);
+            days.setTh(true);
+            days.setF(true);
+            days.setS(true);
+            days.setSu(true);
+            task.repeat = days;
         }
 
         return task;

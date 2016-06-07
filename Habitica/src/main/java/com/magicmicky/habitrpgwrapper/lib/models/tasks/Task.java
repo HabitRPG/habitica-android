@@ -88,6 +88,7 @@ public class Task extends BaseModel {
     public Integer everyX, streak;
 
     @Column
+    public
     Date startDate;
 
     @Column

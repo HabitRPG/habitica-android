@@ -154,9 +154,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         if (v == this.nextButton) {
             if (this.pager.getCurrentItem() == 1) {
-                List<Map<String, Object>> newTasks = this.taskSetupFragment.createSampleTasks();
+                List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;
-                this.apiHelper.apiService.createItems(newTasks)
+                this.apiHelper.apiService.createTasks(newTasks)
                         .compose(this.apiHelper.configureApiCallObserver())
                         .subscribe(tasks -> {
                             onUserReceived(user);

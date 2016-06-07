@@ -94,7 +94,7 @@ public interface ApiService {
     Observable<Task> createItem(@Body Task item);
 
     @POST("tasks/user")
-    Observable<List<Task>> createItems(@Body List<Map<String, Object>> tasks);
+    Observable<List<Task>> createTasks(@Body List<Task> tasks);
 
     @PUT("tasks/{id}")
     Observable<Task> updateTask(@Path("id") String id, @Body Task item);

@@ -246,16 +246,14 @@ public class APIHelper implements Action1<Throwable> {
         auth.setPassword(password);
         auth.setConfirmPassword(confirmPassword);
         auth.setEmail(email);
-        return this.apiService.registerUser(auth)
-                .compose(this.configureApiCallObserver());
+        return this.apiService.registerUser(auth);
     }
 
     public Observable<UserAuthResponse> connectUser(String username, String password) {
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);
-        return this.apiService.connectLocal(auth)
-                .compose(this.configureApiCallObserver());
+        return this.apiService.connectLocal(auth);
     }
 
 	public Observable<UserAuthResponse> connectSocial(String userId, String accessToken) {
@@ -265,8 +263,7 @@ public class APIHelper implements Action1<Throwable> {
         authResponse.setClient_id(userId);
         authResponse.setAccess_token(accessToken);
         auth.setAuthResponse(authResponse);
-		return this.apiService.connectSocial(auth)
-                .compose(this.configureApiCallObserver());
+		return this.apiService.connectSocial(auth);
 	}
 
     @Override
