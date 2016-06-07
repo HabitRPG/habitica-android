@@ -11,7 +11,7 @@ before_install:
   - git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg
   - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 1; done
   - cd ../habitrpg && cp config.json.example config.json && npm install
-  - npm start &
+
   - cd -
 android:
   components:
@@ -36,6 +36,10 @@ android:
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
 script:
+    - cd ../habitrpg
+    - npm start &
+    - cd -
+    - sleep 30
     - cp habitica.properties.travis habitica.properties
     - ./gradlew assembleDebug
-    - ./gradlew testDebugUnitTest
+    - ./gradlew testDebugUnitTest --info
