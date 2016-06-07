@@ -13,7 +13,7 @@ before_install:
   - git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg
   - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done
   - cd ../habitrpg && cp config.json.example config.json && npm install
-  - npm start
+  - npm start &
   - until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done
   - cd -
 android:
