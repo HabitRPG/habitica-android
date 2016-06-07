@@ -10,7 +10,9 @@ before_install:
   - sudo apt-get install mongodb-org-server
   - git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg
   - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 1; done
-  - cd ../habitrpg && cp config.json.example config.json && npm install && cd -
+  - cd ../habitrpg && cp config.json.example config.json && npm install
+  - npm start &
+  - cd -
 android:
   components:
     # Uncomment the lines below if you want to
