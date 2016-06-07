@@ -1,10 +1,10 @@
 language: android
 jdk: oraclejdk8
-node_js:
-- 4.1.1
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - nvm install 4.1.1
+  - nvm use 4.1.1
   - npm i -g npm@3
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
   - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
