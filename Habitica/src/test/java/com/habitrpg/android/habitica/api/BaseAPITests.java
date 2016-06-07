@@ -22,8 +22,6 @@ import java.util.UUID;
 
 import rx.observers.TestSubscriber;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
-@RunWith(RobolectricGradleTestRunner.class)
 public class BaseAPITests {
 
     public APIHelper apiHelper;

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.api;
 
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -8,6 +9,11 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
+
+import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +25,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@RunWith(RobolectricGradleTestRunner.class)
 public class TaskAPITests extends BaseAPITests {
 
     private Task habit1;

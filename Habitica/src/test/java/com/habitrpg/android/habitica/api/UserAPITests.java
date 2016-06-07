@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.api;
 
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
@@ -8,6 +9,11 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
+
+import android.os.Build;
 
 import java.util.UUID;
 
@@ -16,6 +22,8 @@ import rx.observers.TestSubscriber;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotSame;
 
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@RunWith(RobolectricGradleTestRunner.class)
 public class UserAPITests extends BaseAPITests {
 
     @Test
