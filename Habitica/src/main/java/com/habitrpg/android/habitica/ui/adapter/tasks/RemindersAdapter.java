@@ -70,11 +70,11 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     @Override
     public void onItemDismiss(int position) {
         if(position >= 0 && position < mItems.size()){
+            mItems.get(position).async().delete();
             mItems.remove(position);
             notifyItemRemoved(position);
         }
     }
-
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -107,6 +107,14 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             reminderItemTextView.setText( selectedHour + ":" + selectedMinute);
+
+                            RemindersItem reminder = mItems.get(getAdapterPosition());
+                            Date time = reminder.getTime();
+                            time.setHours(selectedHour);
+                            time.setMinutes(selectedMinute);
+                            time.setSeconds(0);
+                            reminder.setTime(time);
+                            reminder.async().save();
                         }
                     }, hour, minute, true);
                     mTimePicker.setTitle("Select Time");
