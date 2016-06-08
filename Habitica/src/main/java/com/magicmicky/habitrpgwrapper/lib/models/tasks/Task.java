@@ -577,4 +577,28 @@ public class Task extends BaseModel {
     public Boolean isChecklistDisplayActive(int offset) {
         return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
     }
+
+    public Date getNextActiveDateAfter(Date oldTime) {
+        Calendar today = new GregorianCalendar();
+        today.set(Calendar.MILLISECOND, 0);
+        today.set(Calendar.SECOND, 0);
+
+        Calendar newTime = new GregorianCalendar();
+        newTime.setTime(oldTime);
+
+        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+            TimeUnit timeUnit = TimeUnit.DAYS;
+            long diffInMillies = newTime.getTimeInMillis() - today.getTimeInMillis();
+            long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            Log.v("Test", String.valueOf(daySinceStart % this.getEveryX()));
+        } else {
+            int nextActiveDayOfTheWeek = today.get(Calendar.DAY_OF_WEEK);
+            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today)) {
+                if (nextActiveDayOfTheWeek == 6) nextActiveDayOfTheWeek = 0;
+                nextActiveDayOfTheWeek += 1;
+                newTime.add(Calendar.DATE, 1);
+            }
+        }
+        return newTime.getTime();
+    }
 }

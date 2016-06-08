@@ -1,1 +1,0 @@
-ALTER TABLE RemindersItem ADD COLUMN 'alarmId' integer;

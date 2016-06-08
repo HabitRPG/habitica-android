@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -15,7 +16,7 @@ import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
 /**
  * Created by keithholliday on 5/29/16.
  */
-public class TodoReceiver  extends BroadcastReceiver {
+public class TaskReceiver  extends BroadcastReceiver {
 
     private Context context;
 
@@ -29,12 +30,14 @@ public class TodoReceiver  extends BroadcastReceiver {
         taskAlarmManager = TaskAlarmManager.getInstance(context);
 
         Bundle extras = arg1.getExtras();
+
         if (extras != null) {
             taskTitle = extras.getString(TaskAlarmManager.TASK_NAME_INTENT_KEY);
             taskId = extras.getString(TaskAlarmManager.TASK_ID_INTENT_KEY);
+            //This will set up the next reminders for dailies
+            taskAlarmManager.addAlarmForTaskId(taskId);
+            createNotification();
         }
-
-        createNotification();
     }
 
     public void createNotification() {

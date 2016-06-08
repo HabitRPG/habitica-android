@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
-import com.habitrpg.android.habitica.receivers.TodoReceiver;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
@@ -597,6 +596,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             String[] reminderTimeSplit = reminderTimeString.split(":");
             time.setHours(Integer.parseInt(reminderTimeSplit[0]));
             time.setMinutes(Integer.parseInt(reminderTimeSplit[1]));
+            time.setSeconds(0);
 
             RemindersItem item = new RemindersItem();
             UUID randomUUID = UUID.randomUUID();

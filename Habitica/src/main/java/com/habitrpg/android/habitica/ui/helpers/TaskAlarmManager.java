@@ -4,14 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.habitrpg.android.habitica.receivers.TodoReceiver;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -20,15 +16,11 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by keithholliday on 5/29/16.
@@ -59,36 +51,36 @@ public class TaskAlarmManager {
         Task task = (Task) evnt.task;
         List<RemindersItem> reminders = task.getReminders();
         for (RemindersItem reminder : reminders) {
-            this.addAlarmForTaskReminder(task, reminder);
+            if (task.getType().equals(Task.TYPE_DAILY)) {
+                //Ensure that we set to the next available time
+                reminder = this.setTimeForDailyReminder(reminder, task);
+            }
+            this.setAlarmForRemindersItem(reminder);
+            reminder.async().save();
         }
     }
 
-    public void addAlarmForTaskReminder(Task task, RemindersItem reminder) {
-        if (task.getType().equals("todo")) {
-            this.addAlarmForTodo(task, reminder);
-        }
-    }
+    //This function is used from the TaskReceiver since we do not have access to the task
+    //We currently only use this function to schedule the next reminder for dailies
+    //We may be able to use repeating alarms instead of this in the future
+    public void addAlarmForTaskId(String taskId) {
+        List<Task> tasks = new Select()
+                .from(Task.class)
+                .where(Condition.column("id").eq(taskId))
+                .queryList();
 
-    private void addAlarmForTodo(Task task, RemindersItem reminder) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(reminder.getStartDate());
-
-        Intent intent = new Intent(context, TodoReceiver.class);
-        intent.putExtra(TASK_NAME_INTENT_KEY, task.getText());
-        intent.putExtra(TASK_ID_INTENT_KEY, task.getId());
-
-        Integer alarmId = reminder.getAlarmId();
-        if (alarmId == null) {
-            alarmId = (int) System.currentTimeMillis();
-            reminder.setAlarmId(alarmId);
+        Task task = tasks.get(0);
+        if (!task.getType().equals(Task.TYPE_DAILY)) {
+            return;
         }
 
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
-
-        reminder.async().save();
+        List<RemindersItem> reminders = task.getReminders();
+        for (RemindersItem remindersItem : reminders) {
+            //Ensure that we set to the next available time
+            remindersItem = this.setTimeForDailyReminder(remindersItem, task);
+            this.setAlarmForRemindersItem(remindersItem);
+            remindersItem.async().save();
+        }
     }
 
     public void scheduleAllSavedAlarms() {
@@ -99,21 +91,45 @@ public class TaskAlarmManager {
                 .queryList();
 
         for (RemindersItem remindersItem : reminders) {
-            Task reminderItemTask = remindersItem.getTask();
-            Integer alarmId = remindersItem.getAlarmId();
-
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(remindersItem.getStartDate());
-
-            Intent intent = new Intent(context, TodoReceiver.class);
-            intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.getText());
-            intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.getId());
-
-            PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+            this.setAlarmForRemindersItem(remindersItem);
         }
     }
 
+    private RemindersItem setTimeForDailyReminder (RemindersItem remindersItem, Task task) {
+        Date oldTime = remindersItem.getTime();
+        Date newTime = task.getNextActiveDateAfter(oldTime);
+        newTime.setHours(oldTime.getHours());
+        newTime.setMinutes(oldTime.getMinutes());
+        newTime.setSeconds(0);
+        remindersItem.setTime(newTime);
+        return remindersItem;
+    }
+
+    private void setAlarmForRemindersItem(RemindersItem remindersItem) {
+        Task reminderItemTask = remindersItem.getTask();
+        Integer alarmId = remindersItem.getAlarmId();
+
+        if (alarmId == null) {
+            alarmId = (int) System.currentTimeMillis();
+            remindersItem.setAlarmId(alarmId);
+        }
+
+        Date now = new Date();
+
+        if (remindersItem.getTime().before(now)) {
+            return;
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(remindersItem.getTime());
+
+        Intent intent = new Intent(context, TaskReceiver.class);
+        intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.getText());
+        intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.getId());
+
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+    }
 }
