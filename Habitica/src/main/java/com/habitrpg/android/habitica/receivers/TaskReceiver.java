@@ -42,16 +42,16 @@ public class TaskReceiver  extends BroadcastReceiver {
 
     public void createNotification() {
         Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
-        Notification noti = new Notification.Builder(context)
+        Notification notification = new Notification.Builder(context)
                 .setContentTitle(taskTitle)
                 .setContentText(taskTitle).setSmallIcon(R.drawable.ic_gryphon)
-                .setContentIntent(pIntent)
+                .setContentIntent(pendingIntent)
                 .build();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-        notificationManager.notify((int) System.currentTimeMillis(), noti);
+        notificationManager.notify((int) System.currentTimeMillis(), notification);
     }
 }

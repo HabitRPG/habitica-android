@@ -33,10 +33,10 @@ import butterknife.ButterKnife;
  */
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter {
-    private final List<RemindersItem> mItems = new ArrayList<>();
+    private final List<RemindersItem> reminders = new ArrayList<>();
 
     public RemindersAdapter(List<RemindersItem> reminders) {
-        mItems.addAll(reminders);
+        reminders.addAll(reminders);
     }
 
     @Override
@@ -48,37 +48,37 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
-        Date time = mItems.get(position).getTime();
+        Date time = reminders.get(position).getTime();
         holder.reminderItemTextView.setText(time.getHours() + ":" + time.getMinutes());
     }
 
     public void addItem(RemindersItem item){
-        mItems.add(item);
-        notifyItemInserted(mItems.size() - 1);
+        reminders.add(item);
+        notifyItemInserted(reminders.size() - 1);
     }
 
     public List<RemindersItem> getRemindersItems(){
-        return mItems;
+        return reminders;
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return reminders.size();
     }
 
 
     @Override
     public void onItemDismiss(int position) {
-        if(position >= 0 && position < mItems.size()){
-            mItems.get(position).async().delete();
-            mItems.remove(position);
+        if(position >= 0 && position < reminders.size()){
+            reminders.get(position).async().delete();
+            reminders.remove(position);
             notifyItemRemoved(position);
         }
     }
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mItems, fromPosition, toPosition);
+        Collections.swap(reminders, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -108,7 +108,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             reminderItemTextView.setText( selectedHour + ":" + selectedMinute);
 
-                            RemindersItem reminder = mItems.get(getAdapterPosition());
+                            RemindersItem reminder = reminders.get(getAdapterPosition());
                             Date time = reminder.getTime();
                             time.setHours(selectedHour);
                             time.setMinutes(selectedMinute);
