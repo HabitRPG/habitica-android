@@ -68,6 +68,8 @@ public class TaskAlarmManager {
                 .queryList();
 
         Task task = tasks.get(0);
+        if (task == null) return;
+
         if (!task.getType().equals(Task.TYPE_DAILY)) {
             return;
         }
