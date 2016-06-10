@@ -3,17 +3,19 @@ jdk: oraclejdk8
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - cp habitica.properties.travis habitica.properties
+  - nvm install 4.1.1
+  - nvm use 4.1.1
   - npm i -g npm@3
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' |
-  sudo tee /etc/apt/sources.list.d/mongodb.list
+  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
   - sudo apt-get update
   - sudo apt-get install mongodb-org-server
   - git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg
-  - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 1; done
-  - cd ../habitrpg && cp config.json.example config.json && npm install && cd -
-
+  - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done
+  - cd ../habitrpg && cp config.json.example config.json && npm install
+  - npm start &
+  - until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done
+  - cd -
 android:
   components:
     # Uncomment the lines below if you want to
@@ -37,6 +39,6 @@ android:
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
 script:
-    - cp habitica.properties.example habitica.properties
+    - cp habitica.properties.travis habitica.properties
     - ./gradlew assembleDebug
-    - ./gradlew testDebugUnitTest
+    - ./gradlew testDebugUnitTest --info

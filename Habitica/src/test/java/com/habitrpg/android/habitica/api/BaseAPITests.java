@@ -17,6 +17,7 @@ import org.robolectric.annotation.Config;
 
 import android.os.Build;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,9 @@ public class BaseAPITests {
 
     @Before
     public void setUp() {
+        if (BuildConfig.BASE_URL.contains("habitica.com")) {
+            throw new InvalidParameterException("Can't test against production server.");
+        }
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
