@@ -1,7 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
@@ -590,7 +588,13 @@ public class Task extends BaseModel {
             TimeUnit timeUnit = TimeUnit.DAYS;
             long diffInMillies = newTime.getTimeInMillis() - today.getTimeInMillis();
             long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            Log.v("Test", String.valueOf(daySinceStart % this.getEveryX()));
+            long daysUntilNextReminder = this.getEveryX() - (daySinceStart % this.getEveryX()) - 1;
+
+            if (newTime.before(today)) {
+                daysUntilNextReminder += this.getEveryX();
+            }
+
+            newTime.add(Calendar.DATE, (int) daysUntilNextReminder);
         } else {
             int nextActiveDayOfTheWeek = today.get(Calendar.DAY_OF_WEEK);
             while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today)) {
@@ -599,6 +603,7 @@ public class Task extends BaseModel {
                 newTime.add(Calendar.DATE, 1);
             }
         }
+
         return newTime.getTime();
     }
 }
