@@ -78,7 +78,7 @@ public class RemindersItem extends BaseModel {
     public void setTask(Task task) {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
-        this.task.put("id", task.id);
+        this.task.put("id", task.getId());
     }
 
     @Override

@@ -35,8 +35,8 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
         implements ItemTouchHelperAdapter {
     private final List<RemindersItem> reminders = new ArrayList<>();
 
-    public RemindersAdapter(List<RemindersItem> reminders) {
-        reminders.addAll(reminders);
+    public RemindersAdapter(List<RemindersItem> remindersInc) {
+        reminders.addAll(remindersInc);
     }
 
     @Override
