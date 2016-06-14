@@ -22,7 +22,7 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
         if (obj.has("id")) {
             message.id = obj.get("id").getAsString();
         }
-        if (obj.has("text")) {
+        if (obj.has("text") && !obj.get("leaderMessage").isJsonNull()) {
             message.text = obj.get("text").getAsString();
         }
         if (obj.has("timestamp")) {

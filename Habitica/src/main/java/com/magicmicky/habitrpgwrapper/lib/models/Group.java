@@ -20,6 +20,8 @@ public class Group extends BaseModel {
 
     public String leaderID;
 
+    public String leaderName;
+
     public String name;
 
     public int memberCount;
@@ -39,6 +41,8 @@ public class Group extends BaseModel {
     public List<HabitRPGUser> members;
 
     public int challengeCount;
+
+    public String leaderMessage;
 
     // TODO Challenges
 

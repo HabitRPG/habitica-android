@@ -28,6 +28,9 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         if (obj.has("description") && !obj.get("description").isJsonNull()) {
             group.description = obj.get("description").getAsString();
         }
+        if (obj.has("leaderMessage") && !obj.get("leaderMessage").isJsonNull()) {
+            group.leaderMessage = obj.get("leaderMessage").getAsString();
+        }
         if (obj.has("privacy")) {
             group.privacy = obj.get("privacy").getAsString();
         }
@@ -57,7 +60,12 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
             if (obj.get("leader").isJsonPrimitive()) {
                 group.leaderID = obj.get("leader").getAsString();
             } else {
-                group.leaderID = obj.get("leader").getAsJsonObject().get("_id").getAsString();
+                JsonObject leader = obj.get("leader").getAsJsonObject();
+                group.leaderID = leader.get("_id").getAsString();
+                if (leader.has("profile") && !leader.get("profile").isJsonNull()) {
+                    if (leader.get("profile").getAsJsonObject().has("name"))
+                    group.leaderName = leader.get("profile").getAsJsonObject().get("name").getAsString();
+                }
             }
         }
         if (obj.has("quest")) {

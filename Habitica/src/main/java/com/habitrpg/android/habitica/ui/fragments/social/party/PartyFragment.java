@@ -82,7 +82,9 @@ public class PartyFragment extends BaseMainFragment {
                         activity.getSupportFragmentManager().popBackStackImmediate();
                     });
             builder.show();
-            tabLayout.removeAllTabs();
+            if (tabLayout != null) {
+                tabLayout.removeAllTabs();
+            }
         }
 
 

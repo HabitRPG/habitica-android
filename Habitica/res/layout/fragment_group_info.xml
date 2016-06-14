@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/CardView.Default"
-                android:visibility="@{group.description.length() == 0 &amp;&amp; group.balance == 0 ? View.GONE : View.VISIBLE}">
+                android:visibility="@{group.description.length() == 0 &amp;&amp; group.leaderMessage.length() == 0 &amp;&amp; group.balance == 0 ? View.GONE : View.VISIBLE}">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,6 +65,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{group.description}" />
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{group.leaderMessage.length() == 0 ? View.GONE : View.VISIBLE}">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/leaderMessage(group.leaderName)}" />
+                        <com.github.data5tream.emojilib.EmojiTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                bind:parsemarkdown="@{group.leaderMessage}"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
