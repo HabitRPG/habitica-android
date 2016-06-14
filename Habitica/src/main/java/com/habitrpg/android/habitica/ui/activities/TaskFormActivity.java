@@ -565,22 +565,19 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
 
-        newRemindersEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(TaskFormActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        newRemindersEditText.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
+        newRemindersEditText.setOnClickListener(v -> {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(TaskFormActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    newRemindersEditText.setText( selectedHour + ":" + selectedMinute);
+                }
+            }, hour, minute, true);
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
         });
 
         addReminderButton.setOnClickListener(v -> {
