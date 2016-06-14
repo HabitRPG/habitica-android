@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -368,6 +369,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         }
                         loadAndRemoveOldTaskTags(allTaskTags);
 
+                        loadAndRemoveOldTags(user.getTags());
+
                         updateOwnedDataForUser(user);
                     }
                 }).start();
@@ -515,6 +518,52 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     @Override
                     public boolean hasResult(BaseTransaction<List<TaskTag>> baseTransaction, List<TaskTag> items) {
                         return items != null && items.size() > 0;
+                    }
+                });
+            }
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
+
+    }
+
+    private void loadAndRemoveOldTags(final List<Tag> onlineEntries) {
+        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
+
+        for (Tag item : onlineEntries) {
+            onlineTaskTagItemIdList.add(item.getId());
+        }
+
+        From<Tag> query = new Select().from(Tag.class);
+        try {
+            if (query.count() != onlineEntries.size()) {
+
+                // Load Database Checklist items
+                query.async().queryList(new TransactionListener<List<Tag>>() {
+                    @Override
+                    public void onResultReceived(List<Tag> items) {
+
+                        ArrayList<Tag> tagsToDelete = new ArrayList<>();
+
+                        for (Tag tag : items) {
+                            if (!onlineTaskTagItemIdList.contains(tag.getId())) {
+                                tagsToDelete.add(tag);
+                            }
+                        }
+
+                        for (Tag tag : tagsToDelete) {
+                            tag.async().delete();
+                        }
+                    }
+
+                    @Override
+                    public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasResult(BaseTransaction<List<Tag>> transaction, List<Tag> result) {
+                        return result != null && result.size() > 0;
                     }
                 });
             }
