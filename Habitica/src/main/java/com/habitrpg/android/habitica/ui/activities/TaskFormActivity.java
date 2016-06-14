@@ -570,11 +570,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(TaskFormActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    newRemindersEditText.setText( selectedHour + ":" + selectedMinute);
-                }
+            mTimePicker = new TimePickerDialog(TaskFormActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+                newRemindersEditText.setText(String.format("%d:%02d", selectedHour, selectedMinute));
             }, hour, minute, true);
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
