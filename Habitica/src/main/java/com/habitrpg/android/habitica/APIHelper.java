@@ -35,6 +35,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
@@ -55,6 +56,7 @@ import com.magicmicky.habitrpgwrapper.lib.utils.MountListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PetListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.PurchasedDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.QuestListDeserializer;
+import com.magicmicky.habitrpgwrapper.lib.utils.RemindersItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.SkillDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskListDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TaskSerializer;
@@ -217,6 +219,7 @@ public class APIHelper implements Action1<Throwable> {
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(skillListType, new SkillDeserializer())
                 .registerTypeAdapter(ChecklistItem.class, new ChecklistItemSerializer())
+                .registerTypeAdapter(RemindersItem.class, new RemindersItemSerializer())
                 .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())

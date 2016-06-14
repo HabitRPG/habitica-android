@@ -8,12 +8,15 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -25,6 +28,7 @@ import com.raizlabs.android.dbflow.sql.language.Set;
 import org.greenrobot.eventbus.EventBus;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,7 +41,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.ArraySet;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +58,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -67,6 +71,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -91,7 +96,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private NumberPicker frequencyPicker;
     private List<Tag> tags;
     private CheckListAdapter checklistAdapter;
+    private RemindersAdapter remindersAdapter;
     private List<CheckBox> tagCheckBoxList;
+
+    private TaskAlarmManager taskAlarmManager;
 
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
@@ -159,6 +167,18 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.add_checklist_button)
     Button button;
 
+    @BindView(R.id.task_reminders_wrapper)
+    LinearLayout remindersWrapper;
+
+    @BindView(R.id.new_reminder_edittext)
+    EditText newRemindersEditText;
+
+    @BindView(R.id.reminders_recycler_view)
+    RecyclerView remindersRecyclerView;
+
+    @BindView(R.id.add_reminder_button)
+    Button addReminderButton;
+
     @BindView(R.id.emoji_toggle_btn0)
     ImageButton emojiToggle0;
 
@@ -215,6 +235,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             return;
         }
 
+        taskAlarmManager = TaskAlarmManager.getInstance(this);
+
         dueDateListener = new DateEditTextListener(dueDatePickerText);
         startDateListener = new DateEditTextListener(startDatePickerText);
 
@@ -255,6 +277,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             taskWrapper.removeView(startDateLayout);
 
             mainWrapper.removeView(checklistWrapper);
+            mainWrapper.removeView(remindersWrapper);
 
             positiveCheckBox.setChecked(true);
             negativeCheckBox.setChecked(true);
@@ -292,6 +315,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         } else {
 
             mainWrapper.removeView(checklistWrapper);
+            mainWrapper.removeView(remindersWrapper);
 
             difficultyWrapper.setVisibility(View.GONE);
             attributeWrapper.setVisibility(View.GONE);
@@ -314,6 +338,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         if (taskType.equals("todo") || taskType.equals("daily")) {
             createCheckListRecyclerView();
+            createRemindersRecyclerView();
         }
 
         // Emoji keyboard stuff
@@ -518,6 +543,65 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             ChecklistItem item = new ChecklistItem(checklist);
             checklistAdapter.addItem(item);
             newCheckListEditText.setText("");
+        });
+    }
+
+    private void createRemindersRecyclerView() {
+        List<RemindersItem> reminders = new ArrayList<>();
+        if (task != null && task.getReminders() != null) {
+            reminders = task.getReminders();
+        }
+        remindersAdapter = new RemindersAdapter(reminders);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        remindersRecyclerView.setLayoutManager(llm);
+        remindersRecyclerView.setAdapter(remindersAdapter);
+
+        remindersRecyclerView.setLayoutManager(new WrapContentRecyclerViewLayoutManager(this));
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
+
+        newRemindersEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(TaskFormActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        newRemindersEditText.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
+
+        addReminderButton.setOnClickListener(v -> {
+            Date startDate = new Date(startDateListener.getCalendar().getTimeInMillis());
+
+            Date time = startDate;
+            String reminderTimeString = newRemindersEditText.getText().toString();
+            if (reminderTimeString.isEmpty()) return;
+            String[] reminderTimeSplit = reminderTimeString.split(":");
+            time.setHours(Integer.parseInt(reminderTimeSplit[0]));
+            time.setMinutes(Integer.parseInt(reminderTimeSplit[1]));
+            time.setSeconds(0);
+
+            RemindersItem item = new RemindersItem();
+            UUID randomUUID = UUID.randomUUID();
+            item.setId(randomUUID.toString());
+            item.setStartDate(startDate);
+            item.setTime(time);
+
+            remindersAdapter.addItem(item);
+            newRemindersEditText.setText("");
         });
     }
 
@@ -744,6 +828,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (checklistAdapter != null) {
             if (checklistAdapter.getCheckListItems() != null) {
                 task.setChecklist(checklistAdapter.getCheckListItems());
+            }
+        }
+
+        if (remindersAdapter != null) {
+            if (remindersAdapter.getRemindersItems() != null) {
+                task.setReminders(remindersAdapter.getRemindersItems());
             }
         }
 

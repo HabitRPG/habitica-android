@@ -70,6 +70,7 @@ public class TaskAPITests extends BaseAPITests {
         task.setType(type);
         task.setTags(new ArrayList<>());
         task.setChecklist(new ArrayList<>());
+        task.setReminders(new ArrayList<>());
         return task;
     }
 

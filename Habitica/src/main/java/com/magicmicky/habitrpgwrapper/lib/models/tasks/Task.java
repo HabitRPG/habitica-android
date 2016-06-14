@@ -78,6 +78,7 @@ public class Task extends BaseModel {
     public boolean completed;
 
     public List<ChecklistItem> checklist;
+    public List<RemindersItem> reminders;
 
 
     //dailies
@@ -291,6 +292,25 @@ public class Task extends BaseModel {
         this.checklist = checklist;
     }
 
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "reminders")
+    public List<RemindersItem> getReminders() {
+        if(this.reminders == null) {
+            this.reminders = new Select()
+                    .from(RemindersItem.class)
+                    .where(Condition.column("task_id").eq(this.id))
+                    .orderBy(true, "time")
+                    .queryList();
+        }
+        return this.reminders;
+    }
+
+    public void setReminders(List<RemindersItem> reminders) {
+        for (RemindersItem remindersItem : reminders) {
+            remindersItem.setTask(this);
+        }
+        this.reminders = reminders;
+    }
+
     public Integer getCompletedChecklistCount() {
         Integer count = 0;
         for (ChecklistItem item : this.getChecklist()) {
@@ -387,11 +407,13 @@ public class Task extends BaseModel {
         }
         List<TaskTag> tmpTags = tags;
         List<ChecklistItem> tmpChecklist = checklist;
+        List<RemindersItem> tmpReminders = reminders;
 
         // remove them, so that the database don't add empty entries
 
         tags = null;
         checklist = null;
+        reminders = null;
 
         if(repeat != null)
             repeat.task_id = this.id;
@@ -400,6 +422,7 @@ public class Task extends BaseModel {
 
         tags = tmpTags;
         checklist = tmpChecklist;
+        reminders = tmpReminders;
 
         if (this.tags != null) {
             for (TaskTag tag : this.tags) {
@@ -407,6 +430,7 @@ public class Task extends BaseModel {
                 tag.async().save();
             }
         }
+
         int position = 0;
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
@@ -416,6 +440,20 @@ public class Task extends BaseModel {
                 item.setPosition(position);
                 item.async().save();
                 position++;
+            }
+        }
+
+        int index = 0;
+        if (this.reminders != null) {
+            for (RemindersItem item : this.reminders) {
+                if(item.getTask() == null) {
+                    item.setTask(this);
+                }
+                if(item.getId() == null) {
+                    item.setId(this.id + "task-reminder" + index);
+                }
+                item.async().save();
+                index++;
             }
         }
     }
@@ -536,5 +574,36 @@ public class Task extends BaseModel {
 
     public Boolean isChecklistDisplayActive(int offset) {
         return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
+    }
+
+    public Date getNextActiveDateAfter(Date oldTime) {
+        Calendar today = new GregorianCalendar();
+        today.set(Calendar.MILLISECOND, 0);
+        today.set(Calendar.SECOND, 0);
+
+        Calendar newTime = new GregorianCalendar();
+        newTime.setTime(oldTime);
+
+        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+            TimeUnit timeUnit = TimeUnit.DAYS;
+            long diffInMillies = newTime.getTimeInMillis() - today.getTimeInMillis();
+            long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            long daysUntilNextReminder = this.getEveryX() - (daySinceStart % this.getEveryX()) - 1;
+
+            if (newTime.before(today)) {
+                daysUntilNextReminder += this.getEveryX();
+            }
+
+            newTime.add(Calendar.DATE, (int) daysUntilNextReminder);
+        } else {
+            int nextActiveDayOfTheWeek = today.get(Calendar.DAY_OF_WEEK);
+            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today)) {
+                if (nextActiveDayOfTheWeek == 6) nextActiveDayOfTheWeek = 0;
+                nextActiveDayOfTheWeek += 1;
+                newTime.add(Calendar.DATE, 1);
+            }
+        }
+
+        return newTime.getTime();
     }
 }

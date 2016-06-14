@@ -39,6 +39,7 @@ public class TaskSerializer implements JsonSerializer<Task> {
                 obj.add("startDate", context.serialize(task.getStartDate()));
                 obj.addProperty("streak", task.getStreak());
                 obj.add("checklist", context.serialize(task.getChecklist()));
+                obj.add("reminders", context.serialize(task.getReminders()));
                 obj.addProperty("completed", task.getCompleted());
                 break;
             case "todo":
@@ -48,6 +49,7 @@ public class TaskSerializer implements JsonSerializer<Task> {
                     obj.add("date", context.serialize(task.getDueDate()));
                 }
                 obj.add("checklist", context.serialize(task.getChecklist()));
+                obj.add("reminders", context.serialize(task.getReminders()));
                 obj.addProperty("completed", task.getCompleted());
                 break;
         }
