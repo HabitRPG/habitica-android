@@ -38,6 +38,7 @@ import rx.schedulers.Schedulers;
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
         extends RecyclerView.Adapter<VH> {
 
+    private final String userID;
     int layoutResource;
     String taskType;
     Context context;
@@ -46,11 +47,12 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     private TagsHelper tagsHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
-                                        Context newContext) {
+                                        Context newContext, String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext;
         this.tagsHelper = tagsHelper;
+        this.userID = userID;
         this.filteredContent = new ArrayList<>();
 
         this.loadContent(true);
@@ -182,6 +184,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                             .begin(Condition.column("completed").eq(false))
                             .or(Condition.column("type").eq("daily"))
                     )
+                    .and(Condition.column("user_id").eq(this.userID))
                     .orderBy(OrderBy.columns("position", "dateCreated").descending())
                     .queryList()))
                     .flatMap(Observable::from)

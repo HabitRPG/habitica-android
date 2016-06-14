@@ -12,8 +12,8 @@ public class DailiesRecyclerViewHolder extends BaseTasksRecyclerViewAdapter<Dail
 
     public int dailyResetOffset;
 
-    public DailiesRecyclerViewHolder(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, int dailyResetOffset) {
-        super(taskType, tagsHelper, layoutResource, newContext);
+    public DailiesRecyclerViewHolder(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, int dailyResetOffset) {
+        super(taskType, tagsHelper, layoutResource, newContext, userID);
     }
 
     @Override

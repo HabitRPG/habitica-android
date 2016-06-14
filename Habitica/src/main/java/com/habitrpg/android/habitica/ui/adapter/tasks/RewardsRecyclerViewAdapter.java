@@ -27,7 +27,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     private APIHelper apiHelper;
 
     public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, APIHelper apiHelper) {
-        super(taskType, tagsHelper, layoutResource, newContext);
+        super(taskType, tagsHelper, layoutResource, newContext, user.getId());
         this.user = user;
         this.apiHelper = apiHelper;
         this.contentCache = new ContentCache(apiHelper.apiService);

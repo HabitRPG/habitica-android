@@ -63,11 +63,15 @@ public abstract class BaseFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        injectFragment(((BaseActivity)getActivity()).getHabiticaApplication().getComponent());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        injectFragment(((BaseActivity)getActivity()).getHabiticaApplication().getComponent());
 
         // Receive Events
         try {

@@ -70,6 +70,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class TasksFragment extends BaseMainFragment implements OnCheckedChangeListener {
 
     private static final int TASK_CREATED_RESULT = 1;
@@ -84,7 +86,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
 
-    private TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
+    @Inject
+    public TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
+
     private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
     private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
 
@@ -112,10 +116,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (this.tagsHelper == null) {
-            this.tagsHelper = new TagsHelper();
-        }
 
         if (user != null) {
             fillTagFilterDrawer(user.getTags());
@@ -211,35 +211,21 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
             @Override
             public Fragment getItem(int position) {
-                int layoutOfType;
                 TaskRecyclerViewFragment fragment;
                 BaseTasksRecyclerViewAdapter adapter;
 
                 switch (position) {
                     case 0:
-                        layoutOfType = R.layout.habit_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, TasksFragment.this.tagsHelper, layoutOfType, activity), Task.TYPE_HABIT);
-
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT);
                         break;
                     case 1:
-                        layoutOfType = R.layout.daily_item_card;
-                        int dailyResetOffset = 0;
-                        if (user != null) {
-                            dailyResetOffset = user.getPreferences().getDayStart();
-                        }
-                        adapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, TasksFragment.this.tagsHelper, layoutOfType, activity, dailyResetOffset);
-
-                        fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_DAILY);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY);
                         break;
                     case 3:
-                        layoutOfType = R.layout.reward_item_card;
-                        adapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, TasksFragment.this.tagsHelper, layoutOfType, activity, user, apiHelper);
-
-                        fragment = TaskRecyclerViewFragment.newInstance(adapter, Task.TYPE_REWARD);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD);
                         break;
                     default:
-                        layoutOfType = R.layout.todo_item_card;
-                        fragment = TaskRecyclerViewFragment.newInstance(new TodosRecyclerViewAdapter(Task.TYPE_TODO, TasksFragment.this.tagsHelper, layoutOfType, activity), Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);

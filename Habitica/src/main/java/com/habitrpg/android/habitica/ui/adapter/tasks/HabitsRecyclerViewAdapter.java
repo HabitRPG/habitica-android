@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class HabitsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<HabitViewHolder> {
-    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext) {
-        super(taskType, tagsHelper, layoutResource, newContext);
+    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID) {
+        super(taskType, tagsHelper, layoutResource, newContext, userID);
     }
 
     @Override

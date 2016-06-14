@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 public class TodosRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<TodoViewHolder> {
 
-    public TodosRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext) {
-        super(taskType, tagsHelper, layoutResource, newContext);
+    public TodosRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID) {
+        super(taskType, tagsHelper, layoutResource, newContext, userID);
     }
 
     @Override
