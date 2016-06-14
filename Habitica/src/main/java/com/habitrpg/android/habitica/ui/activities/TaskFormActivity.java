@@ -603,13 +603,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private void createTagsCheckBoxes() {
         int position = 0;
         for (Tag tag : tags) {
-            TableRow row = new TableRow(tagsContainerLinearLayout.getContext());
+            TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.row_checklist, this.tagsContainerLinearLayout, false);
+            CheckBox checkbox = (CheckBox) row.findViewById(R.id.checkbox);
             row.setId(position);
-            CheckBox tagsCheckBox = new CheckBox(tagsContainerLinearLayout.getContext());
-            tagsCheckBox.setText(tag.getName()); // set text Name
-            tagsCheckBox.setId(position);
+            checkbox.setText(tag.getName()); // set text Name
+            checkbox.setId(position);
             //This is to check if the tag was selected by the user. Similar to onClickListener
-            tagsCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (buttonView.isChecked()) {
                     if (!selectedTags.contains(tag)) {
                         selectedTags.add(tag);
@@ -621,9 +621,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
             });
-            row.addView(tagsCheckBox);
             tagsContainerLinearLayout.addView(row);
-            tagCheckBoxList.add(tagsCheckBox);
+            tagCheckBoxList.add(checkbox);
             position++;
         }
 
@@ -669,11 +668,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
             for (int i = 0; i < 7; i++) {
                 View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer, false);
-                TextView tv = (TextView) weekdayRow.findViewById(R.id.label);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
+                checkbox.setText(weekdays[i]);
                 checkbox.setChecked(true);
                 this.weekdayCheckboxes.add(checkbox);
-                tv.setText(weekdays[i]);
                 this.frequencyContainer.addView(weekdayRow);
             }
         } else {
