@@ -113,6 +113,9 @@ public class AvatarSetupFragment extends BaseFragment {
         float itemWidth = getContext().getResources().getDimension(R.dimen.customization_width);
 
         int spanCount = (int) (width / itemWidth);
+        if (spanCount == 0) {
+            spanCount = 1;
+        }
         this.layoutManager.setSpanCount(spanCount);
     }
 

@@ -306,14 +306,19 @@ public class PartyFragment extends BaseMainFragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == 1 && group != null) {
-                    chatListFragment.setNavigatedToFragment(group.id);
+                    if (chatListFragment != null) {
+                        chatListFragment.setNavigatedToFragment(group.id);
+
+                    }
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
                 if (position == 1 && group != null) {
-                    chatListFragment.setNavigatedToFragment(group.id);
+                    if (chatListFragment != null) {
+                        chatListFragment.setNavigatedToFragment(group.id);
+                    }
                 }
             }
 

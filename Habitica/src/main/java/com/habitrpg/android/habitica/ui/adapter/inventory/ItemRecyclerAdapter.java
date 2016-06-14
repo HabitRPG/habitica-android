@@ -116,7 +116,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 }
                 binding.setImageNamed("Pet_"+type+"_"+item.getKey());
 
-                if (isHatching) {
+                if (isHatching != null && isHatching) {
                     this.binding.setDisabled(this.isPetOwned());
                 }
             }
