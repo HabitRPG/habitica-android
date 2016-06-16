@@ -9,6 +9,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,5 +54,9 @@ public class BaseAPITests {
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         hostConfig.setUser(response.getId());
         hostConfig.setApi(response.getApiToken() != null ? response.getApiToken() : response.getToken());
+    }
+
+    @After
+    public void tearDown() {
     }
 }

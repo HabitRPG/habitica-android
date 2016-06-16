@@ -213,4 +213,9 @@ public interface ApiService {
     @POST("/iap/android/verify")
     Call<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
 
+
+    //DEBUG: These calls only work on a local development server
+
+    @POST("debug/add-ten-gems")
+    Observable<Void> debugAddTenGems();
 }
