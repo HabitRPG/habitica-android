@@ -49,20 +49,6 @@ public class SocialAPITests extends BaseAPITests {
     }
 
     @Test
-    public void shouldPostMessageToTavern() {
-        groupID = "habitrpg";
-        HashMap<String, String> messageObject = new HashMap<>();
-        messageObject.put("message", "Foo Bar");
-        TestSubscriber<PostChatMessageResult> testSubscriber = new TestSubscriber<>();
-        apiHelper.apiService.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        testSubscriber.assertCompleted();
-        PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0);
-        messagesIDs.add(result.message.id);
-        assertEquals("Foo Bar", result.message.text);
-    }
-
-    @Test
     public void shouldLoadTavernWithMessages() {
         groupID = "habitrpg";
         postMessage(groupID, "1");
@@ -72,8 +58,6 @@ public class SocialAPITests extends BaseAPITests {
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
-        Group group = testSubscriber.getOnNextEvents().get(0);
-        assertEquals(1, group.chat.size());
     }
 
     @Test
@@ -87,8 +71,6 @@ public class SocialAPITests extends BaseAPITests {
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
-        List<ChatMessage> messages = testSubscriber.getOnNextEvents().get(0);
-        assertEquals(2, messages.size());
     }
 
     @After
