@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRe
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
@@ -143,4 +144,6 @@ public interface AppComponent {
     void inject(NewsFragment newsFragment);
 
     void inject(HabiticaApplication habiticaApplication);
+
+    void inject(PreferencesFragment preferencesFragment);
 }

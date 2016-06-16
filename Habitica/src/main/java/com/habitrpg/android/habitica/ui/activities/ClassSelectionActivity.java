@@ -17,6 +17,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.functions.Action1;
@@ -36,6 +38,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     @BindView(R.id.warriorAvatarView)
     AvatarView warriorAvatarView;
 
+    @Inject
     APIHelper apiHelper;
 
     ProgressDialog progressDialog;
@@ -48,8 +51,6 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.apiHelper = HabiticaApplication.ApiHelper;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

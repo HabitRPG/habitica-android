@@ -24,6 +24,8 @@ import android.support.v7.preference.Preference;
 
 import java.util.Calendar;
 
+import javax.inject.Inject;
+
 public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -31,14 +33,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private TimePreference timePreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
-    private APIHelper apiHelper;
+
+    @Inject
+    public APIHelper apiHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        apiHelper = HabiticaApplication.ApiHelper;
-
+        ((HabiticaApplication)getActivity().getApplication()).getComponent().inject(this);
         context = getActivity();
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
@@ -112,7 +115,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             Intent intent = new Intent(getActivity(), ClassSelectionActivity.class);
             intent.putExtras(bundle);
 
-            if (user.getFlags().getClassSelected() && user.getPreferences().getDisableClasses()) {
+            if (user.getFlags().getClassSelected() && !user.getPreferences().getDisableClasses()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.change_class_confirmation))
                         .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
