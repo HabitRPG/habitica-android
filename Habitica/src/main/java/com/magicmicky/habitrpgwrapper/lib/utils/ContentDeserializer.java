@@ -22,6 +22,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.lang.reflect.Type;
@@ -122,6 +123,17 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         }
 
         result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {}.getType());
+
+        List<String> spellKeys = new ArrayList<>();
+        for (Skill skill : result.spells) {
+            spellKeys.add(skill.key);
+        }
+        List<Skill> oldSkills = new Select().from(Skill.class).queryList();
+        for (Skill skill : oldSkills) {
+            if (!spellKeys.contains(skill.key)) {
+                skill.delete();
+            }
+        }
 
         result.appearances = context.deserialize(object.get("appearances"), new TypeToken<List<Customization>>() {}.getType());
         result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<List<Customization>>() {}.getType());
