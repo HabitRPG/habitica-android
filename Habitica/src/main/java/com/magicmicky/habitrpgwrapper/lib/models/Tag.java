@@ -71,6 +71,15 @@ public class Tag extends BaseModel {
         this.id = id;
     }
 
+    @Override
+    public void delete() {
+        if (getTasks() != null) {
+            for (TaskTag tt : getTasks()) {
+                tt.delete();
+            }
+        }
+        super.delete();
+    }
 
     @Override
     public boolean equals(Object o) {
