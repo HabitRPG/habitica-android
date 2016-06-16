@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.userpicture.UserPicture;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -732,7 +733,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
-
         if (rewardKey.equals("potion")) {
             int currentHp = user.getStats().getHp().intValue();
             int maxHp = user.getStats().getMaxHealth();
@@ -744,7 +744,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            apiHelper.apiService.buyItem(event.Reward.getId()).compose(apiHelper.configureApiCallObserver())
+            apiHelper.apiService.buyItem(event.Reward.getId())
+                    .compose(apiHelper.configureApiCallObserver())
                     .subscribe(buyResponse -> {
                         String snackbarMessage = event.Reward.getText() + " successfully purchased!";
 
@@ -789,6 +790,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(new TaskScoringCallback(this, rewardKey), throwable -> {});
         }
+
+        //Update the users gold
+        Stats stats = user.getStats();
+        Double gp = stats.getGp() - event.Reward.getValue();
+        stats.setGp(gp);
 
         avatarInHeader.updateData(user);
         user.async().save();
