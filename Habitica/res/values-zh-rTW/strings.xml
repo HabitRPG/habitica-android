@@ -36,6 +36,7 @@
   <string name="emailAddress">電子郵件地址</string>
   <string name="confirmpassword">確認密碼</string>
   <string name="logout">登出</string>
+  <string name="logout_description">從你的帳號登出</string>
   <string name="account_details">帳號信息</string>
   <string name="LoginActivityName">歡迎</string>
   <string name="string_revive">重生</string>
@@ -92,7 +93,6 @@
   <string name="faint_subtitle">別失望！</string>
   <string name="faint_penalty_body">你降了一級，丟失了所有的金幣和一件裝備。不過繼續努力，你還可以把他們都拿回來的！加油！你做的很棒！</string>
   <string name="faint_header">你沒有生命值了！</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
   <string name="filter">過濾器</string>
   <string name="profile_image">頭像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -108,6 +108,8 @@
   <string name="no_party_message">你沒有加入任何隊伍。如想加入隊伍，請訪問網頁版。</string>
   <string name="forgot_pw_btn">忘記密碼</string>
   <string name="forgot_pw_tv">忘記了您的密碼？請訪問網頁版。</string>
+  <string name="tavern.inn.checkOut">重啟每日任務</string>
+  <string name="tavern.inn.rest">暫停每日任務</string>
   <string name="reward.dialog.buy">購買</string>
   <string name="reward.dialog.dismiss">解散</string>
   <string name="party">隊伍</string>
@@ -253,6 +255,7 @@
   <string name="pets">寵物</string>
   <string name="mounts">坐騎</string>
   <string name="armoireEquipment" formatted="false">你在神秘寶箱裡找到稀有物品: %s! 真是太棒了!</string>
+  <string name="armoireFood" formatted="false">你在魔法衣櫥裡找到了%1$s %2$s。它是用來做什麼的？</string>
   <string name="armoireExp">你奮力打開神秘寶箱而且拿到經驗值!</string>
   <string name="armoireNotesFull" formatted="false">打開神秘寶箱會隨機獲得特殊裝備，經驗，或是食物! 數量剩下: %d 份</string>
   <string name="armoireLastItem">你在神秘寶箱裡找到最後一份稀有裝備。</string>
@@ -262,10 +265,58 @@
   <string name="feed_to_pet">餵食寵物</string>
   <string name="hatch_egg">孵化寵物蛋</string>
   <string name="invite_party">隊伍邀請</string>
+  <string name="dialog_feeding" formatted="false">餵養%1$s %2$s用：</string>
   <string name="use_animal">用</string>
   <string name="feed">餵</string>
   <string name="hatch_with" formatted="false">用 %s 孵化寵物</string>
+  <string name="hatched_pet_title" formatted="false">你孵化了一隻 %1$s %2$s！</string>
   <string name="close">關閉</string>
   <string name="share">分享</string>
+  <string name="notification_pet_fed" formatted="false">你餵食了你的%1$s %2$s！</string>
   <string name="notification_purchase" formatted="false">%s 被買下來了</string>
+  <string name="sectionpets">基本寵物</string>
+  <string name="sectionpremiumPets">神奇藥水寵物</string>
+  <string name="sectionquestPets">劇情任務寵物</string>
+  <string name="sectionspecialPets">稀有寵物</string>
+  <string name="sectionmounts">基本坐騎</string>
+  <string name="sectionpremiumMounts">神奇藥水坐騎</string>
+  <string name="sectionquestMounts">劇情任務坐騎</string>
+  <string name="sectionspecialMounts">稀有坐騎</string>
+  <string name="world_quest">世界任務</string>
+  <string name="inn_description">在客棧休息讓你未完成的每日任務不會傷害你！ (注意：它不能阻止來自任務怪物的傷害。)</string>
+  <string name="empty_items" formatted="false">你沒有擁有任何的%s</string>
+  <string name="user_level" formatted="false">等級 %s</string>
+  <string name="user_level_with_class" formatted="false">等級 %1$s - %2$s</string>
+  <string name="warrior">戰士</string>
+  <string name="rogue">盜賊</string>
+  <string name="mage">法師</string>
+  <string name="healer">醫師</string>
+  <string name="warrior_description">戰士們會有更大的機率觸發暴擊並在完成任務時隨機獲得額外的金幣，經驗和掉率。他們還能對boss造成嚴重的傷害。如果你希望獲得隨機性的獎勵，或者在boss任務中重創boss，來玩戰士吧！</string>
+  <string name="mage_description">法師非常善於學習，獲得經驗值和升級比其他職業快。他們也會獲得大量的魔力值來使用一些特殊的法術。如果你喜歡玩得有策略性，或者你強烈地希望升級解鎖更多的遊戲內容，來玩法師吧！</string>
+  <string name="rogue_description">盜賊熱衷於積累財富，比其他人獲得更多的金幣，還擅長尋找隨機物品。他們標誌性的潛行技能使得他們能夠躲避未完成的日常帶來的傷害。如果你希望獲得更多的獎勵，成就，掉落以及徽章，來玩盜賊吧！</string>
+  <string name="healer_description">醫師們對傷害的抗性很強，也可以保護其他的人。錯過的日常任務和壞習慣無法傷害他們太多，而且他們有很多回血的技能。如果你熱衷於輔助其他的隊友，或者是享受那種從死神手里奪取生命的快感，那就成為一名醫師吧！</string>
+  <string name="select_class">選擇職業</string>
+  <string name="opt_out_class">退出</string>
+  <string name="opt_out_description">不知道選什麼職業？想以後再選？沒問題 - 你現在可以先做一個沒有特殊技能的戰士。我們的維基頁面上有關於職業系統的介紹，之後隨時可以定你的職業。</string>
+  <string name="class_confirmation" formatted="false">你確定想要成為%s嗎？</string>
+  <string name="choose_class">選擇職業</string>
+  <string name="dialog_go_back">返回</string>
+  <string name="opt_out_confirmation">你確定要退出嗎？</string>
+  <string name="change_class">更換你的職業</string>
+  <string name="enable_class">開啟職業系統</string>
+  <string name="changing_class_progress">更換職業</string>
+  <string name="by_email">通過電子郵件</string>
+  <string name="invite_existing_users">邀請已存在的用戶</string>
+  <string name="send">發送</string>
+  <string name="invite">邀請朋友</string>
+  <string name="invite_id_description">如果你的朋友們已經在使用Habitica 了，通過&lt;用戶ID邀請他們 。</string>
+  <string name="invite_email_description">如果你的朋友通過你的郵件加入Habitica，他們將自動被邀請加入你的隊伍。</string>
+  <string name="add_invites">添加邀請</string>
+  <string name="user_id">用戶ID</string>
+  <string name="email">電子郵件</string>
+  <string name="invite_users">邀請加入隊伍</string>
+  <string name="share_using">分享使用</string>
+  <string name="share_levelup" formatted="false">我在Habitica中通過改善我現實生活中的習慣到達了%s級！</string>
+  <string name="share_hatched" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
+  <string name="share_raised" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
 </resources>

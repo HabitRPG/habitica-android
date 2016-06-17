@@ -70,6 +70,7 @@
   <string name="positive_habit_form">いい ( + )</string>
   <string name="negative_habit_form">悪い ( - )</string>
   <string name="checklist">チェックリスト</string>
+  <string name="reminders">通知</string>
   <string name="actions">行動</string>
   <string name="attributes">属性</string>
   <string name="physical">肉体</string>
@@ -256,12 +257,12 @@
   <string name="quests">クエスト</string>
   <string name="pets">ペット</string>
   <string name="mounts">騎獣</string>
-  <string name="armoireEquipment" formatted="false">戸棚で貴重なアイテム、 %s を見つけました!　すごい!</string>
-  <string name="armoireFood" formatted="false">戸棚をひっかきまわして%1$s%2$sを見つけました。何でこんなとこにあるんでしょう?</string>
-  <string name="armoireExp">戸棚と格闘して経験値を増やしました。どうぞっ!</string>
-  <string name="armoireNotesFull" formatted="false">戸棚を開くと、ときどき特別な装備、経験値、えさを手にすることができます!　残っているアイテムの部品 : %d</string>
-  <string name="armoireLastItem">貴重なアイテムの最後の部品を魅惑の戸棚で発見しました。</string>
-  <string name="armoireNotesEmpty">戸棚には毎月最初の週に新しいアイテムが入ります。それまでは、クリックして経験値やえさを手に入れましょう!</string>
+  <string name="armoireEquipment" formatted="false">宝箱に貴重なアイテム、 %s を見つけました!　すごい!</string>
+  <string name="armoireFood" formatted="false">宝箱をひっかきまわして%1$s%2$sを見つけました。何でこんなとこにあるんでしょう?</string>
+  <string name="armoireExp">宝箱と格闘して経験値を増やしました。どうぞっ!</string>
+  <string name="armoireNotesFull" formatted="false">宝箱を開くと、特別な装備、経験値、えさなどを手にできることがあります!　残っているアイテムの部品 : %d</string>
+  <string name="armoireLastItem">貴重なアイテムの最後の部品をラッキー宝箱で発見しました。</string>
+  <string name="armoireNotesEmpty">宝箱には毎月最初の週に新しいアイテムが入ります。それまでは、クリックして経験値やえさを手に入れましょう!</string>
   <string name="sell" formatted="false">%s ゴールドで売る</string>
   <string name="hatch_with_potion">たまごがえしの薬を使う</string>
   <string name="feed_to_pet">ペットにえさをやる</string>
@@ -305,7 +306,7 @@
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいいですか?</string>
   <string name="change_class">クラスを変更する</string>
-  <string name="change_class_description">3 ジェム払って、クラスを変更し、属性値を回収します。</string>
+  <string name="change_class_description">クラスを変更し、能力値を回収します。要 3 ジェム。能力値の割りあては Web 画面で行います。 </string>
   <string name="enable_class">クラス システムを有効にする</string>
   <string name="changing_class_progress">クラスの変更</string>
   <string name="by_email">メールで</string>
@@ -322,4 +323,7 @@
   <string name="share_levelup" formatted="false">生活を改善して、Habitica でのレベルが %s になりました!</string>
   <string name="share_hatched" formatted="false">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめました。</string>
   <string name="share_raised" formatted="false">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな騎獣まで成長しました。</string>
+  <string name="open_in_store">Play ストアで開く</string>
+  <string name="change_class_confirmation">本当にクラスを変更しますか? 3 ジェムかかります。</string>
+  <string name="leaderMessage" formatted="false">%1$s からのメッセージ</string>
 </resources>

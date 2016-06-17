@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="tutorial_habits">Lakukan Kebiasaan Baik untuk mendapatkan emas dan pengalaman! Kebiasaan Buruk akan menyakiti avatarmu jika kamu mengetuknya, jadi hindari melakukannya di dunia nyata!</string>
+  <string name="tutorial_dailies">Kalahkan tugas harianmu yang berulang untuk mendapatkan emas dan pengalaman. Bahaya! Keseharian akan menyakiti avatarmu jika kamu tidak menyelesaikannya tepat waktu.</string>
+  <string name="tutorial_todos">Lakukan Tugasmu di dunia nyata, lalu ceklis daftar untuk EMAS dan PENGALAMAN sehingga kamu bisa mendapatkan Hadiah dan membuka fitur baru!</string>
+  <string name="tutorial_rewards">Ini adalah Hadiahmu! Dapatkan emas dengan menyelesaikan Tugas dunia-nyata, Keseharian, dan Daftar Tugas. Kemudian habiskan untuk Hadiah dalam game atau Hadiah dunia nyata kustom!</string>
+  <string name="tutorial_equipment">Perlengkapan yang kamu beli akan muncul di sini. Perlengkapan Bertarung milikmu akan mempengaruhi status, dan Kostum (jika dicentang) hanya mempengaruhi apa yang avatarmu kenakan.</string>
+  <string name="tutorial_items">Dapatkan item dengan menyelesaikan tugas dan meningkatkan level. Ketuk pada item untuk menggunakannya!</string>
+  <string name="tutorial_pets">Seiring kamu menyelesaikan tugas dunia-nyata, kamu sekarang memiliki kesempatan acak untuk menemukan telur dan ramuan. Campurkan mereka untuk menetaskan peliharaan</string>
+  <string name="tutorial_skills">Keahlian adalah kemampuan spesial yang memiliki efek yang kuat! Ketuk pada suatu keahlian untuk menggunakannya. Keahlian akan mengurangi Mana (baris biru), di mana kamu bisa mendapatkannya dengan mengecek aplikasi setiap hari dan dengan menyelesaikan tugas dunia-nyatamu. Periksa FAQ pada menu untuk info lebih lanjut!</string>
+  <string name="tutorial_party">Ini adalah bagian dimana kamu dan teman-temanmu dapat menjaga masing-masing agar tetap bertanggung jawab sekaligus melawan monster-monster dengan tugasmu!</string>
+  <string name="tutorial_tavern">Selamat datang di Kedai Minuman, ruang berbincang publik untuk semua umur! Disini kamu dapat berbincang mengenai produktivitas dan menanyakan pertanyaan. Selamat bersenang-senang!</string>
+  <string name="tutorial_classes">Pilih untuk menjadi Prajurit, Penyihir, Penyembuh, atau Perampok! Setiap kelas memiliki perlengkapan dan kemampuan yang unik. Ketuk (?) untuk mengetahui lebih lanjut!</string>
+</resources>

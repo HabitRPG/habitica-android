@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">해비티카</string>
+  <string name="action_refresh">새로고침</string>
+  <string name="XP_default">경험</string>
+  <string name="HP_default">체력</string>
+  <string name="MP_default">마나</string>
+  <string name="ERR_pb_barcode">데이터를 가져오지 못했습니다</string>
+  <!--Prefs-->
+  <string name="PS_settings_title">설정</string>
+  <string name="SP_address_hint">당신의 개인서버</string>
+  <string name="SP_userID_title">유저 ID</string>
+  <string name="SP_userID_summary">당신의 유저ID</string>
+  <string name="SP_APIToken_title">API 토큰</string>
+  <string name="SP_APIToken_summary">당신의 API 토큰</string>
+  <string name="PS_contact_title">연락처</string>
+  <string name="unknown_error">오류가 발생했습니다...</string>
+  <string name="pref_account_header">계정</string>
+  <string name="pref_reminder_header">매일 알림</string>
+  <string name="pref_reminder_checkbox">알림 활성화</string>
+  <string name="pref_reminder_picker">알림 시간 설정</string>
+  <!--Adding tasks-->
+  <string name="task_value">값</string>
+  <string name="new_todo">새로운 할 일</string>
+  <string name="new_reward">새로운 보상</string>
+  <string name="new_daily">새로운 일일과제</string>
+  <string name="new_habit">새로운 습관</string>
+  <string name="action_edit">수정</string>
+  <string name="action_delete">삭제</string>
+  <string name="action_cancel">취소</string>
+  <string name="login_btn">로그인</string>
+  <string name="register_btn">등록</string>
+  <string name="username">유저이름</string>
+  <string name="email_username">이메일 혹은 유저이름</string>
+  <string name="password">암호</string>
+  <string name="emailAddress">이메일 주소</string>
+  <string name="confirmpassword">암호 확인</string>
+  <string name="logout">로그아웃</string>
+  <string name="logout_description">계정 로그아웃</string>
+  <string name="account_details">계정 정보</string>
+  <string name="LoginActivityName">환영합니다!</string>
+  <string name="string_revive">되살리기</string>
+  <string name="please_connect">위젯을 사용하기 전 앱을 연결해 주세요</string>
+  <string name="about.title">소개</string>
+  <string name="about.libraries">도서관</string>
+  <string name="about.versionhistory">버젼 내력</string>
+  <string name="about.habitica_open_source">Habitica는 Gitbub를 통해 오픈소스로 공개되어 있습니다</string>
+  <string name="about.rate_our_app">앱 평가</string>
+  <string name="about.give_us_feedback">피드백을 보내주세요!</string>
+  <string name="about.bugreport">버그 리포트</string>
+  <string name="about.source_code">소스코드</string>
+  <!--Network Errors-->
+  <string name="network_error_title">연결 에러</string>
+  <string name="network_error_no_network_body">인터넷에 연결되어 있지 않습니다.</string>
+  <string name="internal_error_api">서버에 문제가 발생한 것 같습니다. 다시 시도해 주세요.</string>
+  <string name="authentication_error_title">인증 에러</string>
+  <string name="authentication_error_body">당신의 유저이름 혹은 암호가 틀렸습니다.</string>
+  <string name="login_validation_error_title">검증 에러</string>
+  <string name="login_validation_error_fieldsmissing">모든 필드를 채워주셔야 합니다.</string>
+  <string name="save_changes">저장</string>
+  <string name="notes">노트</string>
+  <string name="text">내용</string>
+  <string name="difficulty">난이도</string>
+  <string name="tags">태그</string>
+  <string name="trivial">사소함</string>
+  <string name="easy">쉬움</string>
+  <string name="medium">중급</string>
+  <string name="hard">어려움</string>
+  <string name="start_date">시작 날짜</string>
+  <string name="positive_habit_form">긍정적 (+)</string>
+  <string name="negative_habit_form">부정적 (-)</string>
+  <string name="checklist">체크리스트</string>
+  <string name="reminders">알림</string>
+  <string name="actions">행동</string>
+  <string name="attributes">속성</string>
+  <string name="physical">신체</string>
+  <string name="mental">정신</string>
+  <string name="social">사회성</string>
+  <string name="other">기타</string>
+  <string name="frequency">빈도</string>
+  <string name="frequency_weekly">특정 요일에만</string>
+  <string name="frequency_daily">X일 마다</string>
+  <string name="monday">월요일</string>
+  <string name="tuesday">화요일</string>
+  <string name="wednesday">수요일</string>
+  <string name="thursday">목요일</string>
+  <string name="friday">금요일</string>
+  <string name="saturday">토요일</string>
+  <string name="sunday">일요일</string>
+  <string name="levelup_header">레벨이 올랐습니다!</string>
+  <string name="levelup_detail">일상생활의 목표들을 달성함으로써 레벨 %1$d가 되었어요!</string>
+  <string name="levelup_health">체력이 완전히 회복되었습니다!</string>
+  <string name="levelup_button">만세!</string>
+  <string name="faint_subtitle">좌절하지 말아요!</string>
+  <string name="faint_penalty_body">당신은 레벨, 골드, 장비 한개를 잃었지만, 열심히 일하면 곧 되찾을 수 있을꺼에요! 행운을 빌어요--분명 잘 해낼꺼에요.</string>
+  <string name="faint_header">체력이 모두 떨어졌어요!</string>
+  <string name="faint_button"><![CDATA[체력 회복하고 다시 도전하기]]></string>
+  <string name="filter">필터</string>
+  <string name="profile_image">프로필 사진</string>
+  <string name="mana_price_button" formatted="false">%d MP</string>
+  <string name="used_skill" formatted="false">당신은 %1$s을 사용해 %2$d 마나를 얻었습니다.</string>
+  <string name="new_checklist_item">새로운 체크리스트 아이템</string>
+  <string name="add_checklist_item">더하기</string>
+  <string name="reminder_title">일일과제를 체크하는것도 잊지마세요!</string>
+  <string name="skill_progress_title">스킬 사용</string>
+  <string name="coming_soon">곧 찾아옵니다</string>
+  <string name="chat_flag_confirmation">정말 이 메세지를 신고하시겠습니까?</string>
+  <string name="flag_confirm">메세지 신고하기</string>
+  <string name="unlock_lvl_11">레벨 11에 언락</string>
+  <string name="no_party_message">파티에 소속되어 있지 않습니다. 파티에 가입하려면 저희 홈페이지를 방문해주세요.</string>
+  <string name="forgot_pw_btn">암호 찾기</string>
+  <string name="forgot_pw_tv">암호를 잊어버리셨나요? 모바일 홈페이지를 이용해주세요.</string>
+  <string name="tavern.inn.checkOut">일일과제 활성화</string>
+  <string name="tavern.inn.rest">일일과제 일시중지</string>
+  <string name="reward.dialog.buy">구매</string>
+  <string name="reward.dialog.dismiss">닫기</string>
+  <string name="party">파티</string>
+  <string name="chat">채팅</string>
+  <string name="members">멤버</string>
+  <string name="habits">습관</string>
+  <string name="dailies">일일과제</string>
+  <string name="todos">할 일</string>
+  <string name="rewards">보상</string>
+  <string name="taskform.delete.title">확실합니까?</string>
+  <string name="taskform.delete.message">삭제하시겠습니까?</string>
+  <string name="yes">예</string>
+  <string name="no">아니요</string>
+  <string name="quest">퀘스트</string>
+  <string name="avatar_body">몸</string>
+  <string name="avatar_hair">머리</string>
+  <string name="avatar_shirt">셔츠</string>
+  <string name="avatar_skin">피부</string>
+  <string name="avatar_ears">동물 귀</string>
+  <string name="avatar_base">기본</string>
+  <string name="avatar_color">색</string>
+  <string name="avatar_beard">턱수염</string>
+  <string name="avatar_mustache">콧수염</string>
+  <string name="avatar_flower">꽃</string>
+  <string name="avatar_bangs">앞머리</string>
+  <string name="avatar_nothing">세팅되지 않음</string>
+  <string name="avatar_size">체형</string>
+  <string name="avatar_size_slim">날씬하게</string>
+  <string name="avatar_size_broad">넓게</string>
+  <string name="avatar_background">배경</string>
+  <string name="purchase_customization"> 구매</string>
+  <string name="purchase_set_button" formatted="false">%d 보석으로 전체 세트 열기</string>
+  <string name="purchase_button">구매</string>
+  <string name="purchase_set_title" formatted="false">세트 구매 %s</string>
+  <string name="due_date">만기일</string>
+  <string name="quest.accept">승인</string>
+  <string name="quest.reject">거부</string>
+  <string name="quest.begin">퀘스트 시작</string>
+  <string name="quest.cancel">초대 취소</string>
+  <string name="quest.abort">퀘스트 포기</string>
+  <string name="quest.leave">퀘스트 나가기</string>
+  <string name="quest.pending">미결</string>
+  <string name="quest.accepted">승인됨</string>
+  <string name="quest.rejected">거부됨</string>
+  <string name="quest.participants">참가자</string>
+  <string name="version_info" formatted="false">버젼 %s (%d)</string>
+  <string name="sidebar_help">FAQ &amp; FAQ</string>
+  <string name="complete_tutorial">네, 알겠어요!</string>
+  <string name="dismiss_tutorial">나중에 알려주세요</string>
+  <string name="intro_1_title">Habitica에 오신걸 환영합니다</string>
+  <string name="intro_1_description">1,100,000이 넘는 사람들과 함께 재미있게 해야할 일도 달성하세요. 아바타를 만들고 일상생활의 과제의 달성률을 체크하세요. </string>
+  <string name="intro_2_title">게임 진행도 = 인생 진행도</string>
+  <string name="intro_2_description">일상생활의 과제들을 해결하면서 게임의 새로운 기능을 언락하세요. 당신이 목표를 달성할 때 마다 갑옷, 펫과 같은 다양한 보상들을 얻을 수 있습니다!</string>
+  <string name="intro_3_title">친구들과 몬스터를 물리치세요</string>
+  <string name="intro_3_description">친구들의 도움으로 당신의 과제의 진행도를 체크하세요. 일상 생활과 전투에서 서로를 도와가며 함께 성장하세요!</string>
+  <string name="intro_finish_button">시작하기</string>
+  <string name="previous_button">이전</string>
+  <string name="next_button">다음</string>
+  <string name="skip_button">스킵</string>
+  <string name="setup_welcome_description">Habitica에 오신걸 환영합니다. 게임에서의 진행도는 당신 일상에서의 진행도를 의미하죠! 과제를 달성할수록 새로운 장비, 펫, 퀘스트 등을 열 수 있어요.</string>
+  <string name="setup_welcome_title">환영합니다!</string>
+  <string name="avatar_setup_description">우선은 게임에서 당신을 대표할 아바타가 필요해요! 당신이 일상생활에서하는 행동들은 아바타의 체력, 경험치와 골드에 영향을 미칠꺼에요.</string>
+  <string name="task_setup_description">잘했어요! 이제 과제를 설정하여 경험치와 골드를 얻어볼까요.
+
+우선, 당신은 일상의 어떤 부분을 개선하고 싶으신가요?</string>
+  <string name="setup_group_work">일</string>
+  <string name="setup_group_exercise">운동</string>
+  <string name="setup_group_heathWellness">건강</string>
+  <string name="setup_group_school">학교</string>
+  <string name="setup_group_teams">팀</string>
+  <string name="setup_group_chores">집안일</string>
+  <string name="setup_group_creativity">창의력</string>
+  <string name="setup_task_work_1">이메일 정리</string>
+  <string name="setup_task_work_2">가장 중요한 과제</string>
+  <string name="setup_task_work_3">과제하기</string>
+  <string name="setup_task_exercise_1">10분동안 심장강화운동</string>
+  <string name="setup_task_exercise_2">스트레칭</string>
+  <string name="setup_task_exercise_3">운동 계획 짜기</string>
+  <string name="setup_task_healthWellness_1">건강한 음식먹기/군것질</string>
+  <string name="setup_task_healthWellness_2">치실 하기</string>
+  <string name="setup_task_healthWellness_3">건강검진 예약</string>
+  <string name="setup_task_school_1">공부/미루기</string>
+  <string name="setup_task_school_2">숙제하기</string>
+  <string name="setup_task_school_3">숙제 끝내기</string>
+  <string name="setup_task_teams_1">팀에게 연락하기</string>
+  <string name="setup_task_teams_2">팀에게 진행상황 보고하기</string>
+  <string name="setup_task_teams_3">팀 과제 끝내기</string>
+  <string name="setup_task_chores_1">10분간 청소</string>
+  <string name="setup_task_chores_2">설겆이</string>
+  <string name="setup_task_chores_3">옷장 청소</string>
+  <string name="setup_task_creativity_1">공예 배우기</string>
+  <string name="setup_task_creativity_2">창의적인 활동 하기</string>
+  <string name="setup_task_creativity_3">창의적인 과제 끝내기</string>
+  <string name="gem.purchase.support">Habitica가 계속되었으면 좋겠나요? 보석을 구매하여 개발자들을 지원해주세요. 보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:
+
+- 아바타를 위한 멋진 의상
+- 멋진 배경들
+- 펫 알을 얻을 수 있는 재미있는 퀘스트들
+- 레벨 100 이전에 클라스를 변경
+
+더 나은 Habitica를 만들 수 있도록 도와주셔서 감사합니다. 당신의 지원은 큰 의미로 다가옵니다!</string>
+  <string name="my_guilds">나의 길드</string>
+  <string name="public_guilds">열린 길드</string>
+  <string name="guild">길드</string>
+  <string name="leave">나가기</string>
+  <string name="join">가입하기</string>
+  <string name="leader">리더</string>
+  <string name="gems">보석</string>
+  <string name="copy_as_todo">해야할 일로 복사하기</string>
+  <string name="send_pm">PM 보내기</string>
+  <string name="flag">신고</string>
+  <string name="delete">삭제</string>
+  <string name="name">이름</string>
+  <string name="description">설명</string>
+  <string name="add_tag">태그 더하기</string>
+  <string name="privacy">사생활 보호</string>
+  <string name="write_message">메세지 작성</string>
+  <string name="post">게시</string>
+  <string name="todo_due" formatted="false">만기: %s</string>
+  <string name="daily_streak" formatted="false">연속 달성: %d</string>
+  <string name="todo_has_duedate">과제가 만기일이 있습니다</string>
+  <string name="battle_gear">전투 장비</string>
+  <string name="costume">의상</string>
+  <string name="outfit_head">머리</string>
+  <string name="outfit_headAccessory">머리 장식</string>
+  <string name="outfit_eyewear">안경휴</string>
+  <string name="outfit_armor">갑옷</string>
+  <string name="outfit_back">뒤</string>
+  <string name="outfit_body">몸</string>
+  <string name="outfit_shield">방패</string>
+  <string name="outfit_weapon">무기</string>
+  <string name="wear_costume">의상 입기</string>
+  <string name="equipped">착용됨</string>
+  <string name="quest_cancel_message">정말 이 퀘스트를 취소하시겠습니까? 모든 초대장과 승인들을 잃을 것입니다. 퀘스트 스크롤은 주인에게 돌아갑니다.</string>
+  <string name="quest.invitation">퀘스트 초대장</string>
+  <string name="quest_begin_message">정말 이 퀘스트를 시작하시겠습니까? 시작 후 더이상 새로운 파티 멤버가 참여할 수 없습니다.</string>
+  <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
+  <string name="ago_1day">하루 전</string>
+  <string name="ago_days" formatted="false">%d 일 전</string>
+  <string name="ago_1Minute">1분 전</string>
+  <string name="ago_minutes" formatted="false">%d 분 전</string>
+  <string name="ago_hours" formatted="false">%d 시간 전</string>
+  <string name="ago_1hour">1시간 전</string>
+  <string name="today">오늘</string>
+  <string name="sidebar_items">아이템</string>
+  <string name="eggs">알</string>
+  <string name="hatching_potions">부화 포션</string>
+  <string name="food">음식</string>
+  <string name="quests">퀘스트</string>
+  <string name="pets">펫</string>
+  <string name="mounts">탈 것</string>
+  <string name="armoireEquipment" formatted="false">옷장에서 귀한 장비를 찾았습니다: %s! 대단해요!</string>
+  <string name="armoireFood" formatted="false">당신은 옷장안에서  %1$s %2$s 를 발견합니다. 왜 이것들이 여기 들어있지?</string>
+  <string name="armoireExp">당신은 옷장과 씨름하여 경험치를 얻었습니다. 맛 좀 봐라!</string>
+  <string name="armoireNotesFull" formatted="false">옷장을 열어 무작위로 장비, 경험치, 혹은 음식을 얻으세요! 남은 장비 부품: %d</string>
+  <string name="armoireLastItem">당신은 마지막 귀한 장비를 마법의 옷장에서 찾았습니다.</string>
+  <string name="armoireNotesEmpty">옷장에는 매달 첫째주에 새로운 장비가 들어있을 것입니다. 그때까지는 계속 클릭하여 경험치와 음식을 얻으세요!</string>
+  <string name="sell" formatted="false">팔기 (%s 골드)</string>
+  <string name="hatch_with_potion">포션으로 알 깨기</string>
+  <string name="feed_to_pet">펫 먹이주기</string>
+  <string name="hatch_egg">알로 알 깨기</string>
+  <string name="invite_party">파티에 초대</string>
+  <string name="dialog_feeding" formatted="false">%1$s %2$s 에게 다음의 먹이 주기:</string>
+  <string name="use_animal">사용</string>
+  <string name="feed">먹이주기</string>
+  <string name="hatch_with" formatted="false">%s 으로 펫 깨우기</string>
+  <string name="hatched_pet_title" formatted="false">당신은 %1$s %2$s 를 깨웠습니다!</string>
+  <string name="close">닫기</string>
+  <string name="share">나누기</string>
+  <string name="notification_pet_fed" formatted="false">%1$s %2$s 에게 먹이를 줬습니다!</string>
+  <string name="notification_purchase" formatted="false">%s 를 구매했습니다</string>
+  <string name="sectionpets">기본 펫</string>
+  <string name="sectionpremiumPets">마법의 물약 펫</string>
+  <string name="sectionquestPets">퀘스트 펫</string>
+  <string name="sectionspecialPets">레어 펫</string>
+  <string name="sectionmounts">기본 탈 것</string>
+  <string name="sectionpremiumMounts">마법의 물약 탈 것</string>
+  <string name="sectionquestMounts">퀘스트 탈 것</string>
+  <string name="sectionspecialMounts">레어 탈 것</string>
+  <string name="world_quest">세계 퀘스트</string>
+  <string name="inn_description">여관에서 쉬어서 완료하지 못한 일일과제가 당신을 다치게 하는 것을 막을 수 있습니다. (주의: 보스로부터 받는 데미지는 피하지 못합니다.)</string>
+  <string name="empty_items" formatted="false">%s 가 하나도 없습니다</string>
+  <string name="user_level" formatted="false">LVL %s</string>
+  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+  <string name="warrior">전사</string>
+  <string name="rogue">도적</string>
+  <string name="mage">법사</string>
+  <string name="healer">힐러</string>
+  <string name="warrior_description">전사들은 보너스 골드, 경험치를 증가시키고 과제를 달성하는 \"크리터컬 히트\"를 더 강하게, 자주 발생시킬 수 있습니다. 또 보스몬스터에 강한 피해를 입힐 수 있습니다. 예측 불가능한 대박을 터트리거나 보스 공격에서 활약하는 것을 원한다면 전사를 추천합니다!</string>
+  <string name="mage_description">법사는 경험치와 레벨을 다른 클래스에 비해 빠르게 성장해 나아갑니다. 또 특수 능력을 사요하기 위한 마나도 훨씬 많습니다. 계획적은 과제달성 게임을 하시고 싶거나 빠른 레벨업으로 다양한 기능들을 체험하시고 싶으시다면 법사를 추천합니다!</string>
+  <string name="rogue_description">도적은 다른 클래스에 비해 골드를 더 많이 받고 랜덤한 아이템들을 잘 찾아냅니다. 그들의 민첩 능력은 일일과제를 놓쳐서 발생하는 위험을 잘 피할 수 있도록 합니다. 보상과 달성과제, 아이템과 뱃지 모으기를 좋아하신다면 도적을 추천합니다!</string>
+  <string name="healer_description">힐러는 공격에 휘들리지 않고 동료들을 보호해 줍니다. 놓친 일일과제와 나쁜 습관들은 그들에게 큰 피해를 입히지 못하고, 설령 실패를 하더라도 치료가 가능합니다. 파티원들을 도와주길 좋아하고 노력으로 죽음을 이겨내는 것이 매력적이라면 힐러를 추천합니다!</string>
+  <string name="select_class">클레스 고르기</string>
+  <string name="opt_out_class">선택 유예</string>
+  <string name="opt_out_description">클래스에 신경쓰고 싶지 않으신가요? 나중에 고르고 싶으시다고요? 선택유예 하세요 - 당신은 아무런 능력이 없는 전사가 되어있을 꺼에요. 관련된 내용은 wiki를 방문하여 이후에 클래스를 선택하는 방법을 찾을 수 있습니다.</string>
+  <string name="class_confirmation" formatted="false">%s 가 되고싶은 것이 확실한가요?</string>
+  <string name="choose_class">클레스 고르기</string>
+  <string name="dialog_go_back">뒤로 가기</string>
+  <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
+  <string name="change_class">클레스 바꾸기</string>
+  <string name="change_class_description">보석 3개를 사용하여 클래스를 바꾸고 능력치를 초기화 하세요. 웹사이트에서 능력치를 배분할 수 있습니다. </string>
+  <string name="enable_class">클레스 사용 여부</string>
+  <string name="changing_class_progress">클레스 바꾸기</string>
+  <string name="by_email">이메일로</string>
+  <string name="invite_existing_users">등록된 사용자 초대</string>
+  <string name="send">보내기</string>
+  <string name="invite">친구 초대</string>
+  <string name="invite_id_description">Habitica를 이용하는 친구가 있다면, 유저 아이디를 입력하여 초대하세요.</string>
+  <string name="invite_email_description">친구가 당신이 보낸 이메일로 Habitica에 가입하면, 자동으로 당신의 파티에 초대됩니다!</string>
+  <string name="add_invites">초대 더하기</string>
+  <string name="user_id">유저 ID</string>
+  <string name="email">이메일</string>
+  <string name="invite_users">파티 초대</string>
+  <string name="share_using">올리기</string>
+  <string name="share_levelup" formatted="false">일상생활의 습관을 개선하여 Habitica에서 레벨 %s가 되었어요!</string>
+  <string name="share_hatched" formatted="false">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
+  <string name="share_raised" formatted="false">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
+  <string name="open_in_store">플레이스토어로 열기</string>
+  <string name="change_class_confirmation">보석 3개를 사용하여 클레스를 바꾸시겠습니까? </string>
+  <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
+</resources>

@@ -36,6 +36,7 @@
   <string name="emailAddress">El. pašto adresas</string>
   <string name="confirmpassword">Patvirtinti slaptažodį</string>
   <string name="logout">Atsijungti</string>
+  <string name="logout_description">Atsijungti nuo paskyros</string>
   <string name="account_details">Paskyros Duomenys</string>
   <string name="LoginActivityName">Sveiki</string>
   <string name="string_revive">Prisikelti</string>
@@ -287,4 +288,32 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="empty_items" formatted="false">Nebeturi %s</string>
   <string name="user_level" formatted="false">Lygis %s</string>
   <string name="user_level_with_class" formatted="false">Lygis %1$s - %2$s</string>
+  <string name="warrior">Karys</string>
+  <string name="rogue">Sukčius</string>
+  <string name="mage">Magas</string>
+  <string name="healer">Gydytojas</string>
+  <string name="select_class">Pasirinkti Klasę</string>
+  <string name="opt_out_class">Atsisakyti</string>
+  <string name="opt_out_description">Tingi gilintis į klases? Nori pasirinkti vėliau? Atsisakyk. Liksi kariu be specialių sugebėjimų. Galėsi vėliau lengvai ją įjungti, kai pasiskaitysi daugiau apie klases wiki puslapyje.</string>
+  <string name="class_confirmation" formatted="false">Ar tikrai nori būti %s?</string>
+  <string name="choose_class">Pasirink Klasę</string>
+  <string name="dialog_go_back">Grįžti</string>
+  <string name="opt_out_confirmation">Ar tikrai nori atsisakyti?</string>
+  <string name="change_class">Pakeisk klasę</string>
+  <string name="change_class_description">Pakeisk savo klasę ir atgauk išleistus savybių taškus už 3 brangakmenius. Šiuos taškus galėsi priskirti atsidarius interneto puslapį naršyklėje</string>
+  <string name="enable_class">Įjungti Klasių Sistemą</string>
+  <string name="changing_class_progress">Klasės Keitimas</string>
+  <string name="by_email">El. Paštu</string>
+  <string name="invite_existing_users">Pakviesti Esamus Vartotojus</string>
+  <string name="send">Siųsti</string>
+  <string name="invite">Pakviesk Draugus</string>
+  <string name="invite_id_description">Jei tavo draugai jau naudojasi Habitica, pakviesk juos įrašant jų Vartotojo ID čia.</string>
+  <string name="invite_email_description">Jei tavo draugai prisijungs prie Habitica per tavo el. pašto nuorodą, jie bus iš karto pakviesti į tavo grupę!</string>
+  <string name="add_invites">Pridėti Pakvietimų</string>
+  <string name="user_id">Vartotojo ID</string>
+  <string name="email">El. paštas</string>
+  <string name="invite_users">Pakviesk į Grupę</string>
+  <string name="share_using">Pasidalinti su</string>
+  <string name="share_levelup" formatted="false">Pasiekiau %s Habitica lygį tobulinant savo gyvenimo įpročius!</string>
+  <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
 </resources>

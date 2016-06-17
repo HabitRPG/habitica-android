@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">Taken</string>
+  <string name="sidebar.skills">Vaardigheden</string>
+  <string name="sidebar.section.social">Sociaal</string>
+  <string name="sidebar.tavern">Herberg</string>
+  <string name="sidebar.party">Groep</string>
+  <string name="sidebar.purchaseGems">Koop edelstenen</string>
+  <string name="sidebar.guilds">Gildes</string>
+  <string name="sidebar.challenges">Uitdagingen</string>
+  <string name="sidebar.section.inventory">Boedel</string>
+  <string name="sidebar.avatar">Avatar</string>
+  <string name="sidebar.equipment">Uitrusting</string>
+  <string name="sidebar.stable">Stal</string>
+  <string name="sidebar.news">Nieuws</string>
+  <string name="sidebar.settings">Instellingen</string>
+  <string name="sidebar.about">Over</string>
+</resources>

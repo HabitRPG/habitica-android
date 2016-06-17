@@ -304,7 +304,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="dialog_go_back">Wróć</string>
   <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
   <string name="change_class">Zmień swoją klasę</string>
-  <string name="change_class_description">Zmień klasę i odzyskaj punkty atrybutów za 3 kryształy.</string>
+  <string name="change_class_description">Zmień klasę i odzyskaj punkty atrybutów za 3 kryształy. Możesz przedzielić punkty atrybutów poprzez stronę internetową.</string>
   <string name="enable_class">Odblokuj System Klas</string>
   <string name="changing_class_progress">Zmiana Klasy</string>
   <string name="by_email">Przez e-mail</string>
@@ -321,4 +321,6 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="share_levelup" formatted="false">Ulepszając życiowe nawyki, osiągnąłem %s level w Habitice!</string>
   <string name="share_hatched" formatted="false">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="share_raised" formatted="false">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="open_in_store">Otwórz w sklepie Google Play</string>
+  <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
 </resources>

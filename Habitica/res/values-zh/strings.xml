@@ -36,10 +36,11 @@
   <string name="emailAddress">电子邮件地址</string>
   <string name="confirmpassword">确认密码</string>
   <string name="logout">注销</string>
+  <string name="logout_description">從你的帳號登出</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
   <string name="string_revive">重生</string>
-  <string name="please_connect">请在使用widget之前连接应用</string>
+  <string name="please_connect">请在使用小部件之前与应用链接</string>
   <string name="about.title">关于</string>
   <string name="about.libraries">资源库</string>
   <string name="about.versionhistory">版本历史</string>
@@ -92,7 +93,6 @@
   <string name="faint_subtitle">别失望！</string>
   <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你还可以把他们都拿回来的！加油！你做的很棒！</string>
   <string name="faint_header">你没有生命值了！</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
   <string name="filter">过滤器</string>
   <string name="profile_image">头像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -156,7 +156,7 @@
   <string name="quest.rejected">拒绝的</string>
   <string name="quest.participants">参与者</string>
   <string name="version_info" formatted="false">版本%s (%d)</string>
-  <string name="sidebar_help">帮助&amp;FAQ</string>
+  <string name="sidebar_help">帮助 &amp; FAQ</string>
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
   <string name="intro_1_title">欢迎来到Habitica</string>
@@ -194,7 +194,7 @@
   <string name="setup_task_school_1">学习/拖延</string>
   <string name="setup_task_school_2">做家庭作业</string>
   <string name="setup_task_school_3">完成班级委托</string>
-  <string name="setup_task_teams_1">与团队签到</string>
+  <string name="setup_task_teams_1">和队友一起检查</string>
   <string name="setup_task_teams_2">为团队更新现状</string>
   <string name="setup_task_teams_3">完成团队项目</string>
   <string name="setup_task_chores_1">清洁10分钟</string>
@@ -216,7 +216,6 @@
   <string name="flag">标志</string>
   <string name="delete">删除</string>
   <string name="name">名称</string>
-  <string name="description">Description</string>
   <string name="add_tag">添加标签</string>
   <string name="privacy">隐私</string>
   <string name="write_message">写消息</string>
@@ -287,4 +286,39 @@
   <string name="empty_items" formatted="false">你没有拥有任何的%s</string>
   <string name="user_level" formatted="false">等级 %s</string>
   <string name="user_level_with_class" formatted="false">等级 %1$s - %2$s</string>
+  <string name="warrior">戰士</string>
+  <string name="rogue">盜賊</string>
+  <string name="mage">法師</string>
+  <string name="healer">醫師</string>
+  <string name="warrior_description">战士们会有更大的机率触发暴击并在完成任务时随机获得额外的金币，经验和掉率。他们还能对boss造成严重的伤害。如果你希望获得随机性的奖励，或者在boss任务中重创boss，来玩战士吧！</string>
+  <string name="mage_description">法师非常善于学习，获得经验值和升级比其他职业快。他们也会获得大量的魔力值来使用一些特殊的法术。如果你喜欢玩得有策略性，或者你强烈地希望升级解锁更多的游戏内容，来玩法师吧！</string>
+  <string name="rogue_description">盗贼热衷于积累财富，比其他人获得更多的金币，还擅长寻找随机物品。他们标志性的潜行技能使得他们能够躲避未完成的日常带来的伤害。如果你希望获得更多的奖励，成就，掉落以及徽章，来玩盗贼吧！</string>
+  <string name="healer_description">医师们对伤害的抗性很强，也可以保护其他的人。错过的日常任务和坏习惯无法伤害他们太多，而且他们有很多回血的技能。如果你热衷于辅助其他的队友，或者是享受那种从死神手里夺取生命的快感，那就成为一名医师吧！</string>
+  <string name="select_class">选择职业</string>
+  <string name="opt_out_class">退出</string>
+  <string name="opt_out_description">不知道选什么职业？想以后再选？没问题 - 你现在可以先做一个没有特殊技能的战士。我们的维基页面上有关于职业系统的介绍，之后随时可以定你的职业。</string>
+  <string name="class_confirmation" formatted="false">你确定想要成为%s吗？</string>
+  <string name="choose_class">选择职业</string>
+  <string name="dialog_go_back">返回</string>
+  <string name="opt_out_confirmation">你确定要退出吗？</string>
+  <string name="change_class">更换你的职业</string>
+  <string name="change_class_description">转换你的职业病重置属性点需要3颗宝石。你能通过网页分配属性点</string>
+  <string name="enable_class">开启职业系统</string>
+  <string name="changing_class_progress">更换职业</string>
+  <string name="by_email">通过电子邮件</string>
+  <string name="invite_existing_users">邀请已存在的用户</string>
+  <string name="send">发送</string>
+  <string name="invite">邀请朋友</string>
+  <string name="invite_id_description">如果你的朋友们已经在使用Habitica 了，通过&lt;用户ID邀请他们 。</string>
+  <string name="invite_email_description">如果你的朋友通过你的邮件加入Habitica，他们将自动被邀请加入你的队伍。</string>
+  <string name="add_invites">添加邀请</string>
+  <string name="user_id">用户ID</string>
+  <string name="email">电子邮件</string>
+  <string name="invite_users">邀请加入队伍</string>
+  <string name="share_using">分享使用</string>
+  <string name="share_levelup" formatted="false">我在Habitica中通过改善我现实生活中的习惯到达了%s级！</string>
+  <string name="share_hatched" formatted="false">我刚刚在Habitica中通完成我现实生活中的任务孵化了一只宠物%1$s %2$s！</string>
+  <string name="share_raised" formatted="false">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
+  <string name="open_in_store">在应用商店开放</string>
+  <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
 </resources>

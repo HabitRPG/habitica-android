@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positif ( + )</string>
   <string name="negative_habit_form">Négatif ( - )</string>
   <string name="checklist">Liste de vérification</string>
+  <string name="reminders">Rappels</string>
   <string name="actions">Instructions/Actions</string>
   <string name="attributes">Attributs</string>
   <string name="physical">Physique</string>
@@ -304,7 +305,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="dialog_go_back">Revenir</string>
   <string name="opt_out_confirmation">Êtes-vous sûr-e de vouloir désactiver votre compte?</string>
   <string name="change_class">Changez votre classe</string>
-  <string name="change_class_description">Changez de classe et récupérez vos points d\'attribut en échange de 3 gemmes. Vous pourrez réattribuez vos points sur le site web</string>
+  <string name="change_class_description">Changez de classe et remboursez les points d\'attribut en échange de 3 gemmes. Vous pourrez attribuer vos points sur le site web</string>
   <string name="enable_class">Activer le système de classes</string>
   <string name="changing_class_progress">Changer de classe</string>
   <string name="by_email">Par email</string>
@@ -323,4 +324,5 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="share_raised" formatted="false">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
+  <string name="leaderMessage" formatted="false">Message de %1$s</string>
 </resources>

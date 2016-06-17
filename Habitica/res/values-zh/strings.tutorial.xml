@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">完成好习惯能获得金币和经验！坏习惯会使你的角色收到伤害，在现实中戒掉坏习惯吧！</string>
-  <string name="tutorial_dailies">战胜你那规律的每日任务拿到金币和经验。危险！如果你没及时完成每日任务，它们会化为小刀割伤你的角色的。</string>
-  <string name="tutorial_todos">现实完成了待办事项后，勾选相应条目获得金币和经验，用来购买奖励和解锁新的特外观。</string>
-  <string name="tutorial_rewards">这些是你的奖励！通过完成现实的习惯、每日任务和待办事项获得金币，再用它们购买游戏内奖励和自己设定的现实奖励。</string>
+  <string name="tutorial_habits">完成好习惯能获得金币和经验！坏习惯会使你的角色受到伤害，在日常生活中改正你的坏习惯吧！</string>
+  <string name="tutorial_dailies">完成你那规律的每日任务来拿到金币和经验。危险！如果你没能及时完成每日任务，它们会伤害你的角色的。</string>
+  <string name="tutorial_todos">现实中完成了待办事项以后，勾选相应条目以获得金币和经验，用来购买奖励和解锁新的外观。</string>
+  <string name="tutorial_rewards">这些是你的奖励！通过完成现实中的习惯、每日任务和待办事项可以获得金币，然后用它们去购买游戏内的奖励和自己设定的现实奖励吧。</string>
   <string name="tutorial_equipment">在你购买装备后，在这里显示。你的战斗装备会影响你的属性，你的服装(如果装备)会在你的角色上显示。</string>
   <string name="tutorial_items">通过升级和完成任务获得物品。点击一个物品来使用。</string>
   <string name="tutorial_pets">完成现实任务后，随机掉落宠物蛋和药水。将药水洒在宠物蛋上孵化宠物。</string>

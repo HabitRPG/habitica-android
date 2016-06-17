@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positivo ( + )</string>
   <string name="negative_habit_form">Negativo ( + )</string>
   <string name="checklist">Lista de controle</string>
+  <string name="reminders">Lembretes</string>
   <string name="actions">Ações</string>
   <string name="attributes">Atributos</string>
   <string name="physical">Físico</string>
@@ -304,6 +305,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="dialog_go_back">Voltar</string>
   <string name="opt_out_confirmation">Você tem certeza que quer cancelar?</string>
   <string name="change_class">Mude sua classe</string>
+  <string name="change_class_description">Mude sua classe e restitua seus pontos de atributo por 3 gemas. Você pode designar pontos de atributo através do website.</string>
   <string name="enable_class">Habilitar Sistema de Classes</string>
   <string name="changing_class_progress">Mudando de Classe</string>
   <string name="by_email">Por E-mail</string>
@@ -321,4 +323,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="share_levelup" formatted="false">Eu cheguei ao nível %s no Habitica melhorando os hábitos da minha vida real.</string>
   <string name="share_hatched" formatted="false">Eu acabei de ganhar um filhote de %1$s %2$s no Habitica por completar minhas tarefas da vida real!</string>
   <string name="share_raised" formatted="false">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
+  <string name="open_in_store">Abra na Play Store</string>
+  <string name="change_class_confirmation">Você tem certeza que quer mudar sua classe? Isso irá custar 3 gemas.</string>
+  <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
 </resources>

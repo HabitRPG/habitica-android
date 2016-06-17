@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positiv ( + )</string>
   <string name="negative_habit_form">Negativ ( - )</string>
   <string name="checklist">Checkliste</string>
+  <string name="reminders">Erinnerungen</string>
   <string name="actions">Aktionen</string>
   <string name="attributes">Attribute</string>
   <string name="physical">Körperlich</string>
@@ -178,7 +179,7 @@
 Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
-  <string name="setup_group_heathWellness">Gesundheit + Wellness</string>
+  <string name="setup_group_heathWellness">Gesundheit + Wohlbefinden</string>
   <string name="setup_group_school">Schule</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Hausarbeit</string>
@@ -323,4 +324,5 @@ Für den Anfang: welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
+  <string name="leaderMessage" formatted="false">Nachricht von %1$s</string>
 </resources>

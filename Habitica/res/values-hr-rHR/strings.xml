@@ -36,6 +36,7 @@
   <string name="emailAddress">Email adresa</string>
   <string name="confirmpassword">Potvrdi lozinku</string>
   <string name="logout">Odjavi se</string>
+  <string name="logout_description">Odjavi se iz svog računa</string>
   <string name="account_details">Detalji o računu</string>
   <string name="LoginActivityName">Dobrodošli</string>
   <string name="string_revive">Oživi</string>
@@ -287,4 +288,39 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="empty_items" formatted="false">Nemaš %s</string>
   <string name="user_level" formatted="false">LVL %s</string>
   <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+  <string name="warrior">Ratnik</string>
+  <string name="rogue">Odmetnik</string>
+  <string name="mage">Čarobnjak</string>
+  <string name="healer">Iscjelitelj</string>
+  <string name="warrior_description">Ratnici postižu veće rezultate i bolje \"kritične udarce\", koji nasumično daju bonus Zlato, Iskustvo i šansu za dobivanje predmeta za obavljanje zadataka. Isto tako jače naštete Šefovima. Odaberi Ratnika ako te motiviraju nasumične nagrade u stilu jackpota ili ako želiš brže uništiti Šefove u Pothvatima!</string>
+  <string name="mage_description">Čarobnjaci uče brzo, dobivajući Iskustvo i Razine brže od ostalih klasa. Isto tako imaju više Mane za korištenje posebnih sposobnosti. Odaberi Čarobnjaka ako voliš taktičku igru ili ako te motivira brzo dobivanje Razina i otključavanje naprednih značajki!</string>
+  <string name="rogue_description">Odmetnici vole steći bogatstvo, dobivajući više Zlata nego svi drugi te su dobri u pronalaženju nasumičnih predmeta. Njihova jedinstvena sposobnost Potajnost dopušta im da izbjegnu posljedice propuštenih Dailiesi. Odaberi Odmetnika ako te motiviraju nagrade i Postignuća, dobivanje plijena i značaka!</string>
+  <string name="healer_description">Iscjelitelji se ističu u zaštiti protiv ozljeda te šire tu zaštitu na ostale. Propušteni Dailiesi i loše Navike ne ozljeđuju ih puno i imaju načine da vrate Zdravlje iz pogrešaka. Odaberi iscjelitelja ako voliš pomagati drugima u tvojoj Grupi ili ako te inspirira ideja varanja Smrti kroz naporan rad!</string>
+  <string name="select_class">Odaberi Klasu</string>
+  <string name="opt_out_class">Isključi se</string>
+  <string name="opt_out_description">Ne želiš da te gnjave klase? Želiš odabrati kasnije? Isključi se - bit ćeš Ratnik bez posebnih sposobnosti. Možeš pročitati sve o sustavu klasa kasnije na wikiju i uključiti klase u bilo kojem trenutku.</string>
+  <string name="class_confirmation" formatted="false">Jeste li sigurni da želite biti %s?</string>
+  <string name="choose_class">Odaberi Klasu </string>
+  <string name="dialog_go_back">Idi natrag</string>
+  <string name="opt_out_confirmation">Jeste li sigurni da želite isključiti?</string>
+  <string name="change_class">Promijeni svoju klasu</string>
+  <string name="change_class_description">Promijeni svoju klasu i vrati svoje atributne bodove za 3 dragulja. Možeš dodijeliti atributne bodove na stranici.</string>
+  <string name="enable_class">Uključi Sustav Klasa</string>
+  <string name="changing_class_progress">Mijenjanje Klase</string>
+  <string name="by_email">Preko Emaila</string>
+  <string name="invite_existing_users">Pozovi Postojeće Korisnike</string>
+  <string name="send">Pošalji</string>
+  <string name="invite">Pozovi Prijatelje</string>
+  <string name="invite_id_description">Ako imaš prijatelje koji već koriste Habiticu, pozovi ih preko Korisničkog ID-a ovdje.</string>
+  <string name="invite_email_description">Ako se prijatelj pridruži Habitici preko tvog emaila, automatski će biti pozvani u tvoju grupu!</string>
+  <string name="add_invites">Dodaj Pozivnice</string>
+  <string name="user_id">Korisnički ID</string>
+  <string name="email">Email</string>
+  <string name="invite_users">Pozovi u Grupu</string>
+  <string name="share_using">Podijeli koristeći</string>
+  <string name="share_levelup" formatted="false">Stigao sam do %s razine u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
+  <string name="share_hatched" formatted="false">Upravo sam izlegao %1$s %2$s ljubimca u Habitici izvršavajući svoje zadatke u stvarnom životu!</string>
+  <string name="share_raised" formatted="false">Upravo sam dobio %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
+  <string name="open_in_store">Otvori u Trgovini Play</string>
+  <string name="change_class_confirmation">Jeste li sigurni da želite promijeniti svoju Klasu? Ovo će te koštati 3 dragulja.</string>
 </resources>

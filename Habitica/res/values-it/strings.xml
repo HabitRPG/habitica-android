@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positiva ( + )</string>
   <string name="negative_habit_form">Negativa ( - )</string>
   <string name="checklist">Checklist</string>
+  <string name="reminders">Promemoria</string>
   <string name="actions">Azioni</string>
   <string name="attributes">Attributi</string>
   <string name="physical">Fisica</string>
@@ -319,4 +320,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="invite_users">Invita nella squadra</string>
   <string name="share_using">Condividi con</string>
   <string name="share_levelup" formatted="false">Ho raggiunto il livello %s su Habitica migliorando le mie abitudini nella vita reale!</string>
+  <string name="open_in_store">Apri nel Play Store</string>
+  <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
+  <string name="leaderMessage" formatted="false">Messaggio da %1$s</string>
 </resources>
