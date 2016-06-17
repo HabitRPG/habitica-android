@@ -10,8 +10,6 @@ import org.robolectric.annotation.Config;
 
 import android.os.Build;
 
-import java.util.List;
-
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)

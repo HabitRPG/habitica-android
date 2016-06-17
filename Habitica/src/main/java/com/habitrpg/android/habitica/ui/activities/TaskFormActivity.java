@@ -74,6 +74,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func0;
@@ -165,7 +166,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     EmojiEditText newCheckListEditText;
 
     @BindView(R.id.add_checklist_button)
-    Button button;
+    Button addChecklistItemButton;
 
     @BindView(R.id.task_reminders_wrapper)
     LinearLayout remindersWrapper;
@@ -537,13 +538,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
 
-        button.setOnClickListener(v -> {
-            String checklist = newCheckListEditText.getText().toString();
-            ChecklistItem item = new ChecklistItem(checklist);
-            checklistAdapter.addItem(item);
-            newCheckListEditText.setText("");
-        });
+    @OnClick(R.id.add_checklist_button)
+    public void addChecklistItem() {
+        String checklist = newCheckListEditText.getText().toString();
+        ChecklistItem item = new ChecklistItem(checklist);
+        checklistAdapter.addItem(item);
+        newCheckListEditText.setText("");
     }
 
     private void createRemindersRecyclerView() {
@@ -564,41 +566,42 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
-
-        newRemindersEditText.setOnClickListener(v -> {
-            Calendar mcurrentTime = Calendar.getInstance();
-            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = mcurrentTime.get(Calendar.MINUTE);
-            TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(TaskFormActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                newRemindersEditText.setText(String.format("%d:%02d", selectedHour, selectedMinute));
-            }, hour, minute, true);
-            mTimePicker.setTitle("Select Time");
-            mTimePicker.show();
-        });
-
-        addReminderButton.setOnClickListener(v -> {
-            Date startDate = new Date(startDateListener.getCalendar().getTimeInMillis());
-
-            Date time = startDate;
-            String reminderTimeString = newRemindersEditText.getText().toString();
-            if (reminderTimeString.isEmpty()) return;
-            String[] reminderTimeSplit = reminderTimeString.split(":");
-            time.setHours(Integer.parseInt(reminderTimeSplit[0]));
-            time.setMinutes(Integer.parseInt(reminderTimeSplit[1]));
-            time.setSeconds(0);
-
-            RemindersItem item = new RemindersItem();
-            UUID randomUUID = UUID.randomUUID();
-            item.setId(randomUUID.toString());
-            item.setStartDate(startDate);
-            item.setTime(time);
-
-            remindersAdapter.addItem(item);
-            newRemindersEditText.setText("");
-        });
     }
 
+    @OnClick(R.id.add_reminder_button)
+    public void addReminder() {
+        Date startDate = new Date(startDateListener.getCalendar().getTimeInMillis());
+
+        Date time = startDate;
+        String reminderTimeString = newRemindersEditText.getText().toString();
+        if (reminderTimeString.isEmpty()) return;
+        String[] reminderTimeSplit = reminderTimeString.split(":");
+        time.setHours(Integer.parseInt(reminderTimeSplit[0]));
+        time.setMinutes(Integer.parseInt(reminderTimeSplit[1]));
+        time.setSeconds(0);
+
+        RemindersItem item = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        item.setId(randomUUID.toString());
+        item.setStartDate(startDate);
+        item.setTime(time);
+
+        remindersAdapter.addItem(item);
+        newRemindersEditText.setText("");
+    }
+
+    @OnClick(R.id.new_reminder_edittext)
+    public void changeNewReminderTime() {
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(TaskFormActivity.this, (timePicker, selectedHour, selectedMinute) -> {
+            newRemindersEditText.setText(String.format("%d:%02d", selectedHour, selectedMinute));
+        }, hour, minute, true);
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
 
     private void createTagsCheckBoxes() {
         int position = 0;

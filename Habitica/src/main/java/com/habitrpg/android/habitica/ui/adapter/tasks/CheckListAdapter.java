@@ -28,10 +28,10 @@ import butterknife.ButterKnife;
 public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>
     implements ItemTouchHelperAdapter{
 
-    private final List<ChecklistItem> mItems = new ArrayList<>();
+    private final List<ChecklistItem> items = new ArrayList<>();
 
     public CheckListAdapter(List<ChecklistItem> checklistItems) {
-        mItems.addAll(checklistItems);
+        items.addAll(checklistItems);
     }
 
     @Override
@@ -43,28 +43,29 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
-        holder.checkListTextView.setText(mItems.get(position).getText());
+        holder.textWatcher.position = position;
+        holder.checkListTextView.setText(items.get(position).getText());
     }
 
     public void addItem(ChecklistItem item){
-        mItems.add(item);
-        notifyItemInserted(mItems.size() - 1);
+        items.add(item);
+        notifyItemInserted(items.size() - 1);
     }
 
     public List<ChecklistItem> getCheckListItems(){
-        return mItems;
+        return items;
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return items.size();
     }
 
 
     @Override
     public void onItemDismiss(int position) {
-        if(position >= 0 && position < mItems.size()){
-            mItems.remove(position);
+        if(position >= 0 && position < items.size()){
+            items.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -72,7 +73,9 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mItems, fromPosition, toPosition);
+        ChecklistItem item = items.get(fromPosition);
+        items.remove(fromPosition);
+        items.add(toPosition, item);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -85,24 +88,15 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         @BindView(R.id.delete_item_button)
         Button deleteButton;
 
+        public ChecklistTextWatcher textWatcher;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             deleteButton.setOnClickListener(this);
 
-            checkListTextView.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    mItems.get(getAdapterPosition()).setText(checkListTextView.getText().toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
+            textWatcher = new ChecklistTextWatcher();
+            checkListTextView.addTextChangedListener(textWatcher);
         }
 
         @Override
@@ -119,6 +113,26 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         public void onClick(View v) {
             if (v == deleteButton) {
                  CheckListAdapter.this.onItemDismiss(getAdapterPosition());
+            }
+        }
+
+        private class ChecklistTextWatcher implements TextWatcher {
+
+            public int position;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                items.get(position).setText(checkListTextView.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         }
     }
