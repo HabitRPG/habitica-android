@@ -104,7 +104,7 @@ public interface ApiService {
 
 
     @POST("tags")
-    Observable<List<Tag>> createTag(@Body Tag tag);
+    Observable<Tag> createTag(@Body Tag tag);
 
     @PUT("tags/{id}")
     Observable<Tag> updateTag(@Path("id") String id, @Body Tag tag);

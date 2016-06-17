@@ -314,14 +314,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         if (apiHelper != null) {
             apiHelper.apiService.createTag(t)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(tags -> {
+                    .subscribe(tag -> {
                         // Since we get a list of all tags, we just save them all
-                        for (Tag onlineTag : tags) {
-                            onlineTag.user_id = user.getId();
-                            onlineTag.async().save();
-                        }
+                        tag.user_id = user.getId();
+                        tag.async().save();
 
-                        fillTagFilterDrawer(tags);
+                        addTagFilterDrawerItem(tag);
                     }, throwable -> {
                         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
                     });
@@ -414,6 +412,17 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 );
             }
             this.activity.fillFilterDrawer(items);
+        }
+    }
+
+    public void addTagFilterDrawerItem(Tag tag) {
+        if (this.tagsHelper != null) {
+            IDrawerItem item = new SwitchDrawerItem()
+                    .withName(tag.getName())
+                    .withTag(tag)
+                    .withChecked(this.tagsHelper.isTagChecked(tag.getId()))
+                    .withOnCheckedChangeListener(this);
+            this.activity.addFilterDrawerItem(item);
         }
     }
 

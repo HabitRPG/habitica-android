@@ -1365,4 +1365,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
     }
+
+    public void addFilterDrawerItem(IDrawerItem item) {
+        this.filterDrawer.addItem(item);
+    }
 }
