@@ -58,6 +58,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         this.isTavern = isTavern;
     }
 
+    public void setMessages(List<ChatMessage> messages) {
+        this.messages = messages;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
         switch (position) {

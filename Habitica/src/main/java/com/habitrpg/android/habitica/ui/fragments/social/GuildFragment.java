@@ -125,12 +125,12 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
                 switch (position) {
                     case 0: {
-                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user, apiHelper);
+                        fragment = guildInformationFragment = GroupInformationFragment.newInstance(GuildFragment.this.guild, user);
                         break;
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, GuildFragment.this.guild.id, apiHelper, user, activity, false);
+                        chatListFragment.configure(GuildFragment.this.guild.id, user, false);
                         fragment = chatListFragment;
                         break;
                     }

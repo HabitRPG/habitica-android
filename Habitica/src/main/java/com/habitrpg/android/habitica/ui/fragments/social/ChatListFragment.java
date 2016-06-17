@@ -10,12 +10,11 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -24,7 +23,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,7 +46,6 @@ import rx.functions.Action1;
 
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Action1<List<ChatMessage>> {
 
-    private Context ctx;
     private String groupId;
     public String seenGroupId;
 
@@ -57,19 +54,15 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     private HabitRPGUser user;
     private String userId;
     public boolean isTavern;
-    private MainActivity activity;
+    private ChatRecyclerViewAdapter chatAdapter;
 
-    public void configure(Context ctx, String groupId, APIHelper apiHelper, HabitRPGUser user, MainActivity activity, boolean isTavern) {
-
-        this.ctx = ctx;
+    public void configure(String groupId, HabitRPGUser user, boolean isTavern) {
         this.groupId = groupId;
-        this.apiHelper = apiHelper;
         this.user = user;
         if (this.user != null) {
             this.userId = this.user.getId();
         }
         this.isTavern = isTavern;
-        this.activity = activity;
     }
 
     private View view;
@@ -123,18 +116,17 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-
         layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
 
         if (layoutManager == null) {
-            layoutManager = new LinearLayoutManager(ctx);
+            layoutManager = new LinearLayoutManager(getContext());
 
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(new ArrayList<ChatMessage>(), userId, groupId, isTavern);
+        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), userId, groupId, isTavern);
 
-        mRecyclerView.setAdapter(tavernAdapter);
+        mRecyclerView.setAdapter(chatAdapter);
 
         onRefresh();
     }
@@ -179,7 +171,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                     apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id)
                             .compose(apiHelper.configureApiCallObserver())
                             .subscribe(aVoid -> {
-                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
+                                MainActivity activity = (MainActivity)getActivity();
+                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
                     }, throwable -> {});
                 })
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
@@ -250,11 +243,10 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         currentChatMessages = chatMessages;
 
         //Load unparsed messages first
-        ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, userId, groupId, isTavern);
-
-        if(mRecyclerView != null) {
-            mRecyclerView.setAdapter(tavernAdapter);
+        if (chatAdapter != null) {
+            chatAdapter.setMessages(chatMessages);
         }
+
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
@@ -285,10 +277,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         protected void onPostExecute(Void result) {
-            ChatRecyclerViewAdapter tavernAdapter = new ChatRecyclerViewAdapter(chatMessages, userId, groupId, isTavern);
-
-            if(mRecyclerView != null) {
-                mRecyclerView.setAdapter(tavernAdapter);
+            if (chatAdapter != null) {
+                chatAdapter.setMessages(chatMessages);
             }
 
             if (swipeRefreshLayout != null) {

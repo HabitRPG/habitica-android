@@ -256,12 +256,12 @@ public class PartyFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0: {
-                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user, apiHelper);
+                        fragment = groupInformationFragment = GroupInformationFragment.newInstance(group, user);
                         break;
                     }
                     case 1: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, "party", apiHelper, user, activity, false);
+                        chatListFragment.configure("party", user, false);
                         fragment = chatListFragment;
                         break;
                     }

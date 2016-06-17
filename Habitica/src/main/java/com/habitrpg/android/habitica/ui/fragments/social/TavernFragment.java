@@ -88,12 +88,12 @@ public class TavernFragment extends BaseMainFragment {
                 switch (position) {
                     case 0: {
                         chatListFragment = new ChatListFragment();
-                        chatListFragment.configure(activity, "habitrpg", apiHelper, user, activity, true);
+                        chatListFragment.configure("habitrpg", user, true);
                         fragment = chatListFragment;
                         break;
                     }
                     case 1: {
-                        fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user, apiHelper);
+                        fragment = questInfoFragment = GroupInformationFragment.newInstance(tavern, user);
                         break;
                     }
                     default:

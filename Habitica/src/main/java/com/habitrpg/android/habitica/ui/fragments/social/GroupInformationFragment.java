@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
@@ -15,7 +16,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,15 +25,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +36,7 @@ public class GroupInformationFragment extends BaseFragment {
 
     private View view;
     FragmentGroupInfoBinding viewBinding;
+    @Inject
     APIHelper apiHelper;
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
@@ -57,7 +50,7 @@ public class GroupInformationFragment extends BaseFragment {
 
     private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
 
-    public static GroupInformationFragment newInstance(Group group, HabitRPGUser user, APIHelper mAPIHelper) {
+    public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
 
         Bundle args = new Bundle();
 
@@ -65,7 +58,6 @@ public class GroupInformationFragment extends BaseFragment {
         fragment.setArguments(args);
         fragment.group = group;
         fragment.user = user;
-        fragment.apiHelper = mAPIHelper;
         return fragment;
     }
 
