@@ -192,8 +192,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!HabiticaApplication.checkUserAuthentication(this, hostConfig))
+        if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
+        }
 
         //Check if reminder alarm is set
         scheduleReminder(this);
@@ -232,7 +233,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         //resync, if last sync was more than 10 minutes ago
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
-            if (this.apiHelper != null) {
+            if (this.apiHelper != null && this.apiHelper.hasAuthenticationKeys()) {
                 this.apiHelper.retrieveUser(true)
                         .compose(apiHelper.configureApiCallObserver())
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {});

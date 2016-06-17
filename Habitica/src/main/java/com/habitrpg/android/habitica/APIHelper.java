@@ -342,6 +342,10 @@ public class APIHelper implements Action1<Throwable> {
         return taskList;
     }
 
+    public boolean hasAuthenticationKeys() {
+        return this.hostConfig.getUser() != null;
+    }
+
     public class ErrorResponse{
         public String message;
     }
