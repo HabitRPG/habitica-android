@@ -40,5 +40,6 @@ android:
     #- sys-img-x86-android-17
 script:
     - cp habitica.properties.travis habitica.properties
+    - cp habitica.resources.example habitica.resources
     - ./gradlew assembleDebug
     - ./gradlew testDebugUnitTest --info
