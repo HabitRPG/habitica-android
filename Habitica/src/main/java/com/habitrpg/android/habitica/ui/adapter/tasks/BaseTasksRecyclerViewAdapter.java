@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
+import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
@@ -195,7 +196,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(tasks::add, throwable -> {}, () -> setTasks(tasks));
+                    .subscribe(tasks::add, Crashlytics::logException, () -> setTasks(tasks));
         }
     }
 
