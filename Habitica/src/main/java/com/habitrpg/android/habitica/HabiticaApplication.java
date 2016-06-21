@@ -53,18 +53,6 @@ public class HabiticaApplication extends MultiDexApplication {
     @Inject
     Lazy<APIHelper> lazyApiHelper;
     private AppComponent component;
-    /**
-     * For better performance billing class should be used as singleton
-     */
-    @NonNull
-    private Billing billing;
-    /**
-     * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used
-     * anywhere in the app).
-     * This instance contains all available products in the app.
-     */
-    @NonNull
-    private Checkout checkout;
 
     public static HabiticaApplication getInstance(Context context) {
         return (HabiticaApplication) context.getApplicationContext();
@@ -125,7 +113,6 @@ public class HabiticaApplication extends MultiDexApplication {
         setupFlowManager();
         setupFacebookSdk();
         setupCrashlytics();
-        createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
         Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
         Fresco.initialize(this);
@@ -267,34 +254,6 @@ public class HabiticaApplication extends MultiDexApplication {
     @Override
     public File getDatabasePath(String name) {
         return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
-    }
-
-    private void createBillingAndCheckout() {
-        billing = new Billing(this, new Billing.DefaultConfiguration() {
-            @NonNull
-            @Override
-            public String getPublicKey() {
-                return "DONT-NEED-IT";
-            }
-
-            @Nullable
-            @Override
-            public Cache getCache() {
-                return Billing.newCache();
-            }
-
-            @Override
-            public PurchaseVerifier getPurchaseVerifier() {
-                return new HabiticaPurchaseVerifier(HabiticaApplication.this);
-            }
-        });
-
-        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, Arrays.asList(Purchase20Gems)));
-    }
-
-    @NonNull
-    public Checkout getCheckout() {
-        return checkout;
     }
 
     // endregion

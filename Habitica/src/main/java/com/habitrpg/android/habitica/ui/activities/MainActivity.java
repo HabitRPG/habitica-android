@@ -145,7 +145,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public static final int SELECT_CLASS_RESULT = 11;
     private static final int MIN_LEVEL_FOR_SKILLS = 11;
     // Checkout needs to be in the Activity..
-    public ActivityCheckout checkout = null;
+
+    @Inject
+    public Checkout checkout;
+    private ActivityCheckout activityCheckout;
+
     @Inject
     public APIHelper apiHelper;
     @Inject
@@ -269,13 +273,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void setupCheckout() {
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
-        checkout.start();
+        activityCheckout = Checkout.forActivity(this, checkout);
+        activityCheckout.start();
     }
 
     @Override
     public ActivityCheckout getActivityCheckout() {
-        return checkout;
+        return activityCheckout;
     }
 
     private void saveLoginInformation() {
@@ -720,7 +724,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
+        activityCheckout.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SELECT_CLASS_RESULT) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
