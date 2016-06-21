@@ -25,12 +25,12 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class PetDetailRecyclerFragment extends BaseMainFragment {
+    private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     public RecyclerView recyclerView;
     public PetDetailRecyclerAdapter adapter;
     public String animalType;
     public String animalGroup;
     public List<Pet> animals;
-    private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     GridLayoutManager layoutManager = null;
 
     private View view;
@@ -50,7 +50,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
-            adapter = (PetDetailRecyclerAdapter)recyclerView.getAdapter();
+            adapter = (PetDetailRecyclerAdapter) recyclerView.getAdapter();
             if (adapter == null) {
                 adapter = new PetDetailRecyclerAdapter();
                 adapter.context = this.getActivity();
@@ -61,7 +61,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
             }
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.animalType = savedInstanceState.getString(ANIMAL_TYPE_KEY, "");
         }
 
@@ -102,7 +102,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         Runnable itemsRunnable = () -> {
             List<Pet> items = new Select().from(Pet.class).where(Condition.CombinedCondition
                     .begin(Condition.column("animal").eq(animalType))
-            .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
+                    .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
             adapter.setItemList(items);
             animals = items;
             adapter.setOwnedMapping(user.getItems().getPets());

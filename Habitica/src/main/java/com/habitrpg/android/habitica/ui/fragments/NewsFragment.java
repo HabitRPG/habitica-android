@@ -15,10 +15,9 @@ import butterknife.ButterKnife;
 
 public class NewsFragment extends BaseMainFragment {
 
-    private View view;
-
     @BindView(R.id.news_webview)
     WebView newsWebview;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

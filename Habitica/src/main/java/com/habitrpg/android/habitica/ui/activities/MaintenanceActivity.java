@@ -26,21 +26,16 @@ import rx.schedulers.Schedulers;
 
 public class MaintenanceActivity extends BaseActivity {
 
-    @BindView(R.id.titleTextView)
-    TextView titleTextView;
-
-    @BindView(R.id.imageView)
-    ImageView imageView;
-
-    @BindView(R.id.descriptionTextView)
-    EmojiTextView descriptionTextView;
-
-    @BindView(R.id.playStoreButton)
-    Button playStoreButton;
-
     @Inject
     public MaintenanceApiService maintenanceService;
-
+    @BindView(R.id.titleTextView)
+    TextView titleTextView;
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.descriptionTextView)
+    EmojiTextView descriptionTextView;
+    @BindView(R.id.playStoreButton)
+    Button playStoreButton;
     private Boolean isDeprecationNotice;
 
     @Override
@@ -83,7 +78,8 @@ public class MaintenanceActivity extends BaseActivity {
                         if (!maintenanceResponse.activeMaintenance) {
                             finish();
                         }
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         }
     }
 

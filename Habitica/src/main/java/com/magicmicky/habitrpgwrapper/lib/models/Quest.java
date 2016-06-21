@@ -40,6 +40,9 @@ public class Quest extends BaseModel {
         this.progress = progress;
     }
 
+    public Quest() {
+    }
+
     public QuestProgress getProgress() {
         return progress;
     }
@@ -55,6 +58,4 @@ public class Quest extends BaseModel {
     public void setKey(String key) {
         this.key = key;
     }
-
-    public Quest() {}
 }

@@ -34,8 +34,7 @@ public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
                 if (tag.getId().equals(tagId)) {
                     taskTag.setTag(tag);
 
-                    if(!alreadyContainsTag(taskTags, tagId))
-                    {
+                    if (!alreadyContainsTag(taskTags, tagId)) {
                         taskTags.add(taskTag);
                     }
 
@@ -49,8 +48,8 @@ public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
     }
 
     private boolean alreadyContainsTag(List<TaskTag> list, String idToCheck) {
-        for(TaskTag t : list) {
-            if(t.getTag().getId().equals(idToCheck)) {
+        for (TaskTag t : list) {
+            if (t.getTag().getId().equals(idToCheck)) {
                 return true;
             }
         }

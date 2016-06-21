@@ -46,15 +46,23 @@ import rx.functions.Action1;
 
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Action1<List<ChatMessage>> {
 
-    private String groupId;
     public String seenGroupId;
-
     @Inject
     public APIHelper apiHelper;
+    public boolean isTavern;
+    @BindView(R.id.chat_list)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.chat_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayoutManager layoutManager;
+    private String groupId;
     private HabitRPGUser user;
     private String userId;
-    public boolean isTavern;
     private ChatRecyclerViewAdapter chatAdapter;
+    private View view;
+    private List<ChatMessage> currentChatMessages;
+    private boolean navigatedOnceToFragment = false;
+    private boolean gotNewMessages = false;
 
     public void configure(String groupId, HabitRPGUser user, boolean isTavern) {
         this.groupId = groupId;
@@ -65,27 +73,25 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         this.isTavern = isTavern;
     }
 
-    private View view;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         if (savedInstanceState != null) {
-          if (savedInstanceState.containsKey("groupId")) {
-            this.groupId = savedInstanceState.getString("groupId");
-          }
-
-          if (savedInstanceState.containsKey("isTavern")) {
-            this.isTavern = savedInstanceState.getBoolean("isTavern");
-          }
-
-          if (savedInstanceState.containsKey("userId")) {
-            this.userId = savedInstanceState.getString("userId");
-            if (this.userId != null) {
-              this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+            if (savedInstanceState.containsKey("groupId")) {
+                this.groupId = savedInstanceState.getString("groupId");
             }
-          }
+
+            if (savedInstanceState.containsKey("isTavern")) {
+                this.isTavern = savedInstanceState.getBoolean("isTavern");
+            }
+
+            if (savedInstanceState.containsKey("userId")) {
+                this.userId = savedInstanceState.getString("userId");
+                if (this.userId != null) {
+                    this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+                }
+            }
 
         }
 
@@ -99,14 +105,6 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
-
-    @BindView(R.id.chat_list)
-    RecyclerView mRecyclerView;
-
-    @BindView(R.id.chat_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
-    LinearLayoutManager layoutManager;
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
@@ -136,30 +134,28 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         swipeRefreshLayout.setRefreshing(true);
 
         apiHelper.apiService.listGroupChat(groupId).compose(apiHelper.configureApiCallObserver())
-                .subscribe(this, throwable -> {});
+                .subscribe(this, throwable -> {
+                });
     }
 
-    private List<ChatMessage> currentChatMessages;
-
-    public void setNavigatedToFragment(String groupId){
+    public void setNavigatedToFragment(String groupId) {
         seenGroupId = groupId;
         navigatedOnceToFragment = true;
 
         markMessagesAsSeen();
     }
 
-    private boolean navigatedOnceToFragment = false;
-    private boolean gotNewMessages = false;
-
-    private void markMessagesAsSeen(){
-        if(!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
+    private void markMessagesAsSeen() {
+        if (!isTavern && seenGroupId != null && !seenGroupId.isEmpty()
                 && gotNewMessages && navigatedOnceToFragment) {
 
             gotNewMessages = false;
 
             apiHelper.apiService.seenMessages(seenGroupId)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(s -> {}, throwable -> {});
+                    .subscribe(s -> {
+                    }, throwable -> {
+                    });
         }
     }
 
@@ -171,9 +167,10 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                     apiHelper.apiService.flagMessage(cmd.groupId, cmd.chatMessage.id)
                             .compose(apiHelper.configureApiCallObserver())
                             .subscribe(aVoid -> {
-                                MainActivity activity = (MainActivity)getActivity();
+                                MainActivity activity = (MainActivity) getActivity();
                                 UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
-                    }, throwable -> {});
+                            }, throwable -> {
+                            });
                 })
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
                 });
@@ -183,7 +180,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @Subscribe
     public void onEvent(final ToggleLikeMessageCommand cmd) {
         apiHelper.apiService.likeMessage(cmd.groupId, cmd.chatMessage.id).compose(apiHelper.configureApiCallObserver())
-                .subscribe(voids -> {}, throwable -> {});
+                .subscribe(voids -> {
+                }, throwable -> {
+                });
     }
 
     @Subscribe
@@ -191,12 +190,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         apiHelper.apiService.deleteMessage(cmd.groupId, cmd.chatMessage.id)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(aVoid -> {
-            if (currentChatMessages != null) {
-                currentChatMessages.remove(cmd.chatMessage);
+                    if (currentChatMessages != null) {
+                        currentChatMessages.remove(cmd.chatMessage);
 
-                ChatListFragment.this.call(currentChatMessages);
-            }
-        }, throwable -> {});
+                        ChatListFragment.this.call(currentChatMessages);
+                    }
+                }, throwable -> {
+                });
     }
 
     @Subscribe
@@ -206,12 +206,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         apiHelper.apiService.postGroupChat(cmd.TargetGroupId, messageObject)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(postChatMessageResult -> {
-            if (currentChatMessages != null) {
-                currentChatMessages.add(0, postChatMessageResult.message);
+                    if (currentChatMessages != null) {
+                        currentChatMessages.add(0, postChatMessageResult.message);
 
-                ChatListFragment.this.call(currentChatMessages);
-            }
-        }, throwable -> {});
+                        ChatListFragment.this.call(currentChatMessages);
+                    }
+                }, throwable -> {
+                });
 
         UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
     }
@@ -227,7 +228,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                     user.getPreferences().setSleep(innState.Inn);
 
                     EventBus.getDefault().post(innState);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Override
@@ -269,7 +271,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         @Override
         protected Void doInBackground(Void... params) {
 
-            for (int i = 0; i < chatMessages.size() ; i++) {
+            for (int i = 0; i < chatMessages.size(); i++) {
                 chatMessages.get(i).parsedText = MarkdownParser.parseMarkdown(chatMessages.get(i).text);
             }
 

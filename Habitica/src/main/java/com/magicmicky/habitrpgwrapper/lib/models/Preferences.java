@@ -17,30 +17,25 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Preferences extends BaseModel {
 
     @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-
-    @Column
-    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
-
-    @Column
-    private String allocationMode, shirt, skin, size, background, chair;
-
-    @Column
-    private int dayStart, timezoneOffset;
-
-    @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "hair_user_id",
             columnType = String.class,
             foreignColumnName = "userId")})
     public Hair hair;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "suppressedModals_user_id",
             columnType = String.class,
             foreignColumnName = "userId")})
     public SuppressedModals suppressModals;
+    @Column
+    @PrimaryKey
+    @NotNull
+    String user_id;
+    @Column
+    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
+    @Column
+    private String allocationMode, shirt, skin, size, background, chair;
+    @Column
+    private int dayStart, timezoneOffset;
 
     public Preferences() {
     }
@@ -105,10 +100,6 @@ public class Preferences extends BaseModel {
         return disableClasses;
     }
 
-    public void setDisableClasses(boolean disableClasses) {
-        this.disableClasses = disableClasses;
-    }
-
     public boolean getStickyHeader() {
         return stickyHeader;
     }
@@ -119,10 +110,6 @@ public class Preferences extends BaseModel {
 
     public boolean getSleep() {
         return sleep;
-    }
-
-    public void setSleep(boolean sleep) {
-        this.sleep = sleep;
     }
 
     public boolean getHideHeader() {
@@ -191,7 +178,7 @@ public class Preferences extends BaseModel {
 
     public String getChair() {
         if (chair != null && !chair.equals("none")) {
-            return "chair_"+chair;
+            return "chair_" + chair;
         }
         return null;
     }
@@ -204,8 +191,16 @@ public class Preferences extends BaseModel {
         return sleep;
     }
 
+    public void setSleep(boolean sleep) {
+        this.sleep = sleep;
+    }
+
     public boolean isDisableClasses() {
         return disableClasses;
+    }
+
+    public void setDisableClasses(boolean disableClasses) {
+        this.disableClasses = disableClasses;
     }
 
     @Override

@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
 
 public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder> {
 
-    private String[][] taskList;
     public List<Boolean> checkedList;
+    private String[][] taskList;
 
     public void setTaskList(String[][] taskList) {
         this.taskList = taskList;

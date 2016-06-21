@@ -48,7 +48,7 @@ public class NotificationPublisher extends BroadcastReceiver {
             }
         }
         if (show_notification) {
-            NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             int id = intent.getIntExtra(NOTIFICATION_ID, 0);
             notificationManager.notify(id, notification);
@@ -77,9 +77,9 @@ public class NotificationPublisher extends BroadcastReceiver {
             builder.setColor(ContextCompat.getColor(context, R.color.brand_300));
         }
 
-        if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN){
+        if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
-        } else{
+        } else {
             notification = builder.getNotification();
         }
         notification.defaults |= Notification.DEFAULT_LIGHTS;

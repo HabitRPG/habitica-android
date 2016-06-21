@@ -25,17 +25,15 @@ import java.util.List;
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
 
-    @Column
-    @PrimaryKey
-    @SerializedName("_id")
-    private String id;
-
     List<Task> dailys;
     List<Task> todos;
     List<Task> rewards;
     List<Task> habits;
     List<Tag> tags;
-
+    @Column
+    @PrimaryKey
+    @SerializedName("_id")
+    private String id;
     @Column
     private double balance;
 
@@ -102,26 +100,6 @@ public class HabitRPGUser extends BaseModel {
         this.id = id;
     }
 
-    public void setDailys(List<Task> dailys) {
-        this.dailys = dailys;
-    }
-
-    public void setTodos(List<Task> todos) {
-        this.todos = todos;
-    }
-
-    public void setRewards(List<Task> rewards) {
-        this.rewards = rewards;
-    }
-
-    public void setHabits(List<Task> habits) {
-        this.habits = habits;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
     public Stats getStats() {
         return stats;
     }
@@ -155,12 +133,12 @@ public class HabitRPGUser extends BaseModel {
         this.items.user_id = id;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public double getBalance() {
         return this.balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public Authentication getAuthentication() {
@@ -171,8 +149,13 @@ public class HabitRPGUser extends BaseModel {
         this.authentication = authentication;
     }
 
-    public Purchases getPurchased() { return purchased; }
-    public void setPurchased(Purchases purchased) { this.purchased = purchased; }
+    public Purchases getPurchased() {
+        return purchased;
+    }
+
+    public void setPurchased(Purchases purchased) {
+        this.purchased = purchased;
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
     public List<Task> getHabits() {
@@ -184,6 +167,10 @@ public class HabitRPGUser extends BaseModel {
                     .queryList();
         }
         return habits;
+    }
+
+    public void setHabits(List<Task> habits) {
+        this.habits = habits;
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "dailys")
@@ -198,6 +185,10 @@ public class HabitRPGUser extends BaseModel {
         return dailys;
     }
 
+    public void setDailys(List<Task> dailys) {
+        this.dailys = dailys;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
     public List<Task> getTodos() {
         if (todos == null) {
@@ -208,6 +199,10 @@ public class HabitRPGUser extends BaseModel {
                     .queryList();
         }
         return todos;
+    }
+
+    public void setTodos(List<Task> todos) {
+        this.todos = todos;
     }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
@@ -222,6 +217,10 @@ public class HabitRPGUser extends BaseModel {
         return rewards;
     }
 
+    public void setRewards(List<Task> rewards) {
+        this.rewards = rewards;
+    }
+
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<Tag> getTags() {
         if (tags == null) {
@@ -231,6 +230,10 @@ public class HabitRPGUser extends BaseModel {
                     .queryList();
         }
         return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public Flags getFlags() {

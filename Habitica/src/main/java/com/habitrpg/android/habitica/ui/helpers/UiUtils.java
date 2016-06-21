@@ -15,10 +15,6 @@ import android.widget.TextView;
  */
 public class UiUtils {
 
-    public enum SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP
-    }
-
     /**
      * Hides soft keyboard if it's opened.
      *
@@ -34,9 +30,10 @@ public class UiUtils {
 
     /**
      * Shows snackbar in given container.
-     * @param context Context.
+     *
+     * @param context   Context.
      * @param container Parent view where Snackbar will appear.
-     * @param content Message.
+     * @param content   Message.
      */
     public static void showSnackbar(Context context, View container, String content, SnackbarDisplayType displayType) {
         Snackbar snackbar = Snackbar.make(container, content, Snackbar.LENGTH_LONG);
@@ -57,6 +54,10 @@ public class UiUtils {
         }
 
         snackbar.show();
+    }
+
+    public enum SnackbarDisplayType {
+        NORMAL, FAILURE, FAILURE_BLUE, DROP
     }
 
 }

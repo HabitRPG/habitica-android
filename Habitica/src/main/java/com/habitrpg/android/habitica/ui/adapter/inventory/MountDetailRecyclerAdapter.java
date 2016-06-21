@@ -27,11 +27,10 @@ import butterknife.ButterKnife;
 
 public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetailRecyclerAdapter.MountViewHolder> {
 
+    public String itemType;
+    public Context context;
     private List<Mount> itemList;
     private HashMap<String, Boolean> ownedMapping;
-    public String itemType;
-
-    public Context context;
 
     public void setItemList(List<Mount> itemList) {
         this.itemList = itemList;
@@ -88,7 +87,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
-        public Boolean  isOwned() {
+        public Boolean isOwned() {
             if (ownedMapping != null && animal != null) {
                 if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
                     return true;

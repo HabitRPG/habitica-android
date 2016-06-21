@@ -24,7 +24,7 @@ public class EggListDeserializer implements JsonDeserializer<List<Egg>> {
             List<Egg> existingItems = new Select().from(Egg.class).queryList();
 
             for (Egg item : existingItems) {
-                if(object.has(item.getKey())) {
+                if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
 
                     if (itemObject.isJsonObject()) {
@@ -42,7 +42,7 @@ public class EggListDeserializer implements JsonDeserializer<List<Egg>> {
                 }
             }
 
-            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 Egg item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), Egg.class);

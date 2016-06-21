@@ -129,54 +129,46 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     public class ChatRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-        private int layoutType;
-        private String uuid;
-        private String groupId;
-
         // Toggle Inn State
         @BindView(R.id.btn_toggle_inn)
         @Nullable
         Button btnToggleInn;
-
         // New Msg
         @BindView(R.id.edit_new_message_text)
         @Nullable
         EmojiEditText textNewMessage;
-
         @BindView(R.id.btn_send_message)
         @Nullable
         Button btnSendNewMessage;
-
         @BindView(R.id.btn_options)
         @Nullable
         ImageView btnOptions;
-
         @BindView(R.id.user_background_layout)
         @Nullable
         LinearLayout userBackground;
-
         @BindView(R.id.like_background_layout)
         @Nullable
         LinearLayout likeBackground;
-
         @BindView(R.id.user_label)
         @Nullable
         TextView userLabel;
-
         @BindView(R.id.message_text)
         @Nullable
         EmojiTextView messageText;
-
         @BindView(R.id.ago_label)
         @Nullable
         TextView agoLabel;
-
         @BindView(R.id.tvLikes)
         @Nullable
         TextView tvLikes;
-
         Context context;
         Resources res;
+        int likeCount = 0;
+        boolean currentUserLikedPost = false;
+        private int layoutType;
+        private String uuid;
+        private String groupId;
+        private ChatMessage currentMsg;
 
         public ChatRecyclerViewHolder(View itemView, int layoutType, String currentUserId, String groupId) {
             super(itemView);
@@ -197,9 +189,9 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     }
 
                     ViewHelper.SetBackgroundTint(btnToggleInn, ContextCompat.getColor(context, R.color.brand));
-                    if(HabiticaApplication.User != null && HabiticaApplication.User.getPreferences().getSleep()){
+                    if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences().getSleep()) {
                         btnToggleInn.setText(R.string.tavern_inn_checkOut);
-                    }else{
+                    } else {
                         btnToggleInn.setText(R.string.tavern_inn_rest);
                     }
 
@@ -231,8 +223,6 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             }
         }
 
-        private ChatMessage currentMsg;
-
         public void bind(final ChatMessage msg) {
             currentMsg = msg;
 
@@ -261,14 +251,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             }
         }
 
-        int likeCount = 0;
-        boolean currentUserLikedPost = false;
-
         private void setLikeProperties(ChatMessage msg) {
             likeCount = 0;
             currentUserLikedPost = false;
 
-            if(msg != null && msg.likes != null) {
+            if (msg != null && msg.likes != null) {
                 for (Map.Entry<String, Boolean> e : msg.likes.entrySet()) {
                     if (e.getValue()) {
                         likeCount++;
@@ -374,11 +361,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
             if (v == btnToggleInn) {
                 EventBus.getDefault().post(new ToggleInnCommand());
-                if(!HabiticaApplication.User.getPreferences().getSleep()){
+                if (!HabiticaApplication.User.getPreferences().getSleep()) {
                     if (btnToggleInn != null) {
                         btnToggleInn.setText(R.string.tavern_inn_checkOut);
                     }
-                }else{
+                } else {
                     if (btnToggleInn != null) {
                         btnToggleInn.setText(R.string.tavern_inn_rest);
                     }

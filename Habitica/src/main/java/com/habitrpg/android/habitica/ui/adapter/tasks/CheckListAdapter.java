@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * Created by franzejr on 15/11/15.
  */
 public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>
-    implements ItemTouchHelperAdapter{
+        implements ItemTouchHelperAdapter {
 
     private final List<ChecklistItem> items = new ArrayList<>();
 
@@ -47,12 +47,12 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         holder.checkListTextView.setText(items.get(position).getText());
     }
 
-    public void addItem(ChecklistItem item){
+    public void addItem(ChecklistItem item) {
         items.add(item);
         notifyItemInserted(items.size() - 1);
     }
 
-    public List<ChecklistItem> getCheckListItems(){
+    public List<ChecklistItem> getCheckListItems() {
         return items;
     }
 
@@ -64,7 +64,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
     @Override
     public void onItemDismiss(int position) {
-        if(position >= 0 && position < items.size()){
+        if (position >= 0 && position < items.size()) {
             items.remove(position);
             notifyItemRemoved(position);
         }
@@ -82,13 +82,11 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
     public class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
+        public ChecklistTextWatcher textWatcher;
         @BindView(R.id.item_edittext)
         EmojiEditText checkListTextView;
-
         @BindView(R.id.delete_item_button)
         Button deleteButton;
-
-        public ChecklistTextWatcher textWatcher;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -112,7 +110,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         @Override
         public void onClick(View v) {
             if (v == deleteButton) {
-                 CheckListAdapter.this.onItemDismiss(getAdapterPosition());
+                CheckListAdapter.this.onItemDismiss(getAdapterPosition());
             }
         }
 

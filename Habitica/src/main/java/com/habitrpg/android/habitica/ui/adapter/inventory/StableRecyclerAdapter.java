@@ -25,10 +25,9 @@ import butterknife.ButterKnife;
 
 public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> itemList;
     public String itemType;
-
     public MainActivity activity;
+    private List<Object> itemList;
 
     public <T extends Animal> void setItemList(List<Object> itemList) {
         this.itemList = itemList;
@@ -54,7 +53,7 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = this.itemList.get(position);
         if (obj.getClass().equals(String.class)) {
-            ((SectionViewHolder)holder).bind((String) obj);
+            ((SectionViewHolder) holder).bind((String) obj);
         } else {
             ((StableViewHolder) holder).bind((Animal) itemList.get(position));
 
@@ -158,12 +157,12 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void bind(String title) {
-                try {
-                    Integer stringID = context.getResources().getIdentifier("section"+title, "string", context.getPackageName());
-                    this.label.setText(context.getString(stringID));
-                } catch (Exception e) {
-                    this.label.setText(title);
-                }
+            try {
+                Integer stringID = context.getResources().getIdentifier("section" + title, "string", context.getPackageName());
+                this.label.setText(context.getString(stringID));
+            } catch (Exception e) {
+                this.label.setText(title);
+            }
         }
     }
 }

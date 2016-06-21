@@ -73,8 +73,10 @@ public class PartyFragment extends BaseMainFragment {
                                             PartyFragment.this.group.members = members;
                                             updateGroupUI();
                                         },
-                                        throwable -> {});
-                    }, throwable -> {});
+                                        throwable -> {
+                                        });
+                    }, throwable -> {
+                    });
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                     .setMessage(activity.getString(R.string.no_party_message))
@@ -109,7 +111,7 @@ public class PartyFragment extends BaseMainFragment {
             groupInformationFragment.setGroup(group);
         }
 
-        if(chatListFragment != null){
+        if (chatListFragment != null) {
             chatListFragment.seenGroupId = group.id;
         }
 
@@ -153,8 +155,9 @@ public class PartyFragment extends BaseMainFragment {
             case R.id.menu_guild_leave:
                 this.apiHelper.apiService.leaveGroup(this.group.id).compose(apiHelper.configureApiCallObserver())
                         .subscribe(group -> {
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-                }, throwable -> {});
+                            getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
+                        }, throwable -> {
+                        });
                 return true;
         }
 
@@ -163,10 +166,10 @@ public class PartyFragment extends BaseMainFragment {
 
     private void displayEditForm() {
         Bundle bundle = new Bundle();
-        bundle.putString("groupID",this.group.id);
-        bundle.putString("name",this.group.name);
-        bundle.putString("description",this.group.description);
-        bundle.putString("leader",this.group.leaderID);
+        bundle.putString("groupID", this.group.id);
+        bundle.putString("name", this.group.name);
+        bundle.putString("description", this.group.description);
+        bundle.putString("leader", this.group.leaderID);
 
         Intent intent = new Intent(activity, GroupFormActivity.class);
         intent.putExtras(bundle);
@@ -177,8 +180,8 @@ public class PartyFragment extends BaseMainFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (GroupFormActivity.GROUP_FORM_ACTIVITY) : {
+        switch (requestCode) {
+            case (GroupFormActivity.GROUP_FORM_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     boolean needsSaving = false;
                     Bundle bundle = data.getExtras();
@@ -201,13 +204,15 @@ public class PartyFragment extends BaseMainFragment {
                     if (needsSaving) {
                         this.apiHelper.apiService.updateGroup(this.group.id, this.group)
                                 .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(aVoid -> {}, throwable -> {});
+                                .subscribe(aVoid -> {
+                                }, throwable -> {
+                                });
                         this.groupInformationFragment.setGroup(group);
                     }
                 }
                 break;
             }
-            case (PartyInviteActivity.RESULT_SEND_INVITES) : {
+            case (PartyInviteActivity.RESULT_SEND_INVITES): {
                 if (resultCode == Activity.RESULT_OK) {
                     Map<String, Object> inviteData = new HashMap<>();
                     inviteData.put("inviter", this.user.getProfile().getName());
@@ -229,7 +234,9 @@ public class PartyFragment extends BaseMainFragment {
                     }
                     this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
                             .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(aVoid -> {}, throwable -> {});
+                            .subscribe(aVoid -> {
+                            }, throwable -> {
+                            });
                 }
             }
         }
@@ -243,7 +250,7 @@ public class PartyFragment extends BaseMainFragment {
 
         UserParty party = this.user.getParty();
 
-        if(party == null) {
+        if (party == null) {
             return;
         }
 

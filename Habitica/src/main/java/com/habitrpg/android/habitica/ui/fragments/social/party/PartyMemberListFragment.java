@@ -24,21 +24,18 @@ import butterknife.BindView;
  */
 public class PartyMemberListFragment extends BaseFragment {
 
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
     private Context ctx;
     private List<HabitRPGUser> members;
-
     private PartyMemberRecyclerViewAdapter viewAdapter;
+    private View view;
 
     public void configure(Context ctx, List<HabitRPGUser> members) {
         this.ctx = ctx;
         this.members = members;
 
     }
-
-    private View view;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
 
     @Nullable
     @Override

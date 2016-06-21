@@ -23,8 +23,8 @@ import java.util.Set;
  */
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
-    private Set<String> purchasedOrderList = new HashSet<>();
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
+    private Set<String> purchasedOrderList = new HashSet<>();
     private SharedPreferences preferences;
 
     public HabiticaPurchaseVerifier(Context context) {

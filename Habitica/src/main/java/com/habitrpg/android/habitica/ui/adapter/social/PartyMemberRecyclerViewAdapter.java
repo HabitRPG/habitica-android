@@ -25,8 +25,9 @@ import butterknife.ButterKnife;
 public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMemberRecyclerViewAdapter.MemberViewHolder> {
 
 
-    private List<HabitRPGUser> memberList;
     public Context context;
+    private List<HabitRPGUser> memberList;
+
     public void setMemberList(List<HabitRPGUser> memberList) {
         this.memberList = memberList;
         this.notifyDataSetChanged();

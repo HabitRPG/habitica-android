@@ -30,12 +30,31 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends DialogFragment {
 
-    private boolean registerEventBus = false;
-
     public String tutorialStepIdentifier;
     public String tutorialText;
-
     public Unbinder unbinder;
+    private boolean registerEventBus = false;
+    private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
+        @Override
+        public void onResultReceived(TutorialStep step) {
+            if (step != null && !step.getWasCompleted() && (step.getDisplayedOn() == null || (new Date().getTime() - step.getDisplayedOn().getTime()) > 86400000)) {
+                DisplayTutorialEvent event = new DisplayTutorialEvent();
+                event.step = step;
+                event.tutorialText = tutorialText;
+                EventBus.getDefault().post(event);
+            }
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
+            return true;
+        }
+    };
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -64,7 +83,7 @@ public abstract class BaseFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        injectFragment(((BaseActivity)getActivity()).getHabiticaApplication().getComponent());
+        injectFragment(((BaseActivity) getActivity()).getHabiticaApplication().getComponent());
     }
 
     @Nullable
@@ -110,29 +129,6 @@ public abstract class BaseFragment extends DialogFragment {
     public String getDisplayedClassName() {
         return this.getClass().getSimpleName();
     }
-
-    private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
-        @Override
-        public void onResultReceived(TutorialStep step) {
-            if (step != null && !step.getWasCompleted() && (step.getDisplayedOn() == null || (new Date().getTime() - step.getDisplayedOn().getTime()) > 86400000)) {
-                DisplayTutorialEvent event = new DisplayTutorialEvent();
-                event.step = step;
-                event.tutorialText = tutorialText;
-                EventBus.getDefault().post(event);
-            }
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<TutorialStep> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<TutorialStep> baseTransaction, TutorialStep step) {
-            return true;
-        }
-    };
-
 
 
 }

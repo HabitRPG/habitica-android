@@ -11,12 +11,12 @@ public abstract class Debounce {
     private long debounceDelay = 0;
     private long checkDelay = 0;
 
-    public abstract void execute();
-
     public Debounce(long debounceDelay, long checkDelay) {
         this.debounceDelay = debounceDelay;
         this.checkDelay = checkDelay;
     }
+
+    public abstract void execute();
 
     public void hit() {
         lastHit = System.currentTimeMillis();

@@ -22,10 +22,8 @@ import rx.schedulers.Schedulers;
 
 public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    protected Context context;
-
     public Task task;
-
+    protected Context context;
     @BindView(R.id.checkedTextView)
     TextView titleTextView;
 

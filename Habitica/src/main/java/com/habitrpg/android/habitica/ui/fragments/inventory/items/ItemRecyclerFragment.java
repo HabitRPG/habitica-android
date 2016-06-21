@@ -35,25 +35,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ItemRecyclerFragment extends BaseFragment {
+    private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
-
     @BindView(R.id.empty_view)
     public TextView emptyView;
-
     @BindView(R.id.titleTextView)
     public TextView titleView;
     public ItemRecyclerAdapter adapter;
     public String itemType;
     public String itemTypeText;
-
     public Boolean isHatching;
     public Boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
     public HashMap<String, Integer> ownedPets;
-
-    private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     LinearLayoutManager layoutManager = null;
 
     private View view;
@@ -78,7 +74,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        adapter = (ItemRecyclerAdapter)recyclerView.getAdapter();
+        adapter = (ItemRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
             adapter = new ItemRecyclerAdapter();
             adapter.context = this.getActivity();
@@ -96,7 +92,7 @@ public class ItemRecyclerFragment extends BaseFragment {
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");
         }
 

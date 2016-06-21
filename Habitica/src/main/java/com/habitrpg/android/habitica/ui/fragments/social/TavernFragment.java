@@ -52,23 +52,24 @@ public class TavernFragment extends BaseMainFragment {
             apiHelper.apiService.getGroup("habitrpg")
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(group -> {
-                TavernFragment.this.tavern = group;
-                if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
-                    TavernFragment.this.viewPager.getAdapter().notifyDataSetChanged();
-                    if (TavernFragment.this.tabLayout != null) {
-                        TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
-                        TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
-                    }
+                        TavernFragment.this.tavern = group;
+                        if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
+                            TavernFragment.this.viewPager.getAdapter().notifyDataSetChanged();
+                            if (TavernFragment.this.tabLayout != null) {
+                                TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
+                                TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
+                            }
 
-                    ContentCache contentCache = new ContentCache(apiHelper.apiService);
+                            ContentCache contentCache = new ContentCache(apiHelper.apiService);
 
-                    contentCache.GetQuestContent(group.quest.key, content -> {
-                        if (questInfoFragment != null) {
-                            questInfoFragment.setQuestContent(content);
+                            contentCache.GetQuestContent(group.quest.key, content -> {
+                                if (questInfoFragment != null) {
+                                    questInfoFragment.setQuestContent(content);
+                                }
+                            });
                         }
+                    }, throwable -> {
                     });
-                }
-            }, throwable -> {});
         }
     }
 

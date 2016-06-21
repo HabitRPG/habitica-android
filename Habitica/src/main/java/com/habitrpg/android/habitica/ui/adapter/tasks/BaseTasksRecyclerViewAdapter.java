@@ -103,11 +103,11 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     @Subscribe
-    public void onEvent(TaskCheckedCommand evnt){
+    public void onEvent(TaskCheckedCommand evnt) {
         if (!taskType.equals(evnt.Task.getType()))
             return;
 
-        if(evnt.completed && evnt.Task.getType().equals("todo")){
+        if (evnt.completed && evnt.Task.getType().equals("todo")) {
             // remove from the list
             content.remove(evnt.Task);
         }
@@ -136,14 +136,14 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     public void onEvent(TaskRemovedEvent evnt) {
         Task taskToDelete = null;
 
-        for(Task t : content) {
-            if(t.getId().equals(evnt.deletedTaskId)){
+        for (Task t : content) {
+            if (t.getId().equals(evnt.deletedTaskId)) {
                 taskToDelete = t;
                 break;
             }
         }
 
-        if(taskToDelete != null) {
+        if (taskToDelete != null) {
             content.remove(taskToDelete);
             filter();
         }
@@ -151,7 +151,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
 
     private void updateTask(Task task) {
         int i;
-        for(i = 0; i < this.content.size(); ++i) {
+        for (i = 0; i < this.content.size(); ++i) {
             if (content.get(i).getId().equals(task.getId())) {
                 break;
             }

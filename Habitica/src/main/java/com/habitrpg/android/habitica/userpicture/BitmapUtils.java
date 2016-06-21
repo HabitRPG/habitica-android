@@ -74,9 +74,9 @@ public class BitmapUtils {
     private static boolean createNomedia() {
         //Returns true if .nomedia was created/already existed and false if not
         try {
-            File cacheDir = new File (getSavePath());
+            File cacheDir = new File(getSavePath());
             cacheDir.mkdirs();
-            File nomediaFile = new File (getSavePath() + "/.nomedia");
+            File nomediaFile = new File(getSavePath() + "/.nomedia");
             if (!nomediaFile.isFile()) return nomediaFile.createNewFile();
         } catch (IOException e) {
         }

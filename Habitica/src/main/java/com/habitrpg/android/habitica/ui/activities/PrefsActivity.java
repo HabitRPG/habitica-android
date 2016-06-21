@@ -23,6 +23,19 @@ public class PrefsActivity extends BaseActivity implements
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    // TODO:
+    // This method should be moved to HabiticaApplication
+    public static HostConfig fromContext(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        HostConfig config;
+        String httpPort = BuildConfig.PORT;
+        String address = BuildConfig.DEBUG ? BuildConfig.BASE_URL : ctx.getString(R.string.base_url);
+        String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
+        String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
+        config = new HostConfig(address, httpPort, api, userID);
+        return config;
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_prefs;
@@ -76,19 +89,6 @@ public class PrefsActivity extends BaseActivity implements
             fragment = new AccountDetailsFragment();
         }
         return fragment;
-    }
-
-    // TODO:
-    // This method should be moved to HabiticaApplication
-    public static HostConfig fromContext(Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        HostConfig config;
-        String httpPort = BuildConfig.PORT;
-        String address = BuildConfig.DEBUG ? BuildConfig.BASE_URL : ctx.getString(R.string.base_url);
-        String api = prefs.getString(ctx.getString(R.string.SP_APIToken), null);
-        String userID = prefs.getString(ctx.getString(R.string.SP_userID), null);
-        config = new HostConfig(address, httpPort, api, userID);
-        return config;
     }
 }
 

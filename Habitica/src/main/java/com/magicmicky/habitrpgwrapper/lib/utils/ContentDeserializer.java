@@ -47,23 +47,34 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         items.add(result.armoire);
         items.addAll(result.gear.flat);
 
-        result.quests = context.deserialize(object.get("quests"), new TypeToken<List<QuestContent>>() {}.getType());
-        result.eggs = context.deserialize(object.get("eggs"), new TypeToken<List<Egg>>() {}.getType());
-        result.food = context.deserialize(object.get("food"), new TypeToken<List<Food>>() {}.getType());
-        result.hatchingPotions = context.deserialize(object.get("hatchingPotions"), new TypeToken<List<HatchingPotion>>() {}.getType());
+        result.quests = context.deserialize(object.get("quests"), new TypeToken<List<QuestContent>>() {
+        }.getType());
+        result.eggs = context.deserialize(object.get("eggs"), new TypeToken<List<Egg>>() {
+        }.getType());
+        result.food = context.deserialize(object.get("food"), new TypeToken<List<Food>>() {
+        }.getType());
+        result.hatchingPotions = context.deserialize(object.get("hatchingPotions"), new TypeToken<List<HatchingPotion>>() {
+        }.getType());
 
         items.addAll(result.quests);
         items.addAll(result.eggs);
         items.addAll(result.food);
         items.addAll(result.hatchingPotions);
 
-        result.pets = context.deserialize(object.get("pets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
-        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
-        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
-        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<HashMap<String, Pet>>() {}.getType());
-        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
-        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
-        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<HashMap<String, Mount>>() {}.getType());
+        result.pets = context.deserialize(object.get("pets"), new TypeToken<HashMap<String, Pet>>() {
+        }.getType());
+        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<HashMap<String, Pet>>() {
+        }.getType());
+        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<HashMap<String, Pet>>() {
+        }.getType());
+        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<HashMap<String, Pet>>() {
+        }.getType());
+        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<HashMap<String, Mount>>() {
+        }.getType());
+        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<HashMap<String, Mount>>() {
+        }.getType());
+        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<HashMap<String, Mount>>() {
+        }.getType());
 
         for (Egg egg : result.eggs) {
             for (HatchingPotion potion : result.hatchingPotions) {
@@ -122,7 +133,8 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             items.add(mount);
         }
 
-        result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {}.getType());
+        result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {
+        }.getType());
 
         List<String> spellKeys = new ArrayList<>();
         for (Skill skill : result.spells) {
@@ -135,10 +147,13 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             }
         }
 
-        result.appearances = context.deserialize(object.get("appearances"), new TypeToken<List<Customization>>() {}.getType());
-        result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<List<Customization>>() {}.getType());
+        result.appearances = context.deserialize(object.get("appearances"), new TypeToken<List<Customization>>() {
+        }.getType());
+        result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<List<Customization>>() {
+        }.getType());
 
-        result.faq = context.deserialize(object.get("faq"), new TypeToken<List<FAQArticle>>() {}.getType());
+        result.faq = context.deserialize(object.get("faq"), new TypeToken<List<FAQArticle>>() {
+        }.getType());
 
         items.addAll(result.spells);
 

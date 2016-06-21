@@ -15,7 +15,7 @@ public class MountListDeserializer implements JsonDeserializer<HashMap<String, M
     @Override
     public HashMap<String, Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         HashMap<String, Mount> vals = new HashMap<>();
-        for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
             Mount pet = new Mount();
             pet.setKey(entry.getKey());
             pet.setAnimal(entry.getKey().split("-")[0]);

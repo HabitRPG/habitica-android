@@ -22,16 +22,15 @@ import butterknife.Unbinder;
 
 public class AboutFragment extends Fragment {
 
-    private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
-    private String twitterLink = "https://twitter.com/habitica";
-
+    @BindView(R.id.versionInfo)
+    public TextView versionInfo;
     String versionName = "";
     int versionCode = 0;
     String userId = "";
     Unbinder unbinder;
-
-    @BindView(R.id.versionInfo)
-    public TextView versionInfo;
+    private String androidSourceCodeLink = "https://github.com/HabitRPG/habitrpg-android/";
+    private String twitterLink = "https://twitter.com/habitica";
+    private View view;
 
     @OnClick(R.id.sourceCodeLink)
     public void openSourceCodePageByLabel() {
@@ -58,15 +57,12 @@ public class AboutFragment extends Fragment {
         sendEmail("[Android] Feedback");
     }
 
-
     @OnClick(R.id.googlePlayStoreButton)
     public void openGooglePlay() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=com.habitrpg.android.habitica"));
         startActivity(intent);
     }
-
-    private View view;
 
     @Nullable
     @Override
@@ -109,13 +105,13 @@ public class AboutFragment extends Fragment {
         int version = Build.VERSION.SDK_INT;
         String device = Build.DEVICE;
         String bodyOfEmail = "Device: " + device +
-                             " \nAndroid Version: " + version +
-                             " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                             " \nUser ID: " + userId +
-                             " \nDetails: ";
+                " \nAndroid Version: " + version +
+                " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
+                " \nUser ID: " + userId +
+                " \nDetails: ";
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                "mailto","mobile@habitica.com", null));
+                "mailto", "mobile@habitica.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_TEXT, bodyOfEmail);
         startActivity(Intent.createChooser(emailIntent, "Send email..."));

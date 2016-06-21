@@ -8,6 +8,13 @@ import android.util.AttributeSet;
 public class TimePreference extends DialogPreference {
     private String timeval;
 
+    public TimePreference(Context ctxt, AttributeSet attrs) {
+        super(ctxt, attrs);
+
+        setPositiveButtonText("Set");
+        setNegativeButtonText("Cancel");
+    }
+
     public static int getHour(String timeval) {
         String[] pieces = timeval.split(":");
         return (Integer.parseInt(pieces[0]));
@@ -16,14 +23,6 @@ public class TimePreference extends DialogPreference {
     public static int getMinute(String timeval) {
         String[] pieces = timeval.split(":");
         return (Integer.parseInt(pieces[1]));
-    }
-
-
-    public TimePreference(Context ctxt, AttributeSet attrs) {
-        super(ctxt, attrs);
-
-        setPositiveButtonText("Set");
-        setNegativeButtonText("Cancel");
     }
 
     @Override
@@ -47,6 +46,18 @@ public class TimePreference extends DialogPreference {
         setSummary(timeval);
     }
 
+    public int getLastHour() {
+        return getHour(timeval);
+    }
+
+    public int getLastMinute() {
+        return getMinute(timeval);
+    }
+
+    public String getText() {
+        return timeval;
+    }
+
     public void setText(String text) {
         final boolean wasBlocking = shouldDisableDependents();
 
@@ -58,17 +69,5 @@ public class TimePreference extends DialogPreference {
         if (isBlocking != wasBlocking) {
             notifyDependencyChange(isBlocking);
         }
-    }
-
-    public int getLastHour() {
-        return getHour(timeval);
-    }
-
-    public int getLastMinute() {
-        return getMinute(timeval);
-    }
-
-    public String getText() {
-        return timeval;
     }
 }

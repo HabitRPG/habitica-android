@@ -34,38 +34,17 @@ import butterknife.ButterKnife;
 
 public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> customizationList;
-    private String activeCustomization;
     public String userSize;
     public String hairColor;
     public double gemBalance;
-
-    public void setCustomizationList(List<Customization> newCustomizationList) {
-        this.customizationList = new ArrayList<>();
-        CustomizationSet lastSet = new CustomizationSet();
-        for (Customization customization : newCustomizationList) {
-            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.identifier)) {
-                CustomizationSet set = new CustomizationSet();
-                set.identifier = customization.getCustomizationSet();
-                set.text = customization.getCustomizationSetName();
-                set.price = customization.getSetPrice();
-                set.hasPurchasable = !customization.isUsable();
-                lastSet = set;
-                customizationList.add(set);
-            }
-            customizationList.add(customization);
-            if (!customization.isUsable() && !lastSet.hasPurchasable) {
-                lastSet.hasPurchasable = true;
-            }
-        }
-        this.notifyDataSetChanged();
-    }
+    private List<Object> customizationList;
+    private String activeCustomization;
 
     public void updateOwnership(List<String> ownedCustomizations) {
         int position = 0;
         for (Object obj : customizationList) {
             if (obj.getClass().equals(Customization.class)) {
-                Customization customization = (Customization)obj;
+                Customization customization = (Customization) obj;
                 if (customization.getPurchased() != ownedCustomizations.contains(customization.getId())) {
                     customization.setPurchased(ownedCustomizations.contains(customization.getId()));
                     notifyItemChanged(position);
@@ -109,7 +88,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = customizationList.get(position);
         if (obj.getClass().equals(CustomizationSet.class)) {
-            ((SectionViewHolder)holder).bind((CustomizationSet) obj);
+            ((SectionViewHolder) holder).bind((CustomizationSet) obj);
         } else {
             ((CustomizationViewHolder) holder).bind((Customization) customizationList.get(position));
 
@@ -138,10 +117,31 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         return this.customizationList;
     }
 
+    public void setCustomizationList(List<Customization> newCustomizationList) {
+        this.customizationList = new ArrayList<>();
+        CustomizationSet lastSet = new CustomizationSet();
+        for (Customization customization : newCustomizationList) {
+            if (customization.getCustomizationSet() != null && !customization.getCustomizationSet().equals(lastSet.identifier)) {
+                CustomizationSet set = new CustomizationSet();
+                set.identifier = customization.getCustomizationSet();
+                set.text = customization.getCustomizationSetName();
+                set.price = customization.getSetPrice();
+                set.hasPurchasable = !customization.isUsable();
+                lastSet = set;
+                customizationList.add(set);
+            }
+            customizationList.add(customization);
+            if (!customization.isUsable() && !lastSet.hasPurchasable) {
+                lastSet.hasPurchasable = true;
+            }
+        }
+        this.notifyDataSetChanged();
+    }
+
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.card_view)
-             CardView cardView;
+        CardView cardView;
 
         @BindView(R.id.linearLayout)
         RelativeLayout linearLayout;
@@ -236,15 +236,12 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     class SectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private CustomizationSet set;
-
         @BindView(R.id.label)
         TextView label;
-
         @BindView(R.id.purchaseSetButton)
         Button purchaseSetButton;
-
         Context context;
+        private CustomizationSet set;
 
         public SectionViewHolder(View itemView) {
             super(itemView);
@@ -266,40 +263,40 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
         @Override
         public void onClick(View v) {
-                LinearLayout dialogContent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null);
+            LinearLayout dialogContent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null);
 
-                TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
-                priceLabel.setText(String.valueOf(set.price));
+            TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);
+            priceLabel.setText(String.valueOf(set.price));
 
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
-                            if (set.price > gemBalance) {
-                                OpenMenuItemCommand event = new OpenMenuItemCommand();
-                                event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
-                                EventBus.getDefault().post(event);
-                                return;
-                            }
-                            UnlockPathCommand event = new UnlockPathCommand();
-                            String path = "";
-                            for (Object obj : customizationList) {
-                                if (obj.getClass().equals(Customization.class)) {
-                                    Customization customization = (Customization) obj;
-                                    if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
-                                        path = path + "," + customization.getPath();
-                                    }
+            AlertDialog dialog = new AlertDialog.Builder(context)
+                    .setPositiveButton(R.string.purchase_button, (dialog1, which) -> {
+                        if (set.price > gemBalance) {
+                            OpenMenuItemCommand event = new OpenMenuItemCommand();
+                            event.identifier = MainDrawerBuilder.SIDEBAR_PURCHASE;
+                            EventBus.getDefault().post(event);
+                            return;
+                        }
+                        UnlockPathCommand event = new UnlockPathCommand();
+                        String path = "";
+                        for (Object obj : customizationList) {
+                            if (obj.getClass().equals(Customization.class)) {
+                                Customization customization = (Customization) obj;
+                                if (!customization.isUsable() && customization.getCustomizationSet() != null && customization.getCustomizationSet().equals(set.identifier)) {
+                                    path = path + "," + customization.getPath();
                                 }
                             }
-                            path = path.substring(1);
-                            event.path = path;
-                            event.balanceDiff = set.price / 4;
-                            EventBus.getDefault().post(event);
-                        })
-                        .setTitle(context.getString(R.string.purchase_set_title, set.text))
-                        .setView(dialogContent)
-                        .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
-                            dialog1.dismiss();
-                        }).create();
-                dialog.show();
+                        }
+                        path = path.substring(1);
+                        event.path = path;
+                        event.balanceDiff = set.price / 4;
+                        EventBus.getDefault().post(event);
+                    })
+                    .setTitle(context.getString(R.string.purchase_set_title, set.text))
+                    .setView(dialogContent)
+                    .setNegativeButton(R.string.reward_dialog_dismiss, (dialog1, which) -> {
+                        dialog1.dismiss();
+                    }).create();
+            dialog.show();
         }
     }
 }

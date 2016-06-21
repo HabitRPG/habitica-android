@@ -28,20 +28,16 @@ import butterknife.ButterKnife;
 
 public class AvatarSetupFragment extends BaseFragment {
 
-    View view;
     public SetupActivity activity;
-    private HabitRPGUser user;
     public int width;
-
-
+    View view;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
     @BindView(R.id.avatarView)
     AvatarView avatarView;
-
     CustomizationSetupAdapter adapter;
     GridLayoutManager layoutManager;
+    private HabitRPGUser user;
 
     @Nullable
     @Override
@@ -94,15 +90,15 @@ public class AvatarSetupFragment extends BaseFragment {
     }
 
     private void loadCustomizations() {
-        if(this.user == null || this.adapter == null){
+        if (this.user == null || this.adapter == null) {
             return;
         }
 
         Where<Customization> select = new Select()
                 .from(Customization.class)
                 .where(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
-                                .or(Condition.column("price").eq(0))
-                                .or(Condition.column("price").isNull())
+                        .or(Condition.column("price").eq(0))
+                        .or(Condition.column("price").isNull())
                 );
 
         List<Customization> customizations = select.queryList();

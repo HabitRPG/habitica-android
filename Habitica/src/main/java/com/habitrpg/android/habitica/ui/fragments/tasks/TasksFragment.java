@@ -72,17 +72,11 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private static final int TASK_UPDATED_RESULT = 2;
 
     public ViewPager viewPager;
-
-    MenuItem refreshItem;
-
-
-    FloatingActionMenu floatingMenu;
-
-    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
-
     @Inject
     public TagsHelper tagsHelper; // This will be used for this fragment. Currently being used to help filtering
-
+    MenuItem refreshItem;
+    FloatingActionMenu floatingMenu;
+    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
     private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
     private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
 
@@ -265,7 +259,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
-                    BaseTasksRecyclerViewAdapter adapter= fragm.recyclerAdapter;
+                    BaseTasksRecyclerViewAdapter adapter = fragm.recyclerAdapter;
                     if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
                         final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragm.recyclerAdapter;
                         dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();
@@ -282,7 +276,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null){
+        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
             allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
         }
 
@@ -327,7 +321,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null){
+        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
             allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
         }
 
@@ -349,21 +343,24 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     public void onEvent(TaskCheckedCommand event) {
         apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {});
+                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
+                });
     }
 
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskUpdateCallback(), throwable -> {});
+                .subscribe(new TaskUpdateCallback(), throwable -> {
+                });
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {});
+                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {
+                });
     }
 
     @Subscribe
@@ -377,12 +374,14 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         if (event.created) {
             this.apiHelper.apiService.createItem(task)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskCreationCallback(), throwable -> {});
+                    .subscribe(new TaskCreationCallback(), throwable -> {
+                    });
             floatingMenu.close(true);
         } else {
             this.apiHelper.apiService.updateTask(task.getId(), task)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskUpdateCallback(), throwable -> {});
+                    .subscribe(new TaskUpdateCallback(), throwable -> {
+                    });
         }
     }
 

@@ -35,20 +35,28 @@ import javax.inject.Named;
  * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
 public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
+    private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
     public RecyclerView recyclerView;
     public BaseTasksRecyclerViewAdapter recyclerAdapter;
-    private String classType;
-    private HabitRPGUser user;
-    private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
-
-    @Inject @Named("UserID")
+    @Inject
+    @Named("UserID")
     String userID;
-
     @Inject
     APIHelper apiHelper;
-
     @Inject
     TagsHelper tagsHelper;
+    LinearLayoutManager layoutManager = null;
+    private String classType;
+    private HabitRPGUser user;
+    private View view;
+
+    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType) {
+        TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
+        fragment.setRetainInstance(true);
+        fragment.user = user;
+        fragment.classType = classType;
+        return fragment;
+    }
 
     // TODO needs a bit of cleanup
     public void setInnerAdapter() {
@@ -77,8 +85,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
     }
 
-    private View view;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
@@ -101,7 +107,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "");
         }
 
@@ -136,8 +142,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         component.inject(this);
     }
 
-    LinearLayoutManager layoutManager = null;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -148,14 +152,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(CLASS_TYPE_KEY, this.classType);
-    }
-
-    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType) {
-        TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
-        fragment.setRetainInstance(true);
-        fragment.user = user;
-        fragment.classType = classType;
-        return fragment;
     }
 
     @Override

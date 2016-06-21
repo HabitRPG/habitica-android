@@ -29,9 +29,9 @@ import butterknife.ButterKnife;
 
 public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Object> customizationList;
     public String userSize;
     public HabitRPGUser user;
+    private List<Object> customizationList;
 
     public void setCustomizationList(List<Customization> newCustomizationList) {
         this.customizationList = new ArrayList<>();
@@ -76,7 +76,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = customizationList.get(position);
         if (obj.getClass().equals(String.class)) {
-            ((SectionViewHolder)holder).bind((String) obj);
+            ((SectionViewHolder) holder).bind((String) obj);
         } else {
             ((CustomizationViewHolder) holder).bind((Customization) customizationList.get(position));
 

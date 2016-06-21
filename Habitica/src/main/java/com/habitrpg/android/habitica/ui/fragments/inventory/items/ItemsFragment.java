@@ -112,7 +112,8 @@ public class ItemsFragment extends BaseMainFragment {
                     OpenMenuItemCommand event1 = new OpenMenuItemCommand();
                     event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
                     EventBus.getDefault().post(event1);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Subscribe
@@ -121,7 +122,7 @@ public class ItemsFragment extends BaseMainFragment {
             ItemRecyclerFragment fragment = new ItemRecyclerFragment();
             if (event.usingEgg != null) {
                 fragment.itemType = "hatchingPotions";
-                fragment.hatchingItem= event.usingEgg;
+                fragment.hatchingItem = event.usingEgg;
             } else {
                 fragment.itemType = "eggs";
                 fragment.hatchingItem = event.usingHatchingPotion;

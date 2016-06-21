@@ -17,16 +17,14 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class BasicStats extends BaseModel {
 
     @Column
-    @PrimaryKey
-    @NotNull
-    String id;
-
-    @Column
     public Float con, str, per;
-
     @Column
     @SerializedName("int")
     public Float _int;
+    @Column
+    @PrimaryKey
+    @NotNull
+    String id;
 
     public Float getCon() {
         return con != null ? con : Float.valueOf(0);

@@ -29,28 +29,23 @@ import butterknife.OnClick;
 
 public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implements CompoundButton.OnCheckedChangeListener {
 
+    public Boolean displayChecklist;
     @BindView(R.id.checkBoxHolder)
     ViewGroup checkboxHolder;
-
     @BindView(R.id.checkBox)
     CheckBox checkbox;
-
     @BindView(R.id.checklistView)
     LinearLayout checklistView;
     @BindView(R.id.checklistSeparator)
     View checklistSeparator;
     @BindView(R.id.checklistBottomSpace)
     View checklistBottomSpace;
-
     @BindView(R.id.checklistIndicatorWrapper)
     ViewGroup checklistIndicatorWrapper;
-
     @BindView(R.id.checkListCompletedTextView)
     TextView checklistCompletedTextView;
     @BindView(R.id.checkListAllTextView)
     TextView checklistAllTextView;
-
-    public Boolean displayChecklist;
 
     public ChecklistedViewHolder(View itemView) {
         super(itemView);
@@ -126,13 +121,13 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
             this.setDisplayChecklist(true);
         }
         if (this.displayChecklist) {
-            RecyclerView recyclerView = (RecyclerView)this.checklistView.getParent().getParent();
-            LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+            RecyclerView recyclerView = (RecyclerView) this.checklistView.getParent().getParent();
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             layoutManager.scrollToPositionWithOffset(this.getAdapterPosition(), 15);
         }
     }
 
-    public void expandCheckboxTouchArea(final View expandedView, final View checkboxView){
+    public void expandCheckboxTouchArea(final View expandedView, final View checkboxView) {
         expandedView.post(() -> {
             Rect rect = new Rect();
             expandedView.getHitRect(rect);
@@ -146,12 +141,12 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
             if (isChecked != task.getCompleted()) {
                 TaskCheckedCommand event = new TaskCheckedCommand();
                 event.Task = task;
-                event.completed =  !task.getCompleted();
+                event.completed = !task.getCompleted();
 
                 // it needs to be changed after the event is send -> to the server
                 // maybe a refactor is needed here
                 EventBus.getDefault().post(event);
-                task.completed =event.completed;
+                task.completed = event.completed;
                 task.save();
             }
         } else {

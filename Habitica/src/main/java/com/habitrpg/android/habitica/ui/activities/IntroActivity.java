@@ -21,20 +21,16 @@ import butterknife.BindView;
 
 public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    @BindView(R.id.view_pager)
-    ViewPager pager;
-
-    @BindView(R.id.view_pager_indicator)
-    CirclePageIndicator indicator;
-
-    @BindView(R.id.skipButton)
-    Button skipButton;
-
-    @BindView(R.id.finishButton)
-    Button finishButton;
-
     @Inject
     public APIHelper apiHelper;
+    @BindView(R.id.view_pager)
+    ViewPager pager;
+    @BindView(R.id.view_pager_indicator)
+    CirclePageIndicator indicator;
+    @BindView(R.id.skipButton)
+    Button skipButton;
+    @BindView(R.id.finishButton)
+    Button finishButton;
 
     @Override
     protected int getLayoutResId() {
@@ -55,7 +51,9 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
 
         apiHelper.apiService.getContent()
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(contentResult -> {}, throwable -> {});
+                .subscribe(contentResult -> {
+                }, throwable -> {
+                });
     }
 
     @Override

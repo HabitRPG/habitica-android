@@ -6,23 +6,19 @@ package com.magicmicky.habitrpgwrapper.lib.api;
 public class Server {
     private String addr;
 
-    public Server(String addr)
-    {
+    public Server(String addr) {
         this(addr, true);
     }
 
-    public Server(String addr, boolean attachSuffix)
-    {
-        if(attachSuffix){
-            if(addr.endsWith("/api/v3") || addr.endsWith("/api/v3/"))
-                this.addr=addr;
-            else if(addr.endsWith("/"))
-                this.addr=addr + "api/v3/";
+    public Server(String addr, boolean attachSuffix) {
+        if (attachSuffix) {
+            if (addr.endsWith("/api/v3") || addr.endsWith("/api/v3/"))
+                this.addr = addr;
+            else if (addr.endsWith("/"))
+                this.addr = addr + "api/v3/";
             else
                 this.addr = addr + "/api/v3/";
-        }
-        else
-        {
+        } else {
             this.addr = addr;
         }
     }

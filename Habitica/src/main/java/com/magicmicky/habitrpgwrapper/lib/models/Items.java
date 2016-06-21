@@ -19,30 +19,24 @@ import java.util.HashMap;
 @Table(databaseName = HabitDatabase.NAME)
 public class Items extends BaseModel {
 
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-
-    @Column
-    private String currentMount, currentPet;
-
-    @Column
-    private int lastDrop_count;
-
-    @Column
-    private Date lastDrop_date;
-
     public HashMap<String, Integer> eggs;
     public HashMap<String, Integer> food;
     public HashMap<String, Integer> hatchingPotions;
     public HashMap<String, Integer> quests;
-
+    @Column
+    @PrimaryKey
+    @NotNull
+    String user_id;
     HashMap<String, Integer> pets;
     HashMap<String, Boolean> mounts;
+    @Column
+    private String currentMount, currentPet;
+    @Column
+    private int lastDrop_count;
+    @Column
+    private Date lastDrop_date;
 
     //private QuestContent quest;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "gear_id",
             columnType = String.class,
@@ -54,6 +48,9 @@ public class Items extends BaseModel {
         this.currentPet = currentPet;
         this.lastDrop_count = lastDrop_count;
         this.lastDrop_date = lastDrop_date;
+    }
+
+    public Items() {
     }
 
     public String getCurrentMount() {
@@ -151,8 +148,6 @@ public class Items extends BaseModel {
     public void setMounts(HashMap<String, Boolean> mounts) {
         this.mounts = mounts;
     }
-
-    public Items() {}
 
     @Override
     public void save() {

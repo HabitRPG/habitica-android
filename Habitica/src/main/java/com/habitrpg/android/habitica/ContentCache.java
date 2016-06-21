@@ -18,15 +18,6 @@ import rx.schedulers.Schedulers;
 
 
 public class ContentCache {
-    public interface GotContentEntryCallback<T extends Object> {
-        void GotObject(T obj);
-    }
-
-    public interface QuestContentCallback {
-        void GotQuest(QuestContent content);
-    }
-
-
     private ApiService apiService;
 
     public ContentCache(ApiService apiService) {
@@ -120,7 +111,8 @@ public class ContentCache {
                             break;
                         }
                     }
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
@@ -135,6 +127,15 @@ public class ContentCache {
                 .filter(item -> searchKeys.contains(item.key))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(resultList::add, throwable -> {}, () -> gotEntry.GotObject(resultList));
+                .subscribe(resultList::add, throwable -> {
+                }, () -> gotEntry.GotObject(resultList));
+    }
+
+    public interface GotContentEntryCallback<T extends Object> {
+        void GotObject(T obj);
+    }
+
+    public interface QuestContentCallback {
+        void GotQuest(QuestContent content);
     }
 }

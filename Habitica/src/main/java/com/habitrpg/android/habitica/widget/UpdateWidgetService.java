@@ -25,14 +25,13 @@ import javax.inject.Inject;
  */
 public class UpdateWidgetService extends Service implements HabitRPGUserCallback.OnUserReceived {
     private static final String LOG = ".simplewidget.service";
-    private AppWidgetManager appWidgetManager;
-
     @Inject
     public APIHelper apiHelper;
+    private AppWidgetManager appWidgetManager;
 
     public UpdateWidgetService() {
         super();
-        ((HabiticaApplication)getApplication()).getComponent().inject(this);
+        ((HabiticaApplication) getApplication()).getComponent().inject(this);
     }
 
     @Override

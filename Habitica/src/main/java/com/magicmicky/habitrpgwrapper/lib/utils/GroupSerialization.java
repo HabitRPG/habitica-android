@@ -53,7 +53,8 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
         if (obj.has("members")) {
             JsonArray memberList = obj.get("members").getAsJsonArray();
             if (memberList.size() > 0 && memberList.get(0).isJsonObject()) {
-                group.members = context.deserialize(memberList, new TypeToken<List<HabitRPGUser>>(){}.getType());
+                group.members = context.deserialize(memberList, new TypeToken<List<HabitRPGUser>>() {
+                }.getType());
             }
         }
         if (obj.has("leader")) {
@@ -64,7 +65,7 @@ public class GroupSerialization implements JsonDeserializer<Group>, JsonSerializ
                 group.leaderID = leader.get("_id").getAsString();
                 if (leader.has("profile") && !leader.get("profile").isJsonNull()) {
                     if (leader.get("profile").getAsJsonObject().has("name"))
-                    group.leaderName = leader.get("profile").getAsJsonObject().get("name").getAsString();
+                        group.leaderName = leader.get("profile").getAsJsonObject().get("name").getAsString();
                 }
             }
         }

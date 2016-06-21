@@ -63,7 +63,9 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         if (this.apiHelper != null) {
             this.apiHelper.apiService.getContent()
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(contentResult -> {}, throwable -> {});
+                    .subscribe(contentResult -> {
+                    }, throwable -> {
+                    });
         }
 
     }
@@ -107,10 +109,10 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     private void displayCustomizationFragment(String type, String category) {
-                AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
-                fragment.type = type;
-                fragment.category = category;
-                activity.displayFragment(fragment);
+        AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
+        fragment.type = type;
+        fragment.category = category;
+        activity.displayFragment(fragment);
     }
 
     @Override
@@ -142,10 +144,12 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
             updateData.put("preferences.size", newSize);
             apiHelper.apiService.updateUser(updateData)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {});
+                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
+                    });
         }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 }

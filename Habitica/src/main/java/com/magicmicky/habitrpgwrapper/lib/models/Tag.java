@@ -30,14 +30,12 @@ public class Tag extends BaseModel {
     @Column
     @NotNull
     public String user_id;
-
+    public List<TaskTag> tasks;
     @Column
     String name;
 
-    public List<TaskTag> tasks;
-
     public Tag() {
-        this(null,null);
+        this(null, null);
     }
 
     public Tag(String id, String name) {
@@ -46,7 +44,7 @@ public class Tag extends BaseModel {
     }
 
     public List<TaskTag> getTasks() {
-        if(tasks == null) {
+        if (tasks == null) {
             tasks = new Select()
                     .from(TaskTag.class)
                     .where(Condition.column("tag_id").eq(this.id)).and(Condition.column("task_id").isNotNull())
@@ -84,7 +82,7 @@ public class Tag extends BaseModel {
     @Override
     public boolean equals(Object o) {
         if (o.getClass().equals(Tag.class)) {
-            Tag otherTag = (Tag)o;
+            Tag otherTag = (Tag) o;
             return this.getId().equals(otherTag.getId());
         }
         return super.equals(o);

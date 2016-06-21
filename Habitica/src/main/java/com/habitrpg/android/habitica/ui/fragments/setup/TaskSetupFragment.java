@@ -26,18 +26,14 @@ import butterknife.ButterKnife;
 public class TaskSetupFragment extends BaseFragment {
 
 
-    View view;
     public SetupActivity activity;
     public int width;
-
-    private String[][] taskGroups;
-
-    private Object[][] tasks;
-
+    View view;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
     TaskSetupAdapter adapter;
+    private String[][] taskGroups;
+    private Object[][] tasks;
 
     @Nullable
     @Override

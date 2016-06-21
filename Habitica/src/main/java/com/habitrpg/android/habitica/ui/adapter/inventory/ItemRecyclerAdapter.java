@@ -32,16 +32,14 @@ import java.util.List;
 
 public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ItemViewHolder> {
 
-    private List<Item> itemList;
-
     public Boolean isHatching;
     public Boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;
     public HashMap<String, Integer> ownedPets;
-
     public Context context;
+    private List<Item> itemList;
 
     public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
@@ -104,7 +102,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
             binding.setDisabled(false);
             if (item instanceof QuestContent) {
-                binding.setImageNamed("inventory_quest_scroll_"+item.getKey());
+                binding.setImageNamed("inventory_quest_scroll_" + item.getKey());
             } else {
                 String type = "";
                 if (item instanceof Egg) {
@@ -114,7 +112,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 } else if (item instanceof HatchingPotion) {
                     type = "HatchingPotion";
                 }
-                binding.setImageNamed("Pet_"+type+"_"+item.getKey());
+                binding.setImageNamed("Pet_" + type + "_" + item.getKey());
 
                 if (isHatching != null && isHatching) {
                     this.binding.setDisabled(this.isPetOwned());
@@ -143,7 +141,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                         event.item = item;
                         EventBus.getDefault().post(event);
                         if (item.getOwned() > 1) {
-                            item.setOwned(item.getOwned()-1);
+                            item.setOwned(item.getOwned() - 1);
                             notifyItemChanged(getAdapterPosition());
                         } else {
                             if (getAdapterPosition() >= 0) {
@@ -156,15 +154,15 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     }
                     if (item instanceof Egg) {
                         HatchingCommand event = new HatchingCommand();
-                        event.usingEgg = (Egg)item;
+                        event.usingEgg = (Egg) item;
                         EventBus.getDefault().post(event);
                     } else if (item instanceof Food) {
                         FeedCommand event = new FeedCommand();
-                        event.usingFood = (Food)item;
+                        event.usingFood = (Food) item;
                         EventBus.getDefault().post(event);
                     } else if (item instanceof HatchingPotion) {
                         HatchingCommand event = new HatchingCommand();
-                        event.usingHatchingPotion = (HatchingPotion)item;
+                        event.usingHatchingPotion = (HatchingPotion) item;
                         EventBus.getDefault().post(event);
                     } else if (item instanceof QuestContent) {
                         InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
@@ -173,26 +171,26 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     }
                 });
                 menu.show();
-            } else if (isHatching){
+            } else if (isHatching) {
                 if (this.isPetOwned()) {
                     return;
                 }
                 if (item instanceof Egg) {
                     HatchingCommand event = new HatchingCommand();
-                    event.usingEgg = (Egg)item;
-                    event.usingHatchingPotion = (HatchingPotion)hatchingItem;
+                    event.usingEgg = (Egg) item;
+                    event.usingHatchingPotion = (HatchingPotion) hatchingItem;
                     EventBus.getDefault().post(event);
                 } else if (item instanceof HatchingPotion) {
                     HatchingCommand event = new HatchingCommand();
                     event.usingHatchingPotion = (HatchingPotion) item;
-                    event.usingEgg = (Egg)hatchingItem;
+                    event.usingEgg = (Egg) hatchingItem;
                     EventBus.getDefault().post(event);
                 }
                 fragment.dismiss();
             } else if (isFeeding) {
                 FeedCommand event = new FeedCommand();
                 event.usingPet = feedingPet;
-                event.usingFood = (Food)item;
+                event.usingFood = (Food) item;
                 EventBus.getDefault().post(event);
                 fragment.dismiss();
             }

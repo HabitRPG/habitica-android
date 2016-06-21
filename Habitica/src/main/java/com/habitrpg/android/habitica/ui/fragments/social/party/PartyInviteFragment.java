@@ -68,8 +68,8 @@ public class PartyInviteFragment extends BaseFragment {
 
     public String[] getValues() {
         List<String> values = new ArrayList<>();
-        for (int i = 0; i < invitationWrapper.getChildCount();i++) {
-            EditText valueEditText = (EditText)invitationWrapper.getChildAt(i);
+        for (int i = 0; i < invitationWrapper.getChildCount(); i++) {
+            EditText valueEditText = (EditText) invitationWrapper.getChildAt(i);
             if (valueEditText.getText().toString().length() > 0) {
                 values.add(valueEditText.getText().toString());
             }

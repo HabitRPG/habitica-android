@@ -37,10 +37,11 @@ import rx.Observable;
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
-
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    SkillsRecyclerViewAdapter adapter;
     private View view;
     private Skill selectedSkill;
-
     private ProgressDialog progressDialog;
 
     @Nullable
@@ -64,11 +65,6 @@ public class SkillsFragment extends BaseMainFragment {
         component.inject(this);
     }
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-
-    SkillsRecyclerViewAdapter adapter;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -77,8 +73,8 @@ public class SkillsFragment extends BaseMainFragment {
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void checkUserLoadSkills(){
-        if(user == null || adapter == null){
+    private void checkUserLoadSkills() {
+        if (user == null || adapter == null) {
             return;
         }
 
@@ -119,14 +115,15 @@ public class SkillsFragment extends BaseMainFragment {
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), activity.getString(R.string.used_skill, skill.text, skill.mana), UiUtils.SnackbarDisplayType.NORMAL);
         apiHelper.apiService.getUser()
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new MergeUserCallback(activity, user), throwable -> {});
+                .subscribe(new MergeUserCallback(activity, user), throwable -> {
+                });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (TASK_SELECTION_ACTIVITY) : {
+        switch (requestCode) {
+            case (TASK_SELECTION_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     useSkill(selectedSkill, data.getStringExtra("task_id"));
                 }

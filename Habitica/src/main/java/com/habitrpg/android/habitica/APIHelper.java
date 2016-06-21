@@ -107,15 +107,13 @@ public class APIHelper implements Action1<Throwable> {
 
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
+    final Observable.Transformer apiCallTransformer =
+            observable -> ((Observable) observable).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(this);
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
-
-    final Observable.Transformer apiCallTransformer =
-            observable -> ((Observable)observable).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-            .doOnError(this);
-
     private AlertDialog displayedAlert;
 
     //private OnHabitsAPIResult mResultListener;
@@ -186,18 +184,30 @@ public class APIHelper implements Action1<Throwable> {
     }
 
     public static GsonConverterFactory createGsonFactory() {
-        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {}.getType();
-        Type skillListType = new TypeToken<List<Skill>>() {}.getType();
-        Type customizationListType = new TypeToken<List<Customization>>() {}.getType();
-        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {}.getType();
-        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {}.getType();
-        Type itemDataListType = new TypeToken<List<ItemData>>() {}.getType();
-        Type eggListType = new TypeToken<List<Egg>>() {}.getType();
-        Type foodListType = new TypeToken<List<Food>>() {}.getType();
-        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {}.getType();
-        Type questContentListType = new TypeToken<List<QuestContent>>() {}.getType();
-        Type petListType = new TypeToken<HashMap<String, Pet>>() {}.getType();
-        Type mountListType = new TypeToken<HashMap<String, Mount>>() {}.getType();
+        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {
+        }.getType();
+        Type skillListType = new TypeToken<List<Skill>>() {
+        }.getType();
+        Type customizationListType = new TypeToken<List<Customization>>() {
+        }.getType();
+        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {
+        }.getType();
+        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {
+        }.getType();
+        Type itemDataListType = new TypeToken<List<ItemData>>() {
+        }.getType();
+        Type eggListType = new TypeToken<List<Egg>>() {
+        }.getType();
+        Type foodListType = new TypeToken<List<Food>>() {
+        }.getType();
+        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {
+        }.getType();
+        Type questContentListType = new TypeToken<List<QuestContent>>() {
+        }.getType();
+        Type petListType = new TypeToken<HashMap<String, Pet>>() {
+        }.getType();
+        Type mountListType = new TypeToken<HashMap<String, Mount>>() {
+        }.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -258,15 +268,15 @@ public class APIHelper implements Action1<Throwable> {
         return this.apiService.connectLocal(auth);
     }
 
-	public Observable<UserAuthResponse> connectSocial(String userId, String accessToken) {
-		UserAuthSocial auth = new UserAuthSocial();
-		auth.setNetwork("facebook");
+    public Observable<UserAuthResponse> connectSocial(String userId, String accessToken) {
+        UserAuthSocial auth = new UserAuthSocial();
+        auth.setNetwork("facebook");
         UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
         authResponse.setClient_id(userId);
         authResponse.setAccess_token(accessToken);
         auth.setAuthResponse(authResponse);
-		return this.apiService.connectSocial(auth);
-	}
+        return this.apiService.connectSocial(auth);
+    }
 
     @Override
     public void call(Throwable throwable) {
@@ -276,7 +286,7 @@ public class APIHelper implements Action1<Throwable> {
         } else if (throwableClass.equals(SocketTimeoutException.class) || throwableClass.equals(UnknownHostException.class)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
         } else if (throwableClass.equals(HttpException.class)) {
-            HttpException error = (HttpException)throwable;
+            HttpException error = (HttpException) throwable;
             retrofit2.Response<?> response = error.response();
             ErrorResponse res = null;
 
@@ -291,7 +301,7 @@ public class APIHelper implements Action1<Throwable> {
 
             int status = error.code();
             if (status == 401) {
-                if(res != null && res.message != null && !res.message.isEmpty()) {
+                if (res != null && res.message != null && !res.message.isEmpty()) {
                     showConnectionProblemDialog("", res.message);
                 } else {
                     showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
@@ -300,7 +310,7 @@ public class APIHelper implements Action1<Throwable> {
             } else if (status >= 500 && status < 600) {
                 this.showConnectionProblemDialog(R.string.internal_error_api);
             } else if (status == 400) {
-                if(res != null && res.message != null && !res.message.isEmpty()) {
+                if (res != null && res.message != null && !res.message.isEmpty()) {
                     showConnectionProblemDialog("", res.message);
                 }
             } else {
@@ -327,7 +337,7 @@ public class APIHelper implements Action1<Throwable> {
         return userObservable;
     }
 
-    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder){
+    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder) {
         List<Task> taskList = new ArrayList<>();
         int position = 0;
         for (String taskId : taskOrder) {
@@ -345,10 +355,6 @@ public class APIHelper implements Action1<Throwable> {
         return this.hostConfig.getUser() != null;
     }
 
-    public class ErrorResponse{
-        public String message;
-    }
-
     private void showConnectionProblemDialog(final int resourceMessageString) {
         showConnectionProblemDialog(R.string.network_error_title, resourceMessageString);
     }
@@ -360,7 +366,7 @@ public class APIHelper implements Action1<Throwable> {
         }
     }
 
-    private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString){
+    private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
         HabiticaApplication.currentActivity.runOnUiThread(() -> {
             if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
@@ -380,7 +386,7 @@ public class APIHelper implements Action1<Throwable> {
     }
 
     public PurchaseValidationResult validatePurchase(PurchaseValidationRequest request) throws IOException {
-       Call<PurchaseValidationResult> response = apiService.validatePurchase(request);
+        Call<PurchaseValidationResult> response = apiService.validatePurchase(request);
         return response.execute().body();
     }
 
@@ -395,5 +401,9 @@ public class APIHelper implements Action1<Throwable> {
         Crashlytics.getInstance().core.setUserIdentifier(this.hostConfig.getUser());
         Crashlytics.getInstance().core.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
+    }
+
+    public class ErrorResponse {
+        public String message;
     }
 }

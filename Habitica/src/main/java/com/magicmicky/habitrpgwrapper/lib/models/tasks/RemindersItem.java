@@ -18,19 +18,6 @@ import java.util.Date;
 @Table(databaseName = HabitDatabase.NAME)
 public class RemindersItem extends BaseModel {
     @Column
-    @PrimaryKey
-    private String id;
-
-    @Column
-    private Date startDate;
-
-    @Column
-    private Date time;
-
-    @Column
-    private Integer alarmId;
-
-    @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
@@ -38,10 +25,20 @@ public class RemindersItem extends BaseModel {
             saveForeignKeyModel = false)
     @ExcludeCheckListItem
     ForeignKeyContainer<Task> task;
+    @Column
+    @PrimaryKey
+    private String id;
+    @Column
+    private Date startDate;
+    @Column
+    private Date time;
+    @Column
+    private Integer alarmId;
 
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -49,6 +46,7 @@ public class RemindersItem extends BaseModel {
     public Integer getAlarmId() {
         return this.alarmId;
     }
+
     public void setAlarmId(Integer alarmId) {
         this.alarmId = alarmId;
     }
@@ -56,6 +54,7 @@ public class RemindersItem extends BaseModel {
     public Date getStartDate() {
         return startDate;
     }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -63,6 +62,7 @@ public class RemindersItem extends BaseModel {
     public Date getTime() {
         return time;
     }
+
     public void setTime(Date time) {
         this.time = time;
     }

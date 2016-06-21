@@ -7,7 +7,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
  */
 
 
-
 public class DaysUtils {
     public static Days getDaysFromBooleans(boolean[] b) {
         Days d = new Days();
@@ -20,6 +19,7 @@ public class DaysUtils {
         d.setSu(b[6]);
         return d;
     }
+
     public static boolean[] getBooleansFromDays(Days days) {
         boolean[] b = new boolean[7];
         b[0] = days.getM();

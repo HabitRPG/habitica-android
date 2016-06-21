@@ -17,10 +17,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FAQOverviewRecyclerAdapter  extends RecyclerView.Adapter<FAQOverviewRecyclerAdapter.FAQArticleViewHolder> {
+public class FAQOverviewRecyclerAdapter extends RecyclerView.Adapter<FAQOverviewRecyclerAdapter.FAQArticleViewHolder> {
 
-    private List<FAQArticle> articles;
     public MainActivity activity;
+    private List<FAQArticle> articles;
 
     public void setArticles(List<FAQArticle> articles) {
         this.articles = articles;

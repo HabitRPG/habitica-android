@@ -17,15 +17,16 @@ public class Buffs extends BasicStats {
     private Boolean streaks;
 
     public Buffs() {
-        this(false,false);
+        this(false, false);
     }
+
     public Buffs(Boolean snowball, Boolean streaks) {
         this.snowball = snowball;
         this.streaks = streaks;
     }
 
     public Boolean getSnowball() {
-        return snowball != null ? snowball: Boolean.FALSE;
+        return snowball != null ? snowball : Boolean.FALSE;
     }
 
     public void setSnowball(Boolean snowball) {

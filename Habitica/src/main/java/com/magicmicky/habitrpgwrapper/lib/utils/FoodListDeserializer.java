@@ -24,7 +24,7 @@ public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
             List<Food> existingItems = new Select().from(Food.class).queryList();
 
             for (Food item : existingItems) {
-                if(object.has(item.getKey())) {
+                if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
 
                     if (itemObject.isJsonObject()) {
@@ -43,7 +43,7 @@ public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
                 }
             }
 
-            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 Food item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), Food.class);

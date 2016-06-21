@@ -36,25 +36,20 @@ import butterknife.BindView;
 
 public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
-    @BindView(R.id.view_pager)
-    ViewPager pager;
-
-    @BindView(R.id.skipButton)
-    Button skipButton;
-
-    @BindView(R.id.nextButton)
-    Button nextButton;
-
-    @BindView(R.id.previousButton)
-    Button previousButton;
-
-    AvatarSetupFragment avatarSetupFragment;
-    TaskSetupFragment taskSetupFragment;
-
     @Inject
     public APIHelper apiHelper;
     @Inject
     protected HostConfig hostConfig;
+    @BindView(R.id.view_pager)
+    ViewPager pager;
+    @BindView(R.id.skipButton)
+    Button skipButton;
+    @BindView(R.id.nextButton)
+    Button nextButton;
+    @BindView(R.id.previousButton)
+    Button previousButton;
+    AvatarSetupFragment avatarSetupFragment;
+    TaskSetupFragment taskSetupFragment;
     HabitRPGUser user;
     Boolean completedSetup;
 
@@ -100,7 +95,8 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             } else {
                 this.apiHelper.apiService.getUser()
                         .compose(this.apiHelper.configureApiCallObserver())
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                        });
             }
         }
     }
@@ -146,7 +142,8 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     public void onEvent(UpdateUserCommand event) {
         this.apiHelper.apiService.updateUser(event.updateData)
                 .compose(this.apiHelper.configureApiCallObserver())
-                .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                .subscribe(new MergeUserCallback(this, user), throwable -> {
+                });
     }
 
     @Override
@@ -159,12 +156,13 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
                         .compose(this.apiHelper.configureApiCallObserver())
                         .subscribe(tasks -> {
                             onUserReceived(user);
-                        }, throwable -> {});
+                        }, throwable -> {
+                        });
                 //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
             }
-            this.pager.setCurrentItem(this.pager.getCurrentItem()+1);
+            this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
         } else if (v == this.previousButton) {
-            this.pager.setCurrentItem(this.pager.getCurrentItem()-1);
+            this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
         } else if (v == this.skipButton) {
             JSONObject eventProperties = new JSONObject();
             try {

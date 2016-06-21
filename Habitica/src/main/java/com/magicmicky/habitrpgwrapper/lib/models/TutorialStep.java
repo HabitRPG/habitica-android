@@ -11,13 +11,11 @@ import java.util.Date;
 @Table(databaseName = HabitDatabase.NAME)
 public class TutorialStep extends BaseModel {
 
+    @Column
+    public String user_id;
     @PrimaryKey
     @Column
     private String key;
-
-    @Column
-    public String user_id;
-
     @Column
     private String tutorialGroup, identifier;
 

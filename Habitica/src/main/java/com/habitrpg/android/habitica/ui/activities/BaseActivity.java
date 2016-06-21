@@ -12,11 +12,11 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract int getLayoutResId();
-
     private boolean destroyed;
 
-    public boolean isDestroyed(){
+    protected abstract int getLayoutResId();
+
+    public boolean isDestroyed() {
         return destroyed;
     }
 
@@ -52,6 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public HabiticaApplication getHabiticaApplication() {
-        return (HabiticaApplication)getApplication();
+        return (HabiticaApplication) getApplication();
     }
 }

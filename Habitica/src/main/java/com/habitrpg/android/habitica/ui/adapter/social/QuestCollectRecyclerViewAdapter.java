@@ -31,7 +31,7 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
         this.notifyDataSetChanged();
     }
 
-    public void setQuestContent(QuestContent quest){
+    public void setQuestContent(QuestContent quest) {
         this.quest = quest;
         this.notifyDataSetChanged();
     }
@@ -44,6 +44,7 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
 
         return new QuestCollectViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(QuestCollectViewHolder holder, int position) {
         holder.bind(collect.get(position));

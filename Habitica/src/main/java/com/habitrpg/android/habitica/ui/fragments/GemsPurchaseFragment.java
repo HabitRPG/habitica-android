@@ -34,13 +34,10 @@ import io.fabric.sdk.android.Fabric;
 public class GemsPurchaseFragment extends BaseMainFragment {
 
     private static final int GEMS_TO_ADD = 21;
-
-    private Listener listener;
-
-    private BillingRequests billingRequests;
-
     @BindView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
+    private Listener listener;
+    private BillingRequests billingRequests;
 
     @Override
     public void onAttach(Context context) {
@@ -106,7 +103,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
                     GemsPurchaseFragment.this.billingRequests = billingRequests;
 
                     // if the user leaves the fragment before the checkout callback is done
-                    if(btnPurchaseGems != null) {
+                    if (btnPurchaseGems != null) {
                         btnPurchaseGems.setEnabled(true);
 
                     }
@@ -122,7 +119,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
                         java.util.List<Sku> skus = gems.getSkus();
 
-                        for (Sku sku : skus){
+                        for (Sku sku : skus) {
                             updateBuyButtonText(sku.price);
                         }
                     });
@@ -132,22 +129,20 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         }
     }
 
-    private void updateBuyButtonText(String price){
-        if(price == null || price.isEmpty()){
-            btnPurchaseGems.setText("+"+ GEMS_TO_ADD);
-        }
-        else
-        {
-            btnPurchaseGems.setText(price + " = " +"+"+GEMS_TO_ADD );
+    private void updateBuyButtonText(String price) {
+        if (price == null || price.isEmpty()) {
+            btnPurchaseGems.setText("+" + GEMS_TO_ADD);
+        } else {
+            btnPurchaseGems.setText(price + " = " + "+" + GEMS_TO_ADD);
         }
     }
 
-    private void checkIfPendingPurchases(){
+    private void checkIfPendingPurchases() {
         billingRequests.getAllPurchases(ProductTypes.IN_APP, new RequestListener<Purchases>() {
             @Override
             public void onSuccess(@NonNull Purchases purchases) {
-                for(Purchase purchase : purchases.list){
-                    if(purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                for (Purchase purchase : purchases.list) {
+                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
@@ -155,7 +150,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
                             }
 
                             @Override
-                            public void onError(int i,@NonNull  Exception e) {
+                            public void onError(int i, @NonNull Exception e) {
                                 Fabric.getLogger().e("Purchase", "Consume", e);
                             }
                         });
@@ -164,8 +159,8 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             }
 
             @Override
-            public void onError(int i,@NonNull  Exception e) {
-                Fabric.getLogger().e("Purchase","getAllPurchases", e);
+            public void onError(int i, @NonNull Exception e) {
+                Fabric.getLogger().e("Purchase", "getAllPurchases", e);
             }
         });
     }
@@ -180,14 +175,13 @@ public class GemsPurchaseFragment extends BaseMainFragment {
                     // no current product exist
                     final ActivityCheckout checkout = listener.getActivityCheckout();
                     billingRequests.purchase(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, null, checkout.getPurchaseFlow());
-                }
-                else{
+                } else {
                     checkIfPendingPurchases();
                 }
             }
 
             @Override
-            public void onError(int i,@NonNull  Exception e) {
+            public void onError(int i, @NonNull Exception e) {
                 Fabric.getLogger().e("Purchase", "Error", e);
             }
         });

@@ -31,14 +31,25 @@ public class Customization extends BaseModel {
         this.id = this.identifier + "_" + this.type + "_" + this.category;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIdentifier() {
+        return this.identifier;
+    }
+
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
         this.updateID();
     }
 
-    public void setType(String type) {
-        this.type = type;
-        this.updateID();
+    public String getCategory() {
+        return this.category;
     }
 
     public void setCategory(String category) {
@@ -46,25 +57,46 @@ public class Customization extends BaseModel {
         this.updateID();
     }
 
-    public void setId(String id) {this.id = id;}
-    public void setNotes(String notes) {this.notes = notes;}
-    public void setCustomizationSet(String customizationSet) {this.customizationSet = customizationSet;}
-    public void setCustomizationSetName(String customizationSetName) {this.customizationSetName = customizationSetName;}
-    public void setText(String text) {this.text = text;}
-    public void setPurchased(boolean purchased) {this.purchased = purchased;}
-    public void setPrice(Integer price) {this.price = price;}
-    public void setSetPrice(Integer setPrice) {this.setPrice = setPrice; }
-    public void setAvailableUntil(Date availableUntil) {this.availableUntil = availableUntil; }
-    public void setAvailableFrom(Date availableFrom) {this.availableFrom = availableFrom; }
+    public String getType() {
+        return this.type;
+    }
 
-    public String getId() { return this.id; }
-    public String getIdentifier() { return this.identifier; }
-    public String getCategory() { return this.category; }
-    public String getType() { return this.type; }
-    public String getNotes() { return this.notes; }
-    public String getCustomizationSet() { return this.customizationSet; }
-    public String getCustomizationSetName() { return this.customizationSetName; }
-    public String getText() { return this.text; }
+    public void setType(String type) {
+        this.type = type;
+        this.updateID();
+    }
+
+    public String getNotes() {
+        return this.notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getCustomizationSet() {
+        return this.customizationSet;
+    }
+
+    public void setCustomizationSet(String customizationSet) {
+        this.customizationSet = customizationSet;
+    }
+
+    public String getCustomizationSetName() {
+        return this.customizationSetName;
+    }
+
+    public void setCustomizationSetName(String customizationSetName) {
+        this.customizationSetName = customizationSetName;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     @SuppressWarnings("RedundantIfStatement")
     public boolean getPurchasable() {
@@ -81,11 +113,46 @@ public class Customization extends BaseModel {
 
         return true;
     }
-    public boolean getPurchased() { return this.purchased; }
-    public Integer getPrice() { return this.price; }
-    public Integer getSetPrice() { return this.setPrice; }
-    public Date getAvailableFrom() { return this.availableFrom; }
-    public Date getAvailableUntil() { return this.availableUntil; }
+
+    public boolean getPurchased() {
+        return this.purchased;
+    }
+
+    public void setPurchased(boolean purchased) {
+        this.purchased = purchased;
+    }
+
+    public Integer getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getSetPrice() {
+        return this.setPrice;
+    }
+
+    public void setSetPrice(Integer setPrice) {
+        this.setPrice = setPrice;
+    }
+
+    public Date getAvailableFrom() {
+        return this.availableFrom;
+    }
+
+    public void setAvailableFrom(Date availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public Date getAvailableUntil() {
+        return this.availableUntil;
+    }
+
+    public void setAvailableUntil(Date availableUntil) {
+        this.availableUntil = availableUntil;
+    }
 
     public String getImageName(String userSize, String hairColor) {
 
@@ -110,7 +177,7 @@ public class Customization extends BaseModel {
             case "background":
                 return "background_" + this.identifier;
         }
-         return "";
+        return "";
     }
 
     public boolean isUsable() {

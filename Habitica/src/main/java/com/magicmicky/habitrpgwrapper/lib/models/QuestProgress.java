@@ -15,20 +15,20 @@ import java.util.HashMap;
 public class QuestProgress extends BaseModel {
 
     @Column
+    public double hp, rage;
+    public HashMap<String, Integer> collect;
+    @Column
     @PrimaryKey(autoincrement = true)
     long id;
-
     @Column
     private float down, up;
-
-    @Column
-    public double hp, rage;
-
-    public HashMap<String, Integer> collect;
 
     private QuestProgress(float down, float up) {
         this.down = down;
         this.up = up;
+    }
+
+    public QuestProgress() {
     }
 
     public float getDown() {
@@ -46,6 +46,4 @@ public class QuestProgress extends BaseModel {
     public void setUp(float up) {
         this.up = up;
     }
-
-    public QuestProgress() {}
 }

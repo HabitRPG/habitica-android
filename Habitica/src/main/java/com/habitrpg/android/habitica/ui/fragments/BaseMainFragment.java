@@ -24,10 +24,9 @@ public abstract class BaseMainFragment extends BaseFragment {
     public MainActivity activity;
     public TabLayout tabLayout;
     public FrameLayout floatingMenuWrapper;
-    protected HabitRPGUser user;
     public boolean usesTabLayout;
     public int fragmentSidebarPosition;
-
+    protected HabitRPGUser user;
 
     public void setUser(HabitRPGUser user) {
         this.user = user;

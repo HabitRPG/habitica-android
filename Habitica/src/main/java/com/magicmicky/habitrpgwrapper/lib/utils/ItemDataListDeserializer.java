@@ -24,7 +24,7 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
             List<ItemData> existingItems = new Select().from(ItemData.class).queryList();
 
             for (ItemData item : existingItems) {
-                if(object.has(item.key)) {
+                if (object.has(item.key)) {
                     JsonElement itemObject = object.get(item.key);
 
                     if (itemObject.isJsonObject()) {
@@ -45,7 +45,7 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
                 }
             }
 
-            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 ItemData item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), ItemData.class);

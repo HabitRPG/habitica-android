@@ -16,24 +16,20 @@ import butterknife.ButterKnife;
 
 public class TutorialView extends FrameLayout implements View.OnClickListener {
 
+    public TutorialStep step;
+    public OnTutorialReaction onReaction;
     @BindView(R.id.tutorialTextView)
     TextView tutorialTextView;
-
     @BindView(R.id.background)
     RelativeLayout background;
-
     @BindView(R.id.dismissButton)
     Button dismissButton;
-
     @BindView(R.id.completeButton)
     Button completeButton;
 
-    public TutorialStep step;
-    public OnTutorialReaction onReaction;
-
     public TutorialView(Context context, TutorialStep step, OnTutorialReaction onReaction) {
         super(context);
-        LayoutInflater  mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.overlay_tutorial, this, true);
         ButterKnife.bind(this);
         background.setOnClickListener(this);
@@ -51,7 +47,7 @@ public class TutorialView extends FrameLayout implements View.OnClickListener {
     public void onClick(View v) {
         if (v == background || v == completeButton) {
             this.onReaction.onTutorialCompleted(this.step);
-        } else if (v == dismissButton){
+        } else if (v == dismissButton) {
             this.onReaction.onTutorialDeferred(this.step);
         }
     }

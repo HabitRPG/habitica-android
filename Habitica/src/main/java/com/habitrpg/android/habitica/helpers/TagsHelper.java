@@ -16,10 +16,6 @@ public class TagsHelper {
 
     }
 
-    public void setTags(List<String> tagsId) {
-        this.tagsId = tagsId;
-    }
-
     public void addTags(String tags) {
         this.tagsId.add(tags);
     }
@@ -30,6 +26,10 @@ public class TagsHelper {
 
     public List<String> getTags() {
         return this.tagsId;
+    }
+
+    public void setTags(List<String> tagsId) {
+        this.tagsId = tagsId;
     }
 
     public boolean isTagChecked(String tagID) {

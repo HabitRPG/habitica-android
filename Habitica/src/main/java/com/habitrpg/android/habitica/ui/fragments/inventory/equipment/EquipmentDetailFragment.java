@@ -61,14 +61,14 @@ public class EquipmentDetailFragment extends BaseMainFragment {
     }
 
     private void loadGear() {
-        if(user == null || adapter == null){
+        if (user == null || adapter == null) {
             return;
         }
 
         List<ItemData> gear = new Select()
                 .from(ItemData.class)
                 .where(Condition.CombinedCondition.begin(Condition.column("type").eq(this.type))
-                                .and(Condition.column("owned").eq(true))
+                        .and(Condition.column("owned").eq(true))
                 ).queryList();
 
         adapter.setGearList(gear);

@@ -38,7 +38,7 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
             existingCustomizations = new ArrayList<>();
         }
         for (Customization customization : existingCustomizations) {
-            if(object.has(customization.getType())) {
+            if (object.has(customization.getType())) {
                 JsonObject nestedObject = object.get(customization.getType()).getAsJsonObject();
                 if (customization.getCategory() != null) {
                     if (nestedObject.has(customization.getCategory())) {
@@ -58,7 +58,7 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
             if (!object.has(type)) {
                 continue;
             }
-            for (Map.Entry<String,JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : object.get(type).getAsJsonObject().entrySet()) {
                 customizations.add(this.parseCustomization(null, type, null, entry.getKey(), entry.getValue().getAsBoolean()));
             }
         }

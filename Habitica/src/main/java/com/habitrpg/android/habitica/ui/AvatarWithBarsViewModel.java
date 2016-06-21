@@ -69,6 +69,27 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         gemsText.setOnClickListener(this);
     }
 
+    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
+        Integer maxHP = stats.getMaxHealth();
+        if (maxHP == null || maxHP == 0) {
+            maxHP = 50;
+        }
+
+        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
+    }
+
+    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
+    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
+    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
+        double percent = Math.min(1, value / valueMax);
+
+        valueBar.setWeightToShow((float) percent);
+        valueBar.setText((int) value + "/" + (int) valueMax);
+        valueBar.setDescription(description);
+        valueBar.setBarForegroundColor(color);
+        valueBar.icHeader.setImageResource(icon);
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void updateData(HabitRPGUser user) {
         userObject = user;
@@ -132,16 +153,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         gemsText.setText(String.valueOf(gems.intValue()));
     }
 
-    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
-        Integer maxHP = stats.getMaxHealth();
-        if (maxHP == null || maxHP == 0) {
-            maxHP = 50;
-        }
-
-        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
-    }
-
-    public void setHpBarData(float value, int valueMax){
+    public void setHpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxHealth;
         } else {
@@ -150,7 +162,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), ContextCompat.getColor(context, R.color.hpColor), R.drawable.ic_header_heart);
     }
 
-    public void setXpBarData(float value, int valueMax){
+    public void setXpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxExp;
         } else {
@@ -159,7 +171,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), ContextCompat.getColor(context, R.color.xpColor), R.drawable.ic_header_exp);
     }
 
-    public void setMpBarData(float value, int valueMax){
+    public void setMpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxMana;
         } else {
@@ -168,20 +180,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), ContextCompat.getColor(context, R.color.mpColor), R.drawable.ic_header_magic);
     }
 
-    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
-    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
-        double percent = Math.min(1, value / valueMax);
-
-        valueBar.setWeightToShow((float) percent);
-        valueBar.setText((int) value + "/" + (int) valueMax);
-        valueBar.setDescription(description);
-        valueBar.setBarForegroundColor(color);
-        valueBar.icHeader.setImageResource(icon);
-    }
-
     @Subscribe
-    public void onEvent(BoughtGemsEvent gemsEvent){
+    public void onEvent(BoughtGemsEvent gemsEvent) {
         Double gems = userObject.getBalance() * 4;
         gems += gemsEvent.NewGemsToAdd;
         gemsText.setText(String.valueOf(gems.intValue()));

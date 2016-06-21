@@ -29,19 +29,34 @@ import javax.inject.Inject;
 public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+    @Inject
+    public APIHelper apiHelper;
     private Context context;
     private TimePreference timePreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            PreferencesFragment.this.setUser(habitRPGUser);
+        }
 
-    @Inject
-    public APIHelper apiHelper;
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((HabiticaApplication)getActivity().getApplication()).getComponent().inject(this);
+        ((HabiticaApplication) getActivity().getApplication()).getComponent().inject(this);
         context = getActivity();
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
@@ -73,23 +88,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
     }
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            PreferencesFragment.this.setUser(habitRPGUser);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {

@@ -24,9 +24,8 @@ import butterknife.ButterKnife;
 
 public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder> {
 
-    private List<Skill> skillList;
-
     public Double mana;
+    private List<Skill> skillList;
 
     public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;
@@ -91,7 +90,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
             priceButton.setText(String.format(context.getResources().getString(R.string.mana_price_button), skill.mana));
-            DataBindingUtils.loadImage(skillImageView, "shop_"+skill.key);
+            DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key);
 
             if (skill.mana > mana) {
                 priceButton.setEnabled(false);

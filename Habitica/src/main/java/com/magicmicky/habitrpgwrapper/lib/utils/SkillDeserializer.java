@@ -21,17 +21,17 @@ public class SkillDeserializer
 
     @Override
     public List<Skill> deserialize(JsonElement json, Type type,
-                                             JsonDeserializationContext context) throws JsonParseException {
+                                   JsonDeserializationContext context) throws JsonParseException {
 
         JsonObject object = json.getAsJsonObject();
         List<Skill> skills = new ArrayList<Skill>();
-        for (Map.Entry<String,JsonElement> classEntry : object.entrySet()) {
+        for (Map.Entry<String, JsonElement> classEntry : object.entrySet()) {
             String classname = classEntry.getKey();
             JsonObject classObject = classEntry.getValue().getAsJsonObject();
             if (classname.equals("special")) {
                 continue;
             }
-            for (Map.Entry<String,JsonElement> skillEntry : classObject.entrySet()) {
+            for (Map.Entry<String, JsonElement> skillEntry : classObject.entrySet()) {
                 JsonObject skillObject = skillEntry.getValue().getAsJsonObject();
                 Skill skill = new Skill();
                 skill.key = skillObject.get("key").getAsString();

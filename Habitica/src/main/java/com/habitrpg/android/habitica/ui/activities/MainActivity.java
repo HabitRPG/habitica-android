@@ -142,9 +142,17 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         TaskScoringCallback.OnTaskScored,
         GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
 
-    private static final int MIN_LEVEL_FOR_SKILLS = 11;
     public static final int SELECT_CLASS_RESULT = 11;
-
+    private static final int MIN_LEVEL_FOR_SKILLS = 11;
+    // Checkout needs to be in the Activity..
+    public ActivityCheckout checkout = null;
+    @Inject
+    public APIHelper apiHelper;
+    @Inject
+    public MaintenanceApiService maintenanceService;
+    public HabitRPGUser user;
+    @Inject
+    protected HostConfig hostConfig;
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
@@ -155,20 +163,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
     FrameLayout overlayFrameLayout;
-
-    // Checkout needs to be in the Activity..
-    public ActivityCheckout checkout = null;
     private Drawer drawer;
     private Drawer filterDrawer;
-
-    @Inject
-    protected HostConfig hostConfig;
-    @Inject
-    public APIHelper apiHelper;
-    @Inject
-    public MaintenanceApiService maintenanceService;
-
-    public HabitRPGUser user;
     private AccountHeader accountHeader;
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
@@ -181,6 +177,27 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private TutorialView activeTutorialView;
     private boolean isloadingContent;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            MainActivity.this.user = habitRPGUser;
+            MainActivity.this.setUserData(true);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
+
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -235,7 +252,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if (this.apiHelper != null && this.apiHelper.hasAuthenticationKeys()) {
                 this.apiHelper.retrieveUser(true)
                         .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                        });
                 this.checkMaintenance();
             }
         }
@@ -298,24 +316,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            MainActivity.this.user = habitRPGUser;
-            MainActivity.this.setUserData(true);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
-
     private void setUserData(boolean fromLocalDb) {
         if (user != null) {
             Calendar calendar = new GregorianCalendar();
@@ -325,7 +325,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
                 apiHelper.apiService.updateUser(updateData).compose(apiHelper.configureApiCallObserver())
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                        });
             }
             runOnUiThread(() -> {
                 updateHeader();
@@ -607,6 +608,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         return updates;
     }
+
     private List<ItemData> updateOwnedData(HashMap<String, Boolean> ownedMapping) {
         List<ItemData> updates = new ArrayList<>();
         if (ownedMapping == null) {
@@ -614,7 +616,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         List<ItemData> items = new Select().from(ItemData.class).queryList();
         for (ItemData item : items) {
-            if (ownedMapping.containsKey(item.key) && item.owned != ownedMapping.get(item.key) ) {
+            if (ownedMapping.containsKey(item.key) && item.owned != ownedMapping.get(item.key)) {
                 item.owned = ownedMapping.get(item.key);
                 updates.add(item);
             } else if (!ownedMapping.containsKey(item.key) && item.owned != null) {
@@ -715,7 +717,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -724,10 +725,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
                         .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                        });
             }
         }
     }
+
+    // region Events
 
     @Override
     public void onDestroy() {
@@ -739,8 +743,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         super.onDestroy();
     }
 
-    // region Events
-
     @Subscribe
     public void onEvent(ToggledInnStateEvent evt) {
         avatarInHeader.updateData(user);
@@ -749,14 +751,16 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
         apiHelper.apiService.updateUser(event.updateData).compose(apiHelper.configureApiCallObserver())
-                .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                .subscribe(new MergeUserCallback(this, user), throwable -> {
+                });
     }
 
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiHelper.apiService.equipItem(event.type, event.key)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {});
+                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                });
     }
 
     @Subscribe
@@ -765,7 +769,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.setUserData(false);
         apiHelper.apiService.unlockPath(event.path)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new UnlockCallback(this, this.user), throwable -> {});
+                .subscribe(new UnlockCallback(this, this.user), throwable -> {
+                });
     }
 
     @Subscribe
@@ -832,12 +837,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         MainActivity.this.setUserData(true);
 
                         showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         } else {
             // user created Rewards
             apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskScoringCallback(this, rewardKey), throwable -> {});
+                    .subscribe(new TaskScoringCallback(this, rewardKey), throwable -> {
+                    });
         }
 
         //Update the users gold
@@ -854,7 +861,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         apiHelper.apiService.deleteTask(cmd.TaskIdToDelete).compose(apiHelper.configureApiCallObserver())
                 .subscribe(aVoid -> {
                     EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Subscribe
@@ -881,7 +889,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     user.save();
                     user.setStats(habitRPGUser.getStats());
                     setUserData(false);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Subscribe
@@ -907,7 +916,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                 ShareEvent event1 = new ShareEvent();
                                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet";
-                                Bitmap animalBitmap = ((BitmapDrawable)petImageView.getDrawable()).getBitmap();
+                                Bitmap animalBitmap = ((BitmapDrawable) petImageView.getDrawable()).getBitmap();
                                 Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
                                 Canvas canvas = new Canvas(sharedImage);
                                 canvas.drawColor(getResources().getColor(R.color.brand_300));
@@ -919,7 +928,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             })
                             .create();
                     dialog.show();
-                }, this.user), throwable -> {});
+                }, this.user), throwable -> {
+                });
     }
 
     @Subscribe
@@ -932,7 +942,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(feedResponse -> {
                     MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
-                    MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned()-1);
+                    MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
                     MainActivity.this.setUserData(false);
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
@@ -951,7 +961,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                     ShareEvent event1 = new ShareEvent();
                                     event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
-                                    Bitmap animalBitmap = ((BitmapDrawable)mountImageView.getDrawable()).getBitmap();
+                                    Bitmap animalBitmap = ((BitmapDrawable) mountImageView.getDrawable()).getBitmap();
                                     Bitmap sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888);
                                     Canvas canvas = new Canvas(sharedImage);
                                     canvas.drawColor(getResources().getColor(R.color.brand_300));
@@ -964,8 +974,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 .create();
                         dialog.show();
                     }
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
+
+    // endregion
 
     @Subscribe
     public void reloadContent(ReloadContentEvent event) {
@@ -977,11 +990,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         isloadingContent = false;
                         ContentReloadedEvent event1 = new ContentReloadedEvent();
                         EventBus.getDefault().post(event1);
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         }
     }
-
-    // endregion
 
     @Override
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
@@ -1015,7 +1027,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
             this.apiHelper.retrieveUser(true)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                    });
             user.getStats().setLvl(lvl);
 
             showSnackbar(this, floatingMenuWrapper, message.toString(), SnackbarDisplayType.NORMAL);
@@ -1048,10 +1061,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         setUserData(true);
     }
 
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
-    }
-
     private void displayDeathDialogIfNeeded() {
 
         if (user.getStats().getHp() == null || user.getStats().getHp() > 0) {
@@ -1079,7 +1088,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         faintDialog = null;
                         apiHelper.apiService.revive()
                                 .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {});
+                                .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {
+                                });
                     })
                     .create();
 
@@ -1224,7 +1234,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         updateData.put(path, true);
         apiHelper.apiService.updateUser(updateData)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new MergeUserCallback(this, user), throwable -> {});
+                .subscribe(new MergeUserCallback(this, user), throwable -> {
+                });
         this.overlayFrameLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
@@ -1301,7 +1312,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             }
                         }
                     }
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     private Intent createMaintenanceIntent(MaintenanceResponse maintenanceResponse, Boolean isDeprecationNotice) {

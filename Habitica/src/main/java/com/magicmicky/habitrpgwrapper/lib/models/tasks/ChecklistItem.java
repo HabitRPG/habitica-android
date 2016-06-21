@@ -17,19 +17,6 @@ import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 public class ChecklistItem extends BaseModel {
 
     @Column
-    @PrimaryKey
-    private String id;
-
-    @Column
-    private String text;
-
-    @Column
-    private boolean completed;
-
-    @Column
-    private int position;
-
-    @Column
     @ForeignKey(
             references = {@ForeignKeyReference(columnName = "task_id",
                     columnType = String.class,
@@ -37,46 +24,71 @@ public class ChecklistItem extends BaseModel {
             saveForeignKeyModel = false)
     @ExcludeCheckListItem
     ForeignKeyContainer<Task> task;
+    @Column
+    @PrimaryKey
+    private String id;
+    @Column
+    private String text;
+    @Column
+    private boolean completed;
+    @Column
+    private int position;
 
     public ChecklistItem() {
-        this(null,null);
+        this(null, null);
     }
+
     public ChecklistItem(String id, String text) {
         this(id, text, false);
     }
-    public ChecklistItem(String id,String text, boolean completed) {
+
+    public ChecklistItem(String id, String text, boolean completed) {
         this.setText(text);
         this.setId(id);
         this.setCompleted(completed);
     }
+
     public ChecklistItem(String s) {
-        this(null,s);
+        this(null, s);
     }
+
     public ChecklistItem(ChecklistItem item) {
         this.text = item.getText();
-        this.id= item.getId();
-        this.completed=item.getCompleted();
+        this.id = item.getId();
+        this.completed = item.getCompleted();
     }
+
     public String getText() {
         return text;
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
+
     public boolean getCompleted() {
         return completed;
     }
+
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
-    public int getPosition() { return this.position; }
-    public void setPosition(int position) { this.position = position; }
+
+    public int getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public Task getTask() {
         if (task != null) {

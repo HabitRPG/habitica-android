@@ -83,7 +83,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     }
 
     private void loadCustomizations() {
-        if(user == null || adapter == null){
+        if (user == null || adapter == null) {
             return;
         }
 
@@ -95,10 +95,10 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                         .or(Condition.column("price").isNull())
                         .or(Condition.CombinedCondition.begin(
                                 Condition.CombinedCondition.begin(Condition.column("availableUntil").isNull())
-                                .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))
-                            .and(Condition.CombinedCondition.begin(Condition.column("availableFrom").isNull())
-                                .or(Condition.column("availableFrom").lessThanOrEq(new Date().getTime()))
-                            )
+                                        .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))
+                                .and(Condition.CombinedCondition.begin(Condition.column("availableFrom").isNull())
+                                        .or(Condition.column("availableFrom").lessThanOrEq(new Date().getTime()))
+                                )
                         )
                 );
         if (this.category != null) {

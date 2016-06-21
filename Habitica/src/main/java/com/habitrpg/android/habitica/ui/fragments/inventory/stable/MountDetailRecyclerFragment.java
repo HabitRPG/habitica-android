@@ -20,12 +20,12 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class MountDetailRecyclerFragment extends BaseMainFragment {
+    private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     public RecyclerView recyclerView;
     public MountDetailRecyclerAdapter adapter;
     public String animalType;
     public String animalGroup;
     public List<Mount> animals;
-    private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
     GridLayoutManager layoutManager = null;
 
     private View view;
@@ -45,7 +45,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
-            adapter = (MountDetailRecyclerAdapter)recyclerView.getAdapter();
+            adapter = (MountDetailRecyclerAdapter) recyclerView.getAdapter();
             if (adapter == null) {
                 adapter = new MountDetailRecyclerAdapter();
                 adapter.context = this.getActivity();
@@ -56,7 +56,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
             }
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.animalType = savedInstanceState.getString(ANIMAL_TYPE_KEY, "");
         }
 
@@ -80,7 +80,6 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         super.onSaveInstanceState(outState);
         outState.putString(ANIMAL_TYPE_KEY, this.animalType);
     }
-
 
 
     private void setGridSpanCount(int width) {

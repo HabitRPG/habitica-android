@@ -13,14 +13,11 @@ public class QuestCollect extends BaseModel {
 
     @Column
     public String quest_key;
-
+    @Column
+    public String text;
+    @Column
+    public int count;
     @Column
     @PrimaryKey(autoincrement = true)
     long id;
-
-    @Column
-    public String text;
-
-    @Column
-    public int count;
 }

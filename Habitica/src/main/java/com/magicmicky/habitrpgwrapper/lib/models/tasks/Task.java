@@ -39,77 +39,55 @@ public class Task extends BaseModel {
     public static final String ATTRIBUTE_CONSTITUTION = "con";
     public static final String ATTRIBUTE_INTELLIGENCE = "int";
     public static final String ATTRIBUTE_PERCEPTION = "per";
-
-    @Column
-    @PrimaryKey
-    @NotNull
-    @SerializedName("_id")
-    String id;
-
     @Column
     @SerializedName("userId")
     public String user_id;
-
     @Column
     public Float priority;
-
     @Column
     public String text, notes, attribute, type;
-
     @Column
     public double value;
-
-
     public List<TaskTag> tags;
-
     @Column
     public Date dateCreated;
-
     @Column
     public int position;
-
     //Habits
     @Column
     public Boolean up, down;
-
-
     //todos/dailies
     @Column
     public boolean completed;
-
     public List<ChecklistItem> checklist;
     public List<RemindersItem> reminders;
-
-
     //dailies
     @Column
     public String frequency;
-
     @Column
     public Integer everyX, streak;
-
     @Column
     public
     Date startDate;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
             columnType = String.class,
             foreignColumnName = "task_id")})
     public Days repeat;
-    //TODO: private String lastCompleted;
-
-
     //todos
     @Column
     @SerializedName("date")
     public Date duedate;
-
+    //TODO: private String lastCompleted;
     // used for buyable items
     public String specialTag;
-
     public CharSequence parsedText;
     public CharSequence parsedNotes;
+    @Column
+    @PrimaryKey
+    @NotNull
+    @SerializedName("_id")
+    String id;
 
     /**
      * @return the id
@@ -117,54 +95,72 @@ public class Task extends BaseModel {
     public String getId() {
         return id;
     }
+
     /**
      * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * @return the notes
      */
     public String getNotes() {
         return notes;
     }
+
     /**
      * @param notes the notes to set
      */
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
     /**
      * @return the priority
      */
     public Float getPriority() {
         return priority;
     }
+
     /**
      * @param i the priority to set
      */
     public void setPriority(Float i) {
         this.priority = i;
     }
+
     /**
      * @return the text
      */
     public String getText() {
         return text;
     }
+
     /**
      * @param text the text to set
      */
     public void setText(String text) {
         this.text = text;
     }
+
     /**
      * @return the value
      */
     public double getValue() {
         return value;
     }
+
+    /**
+     * To be allowed to set int value without problems
+     *
+     * @param value the value to set
+     */
+    public void setValue(double value) {
+        this.setValue(Double.valueOf(value));
+    }
+
     /**
      * @param value the value to set
      */
@@ -173,25 +169,21 @@ public class Task extends BaseModel {
     }
 
     /**
-     * To be allowed to set int value without problems
-     * @param value the value to set
-     */
-    public void setValue(double value) {
-        this.setValue(Double.valueOf(value));
-    }
-
-
-    /**
      * Returns a string of the type of the Task
+     *
      * @return the string of the Item type
      */
-    public String getType() {return this.type;}
+    public String getType() {
+        return this.type;
+    }
 
-    public void setType(String type) {this.type = type;}
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<TaskTag> getTags() {
-        if(tags == null) {
+        if (tags == null) {
             tags = new Select()
                     .from(TaskTag.class)
                     .where(Condition.column("task_id").eq(this.id))
@@ -207,11 +199,11 @@ public class Task extends BaseModel {
         this.tags = tags;
     }
 
-    public boolean containsAnyTagId(ArrayList<String> tagIdList){
+    public boolean containsAnyTagId(ArrayList<String> tagIdList) {
         getTags();
 
-        for (TaskTag t : tags){
-            if(tagIdList.contains(t.getTag().getId())) {
+        for (TaskTag t : tags) {
+            if (tagIdList.contains(t.getTag().getId())) {
                 return true;
             }
         }
@@ -219,12 +211,12 @@ public class Task extends BaseModel {
         return false;
     }
 
-    public boolean containsAllTagIds(List<String> tagIdList){
+    public boolean containsAllTagIds(List<String> tagIdList) {
         getTags();
 
         ArrayList<String> allTagIds = new ArrayList<String>();
 
-        for (TaskTag t : tags){
+        for (TaskTag t : tags) {
             allTagIds.add(t.getTag().getId());
         }
 
@@ -235,26 +227,31 @@ public class Task extends BaseModel {
      * @return whether or not the habit can be "upped"
      */
     public boolean getUp() {
-        if (up == null) { return false; }
+        if (up == null) {
+            return false;
+        }
         return up;
     }
+
     /**
      * Set the Up value
-     * @param up
      */
     public void setUp(Boolean up) {
         this.up = up;
     }
+
     /**
      * @return whether or not the habit can be "down"
      */
     public boolean getDown() {
-        if (down == null) { return false; }
+        if (down == null) {
+            return false;
+        }
         return down;
     }
+
     /**
      * Set the Down value
-     * @param down
      */
     public void setDown(Boolean down) {
         this.down = down;
@@ -264,9 +261,9 @@ public class Task extends BaseModel {
     public boolean getCompleted() {
         return completed;
     }
+
     /**
-     *  Set whether or not the daily is completed
-     * @param completed
+     * Set whether or not the daily is completed
      */
     public void setCompleted(Boolean completed) {
         this.completed = completed;
@@ -275,7 +272,7 @@ public class Task extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "checklist")
     public List<ChecklistItem> getChecklist() {
-        if(this.checklist == null) {
+        if (this.checklist == null) {
             this.checklist = new Select()
                     .from(ChecklistItem.class)
                     .where(Condition.column("task_id").eq(this.id))
@@ -294,7 +291,7 @@ public class Task extends BaseModel {
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "reminders")
     public List<RemindersItem> getReminders() {
-        if(this.reminders == null) {
+        if (this.reminders == null) {
             this.reminders = new Select()
                     .from(RemindersItem.class)
                     .where(Condition.column("task_id").eq(this.id))
@@ -322,20 +319,37 @@ public class Task extends BaseModel {
     }
 
     public String getFrequency() {
-        if (frequency == null) { return FREQUENCY_WEEKLY; }
-        return frequency; }
-    public void setFrequency(String frequency) { this.frequency = frequency; }
+        if (frequency == null) {
+            return FREQUENCY_WEEKLY;
+        }
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
 
     public Integer getEveryX() {
-        if (everyX == null) { return 1; }
-        return everyX; }
-    public void setEveryX(Integer everyX) { this.everyX = everyX; }
+        if (everyX == null) {
+            return 1;
+        }
+        return everyX;
+    }
+
+    public void setEveryX(Integer everyX) {
+        this.everyX = everyX;
+    }
 
     public Date getStartDate() {
-        if (startDate == null) { return new Date(); }
+        if (startDate == null) {
+            return new Date();
+        }
         return startDate;
     }
-    public void setStartDate(Date startDate) {this.startDate = startDate; }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
     /**
      * @return the repeat array.<br/>
@@ -347,6 +361,7 @@ public class Task extends BaseModel {
         }
         return repeat;
     }
+
     /**
      * @param repeat the repeat array to set
      */
@@ -354,15 +369,16 @@ public class Task extends BaseModel {
         this.repeat = repeat;
     }
 
-	/**
-	 * @return the streak
-	 */
+    /**
+     * @return the streak
+     */
     public int getStreak() {
         if (streak == null) {
             return 0;
         }
         return streak;
     }
+
     /**
      * @param streak the streak to set
      */
@@ -380,6 +396,7 @@ public class Task extends BaseModel {
 
     /**
      * Set the due date
+     *
      * @param duedate the date to set
      */
     public void setDueDate(Date duedate) {
@@ -392,6 +409,7 @@ public class Task extends BaseModel {
     public String getAttribute() {
         return attribute;
     }
+
     /**
      * @param attribute the attribute to set
      */
@@ -415,7 +433,7 @@ public class Task extends BaseModel {
         checklist = null;
         reminders = null;
 
-        if(repeat != null)
+        if (repeat != null)
             repeat.task_id = this.id;
 
         super.save();
@@ -434,7 +452,7 @@ public class Task extends BaseModel {
         int position = 0;
         if (this.checklist != null) {
             for (ChecklistItem item : this.checklist) {
-                if(item.getTask() == null){
+                if (item.getTask() == null) {
                     item.setTask(this);
                 }
                 item.setPosition(position);
@@ -446,10 +464,10 @@ public class Task extends BaseModel {
         int index = 0;
         if (this.reminders != null) {
             for (RemindersItem item : this.reminders) {
-                if(item.getTask() == null) {
+                if (item.getTask() == null) {
                     item.setTask(this);
                 }
-                if(item.getId() == null) {
+                if (item.getId() == null) {
                     item.setId(this.id + "task-reminder" + index);
                 }
                 item.async().save();
@@ -466,8 +484,7 @@ public class Task extends BaseModel {
         super.update();
     }
 
-    public int getLightTaskColor()
-    {
+    public int getLightTaskColor() {
         if (this.value < -20)
             return R.color.worst_100;
         if (this.value < -10)
@@ -488,8 +505,7 @@ public class Task extends BaseModel {
      *
      * @return the color resource id
      */
-    public int getMediumTaskColor()
-    {
+    public int getMediumTaskColor() {
         if (this.value < -20)
             return R.color.worst_50;
         if (this.value < -10)
@@ -511,8 +527,7 @@ public class Task extends BaseModel {
      *
      * @return the color resource id
      */
-    public int getDarkTaskColor()
-    {
+    public int getDarkTaskColor() {
         if (this.value < -20)
             return R.color.worst_10;
         if (this.value < -10)
@@ -545,7 +560,7 @@ public class Task extends BaseModel {
                     startDate.get(Calendar.MONTH),
                     startDate.get(Calendar.DAY_OF_MONTH));
 
-            if ( startDateAtMidnight.after(today) ) {
+            if (startDateAtMidnight.after(today)) {
                 return false;
             }
         } else {
@@ -555,7 +570,7 @@ public class Task extends BaseModel {
         }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {
-            if(getEveryX() == 0){
+            if (getEveryX() == 0) {
                 return false;
             }
 

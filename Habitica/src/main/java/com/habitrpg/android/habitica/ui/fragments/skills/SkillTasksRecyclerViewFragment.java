@@ -17,65 +17,63 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class SkillTasksRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
-        public RecyclerView mRecyclerView;
-        public RecyclerView.Adapter mAdapter;
-        private String classType;
+    public RecyclerView mRecyclerView;
+    public RecyclerView.Adapter mAdapter;
+    LinearLayoutManager layoutManager = null;
+    private String classType;
+    private View view;
 
-        public void SetInnerAdapter(SkillTasksRecyclerViewAdapter adapter, String classType) {
-            this.classType = classType;
-            mAdapter = adapter;
-        }
+    public static SkillTasksRecyclerViewFragment newInstance(SkillTasksRecyclerViewAdapter adapter, String classType) {
+        SkillTasksRecyclerViewFragment fragment = new SkillTasksRecyclerViewFragment();
+        fragment.setRetainInstance(true);
 
-        private View view;
+        fragment.SetInnerAdapter(adapter, classType);
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            if (view == null)
-                view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        return fragment;
+    }
 
-            return view;
-        }
+    public void SetInnerAdapter(SkillTasksRecyclerViewAdapter adapter, String classType) {
+        this.classType = classType;
+        mAdapter = adapter;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (view == null)
+            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+
+        return view;
+    }
 
     @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
 
-    LinearLayoutManager layoutManager = null;
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-        @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        android.support.v4.app.FragmentActivity context = getActivity();
 
-            android.support.v4.app.FragmentActivity context = getActivity();
+        layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
 
-            layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        if (layoutManager == null) {
+            layoutManager = new LinearLayoutManager(context);
 
-            if (layoutManager == null) {
-                layoutManager = new LinearLayoutManager(context);
-
-                mRecyclerView.setLayoutManager(layoutManager);
-            }
-
-            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        public static SkillTasksRecyclerViewFragment newInstance(SkillTasksRecyclerViewAdapter adapter, String classType) {
-            SkillTasksRecyclerViewFragment fragment = new SkillTasksRecyclerViewFragment();
-            fragment.setRetainInstance(true);
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
-            fragment.SetInnerAdapter(adapter, classType);
+    @Override
+    public void onClick(View v) {
+        AddNewTaskCommand event = new AddNewTaskCommand();
+        event.ClassType = this.classType;
 
-            return fragment;
-        }
-
-        @Override
-        public void onClick(View v) {
-            AddNewTaskCommand event = new AddNewTaskCommand();
-            event.ClassType = this.classType;
-
-            EventBus.getDefault().post(event);
-        }
+        EventBus.getDefault().post(event);
+    }
 
 }

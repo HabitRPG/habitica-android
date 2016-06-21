@@ -29,17 +29,20 @@ public class AppModule {
         return application;
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public SharedPreferences provideSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    @Provides @Named("UserID")
+    @Provides
+    @Named("UserID")
     public String providesUserID(SharedPreferences sharedPreferences) {
         return sharedPreferences.getString(application.getString(R.string.SP_userID), null);
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public TagsHelper providesTagsHelper() {
         return new TagsHelper();
     }

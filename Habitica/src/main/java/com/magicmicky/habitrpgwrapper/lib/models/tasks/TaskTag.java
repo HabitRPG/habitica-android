@@ -19,22 +19,22 @@ import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 public class TaskTag extends BaseModel {
 
     @Column
-    @PrimaryKey
-    String id;
-
-    @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "tag_id",
             columnType = String.class,
             foreignColumnName = "id")},
             saveForeignKeyModel = false)
     public ForeignKeyContainer<Tag> tag;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "task_id",
             columnType = String.class,
             foreignColumnName = "id")},
             saveForeignKeyModel = false)
     public ForeignKeyContainer<Task> task;
+    @Column
+    @PrimaryKey
+    String id;
+    private String tagId = "";
+    private String taskId = "";
 
     public String getId() {
         return id;
@@ -70,10 +70,7 @@ public class TaskTag extends BaseModel {
         updatePrimaryKey();
     }
 
-    private String tagId = "";
-    private String taskId = "";
-
-    private void updatePrimaryKey(){
-        this.id = taskId+"_"+tagId;
+    private void updatePrimaryKey() {
+        this.id = taskId + "_" + tagId;
     }
 }

@@ -5,7 +5,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
  */
 public class DefaultResponse {
     private boolean result;
- //   private HabitRPGData habitRPGData;
+    //   private HabitRPGData habitRPGData;
 
     public boolean isResult() {
         return result;

@@ -21,27 +21,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQOverviewFragment extends BaseMainFragment {
-        @BindView(R.id.recyclerView)
-        RecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-        FAQOverviewRecyclerAdapter adapter;
+    FAQOverviewRecyclerAdapter adapter;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            super.onCreateView(inflater, container, savedInstanceState);
-            View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-            unbinder = ButterKnife.bind(this, view);
-            adapter = new FAQOverviewRecyclerAdapter();
-            adapter.activity = activity;
-            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(adapter);
-            this.loadArticles();
+        unbinder = ButterKnife.bind(this, view);
+        adapter = new FAQOverviewRecyclerAdapter();
+        adapter.activity = activity;
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.setAdapter(adapter);
+        this.loadArticles();
 
-            return view;
-        }
+        return view;
+    }
 
     @Override
     public void injectFragment(AppComponent component) {
@@ -49,13 +49,13 @@ public class FAQOverviewFragment extends BaseMainFragment {
     }
 
     private void loadArticles() {
-            if(user == null || adapter == null){
-                return;
-            }
-
-            List<FAQArticle> articles = new Select()
-                    .from(FAQArticle.class).queryList();
-
-            adapter.setArticles(articles);
+        if (user == null || adapter == null) {
+            return;
         }
+
+        List<FAQArticle> articles = new Select()
+                .from(FAQArticle.class).queryList();
+
+        adapter.setArticles(articles);
+    }
 }

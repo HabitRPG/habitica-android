@@ -170,40 +170,6 @@ public class GroupFormActivity extends BaseActivity {
         }
     }
 
-    private class emojiClickListener implements View.OnClickListener {
-
-        EmojiEditText view;
-
-        public emojiClickListener(EmojiEditText view) {
-            this.view = view;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if(!popup.isShowing()){
-
-                if(popup.isKeyBoardOpen()){
-                    popup.showAtBottom();
-                    changeEmojiKeyboardIcon(true);
-                }
-
-                else{
-                    view.setFocusableInTouchMode(true);
-                    view.requestFocus();
-                    popup.showAtBottomPending();
-                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-                    changeEmojiKeyboardIcon(true);
-                }
-            }
-
-            else{
-                popup.dismiss();
-                changeEmojiKeyboardIcon(false);
-            }
-        }
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -220,12 +186,42 @@ public class GroupFormActivity extends BaseActivity {
     private void finishActivitySuccessfuly() {
         Intent resultIntent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putString("name",this.groupNameEditText.getText().toString());
+        bundle.putString("name", this.groupNameEditText.getText().toString());
         bundle.putString("description", MarkdownParser.parseCompiled(this.groupDescriptionEditText.getText()));
         bundle.putString("leader", this.groupLeader);
         resultIntent.putExtras(bundle);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
         UiUtils.dismissKeyboard(this);
+    }
+
+    private class emojiClickListener implements View.OnClickListener {
+
+        EmojiEditText view;
+
+        public emojiClickListener(EmojiEditText view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (!popup.isShowing()) {
+
+                if (popup.isKeyBoardOpen()) {
+                    popup.showAtBottom();
+                    changeEmojiKeyboardIcon(true);
+                } else {
+                    view.setFocusableInTouchMode(true);
+                    view.requestFocus();
+                    popup.showAtBottomPending();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                    changeEmojiKeyboardIcon(true);
+                }
+            } else {
+                popup.dismiss();
+                changeEmojiKeyboardIcon(false);
+            }
+        }
     }
 }

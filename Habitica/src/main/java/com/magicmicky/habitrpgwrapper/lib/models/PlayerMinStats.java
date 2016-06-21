@@ -35,7 +35,6 @@ public abstract class PlayerMinStats extends BasicStats {
     public Double gp, exp, mp, hp;
 
 
-
     public BasicStats getTraining() {
         return training;
     }
@@ -72,15 +71,15 @@ public abstract class PlayerMinStats extends BasicStats {
         return _class;
     }
 
+    public void set_class(HabitRpgClass _class) {
+        this._class = _class;
+    }
+
     public String getCleanedClassName() {
         if (_class.toString().equals("wizard")) {
             return "mage";
         }
         return _class.toString();
-    }
-
-    public void set_class(HabitRpgClass _class) {
-        this._class = _class;
     }
 
     public Double getGp() {
@@ -117,7 +116,7 @@ public abstract class PlayerMinStats extends BasicStats {
 
     @Override
     public void save() {
-        training.id = id+"_training";
+        training.id = id + "_training";
         buffs.id = id;
 
         super.save();

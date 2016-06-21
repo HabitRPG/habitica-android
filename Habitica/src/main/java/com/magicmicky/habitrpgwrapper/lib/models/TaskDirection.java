@@ -7,9 +7,11 @@ public enum TaskDirection {
     up("up"),
     down("down");
     private final String dir;
+
     TaskDirection(String dir) {
-        this.dir=dir;
+        this.dir = dir;
     }
+
     public String toString() {
         return this.dir;
     }

@@ -37,17 +37,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class StableRecyclerFragment extends BaseFragment {
+    private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
-
     @BindView(R.id.empty_view)
     public TextView emptyView;
-
     public StableRecyclerAdapter adapter;
     public String itemType;
     public String itemTypeText;
     public HabitRPGUser user;
-    private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     GridLayoutManager layoutManager = null;
 
     private View view;
@@ -83,15 +81,15 @@ public class StableRecyclerFragment extends BaseFragment {
         }
 
 
-        adapter = (StableRecyclerAdapter)recyclerView.getAdapter();
+        adapter = (StableRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
             adapter = new StableRecyclerAdapter();
-            adapter.activity = (MainActivity)this.getActivity();
+            adapter.activity = (MainActivity) this.getActivity();
             adapter.itemType = this.itemType;
             recyclerView.setAdapter(adapter);
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "");
         }
 
@@ -116,7 +114,6 @@ public class StableRecyclerFragment extends BaseFragment {
         super.onSaveInstanceState(outState);
         outState.putString(ITEM_TYPE_KEY, this.itemType);
     }
-
 
 
     private void setGridSpanCount(int width) {
@@ -168,8 +165,8 @@ public class StableRecyclerFragment extends BaseFragment {
                     lastAnimal = animal;
                 }
                 if (!animal.getAnimalGroup().equals(lastSectionTitle)) {
-                    if (items.size() > 0 && items.get(items.size()-1).getClass().equals(String.class)) {
-                        items.remove(items.size()-1);
+                    if (items.size() > 0 && items.get(items.size() - 1).getClass().equals(String.class)) {
+                        items.remove(items.size() - 1);
                     }
                     items.add(animal.getAnimalGroup());
                     lastSectionTitle = animal.getAnimalGroup();
@@ -207,7 +204,8 @@ public class StableRecyclerFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(items -> {
                     adapter.setItemList(items);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Subscribe

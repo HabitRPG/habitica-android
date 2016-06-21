@@ -34,7 +34,6 @@ import butterknife.OnClick;
 public class GroupInformationFragment extends BaseFragment {
 
 
-    private View view;
     FragmentGroupInfoBinding viewBinding;
     @Inject
     APIHelper apiHelper;
@@ -42,6 +41,7 @@ public class GroupInformationFragment extends BaseFragment {
     LinearLayout questMemberView;
     @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
+    private View view;
     private Group group;
     private HabitRPGUser user;
     private QuestContent quest;
@@ -49,6 +49,10 @@ public class GroupInformationFragment extends BaseFragment {
     private ValueBarBinding bossRageBar;
 
     private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
+
+    public GroupInformationFragment() {
+
+    }
 
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
 
@@ -59,10 +63,6 @@ public class GroupInformationFragment extends BaseFragment {
         fragment.group = group;
         fragment.user = user;
         return fragment;
-    }
-
-    public GroupInformationFragment(){
-
     }
 
     @Nullable
@@ -195,11 +195,12 @@ public class GroupInformationFragment extends BaseFragment {
         apiHelper.apiService.acceptQuest(group.id)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(aVoid -> {
-            user.getParty().getQuest().RSVPNeeded = false;
-            group.quest.members.put(user.getId(), true);
-            setGroup(group);
-            viewBinding.setUser(user);
-        }, throwable -> {});
+                    user.getParty().getQuest().RSVPNeeded = false;
+                    group.quest.members.put(user.getId(), true);
+                    setGroup(group);
+                    viewBinding.setUser(user);
+                }, throwable -> {
+                });
     }
 
 
@@ -208,11 +209,12 @@ public class GroupInformationFragment extends BaseFragment {
         apiHelper.apiService.rejectQuest(group.id)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(aVoid -> {
-            user.getParty().getQuest().RSVPNeeded = false;
-                group.quest.members.put(user.getId(), false);
-                setGroup(group);
-                viewBinding.setUser(user);
-            }, throwable -> {});
+                    user.getParty().getQuest().RSVPNeeded = false;
+                    group.quest.members.put(user.getId(), false);
+                    setGroup(group);
+                    viewBinding.setUser(user);
+                }, throwable -> {
+                });
     }
 
 
@@ -224,9 +226,10 @@ public class GroupInformationFragment extends BaseFragment {
                     apiHelper.apiService.leaveQuest(group.id)
                             .compose(apiHelper.configureApiCallObserver())
                             .subscribe(aVoid -> {
-                        group.quest.members.remove(user.getId());
-                        setGroup(group);
-                    }, throwable -> {});
+                                group.quest.members.remove(user.getId());
+                                setGroup(group);
+                            }, throwable -> {
+                            });
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });
@@ -244,7 +247,8 @@ public class GroupInformationFragment extends BaseFragment {
                             .subscribe(quest -> {
                                 group.quest = quest;
                                 setGroup(group);
-                            }, throwable -> {});
+                            }, throwable -> {
+                            });
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -259,9 +263,10 @@ public class GroupInformationFragment extends BaseFragment {
                     apiHelper.apiService.cancelQuest(group.id)
                             .compose(apiHelper.configureApiCallObserver())
                             .subscribe(aVoid -> {
-                        setGroup(group);
-                        setQuestContent(null);
-                    }, throwable -> {});
+                                setGroup(group);
+                                setQuestContent(null);
+                            }, throwable -> {
+                            });
                 }).setNegativeButton(R.string.no, (dialog, which) -> {
 
                 });
@@ -279,7 +284,8 @@ public class GroupInformationFragment extends BaseFragment {
                                 group.quest = quest;
                                 setGroup(group);
                                 setQuestContent(null);
-                    }, throwable -> {});
+                            }, throwable -> {
+                            });
                 }).setNegativeButton("No", (dialog, which) -> {
 
                 });

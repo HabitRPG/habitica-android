@@ -23,11 +23,9 @@ import rx.functions.Action1;
 
 public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
-    private Group guild;
     public boolean isMember;
-
     public ViewPager viewPager;
-
+    private Group guild;
     private GroupInformationFragment guildInformationFragment;
     private ChatListFragment chatListFragment;
 
@@ -39,7 +37,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         if (this.guild.chat == null) {
             if (this.apiHelper != null) {
                 apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
-                        .subscribe(this, throwable -> {});
+                        .subscribe(this, throwable -> {
+                        });
             }
         }
     }
@@ -70,7 +69,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         super.onViewCreated(view, savedInstanceState);
         if (this.apiHelper != null && this.guild != null) {
             apiHelper.apiService.getGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
-                    .subscribe(this, throwable -> {});
+                    .subscribe(this, throwable -> {
+                    });
         }
     }
 
@@ -95,14 +95,16 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         switch (id) {
             case R.id.menu_guild_join:
                 this.apiHelper.apiService.joinGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
-                        .subscribe(this, throwable -> {});
+                        .subscribe(this, throwable -> {
+                        });
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
                 this.apiHelper.apiService.leaveGroup(this.guild.id).compose(apiHelper.configureApiCallObserver())
                         .subscribe(aVoid -> {
                             this.activity.supportInvalidateOptionsMenu();
-                        }, throwable -> {});
+                        }, throwable -> {
+                        });
                 this.isMember = false;
                 return true;
             case R.id.menu_guild_edit:
@@ -185,11 +187,11 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     private void displayEditForm() {
         Bundle bundle = new Bundle();
-        bundle.putString("groupID",this.guild.id);
-        bundle.putString("name",this.guild.name);
-        bundle.putString("description",this.guild.description);
-        bundle.putString("privacy",this.guild.privacy);
-        bundle.putString("leader",this.guild.leaderID);
+        bundle.putString("groupID", this.guild.id);
+        bundle.putString("name", this.guild.name);
+        bundle.putString("description", this.guild.description);
+        bundle.putString("privacy", this.guild.privacy);
+        bundle.putString("leader", this.guild.leaderID);
 
         Intent intent = new Intent(activity, GroupFormActivity.class);
         intent.putExtras(bundle);
@@ -200,8 +202,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (GroupFormActivity.GROUP_FORM_ACTIVITY) : {
+        switch (requestCode) {
+            case (GroupFormActivity.GROUP_FORM_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     boolean needsSaving = false;
                     Bundle bundle = data.getExtras();
@@ -224,7 +226,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                     if (needsSaving) {
                         this.apiHelper.apiService.updateGroup(this.guild.id, this.guild)
                                 .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(aVoid -> {}, throwable -> {});
+                                .subscribe(aVoid -> {
+                                }, throwable -> {
+                                });
                         this.guildInformationFragment.setGroup(guild);
                     }
                 }

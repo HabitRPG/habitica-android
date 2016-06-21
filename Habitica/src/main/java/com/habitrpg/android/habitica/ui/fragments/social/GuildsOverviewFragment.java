@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class GuildsOverviewFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.my_guilds_listview)
-    LinearLayout  guildsListView;
+    LinearLayout guildsListView;
 
     @BindView(R.id.publicGuildsButton)
     Button publicGuildsButton;
@@ -72,12 +72,13 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
             this.apiHelper.apiService.listGroups("guilds")
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(groups -> {
-                GuildsOverviewFragment.this.guilds = groups;
-                GuildsOverviewFragment.this.setGuildsOnListView();
-                if (swipeRefreshLayout != null) {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, throwable -> {});
+                        GuildsOverviewFragment.this.guilds = groups;
+                        GuildsOverviewFragment.this.setGuildsOnListView();
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }, throwable -> {
+                    });
         }
     }
 
@@ -87,7 +88,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
         }
         this.guildIDs = new ArrayList<>();
         this.guildsListView.removeAllViewsInLayout();
-        LayoutInflater inflater = (LayoutInflater)   getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (Group guild : this.guilds) {
             TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.guildsListView, false);
             entry.setText(guild.name);
@@ -104,7 +105,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
             publicGuildsFragment.memberGuildIDs = this.guildIDs;
             this.activity.displayFragment(publicGuildsFragment);
         } else {
-            Integer guildIndex = ((ViewGroup)v.getParent()).indexOfChild(v);
+            Integer guildIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             GuildFragment guildFragment = new GuildFragment();
             guildFragment.setGuild(this.guilds.get(guildIndex));
             guildFragment.isMember = true;

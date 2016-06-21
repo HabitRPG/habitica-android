@@ -29,7 +29,8 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
             message.timestamp = obj.get("timestamp").getAsLong();
         }
         if (obj.has("likes")) {
-            message.likes = context.deserialize(obj.get("likes"), new TypeToken<HashMap<String, Boolean>>() {}.getType());
+            message.likes = context.deserialize(obj.get("likes"), new TypeToken<HashMap<String, Boolean>>() {
+            }.getType());
         }
         if (obj.has("flagCount")) {
             message.flagCount = obj.get("flagCount").getAsInt();

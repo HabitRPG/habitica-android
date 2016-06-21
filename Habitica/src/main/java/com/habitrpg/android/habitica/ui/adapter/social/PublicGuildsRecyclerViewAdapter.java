@@ -59,7 +59,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
                             memberGuildIDs.remove(guild.id);
                             int indexOfGroup = publicGuildList.indexOf(guild);
                             notifyItemChanged(indexOfGroup);
-                        }, throwable -> {});
+                        }, throwable -> {
+                        });
             } else {
                 PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.joinGroup(guild.id)
                         .compose(apiHelper.configureApiCallObserver())
@@ -67,7 +68,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
                             memberGuildIDs.add(group.id);
                             int indexOfGroup = publicGuildList.indexOf(group);
                             notifyItemChanged(indexOfGroup);
-                        }, throwable -> {});
+                        }, throwable -> {
+                        });
             }
 
         });

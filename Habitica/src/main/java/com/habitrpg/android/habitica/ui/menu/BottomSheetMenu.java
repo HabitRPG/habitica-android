@@ -19,7 +19,7 @@ public class BottomSheetMenu extends BottomSheetDialog implements View.OnClickLi
         super(context);
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.contentView = (LinearLayout)inflater.inflate(R.layout.menu_bottom_sheet, null);
+        this.contentView = (LinearLayout) inflater.inflate(R.layout.menu_bottom_sheet, null);
         this.setContentView(this.contentView);
     }
 

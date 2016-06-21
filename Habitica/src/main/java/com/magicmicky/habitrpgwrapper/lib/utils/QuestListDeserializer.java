@@ -27,7 +27,7 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
             List<QuestContent> existingItems = new Select().from(QuestContent.class).queryList();
 
             for (QuestContent item : existingItems) {
-                if(object.has(item.getKey())) {
+                if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
 
                     if (itemObject.isJsonObject()) {
@@ -49,7 +49,7 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                 }
             }
 
-            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 QuestContent item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), QuestContent.class);

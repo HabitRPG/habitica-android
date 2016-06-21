@@ -70,7 +70,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
     @Override
     public void onClick(View v) {
-        if(task.specialTag != null && task.specialTag.equals("item")) {
+        if (task.specialTag != null && task.specialTag.equals("item")) {
             LinearLayout contentViewForDialog = createContentViewForGearDialog();
             AlertDialog dialog = createGearDialog(contentViewForDialog);
             dialog.show();
@@ -85,7 +85,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
     private AlertDialog createGearDialog(LinearLayout contentViewForDialog) {
         return new AlertDialog.Builder(context)
                 .setPositiveButton(R.string.reward_dialog_buy, (dialog, which) -> {
-                   this.buyReward();
+                    this.buyReward();
                 })
                 .setTitle(this.task.getText())
                 .setView(contentViewForDialog)
@@ -109,7 +109,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         gearImageLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-        gearImageLayoutParams.setMargins(0,0,0,20);
+        gearImageLayoutParams.setMargins(0, 0, 0, 20);
         gearImageView.setMinimumWidth(200);
         gearImageView.setMinimumHeight(200);
         gearImageView.setLayoutParams(gearImageLayoutParams);
@@ -117,7 +117,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
         // Gear Description
         TextView contentTextView = new TextView(context, null);
-        if(!content.isEmpty()){
+        if (!content.isEmpty()) {
             contentTextView.setText(content);
         }
 
@@ -147,14 +147,14 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         goldPriceLayout.addView(gold);
         goldPriceLayout.addView(priceTextView);
 
-        if(gearImageView.getDrawable()!= null){
+        if (gearImageView.getDrawable() != null) {
             contentViewLayout.addView(gearImageView);
         }
         contentViewLayout.setGravity(Gravity.CENTER_VERTICAL);
 
         contentViewLayout.addView(goldPriceLayout);
 
-        if(!content.isEmpty()){
+        if (!content.isEmpty()) {
             contentViewLayout.addView(contentTextView);
         }
 

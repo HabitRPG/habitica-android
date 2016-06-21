@@ -46,7 +46,6 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_ABOUT = 14;
 
 
-
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         return new AccountHeaderBuilder()
                 .withActivity(activity)
@@ -140,7 +139,7 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_NEWS: {
-                            fragment= new NewsFragment();
+                            fragment = new NewsFragment();
                             break;
                         }
                         case SIDEBAR_SETTINGS: {

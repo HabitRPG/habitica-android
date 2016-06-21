@@ -21,15 +21,16 @@ public class Days extends BaseModel {
     String task_id;
 
     @Column
-    private boolean m, t,w, th,f,s,su;
+    private boolean m, t, w, th, f, s, su;
+
     public Days() {
-        this.m=false;
-        this.t=false;
-        this.w=false;
-        this.th=false;
-        this.f=false;
-        this.s=true;
-        this.su=true;
+        this.m = false;
+        this.t = false;
+        this.w = false;
+        this.th = false;
+        this.f = false;
+        this.s = true;
+        this.su = true;
     }
 
     public boolean getT() {
@@ -90,13 +91,20 @@ public class Days extends BaseModel {
 
     public boolean getForDay(int day) {
         switch (day) {
-            case 2: return this.getM();
-            case 3: return this.getT();
-            case 4: return this.getW();
-            case 5: return this.getTh();
-            case 6: return this.getF();
-            case 7: return this.getS();
-            case 1: return this.getSu();
+            case 2:
+                return this.getM();
+            case 3:
+                return this.getT();
+            case 4:
+                return this.getW();
+            case 5:
+                return this.getTh();
+            case 6:
+                return this.getF();
+            case 7:
+                return this.getS();
+            case 1:
+                return this.getSu();
         }
         return false;
     }

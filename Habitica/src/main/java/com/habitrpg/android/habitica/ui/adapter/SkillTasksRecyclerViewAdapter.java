@@ -26,11 +26,10 @@ import butterknife.ButterKnife;
 public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTasksRecyclerViewAdapter.ViewHolder> {
 
 
-    String taskType;
-    private ObservableArrayList<Task> observableContent;
-    SkillTasksActivity activity;
-
     private static final int TYPE_CELL = 1;
+    String taskType;
+    SkillTasksActivity activity;
+    private ObservableArrayList<Task> observableContent;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
     public SkillTasksRecyclerViewAdapter(String taskType, SkillTasksActivity activity) {
@@ -67,7 +66,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.skill_task_item_card, parent, false);
+                .inflate(R.layout.skill_task_item_card, parent, false);
         return new SkillTasksRecyclerViewAdapter.ViewHolder(view);
     }
 
@@ -80,12 +79,39 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     // region ViewHolders
 
+    public void loadContent() {
+        this.loadContent(false);
+    }
+
+    // endregion
+
+    public void loadContent(boolean forced) {
+
+        if (this.observableContent == null || forced) {
+
+            this.observableContent = new ObservableArrayList<>();
+
+            this.observableContent.addAll(new Select().from(Task.class)
+                    .where(Condition.column("type").eq(this.taskType))
+                    .and(Condition.CombinedCondition
+                            .begin(Condition.column("completed").eq(false))
+                            .or(Condition.column("type").eq("daily"))
+                    )
+                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
+                    .queryList());
+        }
+
+        if (parentAdapter != null) {
+            parentAdapter.notifyDataSetChanged();
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        protected android.content.res.Resources resources;
-
         public Task task;
-
+        protected android.content.res.Resources resources;
         SkillTaskItemCardBinding binding;
 
         @BindView(R.id.notesTextView)
@@ -120,34 +146,5 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
             activity.taskSelected(task.getId());
         }
 
-    }
-
-    // endregion
-
-    public void loadContent() {
-        this.loadContent(false);
-    }
-
-    public void loadContent(boolean forced) {
-
-        if (this.observableContent == null || forced) {
-
-            this.observableContent = new ObservableArrayList<>();
-
-            this.observableContent.addAll(new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                                    .begin(Condition.column("completed").eq(false))
-                                    .or(Condition.column("type").eq("daily"))
-                    )
-                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
-                    .queryList());
-        }
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        } else {
-            notifyDataSetChanged();
-        }
     }
 }

@@ -47,12 +47,12 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
         holder.minute = time.getMinutes();
     }
 
-    public void addItem(RemindersItem item){
+    public void addItem(RemindersItem item) {
         reminders.add(item);
         notifyItemInserted(reminders.size() - 1);
     }
 
-    public List<RemindersItem> getRemindersItems(){
+    public List<RemindersItem> getRemindersItems() {
         return reminders;
     }
 
@@ -64,7 +64,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
 
     @Override
     public void onItemDismiss(int position) {
-        if(position >= 0 && position < reminders.size()){
+        if (position >= 0 && position < reminders.size()) {
             reminders.get(position).async().delete();
             reminders.remove(position);
             notifyItemRemoved(position);

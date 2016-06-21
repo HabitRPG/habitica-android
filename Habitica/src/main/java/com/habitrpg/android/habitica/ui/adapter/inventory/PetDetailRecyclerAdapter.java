@@ -29,12 +29,11 @@ import butterknife.ButterKnife;
 
 public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecyclerAdapter.PetViewHolder> {
 
+    public String itemType;
+    public Context context;
     private List<Pet> itemList;
     private HashMap<String, Integer> ownedMapping;
     private HashMap<String, Boolean> ownedMountMapping;
-    public String itemType;
-
-    public Context context;
 
     public void setItemList(List<Pet> itemList) {
         this.itemList = itemList;
@@ -96,7 +95,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             itemView.setOnClickListener(this);
         }
 
-        public int  getOwnedStatus() {
+        public int getOwnedStatus() {
             if (ownedMapping != null && animal != null) {
                 if (ownedMapping.containsKey(animal.getKey())) {
                     return ownedMapping.get(animal.getKey());

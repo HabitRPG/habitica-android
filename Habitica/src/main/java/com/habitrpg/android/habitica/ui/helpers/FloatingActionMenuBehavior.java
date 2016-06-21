@@ -82,15 +82,15 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         return minOffset;
     }
 
-	@Override
-	public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-		return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-				super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
-	}
+    @Override
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
+                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+    }
 
-	@Override
-	public void onNestedScroll(CoordinatorLayout coordinatorLayout, final View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-		super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    @Override
+    public void onNestedScroll(CoordinatorLayout coordinatorLayout, final View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
         /*
         Logic:
@@ -108,36 +108,36 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
             - If we're not on screen
             AND we're scrolling upwards and not animating OR we're at the top of the screen > SHOW
          */
-		} else if (isOffScreen && ((dyConsumed < -10 && !isAnimating) || dyUnconsumed < 0)) {
+        } else if (isOffScreen && ((dyConsumed < -10 && !isAnimating) || dyUnconsumed < 0)) {
             isAnimating = true;
             slideFabOnScreen(child);
             resetAnimatingStatusWithDelay(child);
             isOffScreen = false;
-		}
-	}
+        }
+    }
 
     private void resetAnimatingStatusWithDelay(final View child) {
         child.postDelayed(() -> {
             isAnimating = false;
-FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) child).getChildAt(0);
-if (isOffScreen && fab != null) {
-fab.hideMenu(false);
-}
-}, FAB_ANIMATION_DURATION);
+            FloatingActionMenu fab = (FloatingActionMenu) ((ViewGroup) child).getChildAt(0);
+            if (isOffScreen && fab != null) {
+                fab.hideMenu(false);
+            }
+        }, FAB_ANIMATION_DURATION);
     }
 
-    private void slideFabOffScreen(View view){
+    private void slideFabOffScreen(View view) {
         Animation slideOff = AnimationUtils.loadAnimation(context, R.anim.fab_slide_out);
         slideOff.setDuration(FAB_ANIMATION_DURATION);
         slideOff.setFillAfter(true);
         view.startAnimation(slideOff);
     }
 
-    private void slideFabOnScreen(View view){
+    private void slideFabOnScreen(View view) {
         Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.fab_slide_in);
         slideIn.setDuration(FAB_ANIMATION_DURATION);
         slideIn.setFillAfter(true);
-        FloatingActionMenu fab = (FloatingActionMenu)((ViewGroup) view).getChildAt(0);
+        FloatingActionMenu fab = (FloatingActionMenu) ((ViewGroup) view).getChildAt(0);
         view.startAnimation(slideIn);
         if (fab != null) {
             fab.showMenu(false);

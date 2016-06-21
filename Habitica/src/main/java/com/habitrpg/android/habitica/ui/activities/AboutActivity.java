@@ -71,6 +71,7 @@ public class AboutActivity extends BaseActivity {
 
         tabLayout.setupWithViewPager(pager);
     }
+
     @Override
     protected void injectActivity(AppComponent component) {
         component.inject(this);

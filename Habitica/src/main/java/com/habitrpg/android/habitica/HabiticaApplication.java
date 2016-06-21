@@ -50,14 +50,72 @@ public class HabiticaApplication extends MultiDexApplication {
     public static HabitRPGUser User;
     public static APIHelper ApiHelper;
     public static Activity currentActivity = null;
-    private AppComponent component;
-
     @Inject
     Lazy<APIHelper> lazyApiHelper;
+    private AppComponent component;
+    /**
+     * For better performance billing class should be used as singleton
+     */
+    @NonNull
+    private Billing billing;
+    /**
+     * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used
+     * anywhere in the app).
+     * This instance contains all available products in the app.
+     */
+    @NonNull
+    private Checkout checkout;
 
     public static HabiticaApplication getInstance(Context context) {
         return (HabiticaApplication) context.getApplicationContext();
     }
+
+    public static boolean exists(@NonNull Context context) {
+        try {
+            File dbFile = context.getDatabasePath(String.format("%s.db", HabitDatabase.NAME));
+            return dbFile.exists();
+        } catch (Exception exception) {
+            Log.e("DbExists", "Database %s doesn't exist.", exception);
+            return false;
+        }
+    }
+
+    private static void setFinalStatic(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
+        field.setAccessible(true);
+        field.set(null, newValue);
+    }
+
+    public static void logout(Context context) {
+        getInstance(context).deleteDatabase(HabitDatabase.NAME);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean use_reminder = preferences.getBoolean("use_reminder", false);
+        String reminder_time = preferences.getString("reminder_time", "19:00");
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.putBoolean("use_reminder", use_reminder);
+        editor.putString("reminder_time", reminder_time);
+        editor.apply();
+        getInstance(context).lazyApiHelper.get().updateAuthenticationCredentials(null, null);
+        startActivity(LoginActivity.class, context);
+    }
+
+    public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
+        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
+            startActivity(IntroActivity.class, context);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private static void startActivity(Class activityClass, Context context) {
+        Intent intent = new Intent(context, activityClass);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    // region SQLite overrides
 
     @Override
     public void onCreate() {
@@ -136,13 +194,11 @@ public class HabiticaApplication extends MultiDexApplication {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                if(currentActivity == activity)
+                if (currentActivity == activity)
                     currentActivity = null;
             }
         });
     }
-
-    // region SQLite overrides
 
     @Override
     public SQLiteDatabase openOrCreateDatabase(String name,
@@ -182,6 +238,10 @@ public class HabiticaApplication extends MultiDexApplication {
         return deleted;
     }
 
+    // endregion
+
+    // region IAP - Specific
+
     // Hack for DBFlow - Not deleting Database
     // https://github.com/kaeawc/dbflow-sample-app/blob/master/app/src/main/java/io/kaeawc/flow/app/ui/MainActivityFragment.java#L201
     private void reflectionHack(@NonNull Context context) {
@@ -204,59 +264,10 @@ public class HabiticaApplication extends MultiDexApplication {
         }
     }
 
-    public static boolean exists(@NonNull Context context) {
-        try {
-            File dbFile = context.getDatabasePath(String.format("%s.db", HabitDatabase.NAME));
-            return dbFile.exists();
-        } catch (Exception exception) {
-            Log.e("DbExists", "Database %s doesn't exist.", exception);
-            return false;
-        }
-    }
-
-    private static void setFinalStatic(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
-        field.setAccessible(true);
-        field.set(null, newValue);
-    }
-
     @Override
     public File getDatabasePath(String name) {
         return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
     }
-
-    public static void logout(Context context) {
-        getInstance(context).deleteDatabase(HabitDatabase.NAME);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean use_reminder = preferences.getBoolean("use_reminder", false);
-        String reminder_time = preferences.getString("reminder_time", "19:00");
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.putBoolean("use_reminder", use_reminder);
-        editor.putString("reminder_time", reminder_time);
-        editor.apply();
-        getInstance(context).lazyApiHelper.get().updateAuthenticationCredentials(null, null);
-        startActivity(LoginActivity.class, context);
-    }
-
-    public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
-        if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
-            startActivity(IntroActivity.class, context);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private static void startActivity(Class activityClass, Context context) {
-        Intent intent = new Intent(context, activityClass);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    // endregion
-
-    // region IAP - Specific
 
     private void createBillingAndCheckout() {
         billing = new Billing(this, new Billing.DefaultConfiguration() {
@@ -280,20 +291,6 @@ public class HabiticaApplication extends MultiDexApplication {
 
         checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, Arrays.asList(Purchase20Gems)));
     }
-
-    /**
-     * For better performance billing class should be used as singleton
-     */
-    @NonNull
-    private Billing billing;
-
-    /**
-     * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used anywhere in the app).
-     * This instance contains all available products in the app.
-     */
-    @NonNull
-    private Checkout checkout;
-
 
     @NonNull
     public Checkout getCheckout() {

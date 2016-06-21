@@ -15,7 +15,7 @@ import android.os.Bundle;
 /**
  * Created by keithholliday on 5/29/16.
  */
-public class TaskReceiver  extends BroadcastReceiver {
+public class TaskReceiver extends BroadcastReceiver {
 
     private Context context;
 

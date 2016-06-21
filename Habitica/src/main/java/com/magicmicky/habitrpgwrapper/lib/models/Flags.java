@@ -22,12 +22,9 @@ public class Flags extends BaseModel {
     @PrimaryKey
     @NotNull
     String user_id;
-
+    List<TutorialStep> tutorial;
     @Column
     private boolean showTour, dropsEnabled, itemsEnabled, newStuff, classSelected, rebirthEnabled, welcomed, armoireEnabled, armoireOpened, armoireEmpty;
-
-    List<TutorialStep> tutorial;
-
 
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tutorial")
     public List<TutorialStep> getTutorial() {
@@ -40,16 +37,16 @@ public class Flags extends BaseModel {
         return tutorial;
     }
 
+    public void setTutorial(List<TutorialStep> tutorial) {
+        this.tutorial = tutorial;
+    }
+
     public String getUser_id() {
         return user_id;
     }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public void setTutorial(List<TutorialStep> tutorial) {
-        this.tutorial = tutorial;
     }
 
     public boolean getShowTour() {

@@ -21,9 +21,10 @@ public class EmojiKeyboard {
      * Create a Emoji keyboard
      *
      * @param itemView Must contain views with the following IDs:
-     *                 'emoji.toggle.btn' for the ImageButton that is used to enable/disable the emoji keyboard
+     *                 'emoji.toggle.btn' for the ImageButton that is used to enable/disable the
+     *                 emoji keyboard
      *                 'edit.new.message.text'  for the EmojiEditText where the emojis are put into
-     * @param context The context from the calling Activity
+     * @param context  The context from the calling Activity
      */
     public static void createKeyboard(View itemView, final Context context) {
 
@@ -44,7 +45,7 @@ public class EmojiKeyboard {
 
             @Override
             public void onKeyboardClose() {
-                if(popup.isShowing())
+                if (popup.isShowing())
                     popup.dismiss();
             }
         });
@@ -73,14 +74,12 @@ public class EmojiKeyboard {
 
         emojiButton.setOnClickListener(v -> {
 
-            if(!popup.isShowing()){
+            if (!popup.isShowing()) {
 
-                if(popup.isKeyBoardOpen()){
+                if (popup.isKeyBoardOpen()) {
                     popup.showAtBottom();
                     changeEmojiKeyboardIcon(emojiButton, context, true);
-                }
-
-                else{
+                } else {
                     emojiEditText.setFocusableInTouchMode(true);
                     emojiEditText.requestFocus();
                     popup.showAtBottomPending();
@@ -88,14 +87,13 @@ public class EmojiKeyboard {
                     inputMethodManager.showSoftInput(emojiEditText, InputMethodManager.SHOW_IMPLICIT);
                     changeEmojiKeyboardIcon(emojiButton, context, true);
                 }
-            }
-
-            else{
+            } else {
                 popup.dismiss();
                 changeEmojiKeyboardIcon(emojiButton, context, false);
             }
         });
     }
+
     private static void changeEmojiKeyboardIcon(ImageButton view, Context context, Boolean keyboardOpened) {
 
         if (keyboardOpened) {

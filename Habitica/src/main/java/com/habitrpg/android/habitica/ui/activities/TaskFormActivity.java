@@ -80,12 +80,84 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
-
+    @BindView(R.id.task_value_edittext)
+    EditText taskValue;
+    @BindView(R.id.task_value_layout)
+    TextInputLayout taskValueLayout;
+    @BindView(R.id.task_checklist_wrapper)
+    LinearLayout checklistWrapper;
+    @BindView(R.id.task_difficulty_wrapper)
+    LinearLayout difficultyWrapper;
+    @BindView(R.id.task_attribute_wrapper)
+    LinearLayout attributeWrapper;
+    @BindView(R.id.task_main_wrapper)
+    LinearLayout mainWrapper;
+    @BindView(R.id.task_text_edittext)
+    EmojiEditText taskText;
+    @BindView(R.id.task_notes_edittext)
+    EmojiEditText taskNotes;
+    @BindView(R.id.task_difficulty_spinner)
+    Spinner taskDifficultySpinner;
+    @BindView(R.id.task_attribute_spinner)
+    Spinner taskAttributeSpinner;
+    @BindView(R.id.btn_delete_task)
+    Button btnDelete;
+    @BindView(R.id.task_startdate_layout)
+    LinearLayout startDateLayout;
+    @BindView(R.id.task_task_wrapper)
+    LinearLayout taskWrapper;
+    @BindView(R.id.task_positive_checkbox)
+    CheckBox positiveCheckBox;
+    @BindView(R.id.task_negative_checkbox)
+    CheckBox negativeCheckBox;
+    @BindView(R.id.task_actions_wrapper)
+    LinearLayout actionsLayout;
+    @BindView(R.id.task_weekdays_wrapper)
+    LinearLayout weekdayWrapper;
+    @BindView(R.id.task_frequency_spinner)
+    Spinner dailyFrequencySpinner;
+    @BindView(R.id.task_frequency_container)
+    LinearLayout frequencyContainer;
+    @BindView(R.id.checklist_recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.new_checklist)
+    EmojiEditText newCheckListEditText;
+    @BindView(R.id.add_checklist_button)
+    Button addChecklistItemButton;
+    @BindView(R.id.task_reminders_wrapper)
+    LinearLayout remindersWrapper;
+    @BindView(R.id.new_reminder_edittext)
+    EditText newRemindersEditText;
+    @BindView(R.id.reminders_recycler_view)
+    RecyclerView remindersRecyclerView;
+    @BindView(R.id.add_reminder_button)
+    Button addReminderButton;
+    @BindView(R.id.emoji_toggle_btn0)
+    ImageButton emojiToggle0;
+    @BindView(R.id.emoji_toggle_btn1)
+    ImageButton emojiToggle1;
+    ImageButton emojiToggle2;
+    @BindView(R.id.task_duedate_layout)
+    LinearLayout dueDateLayout;
+    @BindView(R.id.task_duedate_picker_layout)
+    LinearLayout dueDatePickerLayout;
+    @BindView(R.id.duedate_checkbox)
+    CheckBox dueDateCheckBox;
+    @BindView(R.id.startdate_text_edittext)
+    EditText startDatePickerText;
+    DateEditTextListener startDateListener;
+    @BindView(R.id.duedate_text_edittext)
+    EditText dueDatePickerText;
+    DateEditTextListener dueDateListener;
+    @BindView(R.id.task_tags_wrapper)
+    LinearLayout tagsWrapper;
+    @BindView(R.id.task_tags_checklist)
+    LinearLayout tagsContainerLinearLayout;
+    EmojiPopup popup;
     private String taskType;
     private String taskId;
     private String userId;
     private Task task;
-
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
@@ -93,120 +165,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private CheckListAdapter checklistAdapter;
     private RemindersAdapter remindersAdapter;
     private List<CheckBox> tagCheckBoxList;
-
     private TaskAlarmManager taskAlarmManager;
-
-    @BindView(R.id.task_value_edittext)
-    EditText taskValue;
-
-    @BindView(R.id.task_value_layout)
-    TextInputLayout taskValueLayout;
-
-    @BindView(R.id.task_checklist_wrapper)
-    LinearLayout checklistWrapper;
-
-    @BindView(R.id.task_difficulty_wrapper)
-    LinearLayout difficultyWrapper;
-
-    @BindView(R.id.task_attribute_wrapper)
-    LinearLayout attributeWrapper;
-
-    @BindView(R.id.task_main_wrapper)
-    LinearLayout mainWrapper;
-
-    @BindView(R.id.task_text_edittext)
-    EmojiEditText taskText;
-
-    @BindView(R.id.task_notes_edittext)
-    EmojiEditText taskNotes;
-
-    @BindView(R.id.task_difficulty_spinner)
-    Spinner taskDifficultySpinner;
-
-    @BindView(R.id.task_attribute_spinner)
-    Spinner taskAttributeSpinner;
-
-    @BindView(R.id.btn_delete_task)
-    Button btnDelete;
-
-    @BindView(R.id.task_startdate_layout)
-    LinearLayout startDateLayout;
-
-    @BindView(R.id.task_task_wrapper)
-    LinearLayout taskWrapper;
-
-    @BindView(R.id.task_positive_checkbox)
-    CheckBox positiveCheckBox;
-
-    @BindView(R.id.task_negative_checkbox)
-    CheckBox negativeCheckBox;
-
-    @BindView(R.id.task_actions_wrapper)
-    LinearLayout actionsLayout;
-
-    @BindView(R.id.task_weekdays_wrapper)
-    LinearLayout weekdayWrapper;
-
-    @BindView(R.id.task_frequency_spinner)
-    Spinner dailyFrequencySpinner;
-
-    @BindView(R.id.task_frequency_container)
-    LinearLayout frequencyContainer;
-
-    @BindView(R.id.checklist_recycler_view)
-    RecyclerView recyclerView;
-
-    @BindView(R.id.new_checklist)
-    EmojiEditText newCheckListEditText;
-
-    @BindView(R.id.add_checklist_button)
-    Button addChecklistItemButton;
-
-    @BindView(R.id.task_reminders_wrapper)
-    LinearLayout remindersWrapper;
-
-    @BindView(R.id.new_reminder_edittext)
-    EditText newRemindersEditText;
-
-    @BindView(R.id.reminders_recycler_view)
-    RecyclerView remindersRecyclerView;
-
-    @BindView(R.id.add_reminder_button)
-    Button addReminderButton;
-
-    @BindView(R.id.emoji_toggle_btn0)
-    ImageButton emojiToggle0;
-
-    @BindView(R.id.emoji_toggle_btn1)
-    ImageButton emojiToggle1;
-
-
-    ImageButton emojiToggle2;
-
-    @BindView(R.id.task_duedate_layout)
-    LinearLayout dueDateLayout;
-
-    @BindView(R.id.task_duedate_picker_layout)
-    LinearLayout dueDatePickerLayout;
-
-    @BindView(R.id.duedate_checkbox)
-    CheckBox dueDateCheckBox;
-
-    @BindView(R.id.startdate_text_edittext)
-    EditText startDatePickerText;
-    DateEditTextListener startDateListener;
-
-    @BindView(R.id.duedate_text_edittext)
-    EditText dueDatePickerText;
-    DateEditTextListener dueDateListener;
-
-    @BindView(R.id.task_tags_wrapper)
-    LinearLayout tagsWrapper;
-
-    @BindView(R.id.task_tags_checklist)
-    LinearLayout tagsContainerLinearLayout;
-
-    EmojiPopup popup;
     private List<Tag> selectedTags;
 
     @Override
@@ -249,8 +208,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                     EventBus.getDefault().post(new DeleteTaskCommand(taskId));
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
-            dialog.dismiss();
-        }).show());
+                    dialog.dismiss();
+                }).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
@@ -410,7 +369,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                             tags = loadedTags;
                             createTagsCheckBoxes();
                         },
-                        throwable -> {}
+                        throwable -> {
+                        }
                 );
     }
 
@@ -433,84 +393,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle0.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
             emojiToggle1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
             emojiToggle2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_emoticon_grey600_24dp));
-        }
-    }
-
-    private class DateEditTextListener implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
-        Calendar calendar;
-        DatePickerDialog datePickerDialog;
-        EditText datePickerText;
-        DateFormat dateFormatter;
-
-
-        public DateEditTextListener(EditText dateText) {
-            calendar = Calendar.getInstance();
-            this.datePickerText = dateText;
-            this.datePickerText.setOnClickListener(this);
-            this.dateFormatter = DateFormat.getDateInstance();
-            this.datePickerDialog = new DatePickerDialog(datePickerText.getContext(), this,
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH));
-            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), (dialog, which) -> {
-                setCalendar(Calendar.getInstance().getTime());
-            });
-            updateDateText();
-        }
-
-        public void onClick(View view) {
-            datePickerDialog.show();
-        }
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar.set(year, monthOfYear, dayOfMonth);
-            updateDateText();
-        }
-
-        public Calendar getCalendar() {
-            return (Calendar) calendar.clone();
-        }
-
-        public void setCalendar(Date date) {
-            calendar.setTime(date);
-            datePickerDialog.updateDate(calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH));
-            updateDateText();
-        }
-
-        private void updateDateText() {
-            datePickerText.setText(dateFormatter.format(calendar.getTime()));
-        }
-    }
-
-    private class emojiClickListener implements View.OnClickListener {
-
-        EmojiEditText view;
-
-        public emojiClickListener(EmojiEditText view) {
-            this.view = view;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (!popup.isShowing()) {
-
-                if (popup.isKeyBoardOpen()) {
-                    popup.showAtBottom();
-                    changeEmojiKeyboardIcon(true);
-                } else {
-                    view.setFocusableInTouchMode(true);
-                    view.requestFocus();
-                    popup.showAtBottomPending();
-                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-                    changeEmojiKeyboardIcon(true);
-                }
-            } else {
-                popup.dismiss();
-                changeEmojiKeyboardIcon(false);
-            }
         }
     }
 
@@ -627,7 +509,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             fillTagCheckboxes();
         }
     }
-
 
     private void setTitle(Task task) {
         ActionBar actionBar = getSupportActionBar();
@@ -980,6 +861,84 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         View currentFocus = getCurrentFocus();
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+    }
+
+    private class DateEditTextListener implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+        Calendar calendar;
+        DatePickerDialog datePickerDialog;
+        EditText datePickerText;
+        DateFormat dateFormatter;
+
+
+        public DateEditTextListener(EditText dateText) {
+            calendar = Calendar.getInstance();
+            this.datePickerText = dateText;
+            this.datePickerText.setOnClickListener(this);
+            this.dateFormatter = DateFormat.getDateInstance();
+            this.datePickerDialog = new DatePickerDialog(datePickerText.getContext(), this,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), (dialog, which) -> {
+                setCalendar(Calendar.getInstance().getTime());
+            });
+            updateDateText();
+        }
+
+        public void onClick(View view) {
+            datePickerDialog.show();
+        }
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(year, monthOfYear, dayOfMonth);
+            updateDateText();
+        }
+
+        public Calendar getCalendar() {
+            return (Calendar) calendar.clone();
+        }
+
+        public void setCalendar(Date date) {
+            calendar.setTime(date);
+            datePickerDialog.updateDate(calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            updateDateText();
+        }
+
+        private void updateDateText() {
+            datePickerText.setText(dateFormatter.format(calendar.getTime()));
+        }
+    }
+
+    private class emojiClickListener implements View.OnClickListener {
+
+        EmojiEditText view;
+
+        public emojiClickListener(EmojiEditText view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (!popup.isShowing()) {
+
+                if (popup.isKeyBoardOpen()) {
+                    popup.showAtBottom();
+                    changeEmojiKeyboardIcon(true);
+                } else {
+                    view.setFocusableInTouchMode(true);
+                    view.requestFocus();
+                    popup.showAtBottomPending();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                    changeEmojiKeyboardIcon(true);
+                }
+            } else {
+                popup.dismiss();
+                changeEmojiKeyboardIcon(false);
+            }
         }
     }
 }

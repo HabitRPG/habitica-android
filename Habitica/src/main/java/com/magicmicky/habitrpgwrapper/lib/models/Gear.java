@@ -18,24 +18,21 @@ import java.util.HashMap;
 @Table(databaseName = HabitDatabase.NAME)
 public class Gear extends BaseModel {
 
+    public HashMap<String, Boolean> owned;
     @Column
     @PrimaryKey
     @NotNull
     String user_id;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "equipped_id",
             columnType = String.class,
             foreignColumnName = "user_id")})
     private Outfit equipped;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "costume_id",
             columnType = String.class,
             foreignColumnName = "user_id")})
     private Outfit costume;
-
-    public HashMap<String, Boolean> owned;
 
     public Outfit getCostume() {
         return costume;
@@ -55,8 +52,8 @@ public class Gear extends BaseModel {
 
     @Override
     public void save() {
-        equipped.user_id = user_id+"_equipped";
-        costume.user_id = user_id+"_costume";
+        equipped.user_id = user_id + "_equipped";
+        costume.user_id = user_id + "_costume";
 
         super.save();
     }

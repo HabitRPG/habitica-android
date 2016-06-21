@@ -23,24 +23,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPicture {
 
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
     private static final int WIDTH = 140;
     private static final int HEIGHT = 147;
     private static final int COMPACT_WIDTH = 114;
     private static final int COMPACT_HEIGHT = 114;
-
+    final List<Bitmap> layers = new ArrayList<>();
+    final List<SpriteTarget> targets = new ArrayList<>();
     private HabitRPGUser user;
     private ImageView imageView;
     private UserPictureRunnable runnable;
     private Context context;
     private AtomicInteger numOfTasks = new AtomicInteger(0);
-
     private boolean hasBackground, hasPetMount;
     private boolean userHasBackground, userHasPet, userHasMount;
-
     private String currentCacheFileName;
-
-    final List<Bitmap> layers = new ArrayList<>();
-    final List<SpriteTarget> targets = new ArrayList<>();
 
     public UserPicture(Context context) {
         this.context = context;
@@ -52,6 +49,30 @@ public class UserPicture {
         this.context = context;
         this.hasBackground = hasBackground;
         this.hasPetMount = hasPetMount;
+    }
+
+    private static String generateHashCode(String value) {
+        byte[] digest = new byte[0];
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            md.update(value.getBytes());
+            digest = md.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return bytesToHex(digest);
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
     public void setUser(HabitRPGUser user) {
@@ -120,7 +141,7 @@ public class UserPicture {
         Bitmap cache = this.getCachedImage(layerNames);
 
         // yes => load image to bitmap
-        if(cache != null){
+        if (cache != null) {
             runnable.run(cache);
             return;
         }
@@ -212,32 +233,6 @@ public class UserPicture {
         }
     }
 
-    private static String generateHashCode(String value) {
-        byte[] digest = new byte[0];
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            md.update(value.getBytes());
-            digest = md.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        return bytesToHex(digest);
-    }
-
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
-
     private void modifyCanvas(Bitmap img, Canvas canvas, Integer layerNumber) {
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
@@ -254,20 +249,29 @@ public class UserPicture {
             if (this.userHasMount) {
                 if (((this.userHasBackground && layerNumber > 1) ||
                         (!this.userHasBackground && layerNumber > 0)) &&
-                        ((this.userHasPet && layerNumber < (this.layers.size()-2)) ||
-                        (!this.userHasPet && layerNumber < this.layers.size()-1))) {
+                        ((this.userHasPet && layerNumber < (this.layers.size() - 2)) ||
+                                (!this.userHasPet && layerNumber < this.layers.size() - 1))) {
                     yOffset = 0;
                 }
             }
         }
 
-        if (this.hasPetMount && this.userHasPet && layerNumber == this.layers.size()-1) {
+        if (this.hasPetMount && this.userHasPet && layerNumber == this.layers.size() - 1) {
             xOffset = 0;
             yOffset = 43;
         }
 
         canvas.drawBitmap(img, new Rect(0, 0, img.getWidth(), img.getHeight()),
                 new Rect(xOffset, yOffset, img.getWidth() + xOffset, img.getHeight() + yOffset), paint);
+    }
+
+    private String getFileName(String imageName) {
+        if (imageName.equals("head_special_1")) {
+            return "ContributorOnly-Equip-CrystalHelmet.gif";
+        } else if (imageName.equals("armor_special_1")) {
+            return "ContributorOnly-Equip-CrystalArmor.gif";
+        }
+        return imageName + ".png";
     }
 
     private class SpriteTarget implements Target {
@@ -298,15 +302,6 @@ public class UserPicture {
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
         }
-    }
-
-    private String getFileName(String imageName) {
-        if (imageName.equals("head_special_1")) {
-            return "ContributorOnly-Equip-CrystalHelmet.gif";
-        } else if (imageName.equals("armor_special_1")) {
-            return "ContributorOnly-Equip-CrystalArmor.gif";
-        }
-        return imageName+".png";
     }
 
 }

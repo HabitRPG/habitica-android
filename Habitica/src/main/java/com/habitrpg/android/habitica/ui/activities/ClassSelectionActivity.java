@@ -103,8 +103,9 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
             apiHelper.apiService.changeClass()
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(user -> {
-                classWasUnset = true;
-            }, throwable -> {});
+                        classWasUnset = true;
+                    }, throwable -> {
+                    });
         }
     }
 
@@ -179,7 +180,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         this.displayProgressDialog();
         apiHelper.apiService.disableClasses()
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(this, throwable -> {});
+                .subscribe(this, throwable -> {
+                });
     }
 
     private void selectClass(String selectedClass) {
@@ -187,7 +189,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         this.displayProgressDialog();
         apiHelper.apiService.changeClass(selectedClass)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(this, throwable -> {});
+                .subscribe(this, throwable -> {
+                });
     }
 
     private void displayProgressDialog() {

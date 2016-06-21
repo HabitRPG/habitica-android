@@ -24,7 +24,7 @@ public class HatchingPotionListDeserializer implements JsonDeserializer<List<Hat
             List<HatchingPotion> existingItems = new Select().from(HatchingPotion.class).queryList();
 
             for (HatchingPotion item : existingItems) {
-                if(object.has(item.getKey())) {
+                if (object.has(item.getKey())) {
                     JsonElement itemObject = object.get(item.getKey());
 
                     if (itemObject.isJsonObject()) {
@@ -42,7 +42,7 @@ public class HatchingPotionListDeserializer implements JsonDeserializer<List<Hat
                 }
             }
 
-            for (Map.Entry<String,JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 HatchingPotion item;
                 if (entry.getValue().isJsonObject()) {
                     item = context.deserialize(entry.getValue(), HatchingPotion.class);

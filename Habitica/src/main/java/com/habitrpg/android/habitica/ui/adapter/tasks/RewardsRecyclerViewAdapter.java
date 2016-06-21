@@ -86,7 +86,8 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);
                         notifyDataSetChanged();
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         }
     }
 

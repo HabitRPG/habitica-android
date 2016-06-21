@@ -27,9 +27,8 @@ public class SkillTasksActivity extends BaseActivity {
 
     @BindView(R.id.tab_layout)
     public TabLayout tabLayout;
-
-    Map<Integer, SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new HashMap<>();
     protected HabitRPGUser user;
+    Map<Integer, SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new HashMap<>();
 
     @Override
     protected int getLayoutResId() {

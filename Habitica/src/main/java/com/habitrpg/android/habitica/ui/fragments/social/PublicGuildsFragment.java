@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 public class PublicGuildsFragment extends BaseMainFragment {
 
     List<String> memberGuildIDs;
-    List <Group> guilds;
+    List<Group> guilds;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -68,11 +68,12 @@ public class PublicGuildsFragment extends BaseMainFragment {
             this.apiHelper.apiService.listGroups("publicGuilds")
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(groups -> {
-                PublicGuildsFragment.this.guilds = groups;
-                if (PublicGuildsFragment.this.viewAdapter!= null) {
-                    PublicGuildsFragment.this.viewAdapter.setPublicGuildList(groups);
-                }
-            }, throwable -> {});
+                        PublicGuildsFragment.this.guilds = groups;
+                        if (PublicGuildsFragment.this.viewAdapter != null) {
+                            PublicGuildsFragment.this.viewAdapter.setPublicGuildList(groups);
+                        }
+                    }, throwable -> {
+                    });
         }
     }
 }

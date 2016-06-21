@@ -33,7 +33,7 @@ public class TaskScoringCallback implements Action1<TaskDirectionData> {
                 .querySingle(new TransactionListener<Task>() {
                     @Override
                     public void onResultReceived(Task task) {
-                        if(task != null && task.type != null && !task.type.equals("reward")) {
+                        if (task != null && task.type != null && !task.type.equals("reward")) {
                             task.value = task.value + taskDirectionData.getDelta();
 
                             task.save();
@@ -76,8 +76,8 @@ public class TaskScoringCallback implements Action1<TaskDirectionData> {
                                 @Override
                                 public void onResultReceived(Object result) {
                                     if (result != null) {
-                                        Item item = (Item)result;
-                                        item.setOwned(item.getOwned()+1);
+                                        Item item = (Item) result;
+                                        item.setOwned(item.getOwned() + 1);
                                         item.save();
                                     }
                                 }

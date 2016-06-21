@@ -4,7 +4,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import rx.functions.Action1;
 
-/**r
+/**
+ * r
  * Created by magicmicky on 18/02/15.
  */
 public class HabitRPGUserCallback implements Action1<HabitRPGUser> {
