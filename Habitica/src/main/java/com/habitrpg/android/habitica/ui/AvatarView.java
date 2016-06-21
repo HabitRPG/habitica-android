@@ -407,6 +407,11 @@ public class AvatarView extends View {
     }
 
     @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    @Override
     protected boolean verifyDrawable(Drawable who) {
         return multiDraweeHolder.verifyDrawable(who) || super.verifyDrawable(who);
     }

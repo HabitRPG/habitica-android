@@ -42,13 +42,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tutorialTextView"
                 android:layout_gravity="bottom"
-                android:textSize="20sp"
-                android:text="jerwerwe rwe r we rwerewioro ikljhrwe rjhwek rhjwekr jhwke rhjwke jrhwkelgrfwe r" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                style="?android:attr/buttonBarStyle" >
 
                 <Button
                     android:layout_width="0px"
@@ -57,7 +57,8 @@
                     android:text="@string/dismiss_tutorial"
                     android:id="@+id/dismissButton"
                     android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton" />
+                    android:theme="@style/DialogButton"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:layout_width="0px"
@@ -66,7 +67,8 @@
                     android:text="@string/complete_tutorial"
                     android:id="@+id/completeButton"
                     android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton" />
+                    android:theme="@style/DialogButton"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
         </LinearLayout>

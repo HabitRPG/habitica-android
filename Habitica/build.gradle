@@ -198,6 +198,10 @@ android {
         javaMaxHeapSize "2g" // Use gig increments depending on needs
         incremental true
     }
+
+    lintOptions {
+        disable 'UnusedResources'
+    }
 }
 
 def Properties props = new Properties()
