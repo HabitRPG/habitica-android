@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;

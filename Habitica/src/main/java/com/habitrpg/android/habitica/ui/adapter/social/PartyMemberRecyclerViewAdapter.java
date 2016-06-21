@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.content.Context;

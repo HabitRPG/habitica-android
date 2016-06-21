@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
 import com.commonsware.cwac.anddown.AndDown;
+
 import net.pherth.android.emoji_library.EmojiParser;
 
 import android.text.Html;

@@ -83,7 +83,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLPeerUnverifiedException;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;

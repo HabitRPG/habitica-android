@@ -2,13 +2,10 @@ package com.habitrpg.android.habitica.widget;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.language.Update;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -16,7 +13,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import javax.inject.Inject;

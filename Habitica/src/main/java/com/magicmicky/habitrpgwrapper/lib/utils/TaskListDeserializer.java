@@ -8,9 +8,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

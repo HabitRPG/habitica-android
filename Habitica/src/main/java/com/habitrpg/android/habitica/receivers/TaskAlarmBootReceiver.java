@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.receivers;
 
+import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-
-import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
 
 /**
  * Created by keithholliday on 5/29/16.

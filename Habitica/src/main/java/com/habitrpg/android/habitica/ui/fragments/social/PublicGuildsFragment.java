@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
 import android.os.Bundle;

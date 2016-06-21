@@ -1,7 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.repacked.antlr.v4.runtime.atn.BasicState;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;

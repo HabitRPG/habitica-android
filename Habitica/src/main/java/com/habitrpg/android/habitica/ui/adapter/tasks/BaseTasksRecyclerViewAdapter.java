@@ -10,8 +10,6 @@ import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -32,8 +30,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func0;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>

@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;

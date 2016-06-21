@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import net.pherth.android.emoji_library.EmojiTextView;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.squareup.picasso.Picasso;
+
+import net.pherth.android.emoji_library.EmojiTextView;
 
 import android.content.Intent;
 import android.net.Uri;

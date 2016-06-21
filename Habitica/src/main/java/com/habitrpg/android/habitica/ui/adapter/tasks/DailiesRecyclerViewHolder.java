@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 
 public class DailiesRecyclerViewHolder extends BaseTasksRecyclerViewAdapter<DailyViewHolder> {

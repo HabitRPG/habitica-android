@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import net.pherth.android.emoji_library.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+
+import net.pherth.android.emoji_library.EmojiEditText;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;

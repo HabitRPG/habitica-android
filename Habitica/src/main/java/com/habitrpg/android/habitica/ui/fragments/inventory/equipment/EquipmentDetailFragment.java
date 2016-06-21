@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;

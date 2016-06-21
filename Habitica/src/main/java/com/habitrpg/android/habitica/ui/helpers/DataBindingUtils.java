@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import net.pherth.android.emoji_library.EmojiTextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.squareup.picasso.Picasso;
+
+import net.pherth.android.emoji_library.EmojiTextView;
 
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;

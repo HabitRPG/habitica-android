@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 
 import android.app.Activity;
 import android.content.Intent;

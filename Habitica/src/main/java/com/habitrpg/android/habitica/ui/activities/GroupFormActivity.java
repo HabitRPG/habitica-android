@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;

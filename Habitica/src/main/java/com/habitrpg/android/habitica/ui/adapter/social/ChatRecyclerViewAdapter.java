@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import net.pherth.android.emoji_library.EmojiEditText;
-import net.pherth.android.emoji_library.EmojiTextView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
@@ -15,6 +13,9 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 

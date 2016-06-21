@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica;
 
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
-import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 

@@ -4,8 +4,6 @@ import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.ui.activities.BaseActivity;
-import com.habitrpg.android.habitica.ui.activities.IntroActivity;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;

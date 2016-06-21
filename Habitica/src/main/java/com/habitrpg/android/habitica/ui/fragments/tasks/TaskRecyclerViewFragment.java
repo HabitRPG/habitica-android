@@ -5,14 +5,13 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.ui.activities.BaseActivity;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 

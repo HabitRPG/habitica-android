@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import net.pherth.android.emoji_library.EmojiEditText;
-import net.pherth.android.emoji_library.EmojiPopup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
@@ -19,11 +17,11 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Set;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiPopup;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -58,7 +56,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -67,17 +64,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
 

@@ -21,7 +21,6 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
