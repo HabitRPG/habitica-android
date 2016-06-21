@@ -61,7 +61,7 @@
                     android:divider="?android:listDivider"
                     android:showDividers="middle"
                     android:orientation="vertical">
-                    <com.github.data5tream.emojilib.EmojiTextView
+                    <net.pherth.android.emoji_library.EmojiTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{group.description}" />
@@ -74,7 +74,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@{@string/leaderMessage(group.leaderName)}" />
-                        <com.github.data5tream.emojilib.EmojiTextView
+                        <net.pherth.android.emoji_library.EmojiTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 bind:parsemarkdown="@{group.leaderMessage}"/>

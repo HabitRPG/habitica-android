@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                    <com.github.data5tream.emojilib.EmojiEditText
+                    <net.pherth.android.emoji_library.EmojiEditText
                         android:id="@+id/task_text_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                     android:layout_height="72dp"
                     app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-                    <com.github.data5tream.emojilib.EmojiEditText
+                    <net.pherth.android.emoji_library.EmojiEditText
                         android:id="@+id/task_notes_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
                     android:background="@drawable/md_transparent"
                     android:contentDescription="Toogle Emoji" />
 
-                <com.github.data5tream.emojilib.EmojiEditText
+                <net.pherth.android.emoji_library.EmojiEditText
                     android:id="@+id/new_checklist"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

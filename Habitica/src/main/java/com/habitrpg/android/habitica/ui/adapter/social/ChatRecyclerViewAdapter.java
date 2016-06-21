@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiTextView;
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiTextView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;

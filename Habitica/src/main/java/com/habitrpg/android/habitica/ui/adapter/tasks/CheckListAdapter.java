@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.github.data5tream.emojilib.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiEditText;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;

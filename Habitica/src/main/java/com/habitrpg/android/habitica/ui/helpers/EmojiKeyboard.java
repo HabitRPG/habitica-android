@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
-import com.github.data5tream.emojilib.EmojiEditText;
-import com.github.data5tream.emojilib.EmojiPopup;
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiPopup;
 import com.habitrpg.android.habitica.R;
 
 import android.content.Context;

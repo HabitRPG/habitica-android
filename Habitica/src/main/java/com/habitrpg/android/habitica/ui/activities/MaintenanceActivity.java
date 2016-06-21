@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.github.data5tream.emojilib.EmojiTextView;
+import net.pherth.android.emoji_library.EmojiTextView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;

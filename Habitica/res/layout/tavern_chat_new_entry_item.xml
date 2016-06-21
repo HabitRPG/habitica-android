@@ -34,7 +34,7 @@
             android:layout_weight="1"
             app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
-            <com.github.data5tream.emojilib.EmojiEditText
+            <net.pherth.android.emoji_library.EmojiEditText
                 android:id="@+id/edit.new.message.text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

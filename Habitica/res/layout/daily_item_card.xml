@@ -32,12 +32,12 @@
                 android:paddingTop="@dimen/task_top_bottom_padding"
                 android:id="@+id/linearLayout"
                 android:layout_weight="1">
-            <com.github.data5tream.emojilib.EmojiTextView
+            <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/checkedTextView"
                     style="@style/CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-            <com.github.data5tream.emojilib.EmojiTextView
+            <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/notesTextView"
                     style="@style/CardText"
                     android:layout_width="match_parent"
