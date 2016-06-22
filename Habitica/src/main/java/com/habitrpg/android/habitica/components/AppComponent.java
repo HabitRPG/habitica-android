@@ -39,6 +39,8 @@ import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
@@ -144,4 +146,8 @@ public interface AppComponent {
     void inject(HabiticaApplication habiticaApplication);
 
     void inject(PreferencesFragment preferencesFragment);
+
+    void inject(InboxFragment inboxFragment);
+
+    void inject(InboxMessageListFragment inboxMessageListFragment);
 }

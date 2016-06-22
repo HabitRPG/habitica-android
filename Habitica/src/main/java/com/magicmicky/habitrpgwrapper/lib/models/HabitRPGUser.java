@@ -44,6 +44,12 @@ public class HabitRPGUser extends BaseModel {
     private Stats stats;
 
     @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "inbox_id",
+            columnType = String.class,
+            foreignColumnName = "user_Id")})
+    private Inbox inbox;
+
+    @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "preferences_id",
             columnType = String.class,
             foreignColumnName = "user_id")})
@@ -104,9 +110,18 @@ public class HabitRPGUser extends BaseModel {
         return stats;
     }
 
+    public void setInbox(Inbox inbox) {
+        this.inbox = inbox;
+    }
+
+    public Inbox getInbox() {
+        return inbox;
+    }
+
     public void setStats(Stats stats) {
         this.stats = stats;
     }
+
 
     public Profile getProfile() {
         return profile;
@@ -258,6 +273,7 @@ public class HabitRPGUser extends BaseModel {
         preferences.user_id = id;
         stats.id = id;
         profile.user_Id = id;
+        inbox.user_Id = id;
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;

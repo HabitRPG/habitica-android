@@ -56,9 +56,9 @@
     <string name="about.bugreport">Report a Bug</string>
     <string name="about.source_code">Source Code</string>
 
-	<!-- Network Errors -->
-	<string name="network_error_title">Connection Error</string>
-	<string name="network_error_no_network_body">You are not connected to the internet.</string>
+    <!-- Network Errors -->
+    <string name="network_error_title">Connection Error</string>
+    <string name="network_error_no_network_body">You are not connected to the internet.</string>
     <string name="internal_error_api">There seems to be a problem with the server. Try again later.</string>
 
     <string name="authentication_error_title">Authentication Error</string>
@@ -347,4 +347,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="open_in_store">Open in play store</string>
     <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
     <string name="leaderMessage" formatted="false">Message from %1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
