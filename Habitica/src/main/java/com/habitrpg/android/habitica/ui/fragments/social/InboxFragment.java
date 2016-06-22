@@ -99,7 +99,6 @@ public class InboxFragment extends BaseMainFragment
     public void onClick(View v) {
         TextView entry = (TextView) v;
         InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
-        Log.v("test", entry.getText().toString());
         inboxMessageListFragment.setMessages(this.messages, entry.getText().toString());
         this.activity.displayFragment(inboxMessageListFragment);
     }

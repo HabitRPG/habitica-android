@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -238,10 +239,14 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 if (userLabel != null) {
                     userLabel.setText(msg.user);
                 }
+
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
 
                 if (messageText != null) {
                     messageText.setText(msg.parsedText);
+                    if (msg.parsedText == null) {
+                        messageText.setText(msg.text);
+                    }
                     this.messageText.setMovementMethod(LinkMovementMethod.getInstance());
                 }
 
