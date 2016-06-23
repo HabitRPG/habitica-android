@@ -133,7 +133,9 @@ public class AvatarView extends View {
                                 ImageInfo imageInfo,
                                 Animatable anim) {
                             if (imageInfo != null) {
-                                multiDraweeHolder.get(layerNumber).getTopLevelDrawable().setBounds(getLayerBounds(layerKey, layerName, imageInfo));
+                                if (multiDraweeHolder.size() > layerNumber) {
+                                    multiDraweeHolder.get(layerNumber).getTopLevelDrawable().setBounds(getLayerBounds(layerKey, layerName, imageInfo));
+                                }
                                 onLayerComplete();
                             }
                         }
