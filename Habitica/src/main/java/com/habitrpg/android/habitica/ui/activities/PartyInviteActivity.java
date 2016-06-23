@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,9 @@ import butterknife.BindView;
 public class PartyInviteActivity extends BaseActivity {
 
     public static final int RESULT_SEND_INVITES = 100;
+    public static final String USER_IDS_KEY = "userIDs";
+    public static final String IS_EMAIL_KEY = "isEmail";
+    public static final String EMAILS_KEY = "emails";
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
@@ -64,7 +68,7 @@ public class PartyInviteActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send_invites) {
-            setResult(RESULT_SEND_INVITES, createResultIntent());
+            setResult(Activity.RESULT_OK, createResultIntent());
             finish();
             return true;
         }
@@ -76,11 +80,11 @@ public class PartyInviteActivity extends BaseActivity {
         Intent intent = new Intent();
         PartyInviteFragment fragment = fragments.get(viewPager.getCurrentItem());
         if (viewPager.getCurrentItem() == 0) {
-            intent.putExtra("isEmail", true);
-            intent.putExtra("emails", fragment.getValues());
+            intent.putExtra(PartyInviteActivity.IS_EMAIL_KEY, true);
+            intent.putExtra(PartyInviteActivity.EMAILS_KEY, fragment.getValues());
         } else {
-            intent.putExtra("isEmail", false);
-            intent.putExtra("userIds", fragment.getValues());
+            intent.putExtra(PartyInviteActivity.IS_EMAIL_KEY, false);
+            intent.putExtra(PartyInviteActivity.USER_IDS_KEY, fragment.getValues());
         }
         return intent;
     }

@@ -152,7 +152,7 @@ public interface ApiService {
     @GET("groups/{gid}")
     Observable<Group> getGroup(@Path("gid") String groupId);
 
-    @POST("groups/{id}")
+    @PUT("groups/{id}")
     Observable<Void> updateGroup(@Path("id") String id, @Body Group item);
 
     @GET("groups/{gid}/chat")

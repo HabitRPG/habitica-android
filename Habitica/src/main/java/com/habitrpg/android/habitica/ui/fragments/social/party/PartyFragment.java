@@ -216,8 +216,8 @@ public class PartyFragment extends BaseMainFragment {
                 if (resultCode == Activity.RESULT_OK) {
                     Map<String, Object> inviteData = new HashMap<>();
                     inviteData.put("inviter", this.user.getProfile().getName());
-                    if (data.getBooleanExtra("isEmail", false)) {
-                        String[] emails = data.getStringArrayExtra("emails");
+                    if (data.getBooleanExtra(PartyInviteActivity.IS_EMAIL_KEY, false)) {
+                        String[] emails = data.getStringArrayExtra(PartyInviteActivity.EMAILS_KEY);
                         List<HashMap<String, String>> invites = new ArrayList<>();
                         for (String email : emails) {
                             HashMap<String, String> invite = new HashMap<>();
@@ -227,7 +227,7 @@ public class PartyFragment extends BaseMainFragment {
                         }
                         inviteData.put("emails", invites);
                     } else {
-                        String[] userIDs = data.getStringArrayExtra("userIDs");
+                        String[] userIDs = data.getStringArrayExtra(PartyInviteActivity.USER_IDS_KEY);
                         List<String> invites = new ArrayList<>();
                         Collections.addAll(invites, userIDs);
                         inviteData.put("uuids", invites);

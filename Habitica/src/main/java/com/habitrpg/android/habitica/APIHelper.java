@@ -300,19 +300,15 @@ public class APIHelper implements Action1<Throwable> {
             }
 
             int status = error.code();
-            if (status == 401) {
+            if (status >= 400 && status < 500) {
                 if (res != null && res.message != null && !res.message.isEmpty()) {
                     showConnectionProblemDialog("", res.message);
-                } else {
+                } else if (status == 401) {
                     showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
 
             } else if (status >= 500 && status < 600) {
                 this.showConnectionProblemDialog(R.string.internal_error_api);
-            } else if (status == 400) {
-                if (res != null && res.message != null && !res.message.isEmpty()) {
-                    showConnectionProblemDialog("", res.message);
-                }
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
