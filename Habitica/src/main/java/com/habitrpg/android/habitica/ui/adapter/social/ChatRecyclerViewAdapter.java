@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
+import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -52,12 +53,19 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private String uuid;
     private String groupId;
     private boolean isTavern;
+    private boolean isInboxChat = false;
+    private String replyToUserUUID;
 
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String uuid, String groupId, boolean isTavern) {
         this.messages = messages;
         this.uuid = uuid;
         this.groupId = groupId;
         this.isTavern = isTavern;
+    }
+
+    public void setToInboxChat(String replyToUserUUID) {
+        this.replyToUserUUID = replyToUserUUID;
+        this.isInboxChat = true;
     }
 
     public void setMessages(List<ChatMessage> messages) {
@@ -381,7 +389,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (textNewMessage != null) {
                 String text = textNewMessage.getText().toString();
                 if (!text.equals("")) {
-                    EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
+                    if (isInboxChat) {
+                        EventBus.getDefault().post(new SendNewInboxMessageCommand(replyToUserUUID, text));
+                    } else {
+                        EventBus.getDefault().post(new SendNewGroupMessageCommand(groupId, text));
+                    }
                 }
                 textNewMessage.setText("");
             }

@@ -36,6 +36,7 @@ public class InboxFragment extends BaseMainFragment
     SwipeRefreshLayout swipeRefreshLayout;
 
     Map<String, ChatMessage> messages;
+    Map<String, String> roomsAdded;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,15 +78,15 @@ public class InboxFragment extends BaseMainFragment
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Map<String,Boolean> roomsAdded = new HashMap<String, Boolean>();
+        roomsAdded = new HashMap<String, String>();
 
         Iterator it = this.messages.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
 
             ChatMessage message = (ChatMessage) pair.getValue();
-            if (roomsAdded.get(message.user) != null && roomsAdded.get(message.user)) return;
-            roomsAdded.put(message.user, true);
+            if (roomsAdded.get(message.user) != null) continue;
+            roomsAdded.put(message.user, message.uuid);
 
             TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
             entry.setText(message.user);
@@ -99,7 +100,8 @@ public class InboxFragment extends BaseMainFragment
     public void onClick(View v) {
         TextView entry = (TextView) v;
         InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
-        inboxMessageListFragment.setMessages(this.messages, entry.getText().toString());
+        String replyToUserName = entry.getText().toString();
+        inboxMessageListFragment.setMessages(this.messages, replyToUserName, this.roomsAdded.get(replyToUserName));
         this.activity.displayFragment(inboxMessageListFragment);
     }
 
