@@ -93,7 +93,6 @@
   <string name="faint_subtitle">Jangan bersedih!</string>
   <string name="faint_penalty_body">Kamu kehilangan Level, Emasmu, dan sepotong Perlengkapan, tetapi kamu dapat mendapatkannya kembali dengan kerja keras! Semoga berhasil--kamu pasti bisa.</string>
   <string name="faint_header">Kamu kehabisan Nyawa!</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
   <string name="filter">Filter</string>
   <string name="profile_image">Gambar Profil</string>
   <string name="mana_price_button" formatted="false">%d MP</string>

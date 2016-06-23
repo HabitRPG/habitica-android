@@ -93,7 +93,6 @@
   <string name="faint_subtitle">Nepergyvenk!</string>
   <string name="faint_penalty_body">Praradai Lygį, Auksą, ir dalį savo Aprangos, bet gali juos visus atgauti labiau pasistengęs(us)! Sėkmės - tau tikrai pasiseks.</string>
   <string name="faint_header">Tavo gyvybingumas išseko!</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
   <string name="filter">FIltras</string>
   <string name="profile_image">Profilis Paveikslėlis</string>
   <string name="mana_price_button" formatted="false">%d Magijos Taškai</string>

@@ -94,7 +94,7 @@
   <string name="faint_subtitle">Não se desespere!</string>
   <string name="faint_penalty_body">Você perdeu um Nível. seu Ouro, e uma parte de Equipamento, mas você pode ganhar todos eles de volta com trabalho pesado! Boa sorte--Você se sairá ótimo!</string>
   <string name="faint_header">Você esgotou sua vida!</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
+  <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Imagem de Perfil</string>
   <string name="mana_price_button" formatted="false">%d PM</string>

@@ -94,11 +94,11 @@
   <string name="faint_subtitle">がっかりしないで!</string>
   <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失いました。しかし、がんばればすべてを取り返せます! 　あなたなら、きっとできる。幸あらんことを。</string>
   <string name="faint_header">体力がなくなった!</string>
-  <string name="faint_button"><![CDATA[体力を満たしてもう一度]]></string>
+  <string name="faint_button">体力を全回復してやり直す</string>
   <string name="filter">フィルター</string>
   <string name="profile_image">プロフィール画像</string>
   <string name="mana_price_button" formatted="false">%d マナ</string>
-  <string name="used_skill" formatted="false">%2$d マナを %1$s ゴールドで買った</string>
+  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sを使いました。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
   <string name="reminder_title">日課をチェックしましたか?</string>

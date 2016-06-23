@@ -92,7 +92,6 @@
   <string name="faint_subtitle">Não desesperes!</string>
   <string name="faint_penalty_body">Tu perdeste um Nível, o teu Ouro e uma peça do teu Equipamento, mas consegues recuperá-los de volta com trabalho duro! Boa sorte - tu serás grande.</string>
   <string name="faint_header">Tu ficaste sem Saúde!</string>
-  <string name="faint_button"><![CDATA[Reenche a Saúde e Tenta Novamente]]></string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Imagem de perfil</string>
   <string name="mana_price_button" formatted="false">%d MP</string>

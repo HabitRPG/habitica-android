@@ -94,7 +94,7 @@
   <string name="faint_subtitle">Ne désespérez pas !</string>
   <string name="faint_penalty_body">Vous avez perdu un niveau, de l\'or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance--vous y arriverez.</string>
   <string name="faint_header">Vous n\'avez plus de points de vie !</string>
-  <string name="faint_button"><![CDATA[Reprendre Vie & Essayer à Nouveau]]></string>
+  <string name="faint_button">Reprendre des forces &amp; réessayer</string>
   <string name="filter">Filtrer</string>
   <string name="profile_image">Image de Profil</string>
   <string name="mana_price_button" formatted="false">%d Points de Mana</string>

@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positivo ( + )</string>
   <string name="negative_habit_form">Negativo ( - )</string>
   <string name="checklist">Listado</string>
+  <string name="reminders">Recordatorios</string>
   <string name="actions">Acciones</string>
   <string name="attributes">Atributos</string>
   <string name="physical">Físico</string>
@@ -93,7 +94,7 @@
   <string name="faint_subtitle">¡No desesperes!</string>
   <string name="faint_penalty_body">Has perdido un nivel, todo tu oro y una pieza de tu equipamiento, ¡pero puedes recuperarlo todo con tu esfuerzo! Buena suerte, lo harás genial.</string>
   <string name="faint_header">¡Te has quedado sin salud!</string>
-  <string name="faint_button"><![CDATA[Recuperar salud y volver a intentarlo]]></string>
+  <string name="faint_button">Recuperar toda la salud y volver a intentarlo</string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Imagen de perfil</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
@@ -104,7 +105,7 @@
   <string name="skill_progress_title">Usando habilidad</string>
   <string name="coming_soon">Próximamente</string>
   <string name="chat_flag_confirmation">¿Seguro que quieres informar de que este mensaje incumple las normas?</string>
-  <string name="flag_confirm">Marcar mensaje</string>
+  <string name="flag_confirm">Denunciar mensaje</string>
   <string name="unlock_lvl_11">Se desbloquea en el nivel 11</string>
   <string name="no_party_message">No formas parte de ningún grupo. Para unirte a uno, entra en la página web.</string>
   <string name="forgot_pw_btn">He olvidado la contraseña</string>
@@ -200,7 +201,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="setup_task_teams_3">Acabar trabajo en equipo</string>
   <string name="setup_task_chores_1">Limpiar 10 minutos</string>
   <string name="setup_task_chores_2">Lavar los platos</string>
-  <string name="setup_task_chores_3">Organizar el armario</string>
+  <string name="setup_task_chores_3">Ordenar el armario</string>
   <string name="setup_task_creativity_1">Estudiar hasta dominar la técnica</string>
   <string name="setup_task_creativity_2">Trabajar en proyecto creativo</string>
   <string name="setup_task_creativity_3">Terminar proyecto creativo</string>
@@ -225,7 +226,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="todo_due" formatted="false">Para: %s</string>
   <string name="daily_streak" formatted="false">racha actual: %d</string>
   <string name="todo_has_duedate">La tarea tiene fecha límite</string>
-  <string name="battle_gear">Armadura</string>
+  <string name="battle_gear">Equipo de batalla</string>
   <string name="costume">Disfraz</string>
   <string name="outfit_head">Cabeza</string>
   <string name="outfit_headAccessory">Accesorio para la cabeza</string>
@@ -304,6 +305,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="dialog_go_back">Volver</string>
   <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
   <string name="change_class">Cambiar de clase</string>
+  <string name="change_class_description">Cambia de clase y recupera tus puntos de atributos por 3 gemas. Puedes asignar los puntos de atributos en el sitio web.</string>
   <string name="enable_class">Activar sistema de clases</string>
   <string name="changing_class_progress">Cambio de clase</string>
   <string name="by_email">Por correo electrónico</string>
@@ -320,4 +322,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="share_levelup" formatted="false">¡He subido al nivel %s en Habitica mejorando mis hábitos en el mundo real!</string>
   <string name="share_hatched" formatted="false">¡He criado un %1$s %2$s de mascota en Habitica realizando tareas en mi vida real!</string>
   <string name="share_raised" formatted="false">¡He conseguido una montura de %1$s %2$s en Habitica realizando tareas en mi vida real!</string>
+  <string name="open_in_store">Abrir en Play Store</string>
+  <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
+  <string name="leaderMessage" formatted="false">Mensaje de %1$s</string>
 </resources>

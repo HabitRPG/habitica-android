@@ -70,6 +70,7 @@
   <string name="positive_habit_form">חיובי ( + )</string>
   <string name="negative_habit_form">שלילי ( - )</string>
   <string name="checklist">רשימה</string>
+  <string name="reminders">תזכורות</string>
   <string name="actions">פעולות</string>
   <string name="attributes">תכונות</string>
   <string name="physical">פיזי</string>
@@ -93,7 +94,6 @@
   <string name="faint_subtitle">אל ייאוש!</string>
   <string name="faint_penalty_body">הפסדתם דרגה, זהב, וחפץ, אך אתם יכולים להשיג אותם שוב עם עבודה קשה! בהצלחה--אתם תצליחו.</string>
   <string name="faint_header">נגמרה לכם הבריאות!</string>
-  <string name="faint_button"><![CDATA[מלאו בריאות ונסו שוב]]></string>
   <string name="filter">מסנן</string>
   <string name="profile_image">תמונת פרופיל</string>
   <string name="mana_price_button" formatted="false">%d מאנה</string>
@@ -323,4 +323,5 @@
   <string name="share_raised" formatted="false">הרגע הרווחתי חיית רכיבה של %1$s %2$s בהאביטיקה על ידי השלמת משימות בחיים האמיתיים!</string>
   <string name="open_in_store">פתיחה בפליי סטור</string>
   <string name="change_class_confirmation">האם אתם בטוחים שאתם מעוניינים להחליף מקצוע? זה יעלה לכם 3 אבני חן.</string>
+  <string name="leaderMessage" formatted="false">הודעה מאת %1$s</string>
 </resources>

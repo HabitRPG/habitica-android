@@ -70,6 +70,7 @@
   <string name="positive_habit_form">正面的(+)</string>
   <string name="negative_habit_form">负面的 (-)</string>
   <string name="checklist">检查蛋</string>
+  <string name="reminders">提醒</string>
   <string name="actions">动作</string>
   <string name="attributes">属性</string>
   <string name="physical">身体上的</string>
@@ -93,6 +94,7 @@
   <string name="faint_subtitle">别失望！</string>
   <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你还可以把他们都拿回来的！加油！你做的很棒！</string>
   <string name="faint_header">你没有生命值了！</string>
+  <string name="faint_button">补满生命值 &amp; 再次尝试</string>
   <string name="filter">过滤器</string>
   <string name="profile_image">头像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -216,6 +218,7 @@
   <string name="flag">标志</string>
   <string name="delete">删除</string>
   <string name="name">名称</string>
+  <string name="description">描述</string>
   <string name="add_tag">添加标签</string>
   <string name="privacy">隐私</string>
   <string name="write_message">写消息</string>
@@ -321,4 +324,5 @@
   <string name="share_raised" formatted="false">我刚刚在Habitica中通完成我现实生活中的任务得到了一匹坐骑%1$s %2$s！</string>
   <string name="open_in_store">在应用商店开放</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
+  <string name="leaderMessage" formatted="false">从%1$s来的消息</string>
 </resources>

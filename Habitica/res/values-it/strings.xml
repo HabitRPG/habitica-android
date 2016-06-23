@@ -94,7 +94,6 @@
   <string name="faint_subtitle">Non disperarti!</string>
   <string name="faint_penalty_body">Hai perso un livello, il tuo oro e un pezzo di equipaggiamento, ma puoi riottenere ogni cosa lavorando sodo! Buona fortuna - vedrai che ci riuscirai.</string>
   <string name="faint_header">Hai finito i punti salute!</string>
-  <string name="faint_button"><![CDATA[Ripristina Salute e riprova]]></string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Immagine profilo</string>
   <string name="mana_price_button" formatted="false">%d MP</string>

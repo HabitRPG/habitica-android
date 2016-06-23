@@ -94,7 +94,6 @@
   <string name="faint_subtitle">Не отчаивайтесь!</string>
   <string name="faint_penalty_body">Вы потеряли уровень, золото и предмет экипировки, но сможете это наверстать, если постараетесь! Удачи! Все получится!</string>
   <string name="faint_header">У вас закончилось здоровье!</string>
-  <string name="faint_button"><![CDATA[Refill Health & Try Again]]></string>
   <string name="filter">Фильтр</string>
   <string name="profile_image">Аватар</string>
   <string name="mana_price_button" formatted="false">%d М</string>

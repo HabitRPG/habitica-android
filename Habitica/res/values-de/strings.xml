@@ -94,7 +94,7 @@
   <string name="faint_subtitle">Nicht verzweifeln!</string>
   <string name="faint_penalty_body">Du hast einen Level, Dein Gold und einen Teil Deiner Ausrüstung verloren, aber Du kannst alles durch harte Arbeit wieder zurückbekommen! Viel Glück -- Du schaffst das.</string>
   <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>
-  <string name="faint_button"><![CDATA[Lebenspunkte wiederherstellen & nochmal versuchen]]></string>
+  <string name="faint_button">Lebenspunkte auffüllen &amp; Nochmal versuchen</string>
   <string name="filter">Filtern</string>
   <string name="profile_image">Profilbild</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
