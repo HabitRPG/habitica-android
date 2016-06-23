@@ -61,27 +61,29 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     // TODO needs a bit of cleanup
     public void setInnerAdapter() {
         int layoutOfType;
-        switch (this.classType) {
-            case Task.TYPE_HABIT:
-                layoutOfType = R.layout.habit_item_card;
-                this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, tagsHelper, layoutOfType, getContext(), userID);
-                break;
-            case Task.TYPE_DAILY:
-                layoutOfType = R.layout.daily_item_card;
-                int dailyResetOffset = 0;
-                if (user != null) {
-                    dailyResetOffset = user.getPreferences().getDayStart();
-                }
-                this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, tagsHelper, layoutOfType, getContext(), userID, dailyResetOffset);
-                break;
-            case Task.TYPE_TODO:
-                layoutOfType = R.layout.todo_item_card;
-                this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, tagsHelper, layoutOfType, getContext(), userID);
-                return;
-            case Task.TYPE_REWARD:
-                layoutOfType = R.layout.reward_item_card;
-                this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiHelper);
-                break;
+        if (this.classType != null) {
+            switch (this.classType) {
+                case Task.TYPE_HABIT:
+                    layoutOfType = R.layout.habit_item_card;
+                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, tagsHelper, layoutOfType, getContext(), userID);
+                    break;
+                case Task.TYPE_DAILY:
+                    layoutOfType = R.layout.daily_item_card;
+                    int dailyResetOffset = 0;
+                    if (user != null) {
+                        dailyResetOffset = user.getPreferences().getDayStart();
+                    }
+                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, tagsHelper, layoutOfType, getContext(), userID, dailyResetOffset);
+                    break;
+                case Task.TYPE_TODO:
+                    layoutOfType = R.layout.todo_item_card;
+                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, tagsHelper, layoutOfType, getContext(), userID);
+                    return;
+                case Task.TYPE_REWARD:
+                    layoutOfType = R.layout.reward_item_card;
+                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiHelper);
+                    break;
+            }
         }
     }
 

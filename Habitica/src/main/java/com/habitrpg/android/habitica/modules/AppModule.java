@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.modules;
 
+import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaPurchaseVerifier;
 import com.habitrpg.android.habitica.R;
@@ -61,7 +62,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public Billing providesBilling() {
+    public Billing providesBilling(APIHelper apiHelper) {
         return new Billing(application, new Billing.DefaultConfiguration() {
             @NonNull
             @Override
@@ -77,7 +78,7 @@ public class AppModule {
 
             @Override
             public PurchaseVerifier getPurchaseVerifier() {
-                return new HabiticaPurchaseVerifier(application);
+                return new HabiticaPurchaseVerifier(application, apiHelper);
             }
         });
     }

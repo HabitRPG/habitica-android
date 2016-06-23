@@ -11,6 +11,7 @@ import org.solovyev.android.checkout.RequestListener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,17 +25,20 @@ import java.util.Set;
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
+    private final APIHelper apiHelper;
     private Set<String> purchasedOrderList = new HashSet<>();
     private SharedPreferences preferences;
 
-    public HabiticaPurchaseVerifier(Context context) {
+    public HabiticaPurchaseVerifier(Context context, APIHelper apiHelper) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
+
+        this.apiHelper = apiHelper;
     }
 
     @Override
-    protected void doVerify(final List<Purchase> purchases, final RequestListener<List<Purchase>> requestListener) {
+    protected void doVerify(@NonNull final List<Purchase> purchases, @NonNull final RequestListener<List<Purchase>> requestListener) {
         final List<Purchase> verifiedPurchases = new ArrayList<>(purchases.size());
 
         for (final Purchase purchase : purchases) {
@@ -49,7 +53,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 validationRequest.transaction.signature = purchase.signature;
 
                 try {
-                    PurchaseValidationResult purchaseValidationResult = HabiticaApplication.ApiHelper.validatePurchase(validationRequest);
+                    PurchaseValidationResult purchaseValidationResult = apiHelper.validatePurchase(validationRequest);
                     if (purchaseValidationResult.ok) {
                         purchasedOrderList.add(purchase.orderId);
 
