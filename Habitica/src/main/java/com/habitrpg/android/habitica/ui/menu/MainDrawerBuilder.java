@@ -33,7 +33,7 @@ public class MainDrawerBuilder {
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
     public static final int SIDEBAR_TASKS = 0;
     public static final int SIDEBAR_SKILLS = 1;
-    public static final int SIDEBAR_INBOX = 15;
+    public static final int SIDEBAR_INBOX = 2;
     public static final int SIDEBAR_TAVERN = 3;
     public static final int SIDEBAR_PARTY = 4;
     public static final int SIDEBAR_GUILDS = 5;
@@ -46,7 +46,7 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_SETTINGS = 12;
     public static final int SIDEBAR_HELP = 13;
     public static final int SIDEBAR_ABOUT = 14;
-    
+
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         return new AccountHeaderBuilder()
                 .withActivity(activity)
