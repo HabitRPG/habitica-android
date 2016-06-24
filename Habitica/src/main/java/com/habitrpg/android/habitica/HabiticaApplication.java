@@ -14,13 +14,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
 
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Products;
-import org.solovyev.android.checkout.PurchaseVerifier;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,13 +24,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -48,7 +39,6 @@ public class HabiticaApplication extends MultiDexApplication {
 
     public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
     public static HabitRPGUser User;
-    public static APIHelper ApiHelper;
     public static Activity currentActivity = null;
     @Inject
     Lazy<APIHelper> lazyApiHelper;
