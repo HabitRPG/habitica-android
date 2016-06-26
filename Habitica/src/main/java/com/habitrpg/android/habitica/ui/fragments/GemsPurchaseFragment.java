@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -93,7 +92,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
                 @Override
                 public void onError(int i, @NonNull Exception e) {
-                    Crashlytics.logException(e);
+                    Fabric.getLogger().e("Purchase", "Error", e);
                 }
             });
 
@@ -161,7 +160,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
             @Override
             public void onError(int i, @NonNull Exception e) {
-                Crashlytics.logException(e);
+                Fabric.getLogger().e("Purchase", "getAllPurchases", e);
             }
         });
     }
@@ -183,7 +182,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
             @Override
             public void onError(int i, @NonNull Exception e) {
-                Crashlytics.logException(e);
+                Fabric.getLogger().e("Purchase", "Error", e);
             }
         });
 

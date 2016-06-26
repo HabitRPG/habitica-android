@@ -14,6 +14,13 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
 
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Products;
+import org.solovyev.android.checkout.PurchaseVerifier;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,11 +31,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -43,6 +52,18 @@ public class HabiticaApplication extends MultiDexApplication {
     @Inject
     Lazy<APIHelper> lazyApiHelper;
     private AppComponent component;
+    /**
+     * For better performance billing class should be used as singleton
+     */
+    @NonNull
+    private Billing billing;
+    /**
+     * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used
+     * anywhere in the app).
+     * This instance contains all available products in the app.
+     */
+    @NonNull
+    private Checkout checkout;
 
     public static HabiticaApplication getInstance(Context context) {
         return (HabiticaApplication) context.getApplicationContext();
@@ -103,6 +124,7 @@ public class HabiticaApplication extends MultiDexApplication {
         setupFlowManager();
         setupFacebookSdk();
         setupCrashlytics();
+        createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
         Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
         Fresco.initialize(this);
@@ -244,6 +266,34 @@ public class HabiticaApplication extends MultiDexApplication {
     @Override
     public File getDatabasePath(String name) {
         return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+    }
+
+    private void createBillingAndCheckout() {
+        billing = new Billing(this, new Billing.DefaultConfiguration() {
+            @NonNull
+            @Override
+            public String getPublicKey() {
+                return "DONT-NEED-IT";
+            }
+
+            @Nullable
+            @Override
+            public Cache getCache() {
+                return Billing.newCache();
+            }
+
+            @Override
+            public PurchaseVerifier getPurchaseVerifier() {
+                return new HabiticaPurchaseVerifier(HabiticaApplication.this, lazyApiHelper.get());
+            }
+        });
+
+        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, Arrays.asList(Purchase20Gems)));
+    }
+
+    @NonNull
+    public Checkout getCheckout() {
+        return checkout;
     }
 
     // endregion
