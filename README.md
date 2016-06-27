@@ -48,11 +48,12 @@ You can install our code style scheme to Intellij and/or Android Studio via this
 
 ## Build Instructions
 
-### Config File
+### Config Files
 
-Setup Habitica build config file by simply copying the example habitica properties file.
+Setup Habitica build config files by simply copying the example habitica files.
 
     $ cp habitica.properties.example habitica.properties
+    $ cp habitica.resources.example habitica.resources
 
 Note: this is the default production `habitica.properties` file for habitica.com. If you
 want to use a local habitica server, please modify the values in the properties file accordingly.
