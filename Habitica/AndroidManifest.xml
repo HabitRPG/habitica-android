@@ -128,6 +128,20 @@
             </intent-filter>
         </receiver>
 
+
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.habitrpg.android.habitica.fileprovider"
