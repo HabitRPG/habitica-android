@@ -4,19 +4,26 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.habitrpg.android.habitica.APIHelper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 /**
  * Created by keithholliday on 6/24/16.
  */
 public class HabiticaFirebaseInstanceIDService extends FirebaseInstanceIdService {
+
+    public PushNotificationManager pushNotificationManager;
+
     @Override
     public void onTokenRefresh() {
-        // Get updated InstanceID token.
+        pushNotificationManager = PushNotificationManager.getInstance(this);
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        pushNotificationManager.setRefreshedToken(refreshedToken);
         Log.d("test", "Refreshed token: " + refreshedToken);
-
-        // TODO: Implement this method to send any registration to your app's servers.
-//        sendRegistrationToServer(refreshedToken);
     }
 
 }

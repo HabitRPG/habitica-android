@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -21,6 +22,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -33,8 +36,11 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public APIHelper apiHelper;
     private Context context;
     private TimePreference timePreference;
+    private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
+    private PushNotificationManager pushNotificationManager;
+
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
@@ -64,6 +70,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
         }
 
+        pushNotificationManager = PushNotificationManager.getInstance(this.getActivity());
     }
 
     @Override
@@ -71,6 +78,12 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         timePreference = (TimePreference) findPreference("reminder_time");
         boolean useReminder = getPreferenceManager().getSharedPreferences().getBoolean("use_reminder", false);
         timePreference.setEnabled(useReminder);
+
+
+        pushNotificationsPreference = (PreferenceScreen) findPreference("pushNotifications");
+        boolean userPushNotifications = getPreferenceManager().getSharedPreferences().getBoolean("usePushNotifications", true);
+        pushNotificationsPreference.setEnabled(userPushNotifications);
+
 
         classSelectionPreference = findPreference("choose_class");
         classSelectionPreference.setVisible(false);
@@ -176,6 +189,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         } else if (key.equals("reminder_time")) {
             removeNotifications();
             scheduleNotifications();
+        } else if (key.equals("usePushNotifications")) {
+            boolean userPushNotifications = sharedPreferences.getBoolean(key, false);
+            pushNotificationsPreference.setEnabled(userPushNotifications);
+            Log.v("test", "test");
+            if (userPushNotifications) {
+                pushNotificationManager.addPushDeviceUsingStoredToken();
+            } else {
+                pushNotificationManager.removePushDeviceUsingStoredToken();
+            }
         }
     }
 

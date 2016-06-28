@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -87,6 +88,10 @@ public class PrefsActivity extends BaseActivity implements
         PreferenceFragmentCompat fragment = null;
         if (preferenceScreen.getKey().equals("accountDetails")) {
             fragment = new AccountDetailsFragment();
+        }
+
+        if (preferenceScreen.getKey().equals("pushNotifications")) {
+            fragment = new PushNotificationsPreferencesFragment();
         }
         return fragment;
     }
