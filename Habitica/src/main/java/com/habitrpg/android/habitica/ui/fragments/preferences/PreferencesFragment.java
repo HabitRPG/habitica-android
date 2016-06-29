@@ -192,7 +192,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         } else if (key.equals("usePushNotifications")) {
             boolean userPushNotifications = sharedPreferences.getBoolean(key, false);
             pushNotificationsPreference.setEnabled(userPushNotifications);
-            Log.v("test", "test");
             if (userPushNotifications) {
                 pushNotificationManager.addPushDeviceUsingStoredToken();
             } else {
