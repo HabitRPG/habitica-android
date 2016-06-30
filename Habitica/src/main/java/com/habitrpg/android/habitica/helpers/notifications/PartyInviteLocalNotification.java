@@ -5,12 +5,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.NotificationCompat;
+import android.content.res.Resources;
+import android.media.RingtoneManager;
+import android.net.Uri;
+
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
+import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
 /**
  * Created by keithholliday on 6/28/16.
@@ -18,21 +22,41 @@ import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 public class PartyInviteLocalNotification implements HabiticaLocalNotification {
 
     public void notifyLocally(Context context, String title, String message) {
-        Intent intent = new Intent(context, PartyInviteActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
-        Notification notification = new Notification.Builder(context)
+        Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_gryphon)
                 .setContentTitle(title)
-                .setContentText(message).setSmallIcon(R.drawable.ic_gryphon)
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_action_delete_white_24, "Accept", pendingIntent)
-                .addAction(R.drawable.ic_gryphon, "Reject", pendingIntent)
-                .build();
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(path);
+
+        Resources res = context.getResources();
+
+        Intent acceptInviteIntent = new Intent(context, LocalNotificationActionReceiver.class);
+        acceptInviteIntent.setAction(res.getString(R.string.accept_party_invite));
+        PendingIntent pendingIntentAccept = PendingIntent.getBroadcast(
+                context,
+                3000,
+                acceptInviteIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        notificationBuilder.addAction(R.drawable.ic_gryphon, "Accept", pendingIntentAccept);
+
+        Intent rejectInviteIntent = new Intent();
+        rejectInviteIntent.setAction(res.getString(R.string.reject_party_invite));
+        PendingIntent pendingIntentReject = PendingIntent.getBroadcast(
+                context,
+                2000,
+                acceptInviteIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        notificationBuilder.addAction(R.drawable.ic_gryphon, "Reject", pendingIntentReject);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-        notificationManager.notify((int) System.currentTimeMillis(), notification);
+        notificationManager.notify(10, notificationBuilder.build());
     }
 
 }

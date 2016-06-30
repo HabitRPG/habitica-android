@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -160,4 +161,5 @@ public interface AppComponent {
 
     void inject(PushNotificationManager pushNotificationManager);
 
+    void inject(LocalNotificationActionReceiver localNotificationActionReceiver);
 }

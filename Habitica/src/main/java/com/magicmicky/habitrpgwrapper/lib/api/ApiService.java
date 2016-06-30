@@ -205,6 +205,9 @@ public interface ApiService {
     @POST("groups/{gid}/invite")
     Observable<Void> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
 
+    @POST("groups/{gid}/reject-invite")
+    Observable<Void> rejectGroupInvite(@Path("gid") String groupId);
+
     @POST("groups/{gid}/quests/accept")
     Observable<Void> acceptQuest(@Path("gid") String groupId);
 
