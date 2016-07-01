@@ -17,6 +17,8 @@ public class HabiticaLocalNotificationFactory {
             return new ReceivedPrivateMessageLocalNotification();
         } else if (notificationType.contains(PushNotificationManager.RECEIVED_GEMS_PUSH_NOTIFICATION_KEY)) {
             return new ReceivedGemsGiftLocalNotification();
+        } else if (notificationType.contains(PushNotificationManager.RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY)) {
+            return new ReceivedSubscriptionGiftLocalNotification();
         }
 
         return null;
