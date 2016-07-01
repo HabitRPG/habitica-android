@@ -24,9 +24,12 @@ public class PushNotificationManager {
     private static PushNotificationManager instance = null;
     private static String DEVICE_TOKEN_PREFERENCE_STRING = "device-token-preference-string";
     public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
-    public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "New Message from test33@test.com:";
+    public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "New Message from";
     public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "Gems";
     public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "Subscription";
+    public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "Guild";
+    public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "Quest Invitation";
+    public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "Your Quest has Begun";
 
     @Inject
     public APIHelper apiHelper;
@@ -103,6 +106,12 @@ public class PushNotificationManager {
             key = "preference_push_gifted_gems";
         } else if (type.contains(RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_gifted_subscription";
+        } else if (type.contains(GUILD_INVITE_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_invited_to_guild";
+        } else if (type.contains(QUEST_INVITE_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_invited_to_quest";
+        } else if (type.contains(QUEST_BEGUN_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_your_quest_has_begun";
         }
 
         return sharedPreferences.getBoolean(key, true);

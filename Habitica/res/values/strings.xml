@@ -377,6 +377,10 @@ To start, which parts of your life do you want to improve?</string>
 
     <!-- Local notification actions -->
     <string name="accept_party_invite">ACCEPT_PARTY_INVITE</string>
-    <string name="reject_party_invite">ACCEPT_PARTY_INVITE</string>
+    <string name="reject_party_invite">REJECT_PARTY_INVITE</string>
+    <string name="accept_guild_invite">ACCEPT_GUILD_INVITE</string>
+    <string name="reject_guild_invite">REJECT_GUILD_INVITE</string>
+    <string name="accept_quest_invite">ACCEPT_QUEST_INVITE</string>
+    <string name="reject_quest_invite">REJECT_QUEST_INVITE</string>
 
 </resources>

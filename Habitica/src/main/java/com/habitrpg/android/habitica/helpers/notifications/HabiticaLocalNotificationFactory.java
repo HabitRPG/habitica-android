@@ -19,6 +19,12 @@ public class HabiticaLocalNotificationFactory {
             return new ReceivedGemsGiftLocalNotification();
         } else if (notificationType.contains(PushNotificationManager.RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY)) {
             return new ReceivedSubscriptionGiftLocalNotification();
+        } else if (notificationType.contains(PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY)) {
+            return new GuildInviteLocalNotification();
+        } else if (notificationType.contains(PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY)) {
+            return new QuestInviteLocalNotification();
+        } else if (notificationType.contains(PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY)) {
+            return new QuestBegunLocalNotification();
         }
 
         return null;
