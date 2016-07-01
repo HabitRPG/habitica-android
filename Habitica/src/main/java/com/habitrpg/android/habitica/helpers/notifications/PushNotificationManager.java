@@ -25,6 +25,7 @@ public class PushNotificationManager {
     private static String DEVICE_TOKEN_PREFERENCE_STRING = "device-token-preference-string";
     public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
     public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "New Message from test33@test.com:";
+    public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "Gems";
 
     @Inject
     public APIHelper apiHelper;
@@ -95,10 +96,10 @@ public class PushNotificationManager {
 
         if (type.equals(PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_invited_to_party";
-        }
-
-        if (type.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY)) {
+        } else if (type.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_received_a_private_message";
+        } else if (type.contains(RECEIVED_GEMS_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_gifted_gems";
         }
 
         return sharedPreferences.getBoolean(key, true);
