@@ -23,6 +23,8 @@ public class PushNotificationManager {
 
     private static PushNotificationManager instance = null;
     private static String DEVICE_TOKEN_PREFERENCE_STRING = "device-token-preference-string";
+    public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
+    public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "New Message from test33@test.com:";
 
     @Inject
     public APIHelper apiHelper;
@@ -80,8 +82,8 @@ public class PushNotificationManager {
 
     public void displayNotification (RemoteMessage remoteMessage) {
         HabiticaLocalNotificationFactory notificationFactory = new HabiticaLocalNotificationFactory();
-        HabiticaLocalNotification notification = notificationFactory.build("PARTY_INVITE_NOTIFICATION");
-        if (userIsSubscribedToNotificationType("PARTY_INVITE_NOTIFICATION") && notification != null) {
+        HabiticaLocalNotification notification = notificationFactory.build(remoteMessage.getNotification().getBody());
+        if (userIsSubscribedToNotificationType(remoteMessage.getNotification().getBody()) && notification != null) {
             notification.notifyLocally(this.context, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
     }
@@ -89,8 +91,14 @@ public class PushNotificationManager {
     private boolean userIsSubscribedToNotificationType(String type) {
         String key = "";
 
-        if (type.equals("PARTY_INVITE_NOTIFICATION")) {
+        //@TODO: If user has push turned off to send
+
+        if (type.equals(PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_invited_to_party";
+        }
+
+        if (type.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_received_a_private_message";
         }
 
         return sharedPreferences.getBoolean(key, true);

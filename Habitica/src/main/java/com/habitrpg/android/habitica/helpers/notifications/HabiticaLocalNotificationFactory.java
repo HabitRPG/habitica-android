@@ -11,9 +11,10 @@ public class HabiticaLocalNotificationFactory {
             return null;
         }
 
-        if(notificationType.equalsIgnoreCase("PARTY_INVITE_NOTIFICATION")){
+        if (notificationType.equalsIgnoreCase(PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
             return new PartyInviteLocalNotification();
-
+        } else if (notificationType.contains(PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY)) {
+            return new ReceivedPrivateMessageLocalNotification();
         }
 
         return null;
