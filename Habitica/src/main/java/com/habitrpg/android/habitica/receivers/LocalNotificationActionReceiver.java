@@ -45,7 +45,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
 
     private void handleLocalNotificationAction(String action) {
         //@TODO: This is a good place for a factory and event emitter pattern
-
+        Log.v("test", action);
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
@@ -56,6 +56,18 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
             apiHelper.apiService.rejectGroupInvite(partyId)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(aVoid -> {}, throwable -> {});
+        } else if (action.equals(this.resources.getString(R.string.accept_quest_invite))) {
+            if (this.user.getParty() == null) return;
+            String partyId = this.user.getParty().getId();
+            apiHelper.apiService.acceptQuest(partyId)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(aVoid -> {}, throwable -> {});
+        } else if (action.equals(this.resources.getString(R.string.reject_quest_invite))) {
+            if (this.user.getParty() == null) return;
+            String partyId = this.user.getParty().getId();
+            apiHelper.apiService.rejectQuest(partyId)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }

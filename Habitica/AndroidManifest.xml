@@ -127,6 +127,8 @@
             <intent-filter>
                 <action android:name="@string/accept_party_invite"/>
                 <action android:name="@string/reject_party_invite"/>
+                <action android:name="@string/accept_quest_invite"/>
+                <action android:name="@string/reject_quest_invite"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

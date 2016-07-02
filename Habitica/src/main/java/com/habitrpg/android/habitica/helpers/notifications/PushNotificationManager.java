@@ -29,7 +29,7 @@ public class PushNotificationManager {
     public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "Subscription";
     public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "Guild";
     public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
-    public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "Your Quest has Begun";
+    public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
 
     @Inject
     public APIHelper apiHelper;
