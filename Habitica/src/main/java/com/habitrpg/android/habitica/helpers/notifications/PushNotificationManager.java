@@ -30,6 +30,8 @@ public class PushNotificationManager {
     public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "Guild";
     public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
     public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
+    public static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
+
 
     @Inject
     public APIHelper apiHelper;
@@ -122,6 +124,8 @@ public class PushNotificationManager {
             key = "preference_push_invited_to_quest";
         } else if (type.contains(QUEST_BEGUN_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_your_quest_has_begun";
+        } else if (type.contains(WON_CHALLENGE_PUSH_NOTIFICATION_KEY)) {
+            key = "preference_push_you_won_challenge";
         }
 
         return sharedPreferences.getBoolean(key, true);
