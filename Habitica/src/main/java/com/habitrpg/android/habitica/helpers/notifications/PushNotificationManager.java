@@ -57,8 +57,12 @@ public class PushNotificationManager {
         if (this.refreshedToken == null) {
             return;
         }
+
         this.refreshedToken = refreshedToken;
-//            sharedPreferences.put
+
+        if (this.userIsSubscribedToNotifications()) {
+            this.addPushDeviceUsingStoredToken();
+        }
     }
 
     //@TODO: Use preferences
@@ -91,6 +95,10 @@ public class PushNotificationManager {
         if (userIsSubscribedToNotificationType(remoteMessage.getNotification().getBody()) && notification != null) {
             notification.notifyLocally(this.context, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
+    }
+
+    private boolean userIsSubscribedToNotifications() {
+        return sharedPreferences.getBoolean("pushNotifications", true);
     }
 
     private boolean userIsSubscribedToNotificationType(String type) {
