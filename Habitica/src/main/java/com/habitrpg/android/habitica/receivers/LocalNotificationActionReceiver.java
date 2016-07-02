@@ -47,11 +47,15 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
         //@TODO: This is a good place for a factory and event emitter pattern
 
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
-            apiHelper.apiService.joinGroup("party")
+            if (this.user.getInvitations().getParty() == null) return;
+            String partyId = this.user.getInvitations().getParty().getId();
+            apiHelper.apiService.joinGroup(partyId)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         } else if (action.equals(this.resources.getString(R.string.reject_party_invite))) {
-            apiHelper.apiService.rejectGroupInvite("party")
+            if (this.user.getInvitations().getParty() == null) return;
+            String partyId = this.user.getInvitations().getParty().getId();
+            apiHelper.apiService.rejectGroupInvite(partyId)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }

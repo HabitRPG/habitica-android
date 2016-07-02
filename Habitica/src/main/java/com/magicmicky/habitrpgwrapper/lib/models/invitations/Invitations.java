@@ -27,7 +27,7 @@ public class Invitations extends BaseModel {
 
     @SerializedName("party")
     @Expose
-    private Map<String, PartyInvite> party;
+    private PartyInvite party;
 
     @SerializedName("guilds")
     @Expose
@@ -38,7 +38,7 @@ public class Invitations extends BaseModel {
      * @return
      * The party invite
      */
-    public Map<String, PartyInvite> getParty() {
+    public PartyInvite getParty() {
         return party;
     }
 
@@ -47,7 +47,7 @@ public class Invitations extends BaseModel {
      * @param party
      * The party
      */
-    public void setParty(Map<String, PartyInvite> party) {
+    public void setParty(PartyInvite party) {
         this.party = party;
     }
 
