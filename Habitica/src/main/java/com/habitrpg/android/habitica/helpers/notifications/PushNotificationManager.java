@@ -22,12 +22,11 @@ import javax.inject.Inject;
 public class PushNotificationManager {
 
     private static PushNotificationManager instance = null;
-    private static String DEVICE_TOKEN_PREFERENCE_STRING = "device-token-preference-string";
     public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
     public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
     public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "Gems";
     public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "Subscription";
-    public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "Guild";
+    public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
     public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
     public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
     public static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
@@ -97,6 +96,7 @@ public class PushNotificationManager {
         HabiticaLocalNotificationFactory notificationFactory = new HabiticaLocalNotificationFactory();
         HabiticaLocalNotification notification = notificationFactory.build(remoteMessageIdentifier);
         if (userIsSubscribedToNotificationType(remoteMessageIdentifier) && notification != null) {
+            notification.setExtras(remoteMessage.getData());
             notification.notifyLocally(this.context, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
     }

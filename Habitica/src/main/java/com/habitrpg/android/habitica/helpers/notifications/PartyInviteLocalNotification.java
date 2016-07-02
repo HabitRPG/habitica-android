@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
+import java.util.Map;
+
 /**
  * Created by keithholliday on 6/28/16.
  */
@@ -57,6 +59,11 @@ public class PartyInviteLocalNotification implements HabiticaLocalNotification {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         notificationManager.notify(10, notificationBuilder.build());
+    }
+
+    @Override
+    public void setExtras(Map<String, String> data) {
+
     }
 
 }

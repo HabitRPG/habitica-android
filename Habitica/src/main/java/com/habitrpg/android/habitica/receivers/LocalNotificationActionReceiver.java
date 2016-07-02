@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.habitrpg.android.habitica.APIHelper;
@@ -24,13 +25,15 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
     private HabitRPGUser user;
     private String action;
     private Resources resources;
+    private Intent intent;
 
     @Override
-    public void onReceive(Context context, Intent arg1) {
+    public void onReceive(Context context, Intent intent) {
         HabiticaApplication.getInstance(context).getComponent().inject(this);
         this.resources = context.getResources();
 
-        this.action = arg1.getAction();
+        this.action = intent.getAction();
+        this.intent = intent;
 
         this.apiHelper.apiService.getUser()
                 .compose(this.apiHelper.configureApiCallObserver())
@@ -68,6 +71,20 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
             apiHelper.apiService.rejectQuest(partyId)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(aVoid -> {}, throwable -> {});
+        } else if (action.equals(this.resources.getString(R.string.accept_guild_invite))) {
+            Bundle extras = this.intent.getExtras();
+            String guildId = extras.getString("groupID");
+            if (guildId == null) return;
+            apiHelper.apiService.joinGroup(guildId)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(aVoid -> {}, throwable -> {});
+        } else if (action.equals(this.resources.getString(R.string.reject_guild_invite))) {
+            Bundle extras = this.intent.getExtras();
+            String guildId = extras.getString("groupID");
+            if (guildId == null) return;
+            apiHelper.apiService.rejectGroupInvite(guildId)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }
