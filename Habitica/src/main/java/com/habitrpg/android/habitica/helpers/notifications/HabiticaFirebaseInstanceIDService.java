@@ -23,7 +23,6 @@ public class HabiticaFirebaseInstanceIDService extends FirebaseInstanceIdService
         pushNotificationManager = PushNotificationManager.getInstance(this);
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         pushNotificationManager.setRefreshedToken(refreshedToken);
-        Log.d("test", "Refreshed token: " + refreshedToken);
     }
 
 }

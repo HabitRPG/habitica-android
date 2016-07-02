@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.ui.AvatarView;
+import com.magicmicky.habitrpgwrapper.lib.models.invitations.Invitations;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -92,6 +93,12 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "user_id")})
     private ContributorInfo contributor;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "invitations_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
+    private Invitations invitations;
+
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
@@ -137,6 +144,7 @@ public class HabitRPGUser extends BaseModel {
         this.profile = profile;
     }
 
+<<<<<<< e956287345a142dd1171f260872d6f1813f43d22
     public ContributorInfo getContributor() {
         return contributor;
     }
@@ -145,6 +153,13 @@ public class HabitRPGUser extends BaseModel {
         this.contributor = contributor;
     }
 
+    public Invitations getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(Invitations invitations) {
+        this.invitations = invitations;
+    }
 
     public UserParty getParty() {
         return party;
@@ -293,6 +308,9 @@ public class HabitRPGUser extends BaseModel {
         authentication.user_id = id;
         flags.user_id = id;
         if (contributor != null) { contributor.user_id = id; }
+        contributor.user_id = id;
+        invitations.user_id = id;
+
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
         if (dailys != null) {
