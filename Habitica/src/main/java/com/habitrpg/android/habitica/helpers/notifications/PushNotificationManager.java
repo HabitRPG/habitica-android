@@ -22,6 +22,8 @@ import javax.inject.Inject;
 public class PushNotificationManager {
 
     private static PushNotificationManager instance = null;
+    public static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
+
     public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
     public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
     public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "Gems";
@@ -49,6 +51,7 @@ public class PushNotificationManager {
             instance = new PushNotificationManager(context);
         }
 
+        instance.refreshedToken = instance.sharedPreferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "");
         instance.context = context;
 
         return instance;
@@ -60,6 +63,10 @@ public class PushNotificationManager {
         }
 
         this.refreshedToken = refreshedToken;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(DEVICE_TOKEN_PREFERENCE_KEY, refreshedToken);
+        editor.commit();
+
 
         if (this.userIsSubscribedToNotifications()) {
             this.addPushDeviceUsingStoredToken();
@@ -68,11 +75,11 @@ public class PushNotificationManager {
 
     //@TODO: Use preferences
     public void addPushDeviceUsingStoredToken () {
-        if (this.refreshedToken == null) {
+        if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
             this.refreshedToken = FirebaseInstanceId.getInstance().getToken();
         }
 
-        if (this.refreshedToken == null) {
+        if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
             return;
         }
 

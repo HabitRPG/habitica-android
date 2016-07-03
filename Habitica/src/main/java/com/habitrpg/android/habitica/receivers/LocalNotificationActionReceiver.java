@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.receivers;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
     private String action;
     private Resources resources;
     private Intent intent;
+    private Context conext;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -34,6 +36,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
 
         this.action = intent.getAction();
         this.intent = intent;
+        this.conext = conext;
 
         this.apiHelper.apiService.getUser()
                 .compose(this.apiHelper.configureApiCallObserver())
@@ -48,7 +51,6 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
 
     private void handleLocalNotificationAction(String action) {
         //@TODO: This is a good place for a factory and event emitter pattern
-        Log.v("test", action);
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
@@ -88,5 +90,8 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }
+
+        NotificationManager notificationManager = (NotificationManager) this.conext.getSystemService(this.conext.NOTIFICATION_SERVICE);
+        notificationManager.cancel(10);
     }
 }

@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -220,6 +221,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         //Check if reminder alarm is set
         scheduleReminder(this);
+
+        PushNotificationManager pushNotificationManager = PushNotificationManager.getInstance(this);
+        pushNotificationManager.addPushDeviceUsingStoredToken();
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
