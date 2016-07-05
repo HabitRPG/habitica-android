@@ -27,7 +27,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
     private String action;
     private Resources resources;
     private Intent intent;
-    private Context conext;
+    private Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,7 +36,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
 
         this.action = intent.getAction();
         this.intent = intent;
-        this.conext = conext;
+        this.context = context;
 
         this.apiHelper.apiService.getUser()
                 .compose(this.apiHelper.configureApiCallObserver())
@@ -50,7 +50,7 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
     }
 
     private void handleLocalNotificationAction(String action) {
-        NotificationManager notificationManager = (NotificationManager) this.conext.getSystemService(this.conext.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
         //@TODO: This is a good place for a factory and event emitter pattern

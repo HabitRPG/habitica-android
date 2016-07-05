@@ -52,7 +52,7 @@ public class QuestInviteLocalNotification implements HabiticaLocalNotification {
         );
         notificationBuilder.addAction(0, "Reject", pendingIntentReject);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(10000, notificationBuilder.build());
     }
 
