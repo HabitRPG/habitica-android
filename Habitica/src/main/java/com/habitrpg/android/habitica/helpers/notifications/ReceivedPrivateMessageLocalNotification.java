@@ -37,7 +37,6 @@ public class ReceivedPrivateMessageLocalNotification implements HabiticaLocalNot
                         .setSound(path);
 
         Intent intent = new Intent(context, LocalNotificationActionReceiver.class);
-//        rejectInviteIntent.setAction(res.getString(R.string.reject_guild_invite));
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 3000,

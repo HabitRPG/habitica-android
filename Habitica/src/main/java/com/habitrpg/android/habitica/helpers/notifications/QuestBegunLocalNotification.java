@@ -39,7 +39,7 @@ public class QuestBegunLocalNotification implements HabiticaLocalNotification {
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(10, notificationBuilder.build());
+        notificationManager.notify(10000, notificationBuilder.build());
     }
 
     @Override

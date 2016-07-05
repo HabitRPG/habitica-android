@@ -45,7 +45,7 @@ public class GuildInviteLocalNotification implements HabiticaLocalNotification {
                 acceptInviteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-        notificationBuilder.addAction(R.drawable.ic_gryphon, "Accept", pendingIntentAccept);
+        notificationBuilder.addAction(0, "Accept", pendingIntentAccept);
 
         Intent rejectInviteIntent = new Intent(context, LocalNotificationActionReceiver.class);
         rejectInviteIntent.setAction(res.getString(R.string.reject_guild_invite));
@@ -56,7 +56,7 @@ public class GuildInviteLocalNotification implements HabiticaLocalNotification {
                 rejectInviteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-        notificationBuilder.addAction(R.drawable.ic_gryphon, "Reject", pendingIntentReject);
+        notificationBuilder.addAction(0, "Reject", pendingIntentReject);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         notificationManager.notify(10, notificationBuilder.build());
