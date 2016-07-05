@@ -99,6 +99,8 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "user_id")})
     private Invitations invitations;
 
+    private List<PushDevice> pushDevices = new ArrayList<PushDevice>();
+
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
@@ -295,6 +297,14 @@ public class HabitRPGUser extends BaseModel {
 
     public void setTasksOrder(TasksOrder tasksOrder) {
         this.tasksOrder = tasksOrder;
+    }
+
+    public List<PushDevice> getPushDevices() {
+        return this.pushDevices;
+    }
+
+    public void setPushDevices(List<PushDevice> pushDevices) {
+        this.pushDevices = pushDevices;
     }
 
     @Override

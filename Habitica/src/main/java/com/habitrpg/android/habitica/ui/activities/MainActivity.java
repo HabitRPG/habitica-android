@@ -206,6 +206,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
+    PushNotificationManager pushNotificationManager;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -222,8 +224,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         //Check if reminder alarm is set
         scheduleReminder(this);
 
-        PushNotificationManager pushNotificationManager = PushNotificationManager.getInstance(this);
-        pushNotificationManager.addPushDeviceUsingStoredToken();
+        pushNotificationManager = PushNotificationManager.getInstance(this);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -352,8 +353,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             displayDeathDialogIfNeeded();
 
             if (!fromLocalDb) {
-
                 displayNewInboxMessagesBadge();
+                pushNotificationManager.setUser(user);
+                pushNotificationManager.addPushDeviceUsingStoredToken();
 
                 // Update the oldEntries
                 new Thread(() -> {

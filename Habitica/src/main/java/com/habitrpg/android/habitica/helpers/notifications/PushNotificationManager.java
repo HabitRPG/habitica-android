@@ -10,6 +10,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +42,16 @@ public class PushNotificationManager {
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
     private Context context;
+    private HabitRPGUser user;
 
     protected PushNotificationManager(Context context) {
         HabiticaApplication.getInstance(context).getComponent().inject(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public void setUser(HabitRPGUser user) {
+        Log.v("test", "sdffsdf");
+        this.user = user;
     }
 
     public static PushNotificationManager getInstance(Context context) {
@@ -66,11 +74,6 @@ public class PushNotificationManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DEVICE_TOKEN_PREFERENCE_KEY, refreshedToken);
         editor.commit();
-
-
-        if (this.userIsSubscribedToNotifications()) {
-            this.addPushDeviceUsingStoredToken();
-        }
     }
 
     //@TODO: Use preferences
@@ -80,6 +83,14 @@ public class PushNotificationManager {
         }
 
         if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
+            return;
+        }
+        Log.v("Test", this.user.toString());
+        if (this.user == null ||  this.userHasPushDevice()) {
+            return;
+        }
+
+        if (!this.userIsSubscribedToNotifications()) {
             return;
         }
 
@@ -95,6 +106,15 @@ public class PushNotificationManager {
         apiHelper.apiService.deletePushDevice(this.refreshedToken)
             .compose(apiHelper.configureApiCallObserver())
             .subscribe(aVoid -> {}, throwable -> {});
+    }
+
+    private Boolean userHasPushDevice() {
+        for(PushDevice pushDevice : this.user.getPushDevices()) {
+            if(pushDevice.getRegId().equals(this.refreshedToken)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void displayNotification (RemoteMessage remoteMessage) {
