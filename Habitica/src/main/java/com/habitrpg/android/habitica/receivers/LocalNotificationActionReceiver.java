@@ -50,6 +50,9 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
     }
 
     private void handleLocalNotificationAction(String action) {
+        NotificationManager notificationManager = (NotificationManager) this.conext.getSystemService(this.conext.NOTIFICATION_SERVICE);
+        notificationManager.cancel(10);
+
         //@TODO: This is a good place for a factory and event emitter pattern
         if (action.equals(this.resources.getString(R.string.accept_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
@@ -90,8 +93,5 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(aVoid -> {}, throwable -> {});
         }
-
-        NotificationManager notificationManager = (NotificationManager) this.conext.getSystemService(this.conext.NOTIFICATION_SERVICE);
-        notificationManager.cancel(10);
     }
 }

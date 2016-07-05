@@ -24,10 +24,10 @@ public class PushNotificationManager {
     private static PushNotificationManager instance = null;
     public static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
 
-    public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "Invited To Party";
+    public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
     public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
-    public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "Gems";
-    public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "Subscription";
+    public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
+    public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
     public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
     public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
     public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";

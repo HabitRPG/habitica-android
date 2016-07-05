@@ -47,12 +47,12 @@ public class PartyInviteLocalNotification implements HabiticaLocalNotification {
         );
         notificationBuilder.addAction(R.drawable.ic_gryphon, "Accept", pendingIntentAccept);
 
-        Intent rejectInviteIntent = new Intent();
+        Intent rejectInviteIntent = new Intent(context, LocalNotificationActionReceiver.class);
         rejectInviteIntent.setAction(res.getString(R.string.reject_party_invite));
         PendingIntent pendingIntentReject = PendingIntent.getBroadcast(
                 context,
                 2000,
-                acceptInviteIntent,
+                rejectInviteIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         notificationBuilder.addAction(R.drawable.ic_gryphon, "Reject", pendingIntentReject);
