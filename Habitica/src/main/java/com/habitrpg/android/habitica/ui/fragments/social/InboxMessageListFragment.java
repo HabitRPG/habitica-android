@@ -67,6 +67,7 @@ public class InboxMessageListFragment extends BaseMainFragment
 
             chatAdapter = new ChatRecyclerViewAdapter(messages, null, null, false);
             chatAdapter.setToInboxChat(this.replyToUserUUID);
+            chatAdapter.setSendingUser(this.user);
             chatRecyclerView.setAdapter(chatAdapter);
 
             return view;

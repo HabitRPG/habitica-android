@@ -86,6 +86,12 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "user_id")})
     private Flags flags;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "contributor_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
+    private ContributorInfo contributor;
+
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
@@ -130,6 +136,15 @@ public class HabitRPGUser extends BaseModel {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+    public ContributorInfo getContributor() {
+        return contributor;
+    }
+
+    public void setContributor(ContributorInfo contributor) {
+        this.contributor = contributor;
+    }
+
 
     public UserParty getParty() {
         return party;
@@ -277,6 +292,7 @@ public class HabitRPGUser extends BaseModel {
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
+        contributor.user_id = id;
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
         if (dailys != null) {

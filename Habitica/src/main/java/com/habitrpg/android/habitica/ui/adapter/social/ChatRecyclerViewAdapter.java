@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -55,6 +56,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private boolean isTavern;
     private boolean isInboxChat = false;
     private String replyToUserUUID;
+    private HabitRPGUser sendingUser;
 
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, String uuid, String groupId, boolean isTavern) {
         this.messages = messages;
@@ -66,6 +68,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     public void setToInboxChat(String replyToUserUUID) {
         this.replyToUserUUID = replyToUserUUID;
         this.isInboxChat = true;
+    }
+
+    public void setSendingUser(HabitRPGUser user) {
+        this.sendingUser = user;
     }
 
     public void setMessages(List<ChatMessage> messages) {
@@ -238,14 +244,22 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
                 setLikeProperties(msg);
 
-                DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                if (msg.sent != null && msg.sent.equals("true")) {
+                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
+                } else {
+                    DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                }
 
                 if (msg.user == null || msg.user.equals("")) {
                     msg.user = "system";
                 }
 
                 if (userLabel != null) {
-                    userLabel.setText(msg.user);
+                    if (msg.sent != null && msg.sent.equals("true")) {
+                        userLabel.setText(sendingUser.getProfile().getName());
+                    } else {
+                        userLabel.setText(msg.user);
+                    }
                 }
 
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());

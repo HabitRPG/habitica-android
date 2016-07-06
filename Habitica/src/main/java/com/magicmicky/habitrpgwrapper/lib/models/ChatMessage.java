@@ -13,23 +13,6 @@ import java.util.HashMap;
  */
 public class ChatMessage {
 
-    private static final HashMap<Integer, Integer> CONTRIBUTOR_COLOR_DICT;
-
-    static {
-        CONTRIBUTOR_COLOR_DICT = new HashMap<>();
-        CONTRIBUTOR_COLOR_DICT.put(0, R.color.contributor_0);
-        CONTRIBUTOR_COLOR_DICT.put(1, R.color.contributor_1);
-        CONTRIBUTOR_COLOR_DICT.put(2, R.color.contributor_2);
-        CONTRIBUTOR_COLOR_DICT.put(3, R.color.contributor_3);
-        CONTRIBUTOR_COLOR_DICT.put(4, R.color.contributor_4);
-        CONTRIBUTOR_COLOR_DICT.put(5, R.color.contributor_5);
-        CONTRIBUTOR_COLOR_DICT.put(6, R.color.contributor_6);
-        CONTRIBUTOR_COLOR_DICT.put(7, R.color.contributor_7);
-        CONTRIBUTOR_COLOR_DICT.put(8, R.color.contributor_mod);
-        CONTRIBUTOR_COLOR_DICT.put(9, R.color.contributor_staff);
-    }
-
-
     public String id;
 
     public String text;
@@ -50,13 +33,15 @@ public class ChatMessage {
 
     public String user;
 
+    public String sent;
+
     public int getContributorColor() {
         int rColor = android.R.color.black;
 
 
         if (contributor != null) {
-            if (CONTRIBUTOR_COLOR_DICT.containsKey(contributor.level)) {
-                rColor = CONTRIBUTOR_COLOR_DICT.get(contributor.level);
+            if (ContributorInfo.CONTRIBUTOR_COLOR_DICT.containsKey(contributor.level)) {
+                rColor = ContributorInfo.CONTRIBUTOR_COLOR_DICT.get(contributor.level);
             }
         }
 
