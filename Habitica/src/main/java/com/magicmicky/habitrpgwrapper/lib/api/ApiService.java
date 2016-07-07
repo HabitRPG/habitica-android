@@ -144,6 +144,9 @@ public interface ApiService {
     @POST("user/disable-classes")
     Observable<HabitRPGUser> disableClasses();
 
+    @POST("user/mark-pms-read")
+    Observable<Void> markPrivateMessagesRead();
+
     /* Group API */
 
     @GET("groups")

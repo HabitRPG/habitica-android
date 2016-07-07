@@ -43,6 +43,10 @@ public class InboxFragment extends BaseMainFragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        this.apiHelper.apiService.markPrivateMessagesRead()
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {}, throwable -> {});
+
         View v = inflater.inflate(R.layout.fragment_inbox, container, false);
         unbinder = ButterKnife.bind(this, v);
 

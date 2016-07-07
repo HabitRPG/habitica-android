@@ -63,9 +63,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.BadgeStyle;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.utils.BadgeDrawableBuilder;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -97,6 +100,7 @@ import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -346,6 +350,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             displayDeathDialogIfNeeded();
 
             if (!fromLocalDb) {
+
+                displayNewInboxMessagesBadge();
+
                 // Update the oldEntries
                 new Thread(() -> {
 
@@ -440,6 +447,31 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             //Ignored
         }
     }
+
+    private void displayNewInboxMessagesBadge() {
+        Integer numberOfUnreadPms = this.user.getInbox().getNewMessages();
+        IDrawerItem newInboxItem;
+
+        if (numberOfUnreadPms <= 0) {
+            newInboxItem = new PrimaryDrawerItem()
+                    .withName(this.getString(R.string.sidebar_inbox))
+                    .withIdentifier(MainDrawerBuilder.SIDEBAR_INBOX);
+        } else {
+            String numberOfUnreadPmsLabel = String.valueOf(numberOfUnreadPms);
+            BadgeStyle badgeStyle = new BadgeStyle()
+                    .withTextColor(Color.WHITE)
+                    .withColorRes(R.color.md_red_700);
+
+            newInboxItem = new PrimaryDrawerItem()
+                    .withName(this.getString(R.string.sidebar_inbox))
+                    .withIdentifier(MainDrawerBuilder.SIDEBAR_INBOX)
+                    .withBadge(numberOfUnreadPmsLabel)
+                    .withBadgeStyle(badgeStyle);
+        }
+
+        this.drawer.updateItemAtPosition(newInboxItem, MainDrawerBuilder.SIDEBAR_INBOX + 2);
+    }
+
 
     private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries) {
         final ArrayList<String> onlineChecklistItemIdList = new ArrayList<>();
