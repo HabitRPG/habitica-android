@@ -84,55 +84,6 @@ public class LoginActivity extends BaseActivity
     TextView mForgotPWTV;
     private Menu menu;
     private CallbackManager callbackManager;
-    private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            if (isRegistering) {
-                String username, email, password, cpassword;
-                username = String.valueOf(mUsernameET.getText()).trim();
-                email = String.valueOf(mEmail.getText()).trim();
-                password = String.valueOf(mPasswordET.getText());
-                cpassword = String.valueOf(mConfirmPassword.getText());
-                if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
-                    showValidationError(R.string.login_validation_error_fieldsmissing);
-                    return;
-                }
-                apiHelper.registerUser(username, email, password, cpassword)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(LoginActivity.this, throwable -> {
-                            hideProgress();
-                        });
-            } else {
-                String username, password;
-                username = String.valueOf(mUsernameET.getText()).trim();
-                password = String.valueOf(mPasswordET.getText());
-                if (username.length() == 0 || password.length() == 0) {
-                    showValidationError(R.string.login_validation_error_fieldsmissing);
-                    return;
-                }
-                apiHelper.connectUser(username, password)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(LoginActivity.this, throwable -> {
-                            hideProgress();
-                        });
-            }
-        }
-    };
-    private View.OnClickListener mForgotPWClick = v -> {
-        String url = BuildConfig.BASE_URL;
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-    };
-
-    public static void show(final View v) {
-        v.setVisibility(View.VISIBLE);
-    }
-
-    public static void hide(final View v) {
-        v.setVisibility(View.GONE);
-    }
 
     @Override
     protected int getLayoutResId() {
