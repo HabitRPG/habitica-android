@@ -50,7 +50,6 @@ public class PushNotificationManager {
     }
 
     public void setUser(HabitRPGUser user) {
-        Log.v("test", "sdffsdf");
         this.user = user;
     }
 
