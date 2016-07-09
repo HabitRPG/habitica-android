@@ -84,7 +84,7 @@ public class PushNotificationManager {
         if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
             return;
         }
-        Log.v("Test", this.user.toString());
+
         if (this.user == null ||  this.userHasPushDevice()) {
             return;
         }
@@ -123,7 +123,7 @@ public class PushNotificationManager {
         HabiticaLocalNotification notification = notificationFactory.build(remoteMessageIdentifier);
         if (userIsSubscribedToNotificationType(remoteMessageIdentifier) && notification != null) {
             notification.setExtras(remoteMessage.getData());
-            notification.notifyLocally(this.context, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            notification.notifyLocally(this.context, remoteMessage.getData().get("title"), remoteMessage.getData().get("body"));
         }
     }
 
