@@ -21,20 +21,16 @@ import java.util.Map;
 /**
  * Created by keithholliday on 6/28/16.
  */
-public class PartyInviteLocalNotification implements HabiticaLocalNotification {
+public class PartyInviteLocalNotification extends HabiticaLocalNotification {
 
     public void notifyLocally(Context context, String title, String message) {
+        super.notifyLocally(context, title, message);
+        this.setNotificationActions();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(10, notificationBuilder.build());
+    }
 
-        Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_gryphon)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(path);
-
+    protected void setNotificationActions() {
         Resources res = context.getResources();
 
         Intent acceptInviteIntent = new Intent(context, LocalNotificationActionReceiver.class);
@@ -56,14 +52,5 @@ public class PartyInviteLocalNotification implements HabiticaLocalNotification {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         notificationBuilder.addAction(0, "Reject", pendingIntentReject);
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(10, notificationBuilder.build());
     }
-
-    @Override
-    public void setExtras(Map<String, String> data) {
-
-    }
-
 }

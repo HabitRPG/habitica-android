@@ -22,20 +22,17 @@ import java.util.Map;
 /**
  * Created by keithholliday on 7/1/16.
  */
-public class ReceivedPrivateMessageLocalNotification implements HabiticaLocalNotification {
+public class ReceivedPrivateMessageLocalNotification extends HabiticaLocalNotification {
 
     @Override
     public void notifyLocally(Context context, String title, String message) {
-        Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        super.notifyLocally(context, title, message);
+        this.setNotificationActions();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        notificationManager.notify(10, notificationBuilder.build());
+    }
 
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_gryphon)
-                        .setContentTitle(title)
-                        .setContentText(message)
-                        .setAutoCancel(true)
-                        .setSound(path);
-
+    protected void setNotificationActions() {
         Intent intent = new Intent(context, LocalNotificationActionReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
@@ -45,13 +42,5 @@ public class ReceivedPrivateMessageLocalNotification implements HabiticaLocalNot
         );
 
         notificationBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify(10, notificationBuilder.build());
-    }
-
-    @Override
-    public void setExtras(Map<String, String> data) {
-
     }
 }
