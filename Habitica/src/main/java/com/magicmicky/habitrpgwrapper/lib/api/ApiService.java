@@ -144,6 +144,9 @@ public interface ApiService {
     @POST("user/disable-classes")
     Observable<HabitRPGUser> disableClasses();
 
+    @POST("user/mark-pms-read")
+    Observable<Void> markPrivateMessagesRead();
+
     /* Group API */
 
     @GET("groups")
@@ -213,6 +216,9 @@ public interface ApiService {
     @POST("/iap/android/verify")
     Call<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
 
+    //Members URL
+    @POST("members/send-private-message")
+    Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
 
     //DEBUG: These calls only work on a local development server
 

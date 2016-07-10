@@ -91,6 +91,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -151,7 +152,7 @@ public class APIHelper implements Action1<Throwable> {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         }
 
         OkHttpClient client = new OkHttpClient.Builder()

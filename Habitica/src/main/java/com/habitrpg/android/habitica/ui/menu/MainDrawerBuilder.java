@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
@@ -32,6 +33,7 @@ public class MainDrawerBuilder {
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
     public static final int SIDEBAR_TASKS = 0;
     public static final int SIDEBAR_SKILLS = 1;
+    public static final int SIDEBAR_INBOX = 2;
     public static final int SIDEBAR_TAVERN = 3;
     public static final int SIDEBAR_PARTY = 4;
     public static final int SIDEBAR_GUILDS = 5;
@@ -44,7 +46,6 @@ public class MainDrawerBuilder {
     public static final int SIDEBAR_SETTINGS = 12;
     public static final int SIDEBAR_HELP = 13;
     public static final int SIDEBAR_ABOUT = 14;
-
 
     public static AccountHeaderBuilder CreateDefaultAccountHeader(final Activity activity) {
         return new AccountHeaderBuilder()
@@ -73,6 +74,7 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS),
 
                         new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social).toUpperCase()),
+                        new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_inbox)).withIdentifier(SIDEBAR_INBOX),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)).withIdentifier(SIDEBAR_GUILDS),
@@ -104,6 +106,10 @@ public class MainDrawerBuilder {
                         }
                         case SIDEBAR_SKILLS: {
                             fragment = new SkillsFragment();
+                            break;
+                        }
+                        case SIDEBAR_INBOX: {
+                            fragment = new InboxFragment();
                             break;
                         }
                         case SIDEBAR_PARTY: {

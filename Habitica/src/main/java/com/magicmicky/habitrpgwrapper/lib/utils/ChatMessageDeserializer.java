@@ -35,9 +35,11 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
         if (obj.has("flagCount")) {
             message.flagCount = obj.get("flagCount").getAsInt();
         }
+
         if (obj.has("uuid")) {
             message.uuid = obj.get("uuid").getAsString();
         }
+
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull()) {
                 if (obj.get("contributor").isJsonObject()) {
@@ -49,11 +51,17 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
                 }
             }
         }
+
         if (obj.has("backer")) {
             message.backer = context.deserialize(obj.get("backer"), Backer.class);
         }
+
         if (obj.has("user")) {
             message.user = obj.get("user").getAsString();
+        }
+
+        if (obj.has("sent")) {
+            message.sent = obj.get("sent").getAsString();
         }
 
         return message;
