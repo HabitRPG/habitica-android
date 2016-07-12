@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
@@ -171,8 +172,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private TaskAlarmManager taskAlarmManager;
     private List<Tag> selectedTags;
 
-    //Used for reminders @TODO: Move this to reminders manager
-    DateFormat dateFormater = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+    private RemindersManager remindersManager;
 
     @Override
     protected int getLayoutResId() {
@@ -195,6 +195,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             return;
         }
 
+        remindersManager = new RemindersManager();
         taskAlarmManager = TaskAlarmManager.getInstance(this);
 
         dueDateListener = new DateEditTextListener(dueDatePickerText);
@@ -453,64 +454,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @OnClick(R.id.add_reminder_button)
     public void addReminder() {
-        try {
-            Date date = dateFormater.parse(newRemindersEditText.getText().toString());
-            RemindersItem item = new RemindersItem();
-            UUID randomUUID = UUID.randomUUID();
-            item.setId(randomUUID.toString());
-            item.setStartDate(date);
-            item.setTime(date);
-            item.setType(taskType);
-            remindersAdapter.addItem(item);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
+        item.setType(taskType);
+        remindersAdapter.addItem(item);
         newRemindersEditText.setText("");
     }
 
     @OnClick(R.id.new_reminder_edittext)
     public void changeNewReminderTime() {
-        Calendar currentTime = Calendar.getInstance();
-        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = currentTime.get(Calendar.MINUTE);
-
-        if (taskType.equals("todo")) {
-            Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.custom_date_time_dialogue);
-            dialog.setTitle("Select Date and Time");
-
-            Button dialogConfirmButton = (Button) dialog.findViewById(R.id.customDialogConfirmButton);
-            TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
-            DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
-
-            dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int day = dialogDatePicker.getDayOfMonth();
-                    int month = dialogDatePicker.getMonth();
-                    int year =  dialogDatePicker.getYear();
-                    int hour = dialogTimePicker.getCurrentHour();
-                    int minute = dialogTimePicker.getCurrentMinute();
-
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year, month, day, hour, minute, 0);
-
-                    newRemindersEditText.setText(dateFormater.format(calendar.getTime()));
-                    dialog.hide();
-                }
-            });
-            dialog.show();
-        } else {
-            TimePickerDialog timePickerDialog;
-            timePickerDialog = new TimePickerDialog(TaskFormActivity.this, (timePicker, selectedHour, selectedMinute) -> {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
-                newRemindersEditText.setText(dateFormater.format(calendar.getTime()));
-            }, hour, minute, true);
-            timePickerDialog.setTitle("Select Time");
-            timePickerDialog.show();
-        }
+        remindersManager.createDialogeForEditText(newRemindersEditText, taskType, this);
     }
 
     private void createTagsCheckBoxes() {

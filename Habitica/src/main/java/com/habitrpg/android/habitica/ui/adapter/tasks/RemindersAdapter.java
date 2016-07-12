@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
@@ -36,11 +37,11 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
         implements ItemTouchHelperAdapter {
 
     private final List<RemindersItem> reminders = new ArrayList<>();
-    private DateFormat dateFormater;
+    private RemindersManager remindersManager;
 
     public RemindersAdapter(List<RemindersItem> remindersInc) {
         reminders.addAll(remindersInc);
-        dateFormater = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+        remindersManager = new RemindersManager();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         Date time = reminders.get(position).getTime();
-        holder.reminderItemTextView.setText(dateFormater.format(time));
+        holder.reminderItemTextView.setText(remindersManager.reminderTimeToString(time));
         holder.hour = time.getHours();
         holder.minute = time.getMinutes();
     }
@@ -114,49 +115,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
                     taskType = reminder.getTask().getType();
                 }
 
-                if (taskType.equals("todo")) {
-                    Dialog dialog = new Dialog(v.getContext());
-                    dialog.setContentView(R.layout.custom_date_time_dialogue);
-                    dialog.setTitle("Select Date and Time");
-
-                    Button dialogConfirmButton = (Button) dialog.findViewById(R.id.customDialogConfirmButton);
-                    TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
-                    DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
-
-                    dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            int day = dialogDatePicker.getDayOfMonth();
-                            int month = dialogDatePicker.getMonth();
-                            int year =  dialogDatePicker.getYear();
-                            int hour = dialogTimePicker.getCurrentHour();
-                            int minute = dialogTimePicker.getCurrentMinute();
-
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.set(year, month, day, hour, minute, 0);
-
-                            reminder.setTime(calendar.getTime());
-
-                            reminderItemTextView.setText(dateFormater.format(calendar.getTime()));
-                            dialog.hide();
-                        }
-                    });
-                    dialog.show();
-                } else {
-                    TimePickerDialog timePicker;
-                    timePicker = new TimePickerDialog(v.getContext(), (timePicker1, selectedHour, selectedMinute) -> {
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(reminder.getTime());
-                        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
-
-                        reminder.setTime(calendar.getTime());
-
-                        reminderItemTextView.setText(dateFormater.format(calendar.getTime()));
-                    }, hour, minute, true);
-                    timePicker.setTitle("Select Time");
-                    timePicker.show();
-                }
+                remindersManager.createDialogeForEditText(reminderItemTextView, taskType, v.getContext());
             });
         }
 
