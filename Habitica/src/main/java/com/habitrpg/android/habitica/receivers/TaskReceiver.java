@@ -2,9 +2,8 @@ package com.habitrpg.android.habitica.receivers;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;

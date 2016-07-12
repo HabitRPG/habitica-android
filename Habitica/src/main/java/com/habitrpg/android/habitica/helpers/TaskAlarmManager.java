@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.helpers;
+package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
@@ -14,7 +14,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;

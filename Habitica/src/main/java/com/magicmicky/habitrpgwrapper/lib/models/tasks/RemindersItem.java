@@ -7,10 +7,13 @@ import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by keithholliday on 5/31/16.
@@ -34,6 +37,9 @@ public class RemindersItem extends BaseModel {
     private Date time;
     @Column
     private Integer alarmId;
+
+    //Use to store task type before a task is created
+    private String type;
 
     public String getId() {
         return id;
@@ -69,7 +75,13 @@ public class RemindersItem extends BaseModel {
 
     public Task getTask() {
         if (task != null) {
-            return task.toModel();
+            //This will get all the task info
+            Task taskModel = task.toModel();
+            List<Task> task = new Select()
+                    .from(Task.class)
+                    .where(Condition.column("id").eq(taskModel.getId()))
+                    .queryList();
+            return task.get(0);
         } else {
             return null;
         }
@@ -79,6 +91,14 @@ public class RemindersItem extends BaseModel {
         this.task = new ForeignKeyContainer<>(Task.class);
         this.task.setModel(task);
         this.task.put("id", task.getId());
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
