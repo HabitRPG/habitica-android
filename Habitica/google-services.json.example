@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "app-id",
         "android_client_info": {
-          "package_name": "com.example"
+          "package_name": "com.habitrpg.android.habitica.debug"
         }
       },
       "oauth_client": [
@@ -41,7 +41,7 @@
       "client_info": {
         "mobilesdk_app_id": "app-id",
         "android_client_info": {
-          "package_name": "com.example"
+          "package_name": "com.habitrpg.android.habitica.debug"
         }
       },
       "oauth_client": [
