@@ -146,7 +146,6 @@ public class HabitRPGUser extends BaseModel {
         this.profile = profile;
     }
 
-<<<<<<< e956287345a142dd1171f260872d6f1813f43d22
     public ContributorInfo getContributor() {
         return contributor;
     }
