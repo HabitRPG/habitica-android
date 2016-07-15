@@ -214,7 +214,7 @@ public interface ApiService {
     Observable<Void> leaveQuest(@Path("gid") String groupId);
 
     @POST("/iap/android/verify")
-    Call<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
+    Observable<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
 
     //Members URL
     @POST("members/send-private-message")

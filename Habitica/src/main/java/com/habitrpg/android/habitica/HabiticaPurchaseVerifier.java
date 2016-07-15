@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import retrofit2.adapter.rxjava.HttpException;
+
 /**
  * Created by Negue on 26.11.2015.
  */
@@ -52,20 +54,29 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 validationRequest.transaction.receipt = purchase.data;
                 validationRequest.transaction.signature = purchase.signature;
 
-                try {
-                    PurchaseValidationResult purchaseValidationResult = apiHelper.validatePurchase(validationRequest);
-                    if (purchaseValidationResult.ok) {
-                        purchasedOrderList.add(purchase.orderId);
+                apiHelper.apiService.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
+                    purchasedOrderList.add(purchase.orderId);
 
-                        verifiedPurchases.add(purchase);
+                    verifiedPurchases.add(purchase);
 
-                        requestListener.onSuccess(verifiedPurchases);
-                    } else {
-                        requestListener.onError(purchases.indexOf(purchase), new Exception(purchaseValidationResult.data.toString()));
+                    requestListener.onSuccess(verifiedPurchases);
+                }, throwable -> {
+                    if (throwable.getClass().equals(HttpException.class)) {
+                        HttpException error = (HttpException)throwable;
+                        APIHelper.ErrorResponse res = apiHelper.getErrorResponse((HttpException) throwable);
+                        if (error.code() == 401) {
+                            if (res.message.equals("RECEIPT_ALREADY_USED")) {
+                                purchasedOrderList.add(purchase.orderId);
+
+                                verifiedPurchases.add(purchase);
+
+                                requestListener.onSuccess(verifiedPurchases);
+                                return;
+                            }
+                        }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    requestListener.onError(purchases.indexOf(purchase), new Exception());
+                });
             }
         }
 

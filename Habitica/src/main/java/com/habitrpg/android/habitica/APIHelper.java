@@ -288,17 +288,7 @@ public class APIHelper implements Action1<Throwable> {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
         } else if (throwableClass.equals(HttpException.class)) {
             HttpException error = (HttpException) throwable;
-            retrofit2.Response<?> response = error.response();
-            ErrorResponse res = null;
-
-            Converter<ResponseBody, ?> errorConverter =
-                    gsonConverter
-                            .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
-            try {
-                res = (ErrorResponse) errorConverter.convert(response.errorBody());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ErrorResponse res = getErrorResponse(error);
 
             int status = error.code();
             if (status >= 400 && status < 500) {
@@ -315,6 +305,18 @@ public class APIHelper implements Action1<Throwable> {
             }
         } else {
             Crashlytics.logException(throwable);
+        }
+    }
+
+    public ErrorResponse getErrorResponse(HttpException error) {
+        retrofit2.Response<?> response = error.response();
+        Converter<ResponseBody, ?> errorConverter =
+                gsonConverter
+                        .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
+        try {
+            return (ErrorResponse) errorConverter.convert(response.errorBody());
+        } catch (IOException e) {
+            return new ErrorResponse();
         }
     }
 
@@ -382,11 +384,6 @@ public class APIHelper implements Action1<Throwable> {
         });
     }
 
-    public PurchaseValidationResult validatePurchase(PurchaseValidationRequest request) throws IOException {
-        Call<PurchaseValidationResult> response = apiService.validatePurchase(request);
-        return response.execute().body();
-    }
-
     @SuppressWarnings("unchecked")
     public <T> Observable.Transformer<T, T> configureApiCallObserver() {
         return (Observable.Transformer<T, T>) apiCallTransformer;
@@ -400,7 +397,7 @@ public class APIHelper implements Action1<Throwable> {
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
     }
 
-    public class ErrorResponse {
+    public static class ErrorResponse {
         public String message;
     }
 }
