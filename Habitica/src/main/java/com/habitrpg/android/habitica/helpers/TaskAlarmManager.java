@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.helpers;
+package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;

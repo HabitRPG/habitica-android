@@ -1,20 +1,28 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -27,10 +35,13 @@ import butterknife.ButterKnife;
  */
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter {
+
     private final List<RemindersItem> reminders = new ArrayList<>();
+    private RemindersManager remindersManager;
 
     public RemindersAdapter(List<RemindersItem> remindersInc) {
         reminders.addAll(remindersInc);
+        remindersManager = new RemindersManager();
     }
 
     @Override
@@ -42,7 +53,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         Date time = reminders.get(position).getTime();
-        holder.reminderItemTextView.setText(String.format("%d:%02d", time.getHours(), time.getMinutes()));
+        holder.reminderItemTextView.setText(remindersManager.reminderTimeToString(time));
         holder.hour = time.getHours();
         holder.minute = time.getMinutes();
     }
@@ -94,19 +105,17 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
             deleteButton.setOnClickListener(this);
 
             reminderItemTextView.setOnClickListener(v -> {
-                TimePickerDialog timePicker;
-                timePicker = new TimePickerDialog(v.getContext(), (timePicker1, selectedHour, selectedMinute) -> {
-                    reminderItemTextView.setText(String.format("%d:%02d", selectedHour, selectedMinute));
+                RemindersItem reminder = reminders.get(getAdapterPosition());
 
-                    RemindersItem reminder = reminders.get(getAdapterPosition());
-                    Date time = reminder.getTime();
-                    time.setHours(selectedHour);
-                    time.setMinutes(selectedMinute);
-                    time.setSeconds(0);
-                    reminder.setTime(time);
-                }, hour, minute, true);
-                timePicker.setTitle("Select Time");
-                timePicker.show();
+                String taskType;
+
+                if (reminder.getTask() == null) {
+                    taskType = reminder.getType();
+                } else {
+                    taskType = reminder.getTask().getType();
+                }
+
+                remindersManager.createDialogeForEditText(reminderItemTextView, taskType, v.getContext());
             });
         }
 
