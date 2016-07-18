@@ -186,8 +186,16 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     .queryList()))
                     .flatMap(Observable::from)
                     .map(task -> {
-                        task.parsedText = MarkdownParser.parseMarkdown(task.getText());
-                        task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
+                        try {
+                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
+                        } catch (NullPointerException e) {
+                            task.parsedText = task.getText();
+                        }
+                        try {
+                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
+                        } catch (NullPointerException e) {
+                            task.parsedNotes = task.getNotes();
+                        }
                         return task;
                     })
                     .subscribeOn(Schedulers.io())
