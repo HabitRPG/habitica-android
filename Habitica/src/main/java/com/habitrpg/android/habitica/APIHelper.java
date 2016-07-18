@@ -68,6 +68,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 
 import java.io.IOException;
@@ -128,6 +129,7 @@ public class APIHelper implements Action1<Throwable> {
 
         Interceptor remove_data_interceptor = chain -> {
             Response response = chain.proceed(chain.request());
+            Crashlytics.log(response.toString());
             String stringJson = response.body().string();
             JSONObject jsonObject = null;
             String dataString = null;

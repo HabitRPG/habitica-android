@@ -61,18 +61,18 @@
   <string name="notes">Aantekeningen</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Moeilijkheidsgraad</string>
-  <string name="tags">Tags</string>
+  <string name="tags">Labels</string>
   <string name="trivial">Triviaal</string>
   <string name="easy">Gemakkelijk</string>
   <string name="medium">Gemiddeld</string>
   <string name="hard">Moeilijk</string>
-  <string name="start_date">Startdatum</string>
+  <string name="start_date">Begindatum</string>
   <string name="positive_habit_form">Positief ( + )</string>
   <string name="negative_habit_form">Negatief ( - )</string>
-  <string name="checklist">Checklist</string>
+  <string name="checklist">Checklijst</string>
   <string name="reminders">Herinneringen</string>
   <string name="actions">Acties</string>
-  <string name="attributes">Attributen</string>
+  <string name="attributes">Eigenschappen</string>
   <string name="physical">Fysiek</string>
   <string name="mental">Mentaal</string>
   <string name="social">Sociaal</string>
@@ -92,21 +92,22 @@
   <string name="levelup_health">Je bent volledig genezen!</string>
   <string name="levelup_button">Hoera!</string>
   <string name="faint_subtitle">Wanhoop niet!</string>
-  <string name="faint_penalty_body">Je verliest een Level, je Goud, en een stuk Uitrusting, maar je kunt ze allemaal terugkrijgen door hard te werken! Succes--je zult het geweldig doen.</string>
+  <string name="faint_penalty_body">Je verliest een niveau, je goud, en een stuk uitrusting, maar je kunt ze allemaal terugkrijgen door hard te werken! Succes--je zult het geweldig doen.</string>
   <string name="faint_header">Je hebt geen Gezondheid meer!</string>
+  <string name="faint_button">Herstel Gezondheid &amp; probeer opnieuw</string>
   <string name="filter">Filter</string>
   <string name="profile_image">Profielfoto</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Je hebt %1$s voor %2$d mana gebruikt.</string>
-  <string name="new_checklist_item">nieuw checklist punt</string>
+  <string name="new_checklist_item">nieuw checklijst punt</string>
   <string name="add_checklist_item">Toevoegen</string>
   <string name="reminder_title">Vergeet niet om je Dagelijkse taken af te vinken!</string>
   <string name="skill_progress_title">Gebruik vaardigheid</string>
   <string name="coming_soon">Binnenkort beschikbaar</string>
   <string name="chat_flag_confirmation">Weet je zeker dat je dit bericht wil melden wegens overtreding?</string>
   <string name="flag_confirm">Markeer bericht</string>
-  <string name="unlock_lvl_11">Beschikbaar vanaf level 11</string>
-  <string name="no_party_message">Je zit niet in een groep. Bezoek de website als je je bij een groep wil aansluiten.</string>
+  <string name="unlock_lvl_11">Beschikbaar vanaf niveau 11</string>
+  <string name="no_party_message">Je zit niet in een groep. Bezoek de website als je je bij een groep wilt aansluiten.</string>
   <string name="forgot_pw_btn">Wachtwoord vergeten</string>
   <string name="forgot_pw_tv">Wachtwoord vergeten? Gebruik dan de mobiele website.</string>
   <string name="tavern.inn.checkOut">Heractiveer je daagelijkse taken</string>
@@ -185,14 +186,14 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="setup_group_creativity">Creativiteit</string>
   <string name="setup_task_work_1">E-mail verwerken</string>
   <string name="setup_task_work_2">Belangrijkste taak</string>
-  <string name="setup_task_work_3">een werk project</string>
+  <string name="setup_task_work_3">Werk project</string>
   <string name="setup_task_exercise_1">10 min cardio</string>
   <string name="setup_task_exercise_2">Uitstrekken</string>
-  <string name="setup_task_exercise_3">Maak een work out routine</string>
+  <string name="setup_task_exercise_3">Maak een trainingsschema</string>
   <string name="setup_task_healthWellness_1">Eet gezond / junk food</string>
   <string name="setup_task_healthWellness_2">Flossen</string>
   <string name="setup_task_healthWellness_3">Maak een afspraak bij de dokter</string>
-  <string name="setup_task_school_1">studeren / uitstellen</string>
+  <string name="setup_task_school_1">Studeren / Uitstellen</string>
   <string name="setup_task_school_2">Huiswerk maken</string>
   <string name="setup_task_school_3">Maak een school opdracht af</string>
   <string name="setup_task_teams_1">Controleer hoe het met je team gaat</string>
@@ -218,12 +219,12 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="delete">Verwijderen</string>
   <string name="name">Naam</string>
   <string name="description">Beschrijving</string>
-  <string name="add_tag">Tag Toevoegen</string>
+  <string name="add_tag">Label toevoegen</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Bericht schrijven</string>
   <string name="post">Post</string>
   <string name="todo_due" formatted="false">Tegen: %s</string>
-  <string name="daily_streak" formatted="false">momentele streak: %d</string>
+  <string name="daily_streak" formatted="false">huidige serie: %d</string>
   <string name="todo_has_duedate">Taak heeft een Deadline</string>
   <string name="battle_gear">Wapenrusting</string>
   <string name="costume">Kostuum</string>
@@ -237,9 +238,9 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="outfit_weapon">Wapen</string>
   <string name="wear_costume">Kostuum Aantrekken</string>
   <string name="equipped">In gebruik</string>
-  <string name="quest_cancel_message">Ben je zeker dat je deze queeste wilt beëindigen? Alle aangenomen invitaties zullen verloren gaan. De eigenaar van de queeste zal de queeste niet verliezen.</string>
+  <string name="quest_cancel_message">Ben je zeker dat je deze queeste wilt beëindigen? Alle aangenomen uitnodigingen zullen verloren gaan. De eigenaar van de queeste zal de queesterol terug krijgen.</string>
   <string name="quest.invitation">Queeste uitnodiging</string>
-  <string name="quest_begin_message">Ben je zeker dat je de queeste wilt beginnen? Zodra het actief is, kunnen er geen andere spelers zich bij je groep aansluiten.</string>
+  <string name="quest_begin_message">Ben je zeker dat je de queeste wilt beginnen? Zodra het actief is, kunnen er geen andere spelers zich bij de queeste aansluiten.</string>
   <string name="quest.invitation.text">Je bent uitgenodigd om deel te nemen in een queeste!</string>
   <string name="ago_1day">1 dag geleden</string>
   <string name="ago_days" formatted="false">%d dagen geleden</string>
@@ -250,20 +251,20 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="today">Vandaag</string>
   <string name="sidebar_items">Voorwerpen</string>
   <string name="eggs">Eieren</string>
-  <string name="hatching_potions">Uitkomensdrankje</string>
+  <string name="hatching_potions">Uitbroedtoverdranken</string>
   <string name="food">Voedsel</string>
   <string name="quests">Queestes</string>
   <string name="pets">Huisdieren</string>
   <string name="mounts">Rijdieren</string>
-  <string name="armoireEquipment" formatted="false">Je hebt een zeldzaam stuk van een Wapenrusting gevonden in de Armoire: %s! Geweldig!</string>
-  <string name="armoireFood" formatted="false">Je rommelt wat rond in de Armoire en vindt %1$s %2$s. Wat doet dat hier?</string>
-  <string name="armoireExp">Je worstelt met de Armoire en verdient Ervaring. Ha!</string>
-  <string name="armoireNotesFull" formatted="false">Open de Armoire om willekeurig speciale Wapenrustingen, Ervaring of Voedsel te vinden! Stukken Wapenrusting die nog over zijn: %d</string>
-  <string name="armoireLastItem">Je hebt het laatste stuk zeldzame Wapenrusting gevonden in de Betoverde Armoire.</string>
-  <string name="armoireNotesEmpty">De Armoire zal nieuwe stukken Wapenrusting hebben tijdens de eerste week van elke maand. Ondertussen blijven klikken voor Ervaring en Voedsel!</string>
+  <string name="armoireEquipment" formatted="false">Je hebt een zeldzaam stuk van een Wapenrusting gevonden in het Kabinet: %s! Geweldig!</string>
+  <string name="armoireFood" formatted="false">Je rommelt wat rond in het Kabinet en vindt %1$s %2$s. Wat doet dat hier?</string>
+  <string name="armoireExp">Je worstelt met het Kabinet en verdient Ervaring. Pak aan!</string>
+  <string name="armoireNotesFull" formatted="false">Open het Kabinet om willekeurig speciale Wapenrustingen, Ervaring of Voedsel te vinden! Stukken Wapenrusting die nog over zijn: %d</string>
+  <string name="armoireLastItem">Je hebt het laatste stuk zeldzame Wapenrusting gevonden in het Betoverde Kabinet.</string>
+  <string name="armoireNotesEmpty">Het Kabinet zal nieuwe stukken Wapenrusting hebben tijdens de eerste week van elke maand. Blijf tot die tijd klikken voor Ervaring en Voedsel!</string>
   <string name="sell" formatted="false">Verkoop (%s Goud)</string>
   <string name="hatch_with_potion">Laten uitkomen met drankje</string>
-  <string name="feed_to_pet">Geef aan Huisdier</string>
+  <string name="feed_to_pet">Aan huisdier voederen</string>
   <string name="hatch_egg">Laten uitkomen met ei</string>
   <string name="invite_party">Nodig groep uit</string>
   <string name="dialog_feeding" formatted="false">Voeder %1$s %2$s met:</string>
@@ -272,7 +273,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="hatch_with" formatted="false">Laat huisdier uitkomen met %s</string>
   <string name="hatched_pet_title" formatted="false">Je hebt een %1$s %2$s laten uitkomen!</string>
   <string name="close">Dichtdoen</string>
-  <string name="share">Dele</string>
+  <string name="share">Delen</string>
   <string name="notification_pet_fed" formatted="false">Je hebt je %1$s %2$s gevoederd!</string>
   <string name="notification_purchase" formatted="false">%s werd gekocht</string>
   <string name="sectionpets">Basis Huisdieren</string>
@@ -289,13 +290,13 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="user_level" formatted="false">LVL %s</string>
   <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
   <string name="warrior">Krijger</string>
-  <string name="rogue">Schurk</string>
+  <string name="rogue">Dief</string>
   <string name="mage">Magiër</string>
   <string name="healer">Heler</string>
-  <string name="warrior_description">Krijgers scoren meer en betere \"kritieke hits\", die willekeurig extra Goud, Ervaring en kans op een voorwerp geven wanneer je een taak afvinkt. Ze doen Bossmonsters ook veel schade aan. Speel een Krijger wanneer je motivatie vindt in onvoorspelbare jackpot-stijl beloningen, of wanneer je de echte schade wilt uitdelen tijdens Boss Queestes!</string>
+  <string name="warrior_description">Krijgers scoren meer en betere \"voltreffers\", die willekeurig extra Goud, Ervaring en kans op een voorwerp geven wanneer je een taak afvinkt. Ze doen ook veel schade aan bazen. Speel een Krijger wanneer je motivatie vindt in onvoorspelbare jackpot-stijl beloningen, of wanneer je de echte schade wilt uitdelen tijdens Baas Queestes!</string>
   <string name="mage_description">Magiërs leren gezwind, en krijgen meer Ervaringspunten en Levels dan andere klassen. Ze krijgen ook veel Mana door speciale talenten te gebruiken. Speel een Magiër wanneer je de tactiek van Gewoontes leuk vindt, of als je sterk gemotiveerd wordt door levels omhoog te gaan en speciale dingen te ontgrendelen!</string>
-  <string name="rogue_description">Schurken vinden het geweldig om rijkdom te verwerven, en krijgen dus ook meer Goud dan al de rest. Ook zijn ze goed in willekeurig voorwerpen te vinden. Hun iconisch Sluipen laat hen zich verschuilen voor gemiste Dagelijkse Taken. Speel een Schurk als je veel motivatie vindt in beloningen en prestaties, strevend voor de buit en de badges!</string>
-  <string name="healer_description">Helers staan onaangedaan tegenover schade, en kunnen die bescherming tot anderen uitstrekken. Gemiste Dagelijkse Taken en slechte Gewoontes doen hen niet veel, en ze hebben hun manieren om er terug bovenop te geraken na pech. Speel een Heler als je het leuk vindt om anderen in je Groep te helpen, of als de idee om de Dood door hard werk te slim af te zijn jou inspireert!</string>
+  <string name="rogue_description">Dieven vinden het geweldig om rijkdom te verwerven, en krijgen dus ook meer Goud dan al de rest. Ook zijn ze goed in willekeurig voorwerpen te vinden. Hun iconische Heimelijkheid laat hen zich verschuilen voor gemiste Dagelijkse Taken. Speel een Dief als je veel motivatie vindt in beloningen en prestaties, strevend voor de buit en de badges!</string>
+  <string name="healer_description">Helers staan onaangedaan tegenover schade en kunnen die bescherming tot anderen uitstrekken. Gemiste Dagelijkse Taken en slechte Gewoontes doen hen niet veel, en ze hebben hun manieren om er terug bovenop te raken na pech. Speel een Heler als je het leuk vindt om anderen in je Groep te helpen of als het idee om de Dood door hard werk te slim af te zijn jou inspireert!</string>
   <string name="select_class">Selecteer Klasse</string>
   <string name="opt_out_class">Trek je terug</string>
   <string name="opt_out_description">Vindt je het klassesysteem te ingewikkeld voor nu? Wil je later pas kiezen? Trek je terug - je zal een krijger zijn zonder speciale talenten. Je kan later nog over het klassesysteem lezen op de wiki en je dan als één bepaalde klasse laten inschrijven.</string>
@@ -311,7 +312,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="invite_existing_users">Bestaande Gebruikers Uitnodigen</string>
   <string name="send">Versturen</string>
   <string name="invite">Vrienden Uitnodigen</string>
-  <string name="invite_id_description">Als je vrienden hebt die al Habitica spelen, nodig je hen hier uit door hun Gebruikers ID.</string>
+  <string name="invite_id_description">Als je vrienden hebt die al Habitica spelen, nodig hen hier uit door hun Gebruikers ID.</string>
   <string name="invite_email_description">Als een vriend zich inschrijft op Habitica door jouw email, zullen ze automatisch uitgenodigd worden naar jouw groep!</string>
   <string name="add_invites">Uitnodigingen Toevoegen</string>
   <string name="user_id">Gebruikers ID</string>

@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Positive ( + )</string>
   <string name="negative_habit_form">Negative ( - )</string>
   <string name="checklist">Checklist</string>
+  <string name="reminders">Reminders</string>
   <string name="actions">Actions</string>
   <string name="attributes">Attributes</string>
   <string name="physical">Physical</string>
@@ -93,6 +94,7 @@
   <string name="faint_subtitle">Don\'t despair!</string>
   <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck--you\'ll do great.</string>
   <string name="faint_header">You ran out of Health!</string>
+  <string name="faint_button">Refill Health &amp; Try Again</string>
   <string name="filter">Filter</string>
   <string name="profile_image">Profile Image</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -322,4 +324,5 @@ To start, which parts of your life do you want to improve?</string>
   <string name="share_raised" formatted="false">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
   <string name="open_in_store">Open in Play Store</string>
   <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
+  <string name="leaderMessage" formatted="false">Message from %1$s</string>
 </resources>

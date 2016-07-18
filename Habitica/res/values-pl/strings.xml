@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Pozytywne ( + )</string>
   <string name="negative_habit_form">Negatywne ( - )</string>
   <string name="checklist">Lista</string>
+  <string name="reminders">Przypomnienia</string>
   <string name="actions">Akcje</string>
   <string name="attributes">Atrybuty</string>
   <string name="physical">Fizyczne</string>
@@ -322,4 +323,5 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="share_raised" formatted="false">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
+  <string name="leaderMessage" formatted="false">Wiadomość od %1$s</string>
 </resources>

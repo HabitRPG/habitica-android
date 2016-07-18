@@ -94,6 +94,7 @@
   <string name="faint_subtitle">אל ייאוש!</string>
   <string name="faint_penalty_body">הפסדתם דרגה, זהב, וחפץ, אך אתם יכולים להשיג אותם שוב עם עבודה קשה! בהצלחה--אתם תצליחו.</string>
   <string name="faint_header">נגמרה לכם הבריאות!</string>
+  <string name="faint_button">מלאו בריאות ונסו מחדש</string>
   <string name="filter">מסנן</string>
   <string name="profile_image">תמונת פרופיל</string>
   <string name="mana_price_button" formatted="false">%d מאנה</string>

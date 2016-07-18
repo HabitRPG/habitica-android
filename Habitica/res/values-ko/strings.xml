@@ -94,6 +94,7 @@
   <string name="faint_subtitle">좌절하지 말아요!</string>
   <string name="faint_penalty_body">당신은 레벨, 골드, 장비 한개를 잃었지만, 열심히 일하면 곧 되찾을 수 있을꺼에요! 행운을 빌어요--분명 잘 해낼꺼에요.</string>
   <string name="faint_header">체력이 모두 떨어졌어요!</string>
+  <string name="faint_button">체력을 채우고 다시 도전하세요.</string>
   <string name="filter">필터</string>
   <string name="profile_image">프로필 사진</string>
   <string name="mana_price_button" formatted="false">%d MP</string>

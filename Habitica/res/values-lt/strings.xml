@@ -70,6 +70,7 @@
   <string name="positive_habit_form">Teigiamas ( + )</string>
   <string name="negative_habit_form">Neigiamas ( - )</string>
   <string name="checklist">Sąrašas</string>
+  <string name="reminders">Priminimai</string>
   <string name="actions">Veiksmai</string>
   <string name="attributes">Savybės</string>
   <string name="physical">Fizinė</string>
@@ -93,6 +94,7 @@
   <string name="faint_subtitle">Nepergyvenk!</string>
   <string name="faint_penalty_body">Praradai Lygį, Auksą, ir dalį savo Aprangos, bet gali juos visus atgauti labiau pasistengęs(us)! Sėkmės - tau tikrai pasiseks.</string>
   <string name="faint_header">Tavo gyvybingumas išseko!</string>
+  <string name="faint_button">Atstatyti Gyvybes ir bandyti dar kartą</string>
   <string name="filter">FIltras</string>
   <string name="profile_image">Profilis Paveikslėlis</string>
   <string name="mana_price_button" formatted="false">%d Magijos Taškai</string>
@@ -291,6 +293,10 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="rogue">Sukčius</string>
   <string name="mage">Magas</string>
   <string name="healer">Gydytojas</string>
+  <string name="warrior_description">Kariai dažniau sugeba smogti \"kritinius\" smūgius, kas duoda papildomo Aukso, Patirties ir padidina lobio gavimo šansą. Jie taip pat daro daug žalos pabaisoms. Pasirink karį, jei tave motyvuoja nenuspėjami atlygiai ar nori pasižymėti pabaisų medžiojimo Misijose!</string>
+  <string name="mage_description">Magai greitaisi mokosi ir greičiau renka Patirtį ir Lygius nei kitos klasės. Jie taip pat turi daugiausia magijos taškų specialiems sugebėjimams. Pasirink Magą, jei tau patinka taktinė Habitica pusė arba jei tave labiausiai motyvuoja veikėjo lygio kilimas!</string>
+  <string name="rogue_description">Sukčiai mėgsta kaupti turtus gaunami daugiausia Aukso ir rasdami daugiausia lobių. Jie taip pat gali pasislėpti nuo praleistų kasdienių Užduočių. Pasirink sukčių, jei tave labiausiai motyvuoja Atlygiai ir Pasiekimai ir nori kuo greičiau užpildyti savo kolekcijas!</string>
+  <string name="healer_description">Gydytojai yra labai sunkiai sužeidžiami - savybė kuria jie dalinasis su aplinkiniais. Praleistos užduotys ir blogi įpročiai jų taip stipriai neveikia ir jie sugeba atstayti savo gyvybes po nesėkmių. Pasirink Gydytoją, jei nori padėti kitiems savo grupėje ir jei tave įkvepia Mirties apgaudinėjimas.</string>
   <string name="select_class">Pasirinkti Klasę</string>
   <string name="opt_out_class">Atsisakyti</string>
   <string name="opt_out_description">Tingi gilintis į klases? Nori pasirinkti vėliau? Atsisakyk. Liksi kariu be specialių sugebėjimų. Galėsi vėliau lengvai ją įjungti, kai pasiskaitysi daugiau apie klases wiki puslapyje.</string>
@@ -314,5 +320,9 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="invite_users">Pakviesk į Grupę</string>
   <string name="share_using">Pasidalinti su</string>
   <string name="share_levelup" formatted="false">Pasiekiau %s Habitica lygį tobulinant savo gyvenimo įpročius!</string>
+  <string name="share_hatched" formatted="false">Kątik gavau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="share_raised" formatted="false">Kątik užauginau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="open_in_store">Atidaryti play parduotuvėje</string>
   <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
+  <string name="leaderMessage" formatted="false">Žinutė nuo %1$s</string>
 </resources>

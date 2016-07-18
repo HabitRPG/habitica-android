@@ -94,6 +94,7 @@
   <string name="faint_subtitle">Non disperarti!</string>
   <string name="faint_penalty_body">Hai perso un livello, il tuo oro e un pezzo di equipaggiamento, ma puoi riottenere ogni cosa lavorando sodo! Buona fortuna - vedrai che ci riuscirai.</string>
   <string name="faint_header">Hai finito i punti salute!</string>
+  <string name="faint_button">Ripristina Salute &amp; Riprova</string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Immagine profilo</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -305,6 +306,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="dialog_go_back">Ritorna</string>
   <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
   <string name="change_class">Cambia la tua classe</string>
+  <string name="change_class_description">Cambia classe a riottieni i tuoi punti attributo per 3 gemme. Puoi assegnare i punti attributo attraverso il sito web.</string>
   <string name="enable_class">Abilita sistema delle classi</string>
   <string name="changing_class_progress">Cambiamento classe</string>
   <string name="by_email">Per e-mail</string>
