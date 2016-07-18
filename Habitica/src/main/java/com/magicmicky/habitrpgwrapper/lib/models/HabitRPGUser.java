@@ -288,11 +288,11 @@ public class HabitRPGUser extends BaseModel {
         preferences.user_id = id;
         stats.id = id;
         profile.user_Id = id;
-        inbox.user_Id = id;
+        if (inbox != null) { inbox.user_Id = id; }
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-        contributor.user_id = id;
+        if (contributor != null) { contributor.user_id = id; }
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
         if (dailys != null) {
