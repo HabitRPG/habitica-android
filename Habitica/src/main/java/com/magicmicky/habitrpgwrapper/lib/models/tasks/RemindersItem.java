@@ -2,6 +2,8 @@ package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.database.ExcludeCheckListItem;
+import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -11,6 +13,8 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 import java.util.List;
@@ -77,10 +81,17 @@ public class RemindersItem extends BaseModel {
         if (task != null) {
             //This will get all the task info
             Task taskModel = task.toModel();
+
+            if (taskModel.getId() == null)
+            {
+                return taskModel;
+            }
+
             List<Task> task = new Select()
                     .from(Task.class)
                     .where(Condition.column("id").eq(taskModel.getId()))
                     .queryList();
+
             return task.get(0);
         } else {
             return null;
@@ -106,6 +117,14 @@ public class RemindersItem extends BaseModel {
         if (this.getId() == null) {
             return;
         }
+        super.save();
+    }
+
+    @Override
+    public void delete() {
+        ReminderDeleteEvent event = new ReminderDeleteEvent();
+        event.reminder = this;
+        EventBus.getDefault().post(event);
         super.save();
     }
 }

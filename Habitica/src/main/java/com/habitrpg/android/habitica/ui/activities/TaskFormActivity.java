@@ -84,80 +84,115 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
+
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
     @BindView(R.id.task_value_layout)
     TextInputLayout taskValueLayout;
+
     @BindView(R.id.task_checklist_wrapper)
     LinearLayout checklistWrapper;
+
     @BindView(R.id.task_difficulty_wrapper)
     LinearLayout difficultyWrapper;
+
     @BindView(R.id.task_attribute_wrapper)
     LinearLayout attributeWrapper;
+
     @BindView(R.id.task_main_wrapper)
     LinearLayout mainWrapper;
+
     @BindView(R.id.task_text_edittext)
     EmojiEditText taskText;
+
     @BindView(R.id.task_notes_edittext)
     EmojiEditText taskNotes;
+
     @BindView(R.id.task_difficulty_spinner)
     Spinner taskDifficultySpinner;
+
     @BindView(R.id.task_attribute_spinner)
     Spinner taskAttributeSpinner;
+
     @BindView(R.id.btn_delete_task)
     Button btnDelete;
+
     @BindView(R.id.task_startdate_layout)
     LinearLayout startDateLayout;
+
     @BindView(R.id.task_task_wrapper)
     LinearLayout taskWrapper;
+
     @BindView(R.id.task_positive_checkbox)
     CheckBox positiveCheckBox;
+
     @BindView(R.id.task_negative_checkbox)
     CheckBox negativeCheckBox;
+
     @BindView(R.id.task_actions_wrapper)
     LinearLayout actionsLayout;
+
     @BindView(R.id.task_weekdays_wrapper)
     LinearLayout weekdayWrapper;
+
     @BindView(R.id.task_frequency_spinner)
     Spinner dailyFrequencySpinner;
+
     @BindView(R.id.task_frequency_container)
     LinearLayout frequencyContainer;
+
     @BindView(R.id.checklist_recycler_view)
     RecyclerView recyclerView;
+
     @BindView(R.id.new_checklist)
     EmojiEditText newCheckListEditText;
+
     @BindView(R.id.add_checklist_button)
     Button addChecklistItemButton;
+
     @BindView(R.id.task_reminders_wrapper)
     LinearLayout remindersWrapper;
+
     @BindView(R.id.new_reminder_edittext)
     EditText newRemindersEditText;
+
     @BindView(R.id.reminders_recycler_view)
     RecyclerView remindersRecyclerView;
+
     @BindView(R.id.add_reminder_button)
     Button addReminderButton;
+
     @BindView(R.id.emoji_toggle_btn0)
     ImageButton emojiToggle0;
+
     @BindView(R.id.emoji_toggle_btn1)
     ImageButton emojiToggle1;
     ImageButton emojiToggle2;
+
     @BindView(R.id.task_duedate_layout)
     LinearLayout dueDateLayout;
+
     @BindView(R.id.task_duedate_picker_layout)
     LinearLayout dueDatePickerLayout;
+
     @BindView(R.id.duedate_checkbox)
     CheckBox dueDateCheckBox;
+
     @BindView(R.id.startdate_text_edittext)
     EditText startDatePickerText;
     DateEditTextListener startDateListener;
+
     @BindView(R.id.duedate_text_edittext)
     EditText dueDatePickerText;
     DateEditTextListener dueDateListener;
+
     @BindView(R.id.task_tags_wrapper)
     LinearLayout tagsWrapper;
+
     @BindView(R.id.task_tags_checklist)
     LinearLayout tagsContainerLinearLayout;
     EmojiPopup popup;
+
     private String taskType;
     private String taskId;
     private String userId;
@@ -169,10 +204,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private CheckListAdapter checklistAdapter;
     private RemindersAdapter remindersAdapter;
     private List<CheckBox> tagCheckBoxList;
-    private TaskAlarmManager taskAlarmManager;
     private List<Tag> selectedTags;
 
     private RemindersManager remindersManager;
+    private TaskAlarmManager taskAlarmManager;
 
     @Override
     protected int getLayoutResId() {
@@ -455,6 +490,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @OnClick(R.id.add_reminder_button)
     public void addReminder() {
         RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
+        if (item == null) {
+            return;
+        }
         item.setType(taskType);
         remindersAdapter.addItem(item);
         newRemindersEditText.setText("");
@@ -462,7 +500,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @OnClick(R.id.new_reminder_edittext)
     public void changeNewReminderTime() {
-        remindersManager.createDialogeForEditText(newRemindersEditText, taskType, this);
+        remindersManager.createDialogeForEditText(newRemindersEditText, taskType, this, null);
     }
 
     private void createTagsCheckBoxes() {
@@ -797,10 +835,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void prepareSave() {
+
         if (this.task == null) {
             this.task = new Task();
             this.task.setType(taskType);
         }
+
         if (this.saveTask(this.task)) {
             List<TaskTag> taskTags = new ArrayList<>();
             for (Tag tag : selectedTags) {

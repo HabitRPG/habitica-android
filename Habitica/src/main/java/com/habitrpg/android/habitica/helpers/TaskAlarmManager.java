@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
+import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
@@ -43,6 +45,23 @@ public class TaskAlarmManager {
     @Subscribe
     public void onEvent(TaskSaveEvent evnt) {
         Task task = (Task) evnt.task;
+        this.setAlarmsForTask(task);
+    }
+
+    @Subscribe
+    public void onEvent(TaskDeleteEvent evnt) {
+        Task task = (Task) evnt.task;
+        this.removeAlarmsForTask(task);
+    }
+
+
+    @Subscribe
+    public void onEvent(ReminderDeleteEvent evnt) {
+        RemindersItem remindersItem = (RemindersItem) evnt.reminder;
+        this.removeAlarmForRemindersItem(remindersItem);
+    }
+
+    public void setAlarmsForTask(Task task) {
         List<RemindersItem> reminders = task.getReminders();
         for (RemindersItem reminder : reminders) {
             if (task.getType().equals(Task.TYPE_DAILY)) {
@@ -51,6 +70,13 @@ public class TaskAlarmManager {
             }
             this.setAlarmForRemindersItem(reminder);
             reminder.async().save();
+        }
+    }
+
+    public void removeAlarmsForTask(Task task) {
+        List<RemindersItem> reminders = task.getReminders();
+        for (RemindersItem reminder : reminders) {
+            this.removeAlarmForRemindersItem(reminder);
         }
     }
 
@@ -70,33 +96,24 @@ public class TaskAlarmManager {
             return;
         }
 
-        List<RemindersItem> reminders = task.getReminders();
-        for (RemindersItem remindersItem : reminders) {
-            //Ensure that we set to the next available time
-            remindersItem = this.setTimeForDailyReminder(remindersItem, task);
-            this.setAlarmForRemindersItem(remindersItem);
-            remindersItem.async().save();
-        }
+        this.setAlarmsForTask(task);
     }
 
     public void scheduleAllSavedAlarms() {
-        List<RemindersItem> reminders = new Select()
-                .from(RemindersItem.class)
-                .where(Condition.column("time").greaterThan(new Date()))
-                .orderBy(true, "time")
+        List<Task> tasks = new Select()
+                .from(Task.class)
                 .queryList();
 
-        for (RemindersItem remindersItem : reminders) {
-            this.setAlarmForRemindersItem(remindersItem);
+        for (Task task : tasks) {
+            this.setAlarmsForTask(task);
         }
     }
 
     private RemindersItem setTimeForDailyReminder(RemindersItem remindersItem, Task task) {
+        Calendar calendar = Calendar.getInstance();
         Date oldTime = remindersItem.getTime();
         Date newTime = task.getNextActiveDateAfter(oldTime);
-        newTime.setHours(oldTime.getHours());
-        newTime.setMinutes(oldTime.getMinutes());
-        newTime.setSeconds(0);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime.getHours(), oldTime.getMinutes(), 0);
         remindersItem.setTime(newTime);
         return remindersItem;
     }
@@ -106,7 +123,7 @@ public class TaskAlarmManager {
         Integer alarmId = remindersItem.getAlarmId();
 
         if (alarmId == null) {
-            alarmId = (int) System.currentTimeMillis();
+            alarmId = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
             remindersItem.setAlarmId(alarmId);
         }
 
@@ -120,12 +137,29 @@ public class TaskAlarmManager {
         cal.setTime(remindersItem.getTime());
 
         Intent intent = new Intent(context, TaskReceiver.class);
+        intent.setAction(remindersItem.getAlarmId().toString());
         intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.getText());
         intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.getId());
-
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+    }
+
+    private void removeAlarmForRemindersItem(RemindersItem remindersItem) {
+        Integer alarmId = remindersItem.getAlarmId();
+        Task reminderItemTask = remindersItem.getTask();
+
+        if (alarmId == null) {
+            return;
+        }
+
+        Intent intent = new Intent(context, TaskReceiver.class);
+        intent.setAction(remindersItem.getAlarmId().toString());
+        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        sender.cancel();
+        am.cancel(sender);
+
     }
 }

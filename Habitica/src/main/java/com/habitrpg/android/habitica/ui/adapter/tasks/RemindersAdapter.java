@@ -115,7 +115,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
                     taskType = reminder.getTask().getType();
                 }
 
-                remindersManager.createDialogeForEditText(reminderItemTextView, taskType, v.getContext());
+                remindersManager.createDialogeForEditText(reminderItemTextView, taskType, v.getContext(), reminder);
             });
         }
 
