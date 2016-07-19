@@ -94,13 +94,12 @@ public class InboxMessageListFragment extends BaseMainFragment
             this.chatRoomUser = chatRoomUser;
             this.replyToUserUUID = replyToUserUUID;
 
-            this.messages = new ArrayList<ChatMessage>();
+            this.messages = new ArrayList<>();
 
-            Iterator it = messages.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
+            for (Object o : messages.entrySet()) {
+                Map.Entry pair = (Map.Entry) o;
                 ChatMessage message = (ChatMessage) pair.getValue();
-                if (!message.user.equals(chatRoomUser)) continue;
+                if (!message.uuid.equals(replyToUserUUID)) continue;
                 this.messages.add(0, message);
             }
 
