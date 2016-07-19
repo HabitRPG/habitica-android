@@ -84,6 +84,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -284,9 +285,9 @@ public class APIHelper implements Action1<Throwable> {
     @Override
     public void call(Throwable throwable) {
         final Class<?> throwableClass = throwable.getClass();
-        if (throwableClass.equals(ConnectException.class) || throwableClass.isAssignableFrom(SSLException.class)) {
+        if (throwableClass.equals(ConnectException.class) ||  SSLException.class.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api);
-        } else if (throwableClass.equals(SocketTimeoutException.class) || throwableClass.equals(UnknownHostException.class)) {
+        } else if (throwableClass.equals(SocketTimeoutException.class) || UnknownHostException.class.equals(throwableClass)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
         } else if (throwableClass.equals(HttpException.class)) {
             HttpException error = (HttpException) throwable;
