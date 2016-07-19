@@ -25,6 +25,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -51,6 +53,8 @@ public class HabiticaApplication extends MultiDexApplication {
     public static Activity currentActivity = null;
     @Inject
     Lazy<APIHelper> lazyApiHelper;
+    @Inject
+    SharedPreferences sharedPrefs;
     private AppComponent component;
     /**
      * For better performance billing class should be used as singleton
@@ -128,6 +132,31 @@ public class HabiticaApplication extends MultiDexApplication {
         registerActivityLifecycleCallbacks();
         Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
         Fresco.initialize(this);
+        checkIfNewVersion();
+    }
+
+    private void checkIfNewVersion() {
+        PackageInfo info = null;
+        try {
+            info = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("MyApplication", "couldn't get package info!");
+        }
+
+        if (info == null) {
+            return;
+        }
+
+        int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
+        if (lastInstalledVersion < info.versionCode) {
+            sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
+            this.lazyApiHelper.get().apiService.getContent()
+                    .compose(this.lazyApiHelper.get().configureApiCallObserver())
+                    .subscribe(contentResult -> {
+                    }, throwable -> {
+                    });
+        }
+
     }
 
     private void setupDagger() {

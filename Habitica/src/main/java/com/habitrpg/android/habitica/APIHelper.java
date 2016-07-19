@@ -75,6 +75,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -285,7 +286,7 @@ public class APIHelper implements Action1<Throwable> {
     @Override
     public void call(Throwable throwable) {
         final Class<?> throwableClass = throwable.getClass();
-        if (throwableClass.equals(ConnectException.class) ||  SSLException.class.isAssignableFrom(throwableClass)) {
+        if (SocketException.class.isAssignableFrom(throwableClass)  ||  SSLException.class.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api);
         } else if (throwableClass.equals(SocketTimeoutException.class) || UnknownHostException.class.equals(throwableClass)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
