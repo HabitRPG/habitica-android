@@ -1,9 +1,12 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -15,6 +18,8 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -423,6 +428,7 @@ public class Task extends BaseModel {
         if (this.getId() == null || this.getId().length() == 0) {
             return;
         }
+
         List<TaskTag> tmpTags = tags;
         List<ChecklistItem> tmpChecklist = checklist;
         List<RemindersItem> tmpReminders = reminders;
@@ -592,27 +598,23 @@ public class Task extends BaseModel {
     }
 
     public Date getNextActiveDateAfter(Date oldTime) {
-        Calendar today = new GregorianCalendar();
-        today.set(Calendar.MILLISECOND, 0);
-        today.set(Calendar.SECOND, 0);
+        Calendar today = Calendar.getInstance();
 
         Calendar newTime = new GregorianCalendar();
         newTime.setTime(oldTime);
 
-        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+        if (this.getFrequency().equals(FREQUENCY_DAILY) && (newTime.before(today) || newTime.equals(today))) {
+            Calendar startDate = new GregorianCalendar();
+            startDate.setTime(this.getStartDate());
+
             TimeUnit timeUnit = TimeUnit.DAYS;
-            long diffInMillies = newTime.getTimeInMillis() - today.getTimeInMillis();
+            long diffInMillies = today.getTimeInMillis() - startDate.getTimeInMillis();
             long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            long daysUntilNextReminder = this.getEveryX() - (daySinceStart % this.getEveryX()) - 1;
-
-            if (newTime.before(today)) {
-                daysUntilNextReminder += this.getEveryX();
-            }
-
+            long daysUntilNextReminder = this.getEveryX() - (daySinceStart % this.getEveryX());
             newTime.add(Calendar.DATE, (int) daysUntilNextReminder);
         } else {
-            int nextActiveDayOfTheWeek = today.get(Calendar.DAY_OF_WEEK);
-            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today)) {
+            int nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK);
+            while (!this.getRepeat().getForDay(nextActiveDayOfTheWeek) || newTime.before(today) || newTime.equals(today)) {
                 if (nextActiveDayOfTheWeek == 6) nextActiveDayOfTheWeek = 0;
                 nextActiveDayOfTheWeek += 1;
                 newTime.add(Calendar.DATE, 1);
@@ -620,5 +622,13 @@ public class Task extends BaseModel {
         }
 
         return newTime.getTime();
+    }
+
+    @Override
+    public void delete() {
+        TaskDeleteEvent event = new TaskDeleteEvent();
+        event.task = this;
+        EventBus.getDefault().post(event);
+        super.save();
     }
 }

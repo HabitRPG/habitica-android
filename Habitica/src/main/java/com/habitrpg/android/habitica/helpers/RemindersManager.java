@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
@@ -37,6 +38,7 @@ public class RemindersManager {
             return item;
         } catch (ParseException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
             return null;
         }
     }
@@ -45,7 +47,7 @@ public class RemindersManager {
         return dateFormater.format(time);
     }
 
-    public void createDialogeForEditText(EditText editText, String taskType, Context context) {
+    public void createDialogeForEditText(EditText editText, String taskType, Context context, RemindersItem reminder) {
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
         int minute = currentTime.get(Calendar.MINUTE);
@@ -71,6 +73,10 @@ public class RemindersManager {
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(year, month, day, hour, minute, 0);
 
+                    if (reminder != null) {
+                        reminder.setTime(calendar.getTime());
+                    }
+
                     editText.setText(dateFormater.format(calendar.getTime()));
                     dialog.hide();
                 }
@@ -81,6 +87,11 @@ public class RemindersManager {
             timePickerDialog = new TimePickerDialog(context, (timePicker, selectedHour, selectedMinute) -> {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
+
+                if (reminder != null) {
+                    reminder.setTime(calendar.getTime());
+                }
+
                 editText.setText(dateFormater.format(calendar.getTime()));
             }, hour, minute, true);
             timePickerDialog.setTitle("Select Time");
