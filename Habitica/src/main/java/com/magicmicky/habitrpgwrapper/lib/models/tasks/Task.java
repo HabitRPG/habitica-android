@@ -603,12 +603,14 @@ public class Task extends BaseModel {
         Calendar newTime = new GregorianCalendar();
         newTime.setTime(oldTime);
 
-        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
+        if (this.getFrequency().equals(FREQUENCY_DAILY) && (newTime.before(today) || newTime.equals(today))) {
+            Calendar startDate = new GregorianCalendar();
+            startDate.setTime(this.getStartDate());
+
             TimeUnit timeUnit = TimeUnit.DAYS;
-            long diffInMillies = newTime.getTimeInMillis() - today.getTimeInMillis();
+            long diffInMillies = today.getTimeInMillis() - startDate.getTimeInMillis();
             long daySinceStart = timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
             long daysUntilNextReminder = this.getEveryX() - (daySinceStart % this.getEveryX());
-
             newTime.add(Calendar.DATE, (int) daysUntilNextReminder);
         } else {
             int nextActiveDayOfTheWeek = newTime.get(Calendar.DAY_OF_WEEK);

@@ -125,6 +125,6 @@ public class RemindersItem extends BaseModel {
         ReminderDeleteEvent event = new ReminderDeleteEvent();
         event.reminder = this;
         EventBus.getDefault().post(event);
-        super.save();
+        super.delete();
     }
 }
