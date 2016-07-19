@@ -44,31 +44,31 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //Networking
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //REST API handling
-    compile ('com.squareup.retrofit2:retrofit:2.0.2') {
+    compile ('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude module: 'okhttp'
     }
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     //Crash Logging
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
         transitive = true;
     }
 
     // View Elements Binding :)
-    compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
     //Dependency Injection
     compile 'com.google.dagger:dagger:2.2'
     apt 'com.google.dagger:dagger-compiler:2.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
-    compile('com.mikepenz:materialdrawer:5.2.6@aar') {
+    compile('com.mikepenz:materialdrawer:5.3.6@aar') {
         transitive = true
     }
     compile 'com.android.support:appcompat-v7:24.0.0'
@@ -88,12 +88,12 @@ dependencies {
     compile 'com.commonsware.cwac:anddown:0.2.4'
 
     // About View for all dependent Libraries, we are using
-    compile('com.mikepenz:aboutlibraries:5.6.6@aar') {
+    compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
         transitive = true
     }
 
     // a better fab alternative
-    compile 'com.github.clans:fab:1.6.3'
+    compile 'com.github.clans:fab:1.6.4'
 
     // ORM
     apt 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
@@ -114,17 +114,17 @@ dependencies {
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
     //RxJava
-    compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.7'
 
     //Analytics
-    compile 'com.amplitude:android-sdk:2.7.1'
+    compile 'com.amplitude:android-sdk:2.9.2'
 
     // Fresco Image Management Library
-    compile('com.facebook.fresco:fresco:0.10.0') {
+    compile('com.facebook.fresco:fresco:0.11.0') {
         exclude module: 'bolts-android'
     }
-    compile('com.facebook.fresco:animated-gif:0.10.0') {
+    compile('com.facebook.fresco:animated-gif:0.11.0') {
         exclude module: 'bolts-android'
     }
     //Tests
