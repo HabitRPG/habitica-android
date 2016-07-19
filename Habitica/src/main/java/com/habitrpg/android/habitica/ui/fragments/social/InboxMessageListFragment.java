@@ -104,7 +104,7 @@ public class InboxMessageListFragment extends BaseMainFragment
             }
 
             Collections.sort(this.messages,
-                    (message1, message2) -> new Date(message2.timestamp).compareTo(new Date(message1.timestamp)));
+                    (message1, message2) -> message2.timestamp.compareTo(message1.timestamp));
 
             if (this.chatAdapter != null) {
                 chatAdapter.setToInboxChat(replyToUserUUID);

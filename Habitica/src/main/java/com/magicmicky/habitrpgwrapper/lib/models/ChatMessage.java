@@ -19,7 +19,7 @@ public class ChatMessage {
 
     public CharSequence parsedText;
 
-    public long timestamp;
+    public Long timestamp;
 
     public HashMap<String, Boolean> likes;
 
