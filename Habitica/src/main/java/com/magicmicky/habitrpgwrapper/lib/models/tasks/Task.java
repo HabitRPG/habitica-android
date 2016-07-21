@@ -629,6 +629,6 @@ public class Task extends BaseModel {
         TaskDeleteEvent event = new TaskDeleteEvent();
         event.task = this;
         EventBus.getDefault().post(event);
-        super.save();
+        super.delete();
     }
 }

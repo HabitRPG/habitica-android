@@ -58,6 +58,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -378,6 +379,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         }
                         loadAndRemoveOldTaskTags(allTaskTags);
 
+                        ArrayList<RemindersItem> allReminders = new ArrayList<>();
+                        for (Task t : allTasks) {
+                            if (t.getReminders() != null) {
+                                allReminders.addAll(t.getReminders());
+                            }
+                        }
+                        loadAndRemoveOldReminders(allReminders);
+
                         loadAndRemoveOldTags(user.getTags());
 
                         updateOwnedDataForUser(user);
@@ -551,6 +560,52 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
                     @Override
                     public boolean hasResult(BaseTransaction<List<TaskTag>> baseTransaction, List<TaskTag> items) {
+                        return items != null && items.size() > 0;
+                    }
+                });
+            }
+        } catch (SQLiteDoneException ignored) {
+            //Ignored
+        }
+
+    }
+
+    private void loadAndRemoveOldReminders(final List<RemindersItem> onlineEntries) {
+        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
+
+        for (RemindersItem item : onlineEntries) {
+            onlineTaskTagItemIdList.add(item.getId());
+        }
+
+        From<RemindersItem> query = new Select().from(RemindersItem.class);
+        try {
+            if (query.count() != onlineEntries.size()) {
+
+                // Load Database Checklist items
+                query.async().queryList(new TransactionListener<List<RemindersItem>>() {
+                    @Override
+                    public void onResultReceived(List<RemindersItem> items) {
+
+                        ArrayList<RemindersItem> remindersToDelete = new ArrayList<>();
+
+                        for (RemindersItem reminder : items) {
+                            if (!onlineTaskTagItemIdList.contains(reminder.getId())) {
+                                remindersToDelete.add(reminder);
+                            }
+                        }
+
+                        for (RemindersItem reminder : remindersToDelete) {
+                            reminder.async().delete();
+                        }
+                    }
+
+                    @Override
+                    public boolean onReady(BaseTransaction<List<RemindersItem>> baseTransaction) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean hasResult(BaseTransaction<List<RemindersItem>> baseTransaction, List<RemindersItem> items) {
                         return items != null && items.size() > 0;
                     }
                 });
