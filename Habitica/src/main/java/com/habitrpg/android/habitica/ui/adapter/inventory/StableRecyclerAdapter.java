@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
 
 import android.content.Context;
@@ -135,33 +136,6 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         activity.displayFragment(fragment);
                     }
                 }
-            }
-        }
-    }
-
-    class SectionViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.label)
-        TextView label;
-
-        @BindView(R.id.purchaseSetButton)
-        Button purchaseSetButton;
-
-        Context context;
-
-        public SectionViewHolder(View itemView) {
-            super(itemView);
-            context = itemView.getContext();
-            ButterKnife.bind(this, itemView);
-            this.purchaseSetButton.setVisibility(View.GONE);
-        }
-
-        public void bind(String title) {
-            try {
-                Integer stringID = context.getResources().getIdentifier("section" + title, "string", context.getPackageName());
-                this.label.setText(context.getString(stringID));
-            } catch (Exception e) {
-                this.label.setText(title);
             }
         }
     }
