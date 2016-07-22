@@ -6,12 +6,14 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 import android.content.Context;
 import android.view.ViewGroup;
 
-public class DailiesRecyclerViewHolder extends BaseTasksRecyclerViewAdapter<DailyViewHolder> {
+public class DailiesRecyclerViewHolder extends SortableTasksRecyclerViewAdapter<DailyViewHolder> {
 
     public int dailyResetOffset;
 
-    public DailiesRecyclerViewHolder(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, int dailyResetOffset) {
-        super(taskType, tagsHelper, layoutResource, newContext, userID);
+    public DailiesRecyclerViewHolder(String taskType, TagsHelper tagsHelper, int layoutResource,
+                                     Context newContext, String userID, int dailyResetOffset,
+                                     SortTasksCallback sortTasksCallback) {
+        super(taskType, tagsHelper, layoutResource, newContext, userID, sortTasksCallback);
         this.dailyResetOffset = dailyResetOffset;
     }
 

@@ -87,6 +87,9 @@ public interface ApiService {
     @POST("tasks/{id}/score/{direction}")
     Observable<TaskDirectionData> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
 
+    @POST("tasks/{id}/move/to/{position}")
+    Observable<Void> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
+
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     Observable<Task> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);
 
