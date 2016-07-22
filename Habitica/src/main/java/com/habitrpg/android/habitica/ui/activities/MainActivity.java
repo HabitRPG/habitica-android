@@ -474,7 +474,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .withBadgeStyle(badgeStyle);
         }
 
-        this.drawer.updateItemAtPosition(newInboxItem, MainDrawerBuilder.SIDEBAR_INBOX + 2);
+        this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
     }
 
 
