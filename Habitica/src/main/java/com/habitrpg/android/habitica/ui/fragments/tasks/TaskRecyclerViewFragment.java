@@ -61,43 +61,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private HabitRPGUser user;
     private View view;
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
-    private ItemTouchHelper.Callback mItemTouchCallback = new ItemTouchHelper.Callback() {
-        private Integer mFromPosition = null;
-
-        @Override
-        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-            super.onSelectedChanged(viewHolder, actionState);
-            if (viewHolder != null){
-                viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
-            }
-        }
-
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
-            ((ItemTouchHelperAdapter)recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            return true;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
-
-        //defines the enabled move directions in each state (idle, swiping, dragging).
-        @Override
-        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                    ItemTouchHelper.DOWN | ItemTouchHelper.UP);
-        }
-
-        @Override
-        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            super.clearView(recyclerView, viewHolder);
-
-            viewHolder.itemView.setBackgroundColor(Color.WHITE);
-            if (mFromPosition != null){
-                ((ItemTouchHelperDropCallback)recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
-            }
-        }
-    };
+    private ItemTouchHelper.Callback mItemTouchCallback;
 
     public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType,
                                                        SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
@@ -148,6 +112,44 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mItemTouchCallback = new ItemTouchHelper.Callback() {
+            private Integer mFromPosition = null;
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if (viewHolder != null){
+                    viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+                }
+            }
+
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
+                ((ItemTouchHelperAdapter)recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+
+            //defines the enabled move directions in each state (idle, swiping, dragging).
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN | ItemTouchHelper.UP);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+
+                viewHolder.itemView.setBackgroundColor(Color.WHITE);
+                if (mFromPosition != null){
+                    ((ItemTouchHelperDropCallback)recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+                }
+            }
+        };
+
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
