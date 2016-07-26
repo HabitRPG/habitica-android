@@ -206,32 +206,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             public Fragment getItem(int position) {
                 TaskRecyclerViewFragment fragment;
                 SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback =
-                        new SortableTasksRecyclerViewAdapter.SortTasksCallback() {
-                            @Override
-                            public void onMove(Task task, int from, int to) {
-                                if (apiHelper != null){
-                                    apiHelper.apiService.postTaskNewPosition(task.getId(), String.valueOf(toIndex(to)))
-                                            .compose(apiHelper.configureApiCallObserver())
-                                            .subscribe(aVoid -> {
-                                        new HabitRPGUserCallback(activity);
-                                    });
-                                }
-                            }
-
-                            private int toIndex(int to){
-                                int toIndex = 0;
-                                if (to > 0){
-                                    boolean shouldBreak = false;
-                                    for (toIndex = 0; toIndex<user.getTodos().size(); toIndex++){
-                                        Task otherTask = user.getTodos().get(toIndex);
-                                        if (!otherTask.getCompleted()){
-                                            to--;
-                                            if (shouldBreak) break;
-                                            if (to == 0) shouldBreak = true;
-                                        }
-                                    }
-                                }
-                                return toIndex;
+                        (task, from, to) -> {
+                            if (apiHelper != null){
+                                apiHelper.apiService.postTaskNewPosition(task.getId(), String.valueOf(to))
+                                        .compose(apiHelper.configureApiCallObserver())
+                                        .subscribe(aVoid -> {
+                                    new HabitRPGUserCallback(activity);
+                                });
                             }
                         };
 
