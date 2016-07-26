@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ItemItemBinding;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -14,19 +12,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,6 +36,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setShop(Shop shop) {
         shopIdentifier = shop.identifier;
         items = new ArrayList<>();
+        items.add(shop);
         for (ShopCategory category : shop.categories) {
             if (category.items != null && category.items.size() > 0) {
                 items.add(category);
@@ -59,6 +53,11 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.shop_header, parent, false);
+
+            return new ShopHeaderViewHolder(view);
+        } else if (viewType == 1) {
+            View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.customization_section_header, parent, false);
 
             return new SectionViewHolder(view);
@@ -74,7 +73,12 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Object obj = this.items.get(position);
-        if (obj.getClass().equals(ShopCategory.class)) {
+        if (obj.getClass().equals(Shop.class)) {
+            ShopHeaderViewHolder viewHolder = (ShopHeaderViewHolder) holder;
+            Shop shop = (Shop)obj;
+            DataBindingUtils.loadImage(viewHolder.imageView, shop.imageName);
+            viewHolder.descriptionView.setText(Html.fromHtml(shop.getNotes()));
+        } else if (obj.getClass().equals(ShopCategory.class)) {
             ((SectionViewHolder) holder).bind(((ShopCategory) obj).getText());
         } else {
             ((ItemViewHolder) holder).bind((ShopItem) items.get(position));
@@ -84,10 +88,12 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (this.items.get(position).getClass().equals(ShopCategory.class)) {
+        if (this.items.get(position).getClass().equals(Shop.class)) {
             return 0;
-        } else {
+        } else if (this.items.get(position).getClass().equals(ShopCategory.class)) {
             return 1;
+        } else {
+            return 2;
         }
     }
 
@@ -165,12 +171,19 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    private static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
+    public static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.imageView)
+        public ImageView imageView;
+
+        @BindView(R.id.descriptionView)
+        public TextView descriptionView;
 
         public ShopHeaderViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+            descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
         
     }
 }
