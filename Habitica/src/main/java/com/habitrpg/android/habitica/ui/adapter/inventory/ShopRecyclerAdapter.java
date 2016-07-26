@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
+import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
+import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
@@ -36,13 +38,16 @@ import butterknife.ButterKnife;
 public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> items;
+    private String shopIdentifier;
 
     public void setShop(Shop shop) {
+        shopIdentifier = shop.identifier;
         items = new ArrayList<>();
         for (ShopCategory category : shop.categories) {
             if (category.items != null && category.items.size() > 0) {
                 items.add(category);
                 for (ShopItem item : category.items) {
+                    item.categoryIdentifier = category.getIdentifier();
                     items.add(item);
                 }
             }
@@ -60,8 +65,9 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_shopitem, parent, false);
-
-            return new ItemViewHolder(view);
+            ItemViewHolder viewHolder = new ItemViewHolder(view);
+            viewHolder.shopIdentifier = shopIdentifier;
+            return viewHolder;
         }
     }
 
@@ -101,6 +107,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.buyButton)
         Button buyButton;
 
+        String shopIdentifier;
         ShopItem item;
 
         Context context;
@@ -114,6 +121,15 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             itemView.setOnClickListener(this);
             itemView.setClickable(true);
+
+            buyButton.setOnClickListener(view -> this.buyItem());
+        }
+
+        private void buyItem() {
+            BuyGemItemCommand command = new BuyGemItemCommand();
+            command.shopIdentifier = shopIdentifier;
+            command.item = item;
+            EventBus.getDefault().post(command);
         }
 
         public void bind(ShopItem item) {
@@ -136,97 +152,25 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
 
-        @NonNull
-        private LinearLayout createContentViewForGearDialog() {
-            String content = this.item.getNotes();
-
-            // External ContentView
-            LinearLayout contentViewLayout = new LinearLayout(context);
-            contentViewLayout.setOrientation(LinearLayout.VERTICAL);
-
-            // Gear Image
-            ImageView gearImageView = new ImageView(context);
-            LinearLayout.LayoutParams gearImageLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            gearImageLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-            gearImageLayoutParams.setMargins(0, 0, 0, 20);
-            gearImageView.setMinimumWidth(200);
-            gearImageView.setMinimumHeight(200);
-            gearImageView.setLayoutParams(gearImageLayoutParams);
-            DataBindingUtils.loadImage(gearImageView, item.getImageName());
-
-            // Gear Description
-            TextView contentTextView = new TextView(context, null);
-            contentTextView.setPadding(16, 0, 16, 0);
-            if (!content.isEmpty()) {
-                contentTextView.setText(content);
-            }
-
-            // GoldPrice View
-            LinearLayout goldPriceLayout = new LinearLayout(context);
-            goldPriceLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-            LinearLayout.LayoutParams goldPriceLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            goldPriceLayoutParams.setMargins(0, 0, 0, 16);
-            goldPriceLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-
-            goldPriceLayout.setOrientation(LinearLayout.HORIZONTAL);
-            goldPriceLayout.setLayoutParams(goldPriceLayoutParams);
-            goldPriceLayout.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-
-            // Price View
-            TextView priceTextView = new TextView(context);
-            priceTextView.setText(item.getValue().toString());
-            priceTextView.setPadding(10, 0, 0, 0);
-
-            ImageView currency = new ImageView(context);
-            switch (item.getCurrency()) {
-                case "gold":
-                    currency.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_header_gold));
-                    break;
-                case "gems":
-                    currency.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_header_gem));
-                    break;
-                default:
-                    buyButton.setVisibility(View.GONE);
-            }
-            currency.setMinimumHeight(50);
-            currency.setMinimumWidth(50);
-            currency.setPadding(0, 0, 5, 0);
-
-            goldPriceLayout.addView(currency);
-            goldPriceLayout.addView(priceTextView);
-
-            if (gearImageView.getDrawable() != null) {
-                contentViewLayout.addView(gearImageView);
-            }
-            contentViewLayout.setGravity(Gravity.CENTER_VERTICAL);
-
-            contentViewLayout.addView(goldPriceLayout);
-
-            if (!content.isEmpty()) {
-                contentViewLayout.addView(contentTextView);
-            }
-
-            return contentViewLayout;
-        }
-
-        private AlertDialog createDialog(LinearLayout contentViewForDialog) {
-            return new AlertDialog.Builder(context)
-                    .setPositiveButton(R.string.reward_dialog_buy, (dialog, which) -> {
-                    })
-                    .setTitle(this.item.getText())
-                    .setView(contentViewForDialog)
-                    .setNegativeButton(R.string.reward_dialog_dismiss, (dialog, which) -> {
-                        dialog.dismiss();
-                    }).create();
-        }
-
         @Override
         public void onClick(View view) {
-            AlertDialog dialog = createDialog(createContentViewForGearDialog());
+            ItemDetailDialog dialog = new ItemDetailDialog(context);
+            dialog.setTitle(item.getText());
+            dialog.setDescription(item.getNotes());
+            dialog.setImage(item.getImageName());
+            dialog.setCurrency(item.getCurrency());
+            dialog.setValue(item.getValue());
+            dialog.setBuyListener((clickedDialog, which) -> this.buyItem());
             dialog.show();
         }
+    }
+
+    private static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        public ShopHeaderViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        
     }
 }

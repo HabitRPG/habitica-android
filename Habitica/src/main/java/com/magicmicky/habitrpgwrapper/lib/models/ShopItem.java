@@ -12,6 +12,7 @@ public class ShopItem {
     public Boolean locked;
     public String currency;
     public String purchaseType;
+    public String categoryIdentifier;
 
     public String getKey() {
         return key;

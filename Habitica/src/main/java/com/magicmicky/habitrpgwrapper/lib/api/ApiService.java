@@ -66,6 +66,15 @@ public interface ApiService {
     @POST("user/buy/{key}")
     Observable<BuyResponse> buyItem(@Path("key") String itemKey);
 
+    @POST("user/purchase/{type}/{key}")
+    Observable<Void> purchaseItem(@Path("type") String type, @Path("key") String itemKey);
+
+    @POST("user/purchase-hourglass/{type}/{key}")
+    Observable<Void> purchaseHourglassItem(@Path("type") String type, @Path("key") String itemKey);
+
+    @POST("user/buy-mystery-set/{key}")
+    Observable<Void> purchaseMysterySet(@Path("key") String itemKey);
+
     @POST("user/sell/{type}/{key}")
     Observable<HabitRPGUser> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
 

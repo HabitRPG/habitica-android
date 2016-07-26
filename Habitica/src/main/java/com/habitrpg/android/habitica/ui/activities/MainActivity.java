@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
@@ -42,6 +43,7 @@ import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -65,11 +67,9 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
-import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.model.utils.BadgeDrawableBuilder;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
@@ -138,6 +138,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import rx.Observable;
 import rx.functions.Action1;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
@@ -863,6 +864,27 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
         drawer.setSelection(event.identifier);
+    }
+
+    @Subscribe
+    public void onEvent(final BuyGemItemCommand event) {
+        Observable<Void> observable;
+        if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
+            if (event.item.purchaseType.equals("gear")) {
+                observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+            } else {
+                observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+            }
+        } else {
+            observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
+        }
+        observable
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(buyResponse -> {
+                    apiHelper.retrieveUser(false)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                }, throwable -> {});
     }
 
     @Subscribe
