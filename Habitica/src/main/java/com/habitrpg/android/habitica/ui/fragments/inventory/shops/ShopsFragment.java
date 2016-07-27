@@ -57,11 +57,11 @@ public class ShopsFragment extends BaseMainFragment {
                         fragment.shopIdentifier = Shop.QUEST_SHOP;
                         break;
                     }
+                    //case 2: {
+                    //    fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
+                    //    break;
+                    //}
                     case 2: {
-                        fragment.shopIdentifier = Shop.TIME_TRAVELERS_SHOP;
-                        break;
-                    }
-                    case 3: {
                         fragment.shopIdentifier = Shop.SEASONAL_SHOP;
                         break;
                     }
@@ -73,7 +73,7 @@ public class ShopsFragment extends BaseMainFragment {
 
             @Override
             public int getCount() {
-                return 4;
+                return 3;
             }
 
             @Override
@@ -83,9 +83,9 @@ public class ShopsFragment extends BaseMainFragment {
                         return activity.getString(R.string.market);
                     case 1:
                         return activity.getString(R.string.quests);
+                    //case 2:
+                    //    return activity.getString(R.string.timeTravelers);
                     case 2:
-                        return activity.getString(R.string.timeTravelers);
-                    case 3:
                         return activity.getString(R.string.seasonalShop);
                 }
                 return "";
