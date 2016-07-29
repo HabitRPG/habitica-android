@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.tasks;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -9,21 +10,31 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapt
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,12 +60,16 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private String classType;
     private HabitRPGUser user;
     private View view;
+    private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
+    private ItemTouchHelper.Callback mItemTouchCallback;
 
-    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType) {
+    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType,
+                                                       SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
+        fragment.sortCallback = sortCallback;
         return fragment;
     }
 
@@ -65,7 +80,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             switch (this.classType) {
                 case Task.TYPE_HABIT:
                     layoutOfType = R.layout.habit_item_card;
-                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, tagsHelper, layoutOfType, getContext(), userID);
+                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, tagsHelper, layoutOfType, getContext(), userID, sortCallback);
+                    allowReordering();
                     break;
                 case Task.TYPE_DAILY:
                     layoutOfType = R.layout.daily_item_card;
@@ -73,11 +89,13 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                     if (user != null) {
                         dailyResetOffset = user.getPreferences().getDayStart();
                     }
-                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, tagsHelper, layoutOfType, getContext(), userID, dailyResetOffset);
+                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, tagsHelper, layoutOfType, getContext(), userID, dailyResetOffset, sortCallback);
+                    allowReordering();
                     break;
                 case Task.TYPE_TODO:
                     layoutOfType = R.layout.todo_item_card;
-                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, tagsHelper, layoutOfType, getContext(), userID);
+                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, tagsHelper, layoutOfType, getContext(), userID, sortCallback);
+                    allowReordering();
                     return;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
@@ -87,8 +105,51 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
     }
 
+    private void allowReordering(){
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mItemTouchCallback = new ItemTouchHelper.Callback() {
+            private Integer mFromPosition = null;
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if (viewHolder != null){
+                    viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+                }
+            }
+
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
+                ((ItemTouchHelperAdapter)recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+
+            //defines the enabled move directions in each state (idle, swiping, dragging).
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN | ItemTouchHelper.UP);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+
+                viewHolder.itemView.setBackgroundColor(Color.WHITE);
+                if (mFromPosition != null){
+                    ((ItemTouchHelperDropCallback)recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+                }
+            }
+        };
+
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 

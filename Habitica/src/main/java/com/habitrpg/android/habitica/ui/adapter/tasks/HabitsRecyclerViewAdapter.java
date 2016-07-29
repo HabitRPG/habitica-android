@@ -6,9 +6,11 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
 import android.content.Context;
 import android.view.ViewGroup;
 
-public class HabitsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<HabitViewHolder> {
-    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID) {
-        super(taskType, tagsHelper, layoutResource, newContext, userID);
+public class HabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
+
+
+    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
+        super(taskType, tagsHelper, layoutResource, newContext, userID, sortCallback);
     }
 
     @Override
