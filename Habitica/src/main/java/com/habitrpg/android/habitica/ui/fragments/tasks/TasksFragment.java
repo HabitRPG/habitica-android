@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -47,6 +48,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +67,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import rx.Observer;
+import rx.functions.Action1;
 
 public class TasksFragment extends BaseMainFragment implements OnCheckedChangeListener {
 
@@ -200,20 +205,29 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             @Override
             public Fragment getItem(int position) {
                 TaskRecyclerViewFragment fragment;
-                BaseTasksRecyclerViewAdapter adapter;
+                SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback =
+                        (task, from, to) -> {
+                            if (apiHelper != null){
+                                apiHelper.apiService.postTaskNewPosition(task.getId(), String.valueOf(to))
+                                        .compose(apiHelper.configureApiCallObserver())
+                                        .subscribe(aVoid -> {
+                                    new HabitRPGUserCallback(activity);
+                                });
+                            }
+                        };
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, sortCallback);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, sortCallback);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, sortCallback);
                 }
 
                 ViewFragmentsDictionary.put(position, fragment);

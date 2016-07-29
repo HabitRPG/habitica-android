@@ -83,24 +83,28 @@ public class InboxFragment extends BaseMainFragment
 
         roomsAdded = new ArrayList<>();
 
-        for (Object o : this.messages.entrySet()) {
-            Map.Entry pair = (Map.Entry) o;
+        if (this.messages.size() > 0) {
+            for (Object o : this.messages.entrySet()) {
+                Map.Entry pair = (Map.Entry) o;
 
-            ChatMessage message = (ChatMessage) pair.getValue();
-            if (roomsAdded.contains(message.uuid)) {
-                TextView entry = (TextView) this.inboxMessagesListView.findViewWithTag(message.uuid);
-                entry.setText(message.user);
-            } else {
-                roomsAdded.add(message.uuid);
+                ChatMessage message = (ChatMessage) pair.getValue();
+                if (roomsAdded.contains(message.uuid)) {
+                    TextView entry = (TextView) this.inboxMessagesListView.findViewWithTag(message.uuid);
+                    entry.setText(message.user);
+                } else {
+                    roomsAdded.add(message.uuid);
 
-                TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
-                entry.setText(message.user);
-                entry.setTag(message.uuid);
-                entry.setOnClickListener(this);
-                this.inboxMessagesListView.addView(entry);
+                    TextView entry = (TextView) inflater.inflate(R.layout.plain_list_item, this.inboxMessagesListView, false);
+                    entry.setText(message.user);
+                    entry.setTag(message.uuid);
+                    entry.setOnClickListener(this);
+                    this.inboxMessagesListView.addView(entry);
+                }
             }
+        } else {
+            TextView tv = new TextView(getContext());
+            tv.setText(R.string.empty_inbox);
         }
-
     }
 
     @Override

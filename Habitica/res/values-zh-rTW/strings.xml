@@ -70,6 +70,7 @@
   <string name="positive_habit_form">正面的(+)</string>
   <string name="negative_habit_form">負面的(-)</string>
   <string name="checklist">檢核表</string>
+  <string name="reminders">提醒</string>
   <string name="actions">動作</string>
   <string name="attributes">屬性</string>
   <string name="physical">物理的</string>
@@ -93,6 +94,7 @@
   <string name="faint_subtitle">別失望！</string>
   <string name="faint_penalty_body">你降了一級，丟失了所有的金幣和一件裝備。不過繼續努力，你還可以把他們都拿回來的！加油！你做的很棒！</string>
   <string name="faint_header">你沒有生命值了！</string>
+  <string name="faint_button">補全生命值 &amp; 请重試</string>
   <string name="filter">過濾器</string>
   <string name="profile_image">頭像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
@@ -303,6 +305,7 @@
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你確定要退出嗎？</string>
   <string name="change_class">更換你的職業</string>
+  <string name="change_class_description">變更職業並重新分配屬性點，這會花費3寶石。你可以在網頁版上分配屬性點。</string>
   <string name="enable_class">開啟職業系統</string>
   <string name="changing_class_progress">更換職業</string>
   <string name="by_email">通過電子郵件</string>
@@ -319,4 +322,5 @@
   <string name="share_levelup" formatted="false">我在Habitica中通過改善我現實生活中的習慣到達了%s級！</string>
   <string name="share_hatched" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
   <string name="share_raised" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
+  <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
 </resources>
