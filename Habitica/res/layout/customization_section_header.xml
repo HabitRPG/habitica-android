@@ -9,7 +9,9 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:layout_gravity="bottom"
-    android:textAppearance="?android:attr/textAppearanceMedium"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_marginLeft="@dimen/section_leftright_padding"
+    android:layout_marginRight="@dimen/section_leftright_padding"/>
 
     <Button
         android:layout_width="wrap_content"

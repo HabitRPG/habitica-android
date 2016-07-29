@@ -25,6 +25,8 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentD
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.MountDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.PetDetailRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
@@ -150,4 +152,8 @@ public interface AppComponent {
     void inject(InboxFragment inboxFragment);
 
     void inject(InboxMessageListFragment inboxMessageListFragment);
+
+    void inject(ShopsFragment shopsFragment);
+
+    void inject(ShopFragment shopFragment);
 }

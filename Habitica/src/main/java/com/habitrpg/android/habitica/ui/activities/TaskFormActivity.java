@@ -489,13 +489,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @OnClick(R.id.add_reminder_button)
     public void addReminder() {
-        RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
-        if (item == null) {
-            return;
+        if (newRemindersEditText.getText().length() > 0) {
+            RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
+            if (item == null) {
+                return;
+            }
+            item.setType(taskType);
+            remindersAdapter.addItem(item);
+            newRemindersEditText.setText("");
         }
-        item.setType(taskType);
-        remindersAdapter.addItem(item);
-        newRemindersEditText.setText("");
     }
 
     @OnClick(R.id.new_reminder_edittext)

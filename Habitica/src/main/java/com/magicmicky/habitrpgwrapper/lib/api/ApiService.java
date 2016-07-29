@@ -9,6 +9,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
+import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
@@ -65,6 +66,15 @@ public interface ApiService {
     @POST("user/buy/{key}")
     Observable<BuyResponse> buyItem(@Path("key") String itemKey);
 
+    @POST("user/purchase/{type}/{key}")
+    Observable<Void> purchaseItem(@Path("type") String type, @Path("key") String itemKey);
+
+    @POST("user/purchase-hourglass/{type}/{key}")
+    Observable<Void> purchaseHourglassItem(@Path("type") String type, @Path("key") String itemKey);
+
+    @POST("user/buy-mystery-set/{key}")
+    Observable<Void> purchaseMysterySet(@Path("key") String itemKey);
+
     @POST("user/sell/{type}/{key}")
     Observable<HabitRPGUser> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
 
@@ -86,6 +96,9 @@ public interface ApiService {
 
     @POST("tasks/{id}/score/{direction}")
     Observable<TaskDirectionData> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
+
+    @POST("tasks/{id}/move/to/{position}")
+    Observable<Void> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     Observable<Task> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);
@@ -219,6 +232,9 @@ public interface ApiService {
     //Members URL
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
+
+    @GET("shops/{identifier}")
+    Observable<Shop> fetchShopInventory(@Path("identifier") String identifier);
 
     //DEBUG: These calls only work on a local development server
 
