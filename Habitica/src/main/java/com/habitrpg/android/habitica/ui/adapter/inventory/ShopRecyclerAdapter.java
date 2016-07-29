@@ -12,6 +12,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -112,6 +114,8 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView descriptionView;
         @BindView(R.id.buyButton)
         Button buyButton;
+        @BindView(R.id.unlockView)
+        TextView unlockView;
 
         String shopIdentifier;
         ShopItem item;
@@ -128,7 +132,34 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemView.setOnClickListener(this);
             itemView.setClickable(true);
 
-            buyButton.setOnClickListener(view -> this.buyItem());
+            buyButton.setOnClickListener(view -> {
+                String currencyString = "";
+                if (item.getCurrency().equals("gems")) {
+                    if (item.getValue() == 1) {
+                        currencyString = context.getString(R.string.gem);
+                    } else {
+                        currencyString = context.getString(R.string.gems);
+                    }
+                } else if (item.getCurrency().equals("gold")) {
+                    if (item.getValue() == 1) {
+                        currencyString = context.getString(R.string.gold_singular);
+                    } else {
+                        currencyString = context.getString(R.string.gems_plural);
+                    }
+                } else if (item.getCurrency().equals("hourglasses")) {
+                    if (item.getValue() == 1) {
+                        currencyString = context.getString(R.string.hourglass);
+                    } else {
+                        currencyString = context.getString(R.string.hourglasses);
+                    }
+                }
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.purchase_confirmation_title)
+                        .setMessage(context.getString(R.string.confirm_purchase_text, item.getText(), item.getValue().toString(), currencyString))
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> this.buyItem())
+                        .setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss())
+                        .show();
+            });
         }
 
         private void buyItem() {
@@ -141,20 +172,27 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void bind(ShopItem item) {
             this.item = item;
             titleView.setText(item.getText());
-            descriptionView.setText(item.getNotes());
+            descriptionView.setText(Html.fromHtml(item.getNotes()));
 
             DataBindingUtils.loadImage(this.imageView, item.getImageName());
 
-            buyButton.setText(item.getValue().toString());
-            switch (item.getCurrency()) {
-                case "gold":
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
-                    break;
-                case "gems":
-                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
-                    break;
-                default:
-                    buyButton.setVisibility(View.GONE);
+            if (item.getUnlockCondition() == null) {
+                buyButton.setText(item.getValue().toString());
+                switch (item.getCurrency()) {
+                    case "gold":
+                        buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
+                        break;
+                    case "gems":
+                        buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
+                        break;
+                    default:
+                        buyButton.setVisibility(View.GONE);
+                }
+                unlockView.setVisibility(View.GONE);
+            } else {
+                buyButton.setVisibility(View.GONE);
+                unlockView.setVisibility(View.VISIBLE);
+                unlockView.setText(item.unlockCondition.readableUnlockConditionId());
             }
         }
 
@@ -162,11 +200,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClick(View view) {
             ItemDetailDialog dialog = new ItemDetailDialog(context);
             dialog.setTitle(item.getText());
-            dialog.setDescription(item.getNotes());
+            dialog.setDescription(Html.fromHtml(item.getNotes()));
             dialog.setImage(item.getImageName());
-            dialog.setCurrency(item.getCurrency());
-            dialog.setValue(item.getValue());
-            dialog.setBuyListener((clickedDialog, which) -> this.buyItem());
+            if (item.getUnlockCondition() == null) {
+                dialog.setCurrency(item.getCurrency());
+                dialog.setValue(item.getValue());
+                dialog.setBuyListener((clickedDialog, which) -> this.buyItem());
+            }
             dialog.show();
         }
     }
