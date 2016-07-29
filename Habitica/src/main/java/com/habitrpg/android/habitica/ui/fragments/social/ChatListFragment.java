@@ -170,8 +170,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         ClipboardManager clipMan = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData chatMessage = ClipData.newPlainText("Chat Message",cmd.chatMessage.text);
         clipMan.setPrimaryClip(chatMessage);
-        Toast.makeText(getActivity().getApplicationContext(),
-                getString(R.string.chat_message_copied),Toast.LENGTH_SHORT).show();
+        MainActivity activity = (MainActivity) getActivity();
+        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
     }
 
     @Subscribe
