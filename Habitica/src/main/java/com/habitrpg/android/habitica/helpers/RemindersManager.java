@@ -25,7 +25,15 @@ import java.util.UUID;
  */
 public class RemindersManager {
 
-    DateFormat dateFormater = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+    DateFormat dateFormater;
+
+    public RemindersManager(String taskType) {
+        if (taskType.equals("todo")) {
+            dateFormater = DateFormat.getDateTimeInstance();
+        } else {
+            dateFormater = DateFormat.getTimeInstance();
+        }
+    }
 
     public RemindersItem createReminderFromDateString(String dateString) {
         try {
@@ -61,25 +69,22 @@ public class RemindersManager {
             TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
             DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
 
-            dialogConfirmButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int day = dialogDatePicker.getDayOfMonth();
-                    int month = dialogDatePicker.getMonth();
-                    int year =  dialogDatePicker.getYear();
-                    int hour = dialogTimePicker.getCurrentHour();
-                    int minute = dialogTimePicker.getCurrentMinute();
+            dialogConfirmButton.setOnClickListener(view -> {
+                int day = dialogDatePicker.getDayOfMonth();
+                int month = dialogDatePicker.getMonth();
+                int year =  dialogDatePicker.getYear();
+                int hour1 = dialogTimePicker.getCurrentHour();
+                int minute1 = dialogTimePicker.getCurrentMinute();
 
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year, month, day, hour, minute, 0);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day, hour1, minute1, 0);
 
-                    if (reminder != null) {
-                        reminder.setTime(calendar.getTime());
-                    }
-
-                    editText.setText(dateFormater.format(calendar.getTime()));
-                    dialog.hide();
+                if (reminder != null) {
+                    reminder.setTime(calendar.getTime());
                 }
+
+                editText.setText(dateFormater.format(calendar.getTime()));
+                dialog.hide();
             });
             dialog.show();
         } else {
