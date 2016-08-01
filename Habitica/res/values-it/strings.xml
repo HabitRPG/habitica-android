@@ -321,7 +321,14 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="invite_users">Invita nella squadra</string>
   <string name="share_using">Condividi con</string>
   <string name="share_levelup" formatted="false">Ho raggiunto il livello %s su Habitica migliorando le mie abitudini nella vita reale!</string>
+  <string name="share_hatched" formatted="false">Oh apena schiuso un %1$s %2$s beniamino in Habitica completando I miei compiti nella vita reale!</string>
+  <string name="share_raised" formatted="false">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
   <string name="leaderMessage" formatted="false">Messaggio da %1$s</string>
+  <string name="confirm">Conferma</string>
+  <string name="market">Mercato</string>
+  <string name="timeTravelers">Viaggiatori del Tempo</string>
+  <string name="seasonalShop">Negozio Stagionale</string>
+  <string name="empty_inbox">Non hai nessun messaggio. Puoi inviare un messaggio privato ad un utente dai loro messaggi nelle chat pubbliche!</string>
 </resources>
