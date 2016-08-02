@@ -13,6 +13,7 @@ public class ShopItem {
     public String currency;
     public String purchaseType;
     public String categoryIdentifier;
+    public ShopItemUnlockCondition unlockCondition;
 
     public String getKey() {
         return key;
@@ -80,5 +81,13 @@ public class ShopItem {
 
     public void setPurchaseType(String purchaseType) {
         this.purchaseType = purchaseType;
+    }
+
+    public ShopItemUnlockCondition getUnlockCondition() {
+        return unlockCondition;
+    }
+
+    public void setUnlockCondition(ShopItemUnlockCondition unlockCondition) {
+        this.unlockCondition = unlockCondition;
     }
 }

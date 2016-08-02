@@ -19,7 +19,9 @@ public class RemindersItemSerializer
     public JsonElement serialize(RemindersItem src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject object = new JsonObject();
         object.addProperty("id", src.getId());
-        object.addProperty("startDate", src.getStartDate().getTime());
+        if (src.getStartDate() != null) {
+            object.addProperty("startDate", src.getStartDate().getTime());
+        }
         object.addProperty("time", src.getTime().getTime());
         return object;
     }

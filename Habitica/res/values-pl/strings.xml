@@ -94,6 +94,7 @@
   <string name="faint_subtitle">Nie rozpaczaj!</string>
   <string name="faint_penalty_body">Straciłeś Poziom, Złoto i jedną część Wyposażenia, ale możesz je odzyskać dzięki ciężkiej pracy! Powodzenia - dasz radę.</string>
   <string name="faint_header">Możesz stracić całe Zdrowie!</string>
+  <string name="faint_button">Uzupełnij Zdrowie &amp; Spróbuj jeszcze raz</string>
   <string name="filter">Filtr</string>
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button" formatted="false">%d PM</string>

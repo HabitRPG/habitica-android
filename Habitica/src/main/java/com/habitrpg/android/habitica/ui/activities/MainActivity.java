@@ -880,6 +880,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         observable
                 .compose(apiHelper.configureApiCallObserver())
+                .doOnNext(aVoid -> {
+                    showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
+                })
                 .subscribe(buyResponse -> {
                     apiHelper.retrieveUser(false)
                             .compose(apiHelper.configureApiCallObserver())
@@ -892,7 +895,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         final String rewardKey = event.Reward.getId();
 
         if (user.getStats().getGp() < event.Reward.getValue()) {
-            showSnackbar(this, floatingMenuWrapper, "Not enough Gold", SnackbarDisplayType.FAILURE);
+            showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), SnackbarDisplayType.FAILURE);
             return;
         }
 
@@ -901,7 +904,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             int maxHp = user.getStats().getMaxHealth();
 
             if (currentHp == maxHp) {
-                UiUtils.showSnackbar(this, floatingMenuWrapper, "You don't need to buy an health potion", SnackbarDisplayType.FAILURE_BLUE);
+                UiUtils.showSnackbar(this, floatingMenuWrapper, getString(R.string.no_potion), SnackbarDisplayType.FAILURE_BLUE);
                 return;
             }
         }
@@ -910,7 +913,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             apiHelper.apiService.buyItem(event.Reward.getId())
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(buyResponse -> {
-                        String snackbarMessage = event.Reward.getText() + " successfully purchased!";
+                        String snackbarMessage = getString(R.string.successful_purchase, event.Reward.getText());
 
                         if (event.Reward.getId().equals("armoire")) {
                             if (buyResponse.armoire.get("type").equals("gear")) {
