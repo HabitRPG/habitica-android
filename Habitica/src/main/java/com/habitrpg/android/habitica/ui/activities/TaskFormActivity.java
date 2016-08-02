@@ -230,7 +230,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             return;
         }
 
-        remindersManager = new RemindersManager();
+        remindersManager = new RemindersManager(taskType);
         taskAlarmManager = TaskAlarmManager.getInstance(this);
 
         dueDateListener = new DateEditTextListener(dueDatePickerText);
@@ -472,7 +472,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             reminders = task.getReminders();
         }
 
-        remindersAdapter = new RemindersAdapter(reminders);
+        remindersAdapter = new RemindersAdapter(reminders, taskType);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);

@@ -325,4 +325,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
   <string name="leaderMessage" formatted="false">Nachricht von %1$s</string>
+  <string name="confirm">Bestätigen</string>
+  <string name="market">Marktplatz</string>
+  <string name="timeTravelers">Mysteriöse Zeitreisende</string>
+  <string name="seasonalShop">Jahreszeitenmarkt</string>
+  <string name="empty_inbox">Du hast keine Nachrichten in Deinem Posteingang. Du kannst einem anderen Benutzer eine neue Nachricht von deren öffentlichen Chatnachrichten aus senden!</string>
 </resources>

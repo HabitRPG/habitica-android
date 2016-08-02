@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,7 +86,7 @@ public class ItemDetailDialog extends AlertDialog {
         });
     }
 
-    public void setDescription(String description) {
+    public void setDescription(CharSequence description) {
         contentTextView.setText(description);
         contentTextView.setVisibility(View.VISIBLE);
     }
@@ -96,6 +98,9 @@ public class ItemDetailDialog extends AlertDialog {
                 break;
             case "gems":
                 currencyImageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_header_gem));
+                break;
+            default:
+                currencyImageView.setImageDrawable(null);
                 break;
         }
     }
@@ -117,5 +122,4 @@ public class ItemDetailDialog extends AlertDialog {
     public void setBuyListener(OnClickListener listener) {
         this.setButton(BUTTON_POSITIVE, getContext().getText(R.string.reward_dialog_buy), listener);
     }
-
 }

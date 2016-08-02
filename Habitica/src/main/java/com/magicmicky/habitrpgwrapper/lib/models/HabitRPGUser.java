@@ -312,8 +312,10 @@ public class HabitRPGUser extends BaseModel {
             t.user_id = id;
         }
 
-        for (Tag t : tags) {
-            t.user_id = id;
+        if (tags != null) {
+            for (Tag t : tags) {
+                t.user_id = id;
+            }
         }
 
         super.save();

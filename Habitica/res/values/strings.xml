@@ -243,7 +243,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
     <string name="post">Post</string>
-    <string name="copy_chat_message">Copy Message</string>
 
     <string name="todo_due" formatted="false">Due: %s</string>
     <string name="daily_streak" formatted="false">current streak: %d</string>
@@ -353,5 +352,15 @@ To start, which parts of your life do you want to improve?</string>
     <string name="timeTravelers">Time Travelers</string>
     <string name="seasonalShop">Seasonal Shop</string>
     <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
-    <string name="chat_message_copied">Message Copied to Clipboard</string>
+    <string name="party_invite">Unlock by inviting friends</string>
+    <string name="no_gold">Not enough Gold</string>
+    <string name="no_potion">You don\'t need to buy an health potion</string>
+    <string name="successful_purchase" formatted="false">%1$s successfully purchased</string>
+    <string name="purchase_confirmation_title">Confirm purchase</string>
+    <string name="confirm_purchase_text" formatted="false">Purchase %1$s for %2$s %3$s</string>
+    <string name="gem">gem</string>
+    <string name="hourglass">hourglass</string>
+    <string name="hourglasses">hourglasses</string>
+    <string name="gold_singular">gold</string>
+    <string name="gems_plural">gold</string>
 </resources>
