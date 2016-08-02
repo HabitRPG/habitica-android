@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Locale;
+
 public class TavernFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
@@ -60,7 +62,7 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            ContentCache contentCache = new ContentCache(apiHelper.apiService);
+                            ContentCache contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
 
                             contentCache.GetQuestContent(group.quest.key, content -> {
                                 if (questInfoFragment != null) {

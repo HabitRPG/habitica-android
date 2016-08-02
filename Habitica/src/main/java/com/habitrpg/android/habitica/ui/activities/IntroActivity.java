@@ -49,7 +49,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
         this.skipButton.setOnClickListener(this);
         this.finishButton.setOnClickListener(this);
 
-        apiHelper.apiService.getContent()
+        apiHelper.apiService.getContent(apiHelper.languageCode)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(contentResult -> {
                 }, throwable -> {

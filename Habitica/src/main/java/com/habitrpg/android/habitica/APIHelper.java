@@ -82,6 +82,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
@@ -120,6 +121,8 @@ public class APIHelper implements Action1<Throwable> {
     private final Retrofit retrofitAdapter;
     private AlertDialog displayedAlert;
 
+    public String languageCode;
+
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
     public APIHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
@@ -128,6 +131,8 @@ public class APIHelper implements Action1<Throwable> {
         Crashlytics.getInstance().core.setUserIdentifier(this.hostConfig.getUser());
         Crashlytics.getInstance().core.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
+
+        languageCode = Locale.getDefault().getLanguage();
 
         Interceptor remove_data_interceptor = chain -> {
             Response response = chain.proceed(chain.request());

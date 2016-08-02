@@ -26,7 +26,7 @@ public class Stats extends PlayerMinStats {
     }
 
     public Integer getMaxHealth() {
-        return maxHealth != null ? maxHealth : Integer.valueOf(0);
+        return maxHealth != null ? maxHealth : Integer.valueOf(50);
     }
 
     public void setMaxHealth(Integer maxHealth) {

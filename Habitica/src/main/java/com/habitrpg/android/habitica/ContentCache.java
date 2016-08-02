@@ -19,10 +19,17 @@ import rx.schedulers.Schedulers;
 
 public class ContentCache {
     private ApiService apiService;
+    private String language;
+
 
     public ContentCache(ApiService apiService) {
-
         this.apiService = apiService;
+        this.language = "en";
+    }
+
+    public ContentCache(ApiService apiService, String language) {
+        this.apiService = apiService;
+        this.language = language;
     }
 
     public void GetQuestContent(final String key, final QuestContentCallback cb) {
@@ -73,7 +80,7 @@ public class ContentCache {
     }
 
     private <T> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
-        apiService.getContent()
+        apiService.getContent(language)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(contentResult -> {
@@ -117,7 +124,7 @@ public class ContentCache {
 
     private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
         List<ItemData> resultList = new ArrayList<>();
-        apiService.getContent()
+        apiService.getContent(language)
                 .flatMap(contentResult -> {
                     List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);

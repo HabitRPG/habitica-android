@@ -2,12 +2,15 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -121,6 +126,15 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             }
             ViewHelper.SetBackgroundTint(classBackground, ContextCompat.getColor(context, colorResourceID));
             userName.setText(user.getProfile().getName());
+
+            itemView.setClickable(true);
+            itemView.setOnClickListener(view -> {
+                OpenFullProfileCommand cmd = new OpenFullProfileCommand(user.getId());
+
+                EventBus.getDefault().post(cmd);
+            });
         }
+
+
     }
 }

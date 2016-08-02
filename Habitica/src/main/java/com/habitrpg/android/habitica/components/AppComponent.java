@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -156,4 +157,6 @@ public interface AppComponent {
     void inject(ShopsFragment shopsFragment);
 
     void inject(ShopFragment shopFragment);
+
+    void inject(FullProfileActivity fullProfileActivity);
 }

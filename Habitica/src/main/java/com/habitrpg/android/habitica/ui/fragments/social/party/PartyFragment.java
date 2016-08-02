@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -24,6 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +57,7 @@ public class PartyFragment extends BaseMainFragment {
 
         viewPager.setCurrentItem(0);
 
-        contentCache = new ContentCache(apiHelper.apiService);
+        contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
@@ -337,5 +341,17 @@ public class PartyFragment extends BaseMainFragment {
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(viewPager);
         }
+    }
+
+    @Subscribe
+    public void onEvent(OpenFullProfileCommand cmd)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", cmd.MemberId);
+
+        Intent intent = new Intent(activity, FullProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 }

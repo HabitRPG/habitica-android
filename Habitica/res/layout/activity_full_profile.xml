@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blurb"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/profile_blurb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blurb" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:id="@+id/avatar_with_bars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:fitsSystemWindows="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.habitrpg.android.habitica.ui.AvatarView
+                            android:id="@+id/avatarView"
+                            android:layout_width="@dimen/avatar_header_width"
+                            android:layout_height="@dimen/avatar_header_height"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            app:showBackground="true"
+                            app:showMount="true"
+                            app:showPet="true" />
+
+                        <LinearLayout
+                            android:id="@+id/LL_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hpBar"
+                                layout="@layout/value_bar" />
+
+                            <include
+                                android:id="@+id/xpBar"
+                                layout="@layout/value_bar" />
+
+                            <include
+                                android:id="@+id/mpBar"
+                                layout="@layout/value_bar" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/lvl_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:drawableLeft="@drawable/ic_header_warrior"
+                            android:drawablePadding="6dp"
+                            android:drawableStart="@drawable/ic_header_warrior"
+                            android:gravity="center"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/gems_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_gem"
+                                android:drawablePadding="8dp"
+                                android:drawableStart="@drawable/ic_header_gem"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/gold_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_gold"
+                                android:drawablePadding="6dp"
+                                android:drawableStart="@drawable/ic_header_gold"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/silver_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_silver"
+                                android:drawablePadding="6dp"
+                                android:drawableStart="@drawable/ic_header_silver"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equipment"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/avatar_equip_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+                <TableLayout
+                    android:id="@+id/equipment_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </TableLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attributes"
+                    android:textSize="@dimen/abc_text_size_title_material"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/avatar_attributes_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+                <TableLayout
+                    android:id="@+id/attributes_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1"
+                    android:visibility="gone">
+
+                </TableLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

@@ -1096,7 +1096,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void reloadContent(ReloadContentEvent event) {
         if (!this.isloadingContent) {
             this.isloadingContent = true;
-            this.apiHelper.apiService.getContent()
+            this.apiHelper.apiService.getContent(apiHelper.languageCode)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(contentResult -> {
                         isloadingContent = false;
