@@ -75,6 +75,9 @@ public interface ApiService {
     @POST("user/buy-mystery-set/{key}")
     Observable<Void> purchaseMysterySet(@Path("key") String itemKey);
 
+    @POST("user/buy-quest/{key}")
+    Observable<Void> purchaseQuest(@Path("key") String key);
+
     @POST("user/sell/{type}/{key}")
     Observable<HabitRPGUser> sellItem(@Path("type") String itemType, @Path("key") String itemKey);
 

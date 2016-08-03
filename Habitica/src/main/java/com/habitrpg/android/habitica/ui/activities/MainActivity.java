@@ -138,6 +138,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -868,26 +869,38 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final BuyGemItemCommand event) {
-        Observable<Void> observable;
-        if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
-            if (event.item.purchaseType.equals("gear")) {
-                observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
+            Observable<Void> observable;
+            if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
+                if (event.item.purchaseType.equals("gear")) {
+                    observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+                } else {
+                    observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                }
+            } else if (event.item.purchaseType.equals("quests")) {
+                observable = apiHelper.apiService.purchaseQuest(event.item.key);
             } else {
-                observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
             }
+            observable
+                    .compose(apiHelper.configureApiCallObserver())
+                    .doOnNext(aVoid -> {
+                        showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
+                    })
+                    .subscribe(buyResponse -> {
+                        apiHelper.retrieveUser(false)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                                });
+                    }, throwable -> {
+                        HttpException error = (HttpException) throwable;
+                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
+                            openGemPurchaseFragment(null);
+                        }
+                    });
         } else {
-            observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
+            openGemPurchaseFragment(null);
         }
-        observable
-                .compose(apiHelper.configureApiCallObserver())
-                .doOnNext(aVoid -> {
-                    showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
-                })
-                .subscribe(buyResponse -> {
-                    apiHelper.retrieveUser(false)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(new HabitRPGUserCallback(this), throwable -> {});
-                }, throwable -> {});
     }
 
     @Subscribe
@@ -978,7 +991,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Subscribe
-    public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
+    public void openGemPurchaseFragment(OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 

@@ -60,6 +60,9 @@ public class ShopItem {
     }
 
     public Boolean getLocked() {
+        if (locked == null) {
+            return false;
+        }
         return locked;
     }
 
@@ -89,5 +92,15 @@ public class ShopItem {
 
     public void setUnlockCondition(ShopItemUnlockCondition unlockCondition) {
         this.unlockCondition = unlockCondition;
+    }
+
+    public boolean canBuy(HabitRPGUser user) {
+        if (getCurrency().equals("gold")) {
+            return getValue() < user.getStats().getGp();
+        } else if (getCurrency().equals("gems")) {
+            return getValue() < user.getBalance();
+        } else {
+            return false;
+        }
     }
 }

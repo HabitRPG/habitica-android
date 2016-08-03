@@ -3,11 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -15,7 +12,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +40,7 @@ public class ShopFragment extends BaseFragment {
     public Shop shop;
 
     @Inject
-    APIHelper apiHeliper;
+    APIHelper apiHelper;
 
     @Nullable
     @Override
@@ -104,8 +100,8 @@ public class ShopFragment extends BaseFragment {
                 shopUrl = "seasonal";
                 break;
         }
-        this.apiHeliper.apiService.fetchShopInventory(shopUrl)
-                .compose(this.apiHeliper.configureApiCallObserver())
+        this.apiHelper.apiService.fetchShopInventory(shopUrl)
+                .compose(this.apiHelper.configureApiCallObserver())
                 .subscribe(shop -> {
                     this.shop = shop;
                     this.adapter.setShop(shop);
