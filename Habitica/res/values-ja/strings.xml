@@ -326,4 +326,20 @@
   <string name="open_in_store">Play ストアで開く</string>
   <string name="change_class_confirmation">クラスを変更します。いいですか? 3 ジェムかかります。</string>
   <string name="leaderMessage" formatted="false">%1$s からのメッセージ</string>
+  <string name="confirm">確認</string>
+  <string name="market">市場</string>
+  <string name="timeTravelers">タイムトラベラー</string>
+  <string name="seasonalShop">期間限定ショップ</string>
+  <string name="empty_inbox">受信箱にメッセージがありません。Habitica ユーザーあてにメッセージを送ることができます。公開チャットに投稿しているユーザーにメッセージを送ってみてはどうですか?</string>
+  <string name="party_invite">友達を招待するとアンロック</string>
+  <string name="no_gold">ゴールドが足りません</string>
+  <string name="no_potion">体力回復の薬を買う必要がありません</string>
+  <string name="successful_purchase" formatted="false">%1$s を買いました</string>
+  <string name="purchase_confirmation_title">購入の確認</string>
+  <string name="confirm_purchase_text" formatted="false">%2$s %3$s で %1$s  を買う</string>
+  <string name="gem">ジェム</string>
+  <string name="hourglass">砂時計</string>
+  <string name="hourglasses">砂時計</string>
+  <string name="gold_singular">ゴールド</string>
+  <string name="gems_plural">ゴールド</string>
 </resources>

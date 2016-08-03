@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Хабитика</string>
+  <string name="action_refresh">Опресняване</string>
+  <string name="XP_default">Опит</string>
+  <string name="HP_default">Здраве</string>
+  <string name="MP_default">Мана</string>
+  <string name="ERR_pb_barcode">Настройките не могат да бъдат заредени от кода</string>
+  <!--Prefs-->
+  <string name="PS_settings_title">Настройки</string>
+  <string name="SP_address_hint">Вашият персонализиран сървър</string>
+  <string name="SP_userID_title">Потребителски идентификатор</string>
+  <string name="SP_userID_summary">Вашият потребителски идентификатор</string>
+  <string name="SP_APIToken_title">Жетон за ППИ</string>
+  <string name="SP_APIToken_summary">Вашият жетон за ППИ</string>
+  <string name="PS_contact_title">Свържете се с мен</string>
+  <string name="unknown_error">Възникна грешка…</string>
+  <string name="pref_account_header">Профил</string>
+  <string name="pref_reminder_header">Ежедневно напомняне</string>
+  <string name="pref_reminder_checkbox">Включване на напомнянето</string>
+  <string name="pref_reminder_picker">Задаване на времето за напомняне</string>
+  <!--Adding tasks-->
+  <string name="task_value">Стойност</string>
+  <string name="new_todo">Нова задача за изпълнение</string>
+  <string name="new_reward">Нова награда</string>
+  <string name="new_daily">Нова ежедневна задача</string>
+  <string name="new_habit">Нов навик</string>
+  <string name="action_edit">Редактиране</string>
+  <string name="action_delete">Изтриване</string>
+  <string name="action_cancel">Отказ</string>
+  <string name="login_btn">Вход</string>
+  <string name="register_btn">Регистрация</string>
+  <string name="username">Потребителско име</string>
+  <string name="email_username">Е-поща или потребителско име</string>
+  <string name="password">Парола</string>
+  <string name="emailAddress">Е-поща</string>
+  <string name="confirmpassword">Потвърдете паролата</string>
+  <string name="logout">Изход</string>
+  <string name="logout_description">Излизане от Вашия профил</string>
+  <string name="account_details">Подробности за профила</string>
+  <string name="LoginActivityName">Добре дошли</string>
+  <string name="string_revive">Съживяване</string>
+  <string name="please_connect">Моля, свържете се чрез приложението, преди да използвате джаджа</string>
+  <string name="about.title">Относно</string>
+  <string name="about.libraries">Библиотеки</string>
+  <string name="about.versionhistory">История на версиите</string>
+  <string name="about.habitica_open_source">Хабитика е софтуер с отворен код, който е наличен в Github</string>
+  <string name="about.rate_our_app">Оценете приложението</string>
+  <string name="about.give_us_feedback">Изпратете ни отзивите си!</string>
+  <string name="about.bugreport">Докладване на грешка</string>
+  <string name="about.source_code">Изходен код</string>
+  <!--Network Errors-->
+  <string name="network_error_title">Грешка при свързване</string>
+  <string name="network_error_no_network_body">Нямате връзка с Интернет.</string>
+  <string name="internal_error_api">Изглежда има проблем със сървъра. Опитайте отново по-късно.</string>
+  <string name="authentication_error_title">Грешка при удостоверяване</string>
+  <string name="authentication_error_body">Потребителското име и/или паролата е грешна.</string>
+  <string name="login_validation_error_title">Грешка при проверяването</string>
+  <string name="login_validation_error_fieldsmissing">Трябва да попълните всички полета.</string>
+  <string name="save_changes">Запазване</string>
+  <string name="notes">Бележки</string>
+  <string name="text">Текст</string>
+  <string name="difficulty">Трудност</string>
+  <string name="tags">Етикети</string>
+  <string name="trivial">Елементарно</string>
+  <string name="easy">Лесно</string>
+  <string name="medium">Средно</string>
+  <string name="hard">Трудно</string>
+  <string name="start_date">Начална дата</string>
+  <string name="positive_habit_form">Положителен ( + )</string>
+  <string name="negative_habit_form">Отрицателен ( - )</string>
+  <string name="checklist">Подзадачи</string>
+  <string name="reminders">Напомняния</string>
+  <string name="actions">Действия</string>
+  <string name="attributes">Атрибути</string>
+  <string name="physical">Физическа</string>
+  <string name="mental">Умствена</string>
+  <string name="social">Обществена</string>
+  <string name="other">Други</string>
+  <string name="frequency">Честота</string>
+  <string name="frequency_weekly">В определени дни от седмицата</string>
+  <string name="frequency_daily">На всеки Х дни</string>
+  <string name="monday">Понеделник</string>
+  <string name="tuesday">Вторник</string>
+  <string name="wednesday">Сряда</string>
+  <string name="thursday">Четвъртък</string>
+  <string name="friday">Петък</string>
+  <string name="saturday">Събота</string>
+  <string name="sunday">Неделя</string>
+  <string name="levelup_header">Вдигнахте ниво!</string>
+  <string name="levelup_detail">Изпълнявайки целите си в истинския живот, Вие достигнахте ниво %1$d!</string>
+  <string name="levelup_health">Вие бяхте излекуван(а) напълно!</string>
+  <string name="levelup_button">Ура!</string>
+  <string name="faint_subtitle">Не се отчайвайте!</string>
+  <string name="faint_penalty_body">Изгубихте ниво, всичкото си злато и един предмет от екипировката си, но можете да си ги върнете с усърдна работа! Късмет — ще се справите.</string>
+  <string name="faint_header">Здравето Ви свърши!</string>
+  <string name="faint_button">Възстановете здравето си и опитайте отново</string>
+  <string name="filter">Филтър</string>
+  <string name="profile_image">Профилно изображение</string>
+  <string name="mana_price_button" formatted="false">%d ТМ</string>
+  <string name="used_skill" formatted="false">Използвахте %1$s за %2$d точки мана.</string>
+  <string name="new_checklist_item">нова подзадача</string>
+  <string name="add_checklist_item">Добавяне</string>
+  <string name="reminder_title">Не забравяйте да изпълнявате ежедневните си задачи!</string>
+  <string name="skill_progress_title">Използване на умение</string>
+  <string name="coming_soon">Очаквайте скоро</string>
+  <string name="chat_flag_confirmation">Наистина ли искате да докладвате това съобщение за нарушение?</string>
+  <string name="flag_confirm">Докладване на съобщението</string>
+  <string name="unlock_lvl_11">Оключва се на ниво 11</string>
+  <string name="no_party_message">Вие не участвате в група. За да се присъедините към група, моля, посетете уеб сайта.</string>
+  <string name="forgot_pw_btn">Забравена парола</string>
+  <string name="forgot_pw_tv">Забравена парола? Моля, използвайте мобилния уеб сайт.</string>
+  <string name="tavern.inn.checkOut">Включете отново ежедневните си задачи</string>
+  <string name="tavern.inn.rest">Пауза на ежедн.</string>
+  <string name="reward.dialog.buy">Купуване</string>
+  <string name="reward.dialog.dismiss">Премахване</string>
+  <string name="party">Група</string>
+  <string name="chat">Чат</string>
+  <string name="members">Членове</string>
+  <string name="habits">Навици</string>
+  <string name="dailies">Ежедневни</string>
+  <string name="todos">Задачи</string>
+  <string name="rewards">Награди</string>
+  <string name="taskform.delete.title">Сигурен/на ли сте?</string>
+  <string name="taskform.delete.message">Наистина ли искате да изтриете това?</string>
+  <string name="yes">Да</string>
+  <string name="no">Не</string>
+  <string name="quest">Мисия</string>
+  <string name="avatar_body">Тяло</string>
+  <string name="avatar_hair">Коса</string>
+  <string name="avatar_shirt">Риза</string>
+  <string name="avatar_skin">Кожа</string>
+  <string name="avatar_ears">Животински уши</string>
+  <string name="avatar_base">Основа</string>
+  <string name="avatar_color">Цвят</string>
+  <string name="avatar_beard">Брада</string>
+  <string name="avatar_mustache">Мустаци</string>
+  <string name="avatar_flower">Цвете</string>
+  <string name="avatar_bangs">Бретон</string>
+  <string name="avatar_nothing">Няма нищо</string>
+  <string name="avatar_size">Размер</string>
+  <string name="avatar_size_slim">Слаб</string>
+  <string name="avatar_size_broad">Широк</string>
+  <string name="avatar_background">Фон</string>
+  <string name="purchase_customization">Купуване на персонализация</string>
+  <string name="purchase_set_button" formatted="false">Отключване на комплекта за %d диамант(а)</string>
+  <string name="purchase_button">Купуване</string>
+  <string name="purchase_set_title" formatted="false">Купуване на комплекта %s</string>
+  <string name="due_date">Крайна дата</string>
+  <string name="quest.accept">Приемане</string>
+  <string name="quest.reject">Отказване</string>
+  <string name="quest.begin">Започване на мисия</string>
+  <string name="quest.cancel">Отказване на поканата</string>
+  <string name="quest.abort">Прекратяване на мисията</string>
+  <string name="quest.leave">Напускане на мисията</string>
+  <string name="quest.pending">В очакване</string>
+  <string name="quest.accepted">Приета</string>
+  <string name="quest.rejected">Отказана</string>
+  <string name="quest.participants">Участници</string>
+  <string name="version_info" formatted="false">Версия %s (%d)</string>
+  <string name="sidebar_help">Помощ и ЧЗВ</string>
+  <string name="complete_tutorial">Разбрано!</string>
+  <string name="dismiss_tutorial">Напомнете ми отново</string>
+  <string name="intro_1_title">Добре дошли в Хабитика</string>
+  <string name="intro_1_description">Над 1 100 000 хора се забавляват, докато вършат нещата си. Присъединете се към тях! Създайте си герой и следете задачите от истинския си живот.</string>
+  <string name="intro_2_title">Напредък в играта = напредък в живота</string>
+  <string name="intro_2_description">Отключвайте функционалностите на играта като изпълнявате задачите в истинския си живот. Печелете екипировка, любимци и още, като награда за постигането на целите си!</string>
+  <string name="intro_3_title">Общност и битки с чудовища</string>
+  <string name="intro_3_description">Приятелите Ви могат да Ви помогнат да постигнете целите си. Подкрепяйте се взаимно в живота и битките, за да израснете заедно!</string>
+  <string name="intro_finish_button">Започване</string>
+  <string name="previous_button">Назад</string>
+  <string name="next_button">Напред</string>
+  <string name="skip_button">Пропускане</string>
+  <string name="setup_welcome_description">Добре дошли в Хабитика, където напредването в играта ще подобри истинския Ви живот! Докато изпълнявате реалните си цели, ще отключвате екипировка, любимци, мисии и още.</string>
+  <string name="setup_welcome_title">Добре дошли</string>
+  <string name="avatar_setup_description">Първо, ще Ви трябва герой, който да Ви представлява в играта! Нещата, които вършите в истинския си живот, ще се отразяват на здравето, нивото и златото на героя Ви.</string>
+  <string name="task_setup_description">Чудесно! А сега да създадем няколко задачи, за да започнете да печелите опит и злато.
+
+Кои области от живота си искате да подобрите?</string>
+  <string name="setup_group_work">Работа</string>
+  <string name="setup_group_exercise">Упражнения</string>
+  <string name="setup_group_heathWellness">Здравословно състояние</string>
+  <string name="setup_group_school">Училище</string>
+  <string name="setup_group_teams">Екипи</string>
+  <string name="setup_group_chores">Домакинска работа</string>
+  <string name="setup_group_creativity">Изобретателност</string>
+  <string name="setup_task_work_1">Обработка на е-поща</string>
+  <string name="setup_task_work_2">Най-важната задача</string>
+  <string name="setup_task_work_3">Работен проект</string>
+  <string name="setup_task_exercise_1">10 мин аеробни упражнения</string>
+  <string name="setup_task_exercise_2">Разтягане</string>
+  <string name="setup_task_exercise_3">Да организирам тренировките си</string>
+  <string name="setup_task_healthWellness_1">Да ям полезна/вредна храна</string>
+  <string name="setup_task_healthWellness_2">Да изчистя зъбите си с конец</string>
+  <string name="setup_task_healthWellness_3">Да се запиша за преглед</string>
+  <string name="setup_task_school_1">Учене/отлагане</string>
+  <string name="setup_task_school_2">Да напиша домашното си</string>
+  <string name="setup_task_school_3">Да завърша проекта за училище</string>
+  <string name="setup_task_teams_1">Да проверя какво прави екипът</string>
+  <string name="setup_task_teams_2">Да уведомя екипа за напредъка си</string>
+  <string name="setup_task_teams_3">Да завърша екипния проект</string>
+  <string name="setup_task_chores_1">10 минути чистене</string>
+  <string name="setup_task_chores_2">Да измия чиниите</string>
+  <string name="setup_task_chores_3">Да подредя килера</string>
+  <string name="setup_task_creativity_1">Да се уча от майстор в занаята</string>
+  <string name="setup_task_creativity_2">Да работя по проекта си</string>
+  <string name="setup_task_creativity_3">Да завърша проекта си</string>
+  <string name="gem.purchase.support">Искате ли да помогнете на Хабитика да продължи да съществува? Можете да подкрепите разработчиците като купите диаманти!\n\nС диамантите можете да си купувате забавни неща за профила си, като: \n\n — Интересни костюми за героя си;\n — Страхотни фонове;\n — Забавни мисии, от които ще получите яйца за любимци;\n — Възможността да променяте класа си преди да достигнете ниво 100.\n\nБлагодарим Ви за това, че помагате на Хабитика да се развива. Подкрепата Ви означава много за нас!</string>
+  <string name="my_guilds">Моите гилдии</string>
+  <string name="public_guilds">Обществени гилдии</string>
+  <string name="guild">Гилдия</string>
+  <string name="leave">Напускане</string>
+  <string name="join">Присъединяване</string>
+  <string name="leader">Водач</string>
+  <string name="gems">Диаманти</string>
+  <string name="copy_as_todo">Копиране като задача</string>
+  <string name="send_pm">Изпращане на ЛС</string>
+  <string name="flag">Докладване</string>
+  <string name="delete">Изтриване</string>
+  <string name="name">Име</string>
+  <string name="description">Описание</string>
+  <string name="add_tag">Добавяне на етикет</string>
+  <string name="privacy">Поверителност</string>
+  <string name="write_message">Напишете съобщение</string>
+  <string name="post">Изпр.</string>
+  <string name="todo_due" formatted="false">Срок: %s</string>
+  <string name="daily_streak" formatted="false">текуща серия: %d</string>
+  <string name="todo_has_duedate">Задачата има краен срок</string>
+  <string name="battle_gear">Бойно снаряжение</string>
+  <string name="costume">Костюм</string>
+  <string name="outfit_head">Глава</string>
+  <string name="outfit_headAccessory">Аксесоар за глава</string>
+  <string name="outfit_eyewear">Предмет за очи</string>
+  <string name="outfit_armor">Броня</string>
+  <string name="outfit_back">Гръб</string>
+  <string name="outfit_body">Тяло</string>
+  <string name="outfit_shield">Щит</string>
+  <string name="outfit_weapon">Оръжие</string>
+  <string name="wear_costume">Костюм</string>
+  <string name="equipped">Екипирано</string>
+  <string name="quest_cancel_message">Наистина ли искате да прекратите мисията? Всички приети покани ще бъдат загубени. Притежателят на мисията ще си запази свитъка ѝ.</string>
+  <string name="quest.invitation">Покана за мисия</string>
+  <string name="quest_begin_message">Наистина ли искате да започнете мисията? След като мисията започне, никой повече няма да може да се присъедини към нея.</string>
+  <string name="quest.invitation.text">Получихте покана за участие в мисия!</string>
+  <string name="ago_1day">Преди 1 ден</string>
+  <string name="ago_days" formatted="false">Преди %d дни</string>
+  <string name="ago_1Minute">Преди 1 минута</string>
+  <string name="ago_minutes" formatted="false">Преди %d минути</string>
+  <string name="ago_hours" formatted="false">Преди %d часа</string>
+  <string name="ago_1hour">Преди 1 час</string>
+  <string name="today">Днес</string>
+  <string name="sidebar_items">Предмети</string>
+  <string name="eggs">Яйца</string>
+  <string name="hatching_potions">Излюпващи отвари</string>
+  <string name="food">Храна</string>
+  <string name="quests">Мисии</string>
+  <string name="pets">Любимци</string>
+  <string name="mounts">Превози</string>
+  <string name="armoireEquipment" formatted="false">Намерихте рядък предмет в гардероба: %s! Страхотно!</string>
+  <string name="armoireFood" formatted="false">Тършувате из гардероба и намирате %1$s %2$s. Какво ли прави това там?</string>
+  <string name="armoireExp">Сборвате се с гардероба и получавате опит. Така му се пада!</string>
+  <string name="armoireNotesFull" formatted="false">Отворете гардероба, за да получите случайно избрана специална екипировка, опит или храна! Оставащи предмети: %d</string>
+  <string name="armoireLastItem">Намерихте последния рядък предмет за екипиране в омагьосания гардероб.</string>
+  <string name="armoireNotesEmpty">В гардероба ще се появяват нови предмети през първата седмица на всеки месец. До тогава продължавайте да щракате за опит и храна!</string>
+  <string name="sell" formatted="false">Продаване (%s злато)</string>
+  <string name="hatch_with_potion">Излюпване с отвара</string>
+  <string name="feed_to_pet">Даване на любимец</string>
+  <string name="hatch_egg">Излюпване с яйце</string>
+  <string name="invite_party">Поканване на групата</string>
+  <string name="dialog_feeding" formatted="false">Хранене на %1$s %2$s с:</string>
+  <string name="use_animal">Използване</string>
+  <string name="feed">Хранене</string>
+  <string name="hatch_with" formatted="false">Излюпване на любимец с %s</string>
+  <string name="hatched_pet_title" formatted="false">Вие излюпихте %1$s %2$s!</string>
+  <string name="close">Затваряне</string>
+  <string name="share">Споделяне</string>
+  <string name="notification_pet_fed" formatted="false">Вие нахранихте своя(та/то) %1$s %2$s!</string>
+  <string name="notification_purchase" formatted="false">%s беше закупен(а/о)</string>
+  <string name="sectionpets">Обикновени любимци</string>
+  <string name="sectionpremiumPets">Любимци от магически отвари</string>
+  <string name="sectionquestPets">Любимци от мисии</string>
+  <string name="sectionspecialPets">Редки любимци</string>
+  <string name="sectionmounts">Обикновени превози</string>
+  <string name="sectionpremiumMounts">Превози от магически отвари</string>
+  <string name="sectionquestMounts">Превози от мисии</string>
+  <string name="sectionspecialMounts">Редки превози</string>
+  <string name="world_quest">Световна мисия</string>
+  <string name="inn_description">Починете в странноприемницата, за да не могат да Ви наранят неизпълнените Ви ежедневни задачи! (Забележка: това не Ви защитава от получаването на щети от главатари.)</string>
+  <string name="empty_items" formatted="false">Нямате %s</string>
+  <string name="user_level" formatted="false">Ниво %s</string>
+  <string name="user_level_with_class" formatted="false">Ниво %1$s - %2$s</string>
+  <string name="warrior">Воин</string>
+  <string name="rogue">Мошеник</string>
+  <string name="mage">Магьосник</string>
+  <string name="healer">Лечител</string>
+  <string name="warrior_description">Воините нанасят повече и по-силни „критични удари“, които на случаен принцип дават злато, опит и шанс за падане на предмет при изпълнение на задача. Те също така нанасят сериозни щети на чудовищата-главатари. Играйте като воин, ако Ви мотивират изненадващите награди, или ако искате да раздавате правосъдие в мисиите с главатари.</string>
+  <string name="mage_description">Магьосниците се учат лесно, тъй като придобиват опит и нива по-бързо от останалите класове. Те имат много мана за специалните си умения. Играйте като магьосник, ако обичате тактическите страни на навиците, или ако се мотивирате от вдигане на нива и отключване на специални функционалности!</string>
+  <string name="rogue_description">Мошениците обичат да трупат богатства, печелят повече злато повече от останалите и са майстори в намирането на случайни предмети. Отличителното им умение „Невидимост“ им позволява да избегнат последствията от пропуснати ежедневни задачи. Играйте като мошеник, ако Ви мотивират наградите и постиженията, и обичате плячката и значките!</string>
+  <string name="healer_description">Лечителите трудно могат да бъдат наранени, и разпростират защитата си върху останалите. Пропуснатите ежедневни задачи и лошите навици не ги смущават толкова много; те винаги могат да възстановят здравето си след провал. Играйте като лечител, ако обичате да помагате на останалите в групата си, или ако искате да изиграете смъртта чрез усърдна работа!</string>
+  <string name="select_class">Изберете клас</string>
+  <string name="opt_out_class">Отказване</string>
+  <string name="opt_out_description">Не Ви се занимава с класове? Искате да изберете по-късно? Откажете се от тях — ще бъдете воин без специални умения. Можете да прочетете относно класовата система по-късно в уикито, както и да включите класовете когато пожелаете.</string>
+  <string name="class_confirmation" formatted="false">Наистина ли искате да бъдете %s?</string>
+  <string name="choose_class">Избиране на класа</string>
+  <string name="dialog_go_back">Назад</string>
+  <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
+  <string name="change_class">Промяна на класа</string>
+  <string name="change_class_description">Променете класа си и възстановете атрибутните си точки за 3 диаманта. Можете да разпределите атрибутните си точки през уеб сайта</string>
+  <string name="enable_class">Включване на класовата система</string>
+  <string name="changing_class_progress">Промяна на класа</string>
+  <string name="by_email">По е-поща</string>
+  <string name="invite_existing_users">Поканете съществуващи потребители</string>
+  <string name="send">Изпращане</string>
+  <string name="invite">Поканете приятели</string>
+  <string name="invite_id_description">Ако имате приятели, които вече използват Хабитика, поканете ги чрез потребителски идентификатор тук.</string>
+  <string name="invite_email_description">Ако приятел се присъедини към Хабитика през Вашето е-писмо, той автоматично ще бъде поканен в групата Ви!</string>
+  <string name="add_invites">Добавяне на покани</string>
+  <string name="user_id">Потребителски ид.</string>
+  <string name="email">Е-поща</string>
+  <string name="invite_users">Поканване в групата</string>
+  <string name="share_using">Споделяне чрез</string>
+  <string name="share_levelup" formatted="false">Достигнах ниво %s в Хабитика, като подобрих навиците си в истинския живот!</string>
+  <string name="share_hatched" formatted="false">Току-що излюпих любимец — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
+  <string name="share_raised" formatted="false">Току-що се сдобих с превоз — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
+  <string name="open_in_store">Отваряне в магазина</string>
+  <string name="change_class_confirmation">Наистина ли искате да промените класа си? Това ще Ви струва 3 диаманта.</string>
+  <string name="leaderMessage" formatted="false">Съобщение от %1$s</string>
+  <string name="confirm">Потвърждаване</string>
+  <string name="market">Пазар</string>
+  <string name="timeTravelers">Пътешественици във времето</string>
+  <string name="seasonalShop">Сезонен магазин</string>
+  <string name="empty_inbox">Нямате входящи съобщения. Можете да изпратите ново съобщение на потребител от екрана с неговите публични съобщения в чата!</string>
+  <string name="party_invite">Отключете, като поканите приятели</string>
+  <string name="no_gold">Нямате достатъчно злато</string>
+  <string name="no_potion">Няма нужда да купувате лечебна отвара</string>
+  <string name="successful_purchase" formatted="false">Закупено успешно: %1$s</string>
+  <string name="purchase_confirmation_title">Потвърждаване на покупката</string>
+  <string name="confirm_purchase_text" formatted="false">Купуване на %1$s за %2$s %3$s</string>
+  <string name="gem">диамант</string>
+  <string name="hourglass">пясъчен часовник</string>
+  <string name="hourglasses">пясъчни часовници</string>
+  <string name="gold_singular">злато</string>
+  <string name="gems_plural">злато</string>
+</resources>
