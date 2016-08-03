@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
@@ -23,6 +24,9 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +37,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,6 +162,16 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                     }, throwable -> {
                     });
         }
+    }
+
+    @Subscribe
+    public void onEvent(CopyChatMessageCommand cmd)
+    {
+        ClipboardManager clipMan = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData chatMessage = ClipData.newPlainText("Chat Message",cmd.chatMessage.text);
+        clipMan.setPrimaryClip(chatMessage);
+        MainActivity activity = (MainActivity) getActivity();
+        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);
     }
 
     @Subscribe

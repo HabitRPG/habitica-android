@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
+import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
@@ -443,6 +444,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                 case R.id.menu_chat_send_pm: {
                     EventBus.getDefault().post(new OpenNewPMActivityCommand());
+
+                    break;
+                }
+
+                case R.id.menu_chat_copy: {
+                    EventBus.getDefault().post(new CopyChatMessageCommand(groupId, currentMsg));
 
                     break;
                 }
