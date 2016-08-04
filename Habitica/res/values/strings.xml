@@ -363,4 +363,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="hourglasses">hourglasses</string>
     <string name="gold_singular">gold</string>
     <string name="gems_plural">gold</string>
+    <string name="chat_message_copied">Message copied to Clipboard</string>
+    <string name="copy_chat_message">Copy to clipboard</string>
 </resources>
