@@ -166,12 +166,14 @@ public class APIHelper implements Action1<Throwable> {
                 .addNetworkInterceptor(chain -> {
                     Request original = chain.request();
                     if (this.hostConfig.getUser() != null) {
-                        Request request = original.newBuilder()
+                        Request.Builder builder = original.newBuilder()
                                 .header("x-api-key", this.hostConfig.getApi())
                                 .header("x-api-user", this.hostConfig.getUser())
-                                .header("x-client", "habitica-android")
-                                .header("user-agent", userAgent)
-                                .method(original.method(), original.body())
+                                .header("x-client", "habitica-android");
+                        if (userAgent != null) {
+                            builder = builder.header("user-agent", userAgent);
+                        }
+                        Request request = builder.method(original.method(), original.body())
                                 .build();
                         return chain.proceed(request);
                     } else {

@@ -22,7 +22,7 @@ import rx.observers.TestSubscriber;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotSame;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricGradleTestRunner.class)
 public class UserAPITests extends BaseAPITests {
 

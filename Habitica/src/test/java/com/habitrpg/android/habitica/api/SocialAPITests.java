@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import android.os.Build;
@@ -23,8 +24,8 @@ import rx.observers.TestSubscriber;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
-@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
+@RunWith(RobolectricTestRunner.class)
 public class SocialAPITests extends BaseAPITests {
 
     List<String> messagesIDs;
