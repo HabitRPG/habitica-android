@@ -130,7 +130,11 @@ public class HabiticaApplication extends MultiDexApplication {
         setupCrashlytics();
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
-        Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+
+        if (!BuildConfig.DEBUG) {
+            Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+        }
+
         Fresco.initialize(this);
         checkIfNewVersion();
     }
@@ -178,7 +182,9 @@ public class HabiticaApplication extends MultiDexApplication {
     }
 
     private void setupFacebookSdk() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        if (!BuildConfig.DEBUG) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
     }
 
     private void setupCrashlytics() {

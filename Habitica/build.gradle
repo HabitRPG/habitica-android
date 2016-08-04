@@ -184,7 +184,7 @@ android {
             assets.srcDirs = ['assets']
         }
         robolectric {
-            manifest.srcFile 'AndroidManifest.xml'
+            manifest.srcFile 'AndroidManifestTesting.xml'
             java.srcDir file('src/test/java/')
             res.srcDirs = ['res']
         }

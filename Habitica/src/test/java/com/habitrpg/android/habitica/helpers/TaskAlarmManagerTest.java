@@ -21,12 +21,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,6 +37,7 @@ import static org.junit.Assert.assertNotNull;
  * Created by keithholliday on 7/16/16.
  */
 
+@Config(manifest = "AndroidManifestTesting.xml")
 @RunWith(value = RobolectricTestRunner.class)
 public class TaskAlarmManagerTest {
     private TaskAlarmManager taskAlarmManager;
@@ -59,6 +62,8 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
@@ -71,14 +76,13 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
-
+        int intentId = remindersItem1.getId().hashCode() & 0xfffffff;
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
-        PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
+        intent.setAction(remindersItem1.getId());
+        PendingIntent sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
-        Assert.assertNotNull(alarmId);
+        Assert.assertNotNull(intentId);
         Assert.assertEquals(true, alarmUp);
     }
 
@@ -89,6 +93,8 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
@@ -101,9 +107,9 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
+        int alarmId = remindersItem1.getId().hashCode() & 0xfffffff;
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
+        intent.setAction(remindersItem1.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
@@ -127,7 +133,7 @@ public class TaskAlarmManagerTest {
         }
 
         taskAlarmManager.setAlarmsForTask(task);
-        Integer newAlarmId = reminders.get(0).getAlarmId();
+        int newAlarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
         PendingIntent senderNew = PendingIntent.getBroadcast(context, newAlarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUpNew = senderNew != null;
 
@@ -192,6 +198,8 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         //We try to set a reminder on Tuesday, but the manager will correct this to Monday
         Calendar cal = Calendar.getInstance();
@@ -206,13 +214,13 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
+        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
 
         Calendar newReminderTime = Calendar.getInstance();
         newReminderTime.setTime(reminders.get(0).getTime());
 
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
+        intent.setAction(remindersItem1.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
@@ -240,6 +248,8 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         //We try to set a reminder for now, but by the manager will correct (because the seconds will be different)
         Calendar cal = Calendar.getInstance();
@@ -252,13 +262,13 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
+        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
 
         Calendar newReminderTime = Calendar.getInstance();
         newReminderTime.setTime(reminders.get(0).getTime());
 
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
+        intent.setAction(remindersItem1.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
@@ -278,13 +288,18 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         //We try to set a reminder one day after the start date, but the manager will correct since the
         // daily is every 2 days from above
         Calendar cal = Calendar.getInstance();
         int currentDayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+        task.setStartDate(cal.getTime());
+
         cal.set(Calendar.DAY_OF_WEEK, currentDayOfTheWeek + 1);
-        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE) + 1);
+        cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
 
         remindersItem1.setTime(cal.getTime());
         reminders.add(remindersItem1);
@@ -294,13 +309,13 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
+        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
 
         Calendar newReminderTime = Calendar.getInstance();
         newReminderTime.setTime(reminders.get(0).getTime());
 
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
+        intent.setAction(remindersItem1.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
@@ -321,6 +336,8 @@ public class TaskAlarmManagerTest {
 
         List<RemindersItem> reminders = new ArrayList<RemindersItem>();
         RemindersItem remindersItem1 = new RemindersItem();
+        UUID randomUUID = UUID.randomUUID();
+        remindersItem1.setId(randomUUID.toString());
 
         //We try to set a reminder for now, but the manager will correct since the seconds will be off
         Calendar cal = Calendar.getInstance();
@@ -334,13 +351,13 @@ public class TaskAlarmManagerTest {
 
         taskAlarmManager.setAlarmsForTask(task);
 
-        Integer alarmId = reminders.get(0).getAlarmId();
+        int alarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
 
         Calendar newReminderTime = Calendar.getInstance();
         newReminderTime.setTime(reminders.get(0).getTime());
 
         Intent intent = new Intent(context, TaskReceiver.class);
-        intent.setAction(remindersItem1.getAlarmId().toString());
+        intent.setAction(remindersItem1.getId());
         PendingIntent sender = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_NO_CREATE);
         boolean alarmUp = sender != null;
 
