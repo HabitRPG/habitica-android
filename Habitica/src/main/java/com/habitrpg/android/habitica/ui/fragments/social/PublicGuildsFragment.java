@@ -14,13 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublicGuildsFragment extends BaseMainFragment {
+public class PublicGuildsFragment extends BaseMainFragment implements SearchView.OnQueryTextListener {
 
     List<String> memberGuildIDs;
     List<Group> guilds;
@@ -30,13 +31,17 @@ public class PublicGuildsFragment extends BaseMainFragment {
 
     private View view;
     private PublicGuildsRecyclerViewAdapter viewAdapter;
+    private SearchView guildSearchView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_guild_recyclerview, container, false);
+
+            guildSearchView = (SearchView)view.findViewById(R.id.guild_search_view);
+            guildSearchView.setOnQueryTextListener(this);
 
             unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
@@ -75,5 +80,17 @@ public class PublicGuildsFragment extends BaseMainFragment {
                     }, throwable -> {
                     });
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        viewAdapter.getFilter().filter(s);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        viewAdapter.getFilter().filter(s);
+        return true;
     }
 }

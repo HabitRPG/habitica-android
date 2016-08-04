@@ -13,21 +13,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> {
+public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable{
 
     public APIHelper apiHelper;
     private List<Group> publicGuildList;
     private List<String> memberGuildIDs;
+    private List<Group> publicGuildListCopy;
 
     public void setPublicGuildList(List<Group> publicGuildList) {
         this.publicGuildList = publicGuildList;
+        this.publicGuildListCopy = new ArrayList<>(publicGuildList);
         this.notifyDataSetChanged();
     }
 
@@ -92,6 +97,42 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
     private boolean isInGroup(Group guild) {
         return this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Group> filteredGuilds = null;
+                if(constraint.length() == 0) {
+                    filteredGuilds = publicGuildListCopy;
+                } else {
+                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredGuilds;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                publicGuildList = (List<Group>) results.values;
+                PublicGuildsRecyclerViewAdapter.this.notifyDataSetChanged();
+            }
+        };
+    }
+
+    protected List<Group> getFilteredResults(String constraint) {
+        List<Group> filteredGuilds = new ArrayList<>();
+
+        for(Group guild : publicGuildListCopy) {
+            if(guild.name.toLowerCase().contains(constraint)) {
+                filteredGuilds.add(guild);
+            }
+        }
+
+        return filteredGuilds;
     }
 
     static class GuildViewHolder extends RecyclerView.ViewHolder {
