@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.DatabaseErrorHandler;
@@ -182,7 +183,17 @@ public class HabiticaApplication extends MultiDexApplication {
     }
 
     private void setupFacebookSdk() {
-        if (!BuildConfig.DEBUG) {
+        String fbApiKey = null;
+        try {
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            fbApiKey = bundle.getString(FacebookSdk.APPLICATION_ID_PROPERTY);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("FB Error", "Failed to load meta-data, NameNotFound: " + e.getMessage());
+        } catch (NullPointerException e) {
+            Log.e("FB Error", "Failed to load meta-data, NullPointer: " + e.getMessage());
+        }
+        if (fbApiKey != null) {
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
     }
