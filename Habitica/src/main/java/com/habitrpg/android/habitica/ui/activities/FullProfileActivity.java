@@ -1,15 +1,24 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
@@ -38,7 +47,7 @@ public class FullProfileActivity extends BaseActivity {
     APIHelper apiHelper;
 
     @BindView(R.id.profile_image)
-    ImageView profile_image;
+    SimpleDraweeView profile_image;
 
     @BindView(R.id.profile_blurb)
     TextView blurbTextView;
@@ -52,11 +61,17 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.equipment_table)
     TableLayout equipmentTableLayout;
 
+    @BindView(R.id.costume_table)
+    TableLayout costumeTableLayout;
+
     @BindView(R.id.avatar_attributes_progress)
     ProgressBar attributesProgress;
 
     @BindView(R.id.avatar_equip_progress)
     ProgressBar equipmentProgress;
+
+    @BindView(R.id.avatar_costume_progress)
+    ProgressBar costumeProgress;
 
     @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
@@ -76,7 +91,8 @@ public class FullProfileActivity extends BaseActivity {
         apiHelper.apiService.GetMember(this.userId)
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(habitRPGUser -> updateView(habitRPGUser),
-                        throwable -> {});
+                        throwable -> {
+                        });
 
         this.contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
 
@@ -95,9 +111,17 @@ public class FullProfileActivity extends BaseActivity {
 
         String imageUrl = profile.getImageUrl();
         if (imageUrl == null || imageUrl.isEmpty()) {
-            profile_image.setVisibility(View.INVISIBLE);
+            profile_image.setVisibility(View.GONE);
         } else {
-            profile_image.setImageURI(Uri.parse(imageUrl));
+            profile_image.setController(Fresco.newDraweeControllerBuilder()
+                    .setUri(imageUrl)
+                    .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                        @Override
+                        public void onFailure(String id, Throwable throwable) {
+                            profile_image.setVisibility(View.GONE);
+                        }
+                    })
+                    .build());
         }
 
         String blurbText = profile.getBlurb();
@@ -113,80 +137,85 @@ public class FullProfileActivity extends BaseActivity {
 
     // region Utils
 
-    private String upperCaseFirstLetter(String s){
-        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
-    }
-
-    private void stopAndHideProgress(ProgressBar bar){
+    private void stopAndHideProgress(ProgressBar bar) {
         bar.setIndeterminate(false);
         bar.setVisibility(View.GONE);
     }
 
-    private String getCeiledValue(float val){
-        return ((int)Math.ceil(val)) + "";
+    private String getCeiledValue(float val) {
+        return ((int) Math.ceil(val)) + "";
     }
 
-    private void addAttributeRow(TableLayout table, String key, float val){
-        int intVal = (int) Math.ceil(val);
+    private void addTableRow(TableLayout table, String key, String value, int resourceId) {
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(resourceId, null);
 
-        if(intVal == 0)
-            return;
-
-        addTableRow(table, key, intVal+"", R.layout.fullprofile_attributetablerow_two_textviews);
-    }
-
-    private void addTableRow(TableLayout table, String key, float val){
-        int intVal = (int) Math.ceil(val);
-
-        if(intVal == 0)
-            return;
-
-        addTableRow(table, key, intVal+"", R.layout.fullprofile_tablerow_two_textviews);
-    }
-
-    private void addTableRow(TableLayout table, String key, String value){
-        addTableRow(table, key, value, R.layout.fullprofile_tablerow_two_textviews);
-    }
-
-    private void addTableRow(TableLayout table, String key, String value, int resourceId){
-        TableRow tableRow = (TableRow)getLayoutInflater().inflate(resourceId, null);
-
-        TextView keyTextView = (TextView)tableRow.findViewById(R.id.tableRowTextView1);
+        TextView keyTextView = (TextView) tableRow.findViewById(R.id.tableRowTextView1);
         keyTextView.setText(key);
 
-        TextView valueTextView = (TextView)tableRow.findViewById(R.id.tableRowTextView2);
+        TextView valueTextView = (TextView) tableRow.findViewById(R.id.tableRowTextView2);
         valueTextView.setText(value);
 
         table.addView(tableRow);
+    }
+
+    private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
+        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.fullprofile_gear_tablerow, null);
+
+        SimpleDraweeView draweeView = (SimpleDraweeView) gearRow.findViewById(R.id.gear_drawee);
+
+        draweeView.setController(Fresco.newDraweeControllerBuilder()
+                .setUri(AvatarView.IMAGE_URI_ROOT + "shop_" + gearKey + ".png")
+                .setControllerListener(new BaseControllerListener<ImageInfo>() {
+                    @Override
+                    public void onFailure(String id, Throwable throwable) {
+                        draweeView.setVisibility(View.GONE);
+                    }
+                })
+                .build());
+
+        TextView keyTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView1);
+        keyTextView.setText(text);
+
+        table.addView(gearRow);
+
+        TextView valueTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView2);
+
+        if (!stats.isEmpty()) {
+            valueTextView.setText(stats);
+        } else {
+            valueTextView.setVisibility(View.GONE);
+        }
+
+        return gearRow;
     }
 
     // endregion
 
     // region Stats
 
-    StatHelper strHelper;
-    StatHelper intHelper;
-    StatHelper conHelper;
-    StatHelper perHelper;
+    private float attributeStrSum = 0;
+    private float attributeIntSum = 0;
+    private float attributeConSum = 0;
+    private float attributePerSum = 0;
 
-    private void addLevelAttributes(Stats stats, HabitRPGUser user)
-    {
-        float byLevelStat = stats.getLvl()/2.0f;
+    private void addLevelAttributes(Stats stats, HabitRPGUser user) {
+        float byLevelStat = stats.getLvl() / 2.0f;
 
-        strHelper = getStatHelper("Strength: ");
-        strHelper.add("Level: ", byLevelStat);
+        addAttributeRow("Level: ", byLevelStat, byLevelStat, byLevelStat, byLevelStat, false);
 
-        intHelper = getStatHelper("Intelligence:");
-        intHelper.add("Level: ", byLevelStat);
+        LoadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
+            GotGear(obj, user);
+            addNormalAddBuffAttributes(stats);
 
-        conHelper = getStatHelper("Constitution:");
-        conHelper.add("Level: ", byLevelStat);
+            stopAndHideProgress(attributesProgress);
+        });
 
-        perHelper = getStatHelper("Perception:");
-        perHelper.add("Level: ", byLevelStat);
+        LoadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
+            GotCostume(obj);
+        });
+    }
 
-        Outfit outfit = user.getItems().getGear().getEquipped();
-
+    private void LoadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());
@@ -197,13 +226,7 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.GetItemDataList(outfitList, obj ->{
-            GotGear(obj, user);
-            addNormalAddBuffAttributes(stats);
-
-            stopAndHideProgress(attributesProgress);
-            attributesTableLayout.setVisibility(View.VISIBLE);
-        });
+        contentCache.GetItemDataList(outfitList, gotEntries);
     }
 
     public void GotGear(List<ItemData> obj, HabitRPGUser user) {
@@ -213,56 +236,52 @@ public class FullProfileActivity extends BaseActivity {
         float perAttributes = 0;
 
         // Summarize stats and fill equipment table
-        for (ItemData i : obj){
-            int str_ = (int)i.getStr();
-            int int_ = (int)i.get_int();
-            int con_ = (int)i.getCon();
+        for (ItemData i : obj) {
+            int str_ = (int) i.getStr();
+            int int_ = (int) i.get_int();
+            int con_ = (int) i.getCon();
             int per_ = (int) i.getPer();
 
-            strAttributes+= str_;
-            intAttributes+= int_;
-            conAttributes+= con_;
-            perAttributes+= per_;
+            strAttributes += str_;
+            intAttributes += int_;
+            conAttributes += con_;
+            perAttributes += per_;
 
             StringBuilder sb = new StringBuilder();
 
-            if(str_ != 0){
-                sb.append("STR "+str_+", ");
+            if (str_ != 0) {
+                sb.append("STR " + str_ + ", ");
             }
-            if(int_ != 0){
-                sb.append("INT "+int_+", ");
+            if (int_ != 0) {
+                sb.append("INT " + int_ + ", ");
             }
-            if(con_ != 0){
-                sb.append("CON "+con_+", ");
+            if (con_ != 0) {
+                sb.append("CON " + con_ + ", ");
             }
-            if(per_ != 0){
-                sb.append("PER "+per_+", ");
+            if (per_ != 0) {
+                sb.append("PER " + per_ + ", ");
             }
 
             // remove the last comma
-            if(sb.length() > 2)
-            {
-                sb.delete(sb.length()-2, sb.length());
+            if (sb.length() > 2) {
+                sb.delete(sb.length() - 2, sb.length());
             }
 
-            addTableRow(equipmentTableLayout,i.getText(),  sb.toString(), R.layout.fullprofile_equipment_tablerow);
+            addEquipmentRow(equipmentTableLayout, i.getKey(), i.getText(), sb.toString());
         }
 
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        strHelper.add("Equipment: ", strAttributes);
-        intHelper.add("Equipment: ", intAttributes);
-        conHelper.add("Equipment: ", conAttributes);
-        perHelper.add("Equipment: ", perAttributes);
+        addAttributeRow("Equipment: ", strAttributes, intAttributes, conAttributes, perAttributes, false);
 
-        if(!user.getPreferences().isDisableClasses()){
+        if (!user.getPreferences().isDisableClasses()) {
             float strClassBonus = 0;
             float intClassBonus = 0;
             float conClassBonus = 0;
             float perClassBonus = 0;
 
-            switch(user.getStats().get_class()){
+            switch (user.getStats().get_class()) {
                 case rogue:
                     strClassBonus = strAttributes * 0.5f;
                     perClassBonus = perAttributes * 0.5f;
@@ -281,62 +300,62 @@ public class FullProfileActivity extends BaseActivity {
                     break;
             }
 
-            strHelper.add("Class-Bonus: ", strClassBonus);
-            intHelper.add("Class-Bonus: ", intClassBonus);
-            conHelper.add("Class-Bonus: ", conClassBonus);
-            perHelper.add("Class-Bonus: ", perClassBonus);
+            addAttributeRow("Class-Bonus: ", strClassBonus, intClassBonus, conClassBonus, perClassBonus, false);
         }
     }
 
+    public void GotCostume(List<ItemData> obj) {
+        // fill costume table
+        for (ItemData i : obj) {
+            addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
+        }
 
-    private void addNormalAddBuffAttributes(Stats stats){
-        Buffs buffs = stats.getBuffs();
-
-        strHelper.add("Allocated: ", stats.getStr());
-        strHelper.add("Boosts: ", buffs.getStr());
-
-        intHelper.add("Allocated: ", stats.get_int());
-        intHelper.add("Boosts: ", buffs.get_int());
-
-        conHelper.add("Allocated: ", stats.getCon());
-        conHelper.add("Boosts: ", buffs.getCon());
-
-        perHelper.add("Allocated: ", stats.getPer());
-        perHelper.add("Boosts: ", buffs.getPer());
+        stopAndHideProgress(costumeProgress);
     }
 
-    private StatHelper getStatHelper(String label){
-        TableRow tableRow = (TableRow)getLayoutInflater().inflate(R.layout.fullprofile_attributetablerow, null);
-        TextView keyTextView = (TextView)tableRow.findViewById(R.id.tableRowTextView1);
+
+    private void addNormalAddBuffAttributes(Stats stats) {
+        Buffs buffs = stats.getBuffs();
+
+        addAttributeRow("Allocated: ", stats.getStr(), stats.get_int(), stats.getCon(), stats.getPer(), false);
+        addAttributeRow("Boosts: ", buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), false);
+
+        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, true);
+    }
+
+    private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean isSummary) {
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.fullprofile_attributetablerow, null);
+        TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
+        keyTextView.setText(label);
+
+        TextView strTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_str);
+        strTextView.setText(getCeiledValue(strVal));
+
+        TextView intTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_int);
+        intTextView.setText(getCeiledValue(intVal));
+
+        TextView conTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_con);
+        conTextView.setText(getCeiledValue(conVal));
+
+        TextView perTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_per);
+        perTextView.setText(getCeiledValue(perVal));
+
+
+        if (isSummary) {
+            strTextView.setTypeface(null, Typeface.BOLD);
+            intTextView.setTypeface(null, Typeface.BOLD);
+            conTextView.setTypeface(null, Typeface.BOLD);
+            perTextView.setTypeface(null, Typeface.BOLD);
+        } else {
+            attributeStrSum += strVal;
+            attributeIntSum += intVal;
+            attributeConSum += conVal;
+            attributePerSum += perVal;
+        }
 
         attributesTableLayout.addView(tableRow);
 
-        TableLayout layout = (TableLayout)tableRow.findViewById(R.id.tableRowAttributesTable);
-
-        return new StatHelper(layout, keyTextView, label);
-    }
-
-    public class StatHelper
-    {
-        private TableLayout layout;
-        private TextView textViewLabel;
-        private String attributeName;
-
-        public float currentStatCount = 0;
-
-        public StatHelper(TableLayout layout, TextView label, String attributeName){
-            this.layout = layout;
-            this.textViewLabel = label;
-            this.attributeName = attributeName;
-        }
-
-        public void add(String label, float value){
-            addAttributeRow(layout, label, value);
-
-            currentStatCount += value;
-
-            textViewLabel.setText(attributeName+" "+ getCeiledValue(currentStatCount));
-        }
+        return tableRow;
     }
 
     // endregion

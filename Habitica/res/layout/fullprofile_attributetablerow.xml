@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp">
 
     <TextView
-        android:id="@+id/tableRowTextView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/tv_attribute_type"
+        android:layout_margin="5dp"
+        android:gravity="left" />
 
-    <TableLayout
-        android:id="@+id/tableRowAttributesTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:stretchColumns="0,1"
-        android:layout_marginBottom="5dp">
+    <TextView
+        android:id="@+id/tv_attribute_str"
+        android:layout_gravity="center" />
 
-    </TableLayout>
+    <TextView
+        android:id="@+id/tv_attribute_int"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_attribute_con"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_attribute_per"
+        android:layout_gravity="center" />
+
 </TableRow>
