@@ -158,6 +158,8 @@ public class APIHelper implements Action1<Throwable> {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         }
 
+        String userAgent = System.getProperty("http.agent");
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(remove_data_interceptor)
                 .addInterceptor(logging)
@@ -168,6 +170,7 @@ public class APIHelper implements Action1<Throwable> {
                                 .header("x-api-key", this.hostConfig.getApi())
                                 .header("x-api-user", this.hostConfig.getUser())
                                 .header("x-client", "habitica-android")
+                                .header("user-agent", userAgent)
                                 .method(original.method(), original.body())
                                 .build();
                         return chain.proceed(request);
