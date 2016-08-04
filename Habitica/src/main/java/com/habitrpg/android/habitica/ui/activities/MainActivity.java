@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -206,6 +207,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
+    PushNotificationManager pushNotificationManager;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -221,6 +224,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         //Check if reminder alarm is set
         scheduleReminder(this);
+
+        pushNotificationManager = PushNotificationManager.getInstance(this);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -349,8 +354,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             displayDeathDialogIfNeeded();
 
             if (!fromLocalDb) {
-
                 displayNewInboxMessagesBadge();
+                pushNotificationManager.setUser(user);
+                pushNotificationManager.addPushDeviceUsingStoredToken();
 
                 // Update the oldEntries
                 new Thread(() -> {

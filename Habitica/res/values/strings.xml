@@ -22,6 +22,17 @@
     <string name="pref_reminder_checkbox">Activate Reminder</string>
     <string name="pref_reminder_picker">Set Reminder Time</string>
 
+    <string name="pref_push_notifications_checkbox">User Push Notifications</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="preference_push_you_won_challenge">You won a Challenge!</string>
+    <string name="preference_push_received_a_private_message">Received a Private Message</string>
+    <string name="preference_push_gifted_gems">Gifted Gems</string>
+    <string name="preference_push_gifted_subscription">Gifted Subscription</string>
+    <string name="preference_push_invited_to_party">Invited to Party</string>
+    <string name="preference_push_invited_to_guild">Invited to Guiild</string>
+    <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
+    <string name="preference_push_invited_to_quest">Invited to Quest</string>
+
     <!-- Adding tasks -->
     <string name="task_value">Value</string>
     <string name="new_todo">New todo</string>

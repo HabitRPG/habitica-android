@@ -122,11 +122,34 @@
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
         <receiver android:process=":remote" android:name=".receivers.TaskReceiver"></receiver>
+
+        <receiver android:name=".receivers.LocalNotificationActionReceiver">
+            <intent-filter>
+                <action android:name="@string/accept_party_invite"/>
+                <action android:name="@string/reject_party_invite"/>
+                <action android:name="@string/accept_quest_invite"/>
+                <action android:name="@string/reject_quest_invite"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action._BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
+
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -41,5 +41,6 @@ android:
 script:
     - cp habitica.properties.travis habitica.properties
     - cp habitica.resources.example habitica.resources
+    - cp Habitica/google-services.json.example Habitica/google-services.json
     - ./gradlew assembleDebug
     - ./gradlew testDebugUnitTest --info

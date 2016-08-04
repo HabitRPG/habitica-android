@@ -208,6 +208,9 @@ public interface ApiService {
     @POST("groups/{gid}/invite")
     Observable<Void> inviteToGroup(@Path("gid") String groupId, @Body Map<String, Object> inviteData);
 
+    @POST("groups/{gid}/reject-invite")
+    Observable<Void> rejectGroupInvite(@Path("gid") String groupId);
+
     @POST("groups/{gid}/quests/accept")
     Observable<Void> acceptQuest(@Path("gid") String groupId);
 
@@ -235,9 +238,16 @@ public interface ApiService {
     //Members URL
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
-
+    
     @GET("shops/{identifier}")
     Observable<Shop> fetchShopInventory(@Path("identifier") String identifier);
+
+    //Push notifications
+    @POST("user/push-devices")
+    Observable<Void> addPushDevice(@Body Map<String, String> pushDeviceData);
+
+    @DELETE("user/push-devices/{regId}")
+    Observable<Void> deletePushDevice(@Path("regId") String regId);
 
     //DEBUG: These calls only work on a local development server
 
