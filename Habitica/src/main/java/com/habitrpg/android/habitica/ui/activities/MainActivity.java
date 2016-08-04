@@ -877,7 +877,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 } else {
                     observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
                 }
-            } else if (event.item.purchaseType.equals("quests")) {
+            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
                 observable = apiHelper.apiService.purchaseQuest(event.item.key);
             } else {
                 observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
