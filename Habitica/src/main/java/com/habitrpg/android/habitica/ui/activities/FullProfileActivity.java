@@ -6,11 +6,19 @@ import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.util.ArrayMap;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,10 +29,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
+import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
@@ -32,7 +45,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.Profile;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
+import net.pherth.android.emoji_library.EmojiEditText;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,6 +59,7 @@ import butterknife.BindView;
 
 public class FullProfileActivity extends BaseActivity {
     private String userId;
+    private String userName;
     private ContentCache contentCache;
 
     @Inject
@@ -77,6 +96,8 @@ public class FullProfileActivity extends BaseActivity {
     View avatar_with_bars;
     private AvatarWithBarsViewModel avatarWithBars;
 
+    @BindView(R.id.fullprofile_scrollview)
+    ScrollView fullprofile_scrollview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +124,64 @@ public class FullProfileActivity extends BaseActivity {
         avatar_with_bars.setBackgroundColor(getResources().getColor(R.color.transparent));
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+         int id = item.getItemId();
+
+        if (id == R.id.private_message) {
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View newMessageView = factory.inflate(
+                    R.layout.fullprofile_new_message_dialog, null);
+
+            EmojiEditText emojiEditText = (EmojiEditText)newMessageView.findViewById(R.id.edit_new_message_text);
+
+            TextView newMessageTitle = (TextView)newMessageView.findViewById(R.id.new_message_title);
+            newMessageTitle.setText("Send message to "+userName);
+
+            final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                        HashMap<String, String> messageObject = new HashMap<>();
+                        messageObject.put("message", emojiEditText.getText().toString());
+                        messageObject.put("toUserId", userId);
+
+                        apiHelper.apiService.postPrivateMessage(messageObject)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(postChatMessageResult -> {
+                                    UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
+                                            "Message sent to "+userName, UiUtils.SnackbarDisplayType.NORMAL);
+                                }, throwable -> {
+                                });
+
+                        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    })
+                    .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
+
+                        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                    })
+
+                    .create();
+
+            addMessageDialog.setView(newMessageView);
+
+            addMessageDialog.show();
+
+            return true;
+        }
+
+        if (id == android.R.id.home) {
+            // app icon in action bar clicked; goto parent activity.
+            this.finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateView(HabitRPGUser user) {
         Profile profile = user.getProfile();
         Stats stats = user.getStats();
+
+        userName = profile.getName();
 
         setTitle(profile.getName());
 
@@ -144,18 +220,6 @@ public class FullProfileActivity extends BaseActivity {
 
     private String getCeiledValue(float val) {
         return ((int) Math.ceil(val)) + "";
-    }
-
-    private void addTableRow(TableLayout table, String key, String value, int resourceId) {
-        TableRow tableRow = (TableRow) getLayoutInflater().inflate(resourceId, null);
-
-        TextView keyTextView = (TextView) tableRow.findViewById(R.id.tableRowTextView1);
-        keyTextView.setText(key);
-
-        TextView valueTextView = (TextView) tableRow.findViewById(R.id.tableRowTextView2);
-        valueTextView.setText(value);
-
-        table.addView(tableRow);
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
@@ -385,6 +449,13 @@ public class FullProfileActivity extends BaseActivity {
     @Override
     protected void injectActivity(AppComponent component) {
         component.inject(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_full_profile, menu);
+        return true;
     }
 
     // endregion
