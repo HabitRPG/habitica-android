@@ -325,4 +325,20 @@
   <string name="open_in_store">在应用商店开放</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
   <string name="leaderMessage" formatted="false">从%1$s来的消息</string>
+  <string name="confirm">确认</string>
+  <string name="market">市场</string>
+  <string name="timeTravelers">时光旅行</string>
+  <string name="seasonalShop">四季商店</string>
+  <string name="empty_inbox">收件箱里没有消息。您可以在用户的公共聊天窗口中给他发送新消息！</string>
+  <string name="party_invite">通过邀请朋友来解锁</string>
+  <string name="no_gold">没有足够的金币</string>
+  <string name="no_potion">你不需要购买生命药水</string>
+  <string name="successful_purchase" formatted="false">已购买 %1$s</string>
+  <string name="purchase_confirmation_title">确认购买</string>
+  <string name="confirm_purchase_text" formatted="false">为 %2$s %3$s 购买 %1$s</string>
+  <string name="gem">宝石</string>
+  <string name="hourglass">沙漏</string>
+  <string name="hourglasses">沙漏</string>
+  <string name="gold_singular">金币</string>
+  <string name="gems_plural">金币</string>
 </resources>

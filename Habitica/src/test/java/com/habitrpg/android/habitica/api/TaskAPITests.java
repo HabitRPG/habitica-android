@@ -22,7 +22,7 @@ import rx.observers.TestSubscriber;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricGradleTestRunner.class)
 public class TaskAPITests extends BaseAPITests {
 

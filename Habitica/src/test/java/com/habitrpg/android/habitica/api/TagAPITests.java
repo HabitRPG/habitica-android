@@ -12,7 +12,7 @@ import android.os.Build;
 
 import rx.observers.TestSubscriber;
 
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricGradleTestRunner.class)
 public class TagAPITests extends BaseAPITests {
 

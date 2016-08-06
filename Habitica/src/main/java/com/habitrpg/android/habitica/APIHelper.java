@@ -163,17 +163,22 @@ public class APIHelper implements Action1<Throwable> {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         }
 
+        String userAgent = System.getProperty("http.agent");
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(remove_data_interceptor)
                 .addInterceptor(logging)
                 .addNetworkInterceptor(chain -> {
                     Request original = chain.request();
                     if (this.hostConfig.getUser() != null) {
-                        Request request = original.newBuilder()
+                        Request.Builder builder = original.newBuilder()
                                 .header("x-api-key", this.hostConfig.getApi())
                                 .header("x-api-user", this.hostConfig.getUser())
-                                .header("x-client", "habitica-android")
-                                .method(original.method(), original.body())
+                                .header("x-client", "habitica-android");
+                        if (userAgent != null) {
+                            builder = builder.header("user-agent", userAgent);
+                        }
+                        Request request = builder.method(original.method(), original.body())
                                 .build();
                         return chain.proceed(request);
                     } else {

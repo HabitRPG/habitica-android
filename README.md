@@ -12,7 +12,7 @@ It's also on Google Play:
        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
 </a>
 
-Having the application installed is a good way to be notified of new releases. However, clicking "Watch" on this 
+Having the application installed is a good way to be notified of new releases. However, clicking "Watch" on this
 repository will allow GitHub to email you whenever we publish a release.
 
 
@@ -54,6 +54,7 @@ Setup Habitica build config files by simply copying the example habitica files.
 
     $ cp habitica.properties.example habitica.properties
     $ cp habitica.resources.example habitica.resources
+    $ cp Habitica/google-services.json.example Habitica/google-services.json (Get .json from Firebase Console)
 
 Note: this is the default production `habitica.properties` file for habitica.com. If you
 want to use a local habitica server, please modify the values in the properties file accordingly.

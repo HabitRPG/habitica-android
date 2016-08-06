@@ -75,4 +75,67 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/push_notifications">
+
+        <CheckBoxPreference
+            android:key="usePushNotifications"
+            android:defaultValue="true"
+            android:title="@string/pref_push_notifications_checkbox"/>
+
+        <PreferenceScreen
+            android:key="pushNotifications"
+            android:title="@string/push_notifications"
+            android:summary="Set your push notifications settings"
+            android:order="1">
+
+            <PreferenceCategory android:title="Push Notifications">
+
+                <CheckBoxPreference
+                    android:key="preference_push_you_won_challenge"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_you_won_challenge"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_received_a_private_message"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_received_a_private_message"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_gifted_gems"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_gifted_gems"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_gifted_subscription"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_gifted_subscription"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_invited_to_party"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_party"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_invited_to_guild"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_guild"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_your_quest_has_begun"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_your_quest_has_begun"/>
+
+                <CheckBoxPreference
+                    android:key="preference_push_invited_to_quest"
+                    android:defaultValue="true"
+                    android:title="@string/preference_push_invited_to_quest"/>
+
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

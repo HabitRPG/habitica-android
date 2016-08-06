@@ -325,4 +325,9 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="open_in_store">Abrir en Play Store</string>
   <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
   <string name="leaderMessage" formatted="false">Mensaje de %1$s</string>
+  <string name="confirm">Confirmar</string>
+  <string name="market">Mercado</string>
+  <string name="timeTravelers">Viajeros del tiempo</string>
+  <string name="seasonalShop">Tienda estacional</string>
+  <string name="empty_inbox">No tienes ningún mensaje en la bandeja de entrada. Puedes enviar un mensaje a un usuario desde los mensajes de chat públicos que hayan enviado.</string>
 </resources>
