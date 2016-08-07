@@ -329,5 +329,16 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="market">Marché</string>
   <string name="timeTravelers">Voyageurs temporels</string>
   <string name="seasonalShop">Boutique saisonnière</string>
-  <string name="empty_inbox">Vous n\'avez pas de message dans la boite de réception. Vous pouvez envoyer un nouveau message à partir des discussions publiques de chaque personne.</string>
+  <string name="empty_inbox">Vous n\'avez pas de message dans votre boîte de réception. Vous pouvez envoyer un nouveau message à partir des messages de discussion publics de chaque personne.</string>
+  <string name="party_invite">Débloquer en invitant des ami•e•s</string>
+  <string name="no_gold">Pas assez d\'or</string>
+  <string name="no_potion">Vous n\'avez pas besoin d\'acheter une potion de santé</string>
+  <string name="successful_purchase" formatted="false">%1$s acheté avec succès</string>
+  <string name="purchase_confirmation_title">Confirmer l\'achat</string>
+  <string name="confirm_purchase_text" formatted="false">Acheter %1$s for %2$s %3$s</string>
+  <string name="gem">gemme</string>
+  <string name="hourglass">sablier</string>
+  <string name="hourglasses">sabliers</string>
+  <string name="gold_singular">or</string>
+  <string name="gems_plural">or</string>
 </resources>

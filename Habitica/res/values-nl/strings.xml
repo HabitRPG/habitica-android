@@ -330,4 +330,15 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="timeTravelers">Tijd Reizigers</string>
   <string name="seasonalShop">Seizoenswinkel</string>
   <string name="empty_inbox">Je hebt geen Inbox berichten. Je kan een gebruiker een nieuw bericht sturen vanuit hun publieke chat berichten.</string>
+  <string name="party_invite">Ontgrendel door vrienden uit te nodigen</string>
+  <string name="no_gold">Niet genoeg goud</string>
+  <string name="no_potion">Je hoeft geen gezondheidsdrankje te kopen</string>
+  <string name="successful_purchase" formatted="false">%1$s succesvol gekocht</string>
+  <string name="purchase_confirmation_title">Bevestig aankoop</string>
+  <string name="confirm_purchase_text" formatted="false">Koop %1$s voor %2$s %3$s</string>
+  <string name="gem">edelsteen</string>
+  <string name="hourglass">zandloper</string>
+  <string name="hourglasses">zandlopers</string>
+  <string name="gold_singular">goud</string>
+  <string name="gems_plural">goud</string>
 </resources>

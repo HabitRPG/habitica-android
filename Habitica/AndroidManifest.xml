@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="108"
-    android:versionName="0.0.33"
+    android:versionCode="111"
+    android:versionName="0.0.33.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -122,11 +122,34 @@
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
         <receiver android:process=":remote" android:name=".receivers.TaskReceiver"></receiver>
+
+        <receiver android:name=".receivers.LocalNotificationActionReceiver">
+            <intent-filter>
+                <action android:name="ACCEPT_PARTY_INVITE"/>
+                <action android:name="REJECT_PARTY_INVITE"/>
+                <action android:name="ACCEPT_QUEST_INVITE"/>
+                <action android:name="REJECT_QUEST_INVITE"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action._BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
+
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".helpers.notifications.HabiticaFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

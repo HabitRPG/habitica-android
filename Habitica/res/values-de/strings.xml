@@ -53,7 +53,7 @@
   <string name="network_error_title">Verbindungsfehler</string>
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
   <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuch es später noch mal.</string>
-  <string name="authentication_error_title">Autentifikationsfehler</string>
+  <string name="authentication_error_title">Authentifikationsfehler</string>
   <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort</string>
   <string name="login_validation_error_title">Validierungsfehler</string>
   <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
@@ -166,14 +166,14 @@
   <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
   <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei, indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
   <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
-  <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf während Ihr Euch gemeinsam verbessert!</string>
+  <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Anfangen</string>
   <string name="previous_button">Zurück</string>
   <string name="next_button">Weiter</string>
   <string name="skip_button">Überspringen</string>
   <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst, wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
-  <string name="avatar_setup_description">Als erstes benötigst Du einen Avater, der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
+  <string name="avatar_setup_description">Als erstes benötigst Du einen Avatar, der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
   <string name="task_setup_description">Großartig! Jetzt lass uns Deine Aufgaben anlegen, damit Du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
 
 Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
@@ -330,4 +330,15 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="timeTravelers">Mysteriöse Zeitreisende</string>
   <string name="seasonalShop">Jahreszeitenmarkt</string>
   <string name="empty_inbox">Du hast keine Nachrichten in Deinem Posteingang. Du kannst einem anderen Benutzer eine neue Nachricht von deren öffentlichen Chatnachrichten aus senden!</string>
+  <string name="party_invite">Durch Einladen von Freunden freischalten</string>
+  <string name="no_gold">Nicht genügend Gold</string>
+  <string name="no_potion">Du musst keinen Heiltrank kaufen</string>
+  <string name="successful_purchase" formatted="false">%1$s gekauft</string>
+  <string name="purchase_confirmation_title">Kauf bestätigen</string>
+  <string name="confirm_purchase_text" formatted="false">%1$s für %2$s %3$s kaufen</string>
+  <string name="gem">Edelstein</string>
+  <string name="hourglass">Sanduhr</string>
+  <string name="hourglasses">Sanduhren</string>
+  <string name="gold_singular">Gold</string>
+  <string name="gems_plural">Gold</string>
 </resources>

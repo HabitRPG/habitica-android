@@ -162,6 +162,10 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }
 
+        private void canBuy() {
+
+        }
+
         private void buyItem() {
             BuyGemItemCommand command = new BuyGemItemCommand();
             command.shopIdentifier = shopIdentifier;
@@ -171,6 +175,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public void bind(ShopItem item) {
             this.item = item;
+            buyButton.setVisibility(View.VISIBLE);
             titleView.setText(item.getText());
             descriptionView.setText(Html.fromHtml(item.getNotes()));
 
@@ -178,21 +183,22 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (item.getUnlockCondition() == null) {
                 buyButton.setText(item.getValue().toString());
-                switch (item.getCurrency()) {
-                    case "gold":
-                        buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
-                        break;
-                    case "gems":
-                        buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
-                        break;
-                    default:
-                        buyButton.setVisibility(View.GONE);
+                if (item.getCurrency().equals("gold")) {
+                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gold, 0, 0, 0);
+                } else if (item.getCurrency().equals("gems")) {
+                    buyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_gem, 0, 0, 0);
+                } else {
+                    buyButton.setVisibility(View.GONE);
                 }
                 unlockView.setVisibility(View.GONE);
             } else {
                 buyButton.setVisibility(View.GONE);
                 unlockView.setVisibility(View.VISIBLE);
                 unlockView.setText(item.unlockCondition.readableUnlockConditionId());
+            }
+
+            if (item.getLocked()) {
+                buyButton.setVisibility(View.GONE);
             }
         }
 

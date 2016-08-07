@@ -326,4 +326,12 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="open_in_store">Abra na Play Store</string>
   <string name="change_class_confirmation">Você tem certeza que quer mudar sua classe? Isso irá custar 3 gemas.</string>
   <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
+  <string name="confirm">Confirmar</string>
+  <string name="market">Mercado</string>
+  <string name="no_potion">Você não precisa comprar uma poção de vida</string>
+  <string name="successful_purchase" formatted="false">%1$s comprado com sucesso</string>
+  <string name="purchase_confirmation_title">Confirmar compra</string>
+  <string name="gem">gema</string>
+  <string name="gold_singular">ouro</string>
+  <string name="gems_plural">ouro</string>
 </resources>

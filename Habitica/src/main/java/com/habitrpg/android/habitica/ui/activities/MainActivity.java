@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -138,6 +139,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -205,6 +207,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
+    PushNotificationManager pushNotificationManager;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -220,6 +224,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         //Check if reminder alarm is set
         scheduleReminder(this);
+
+        pushNotificationManager = PushNotificationManager.getInstance(this);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
@@ -348,8 +354,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             displayDeathDialogIfNeeded();
 
             if (!fromLocalDb) {
-
                 displayNewInboxMessagesBadge();
+                pushNotificationManager.setUser(user);
+                pushNotificationManager.addPushDeviceUsingStoredToken();
 
                 // Update the oldEntries
                 new Thread(() -> {
@@ -868,26 +875,38 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final BuyGemItemCommand event) {
-        Observable<Void> observable;
-        if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
-            if (event.item.purchaseType.equals("gear")) {
-                observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+        if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
+            Observable<Void> observable;
+            if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
+                if (event.item.purchaseType.equals("gear")) {
+                    observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+                } else {
+                    observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                }
+            } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
+                observable = apiHelper.apiService.purchaseQuest(event.item.key);
             } else {
-                observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
             }
+            observable
+                    .compose(apiHelper.configureApiCallObserver())
+                    .doOnNext(aVoid -> {
+                        showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
+                    })
+                    .subscribe(buyResponse -> {
+                        apiHelper.retrieveUser(false)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                                });
+                    }, throwable -> {
+                        HttpException error = (HttpException) throwable;
+                        if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
+                            openGemPurchaseFragment(null);
+                        }
+                    });
         } else {
-            observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
+            openGemPurchaseFragment(null);
         }
-        observable
-                .compose(apiHelper.configureApiCallObserver())
-                .doOnNext(aVoid -> {
-                    showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
-                })
-                .subscribe(buyResponse -> {
-                    apiHelper.retrieveUser(false)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(new HabitRPGUserCallback(this), throwable -> {});
-                }, throwable -> {});
     }
 
     @Subscribe
@@ -978,7 +997,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Subscribe
-    public void onEvent(OpenGemPurchaseFragmentCommand cmd) {
+    public void openGemPurchaseFragment(OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 

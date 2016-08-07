@@ -7,4 +7,12 @@
     <string name="SP_username" translatable="false">Username</string>
     <string name="SP_email" translatable="false">E-mail</string>
     <string name="base_url" translatable="false">https://habitica.com</string>
+
+    <!-- Local notification actions -->
+    <string name="accept_party_invite" translatable="false">ACCEPT_PARTY_INVITE</string>
+    <string name="reject_party_invite" translatable="false">REJECT_PARTY_INVITE</string>
+    <string name="accept_guild_invite" translatable="false">ACCEPT_GUILD_INVITE</string>
+    <string name="reject_guild_invite" translatable="false">REJECT_GUILD_INVITE</string>
+    <string name="accept_quest_invite" translatable="false">ACCEPT_QUEST_INVITE</string>
+    <string name="reject_quest_invite" translatable="false">REJECT_QUEST_INVITE</string>
 </resources>

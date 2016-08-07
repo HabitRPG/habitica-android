@@ -113,7 +113,7 @@
   <string name="tavern.inn.checkOut">重啟每日任務</string>
   <string name="tavern.inn.rest">暫停每日任務</string>
   <string name="reward.dialog.buy">購買</string>
-  <string name="reward.dialog.dismiss">解散</string>
+  <string name="reward.dialog.dismiss">取消</string>
   <string name="party">隊伍</string>
   <string name="chat">聊天</string>
   <string name="members">成員</string>
@@ -322,5 +322,12 @@
   <string name="share_levelup" formatted="false">我在Habitica中通過改善我現實生活中的習慣到達了%s級！</string>
   <string name="share_hatched" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
   <string name="share_raised" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
+  <string name="open_in_store">開啟Play sotre</string>
   <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
+  <string name="leaderMessage" formatted="false">訊息來自%1$s</string>
+  <string name="confirm">確認</string>
+  <string name="market">市集</string>
+  <string name="timeTravelers">時光旅人</string>
+  <string name="seasonalShop">季節限定商店</string>
+  <string name="empty_inbox">你的收件匣裡面沒有任何信息。你可以利用聊天去傳送訊息給大家</string>
 </resources>
