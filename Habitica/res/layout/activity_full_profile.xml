@@ -303,10 +303,34 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="0,1,2,3,4">
+                    android:stretchColumns="0,1">
 
                     <TableRow android:layout_height="wrap_content">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pet-Count" />
+
+                        <TextView
+                            android:id="@+id/profile_pet_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="#" />
+                    </TableRow>
+
+                    <TableRow android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mount-Count" />
+
+                        <TextView
+                            android:id="@+id/profile_mount_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="#" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

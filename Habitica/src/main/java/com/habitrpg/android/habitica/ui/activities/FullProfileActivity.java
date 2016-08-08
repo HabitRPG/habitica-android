@@ -52,6 +52,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -98,6 +99,12 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.fullprofile_scrollview)
     ScrollView fullprofile_scrollview;
+
+    @BindView(R.id.profile_pet_count)
+    TextView petCount;
+
+    @BindView(R.id.profile_mount_count)
+    TextView mountCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +216,35 @@ public class FullProfileActivity extends BaseActivity {
         avatarWithBars.updateData(user);
 
         addLevelAttributes(stats, user);
+
+        petCount.setText(CountEntries(user.getItems().getPets())+"");
+        mountCount.setText(CountEntriesBool(user.getItems().getMounts())+"");
+    }
+
+    private int CountEntries(HashMap<String, Integer> hashMap) {
+        int _count = 0;
+
+        for (Map.Entry<String, Integer> e : hashMap.entrySet()) {
+            if(e.getValue() == -1)
+                continue;
+
+            _count += e.getValue();
+        }
+
+        return _count;
+    }
+
+    private int CountEntriesBool(HashMap<String, Boolean> hashMap) {
+        int _count = 0;
+
+        for (Map.Entry<String, Boolean> e : hashMap.entrySet()) {
+            if(e.getValue() == null)
+                continue;
+
+            _count += 1;
+        }
+
+        return _count;
     }
 
     // region Utils
