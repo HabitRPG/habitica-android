@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.test.mock.MockContext;
 import android.util.Log;
 
+import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -52,7 +54,7 @@ public class TaskAlarmManagerTest {
 
     @After
     public void tearDown() {
-
+        FlowManager.getDatabase(HabitDatabase.NAME).reset(context);
     }
 
     @Test
@@ -125,13 +127,6 @@ public class TaskAlarmManagerTest {
         task.setReminders(reminders);
         task.save();
 
-        //This prevents in error in the DBFLow queue be out of sync
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-
         taskAlarmManager.setAlarmsForTask(task);
         int newAlarmId = reminders.get(0).getId().hashCode() & 0xfffffff;
         PendingIntent senderNew = PendingIntent.getBroadcast(context, newAlarmId, intent, PendingIntent.FLAG_NO_CREATE);
@@ -157,7 +152,7 @@ public class TaskAlarmManagerTest {
         task.setReminders(reminders);
         task.save();
 
-        taskAlarmManager.setAlarmsForTask(task);
+//        taskAlarmManager.setAlarmsForTask(task);
 //
 //        Integer alarmId = reminders.get(0).getAlarmId();
 //        Intent intent = new Intent(context, TaskReceiver.class);
