@@ -27,12 +27,12 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
 
     public APIHelper apiHelper;
     private List<Group> publicGuildList;
+    private List<Group> fullPublicGuildList;
     private List<String> memberGuildIDs;
-    private List<Group> publicGuildListCopy;
 
     public void setPublicGuildList(List<Group> publicGuildList) {
         this.publicGuildList = publicGuildList;
-        this.publicGuildListCopy = new ArrayList<>(publicGuildList);
+        this.fullPublicGuildList = new ArrayList<>(publicGuildList);
         this.notifyDataSetChanged();
     }
 
@@ -98,14 +98,16 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
     private boolean isInGroup(Group guild) {
         return this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
     }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 List<Group> filteredGuilds = null;
+
                 if(constraint.length() == 0) {
-                    filteredGuilds = publicGuildListCopy;
+                    filteredGuilds = fullPublicGuildList;
                 } else {
                     filteredGuilds = getFilteredResults(constraint.toString().toLowerCase());
                 }
@@ -123,11 +125,11 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         };
     }
 
-    protected List<Group> getFilteredResults(String constraint) {
+    protected List<Group> getFilteredResults(String query) {
         List<Group> filteredGuilds = new ArrayList<>();
 
-        for(Group guild : publicGuildListCopy) {
-            if(guild.name.toLowerCase().contains(constraint)) {
+        for(Group guild : fullPublicGuildList) {
+            if(guild.name.toLowerCase().contains(query)) {
                 filteredGuilds.add(guild);
             }
         }

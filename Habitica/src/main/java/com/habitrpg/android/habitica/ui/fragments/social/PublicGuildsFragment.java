@@ -83,14 +83,14 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     }
 
     @Override
-    public boolean onQueryTextSubmit(String s) {
-        viewAdapter.getFilter().filter(s);
+    public boolean onQueryTextSubmit(String query) {
+        viewAdapter.getFilter().filter(query);
         return true;
     }
 
     @Override
-    public boolean onQueryTextChange(String s) {
-        viewAdapter.getFilter().filter(s);
+    public boolean onQueryTextChange(String query) {
+        viewAdapter.getFilter().filter(query);
         return true;
     }
 }

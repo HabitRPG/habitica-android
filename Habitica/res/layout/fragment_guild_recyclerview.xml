@@ -8,7 +8,7 @@
     <SearchView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/guild_search_view"
-                android:queryHint="Search for guilds"/>
+                android:queryHint="@string/guild_search_hint"/>
 
     <android.support.design.widget.CoordinatorLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
