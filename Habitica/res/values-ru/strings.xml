@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">Ежедневное напоминание</string>
   <string name="pref_reminder_checkbox">Активируйте напоминание</string>
   <string name="pref_reminder_picker">Установите время напоминания</string>
+  <string name="pref_push_notifications_checkbox">Push-уведомления пользователя</string>
+  <string name="push_notifications">Push-уведомления</string>
+  <string name="preference_push_you_won_challenge">Вы прошли испытание!</string>
+  <string name="preference_push_received_a_private_message">Получено Личное Сообщение</string>
+  <string name="preference_push_gifted_gems">Подаренные самоцветы</string>
+  <string name="preference_push_gifted_subscription">Подаренная подписка</string>
+  <string name="preference_push_invited_to_party">Приглашены в команду</string>
+  <string name="preference_push_invited_to_guild">Приглашены в Гильдию</string>
+  <string name="preference_push_your_quest_has_begun">Ваш Квест начался</string>
+  <string name="preference_push_invited_to_quest">Приглашены в Квест</string>
   <!--Adding tasks-->
   <string name="task_value">Значение</string>
   <string name="new_todo">Новая задача</string>
@@ -325,4 +335,22 @@
   <string name="open_in_store">Откройте в Play маркет</string>
   <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 кристалла.</string>
   <string name="leaderMessage" formatted="false">Сообщение от %1$s</string>
+  <string name="confirm">Подтвердить</string>
+  <string name="market">Магазин</string>
+  <string name="timeTravelers">Путешественники во времени</string>
+  <string name="seasonalShop">Сезонная Лавка</string>
+  <string name="empty_inbox">У вас нет входящих сообщений. Вы можете отправить пользователю новое сообщение через публичный чат!</string>
+  <string name="party_invite">Разблокировать, пригласив друзей</string>
+  <string name="no_gold">Не достаточно Золота</string>
+  <string name="no_potion">Вам не нужно покупать зелье здоровья</string>
+  <string name="successful_purchase" formatted="false">%1$s успешно куплен</string>
+  <string name="purchase_confirmation_title">Подтвердите покупку</string>
+  <string name="confirm_purchase_text" formatted="false">Купить %1$s для %2$s %3$s</string>
+  <string name="gem">самоцвет</string>
+  <string name="hourglass">Песочные часы</string>
+  <string name="hourglasses">песочные часы</string>
+  <string name="gold_singular">золото</string>
+  <string name="gems_plural">золото</string>
+  <string name="chat_message_copied">Сообщение скопировано в буфер обмена</string>
+  <string name="copy_chat_message">Скопировать в буфер обмена</string>
 </resources>

@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">毎日の通知</string>
   <string name="pref_reminder_checkbox">通知を有効にする</string>
   <string name="pref_reminder_picker">通知時間を設定</string>
+  <string name="pref_push_notifications_checkbox">ユーザーへのプッシュ通知</string>
+  <string name="push_notifications">プッシュ通知</string>
+  <string name="preference_push_you_won_challenge">チャレンジで勝ちました!</string>
+  <string name="preference_push_received_a_private_message">プライベートメッセージを受信しました</string>
+  <string name="preference_push_gifted_gems">ジェムが贈られました</string>
+  <string name="preference_push_gifted_subscription">寄付会員権が贈られました</string>
+  <string name="preference_push_invited_to_party">パーティーに招待されました</string>
+  <string name="preference_push_invited_to_guild">ギルドに招待されました</string>
+  <string name="preference_push_your_quest_has_begun">クエストが始まりました</string>
+  <string name="preference_push_invited_to_quest">クエストに招待されました</string>
   <!--Adding tasks-->
   <string name="task_value">値</string>
   <string name="new_todo">新しい To-Do</string>
@@ -342,4 +352,6 @@
   <string name="hourglasses">砂時計</string>
   <string name="gold_singular">ゴールド</string>
   <string name="gems_plural">ゴールド</string>
+  <string name="chat_message_copied">クリップボードにコピーされたメッセージ</string>
+  <string name="copy_chat_message">クリップボードにコピー</string>
 </resources>

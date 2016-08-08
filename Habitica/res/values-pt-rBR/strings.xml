@@ -19,6 +19,15 @@
   <string name="pref_reminder_header">Lembrete Diário</string>
   <string name="pref_reminder_checkbox">Ativar Lembrete</string>
   <string name="pref_reminder_picker">Definir Tempo do Lembrete</string>
+  <string name="pref_push_notifications_checkbox">Notificações Push</string>
+  <string name="push_notifications">Notificações Push</string>
+  <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
+  <string name="preference_push_received_a_private_message">Recebeu uma Mensagem Privada</string>
+  <string name="preference_push_gifted_gems">Gemas de presente</string>
+  <string name="preference_push_invited_to_party">Convidado para um grupo</string>
+  <string name="preference_push_invited_to_guild">Convidado para uma Guilda</string>
+  <string name="preference_push_your_quest_has_begun">Sua missão começou</string>
+  <string name="preference_push_invited_to_quest">Convidado para uma missão</string>
   <!--Adding tasks-->
   <string name="task_value">Valor</string>
   <string name="new_todo">Novo a fazer</string>
@@ -328,10 +337,21 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
   <string name="confirm">Confirmar</string>
   <string name="market">Mercado</string>
+  <string name="timeTravelers">Viajantes no tempo</string>
+  <string name="seasonalShop">Loja de temporada</string>
+  <string name="empty_inbox">Você não tem nenhuma mensagem na caixa de entrada. Você pode enviar novas mensagens a outros usuários a partir das mensagens deles em chats públicos!</string>
+  <string name="party_invite">Desbloqueie ao convidar amigos</string>
+  <string name="no_gold">Sem ouro suficiente</string>
   <string name="no_potion">Você não precisa comprar uma poção de vida</string>
   <string name="successful_purchase" formatted="false">%1$s comprado com sucesso</string>
   <string name="purchase_confirmation_title">Confirmar compra</string>
+  <string name="confirm_purchase_text" formatted="false">Compre %1$s por %2$s %3$s</string>
   <string name="gem">gema</string>
+  <string name="hourglass">ampulheta</string>
+  <string name="hourglasses">ampulhetas</string>
   <string name="gold_singular">ouro</string>
   <string name="gems_plural">ouro</string>
+  <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
+  <string name="copy_chat_message">Copiar para Área e Transferência
+</string>
 </resources>
