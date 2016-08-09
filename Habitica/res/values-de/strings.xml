@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
   <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
+  <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
+  <string name="push_notifications">Push-Benachrichtigungen</string>
+  <string name="preference_push_you_won_challenge">Du hast einen Wettbewerb gewonnen!</string>
+  <string name="preference_push_received_a_private_message">Private Nachricht erhalten</string>
+  <string name="preference_push_gifted_gems">Geschenkte Edelsteine</string>
+  <string name="preference_push_gifted_subscription">Geschenkte Abonnements</string>
+  <string name="preference_push_invited_to_party">Zur Gruppe eingeladen</string>
+  <string name="preference_push_invited_to_guild">Zur Gilde eingeladen</string>
+  <string name="preference_push_your_quest_has_begun">Deine Quest hat begonnen</string>
+  <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
   <!--Adding tasks-->
   <string name="task_value">Wert</string>
   <string name="new_todo">Neuer To-Do-Eintrag</string>
@@ -209,8 +219,8 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="my_guilds">Meine Gilden</string>
   <string name="public_guilds">Öffentliche Gilden</string>
   <string name="guild">Gilde</string>
-  <string name="leave">verlassen</string>
-  <string name="join">beitreten</string>
+  <string name="leave">Verlassen</string>
+  <string name="join">Beitreten</string>
   <string name="leader">Anführer</string>
   <string name="gems">Edelsteine</string>
   <string name="copy_as_todo">Als To-Do kopieren</string>
@@ -341,4 +351,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="hourglasses">Sanduhren</string>
   <string name="gold_singular">Gold</string>
   <string name="gems_plural">Gold</string>
+  <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
+  <string name="copy_chat_message">In Zwischenablage kopieren</string>
 </resources>

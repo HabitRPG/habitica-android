@@ -99,7 +99,7 @@ public class HabitRPGUser extends BaseModel {
             foreignColumnName = "user_id")})
     private Invitations invitations;
 
-    private List<PushDevice> pushDevices = new ArrayList<PushDevice>();
+    private List<PushDevice> pushDevices;
 
     private Purchases purchased;
 

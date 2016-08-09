@@ -33,7 +33,7 @@ public class ReceivedPrivateMessageLocalNotification extends HabiticaLocalNotifi
     }
 
     protected void setNotificationActions() {
-        Intent intent = new Intent(context, LocalNotificationActionReceiver.class);
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 3000,

@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">Ежедневно напомняне</string>
   <string name="pref_reminder_checkbox">Включване на напомнянето</string>
   <string name="pref_reminder_picker">Задаване на времето за напомняне</string>
+  <string name="pref_push_notifications_checkbox">Потребителски известия</string>
+  <string name="push_notifications">Известия</string>
+  <string name="preference_push_you_won_challenge">Спечелихте предизвикателство</string>
+  <string name="preference_push_received_a_private_message">Получихте лично съобщение</string>
+  <string name="preference_push_gifted_gems">Подарени диаманти</string>
+  <string name="preference_push_gifted_subscription">Подарен абонамен</string>
+  <string name="preference_push_invited_to_party">Получихте покана за група</string>
+  <string name="preference_push_invited_to_guild">Получихте покана за гилдия</string>
+  <string name="preference_push_your_quest_has_begun">Мисията Ви започна</string>
+  <string name="preference_push_invited_to_quest">Получихте покана за мисия</string>
   <!--Adding tasks-->
   <string name="task_value">Стойност</string>
   <string name="new_todo">Нова задача за изпълнение</string>
@@ -341,4 +351,6 @@
   <string name="hourglasses">пясъчни часовници</string>
   <string name="gold_singular">злато</string>
   <string name="gems_plural">злато</string>
+  <string name="chat_message_copied">Съобщението е копирано</string>
+  <string name="copy_chat_message">Копиране</string>
 </resources>
