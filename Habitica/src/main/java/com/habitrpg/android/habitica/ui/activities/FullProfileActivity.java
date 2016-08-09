@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -205,7 +206,7 @@ public class FullProfileActivity extends BaseActivity {
 
         String blurbText = profile.getBlurb();
         if (blurbText != null && !blurbText.isEmpty()) {
-            blurbTextView.setText(blurbText);
+            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText));
         }
 
         avatarView.setUser(user);

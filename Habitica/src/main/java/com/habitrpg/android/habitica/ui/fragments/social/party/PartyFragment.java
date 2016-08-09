@@ -342,16 +342,4 @@ public class PartyFragment extends BaseMainFragment {
             tabLayout.setupWithViewPager(viewPager);
         }
     }
-
-    @Subscribe
-    public void onEvent(OpenFullProfileCommand cmd)
-    {
-        Bundle bundle = new Bundle();
-        bundle.putString("userId", cmd.MemberId);
-
-        Intent intent = new Intent(activity, FullProfileActivity.class);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-    }
 }

@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
@@ -1510,5 +1511,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void addFilterDrawerItem(IDrawerItem item) {
         this.filterDrawer.addItem(item);
+    }
+
+
+    @Subscribe
+    public void onEvent(OpenFullProfileCommand cmd) {
+        if(cmd.MemberId.equals("system"))
+            return;
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", cmd.MemberId);
+
+        Intent intent = new Intent(this, FullProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 }
