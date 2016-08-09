@@ -2,21 +2,13 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -32,11 +24,8 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
-import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -46,8 +35,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +62,9 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.avatarView)
     AvatarView avatarView;
 
+    @BindView(R.id.profile_attributes_card)
+    CardView attributesCardView;
+
     @BindView(R.id.attributes_table)
     TableLayout attributesTableLayout;
 
@@ -92,6 +82,9 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.avatar_costume_progress)
     ProgressBar costumeProgress;
+
+    @BindView(R.id.profile_costume_card)
+    CardView costumeCard;
 
     @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
@@ -114,7 +107,7 @@ public class FullProfileActivity extends BaseActivity {
         Bundle bundle = intent.getExtras();
         this.userId = bundle.getString("userId");
 
-        setTitle("loading member data..");
+        setTitle(R.string.profile_loading_data);
 
         apiHelper.apiService.GetMember(this.userId)
                 .compose(apiHelper.configureApiCallObserver())
@@ -129,6 +122,9 @@ public class FullProfileActivity extends BaseActivity {
         avatarWithBars.valueBarLabelsToBlack();
 
         avatar_with_bars.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+        attributeRows.clear();
+        attributesCardView.setOnClickListener(view -> toggleAttributeDetails());
     }
 
     @Override
@@ -138,12 +134,12 @@ public class FullProfileActivity extends BaseActivity {
         if (id == R.id.private_message) {
             LayoutInflater factory = LayoutInflater.from(this);
             final View newMessageView = factory.inflate(
-                    R.layout.fullprofile_new_message_dialog, null);
+                    R.layout.profile_new_message_dialog, null);
 
             EmojiEditText emojiEditText = (EmojiEditText)newMessageView.findViewById(R.id.edit_new_message_text);
 
             TextView newMessageTitle = (TextView)newMessageView.findViewById(R.id.new_message_title);
-            newMessageTitle.setText("Send message to "+userName);
+            newMessageTitle.setText(String.format(getString(R.string.profile_send_message_to), userName));
 
             final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                     .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
@@ -155,7 +151,7 @@ public class FullProfileActivity extends BaseActivity {
                                 .compose(apiHelper.configureApiCallObserver())
                                 .subscribe(postChatMessageResult -> {
                                     UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                            "Message sent to "+userName, UiUtils.SnackbarDisplayType.NORMAL);
+                                            String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
                                 }, throwable -> {
                                 });
 
@@ -259,7 +255,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
-        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.fullprofile_gear_tablerow, null);
+        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, null);
 
         SimpleDraweeView draweeView = (SimpleDraweeView) gearRow.findViewById(R.id.gear_drawee);
 
@@ -291,7 +287,7 @@ public class FullProfileActivity extends BaseActivity {
 
     // endregion
 
-    // region Stats
+    // region Attributes
 
     private float attributeStrSum = 0;
     private float attributeIntSum = 0;
@@ -301,7 +297,7 @@ public class FullProfileActivity extends BaseActivity {
     private void addLevelAttributes(Stats stats, HabitRPGUser user) {
         float byLevelStat = stats.getLvl() / 2.0f;
 
-        addAttributeRow("Level: ", byLevelStat, byLevelStat, byLevelStat, byLevelStat, false);
+        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, false);
 
         LoadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
             GotGear(obj, user);
@@ -310,9 +306,13 @@ public class FullProfileActivity extends BaseActivity {
             stopAndHideProgress(attributesProgress);
         });
 
-        LoadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
-            GotCostume(obj);
-        });
+        if(user.getPreferences().getCostume()){
+            LoadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
+                GotCostume(obj);
+            });
+        } else  {
+            costumeCard.setVisibility(View.GONE);
+        }
     }
 
     private void LoadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
@@ -373,7 +373,7 @@ public class FullProfileActivity extends BaseActivity {
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        addAttributeRow("Equipment: ", strAttributes, intAttributes, conAttributes, perAttributes, false);
+        addAttributeRow(getString(R.string.battle_gear) +": ", strAttributes, intAttributes, conAttributes, perAttributes, false);
 
         if (!user.getPreferences().isDisableClasses()) {
             float strClassBonus = 0;
@@ -400,7 +400,7 @@ public class FullProfileActivity extends BaseActivity {
                     break;
             }
 
-            addAttributeRow("Class-Bonus: ", strClassBonus, intClassBonus, conClassBonus, perClassBonus, false);
+            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false);
         }
     }
 
@@ -417,14 +417,15 @@ public class FullProfileActivity extends BaseActivity {
     private void addNormalAddBuffAttributes(Stats stats) {
         Buffs buffs = stats.getBuffs();
 
-        addAttributeRow("Allocated: ", stats.getStr(), stats.get_int(), stats.getCon(), stats.getPer(), false);
-        addAttributeRow("Boosts: ", buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), false);
+        addAttributeRow(getString(R.string.profile_allocated), stats.getStr(), stats.get_int(), stats.getCon(), stats.getPer(), false);
+        addAttributeRow(getString(R.string.profile_boosts), buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), false);
 
+        // Summary row
         addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, true);
     }
 
     private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean isSummary) {
-        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.fullprofile_attributetablerow, null);
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, null);
         TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
         keyTextView.setText(label);
 
@@ -451,11 +452,26 @@ public class FullProfileActivity extends BaseActivity {
             attributeIntSum += intVal;
             attributeConSum += conVal;
             attributePerSum += perVal;
+
+            attributeRows.add(tableRow);
+            tableRow.setVisibility(View.GONE);
         }
 
         attributesTableLayout.addView(tableRow);
 
         return tableRow;
+    }
+
+    private boolean attributeDetailsHidden = true;
+
+    private ArrayList<TableRow> attributeRows = new ArrayList<>();
+
+    private void toggleAttributeDetails(){
+        attributeDetailsHidden = !attributeDetailsHidden;
+
+        for (TableRow row : attributeRows){
+            row.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);
+        }
     }
 
     // endregion

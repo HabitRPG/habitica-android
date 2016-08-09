@@ -167,7 +167,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Equipment"
+                    android:text="@string/battle_gear"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
@@ -187,7 +187,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/costume_group"
+            android:id="@+id/profile_costume_card"
             style="@style/CardView.Default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -201,7 +201,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Costume"
+                    android:text="@string/costume"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
@@ -222,8 +222,11 @@
 
         <android.support.v7.widget.CardView
             style="@style/CardView.Default"
+            android:id="@+id/profile_attributes_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,7 +247,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Attributes"
+                            android:text="@string/attributes"
                             android:textSize="@dimen/abc_text_size_title_material"
                             android:textStyle="bold" />
 
@@ -296,7 +299,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pets &amp; Mounts"
+                    android:text="@string/profile_pets_and_mounts"
                     android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
@@ -310,7 +313,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Pet-Count" />
+                            android:text="@string/profile_pets_found" />
 
                         <TextView
                             android:id="@+id/profile_pet_count"
@@ -324,7 +327,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Mount-Count" />
+                            android:text="@string/profile_mounts_tamed" />
 
                         <TextView
                             android:id="@+id/profile_mount_count"
