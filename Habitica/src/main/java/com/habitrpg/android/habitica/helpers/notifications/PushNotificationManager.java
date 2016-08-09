@@ -111,6 +111,7 @@ public class PushNotificationManager {
         if (this.user.getPushDevices() == null) {
             return true;
         }
+
         for(PushDevice pushDevice : this.user.getPushDevices()) {
             if(pushDevice.getRegId().equals(this.refreshedToken)) {
                 return true;
