@@ -81,6 +81,9 @@ dependencies {
     // Image Loading/Caching
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    //QR Code
+    compile 'com.github.kenglxn.QRGen:android:2.2.0'
+
     // Emojis
     compile 'com.github.viirus:emoji-lib:0.0.3.2'
 
@@ -161,11 +164,6 @@ android {
         release
     }
 
-    dexOptions{
-        javaMaxHeapSize "4g"
-        preDexLibraries = false
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -206,8 +204,8 @@ android {
     }
     
     dexOptions {
-        preDexLibraries true
-        javaMaxHeapSize "2g" // Use gig increments depending on needs
+        preDexLibraries false
+        javaMaxHeapSize "4g" // Use gig increments depending on needs
         incremental true
     }
 

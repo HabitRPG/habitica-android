@@ -5,8 +5,14 @@ import com.habitrpg.android.habitica.R;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.preference.Preference;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import net.glxn.qrgen.android.QRCode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +28,15 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
                 findPreference(key).setSummary(preference.getValue().toString());
             }
         }
+
+        displayQRCode();
+    }
+
+    protected void displayQRCode() {
+        Bitmap myBitmap = QRCode.from("www.example.org").bitmap();
+        ImageView myImage = (ImageView) getActivity().findViewById(R.id.imageView);
+        myImage.setVisibility(View.VISIBLE);
+        myImage.setImageBitmap(myBitmap);
     }
 
     protected List<String> getAccountDetailsPreferences() {

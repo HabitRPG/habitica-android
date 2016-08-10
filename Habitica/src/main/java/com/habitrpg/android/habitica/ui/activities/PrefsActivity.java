@@ -15,6 +15,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 
@@ -23,6 +25,9 @@ public class PrefsActivity extends BaseActivity implements
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.imageView)
+    ImageView qrImageView;
 
     // TODO:
     // This method should be moved to HabiticaApplication
@@ -51,6 +56,8 @@ public class PrefsActivity extends BaseActivity implements
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new PreferencesFragment())
                 .commit();
+
+        qrImageView.setVisibility(View.VISIBLE);
     }
 
     @Override
