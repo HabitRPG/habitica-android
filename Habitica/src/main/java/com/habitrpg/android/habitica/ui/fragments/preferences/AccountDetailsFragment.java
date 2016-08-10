@@ -33,7 +33,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
     }
 
     protected void displayQRCode() {
-        Bitmap myBitmap = QRCode.from("www.example.org").bitmap();
+        Bitmap myBitmap = QRCode.from(getString(R.string.SP_userID)).bitmap();
         ImageView myImage = (ImageView) getActivity().findViewById(R.id.imageView);
         myImage.setVisibility(View.VISIBLE);
         myImage.setImageBitmap(myBitmap);

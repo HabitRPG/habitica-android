@@ -14,16 +14,21 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import net.glxn.qrgen.android.QRCode;
 
 import javax.inject.Inject;
 
@@ -37,10 +42,16 @@ public class GroupInformationFragment extends BaseFragment {
     FragmentGroupInfoBinding viewBinding;
     @Inject
     APIHelper apiHelper;
+
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
+
     @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
+
+    @BindView(R.id.QRImageView)
+    ImageView qrImageView;
+
     private View view;
     private Group group;
     private HabitRPGUser user;
@@ -55,7 +66,6 @@ public class GroupInformationFragment extends BaseFragment {
     }
 
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
-
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();
@@ -74,6 +84,7 @@ public class GroupInformationFragment extends BaseFragment {
 
         viewBinding = DataBindingUtil.bind(view);
         viewBinding.setHideParticipantCard(false);
+
         if (user != null) {
             viewBinding.setUser(user);
         }
@@ -88,6 +99,10 @@ public class GroupInformationFragment extends BaseFragment {
         collectionStats.setAdapter(questCollectViewAdapter);
         bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
+
+        if (this.group == null) {
+            displayQRCode();
+        }
 
         return view;
     }
@@ -292,4 +307,11 @@ public class GroupInformationFragment extends BaseFragment {
         builder.show();
     }
 
+    protected void displayQRCode() {
+        Bitmap myBitmap = QRCode.from(getString(R.string.SP_userID)).bitmap();
+
+        if (qrImageView != null) {
+            qrImageView.setImageBitmap(myBitmap);
+        }
+    }
 }
