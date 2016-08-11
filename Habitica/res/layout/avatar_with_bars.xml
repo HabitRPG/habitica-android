@@ -24,8 +24,8 @@
             android:layout_width="@dimen/avatar_header_width"
             android:layout_height="@dimen/avatar_header_height"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             app:showBackground="true"
             app:showMount="true"
             app:showPet="true" />
@@ -38,21 +38,31 @@
 
             <include
                 android:id="@+id/hpBar"
-                layout="@layout/value_bar" />
+                layout="@layout/value_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/header_bar_spacing" />
 
             <include
                 android:id="@+id/xpBar"
-                layout="@layout/value_bar" />
+                layout="@layout/value_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/header_bar_spacing"  />
 
             <include
                 android:id="@+id/mpBar"
-                layout="@layout/value_bar" />
+                layout="@layout/value_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
     <TextView
         android:id="@+id/lvl_tv"
         android:layout_width="wrap_content"

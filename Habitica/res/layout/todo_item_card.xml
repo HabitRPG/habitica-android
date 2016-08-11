@@ -27,9 +27,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingEnd="16dp"
+                android:paddingLeft="@dimen/task_text_padding"
+                android:paddingStart="@dimen/task_text_padding"
+                android:paddingRight="@dimen/task_text_padding"
+                android:paddingEnd="@dimen/task_text_padding"
                 android:paddingBottom="@dimen/task_top_bottom_padding"
                 android:paddingTop="@dimen/task_top_bottom_padding"
                 android:layout_weight="1">

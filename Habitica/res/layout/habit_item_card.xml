@@ -21,11 +21,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/btnPlusBackground"/>
+                    <ImageView
+                            android:id="@+id/btnPlusIconView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/plus"
+                            android:scaleType="center"
+                            android:layout_gravity="center" />
                     <Button
                         android:id="@+id/btnPlus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="+"
                         android:background="@drawable/selection_highlight"
                         style="@style/HabitButton" />
                 </FrameLayout>
@@ -38,11 +44,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/btnMinusBackground"/>
+                    <ImageView
+                            android:id="@+id/btnMinusIconView"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/minus"
+                            android:scaleType="center"
+                            android:layout_gravity="center" />
                     <Button
                         android:id="@+id/btnMinus"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="-"
                         android:background="@drawable/selection_highlight"
                         style="@style/HabitButton"/>
                 </FrameLayout>
@@ -52,9 +64,10 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingLeft="@dimen/task_text_padding"
+                    android:paddingStart="@dimen/task_text_padding"
+                    android:paddingRight="@dimen/task_text_padding"
+                    android:paddingEnd="@dimen/task_text_padding"
                     android:paddingBottom="@dimen/task_top_bottom_padding"
                     android:paddingTop="@dimen/task_top_bottom_padding">
                     <net.pherth.android.emoji_library.EmojiTextView
@@ -72,7 +85,7 @@
                 </LinearLayout>
                 <View
                     android:id="@+id/rightBorderView"
-                    android:layout_width="5dp"
+                    android:layout_width="@dimen/task_right_border_width"
                     android:layout_height="match_parent"
                     android:gravity="center" />
 </LinearLayout>

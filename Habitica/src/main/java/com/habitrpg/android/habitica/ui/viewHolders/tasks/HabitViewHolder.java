@@ -6,6 +6,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -17,6 +18,8 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
     @BindView(R.id.btnPlusWrapper)
     FrameLayout btnPlusWrapper;
+    @BindView(R.id.btnPlusIconView)
+    View btnPlusIconView;
     @BindView(R.id.btnPlusBackground)
     View btnPlusBackground;
     @BindView(R.id.btnPlus)
@@ -24,6 +27,8 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
     @BindView(R.id.btnMinusWrapper)
     FrameLayout btnMinusWrapper;
+    @BindView(R.id.btnMinusIconView)
+    View btnMinusIconView;
     @BindView(R.id.btnMinusBackground)
     View btnMinusBackground;
     @BindView(R.id.btnMinus)

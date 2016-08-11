@@ -26,9 +26,10 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingEnd="16dp"
+                android:paddingLeft="@dimen/task_text_padding"
+                android:paddingStart="@dimen/task_text_padding"
+                android:paddingRight="@dimen/task_text_padding"
+                android:paddingEnd="@dimen/task_text_padding"
                 android:paddingBottom="@dimen/task_top_bottom_padding"
                 android:paddingTop="@dimen/task_top_bottom_padding"
                 android:id="@+id/linearLayout"
@@ -74,7 +75,7 @@
         </LinearLayout>
         <View
                 android:id="@+id/rightBorderView"
-                android:layout_width="5dp"
+                android:layout_width="@dimen/task_right_border_width"
                 android:layout_height="match_parent"
                 android:gravity="center" />
     </LinearLayout>
