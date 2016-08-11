@@ -24,11 +24,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.glxn.qrgen.android.QRCode;
+import net.glxn.qrgen.core.image.ImageType;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 import javax.inject.Inject;
 
@@ -51,6 +63,9 @@ public class GroupInformationFragment extends BaseFragment {
 
     @BindView(R.id.QRImageView)
     ImageView qrImageView;
+
+    @BindView(R.id.QRDownloadButton)
+    Button qRDownloadButton;
 
     private View view;
     private Group group;
@@ -313,5 +328,33 @@ public class GroupInformationFragment extends BaseFragment {
         if (qrImageView != null) {
             qrImageView.setImageBitmap(myBitmap);
         }
+
+        if (qRDownloadButton != null) {
+            qRDownloadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    File path = new File(getActivity().getFilesDir(), "habitrpg-qr-code");
+                    File file = QRCode.from(getString(R.string.SP_userID)).to(ImageType.JPG).file();
+                    file.renameTo(path);
+                    Toast.makeText(getActivity(), "QR code saved at " + path.getPath(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
+
+    public static void copyFile(File src, File dst) throws IOException
+    {
+        FileChannel inChannel = new FileInputStream(src).getChannel();
+        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        try {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        } finally {
+            if (inChannel != null)
+                inChannel.close();
+            if (outChannel != null)
+                outChannel.close();
+        }
+    }
+
 }
