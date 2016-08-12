@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -64,11 +65,8 @@ public class GroupInformationFragment extends BaseFragment {
     @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
 
-    @BindView(R.id.QRImageView)
-    ImageView qrImageView;
-
-    @BindView(R.id.QRDownloadButton)
-    Button qRDownloadButton;
+    @BindView(R.id.qrLayout)
+    LinearLayout qrLayout;
 
     private View view;
     private Group group;
@@ -119,9 +117,11 @@ public class GroupInformationFragment extends BaseFragment {
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
 
         if (this.group == null) {
-            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
-            qrCodeManager.displayQrCode(qrImageView);
-            qrCodeManager.downloadQr(qRDownloadButton);
+            new QrCodeManager(this.getContext(), qrLayout);
+        }
+
+        if (user.getParty().getId() != null) {
+            ((ViewGroup) qrLayout.getParent()).removeView(qrLayout);
         }
 
         return view;

@@ -11,20 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_gravity="center" >
+        android:layout_gravity="top|center" >
 
     </FrameLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/qrLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_height="350dp"
+        android:layout_gravity="center">
+        <include layout="@layout/qr_code" />
+    </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.MainActivity">
+        tools:context=".ui.activities.MainActivity"
+        android:layout_gravity="center_horizontal|bottom">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

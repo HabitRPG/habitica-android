@@ -12,7 +12,9 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import net.glxn.qrgen.android.QRCode;
@@ -32,10 +34,11 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             }
         }
 
-        ImageView qrImageView = (ImageView) getActivity().findViewById(R.id.imageView);
-        QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
-        qrCodeManager.displayQrCode(qrImageView);
-//        qrCodeManager.downloadQr(qRDownloadButton);
+        LinearLayout qrLinearLayout = (LinearLayout) getActivity().findViewById(R.id.qrLinearLayout);
+        qrLinearLayout.setVisibility(View.VISIBLE);
+
+        LinearLayout qrLayout = (LinearLayout) getActivity().findViewById(R.id.qrLayout);
+        QrCodeManager qrCodeManager = new QrCodeManager(this.getContext(), qrLayout);
     }
 
     protected List<String> getAccountDetailsPreferences() {

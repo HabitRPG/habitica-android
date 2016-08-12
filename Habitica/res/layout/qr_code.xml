@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/qrLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have someone invite you with this QR Code"
+        style="@style/SectionTitle"
+         />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CardView.Default"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/CardContent">
+
+            <FrameLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:id="@+id/qrCodeWrapper">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/QRImageView"
+                    android:layout_gravity="center_horizontal" />
+
+                <com.habitrpg.android.habitica.ui.AvatarView
+                    android:id="@+id/avatarView"
+                    android:layout_width="103dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/QRDownloadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Download"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_margin="20dp"
+                android:layout_gravity="center_horizontal|bottom"
+                />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>
+
