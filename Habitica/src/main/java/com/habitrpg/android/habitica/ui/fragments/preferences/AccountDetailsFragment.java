@@ -46,8 +46,6 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-
-        Log.v("keith",  preference.getKey());
         if (preference.getKey().equals(getString(R.string.SP_user_qr_code))) {
             qrCodeManager.showDialogue();
         }

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -8,6 +9,10 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +36,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class PartyInviteActivity extends BaseActivity implements HabitRPGUserCallback.OnUserReceived {
+public class PartyInviteActivity extends BaseActivity {
 
     public static final int RESULT_SEND_INVITES = 100;
     public static final String USER_IDS_KEY = "userIDs";
@@ -44,6 +49,9 @@ public class PartyInviteActivity extends BaseActivity implements HabitRPGUserCal
     @Inject
     APIHelper apiHelper;
 
+    @Inject
+    protected HostConfig hostConfig;
+
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
@@ -51,6 +59,23 @@ public class PartyInviteActivity extends BaseActivity implements HabitRPGUserCal
     ViewPager viewPager;
 
     List<PartyInviteFragment> fragments = new ArrayList<>();
+
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            handleUserRecieved(habitRPGUser);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 
     @Override
     protected int getLayoutResId() {
@@ -158,21 +183,21 @@ public class PartyInviteActivity extends BaseActivity implements HabitRPGUserCal
         if (scanningResult != null) {
             userIdToInvite = scanningResult.getContents();
 
-            //@TODO: Inject the user
-            this.apiHelper.apiService.getUser()
-                    .compose(this.apiHelper.configureApiCallObserver())
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+            //@TODO: Move to user helper/model
+            new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
 
         }
     }
 
-    @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void handleUserRecieved(HabitRPGUser user) {
         this.user = user;
 
+        if (this.userIdToInvite == null) {
+            return;
+        }
 
         Toast toast = Toast.makeText(getApplicationContext(),
-                userIdToInvite, Toast.LENGTH_SHORT);
+                "Invited: " + userIdToInvite, Toast.LENGTH_SHORT);
         toast.show();
 
         Map<String, Object> inviteData = new HashMap<>();

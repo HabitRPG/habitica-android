@@ -13,6 +13,7 @@
         android:text="Ok"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/qrLayout"
         />
 
