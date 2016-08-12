@@ -1,12 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,14 +32,10 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             }
         }
 
-        displayQRCode();
-    }
-
-    protected void displayQRCode() {
-        Bitmap myBitmap = QRCode.from(getString(R.string.SP_userID)).bitmap();
-        ImageView myImage = (ImageView) getActivity().findViewById(R.id.imageView);
-        myImage.setVisibility(View.VISIBLE);
-        myImage.setImageBitmap(myBitmap);
+        ImageView qrImageView = (ImageView) getActivity().findViewById(R.id.imageView);
+        QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+        qrCodeManager.displayQrCode(qrImageView);
+//        qrCodeManager.downloadQr(qRDownloadButton);
     }
 
     protected List<String> getAccountDetailsPreferences() {

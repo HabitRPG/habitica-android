@@ -5,6 +5,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -13,11 +15,15 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,14 +39,10 @@ import android.widget.Toast;
 import net.glxn.qrgen.android.QRCode;
 import net.glxn.qrgen.core.image.ImageType;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 
 import javax.inject.Inject;
 
@@ -52,6 +54,7 @@ public class GroupInformationFragment extends BaseFragment {
 
 
     FragmentGroupInfoBinding viewBinding;
+
     @Inject
     APIHelper apiHelper;
 
@@ -116,7 +119,9 @@ public class GroupInformationFragment extends BaseFragment {
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
 
         if (this.group == null) {
-            displayQRCode();
+            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+            qrCodeManager.displayQrCode(qrImageView);
+            qrCodeManager.downloadQr(qRDownloadButton);
         }
 
         return view;
@@ -321,40 +326,4 @@ public class GroupInformationFragment extends BaseFragment {
                 });
         builder.show();
     }
-
-    protected void displayQRCode() {
-        Bitmap myBitmap = QRCode.from(getString(R.string.SP_userID)).bitmap();
-
-        if (qrImageView != null) {
-            qrImageView.setImageBitmap(myBitmap);
-        }
-
-        if (qRDownloadButton != null) {
-            qRDownloadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    File path = new File(getActivity().getFilesDir(), "habitrpg-qr-code");
-                    File file = QRCode.from(getString(R.string.SP_userID)).to(ImageType.JPG).file();
-                    file.renameTo(path);
-                    Toast.makeText(getActivity(), "QR code saved at " + path.getPath(),
-                            Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
-
-    public static void copyFile(File src, File dst) throws IOException
-    {
-        FileChannel inChannel = new FileInputStream(src).getChannel();
-        FileChannel outChannel = new FileOutputStream(dst).getChannel();
-        try {
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-        } finally {
-            if (inChannel != null)
-                inChannel.close();
-            if (outChannel != null)
-                outChannel.close();
-        }
-    }
-
 }

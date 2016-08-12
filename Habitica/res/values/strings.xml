@@ -376,4 +376,10 @@ To start, which parts of your life do you want to improve?</string>
     <string name="gems_plural">gold</string>
     <string name="chat_message_copied">Message copied to Clipboard</string>
     <string name="copy_chat_message">Copy to clipboard</string>
+
+    <!-- QR Strings -->
+    <string name="qr_album_name">habitica</string>
+    <string name="qr_file_name"> habitrpg-qr-code.jpg</string>
+    <string name="qr_save_message">QR code saved at </string>
+
 </resources>
