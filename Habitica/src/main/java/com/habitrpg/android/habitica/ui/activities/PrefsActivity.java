@@ -27,9 +27,6 @@ public class PrefsActivity extends BaseActivity implements
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.qrLinearLayout)
-    LinearLayout qrLinearLayout;
-
     // TODO:
     // This method should be moved to HabiticaApplication
     public static HostConfig fromContext(Context ctx) {
@@ -57,14 +54,6 @@ public class PrefsActivity extends BaseActivity implements
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new PreferencesFragment())
                 .commit();
-
-        qrLinearLayout.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        qrLinearLayout.setVisibility(View.INVISIBLE);
     }
 
     @Override

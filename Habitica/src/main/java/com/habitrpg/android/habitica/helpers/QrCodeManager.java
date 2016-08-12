@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.habitrpg.android.habitica.R;
@@ -37,6 +39,7 @@ public class QrCodeManager {
 
     //@TODO: Allow users to set other content
     private String content;
+    private String userId;
     private Context context;
 
     private ImageView qrCodeImageView;
@@ -65,7 +68,7 @@ public class QrCodeManager {
         }
     };
 
-    public QrCodeManager(Context context, LinearLayout qrLayout) {
+    public QrCodeManager(Context context) {
         this.context = context;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -75,18 +78,22 @@ public class QrCodeManager {
         this.fileName = this.context.getString(R.string.qr_file_name);
         this.saveMessage = this.context.getString(R.string.qr_save_message);
 
+        this.content = userId;
+        this.userId = userId;
+    }
+
+    public void setUpView(LinearLayout qrLayout) {
         this.qrCodeImageView = (ImageView) qrLayout.findViewById(R.id.QRImageView);
         this.qrCodeDownloadButton = (Button) qrLayout.findViewById(R.id.QRDownloadButton);
         this.avatarView = (AvatarView) qrLayout.findViewById(R.id.avatarView);
+        this.avatarView.configureView(false, false, false);
         this.qrCodeWrapper = (FrameLayout) qrLayout.findViewById(R.id.qrCodeWrapper);
-
-        this.content = userId;
 
         //@TODO: Move to user helper/model
         new Select()
                 .from(HabitRPGUser.class)
                 .where(Condition.column("id")
-                .eq(userId))
+                        .eq(userId))
                 .async()
                 .querySingle(userTransactionListener);
 
@@ -145,5 +152,24 @@ public class QrCodeManager {
                 Environment.DIRECTORY_PICTURES), albumName);
         file.mkdirs();
         return file;
+    }
+
+    public void showDialogue() {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.qr_dialogue);
+        dialog.setTitle(R.string.qr_dialogue_title);
+
+        LinearLayout qrLayout = (LinearLayout) dialog.findViewById(R.id.qrLayout);
+        this.setUpView(qrLayout);
+        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

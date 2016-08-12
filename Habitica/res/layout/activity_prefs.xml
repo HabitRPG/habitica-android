@@ -15,14 +15,6 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/qrLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_gravity="center">
-        <include layout="@layout/qr_code" />
-    </LinearLayout>
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

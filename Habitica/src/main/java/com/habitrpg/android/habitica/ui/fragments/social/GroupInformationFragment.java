@@ -117,7 +117,8 @@ public class GroupInformationFragment extends BaseFragment {
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
 
         if (this.group == null) {
-            new QrCodeManager(this.getContext(), qrLayout);
+            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+            qrCodeManager.setUpView(qrLayout);
         }
 
         if (user.getParty().getId() != null) {

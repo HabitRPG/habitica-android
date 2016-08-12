@@ -25,6 +25,8 @@ import java.util.Map;
 
 public class AccountDetailsFragment extends BasePreferencesFragment {
 
+    private QrCodeManager qrCodeManager;
+
     @Override
     protected void setupPreferences() {
         for (Map.Entry<String, ?> preference : getPreferenceScreen().getSharedPreferences().getAll().entrySet()) {
@@ -34,20 +36,22 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             }
         }
 
-        LinearLayout qrLinearLayout = (LinearLayout) getActivity().findViewById(R.id.qrLinearLayout);
-        qrLinearLayout.setVisibility(View.VISIBLE);
-
-        LinearLayout qrLayout = (LinearLayout) getActivity().findViewById(R.id.qrLayout);
-        QrCodeManager qrCodeManager = new QrCodeManager(this.getContext(), qrLayout);
+        qrCodeManager = new QrCodeManager(this.getContext());
     }
 
     protected List<String> getAccountDetailsPreferences() {
         return Arrays.asList(getString(R.string.SP_username), getString(R.string.SP_email),
-                getString(R.string.SP_APIToken), getString(R.string.SP_userID));
+                getString(R.string.SP_APIToken), getString(R.string.SP_userID), getString(R.string.SP_user_qr_code));
     }
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
+
+        Log.v("keith",  preference.getKey());
+        if (preference.getKey().equals(getString(R.string.SP_user_qr_code))) {
+            qrCodeManager.showDialogue();
+        }
+
         ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         clipMan.setPrimaryClip(ClipData.newPlainText(preference.getKey(), preference.getSummary()));
         Toast.makeText(getActivity(), "Copied " + preference.getKey() + " to clipboard.", Toast.LENGTH_SHORT).show();

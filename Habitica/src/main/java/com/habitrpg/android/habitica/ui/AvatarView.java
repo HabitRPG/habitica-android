@@ -91,6 +91,12 @@ public class AvatarView extends View {
         isOrphan = true;
     }
 
+    public void configureView(boolean showBackground, boolean showMount, boolean showPet) {
+        this.showBackground = showBackground;
+        this.showMount = showMount;
+        this.showPet = showPet;
+    }
+
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
