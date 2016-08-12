@@ -106,7 +106,7 @@ public class EditTagDrawerItem extends BasePrimaryDrawerItem<EditTagDrawerItem, 
         @Override
         public void onClick(View view) {
             if(this.tag != null) {
-                EventBus.getDefault().post(new DeleteTagCommand(this.tag.getId()));
+                EventBus.getDefault().post(new DeleteTagCommand(this.tag));
             }
         }
     }
