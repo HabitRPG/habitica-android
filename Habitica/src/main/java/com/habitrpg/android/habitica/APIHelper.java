@@ -132,8 +132,6 @@ public class APIHelper implements Action1<Throwable> {
         Crashlytics.getInstance().core.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
 
-        languageCode = Locale.getDefault().getLanguage();
-
         Interceptor remove_data_interceptor = chain -> {
             Response response = chain.proceed(chain.request());
             String stringJson = response.body().string();
@@ -412,5 +410,9 @@ public class APIHelper implements Action1<Throwable> {
 
     public static class ErrorResponse {
         public String message;
+    }
+
+    public Observable<ContentResult>getContent() {
+        return apiService.getContent(languageCode);
     }
 }

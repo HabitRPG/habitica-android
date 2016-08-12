@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
@@ -331,6 +332,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void setUserData(boolean fromLocalDb) {
         if (user != null) {
+
+            Preferences preferences = user.getPreferences();
+
+            if(preferences!= null) {
+                apiHelper.languageCode = preferences.getLanguage();
+            }
+
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
             long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);

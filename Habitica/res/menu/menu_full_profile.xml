@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.TaskFormActivity">
     <item android:id="@+id/private_message"
-        android:title="PM"
+        android:title="@string/profile_private_message"
         android:icon="@drawable/ic_action_chat"
         android:orderInCategory="100"
         app:showAsAction="always"

@@ -30,7 +30,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
         super(taskType, tagsHelper, layoutResource, newContext, user.getId());
         this.user = user;
         this.apiHelper = apiHelper;
-        this.contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
+        this.contentCache = new ContentCache(apiHelper);
     }
 
     @Override

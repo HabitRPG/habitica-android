@@ -17,10 +17,10 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                style="@style/CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/avatar_with_bars"
@@ -159,16 +159,16 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                style="@style/CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
+                    style="@style/CardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/battle_gear"
-                    android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
                 <ProgressBar
@@ -193,16 +193,16 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                style="@style/CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
+                    style="@style/CardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/costume"
-                    android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
                 <ProgressBar
@@ -221,18 +221,18 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            style="@style/CardView.Default"
             android:id="@+id/profile_attributes_card"
+            style="@style/CardView.Default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
 
             <LinearLayout
+                style="@style/CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp"
                 android:weightSum="1">
 
                 <TableLayout
@@ -244,13 +244,25 @@
                     <TableRow android:layout_height="wrap_content">
                         <!-- Headers -->
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/attributes"
-                            android:textSize="@dimen/abc_text_size_title_material"
-                            android:textStyle="bold" />
+                            android:layout_height="wrap_content">
 
+                            <TextView
+                                style="@style/CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/attributes"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/attributes_collapse_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                                android:layout_gravity="bottom" />
+
+                        </LinearLayout>
 
                         <TextView
                             android:layout_height="wrap_content"
@@ -290,17 +302,17 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                style="@style/CardContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp"
                 android:weightSum="1">
 
                 <TextView
+                    style="@style/CardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_pets_and_mounts"
-                    android:textSize="@dimen/abc_text_size_title_material"
                     android:textStyle="bold" />
 
                 <TableLayout

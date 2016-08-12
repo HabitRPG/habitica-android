@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 
 public class PartyFragment extends BaseMainFragment {
 
@@ -44,7 +46,9 @@ public class PartyFragment extends BaseMainFragment {
     private PartyMemberListFragment partyMemberListFragment;
     private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
-    private ContentCache contentCache;
+
+    @Inject
+    ContentCache contentCache;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +60,6 @@ public class PartyFragment extends BaseMainFragment {
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 
         viewPager.setCurrentItem(0);
-
-        contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {

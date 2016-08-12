@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -49,7 +51,9 @@ import butterknife.BindView;
 public class FullProfileActivity extends BaseActivity {
     private String userId;
     private String userName;
-    private ContentCache contentCache;
+
+    @Inject
+    ContentCache contentCache;
 
     @Inject
     APIHelper apiHelper;
@@ -68,6 +72,9 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.attributes_table)
     TableLayout attributesTableLayout;
+
+    @BindView(R.id.attributes_collapse_icon)
+    ImageView attributesCollapseIcon;
 
     @BindView(R.id.equipment_table)
     TableLayout equipmentTableLayout;
@@ -116,8 +123,6 @@ public class FullProfileActivity extends BaseActivity {
                         throwable -> {
                         });
 
-        this.contentCache = new ContentCache(apiHelper.apiService, apiHelper.languageCode);
-
         avatarWithBars = new AvatarWithBarsViewModel(this, avatar_with_bars);
         avatarWithBars.hideGems();
         avatarWithBars.valueBarLabelsToBlack();
@@ -130,44 +135,10 @@ public class FullProfileActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-         int id = item.getItemId();
+        int id = item.getItemId();
 
         if (id == R.id.private_message) {
-            LayoutInflater factory = LayoutInflater.from(this);
-            final View newMessageView = factory.inflate(
-                    R.layout.profile_new_message_dialog, null);
-
-            EmojiEditText emojiEditText = (EmojiEditText)newMessageView.findViewById(R.id.edit_new_message_text);
-
-            TextView newMessageTitle = (TextView)newMessageView.findViewById(R.id.new_message_title);
-            newMessageTitle.setText(String.format(getString(R.string.profile_send_message_to), userName));
-
-            final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
-                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                        HashMap<String, String> messageObject = new HashMap<>();
-                        messageObject.put("message", emojiEditText.getText().toString());
-                        messageObject.put("toUserId", userId);
-
-                        apiHelper.apiService.postPrivateMessage(messageObject)
-                                .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(postChatMessageResult -> {
-                                    UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                            String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
-                                }, throwable -> {
-                                });
-
-                        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
-                    })
-                    .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
-
-                        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
-                    })
-
-                    .create();
-
-            addMessageDialog.setView(newMessageView);
-
-            addMessageDialog.show();
+            showSendMessageToUserDialog();
 
             return true;
         }
@@ -179,6 +150,44 @@ public class FullProfileActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSendMessageToUserDialog() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View newMessageView = factory.inflate(
+                R.layout.profile_new_message_dialog, null);
+
+        EmojiEditText emojiEditText = (EmojiEditText) newMessageView.findViewById(R.id.edit_new_message_text);
+
+        TextView newMessageTitle = (TextView) newMessageView.findViewById(R.id.new_message_title);
+        newMessageTitle.setText(String.format(getString(R.string.profile_send_message_to), userName));
+
+        final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    HashMap<String, String> messageObject = new HashMap<>();
+                    messageObject.put("message", emojiEditText.getText().toString());
+                    messageObject.put("toUserId", userId);
+
+                    apiHelper.apiService.postPrivateMessage(messageObject)
+                            .compose(apiHelper.configureApiCallObserver())
+                            .subscribe(postChatMessageResult -> {
+                                UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
+                                        String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
+                            }, throwable -> {
+                            });
+
+                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                })
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
+
+                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+                })
+
+                .create();
+
+        addMessageDialog.setView(newMessageView);
+
+        addMessageDialog.show();
     }
 
     private void updateView(HabitRPGUser user) {
@@ -214,15 +223,15 @@ public class FullProfileActivity extends BaseActivity {
 
         addLevelAttributes(stats, user);
 
-        petCount.setText(CountEntries(user.getItems().getPets())+"");
-        mountCount.setText(CountEntriesBool(user.getItems().getMounts())+"");
+        petCount.setText(countEntries(user.getItems().getPets()) + "");
+        mountCount.setText(countEntriesBool(user.getItems().getMounts()) + "");
     }
 
-    private int CountEntries(HashMap<String, Integer> hashMap) {
+    private int countEntries(HashMap<String, Integer> hashMap) {
         int _count = 0;
 
         for (Map.Entry<String, Integer> e : hashMap.entrySet()) {
-            if(e.getValue() == -1)
+            if (e.getValue() == -1)
                 continue;
 
             _count += e.getValue();
@@ -231,11 +240,11 @@ public class FullProfileActivity extends BaseActivity {
         return _count;
     }
 
-    private int CountEntriesBool(HashMap<String, Boolean> hashMap) {
+    private int countEntriesBool(HashMap<String, Boolean> hashMap) {
         int _count = 0;
 
         for (Map.Entry<String, Boolean> e : hashMap.entrySet()) {
-            if(e.getValue() == null)
+            if (e.getValue() == null)
                 continue;
 
             _count += 1;
@@ -300,23 +309,23 @@ public class FullProfileActivity extends BaseActivity {
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, false);
 
-        LoadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
-            GotGear(obj, user);
+        loadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
+            gotGear(obj, user);
             addNormalAddBuffAttributes(stats);
 
             stopAndHideProgress(attributesProgress);
         });
 
-        if(user.getPreferences().getCostume()){
-            LoadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
-                GotCostume(obj);
+        if (user.getPreferences().getCostume()) {
+            loadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
+                gotCostume(obj);
             });
-        } else  {
+        } else {
             costumeCard.setVisibility(View.GONE);
         }
     }
 
-    private void LoadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
+    private void loadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());
@@ -330,7 +339,7 @@ public class FullProfileActivity extends BaseActivity {
         contentCache.GetItemDataList(outfitList, gotEntries);
     }
 
-    public void GotGear(List<ItemData> obj, HabitRPGUser user) {
+    public void gotGear(List<ItemData> obj, HabitRPGUser user) {
         float strAttributes = 0;
         float intAttributes = 0;
         float conAttributes = 0;
@@ -374,7 +383,7 @@ public class FullProfileActivity extends BaseActivity {
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        addAttributeRow(getString(R.string.battle_gear) +": ", strAttributes, intAttributes, conAttributes, perAttributes, false);
+        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, false);
 
         if (!user.getPreferences().isDisableClasses()) {
             float strClassBonus = 0;
@@ -405,7 +414,7 @@ public class FullProfileActivity extends BaseActivity {
         }
     }
 
-    public void GotCostume(List<ItemData> obj) {
+    public void gotCostume(List<ItemData> obj) {
         // fill costume table
         for (ItemData i : obj) {
             addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
@@ -413,7 +422,6 @@ public class FullProfileActivity extends BaseActivity {
 
         stopAndHideProgress(costumeProgress);
     }
-
 
     private void addNormalAddBuffAttributes(Stats stats) {
         Buffs buffs = stats.getBuffs();
@@ -467,13 +475,16 @@ public class FullProfileActivity extends BaseActivity {
 
     private ArrayList<TableRow> attributeRows = new ArrayList<>();
 
-    private void toggleAttributeDetails(){
+    private void toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden;
 
-        for (TableRow row : attributeRows){
+        attributesCollapseIcon.setImageDrawable(getResources().getDrawable(attributeDetailsHidden ? R.drawable.ic_keyboard_arrow_right_black_24dp : R.drawable.ic_keyboard_arrow_down_black_24dp));
+
+        for (TableRow row : attributeRows) {
             row.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);
         }
     }
+
 
     // endregion
 
