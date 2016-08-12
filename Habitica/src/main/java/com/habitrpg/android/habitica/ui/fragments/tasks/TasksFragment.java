@@ -12,10 +12,12 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
+import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -27,13 +29,14 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.menu.EditTagDrawerItem;
+import com.habitrpg.android.habitica.ui.menu.EditTagsSectionDrawer;
 import com.habitrpg.android.habitica.ui.menu.EditTextDrawer;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
@@ -48,7 +51,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,9 +70,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import rx.Observer;
-import rx.functions.Action1;
-
 public class TasksFragment extends BaseMainFragment implements OnCheckedChangeListener {
 
     private static final int TASK_CREATED_RESULT = 1;
@@ -86,6 +85,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
 
     private boolean displayingTaskForm;
+    private boolean editingTags;
     private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
     private Debounce filterChangedHandler = new Debounce(1500, 1000) {
         @Override
@@ -111,7 +111,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         super.onCreate(savedInstanceState);
 
         if (user != null) {
-            fillTagFilterDrawer(user.getTags());
+            fillTagFilterDrawerEditing(user.getTags());
         }
     }
 
@@ -121,6 +121,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         this.usesTabLayout = true;
         this.displayingTaskForm = false;
+        this.editingTags = false;
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
@@ -269,7 +270,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         super.updateUserData(user);
         stopAnimatingRefreshItem();
         if (this.user != null) {
-            fillTagFilterDrawer(user.getTags());
+            fillTagFilterDrawerEditing(user.getTags());
 
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
@@ -322,6 +323,22 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         tag.async().save();
 
                         addTagFilterDrawerItem(tag);
+                    }, throwable -> {
+                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
+                    });
+        }
+    }
+
+    @Subscribe
+    public void onEvent(final DeleteTagCommand event) {
+        UiUtils.dismissKeyboard(activity);
+        final String tagID = event.tagID;
+        if (apiHelper != null) {
+            apiHelper.apiService.deleteTag(tagID)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(tag -> {
+                        //TODO:
+                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "TAG: " + tagID + " was successfully deleted", UiUtils.SnackbarDisplayType.NORMAL);
                     }, throwable -> {
                         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
                     });
@@ -404,11 +421,20 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         user.getPreferences().setSleep(event.Inn);
     }
 
+    @Subscribe
+    public void onEvent(ToggledEditTagsEvent event) {
+        if(user != null) {
+            this.editingTags = event.editing;
+            fillTagFilterDrawerEditing(user.getTags());
+        }
+
+    }
     //endregion Events
     public void fillTagFilterDrawer(List<Tag> tagList) {
         if (this.tagsHelper != null) {
             List<IDrawerItem> items = new ArrayList<>();
-            items.add(new SectionDrawerItem().withName("Filter by Tag"));
+            //items.add(new SectionDrawerItem().withName("Filter by Tag"));
+            items.add(new EditTagsSectionDrawer());
             items.add(new EditTextDrawer());
             for (Tag t : tagList) {
                 items.add(new SwitchDrawerItem()
@@ -419,6 +445,77 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 );
             }
             this.activity.fillFilterDrawer(items);
+        }
+    }
+
+    public void fillTagFilterDrawerEditing(List<Tag> tagList) {
+        /*
+        if (this.tagsHelper != null) {
+            List<IDrawerItem> items = new ArrayList<>();
+
+            if(this.editingTags) {
+                //items.add(new SectionDrawerItem().withName("Filter by Tag"));
+                items.add(new EditTagsSectionDrawerEditing());
+                items.add(new EditTextDrawer());
+                for (Tag t : tagList) {
+                    items.add(new ToggleDrawerItem()
+                            .withName(t.getName())
+                            .withTag(t)
+                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                            .withOnCheckedChangeListener(this)
+                    );
+                }
+                this.activity.fillFilterDrawer(items);
+            }else {
+                items.add(new SectionDrawerItem().withName("Filter by Tag"));
+                items.add(new EditTagsSectionDrawer());
+                items.add(new EditTextDrawer());
+                for (Tag t : tagList) {
+                    items.add(new SwitchDrawerItem()
+                            .withName(t.getName())
+                            .withTag(t)
+                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                            .withOnCheckedChangeListener(this)
+                    );
+                }
+                this.activity.fillFilterDrawer(items);
+            }
+        }
+         */
+        if (this.tagsHelper != null) {
+            List<IDrawerItem> items = new ArrayList<>();
+
+            if(this.editingTags) {
+                //items.add(new SectionDrawerItem().withName("Filter by Tag"));
+                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName("Edit Tags"));
+                items.add(new EditTextDrawer());
+                for (Tag t : tagList) {
+                    /*
+                    items.add(new ToggleDrawerItem()
+                            .withName(t.getName())
+                            .withTag(t)
+                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                            .withOnCheckedChangeListener(this)
+                    );*/
+                    items.add(new EditTagDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                    );
+                }
+                this.activity.fillFilterDrawer(items);
+            }else {
+                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName("Filter by Tags"));
+                items.add(new EditTextDrawer());
+                for (Tag t : tagList) {
+                    items.add(new SwitchDrawerItem()
+                            .withName(t.getName())
+                            .withTag(t)
+                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                            .withOnCheckedChangeListener(this)
+                    );
+                }
+                this.activity.fillFilterDrawer(items);
+            }
         }
     }
 
