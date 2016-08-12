@@ -105,9 +105,13 @@ public class AvatarView extends View {
         }
     }
 
+    private Map<LayerType, String> currentLayers;
+
     private void showLayers(@NonNull Map<LayerType, String> layerMap) {
         if (multiDraweeHolder.size() > 0) return;
         int i = 0;
+
+        currentLayers = layerMap;
 
         numberLayersInProcess.set(layerMap.size());
 
@@ -310,9 +314,11 @@ public class AvatarView extends View {
         this.user = user;
 
         if (oldUser != null) {
-            Map<LayerType, String> currentLayerMap = getLayerMap(oldUser, false);
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
-            if (!currentLayerMap.equals(newLayerMap)) {
+
+            boolean equals = currentLayers.equals(newLayerMap);
+            
+            if (!equals) {
                 multiDraweeHolder.clear();
                 numberLayersInProcess.set(0);
             }
