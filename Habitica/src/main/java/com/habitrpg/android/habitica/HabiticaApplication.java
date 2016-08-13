@@ -155,7 +155,9 @@ public class HabiticaApplication extends MultiDexApplication {
         int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
         if (lastInstalledVersion < info.versionCode) {
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
-            this.lazyApiHelper.get().apiService.getContent()
+            APIHelper apiHelper = this.lazyApiHelper.get();
+
+            apiHelper.apiService.getContent(apiHelper.languageCode)
                     .compose(this.lazyApiHelper.get().configureApiCallObserver())
                     .subscribe(contentResult -> {
                     }, throwable -> {

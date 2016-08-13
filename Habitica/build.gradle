@@ -161,11 +161,6 @@ android {
         release
     }
 
-    dexOptions{
-        javaMaxHeapSize "4g"
-        preDexLibraries = false
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -206,8 +201,8 @@ android {
     }
     
     dexOptions {
-        preDexLibraries true
-        javaMaxHeapSize "2g" // Use gig increments depending on needs
+        preDexLibraries false
+        javaMaxHeapSize "4g" // Use gig increments depending on needs
         incremental true
     }
 

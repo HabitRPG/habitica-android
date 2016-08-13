@@ -61,7 +61,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         super.onCreate(savedInstanceState);
 
         if (this.apiHelper != null) {
-            this.apiHelper.apiService.getContent()
+            this.apiHelper.apiService.getContent(apiHelper.languageCode)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(contentResult -> {
                     }, throwable -> {

@@ -47,7 +47,7 @@ public interface ApiService {
     Observable<Status> getStatus();
 
     @GET("content")
-    Observable<ContentResult> getContent();
+    Observable<ContentResult> getContent(@Query("language") String language);
 
     /* user API */
 
@@ -236,6 +236,9 @@ public interface ApiService {
     Observable<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
 
     //Members URL
+    @GET("members/{mid}")
+    Observable<HabitRPGUser> GetMember(@Path("mid") String memberId);
+
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
     
