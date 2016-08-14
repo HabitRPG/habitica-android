@@ -4,17 +4,22 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import java.util.List;
 
@@ -39,9 +44,6 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_guild_recyclerview, container, false);
-
-            guildSearchView = (SearchView)view.findViewById(R.id.guild_search_view);
-            guildSearchView.setOnQueryTextListener(this);
 
             unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
@@ -83,14 +85,28 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        viewAdapter.getFilter().filter(query);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_public_guild, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_guild_search);
+        guildSearchView = (SearchView)searchItem.getActionView();
+        SearchView.SearchAutoComplete theTextArea = (SearchView.SearchAutoComplete) guildSearchView.findViewById(R.id.search_src_text);
+        theTextArea.setHintTextColor(ContextCompat.getColor(this.activity,R.color.white));
+        guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
+        guildSearchView.setOnQueryTextListener(this);
+
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        viewAdapter.getFilter().filter(s);
+        UiUtils.dismissKeyboard(this.activity);
         return true;
     }
 
     @Override
-    public boolean onQueryTextChange(String query) {
-        viewAdapter.getFilter().filter(query);
+    public boolean onQueryTextChange(String s) {
+        viewAdapter.getFilter().filter(s);
         return true;
     }
 }
