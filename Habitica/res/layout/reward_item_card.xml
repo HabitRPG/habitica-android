@@ -20,7 +20,9 @@
                         android:layout_weight="1"
                         android:paddingBottom="@dimen/task_top_bottom_padding"
                         android:paddingTop="@dimen/task_top_bottom_padding"
-                        android:paddingLeft='16dp'
+                        android:paddingLeft="@dimen/task_text_padding"
+                        android:paddingStart="@dimen/task_text_padding"
+                        android:paddingEnd="@dimen/reward_spacing"
                         android:paddingRight="@dimen/reward_spacing"
                         android:layout_gravity="center_vertical">
 

@@ -33,7 +33,7 @@ public class Preferences extends BaseModel {
     @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
     @Column
-    private String allocationMode, shirt, skin, size, background, chair;
+    private String allocationMode, shirt, skin, size, background, chair, language;
     @Column
     private int dayStart, timezoneOffset;
 
@@ -201,6 +201,14 @@ public class Preferences extends BaseModel {
 
     public void setDisableClasses(boolean disableClasses) {
         this.disableClasses = disableClasses;
+    }
+
+    public String getLanguage(){
+        return language;
+    }
+
+    public void setLanguage(String language){
+        this.language = language;
     }
 
     @Override

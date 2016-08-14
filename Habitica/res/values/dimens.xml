@@ -31,7 +31,7 @@
 	<dimen name="btn_separator_margin">4dip</dimen>
 
 	<dimen name="list_preferred_item_height">48dp</dimen>
-	<dimen name="minus_plus_buttonsize">50dp</dimen>
+	<dimen name="minus_plus_buttonsize">65dp</dimen>
 	<dimen name="view_layout_margin">4dp</dimen>
 	<dimen name="row_size">58dp</dimen>
     <dimen name="btn_height_reward">50dp</dimen>
@@ -42,7 +42,7 @@
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
 
-	<dimen name="button_width">60dp</dimen>
+	<dimen name="button_width">65dp</dimen>
 
 	<dimen name="hairline_height">0.5dp</dimen>
 	<dimen name="checklist_divider_width">14dp</dimen>
@@ -72,4 +72,9 @@
 	<dimen name="pet_image_height">99dp</dimen>
 	<dimen name="shop_width">162dp</dimen>
 	<dimen name="shop_height">138dp</dimen>
+	<dimen name="bar_icon_padding">10dp</dimen>
+	<dimen name="task_text_padding">16dp</dimen>
+	<dimen name="task_right_border_width">5dp</dimen>
+	<dimen name="header_bar_spacing">7dp</dimen>
+	<dimen name="habit_circle_background_size">40dp</dimen>
 </resources>

@@ -193,4 +193,14 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
     }
+
+    public void hideGems() {
+        gemsText.setVisibility(View.GONE);
+    }
+
+    public void valueBarLabelsToBlack() {
+        hpBar.setPartyMembers(true);
+        mpBar.setPartyMembers(true);
+        xpBar.setPartyMembers(true);
+    }
 }

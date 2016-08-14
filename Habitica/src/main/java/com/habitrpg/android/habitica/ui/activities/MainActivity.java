@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
@@ -44,6 +45,7 @@ import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
@@ -330,6 +332,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void setUserData(boolean fromLocalDb) {
         if (user != null) {
+
+            Preferences preferences = user.getPreferences();
+
+            if(preferences!= null) {
+                apiHelper.languageCode = preferences.getLanguage();
+            }
+
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
             long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
@@ -1115,7 +1124,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void reloadContent(ReloadContentEvent event) {
         if (!this.isloadingContent) {
             this.isloadingContent = true;
-            this.apiHelper.apiService.getContent()
+            this.apiHelper.apiService.getContent(apiHelper.languageCode)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(contentResult -> {
                         isloadingContent = false;
@@ -1510,5 +1519,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void addFilterDrawerItem(IDrawerItem item) {
         this.filterDrawer.addItem(item);
+    }
+
+
+    @Subscribe
+    public void onEvent(OpenFullProfileCommand cmd) {
+        if(cmd.MemberId.equals("system"))
+            return;
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", cmd.MemberId);
+
+        Intent intent = new Intent(this, FullProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 }

@@ -41,8 +41,8 @@
             android:id="@+id/ic_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/bar_padding"
-            android:layout_marginEnd="@dimen/bar_padding"
+            android:layout_marginRight="@dimen/bar_icon_padding"
+            android:layout_marginEnd="@dimen/bar_icon_padding"
             android:layout_alignTop="@+id/bar_full"
             android:layout_alignBottom="@id/bar_full"
             android:scaleType="center"
@@ -74,7 +74,8 @@
             android:layout_below="@id/bar_full"
             android:layout_toRightOf="@id/ic_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+                android:layout_marginTop="1dp">
             <TextView
                 android:id="@+id/TV_value"
                 android:layout_width="0dp"

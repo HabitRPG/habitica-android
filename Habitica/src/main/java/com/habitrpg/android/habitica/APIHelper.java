@@ -82,6 +82,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.net.ssl.SSLException;
@@ -119,6 +120,8 @@ public class APIHelper implements Action1<Throwable> {
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
     private AlertDialog displayedAlert;
+
+    public String languageCode;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -297,8 +300,13 @@ public class APIHelper implements Action1<Throwable> {
         } else if (throwableClass.equals(HttpException.class)) {
             HttpException error = (HttpException) throwable;
             ErrorResponse res = getErrorResponse(error);
-
             int status = error.code();
+
+            if (error.response().raw().request().url().toString().endsWith("/user/push-devices")) {
+                //workaround for an error that sometimes displays that the user already has this push device
+                return;
+            }
+
             if (status >= 400 && status < 500) {
                 if (res != null && res.message != null && !res.message.isEmpty()) {
                     showConnectionProblemDialog("", res.message);
@@ -407,5 +415,9 @@ public class APIHelper implements Action1<Throwable> {
 
     public static class ErrorResponse {
         public String message;
+    }
+
+    public Observable<ContentResult>getContent() {
+        return apiService.getContent(languageCode);
     }
 }
