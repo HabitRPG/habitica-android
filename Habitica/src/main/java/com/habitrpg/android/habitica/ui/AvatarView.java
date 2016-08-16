@@ -316,7 +316,7 @@ public class AvatarView extends View {
         if (oldUser != null) {
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
 
-            boolean equals = currentLayers.equals(newLayerMap);
+            boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
             
             if (!equals) {
                 multiDraweeHolder.clear();
