@@ -12,51 +12,36 @@
         style="@style/SectionTitle"
          />
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CardView.Default"
-        >
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:id="@+id/qrCodeWrapper">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/CardContent">
+            android:id="@+id/QRImageView"
+            android:layout_gravity="center_horizontal" />
 
-            <FrameLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:id="@+id/qrCodeWrapper">
+        <com.habitrpg.android.habitica.ui.AvatarView
+            android:id="@+id/avatarView"
+            android:layout_width="103dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/QRImageView"
-                    android:layout_gravity="center_horizontal" />
-
-                <com.habitrpg.android.habitica.ui.AvatarView
-                    android:id="@+id/avatarView"
-                    android:layout_width="103dp"
-                    android:layout_height="90dp"
-                    android:layout_gravity="center"
-                    />
-            </FrameLayout>
-
-            <Button
-                android:id="@+id/QRDownloadButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Download"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_margin="20dp"
-                android:layout_gravity="center_horizontal|bottom"
-                />
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+    <Button
+        android:id="@+id/QRDownloadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_margin="20dp"
+        android:layout_gravity="center_horizontal|bottom"
+        />
 
 </LinearLayout>
 

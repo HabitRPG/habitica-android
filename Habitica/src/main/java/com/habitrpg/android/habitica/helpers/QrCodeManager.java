@@ -106,7 +106,7 @@ public class QrCodeManager {
             return;
         }
 
-        Bitmap myBitmap = QRCode.from(this.content).bitmap();
+        Bitmap myBitmap = QRCode.from(this.content).withSize(1000, 1000).bitmap();
         qrCodeImageView.setImageBitmap(myBitmap);
     }
 
