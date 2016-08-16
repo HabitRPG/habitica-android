@@ -24,6 +24,7 @@
   <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
   <string name="preference_push_received_a_private_message">Recebeu uma Mensagem Privada</string>
   <string name="preference_push_gifted_gems">Gemas de presente</string>
+  <string name="preference_push_gifted_subscription">Assinatura Presenteada</string>
   <string name="preference_push_invited_to_party">Convidado para um grupo</string>
   <string name="preference_push_invited_to_guild">Convidado para uma Guilda</string>
   <string name="preference_push_your_quest_has_begun">Sua missão começou</string>

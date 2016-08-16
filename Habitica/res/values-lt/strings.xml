@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">Kasdienis Priminimas</string>
   <string name="pref_reminder_checkbox">Įjungti Priminimą</string>
   <string name="pref_reminder_picker">Nustatyti Priminimo Laiką</string>
+  <string name="pref_push_notifications_checkbox">Aktyvūs Vartotojo Pranešimai</string>
+  <string name="push_notifications">Aktyvūs Pranšimai</string>
+  <string name="preference_push_you_won_challenge">Laimėjai Iššūkį!</string>
+  <string name="preference_push_received_a_private_message">Gavai Privačią Žinutę</string>
+  <string name="preference_push_gifted_gems">Padovanoti Brangakmeniai</string>
+  <string name="preference_push_gifted_subscription">Padovanota Prenumerata</string>
+  <string name="preference_push_invited_to_party">Pakvietimas į Grupę</string>
+  <string name="preference_push_invited_to_guild">Pakvietimas į Gildiją</string>
+  <string name="preference_push_your_quest_has_begun">Tavo Misija Prasidėjo</string>
+  <string name="preference_push_invited_to_quest">Pakvietimas į Misiją</string>
   <!--Adding tasks-->
   <string name="task_value">Reikšmė</string>
   <string name="new_todo">Nauja vienkartinė užduotis</string>
@@ -325,4 +335,21 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="open_in_store">Atidaryti play parduotuvėje</string>
   <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
   <string name="leaderMessage" formatted="false">Žinutė nuo %1$s</string>
+  <string name="confirm">Patvirtinti</string>
+  <string name="market">Turgus</string>
+  <string name="timeTravelers">Keliautojai Laiku</string>
+  <string name="seasonalShop">Sezoninė Parduotuvė</string>
+  <string name="empty_inbox">Tavo Pašo dėžutėje žinučių nėra. Kitiems vartotojams galima siųsti pranešimus paspaudus ant jų viešų pranešimų!</string>
+  <string name="party_invite">Atidenk pakviečiant draugus</string>
+  <string name="no_gold">Nepakanka Aukso</string>
+  <string name="no_potion">Tau nereikia gyvybių eliksyro</string>
+  <string name="successful_purchase" formatted="false">%1$s nupirktas</string>
+  <string name="purchase_confirmation_title">Patvirtinti pirkinį</string>
+  <string name="confirm_purchase_text" formatted="false">Pirkti %1$s už %2$s %3$s</string>
+  <string name="gem">brangakmenis</string>
+  <string name="hourglass">smėlio laikrodis</string>
+  <string name="hourglasses">smėlio laikrodžiai</string>
+  <string name="gold_singular">aukso</string>
+  <string name="chat_message_copied">Žinutė nukopijuota į Iškarpinę</string>
+  <string name="copy_chat_message">Kopijuoti į Iškarpinę</string>
 </resources>

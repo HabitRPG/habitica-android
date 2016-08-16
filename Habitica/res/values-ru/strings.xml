@@ -350,7 +350,6 @@
   <string name="hourglass">Песочные часы</string>
   <string name="hourglasses">песочные часы</string>
   <string name="gold_singular">золото</string>
-  <string name="gems_plural">золото</string>
   <string name="chat_message_copied">Сообщение скопировано в буфер обмена</string>
   <string name="copy_chat_message">Скопировать в буфер обмена</string>
 </resources>
