@@ -254,6 +254,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
     <string name="post">Post</string>
+    <string name="guild_search_hint">Search for guilds</string>
 
     <string name="todo_due" formatted="false">Due: %s</string>
     <string name="daily_streak" formatted="false">current streak: %d</string>
