@@ -149,6 +149,9 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
 
     private void updateActiveCustomization() {
         Preferences prefs = this.user.getPreferences();
+        if (this.type == null) {
+            return;
+        }
         switch (this.type) {
             case "skin":
                 this.activeCustomization = prefs.getSkin();
