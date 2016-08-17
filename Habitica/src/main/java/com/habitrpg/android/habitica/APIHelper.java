@@ -153,6 +153,7 @@ public class APIHelper implements Action1<Throwable> {
             } else {
                 body = ResponseBody.create(contentType, stringJson);
             }
+            Crashlytics.setString("last_api_call", response.request().url().toString());
             return response.newBuilder().body(body).build();
         };
 

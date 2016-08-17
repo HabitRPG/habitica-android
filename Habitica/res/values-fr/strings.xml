@@ -345,12 +345,11 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="no_potion">Vous n\'avez pas besoin d\'acheter une potion de santé</string>
   <string name="successful_purchase" formatted="false">%1$s acheté avec succès</string>
   <string name="purchase_confirmation_title">Confirmer l\'achat</string>
-  <string name="confirm_purchase_text" formatted="false">Acheter %1$s for %2$s %3$s</string>
+  <string name="confirm_purchase_text" formatted="false">Acheter %1$s pour %2$s %3$s</string>
   <string name="gem">gemme</string>
   <string name="hourglass">sablier</string>
   <string name="hourglasses">sabliers</string>
-  <string name="gold_singular">or</string>
-  <string name="gems_plural">or</string>
+  <string name="gold_singular">pièce d\'or</string>
   <string name="chat_message_copied">Message copié dans le presse-papier</string>
   <string name="copy_chat_message">Copier dans le presse-papier</string>
 </resources>

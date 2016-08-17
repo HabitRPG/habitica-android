@@ -4,14 +4,20 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublicGuildsFragment extends BaseMainFragment {
+public class PublicGuildsFragment extends BaseMainFragment implements SearchView.OnQueryTextListener {
 
     List<String> memberGuildIDs;
     List<Group> guilds;
@@ -30,13 +36,14 @@ public class PublicGuildsFragment extends BaseMainFragment {
 
     private View view;
     private PublicGuildsRecyclerViewAdapter viewAdapter;
+    private SearchView guildSearchView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_guild_recyclerview, container, false);
 
             unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
@@ -75,5 +82,31 @@ public class PublicGuildsFragment extends BaseMainFragment {
                     }, throwable -> {
                     });
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_public_guild, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_guild_search);
+        guildSearchView = (SearchView)searchItem.getActionView();
+        SearchView.SearchAutoComplete theTextArea = (SearchView.SearchAutoComplete) guildSearchView.findViewById(R.id.search_src_text);
+        theTextArea.setHintTextColor(ContextCompat.getColor(this.activity,R.color.white));
+        guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
+        guildSearchView.setOnQueryTextListener(this);
+
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        viewAdapter.getFilter().filter(s);
+        UiUtils.dismissKeyboard(this.activity);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        viewAdapter.getFilter().filter(s);
+        return true;
     }
 }
