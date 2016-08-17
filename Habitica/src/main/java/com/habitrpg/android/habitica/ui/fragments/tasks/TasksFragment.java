@@ -42,11 +42,13 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialize.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,6 +67,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -122,7 +125,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         if (user != null) {
             tags = user.getTags();
-            fillTagFilterDrawerEditing(tags);
+            fillTagFilterDrawer(tags);
         }
     }
 
@@ -279,7 +282,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         super.updateUserData(user);
         stopAnimatingRefreshItem();
         if (this.user != null) {
-            fillTagFilterDrawerEditing(tags);
+            fillTagFilterDrawer(tags);
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
                 if (fragm != null) {
                     BaseTasksRecyclerViewAdapter adapter = fragm.recyclerAdapter;
@@ -452,31 +455,16 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Subscribe
     public void onEvent(ToggledEditTagsEvent event) {
         if(user != null) {
+            if(this.editingTags == event.editing) {
+                return;
+            }
             this.editingTags = event.editing;
-            fillTagFilterDrawerEditing(tags);
+            fillTagFilterDrawer(tags);
         }
-
     }
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
-        if (this.tagsHelper != null) {
-            List<IDrawerItem> items = new ArrayList<>();
-            items.add(new EditTagsSectionDrawer());
-            items.add(new EditTextDrawer());
-            for (Tag t : tagList) {
-                items.add(new SwitchDrawerItem()
-                        .withName(t.getName())
-                        .withTag(t)
-                        .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                        .withOnCheckedChangeListener(this)
-                );
-            }
-            this.activity.fillFilterDrawer(items);
-        }
-    }
-
-    public void fillTagFilterDrawerEditing(List<Tag> tagList) {
         if (this.tagsHelper != null) {
             List<IDrawerItem> items = new ArrayList<>();
 
@@ -485,8 +473,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 items.add(new EditTextDrawer());
                 for (Tag t : tagList) {
                     items.add(new EditTagsDrawerItem()
-                                .withName(t.getName())
-                                .withTag(t)
+                            .withName(t.getName())
+                            .withTag(t)
                     );
                 }
                 this.activity.fillFilterDrawer(items);
@@ -538,7 +526,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
             //Add 2 for the same reason as above
             int pos = tags.indexOf(t) + 2;
-            IDrawerItem item = null;
+            IDrawerItem item;
 
             if(this.editingTags) {
                 item = new EditTagsDrawerItem()
@@ -598,15 +586,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void showEditTagDialog(Tag tag) {
 
-        EditText tagEditText = null;
         Button btnDelete = null;
 
-        //inflate the alertdialog view
         final View editTagDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_edit_tag,null);
 
-        //Init the components
         if(editTagDialogView != null) {
-            tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
+            EditText tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
             tagEditText.setText(tag.getName());
 
             btnDelete = (Button)editTagDialogView.findViewById(R.id.btnDelete);
@@ -615,29 +600,50 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         AlertDialog alert = new AlertDialog.Builder(this.activity)
                 .setTitle(getString(R.string.edit_tag_title))
-                .setPositiveButton(getString(R.string.save_changes), (dialog, which) -> {
-                    EditText tet = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
-                    String newTagName = tet.getText().toString();
-                    if(!newTagName.equals("")) {
-                        String uuid = tag.getId();
-                        tag.setName(newTagName);
-                        EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
-                    }
-                })
+                .setPositiveButton(getString(R.string.save_changes), null)
                 .setNeutralButton(getString(R.string.dialog_go_back), (dialog, which) -> {
-                    dialog.dismiss();
+                    EditText tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
+                    UiUtils.dismissKeyboard(this.activity,tagEditText);
+                    dialog.cancel();
                 })
                 .create();
         btnDelete.setOnClickListener((View v) -> {showDeleteTagDialog(alert,tag);});
         alert.setView(editTagDialogView);
         alert.show();
+
+        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                EditText tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
+                String newTagName = tagEditText.getText().toString();
+
+                if(newTagName.equals("")) {
+                    return;
+                }
+
+                UiUtils.dismissKeyboard(activity,tagEditText);
+
+                if(newTagName.equals(tag.getName())) {
+                    alert.dismiss();
+                    return;
+                }
+
+                String uuid = tag.getId();
+                tag.setName(newTagName);
+                EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
+                alert.dismiss();
+            }
+        });
     }
 
     public void showDeleteTagDialog(AlertDialog d, Tag tag) {
-        AlertDialog alert2 = new AlertDialog.Builder(this.activity)
+        AlertDialog confirmDeleteAlert = new AlertDialog.Builder(this.activity)
                 .setTitle(getString(R.string.confirm_delete_tag_title)).setMessage(getString(R.string.confirm_delete_tag_message))
                 .setPositiveButton(getString(R.string.yes),(dialog,which) -> {
                     EventBus.getDefault().post(new DeleteTagCommand(tag));
+                    UiUtils.dismissKeyboard(this.activity,d.getCurrentFocus());
+                    //dismiss both dialogs
                     dialog.dismiss();
                     d.dismiss();
                 })
@@ -645,9 +651,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                     dialog.dismiss();
                 })
                 .create();
-        alert2.show();
+        confirmDeleteAlert.show();
     }
-
-    //TODO: Fix Keyboard dismissal.
-    //TODO: Check code for redundancies/improvements
 }

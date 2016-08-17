@@ -7,7 +7,8 @@
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tagEditText" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/tagEditText" android:layout_gravity="center_horizontal"
+            android:focusable="true" android:singleLine="true"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

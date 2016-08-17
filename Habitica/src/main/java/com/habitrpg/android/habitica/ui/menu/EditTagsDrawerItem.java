@@ -13,8 +13,6 @@ import com.mikepenz.materialdrawer.model.BaseViewHolder;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;

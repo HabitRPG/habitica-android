@@ -806,6 +806,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             drawer.closeDrawer();
         } else if (drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
             drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
+            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
         } else {
             super.onBackPressed();
             if (this.activeFragment != null) {
