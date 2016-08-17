@@ -132,9 +132,9 @@ public class EditTagsSectionDrawer extends AbstractDrawerItem<EditTagsSectionDra
         viewHolder.editing = this.editing;
 
         if(this.editing) {
-            viewHolder.btnEdit.setText("Done");
+            viewHolder.btnEdit.setText(ctx.getString(R.string.edit_tag_btn_done));
         }else {
-            viewHolder.btnEdit.setText("Edit");
+            viewHolder.btnEdit.setText(ctx.getString(R.string.edit_tag_btn_edit));
         }
 
         ViewHelper.SetBackgroundTint(viewHolder.btnEdit, ContextCompat.getColor(ctx, R.color.brand));

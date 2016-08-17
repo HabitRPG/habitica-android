@@ -7,12 +7,11 @@
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tagEditText" android:layout_gravity="center_horizontal"
-            android:text="test_tag"/>
+            android:id="@+id/tagEditText" android:layout_gravity="center_horizontal"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/edit_tag_btn_delete"
             android:textColor="@color/white"
             android:id="@+id/btnDelete"
             android:drawableEnd="@drawable/ic_action_delete_white_24"

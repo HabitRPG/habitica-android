@@ -458,10 +458,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     }
     //endregion Events
+
     public void fillTagFilterDrawer(List<Tag> tagList) {
         if (this.tagsHelper != null) {
             List<IDrawerItem> items = new ArrayList<>();
-            //items.add(new SectionDrawerItem().withName("Filter by Tag"));
             items.add(new EditTagsSectionDrawer());
             items.add(new EditTextDrawer());
             for (Tag t : tagList) {
@@ -481,7 +481,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             List<IDrawerItem> items = new ArrayList<>();
 
             if(this.editingTags) {
-                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName("Edit Tags"));
+                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_edit_tags)));
                 items.add(new EditTextDrawer());
                 for (Tag t : tagList) {
                     items.add(new EditTagsDrawerItem()
@@ -491,7 +491,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 }
                 this.activity.fillFilterDrawer(items);
             }else {
-                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName("Filter by Tags"));
+                items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_filter_tags)));
                 items.add(new EditTextDrawer());
                 for (Tag t : tagList) {
                     items.add(new SwitchDrawerItem()
@@ -525,9 +525,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     public void removeTagFilterDrawerItem(Tag t) {
+        //Have to add 2 for the Drawer components that reside above the actual tags' ui component.
         int pos = tags.indexOf(t) + 2;
         tags.remove(t);
-        //Have to add 2 for the Drawer components that reside above the actual tags' ui components.
+
         this.activity.removeFilterDrawerItem(pos);
     }
 
@@ -535,6 +536,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         if (this.tagsHelper != null) {
 
+            //Add 2 for the same reason as above
             int pos = tags.indexOf(t) + 2;
             IDrawerItem item = null;
 
@@ -612,8 +614,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
 
         AlertDialog alert = new AlertDialog.Builder(this.activity)
-                .setTitle("Edit Tag")
-                .setPositiveButton("Save", (dialog, which) -> {
+                .setTitle(getString(R.string.edit_tag_title))
+                .setPositiveButton(getString(R.string.save_changes), (dialog, which) -> {
                     EditText tet = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
                     String newTagName = tet.getText().toString();
                     if(!newTagName.equals("")) {
@@ -622,7 +624,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
                     }
                 })
-                .setNeutralButton("Go Back", (dialog, which) -> {
+                .setNeutralButton(getString(R.string.dialog_go_back), (dialog, which) -> {
                     dialog.dismiss();
                 })
                 .create();
@@ -633,13 +635,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void showDeleteTagDialog(AlertDialog d, Tag tag) {
         AlertDialog alert2 = new AlertDialog.Builder(this.activity)
-                .setTitle("Are you sure?").setMessage("Do you really want to delete?")
-                .setPositiveButton("Yes",(dialog,which) -> {
+                .setTitle(getString(R.string.confirm_delete_tag_title)).setMessage(getString(R.string.confirm_delete_tag_message))
+                .setPositiveButton(getString(R.string.yes),(dialog,which) -> {
                     EventBus.getDefault().post(new DeleteTagCommand(tag));
                     dialog.dismiss();
                     d.dismiss();
                 })
-                .setNegativeButton("No",(dialog, which) -> {
+                .setNegativeButton(getString(R.string.no),(dialog, which) -> {
                     dialog.dismiss();
                 })
                 .create();
@@ -647,6 +649,5 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     //TODO: Fix Keyboard dismissal.
-    //TODO: Update Strings resources.
     //TODO: Check code for redundancies/improvements
 }
