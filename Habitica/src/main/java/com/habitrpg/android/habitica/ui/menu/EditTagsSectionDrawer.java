@@ -132,7 +132,7 @@ public class EditTagsSectionDrawer extends AbstractDrawerItem<EditTagsSectionDra
         viewHolder.editing = this.editing;
 
         if(this.editing) {
-            viewHolder.btnEdit.setText("Save");
+            viewHolder.btnEdit.setText("Done");
         }else {
             viewHolder.btnEdit.setText("Edit");
         }

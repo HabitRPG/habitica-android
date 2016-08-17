@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.menu.EditTagsDrawerItem;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
@@ -1514,5 +1515,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void removeFilterDrawerItem(int position) {
         this.filterDrawer.removeItemByPosition(position);
+    }
+
+    public void checkTagForUpdate(List<Tag> originalTagList) {
+        List<IDrawerItem> drawerItems = this.filterDrawer.getDrawerItems();
+        for(int i = 2; i < drawerItems.size(); ++i) {
+            Tag t = (Tag)drawerItems.get(i).getTag();
+
+            String tagName = t.getName();
+
+            Tag originalTag = originalTagList.get(i-2);
+            Log.i("TAGS", "ORIGINAL TAG: " + originalTag.getName() + " COMPARING TO: " + tagName);
+            if(!originalTag.getName().equals(tagName)) {
+                Log.i("TAGS", "ORIGINAL TAG: " + originalTag.getName() + ", NEW TAG: " + tagName);
+            }
+        }
     }
 }

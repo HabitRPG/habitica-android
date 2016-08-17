@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
+import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -29,7 +30,8 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.Debounce;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.menu.EditTagDrawerItem;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.menu.EditTagsDrawerItem;
 import com.habitrpg.android.habitica.ui.menu.EditTagsSectionDrawer;
 import com.habitrpg.android.habitica.ui.menu.EditTextDrawer;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -44,13 +46,16 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +65,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -88,6 +95,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     private boolean displayingTaskForm;
     private boolean editingTags;
     private List<Tag> tags;
+    private List<Tag> tagsCopy;
     private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
     private Debounce filterChangedHandler = new Debounce(1500, 1000) {
         @Override
@@ -347,6 +355,11 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Subscribe
+    public void onEvent(final EditTagCommand event) {
+        showEditTagDialog(event.tag);
+    }
+
+    @Subscribe
     public void onEvent(TaskTappedEvent event) {
         if (this.displayingTaskForm) {
             return;
@@ -457,7 +470,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName("Edit Tags"));
                 items.add(new EditTextDrawer());
                 for (Tag t : tagList) {
-                    items.add(new EditTagDrawerItem()
+                    items.add(new EditTagsDrawerItem()
                                 .withName(t.getName())
                                 .withTag(t)
                     );
@@ -479,22 +492,28 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
-    //TODO: Switch/Delete based on editing.
     public void addTagFilterDrawerItem(Tag tag) {
         if (this.tagsHelper != null) {
-            IDrawerItem item = new SwitchDrawerItem()
-                    .withName(tag.getName())
-                    .withTag(tag)
-                    .withChecked(this.tagsHelper.isTagChecked(tag.getId()))
-                    .withOnCheckedChangeListener(this);
-            this.activity.addFilterDrawerItem(item);
+            if(this.editingTags) {
+                IDrawerItem item = new EditTagsDrawerItem()
+                        .withName(tag.getName())
+                        .withTag(tag);
+                this.activity.addFilterDrawerItem(item);
+            }else {
+                IDrawerItem item = new SwitchDrawerItem()
+                        .withName(tag.getName())
+                        .withTag(tag)
+                        .withChecked(this.tagsHelper.isTagChecked(tag.getId()))
+                        .withOnCheckedChangeListener(this);
+                this.activity.addFilterDrawerItem(item);
+            }
         }
     }
 
     public void removeTagFilterDrawerItem(Tag t) {
         int pos = tags.indexOf(t);
         tags.remove(t);
-        //Have to add 2 for the Drawer components above the actual tags' ui components.
+        //Have to add 2 for the Drawer components that reside above the actual tags' ui components.
         this.activity.removeFilterDrawerItem(pos+2);
     }
 
@@ -538,5 +557,53 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
             refreshItem.setActionView(null);
         }
+    }
+
+    public void editTag() {
+
+    }
+
+    public void showEditTagDialog(Tag tag) {
+
+        AlertDialog alert = new AlertDialog.Builder(this.activity)
+                .setTitle("Edit Tag")
+                .setPositiveButton("Save", (dialog, which) -> {
+                    //TODO:Update the Tag
+                })
+                .setNeutralButton("Go Back", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create();
+
+        //inflate the alertdialog view
+        View editTagDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_edit_tag,null);
+
+        //Init the components
+        if(editTagDialogView != null) {
+            EditText tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
+            tagEditText.setText(tag.getName());
+
+            Button btnDelete = (Button)editTagDialogView.findViewById(R.id.btnDelete);
+            ViewHelper.SetBackgroundTint(btnDelete, ContextCompat.getColor(this.activity, R.color.worse_10));
+            btnDelete.setOnClickListener((View v) -> {showDeleteTagDialog(alert,tag);});
+        }
+
+        alert.setView(editTagDialogView);
+        alert.show();
+    }
+
+    public void showDeleteTagDialog(AlertDialog d, Tag tag) {
+        AlertDialog alert2 = new AlertDialog.Builder(activity)
+                .setTitle("Are you sure?").setMessage("Do you really want to delete?")
+                .setPositiveButton("Yes",(dialog,which) -> {
+                    EventBus.getDefault().post(new DeleteTagCommand(tag));
+                    dialog.dismiss();
+                    d.dismiss();
+                })
+                .setNegativeButton("No",(dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create();
+        alert2.show();
     }
 }

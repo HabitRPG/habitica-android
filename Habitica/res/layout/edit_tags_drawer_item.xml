@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-    <EditText
-            android:id="@+id/editTagText"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+    <TextView
+            android:id="@+id/tagTextView"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:textColor="@android:color/black"
-            android:inputType="text" />
+            android:paddingLeft="@dimen/material_drawer_vertical_padding"
+            android:paddingRight="@dimen/material_drawer_vertical_padding"/>
     <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="Delete" />
+            android:text="Edit"/>
 </LinearLayout>
