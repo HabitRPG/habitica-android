@@ -20,5 +20,8 @@ public class Skill extends BaseModel {
     @Column
     public Integer mana, lvl;
 
+    @Column
+    public Double gold;
+
 
 }
