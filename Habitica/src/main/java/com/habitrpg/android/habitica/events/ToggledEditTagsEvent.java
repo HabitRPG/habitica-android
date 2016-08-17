@@ -5,4 +5,8 @@ package com.habitrpg.android.habitica.events;
  */
 public class ToggledEditTagsEvent {
     public boolean editing;
+
+    public ToggledEditTagsEvent(boolean editing) {
+        this.editing = editing;
+    }
 }

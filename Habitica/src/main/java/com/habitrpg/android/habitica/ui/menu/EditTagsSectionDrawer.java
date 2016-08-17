@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by jbillz on 8/12/16.
+ * Created by jjbillings on 8/12/16.
  */
 public class EditTagsSectionDrawer extends AbstractDrawerItem<EditTagsSectionDrawer, EditTagsSectionDrawer.ViewHolder> implements Nameable<EditTagsSectionDrawer>, Typefaceable<EditTagsSectionDrawer> {
 
@@ -192,8 +192,7 @@ public class EditTagsSectionDrawer extends AbstractDrawerItem<EditTagsSectionDra
 
         @Override
         public void onClick(View view) {
-            ToggledEditTagsEvent editTagsEvent = new ToggledEditTagsEvent();
-            editTagsEvent.editing = !this.editing;
+            ToggledEditTagsEvent editTagsEvent = new ToggledEditTagsEvent(!this.editing);
             EventBus.getDefault().post(editTagsEvent);
         }
     }

@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -1496,6 +1497,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             drawer = this.filterDrawer;
         }
         if (drawer != null) {
+            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
             drawer.openDrawer();
         }
     }
@@ -1517,18 +1519,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.filterDrawer.removeItemByPosition(position);
     }
 
-    public void checkTagForUpdate(List<Tag> originalTagList) {
-        List<IDrawerItem> drawerItems = this.filterDrawer.getDrawerItems();
-        for(int i = 2; i < drawerItems.size(); ++i) {
-            Tag t = (Tag)drawerItems.get(i).getTag();
-
-            String tagName = t.getName();
-
-            Tag originalTag = originalTagList.get(i-2);
-            Log.i("TAGS", "ORIGINAL TAG: " + originalTag.getName() + " COMPARING TO: " + tagName);
-            if(!originalTag.getName().equals(tagName)) {
-                Log.i("TAGS", "ORIGINAL TAG: " + originalTag.getName() + ", NEW TAG: " + tagName);
-            }
-        }
+    public void updateFilterDrawerItem (IDrawerItem item, int position) {
+        this.filterDrawer.removeItemByPosition(position);
+        this.filterDrawer.addItemAtPosition(item,position);
     }
 }

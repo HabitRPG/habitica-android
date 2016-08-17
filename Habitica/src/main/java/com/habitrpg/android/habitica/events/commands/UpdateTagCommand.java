@@ -3,12 +3,14 @@ package com.habitrpg.android.habitica.events.commands;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 
 /**
- * Created by jjbillings on 8/16/16.
+ * Created by jjbillings on 8/17/16.
  */
-public class EditTagCommand {
+public class UpdateTagCommand {
     public Tag tag;
+    public String uuid;
 
-    public EditTagCommand(Tag tag) {
+    public  UpdateTagCommand(Tag tag, String uuid) {
         this.tag = tag;
+        this.uuid = uuid;
     }
 }
