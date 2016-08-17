@@ -16,6 +16,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -180,12 +181,16 @@ public class PartyInviteActivity extends BaseActivity {
 
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        if (scanningResult != null) {
-            userIdToInvite = scanningResult.getContents();
+        if (scanningResult != null && scanningResult.getContents() != null) {
+            String qrCodeUrl = scanningResult.getContents();
+            Uri uri = Uri.parse(qrCodeUrl);
+            if (uri == null || uri.getPathSegments().size() < 3) {
+                return;
+            }
+            userIdToInvite = uri.getPathSegments().get(2);
 
             //@TODO: Move to user helper/model
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
-
         }
     }
 
@@ -197,7 +202,7 @@ public class PartyInviteActivity extends BaseActivity {
         }
 
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Invited: " + userIdToInvite, Toast.LENGTH_SHORT);
+                "Invited: " + userIdToInvite, Toast.LENGTH_LONG);
         toast.show();
 
         Map<String, Object> inviteData = new HashMap<>();

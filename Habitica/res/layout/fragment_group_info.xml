@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/CardView.Default"
+                android:id="@+id/qrWrapper"
                 >
 
                 <LinearLayout

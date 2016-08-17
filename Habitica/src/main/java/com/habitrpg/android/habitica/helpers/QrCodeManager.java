@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.mikepenz.materialize.color.Material;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -41,6 +42,7 @@ public class QrCodeManager {
     private String content;
     private String userId;
     private Context context;
+    private String qrProfileUrl = "https://habitica.com/qr-code/user/";
 
     private ImageView qrCodeImageView;
     private Button qrCodeDownloadButton;
@@ -78,7 +80,7 @@ public class QrCodeManager {
         this.fileName = this.context.getString(R.string.qr_file_name);
         this.saveMessage = this.context.getString(R.string.qr_save_message);
 
-        this.content = userId;
+        this.content = this.qrProfileUrl + userId;
         this.userId = userId;
     }
 
@@ -106,7 +108,7 @@ public class QrCodeManager {
             return;
         }
 
-        Bitmap myBitmap = QRCode.from(this.content).withSize(1000, 1000).bitmap();
+        Bitmap myBitmap = QRCode.from(this.content).withColor(0xFF432874, 0xFFFFFFFF).withSize(400, 400).bitmap();
         qrCodeImageView.setImageBitmap(myBitmap);
     }
 
@@ -130,7 +132,6 @@ public class QrCodeManager {
 
                 try {
                     FileOutputStream outputStream = new FileOutputStream(pathToQRCode);
-
                     qrCodeWrapper.setDrawingCacheEnabled(true);
                     Bitmap b = qrCodeWrapper.getDrawingCache();
                     b.compress(Bitmap.CompressFormat.JPEG, 95, outputStream);

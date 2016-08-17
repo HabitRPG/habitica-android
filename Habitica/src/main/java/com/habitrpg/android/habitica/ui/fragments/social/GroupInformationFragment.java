@@ -25,6 +25,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -67,6 +68,9 @@ public class GroupInformationFragment extends BaseFragment {
 
     @BindView(R.id.qrLayout)
     LinearLayout qrLayout;
+
+    @BindView(R.id.qrWrapper)
+    CardView qrWrapper;
 
     private View view;
     private Group group;
@@ -121,8 +125,8 @@ public class GroupInformationFragment extends BaseFragment {
             qrCodeManager.setUpView(qrLayout);
         }
 
-        if (user.getParty().getId() != null) {
-            ((ViewGroup) qrLayout.getParent()).removeView(qrLayout);
+        if (user != null && user.getParty().getId() != null) {
+            ((ViewGroup) qrWrapper.getParent()).removeView(qrWrapper);
         }
 
         return view;
