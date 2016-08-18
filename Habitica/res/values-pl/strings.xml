@@ -19,6 +19,16 @@
   <string name="pref_reminder_header">Przypominienie</string>
   <string name="pref_reminder_checkbox">Aktywuj Przypomnienie</string>
   <string name="pref_reminder_picker">Ustaw Czas Przypomnienia</string>
+  <string name="pref_push_notifications_checkbox">Notyfikacje użytkownika</string>
+  <string name="push_notifications">Notyfikacje</string>
+  <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
+  <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
+  <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
+  <string name="preference_push_gifted_subscription">Otrzymałeś Subskrypcję</string>
+  <string name="preference_push_invited_to_party">Otrzymano zaproszenie do drużyny</string>
+  <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do gildii</string>
+  <string name="preference_push_your_quest_has_begun">Twoja misja się rozpoczęła</string>
+  <string name="preference_push_invited_to_quest">Zaproszono Cię na misję</string>
   <!--Adding tasks-->
   <string name="task_value">Wartość</string>
   <string name="new_todo">Nowe DoZrobienia</string>
@@ -171,10 +181,10 @@
   <string name="previous_button">Poprzedni</string>
   <string name="next_button">Następny</string>
   <string name="skip_button">Pomiń</string>
-  <string name="setup_welcome_description">Witaj w Habitice, gdzie postęp w grze ulepszy twoje życie! Osiągając cele w prawdziwym świecie, odblokowujesz ekwipunek, chowańce, misje i wiele więcej.</string>
+  <string name="setup_welcome_description">Witaj w Habitice, gdzie postęp w grze ulepszy Twoje życie! Osiągając cele w prawdziwym świecie, odblokowujesz ekwipunek, chowańce, misje i wiele więcej.</string>
   <string name="setup_welcome_title">Witaj</string>
-  <string name="avatar_setup_description">Na początek, potrzebujesz awatara - twoją reprezentację w grze! To, co robisz w prawdziwym życiu, ma wpływ na zdrowie, poziom doświadczenia i złoto twojego awatara.</string>
-  <string name="task_setup_description">Wspaniale! Teraz ustalmy twoje zadania, żeby zacząć zdobywać doświadczenie i złoto.
+  <string name="avatar_setup_description">Na początek, potrzebujesz awatara - swojego odpowiednika w grze! To, co robisz w prawdziwym życiu, ma wpływ na zdrowie, poziom doświadczenia i złoto Twojego awatara.</string>
+  <string name="task_setup_description">Wspaniale! Teraz ustalmy Twoje zadania, żebyś zaczął zdobywać doświadczenie i złoto.
 
 Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="setup_group_work">Praca</string>
@@ -205,7 +215,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="setup_task_creativity_1">Studiować mistrzostwo rzemiosła</string>
   <string name="setup_task_creativity_2">Pracować nad twórczym projektem</string>
   <string name="setup_task_creativity_3">Ukończyć twórczy projekt</string>
-  <string name="gem.purchase.support">Chcesz nam pomóc w utrzymaniu Habitiki? Możesz wesprzeć deweloperów kupując Klejnoty!\n\nZa Klejnoty można kupować zabawne dodatki do konta, takie jak:\n\n - Fajne kostiumy dla twojego awatara\n - Fantastyczne tła\n - Ciekawe misje, w których nagrodą są jaja chowańców\n - Możliwość zmiany klasy przed osiągnięciem poziomu 100\n\nStukrotne dzięki za pomaganie nam w czynieniu Habitiki najlepszą, jaka może być. Twoja pomoc wiele dla nas znaczy!</string>
+  <string name="gem.purchase.support">Chcesz nam pomóc w utrzymaniu Habitiki? Możesz wesprzeć deweloperów kupując Klejnoty!\n\nZa Klejnoty można kupować zabawne dodatki do konta, takie jak:\n\n - Fajne kostiumy dla Twojego awatara\n - Fantastyczne tła\n - Ciekawe misje, w których nagrodą są jaja chowańców\n - Możliwość zmiany klasy przed osiągnięciem poziomu 100\n\nStukrotne dzięki za pomaganie nam w czynieniu Habitiki najlepszą, jaka może być. Twoja pomoc wiele dla nas znaczy!</string>
   <string name="my_guilds">Moje Gildie</string>
   <string name="public_guilds">Publiczne Gildie</string>
   <string name="guild">Gildia</string>
@@ -293,9 +303,9 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="rogue">Łotrzyk</string>
   <string name="mage">Mag</string>
   <string name="healer">Uzdrowiciel</string>
-  <string name="warrior_description">Wojownicy mają częstsze i lepsze \"uderzenia krytyczne\", które losowo dają Złoto, Doświadczenie, i szansę na zrzut za odznaczenie zadania. Zadają także ciężkie obrażenia bossom. Graj jako Wojownik jeśli motywują cię nieprzewidywalne nagrody, lub jeśli chcesz niszczyć bossów w Misjach!</string>
+  <string name="warrior_description">Wojownicy mają częstsze i lepsze \"trafienia krytyczne\", które losowo dają Złoto, Doświadczenie, i szansę na zdobycz za odznaczenie zadania. Zadają także ciężkie obrażenia bossom. Graj jako Wojownik jeśli motywują Cię nieprzewidywalne nagrody, lub jeśli chcesz niszczyć bossów w Misjach!</string>
   <string name="mage_description">Magowie uczą się sprawnie, zyskując Doświadczenie i Poziomy szybciej niż inne klasy. Dostają także dużo Many na specjalne umiejętności. Graj jako Mag jeśli lubisz elementy gry taktycznej w Habit, lub jeśli jesteś silnie motywowany przez zdobywanie poziomów i odblokowywanie zaawansowanych aspektów gry!</string>
-  <string name="rogue_description">Łotrzyki uwielbiają akumulować bogactwa, zyskując więcej Złota niż inni, oraz są adeptami w znajdowaniu losowych rzeczy. Ich umiejętność skradania pozwala im uniknąć konsekwencji pominięcia Codziennych. Graj jako Łotrzyk jeśli motywują cie Nagrody i Osiągnięcia, walczenie o skarby i odznaki!</string>
+  <string name="rogue_description">Łotrzyki uwielbiają gromadzić bogactwa, zyskując więcej Złota niż inni, oraz są adeptami w znajdowaniu losowych rzeczy. Ich umiejętność skradania pozwala im uniknąć konsekwencji pominięcia Codziennych. Graj jako Łotrzyk jeśli motywują Cię Nagrody i Osiągnięcia, walczenie o skarby i odznaki!</string>
   <string name="healer_description">Medycy są odporni na obrażenia, i przedłużają tą ochronę na innych. Pominięte Codzienne i złe Nawyki nie robią na nich wrażenia, mają także sposoby na odzyskanie Zdrowia po porażce. Graj jako Medyk jeśli lubisz pomagać innym w Drużynie, lub jeśli koncepcja oszukania Śmierci dzięki ciężkiej pracy jest dla ciebie inspirująca!</string>
   <string name="select_class">Wybierz klasę postaci</string>
   <string name="opt_out_class">Wycofaj się</string>
@@ -325,4 +335,21 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
   <string name="leaderMessage" formatted="false">Wiadomość od %1$s</string>
+  <string name="confirm">Potwierdź</string>
+  <string name="market">Sklep</string>
+  <string name="timeTravelers">Podróżnicy w czasie</string>
+  <string name="seasonalShop">Sklep sezonowy</string>
+  <string name="empty_inbox">Nie masz żadnych wiadomości. Możesz wysłać użytkownikowi nową wiadomość za pomocą ich publicznych wiadomości!</string>
+  <string name="party_invite">Odblokuj poprzez zapraszanie przyjaciół</string>
+  <string name="no_gold">Niewystarczająca ilość złota</string>
+  <string name="no_potion">Nie potrzebujesz kupować eliksiru uzdrawiającego</string>
+  <string name="successful_purchase" formatted="false">%1$s jest w Twoim posiadaniu</string>
+  <string name="purchase_confirmation_title">Potwierdź zakup</string>
+  <string name="confirm_purchase_text" formatted="false">Zakup %1$s za %2$s %3$s</string>
+  <string name="gem">diament</string>
+  <string name="hourglass">klepsydra</string>
+  <string name="hourglasses">klepsydry</string>
+  <string name="gold_singular">złoto</string>
+  <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
+  <string name="copy_chat_message">Kopiuj do schowka</string>
 </resources>

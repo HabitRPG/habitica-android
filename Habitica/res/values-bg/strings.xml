@@ -128,7 +128,7 @@
   <string name="chat">Чат</string>
   <string name="members">Членове</string>
   <string name="habits">Навици</string>
-  <string name="dailies">Ежедневни</string>
+  <string name="dailies">Ежедн.</string>
   <string name="todos">Задачи</string>
   <string name="rewards">Награди</string>
   <string name="taskform.delete.title">Сигурен/на ли сте?</string>
@@ -350,7 +350,6 @@
   <string name="hourglass">пясъчен часовник</string>
   <string name="hourglasses">пясъчни часовници</string>
   <string name="gold_singular">злато</string>
-  <string name="gems_plural">злато</string>
   <string name="chat_message_copied">Съобщението е копирано</string>
   <string name="copy_chat_message">Копиране</string>
 </resources>

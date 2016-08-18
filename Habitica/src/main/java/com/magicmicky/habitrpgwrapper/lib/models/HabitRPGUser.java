@@ -317,8 +317,7 @@ public class HabitRPGUser extends BaseModel {
         authentication.user_id = id;
         flags.user_id = id;
         if (contributor != null) { contributor.user_id = id; }
-        contributor.user_id = id;
-        invitations.user_id = id;
+        if (invitations != null) { invitations.user_id = id; }
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();

@@ -24,6 +24,7 @@
   <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
   <string name="preference_push_received_a_private_message">Recebeu uma Mensagem Privada</string>
   <string name="preference_push_gifted_gems">Gemas de presente</string>
+  <string name="preference_push_gifted_subscription">Assinatura Presenteada</string>
   <string name="preference_push_invited_to_party">Convidado para um grupo</string>
   <string name="preference_push_invited_to_guild">Convidado para uma Guilda</string>
   <string name="preference_push_your_quest_has_begun">Sua missão começou</string>
@@ -350,7 +351,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="hourglass">ampulheta</string>
   <string name="hourglasses">ampulhetas</string>
   <string name="gold_singular">ouro</string>
-  <string name="gems_plural">ouro</string>
   <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
   <string name="copy_chat_message">Copiar para Área e Transferência
 </string>

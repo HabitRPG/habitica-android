@@ -14,6 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Locale;
+
+import javax.inject.Inject;
+
 public class TavernFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
@@ -21,6 +25,9 @@ public class TavernFragment extends BaseMainFragment {
 
     ChatListFragment chatListFragment;
     GroupInformationFragment questInfoFragment;
+
+    @Inject
+    ContentCache contentCache;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +66,6 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setVisibility(View.VISIBLE);
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
-
-                            ContentCache contentCache = new ContentCache(apiHelper.apiService);
 
                             contentCache.GetQuestContent(group.quest.key, content -> {
                                 if (questInfoFragment != null) {

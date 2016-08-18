@@ -350,7 +350,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="hourglass">Sanduhr</string>
   <string name="hourglasses">Sanduhren</string>
   <string name="gold_singular">Gold</string>
-  <string name="gems_plural">Gold</string>
   <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
   <string name="copy_chat_message">In Zwischenablage kopieren</string>
 </resources>

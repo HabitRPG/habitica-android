@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import rx.Observable;
 
@@ -29,7 +30,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
         super(taskType, tagsHelper, layoutResource, newContext, user.getId());
         this.user = user;
         this.apiHelper = apiHelper;
-        this.contentCache = new ContentCache(apiHelper.apiService);
+        this.contentCache = new ContentCache(apiHelper);
     }
 
     @Override

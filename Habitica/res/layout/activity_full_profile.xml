@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fullprofile_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/avatar_with_bars"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:fitsSystemWindows="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.habitrpg.android.habitica.ui.AvatarView
+                            android:id="@+id/avatarView"
+                            android:layout_width="@dimen/avatar_header_width"
+                            android:layout_height="@dimen/avatar_header_height"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            app:showBackground="true"
+                            app:showMount="true"
+                            app:showPet="true" />
+
+                        <LinearLayout
+                            android:id="@+id/LL_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hpBar"
+                                layout="@layout/value_bar" />
+
+                            <include
+                                android:id="@+id/xpBar"
+                                layout="@layout/value_bar" />
+
+                            <include
+                                android:id="@+id/mpBar"
+                                layout="@layout/value_bar" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/lvl_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:drawableLeft="@drawable/ic_header_warrior"
+                            android:drawablePadding="6dp"
+                            android:drawableStart="@drawable/ic_header_warrior"
+                            android:gravity="center"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/gems_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_gem"
+                                android:drawablePadding="8dp"
+                                android:drawableStart="@drawable/ic_header_gem"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/gold_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_gold"
+                                android:drawablePadding="6dp"
+                                android:drawableStart="@drawable/ic_header_gold"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/silver_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:drawableLeft="@drawable/ic_header_silver"
+                                android:drawablePadding="6dp"
+                                android:drawableStart="@drawable/ic_header_silver"
+                                android:gravity="center"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/profile_blurb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blurb" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/profile_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:minHeight="200dp"
+                    fresco:actualImageScaleType="fitCenter" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/battle_gear"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/avatar_equip_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+                <TableLayout
+                    android:id="@+id/equipment_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:shrinkColumns="1"
+                    android:stretchColumns="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/profile_costume_card"
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/costume"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/avatar_costume_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+                <TableLayout
+                    android:id="@+id/costume_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:shrinkColumns="1"
+                    android:stretchColumns="0" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/profile_attributes_card"
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <TableLayout
+                    android:id="@+id/attributes_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2,3,4">
+
+                    <TableRow android:layout_height="wrap_content">
+                        <!-- Headers -->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/attributes"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/attributes_collapse_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                                android:layout_gravity="bottom" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="STR" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="INT" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="CON" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="PER" />
+                    </TableRow>
+
+                </TableLayout>
+
+                <ProgressBar
+                    android:id="@+id/avatar_attributes_progress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_pets_and_mounts"
+                    android:textStyle="bold" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1">
+
+                    <TableRow android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_pets_found" />
+
+                        <TextView
+                            android:id="@+id/profile_pet_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="#" />
+                    </TableRow>
+
+                    <TableRow android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_mounts_tamed" />
+
+                        <TextView
+                            android:id="@+id/profile_mount_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="#" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

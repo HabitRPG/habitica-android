@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.events.commands.CopyChatAsTodoCommand;
 import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
@@ -261,6 +262,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     } else {
                         userLabel.setText(msg.user);
                     }
+
+                    userLabel.setClickable(true);
+                    userLabel.setOnClickListener(view -> {
+                        OpenFullProfileCommand cmd = new OpenFullProfileCommand(msg.uuid);
+
+                        EventBus.getDefault().post(cmd);
+                    });
                 }
 
                 DataBindingUtils.setForegroundTintColor(userLabel, msg.getContributorForegroundColor());
