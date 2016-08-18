@@ -162,10 +162,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }
 
-        private void canBuy() {
-
-        }
-
         private void buyItem() {
             BuyGemItemCommand command = new BuyGemItemCommand();
             command.shopIdentifier = shopIdentifier;
