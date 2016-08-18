@@ -37,6 +37,8 @@ public class SkillCallback implements Action1<SkillResponse> {
             this.user.setFlags(user.getFlags());
         }
         if (user.getStats() != null) {
+            usedSkill.xp = user.getStats().getExp() - this.user.getStats().getExp();
+            usedSkill.hp = user.getStats().getHp() - this.user.getStats().getHp();
             usedSkill.gold = user.getStats().getGp() - this.user.getStats().getGp();
             this.user.getStats().merge(user.getStats());
         }

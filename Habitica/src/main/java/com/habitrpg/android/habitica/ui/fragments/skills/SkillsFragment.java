@@ -114,6 +114,12 @@ public class SkillsFragment extends BaseMainFragment {
         adapter.setMana(event.newMana);
         StringBuilder message = new StringBuilder();
         message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        if (skill.xp != 0) {
+            message.append(" + ").append(round(skill.xp, 2)).append(" XP");
+        }
+        if (skill.hp != 0) {
+            message.append(" + ").append(round(skill.hp, 2)).append(" HP");
+        }
         if (skill.gold != 0) {
             message.append(" + ").append(round(skill.gold, 2)).append(" GP");
         }
