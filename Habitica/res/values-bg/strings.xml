@@ -350,7 +350,6 @@
   <string name="hourglass">пясъчен часовник</string>
   <string name="hourglasses">пясъчни часовници</string>
   <string name="gold_singular">злато</string>
-  <string name="gems_plural">злато</string>
   <string name="chat_message_copied">Съобщението е копирано</string>
   <string name="copy_chat_message">Копиране</string>
 </resources>

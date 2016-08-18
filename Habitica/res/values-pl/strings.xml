@@ -350,7 +350,6 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="hourglass">klepsydra</string>
   <string name="hourglasses">klepsydry</string>
   <string name="gold_singular">złoto</string>
-  <string name="gems_plural">złoto</string>
   <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
   <string name="copy_chat_message">Kopiuj do schowka</string>
 </resources>
