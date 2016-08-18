@@ -197,7 +197,7 @@ public interface ApiService {
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
-    Observable<List<Void>> likeMessage(@Path("gid") String groupId, @Path("mid") String mid);
+    Observable<ChatMessage> likeMessage(@Path("gid") String groupId, @Path("mid") String mid);
 
     @POST("groups/{gid}/chat/{mid}/flag")
     Observable<Void> flagMessage(@Path("gid") String groupId, @Path("mid") String mid);
