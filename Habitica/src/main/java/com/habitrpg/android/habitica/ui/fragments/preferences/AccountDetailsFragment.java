@@ -48,11 +48,11 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
     public boolean onPreferenceTreeClick(Preference preference) {
         if (preference.getKey().equals(getString(R.string.SP_user_qr_code))) {
             qrCodeManager.showDialogue();
+        } else {
+            ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            clipMan.setPrimaryClip(ClipData.newPlainText(preference.getKey(), preference.getSummary()));
+            Toast.makeText(getActivity(), "Copied " + preference.getKey() + " to clipboard.", Toast.LENGTH_SHORT).show();
         }
-
-        ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        clipMan.setPrimaryClip(ClipData.newPlainText(preference.getKey(), preference.getSummary()));
-        Toast.makeText(getActivity(), "Copied " + preference.getKey() + " to clipboard.", Toast.LENGTH_SHORT).show();
         return super.onPreferenceTreeClick(preference);
     }
 }
