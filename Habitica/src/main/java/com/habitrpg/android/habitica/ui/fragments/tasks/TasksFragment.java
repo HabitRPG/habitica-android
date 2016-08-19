@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
 import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -344,7 +345,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             apiHelper.apiService.deleteTag(t.getId())
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(tag -> {
+                        tagFilterMap.remove(t.getId());
+                        filterChangedHandler.hit();
                         removeTagFilterDrawerItem(t);
+                        EventBus.getDefault().post(new RefreshUserCommand());
                     }, throwable -> {
                         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
                     });
@@ -366,9 +370,22 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                     .subscribe(tag -> {
                         UiUtils.dismissKeyboard(this.activity);
                         updateTagFilterDrawerItem(tag);
+                        EventBus.getDefault().post(new RefreshUserCommand());
                     }, throwable -> {
                         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
                     });
+        }
+    }
+
+    @Subscribe
+    public void onEvent(RefreshUserCommand event) {
+        if (apiHelper != null) {
+            apiHelper.retrieveUser(true)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(
+                            new HabitRPGUserCallback(activity),
+                            throwable -> stopAnimatingRefreshItem()
+                    );
         }
     }
 
