@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -277,6 +278,10 @@ public class IntentIntegrator {
         return initiateScan(ALL_CODE_TYPES);
     }
 
+    public final AlertDialog initiateScan(Fragment fragment) {
+        return initiateScan(fragment, ALL_CODE_TYPES);
+    }
+
     /**
      * Initiates a scan only for a certain set of barcode types, given as strings corresponding
      * to their names in ZXing's {@code BarcodeFormat} class like "UPC_A". You can supply constants
@@ -286,6 +291,10 @@ public class IntentIntegrator {
      * if a prompt was needed, or null otherwise
      */
     public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
+        return initiateScan(null, desiredBarcodeFormats);
+    }
+
+    public final AlertDialog initiateScan(Fragment fragment, Collection<String> desiredBarcodeFormats) {
         Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -310,7 +319,11 @@ public class IntentIntegrator {
         intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         attachMoreExtras(intentScan);
-        startActivityForResult(intentScan, REQUEST_CODE);
+        if (fragment == null) {
+            startActivityForResult(intentScan, REQUEST_CODE);
+        } else {
+            startActivityForResult(fragment, intentScan, REQUEST_CODE);
+        }
         return null;
     }
 
@@ -326,6 +339,10 @@ public class IntentIntegrator {
      */
     protected void startActivityForResult(Intent intent, int code) {
         activity.startActivityForResult(intent, code);
+    }
+
+    protected  void startActivityForResult(Fragment fragment, Intent intent, int code) {
+        fragment.startActivityForResult(intent, code);
     }
 
     private String findTargetAppPackage(Intent intent) {

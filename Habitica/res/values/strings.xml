@@ -385,5 +385,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="qr_file_name"> habitrpg-qr-code.jpg</string>
     <string name="qr_save_message">QR code saved at </string>
     <string name="qr_dialogue_title">Your QR Code</string>
+    <string name="download">Download</string>
+    <string name="send_new_message">Send new message</string>
+    <string name="choose_recipient_title">Choose Message Recipient</string>
+    <string name="action_continue">Continue</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="enter_recipient_uuid">Enter Recipients User ID</string>
 
 </resources>

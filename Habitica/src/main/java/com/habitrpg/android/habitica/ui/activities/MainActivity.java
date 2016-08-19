@@ -826,8 +826,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SELECT_CLASS_RESULT) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
@@ -836,6 +834,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         });
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
     }
 
     // region Events

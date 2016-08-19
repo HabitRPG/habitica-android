@@ -50,7 +50,7 @@
         android:id="@+id/QRDownloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download"
+        android:text="@string/download"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_margin="20dp"
         android:layout_gravity="center_horizontal|bottom"
