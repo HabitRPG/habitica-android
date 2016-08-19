@@ -612,25 +612,32 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             @Override
             public void onClick(View view) {
                 EditText tagEditText = (EditText)editTagDialogView.findViewById(R.id.tagEditText);
-                String newTagName = tagEditText.getText().toString();
-
-                if(newTagName.equals("")) {
-                    return;
-                }
-
-                UiUtils.dismissKeyboard(activity,tagEditText);
-
-                if(newTagName.equals(tag.getName())) {
+                if(attemptUpdateTag(tagEditText,tag)) {
                     alert.dismiss();
-                    return;
                 }
-
-                String uuid = tag.getId();
-                tag.setName(newTagName);
-                EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
-                alert.dismiss();
             }
         });
+    }
+
+    public boolean attemptUpdateTag(EditText tagEditText, Tag tag) {
+        String newTagName = tagEditText.getText().toString();
+        boolean dismiss = true;
+
+        if(newTagName.equals("")) {
+            dismiss = false;
+            return dismiss;
+        }
+
+        UiUtils.dismissKeyboard(activity,tagEditText);
+
+        if(newTagName.equals(tag.getName())) {
+            return dismiss;
+        }
+
+        String uuid = tag.getId();
+        tag.setName(newTagName);
+        EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
+        return dismiss;
     }
 
     public void showDeleteTagDialog(AlertDialog d, Tag tag) {
