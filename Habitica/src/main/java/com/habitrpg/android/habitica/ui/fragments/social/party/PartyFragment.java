@@ -84,15 +84,15 @@ public class PartyFragment extends BaseMainFragment {
                     }, throwable -> {
                     });
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                    .setMessage(activity.getString(R.string.no_party_message))
-                    .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                        activity.getSupportFragmentManager().popBackStackImmediate();
-                    });
-            builder.show();
-            if (tabLayout != null) {
-                tabLayout.removeAllTabs();
-            }
+//            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+//                    .setMessage(activity.getString(R.string.no_party_message))
+//                    .setNeutralButton(android.R.string.ok, (dialog, which) -> {
+//                        activity.getSupportFragmentManager().popBackStackImmediate();
+//                    });
+//            builder.show();
+//            if (tabLayout != null) {
+//                tabLayout.removeAllTabs();
+//            }
         }
 
 
