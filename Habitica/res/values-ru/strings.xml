@@ -352,4 +352,5 @@
   <string name="gold_singular">золото</string>
   <string name="chat_message_copied">Сообщение скопировано в буфер обмена</string>
   <string name="copy_chat_message">Скопировать в буфер обмена</string>
+  <!--QR Strings-->
 </resources>

@@ -332,4 +332,5 @@
   <string name="open_in_store">플레이스토어로 열기</string>
   <string name="change_class_confirmation">보석 3개를 사용하여 클레스를 바꾸시겠습니까? </string>
   <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
+  <!--QR Strings-->
 </resources>

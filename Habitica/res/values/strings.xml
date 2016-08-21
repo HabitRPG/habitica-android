@@ -381,8 +381,6 @@ To start, which parts of your life do you want to improve?</string>
 
     <!-- QR Strings -->
     <string name="qr_section_title">Have someone invite you with this QR Code</string>
-    <string name="qr_album_name">habitica</string>
-    <string name="qr_file_name"> habitrpg-qr-code.jpg</string>
     <string name="qr_save_message">QR code saved at </string>
     <string name="qr_dialogue_title">Your QR Code</string>
     <string name="download">Download</string>

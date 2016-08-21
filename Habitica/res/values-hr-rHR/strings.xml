@@ -322,4 +322,5 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="share_raised" formatted="false">Upravo sam dobio %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
   <string name="open_in_store">Otvori u Trgovini Play</string>
   <string name="change_class_confirmation">Jeste li sigurni da želite promijeniti svoju Klasu? Ovo će te koštati 3 dragulja.</string>
+  <!--QR Strings-->
 </resources>

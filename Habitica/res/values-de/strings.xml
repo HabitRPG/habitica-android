@@ -13,6 +13,7 @@
   <string name="SP_userID_summary">Deine Benutzer-ID</string>
   <string name="SP_APIToken_title">API-Token</string>
   <string name="SP_APIToken_summary">Dein API-Token</string>
+  <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
@@ -109,7 +110,7 @@
   <string name="profile_image">Profilbild</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Du hast %1$s für %2$d Mana benutzt.</string>
-  <string name="new_checklist_item">Unteraufgabe</string>
+  <string name="new_checklist_item">Neue Unteraufgabe</string>
   <string name="add_checklist_item">Hinzufügen</string>
   <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
   <string name="skill_progress_title">Fertigkeiten benutzen</string>
@@ -233,6 +234,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="privacy">Privatsphäre</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
+  <string name="guild_search_hint">Nach Gilden suchen</string>
   <string name="todo_due" formatted="false">Bis: %s</string>
   <string name="daily_streak" formatted="false">Aktuelle Serie: %d</string>
   <string name="todo_has_duedate">Diese Aufgabe hat eine Frist.</string>
@@ -350,6 +352,11 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="hourglass">Sanduhr</string>
   <string name="hourglasses">Sanduhren</string>
   <string name="gold_singular">Gold</string>
+  <string name="gold_plural">Gold</string>
   <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
   <string name="copy_chat_message">In Zwischenablage kopieren</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">Lass Dich durch diesen QR Code von jemandem einladen</string>
+  <string name="qr_save_message">QR code gespeichert: </string>
+  <string name="qr_dialogue_title">Dein QR Code</string>
 </resources>
