@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class PartyInviteFragment extends BaseFragment {
     @OnClick(R.id.addInviteButton)
     public void addInviteField() {
         EditText editText = new EditText(getContext());
+
         if (isEmailInvite) {
             editText.setHint(R.string.email);
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -64,6 +66,12 @@ public class PartyInviteFragment extends BaseFragment {
             editText.setHint(R.string.user_id);
         }
         invitationWrapper.addView(editText);
+    }
+
+    @OnClick(R.id.InviteByQR)
+    public void startQRInvite() {
+        IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
+        scanIntegrator.initiateScan();
     }
 
     public String[] getValues() {

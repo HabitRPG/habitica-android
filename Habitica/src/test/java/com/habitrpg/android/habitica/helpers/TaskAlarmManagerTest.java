@@ -316,7 +316,10 @@ public class TaskAlarmManagerTest {
 
         Assert.assertNotNull(alarmId);
         Assert.assertEquals(true, alarmUp);
-        Assert.assertEquals(currentDayOfTheWeek + everyXDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
+
+        int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
+
+        Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
     }
 
     @Test
@@ -358,6 +361,9 @@ public class TaskAlarmManagerTest {
 
         Assert.assertNotNull(alarmId);
         Assert.assertEquals(true, alarmUp);
-        Assert.assertEquals(currentDayOfTheWeek + everyXDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
+
+        int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
+
+        Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
     }
 }
