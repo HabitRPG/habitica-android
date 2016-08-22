@@ -29,6 +29,20 @@ public class UiUtils {
     }
 
     /**
+     * Hides soft keyboard if it's opened.
+     * This eliminates weird behavior when hiding keyboard from within Dialog
+     *
+     * @param view View that currently has focus
+     * @param activity - Current activity
+     */
+    public static void dismissKeyboard(Activity activity, View view) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
      * Shows snackbar in given container.
      *
      * @param context   Context.
