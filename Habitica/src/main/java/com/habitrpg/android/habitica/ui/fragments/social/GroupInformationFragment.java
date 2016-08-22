@@ -5,6 +5,9 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -13,17 +16,35 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.glxn.qrgen.android.QRCode;
+import net.glxn.qrgen.core.image.ImageType;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -35,12 +56,22 @@ public class GroupInformationFragment extends BaseFragment {
 
 
     FragmentGroupInfoBinding viewBinding;
+
     @Inject
     APIHelper apiHelper;
+
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
+
     @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
+
+    @BindView(R.id.qrLayout)
+    LinearLayout qrLayout;
+
+    @BindView(R.id.qrWrapper)
+    CardView qrWrapper;
+
     private View view;
     private Group group;
     private HabitRPGUser user;
@@ -55,7 +86,6 @@ public class GroupInformationFragment extends BaseFragment {
     }
 
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
-
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();
@@ -74,6 +104,7 @@ public class GroupInformationFragment extends BaseFragment {
 
         viewBinding = DataBindingUtil.bind(view);
         viewBinding.setHideParticipantCard(false);
+
         if (user != null) {
             viewBinding.setUser(user);
         }
@@ -88,6 +119,15 @@ public class GroupInformationFragment extends BaseFragment {
         collectionStats.setAdapter(questCollectViewAdapter);
         bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
+
+        if (this.group == null) {
+            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+            qrCodeManager.setUpView(qrLayout);
+        }
+
+        if (user != null && user.getParty().getId() != null) {
+            ((ViewGroup) qrWrapper.getParent()).removeView(qrWrapper);
+        }
 
         return view;
     }
@@ -291,5 +331,4 @@ public class GroupInformationFragment extends BaseFragment {
                 });
         builder.show();
     }
-
 }
