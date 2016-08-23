@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.callbacks;
 
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 
@@ -26,6 +27,10 @@ public class SkillCallback implements Action1<SkillResponse> {
 
     @Override
     public void call(SkillResponse skillResponse) {
+        Double xp = this.user.getStats().getExp();
+        Double hp = this.user.getStats().getHp();
+        Double gold = this.user.getStats().getGp();
+
         HabitRPGUser user = skillResponse.user;
         if (user.getItems() != null) {
             this.user.setItems(user.getItems());
@@ -37,16 +42,13 @@ public class SkillCallback implements Action1<SkillResponse> {
             this.user.setFlags(user.getFlags());
         }
         if (user.getStats() != null) {
-            usedSkill.xp = user.getStats().getExp() - this.user.getStats().getExp();
-            usedSkill.hp = user.getStats().getHp() - this.user.getStats().getHp();
-            usedSkill.gold = user.getStats().getGp() - this.user.getStats().getGp();
             this.user.getStats().merge(user.getStats());
         }
 
         this.user.async().save();
 
         callBack.onUserReceived(this.user);
-
-        EventBus.getDefault().post(new SkillUsedEvent(this.usedSkill, skillResponse.user.getStats().getMp()));
+        Stats stats = skillResponse.user.getStats();
+        EventBus.getDefault().post(new SkillUsedEvent(this.usedSkill, stats.getMp(), stats.getExp() - xp, stats.getHp() - hp, stats.getGp() - gold));
     }
 }

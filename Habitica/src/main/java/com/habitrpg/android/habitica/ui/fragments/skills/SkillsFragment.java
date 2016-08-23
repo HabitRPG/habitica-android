@@ -114,14 +114,14 @@ public class SkillsFragment extends BaseMainFragment {
         adapter.setMana(event.newMana);
         StringBuilder message = new StringBuilder();
         message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
-        if (skill.xp != 0) {
-            message.append(" + ").append(round(skill.xp, 2)).append(" XP");
+        if (event.xp != 0) {
+            message.append(" + ").append(round(event.xp, 2)).append(" XP");
         }
-        if (skill.hp != 0) {
-            message.append(" + ").append(round(skill.hp, 2)).append(" HP");
+        if (event.hp != 0) {
+            message.append(" + ").append(round(event.hp, 2)).append(" HP");
         }
-        if (skill.gold != 0) {
-            message.append(" + ").append(round(skill.gold, 2)).append(" GP");
+        if (event.gold != 0) {
+            message.append(" + ").append(round(event.gold, 2)).append(" GP");
         }
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
         apiHelper.apiService.getUser()
