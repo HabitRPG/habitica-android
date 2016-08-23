@@ -34,6 +34,7 @@ public class ContentResult {
 
     public HashMap<String, Mount> mounts;
     public HashMap<String, Mount> specialMounts;
+    public HashMap<String, Mount> premiumMounts;
     public HashMap<String, Mount> questMounts;
 
     public List<Skill> spells;
