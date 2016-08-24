@@ -13,12 +13,23 @@
   <string name="SP_userID_summary">你的用户ID</string>
   <string name="SP_APIToken_title">API令牌</string>
   <string name="SP_APIToken_summary">你的API令牌</string>
+  <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
   <string name="unknown_error">发生了一个错误……</string>
   <string name="pref_account_header">账号</string>
   <string name="pref_reminder_header">每日任务提醒</string>
   <string name="pref_reminder_checkbox">激活提醒</string>
   <string name="pref_reminder_picker">设置提醒时间</string>
+  <string name="pref_push_notifications_checkbox">用户推送通知</string>
+  <string name="push_notifications">推送通知</string>
+  <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
+  <string name="preference_push_received_a_private_message">收到一条私信</string>
+  <string name="preference_push_gifted_gems">赠送的钻石</string>
+  <string name="preference_push_gifted_subscription">赠送的订阅</string>
+  <string name="preference_push_invited_to_party">被邀请加入队伍</string>
+  <string name="preference_push_invited_to_guild">被邀请加入公会</string>
+  <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
+  <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
   <string name="task_value">数值</string>
   <string name="new_todo">新待办事项</string>
@@ -223,6 +234,7 @@
   <string name="privacy">隐私</string>
   <string name="write_message">写消息</string>
   <string name="post">公告</string>
+  <string name="guild_search_hint">寻找工会</string>
   <string name="todo_due" formatted="false">到期：%s</string>
   <string name="daily_streak" formatted="false">目前连击数：%d</string>
   <string name="todo_has_duedate">任务有截止日</string>
@@ -340,4 +352,11 @@
   <string name="hourglass">沙漏</string>
   <string name="hourglasses">沙漏</string>
   <string name="gold_singular">金币</string>
+  <string name="gold_plural">金币</string>
+  <string name="chat_message_copied">复制到剪帖板的信息</string>
+  <string name="copy_chat_message">复制到剪贴板</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">让别人通过此二维码邀请你</string>
+  <string name="qr_save_message">将二维码保存至</string>
+  <string name="qr_dialogue_title">你的二维码</string>
 </resources>

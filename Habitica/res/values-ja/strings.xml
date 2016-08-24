@@ -13,6 +13,7 @@
   <string name="SP_userID_summary">あなたのユーザーID</string>
   <string name="SP_APIToken_title">API トークン</string>
   <string name="SP_APIToken_summary">あなたの API トークン</string>
+  <string name="SP_user_qr_code">QR コード</string>
   <string name="PS_contact_title">開発者に連絡する</string>
   <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
@@ -234,6 +235,7 @@
   <string name="privacy">プライバシー</string>
   <string name="write_message">メッセージを書く</string>
   <string name="post">投稿</string>
+  <string name="guild_search_hint">ギルドを検索</string>
   <string name="todo_due" formatted="false">期限 : %s</string>
   <string name="daily_streak" formatted="false">現在の連続実行 : %d 回</string>
   <string name="todo_has_duedate">期限ありタスク</string>
@@ -351,6 +353,11 @@
   <string name="hourglass">砂時計</string>
   <string name="hourglasses">砂時計</string>
   <string name="gold_singular">ゴールド</string>
+  <string name="gold_plural">ゴールド</string>
   <string name="chat_message_copied">クリップボードにコピーされたメッセージ</string>
   <string name="copy_chat_message">クリップボードにコピー</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">この QR コードで招待を受けます。</string>
+  <string name="qr_save_message">QR コードの保存先</string>
+  <string name="qr_dialogue_title">QR コード</string>
 </resources>

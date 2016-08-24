@@ -3,18 +3,33 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.w3c.dom.Text;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +51,7 @@ public class InboxFragment extends BaseMainFragment
 
     Map<String, ChatMessage> messages;
     List<String> roomsAdded;
+    private View chooseRecipientDialogView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +73,48 @@ public class InboxFragment extends BaseMainFragment
         }
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.activity.getMenuInflater().inflate(R.menu.inbox, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.send_message:
+                openNewMessageDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openNewMessageDialog() {
+        this.chooseRecipientDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_choose_message_recipient,null);
+
+        Button scaneQRCodeButton = (Button) chooseRecipientDialogView.findViewById(R.id.scanQRCodeButton);
+
+        AlertDialog alert = new AlertDialog.Builder(this.activity)
+                .setTitle(getString(R.string.choose_recipient_title))
+                .setPositiveButton(getString(R.string.action_continue), (dialog, which) -> {
+                    EditText uuidEditText = (EditText)chooseRecipientDialogView.findViewById(R.id.uuidEditText);
+                    openInboxMessages(uuidEditText.getText().toString(), "");
+                })
+                .setNeutralButton(getString(R.string.action_cancel), (dialog, which) -> {
+                    UiUtils.dismissKeyboard(this.activity);
+                    dialog.cancel();
+                })
+                .create();
+        scaneQRCodeButton.setOnClickListener((View v) -> {
+            IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
+            scanIntegrator.initiateScan(this);
+        });
+        alert.setView(chooseRecipientDialogView);
+        alert.show();
     }
 
     @Override
@@ -110,9 +168,13 @@ public class InboxFragment extends BaseMainFragment
     @Override
     public void onClick(View v) {
         TextView entry = (TextView) v;
-        InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
         String replyToUserName = entry.getText().toString();
-        inboxMessageListFragment.setMessages(this.messages, replyToUserName, entry.getTag().toString());
+        openInboxMessages(entry.getTag().toString(), replyToUserName);
+    }
+
+    private void openInboxMessages(String userID, String username) {
+        InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
+        inboxMessageListFragment.setMessages(this.messages, username, userID);
         this.activity.displayFragment(inboxMessageListFragment);
     }
 
@@ -122,5 +184,25 @@ public class InboxFragment extends BaseMainFragment
         this.messages = user.getInbox().getMessages();
         this.setInboxMessages();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if (scanningResult != null && scanningResult.getContents() != null) {
+            if (this.chooseRecipientDialogView != null) {
+                EditText uuidEditText = (EditText) this.chooseRecipientDialogView.findViewById(R.id.uuidEditText);
+                String qrCodeUrl = scanningResult.getContents();
+                Uri uri = Uri.parse(qrCodeUrl);
+                if (uri == null || uri.getPathSegments().size() < 3) {
+                    return;
+                }
+                String userID = uri.getPathSegments().get(2);
+                uuidEditText.setText(userID);
+            }
+        }
     }
 }

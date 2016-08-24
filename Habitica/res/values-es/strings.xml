@@ -330,4 +330,5 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="timeTravelers">Viajeros del tiempo</string>
   <string name="seasonalShop">Tienda estacional</string>
   <string name="empty_inbox">No tienes ningún mensaje en la bandeja de entrada. Puedes enviar un mensaje a un usuario desde los mensajes de chat públicos que hayan enviado.</string>
+  <!--QR Strings-->
 </resources>

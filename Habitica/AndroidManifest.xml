@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="115"
+    android:versionCode="117"
     android:versionName="0.0.33.2"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
@@ -163,7 +163,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.habitrpg.android.habitica.fileprovider"
+            android:authorities="@string/content_provider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data

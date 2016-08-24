@@ -330,4 +330,5 @@
   <string name="timeTravelers">時光旅人</string>
   <string name="seasonalShop">季節限定商店</string>
   <string name="empty_inbox">你的收件匣裡面沒有任何信息。你可以利用聊天去傳送訊息給大家</string>
+  <!--QR Strings-->
 </resources>

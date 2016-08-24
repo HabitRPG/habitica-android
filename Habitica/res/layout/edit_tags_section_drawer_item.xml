@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <View   android:id="@+id/material_drawer_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/material_drawer_padding" />
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+
+
+        <TextView
+                android:id="@+id/drawer_section_name"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/material_drawer_item_primary"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical|start"
+                android:lines="1"
+                android:paddingLeft="@dimen/material_drawer_vertical_padding"
+                android:paddingRight="@dimen/material_drawer_vertical_padding"
+                android:singleLine="true"
+                android:textSize="@dimen/material_drawer_item_section_text"
+                android:text="@string/filter_drawer_filter_tags"/>
+        <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/edit_tag_btn_edit" />
+    </LinearLayout>
+
+</LinearLayout>

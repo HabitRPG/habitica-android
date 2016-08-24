@@ -233,6 +233,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="privacy">Sécurité</string>
   <string name="write_message">Écrire un message</string>
   <string name="post">Envoyer</string>
+  <string name="guild_search_hint">Chercher des guildes</string>
   <string name="todo_due" formatted="false">Échéance : %s</string>
   <string name="daily_streak" formatted="false">combo actuel : %d</string>
   <string name="todo_has_duedate">La tâche a une date d\'échéance</string>
@@ -350,6 +351,8 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="hourglass">sablier</string>
   <string name="hourglasses">sabliers</string>
   <string name="gold_singular">pièce d\'or</string>
+  <string name="gold_plural">or</string>
   <string name="chat_message_copied">Message copié dans le presse-papier</string>
   <string name="copy_chat_message">Copier dans le presse-papier</string>
+  <!--QR Strings-->
 </resources>

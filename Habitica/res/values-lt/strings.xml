@@ -233,6 +233,7 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="privacy">Privatumas</string>
   <string name="write_message">Rašyti Žinutę</string>
   <string name="post">Siųsti</string>
+  <string name="guild_search_hint">Ieškoti gildijų</string>
   <string name="todo_due" formatted="false">Terminas: %s</string>
   <string name="daily_streak" formatted="false">dabartinė serija: %d</string>
   <string name="todo_has_duedate">Užduotis turi Terminą</string>
@@ -350,6 +351,8 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="hourglass">smėlio laikrodis</string>
   <string name="hourglasses">smėlio laikrodžiai</string>
   <string name="gold_singular">aukso</string>
+  <string name="gold_plural">aukso</string>
   <string name="chat_message_copied">Žinutė nukopijuota į Iškarpinę</string>
   <string name="copy_chat_message">Kopijuoti į Iškarpinę</string>
+  <!--QR Strings-->
 </resources>

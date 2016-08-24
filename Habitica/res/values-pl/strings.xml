@@ -13,6 +13,7 @@
   <string name="SP_userID_summary">Twoje ID</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Twój Token API</string>
+  <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
   <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
@@ -233,6 +234,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="privacy">Prywatność</string>
   <string name="write_message">Napisz wiadomość</string>
   <string name="post">Wyślij</string>
+  <string name="guild_search_hint">Szukaj gildii</string>
   <string name="todo_due" formatted="false">Termin: %s</string>
   <string name="daily_streak" formatted="false">licznik serii: %d</string>
   <string name="todo_has_duedate">Zdania mają termin wykonania</string>
@@ -350,6 +352,11 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="hourglass">klepsydra</string>
   <string name="hourglasses">klepsydry</string>
   <string name="gold_singular">złoto</string>
+  <string name="gold_plural">złoto</string>
   <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
   <string name="copy_chat_message">Kopiuj do schowka</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
+  <string name="qr_save_message">Kod QR zapisany w</string>
+  <string name="qr_dialogue_title">Twój kod QR</string>
 </resources>

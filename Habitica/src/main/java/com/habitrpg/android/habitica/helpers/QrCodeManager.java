@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +9,9 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Environment;
 import android.support.v7.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -108,8 +112,19 @@ public class QrCodeManager {
             return;
         }
 
-        Bitmap myBitmap = QRCode.from(this.content).withColor(0xFF432874, 0xFFFFFFFF).withSize(400, 400).bitmap();
+        int qrCodeSize = (int)dipToPixels(400.0f);
+
+        Bitmap myBitmap = QRCode.from(this.content)
+                .withErrorCorrection(ErrorCorrectionLevel.H)
+                .withColor(0xFF432874, 0xFFFFFFFF)
+                .withSize(qrCodeSize, qrCodeSize)
+                .bitmap();
         qrCodeImageView.setImageBitmap(myBitmap);
+    }
+
+    public float dipToPixels(float dipValue) {
+        DisplayMetrics metrics = this.context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
     public void setDownloadQr() {

@@ -13,12 +13,23 @@
   <string name="SP_userID_summary">מזהה המשתמש שלכם</string>
   <string name="SP_APIToken_title">מפתח API</string>
   <string name="SP_APIToken_summary">מפתח ה API שלכם</string>
+  <string name="SP_user_qr_code">קוד ה QR שלכם</string>
   <string name="PS_contact_title">צרו איתי קשר</string>
   <string name="unknown_error">ארעה תקלה...</string>
   <string name="pref_account_header">חשבון</string>
   <string name="pref_reminder_header">תזכורת יומית</string>
   <string name="pref_reminder_checkbox">הפעל תזכורת</string>
   <string name="pref_reminder_picker">קבע מועד תזכורת</string>
+  <string name="pref_push_notifications_checkbox">הודעות בדחיפה של משתמש</string>
+  <string name="push_notifications">התראות בדחיפה</string>
+  <string name="preference_push_you_won_challenge">זכיתם באתגר!</string>
+  <string name="preference_push_received_a_private_message">קיבלתם הודעה פרטית</string>
+  <string name="preference_push_gifted_gems">אבני חן ניתנו במתנה</string>
+  <string name="preference_push_gifted_subscription">מנוי ניתן במתנה</string>
+  <string name="preference_push_invited_to_party">הוזמנו לחבורה</string>
+  <string name="preference_push_invited_to_guild">הוזמנו לגילדה</string>
+  <string name="preference_push_your_quest_has_begun">ההרפתקה שלכם החלה</string>
+  <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
   <!--Adding tasks-->
   <string name="task_value">ערך</string>
   <string name="new_todo">מטרה חדשה</string>
@@ -223,6 +234,7 @@
   <string name="privacy">פרטיות</string>
   <string name="write_message">כיתבו הודעה</string>
   <string name="post">שליחה</string>
+  <string name="guild_search_hint">חיפוש אחר גילדות</string>
   <string name="todo_due" formatted="false">חל: %s</string>
   <string name="daily_streak" formatted="false">רצף נוכחי: %d</string>
   <string name="todo_has_duedate">למשימה יש תאריך יעד</string>
@@ -325,4 +337,26 @@
   <string name="open_in_store">פתיחה בפליי סטור</string>
   <string name="change_class_confirmation">האם אתם בטוחים שאתם מעוניינים להחליף מקצוע? זה יעלה לכם 3 אבני חן.</string>
   <string name="leaderMessage" formatted="false">הודעה מאת %1$s</string>
+  <string name="confirm">אישור</string>
+  <string name="market">שוק</string>
+  <string name="timeTravelers">נוסעים בזמן</string>
+  <string name="seasonalShop">חנות עונתית</string>
+  <string name="empty_inbox">אין לכם הודעות בדואר הנכנס. אתם יכולים לשלוח למשתמשים הודעה חדשה מהצ׳אט הפומבי שלהם!</string>
+  <string name="party_invite">שחררו על-ידי הזמנת חברים</string>
+  <string name="no_gold">אין די זהב</string>
+  <string name="no_potion">אינכם צריכים לקנות שיקוי בריאות</string>
+  <string name="successful_purchase" formatted="false">%1$s נרכש בהצלחה</string>
+  <string name="purchase_confirmation_title">אשרו רכישה</string>
+  <string name="confirm_purchase_text" formatted="false">קנו %1$s בעבור %2$s %3$s</string>
+  <string name="gem">אבן חן</string>
+  <string name="hourglass">שעון חול</string>
+  <string name="hourglasses">שעוני חול</string>
+  <string name="gold_singular">זהב</string>
+  <string name="gold_plural">זהב</string>
+  <string name="chat_message_copied">הודעה הועתקה ללוח</string>
+  <string name="copy_chat_message">העתקה ללוח</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">תנו למישהו להזמין אתכם עם קוד ה QR הזה</string>
+  <string name="qr_save_message">קוד QR נשמר ב</string>
+  <string name="qr_dialogue_title">קוד ה QR שלכם</string>
 </resources>

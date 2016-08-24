@@ -13,6 +13,7 @@
   <string name="SP_userID_summary">Вашият потребителски идентификатор</string>
   <string name="SP_APIToken_title">Жетон за ППИ</string>
   <string name="SP_APIToken_summary">Вашият жетон за ППИ</string>
+  <string name="SP_user_qr_code">Вашият QR-код</string>
   <string name="PS_contact_title">Свържете се с мен</string>
   <string name="unknown_error">Възникна грешка…</string>
   <string name="pref_account_header">Профил</string>
@@ -233,6 +234,7 @@
   <string name="privacy">Поверителност</string>
   <string name="write_message">Напишете съобщение</string>
   <string name="post">Изпр.</string>
+  <string name="guild_search_hint">Търсене на гилдии</string>
   <string name="todo_due" formatted="false">Срок: %s</string>
   <string name="daily_streak" formatted="false">текуща серия: %d</string>
   <string name="todo_has_duedate">Задачата има краен срок</string>
@@ -350,6 +352,11 @@
   <string name="hourglass">пясъчен часовник</string>
   <string name="hourglasses">пясъчни часовници</string>
   <string name="gold_singular">злато</string>
+  <string name="gold_plural">злато</string>
   <string name="chat_message_copied">Съобщението е копирано</string>
   <string name="copy_chat_message">Копиране</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">С този QR-код можете да бъдете поканен(а) от някого</string>
+  <string name="qr_save_message">QR-кодът е запазен в</string>
+  <string name="qr_dialogue_title">Вашият QR-код</string>
 </resources>

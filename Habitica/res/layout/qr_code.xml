@@ -31,9 +31,10 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@color/transparent"
+            android:background="@color/white"
             android:clipChildren="true"
-            android:padding="0dp"
+            android:padding="1dp"
+                        android:visibility="gone"
             >
             <com.habitrpg.android.habitica.ui.AvatarView
                 android:id="@+id/avatarView"
@@ -49,7 +50,7 @@
         android:id="@+id/QRDownloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download"
+        android:text="@string/download"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_margin="20dp"
         android:layout_gravity="center_horizontal|bottom"
