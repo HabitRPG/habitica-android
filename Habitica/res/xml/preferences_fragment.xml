@@ -54,10 +54,18 @@
             android:key="choose_class"
             android:order="2"/>
 
+        <ListPreference android:title="Language"
+            android:key="language_preference"
+            android:entries="@array/Language"
+            android:entryValues="@array/LanguageValues"
+            android:summary="Change Habitica's language"
+            android:order="3"/>
+
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"
             android:order="99"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
