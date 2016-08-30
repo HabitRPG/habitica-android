@@ -15,6 +15,8 @@
     <string name="SP_userID_summary">Your User ID</string>
     <string name="SP_APIToken_title">API Token</string>
     <string name="SP_APIToken_summary">Your API Token</string>
+    <string name="Language_title">Language</string>
+    <string name="Language_summary">Change Habitica\'s language</string>
     <string name="PS_contact_title">Contact me</string>
     <string name="unknown_error">An error happened…</string>
     <string name="pref_account_header">Account</string>

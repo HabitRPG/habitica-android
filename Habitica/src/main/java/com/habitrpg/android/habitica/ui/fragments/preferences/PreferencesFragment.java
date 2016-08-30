@@ -1,5 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+import android.util.Log;
+
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
@@ -14,18 +26,8 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceScreen;
-import android.util.Log;
-
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -197,6 +199,16 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             } else {
                 pushNotificationManager.removePushDeviceUsingStoredToken();
             }
+        } else if (key.equals("language")) {
+            Log.v("test", sharedPreferences.getString(key,"0"));
+            Locale locale = new Locale("es");
+            Locale.setDefault(locale);
+            Configuration configuration = new Configuration();
+            configuration.locale = locale;
+            getActivity().getResources().updateConfiguration(configuration,
+                    getActivity().getResources().getDisplayMetrics());
+
+
         }
     }
 

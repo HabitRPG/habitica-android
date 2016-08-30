@@ -37,13 +37,9 @@
     <string-array name="Language">
         <item>English</item>
         <item>Български</item>
-        <item>Čeština</item>
-        <item>Dansk</item>
         <item>Deutsch</item>
-        <item>Pirate English</item>
         <item>British English</item>
         <item>Español</item>
-        <item>Español (América Latina)</item>
         <item>Français</item>
         <item>עברית</item>
         <item>Magyar</item>
@@ -54,12 +50,7 @@
         <item>Polski</item>
         <item>Português</item>
         <item>Português Brasileiro</item>
-        <item>Română</item>
         <item>Русский</item>
-        <item>Slovenský</item>
-        <item>Srpski</item>
-        <item>Svenska</item>
-        <item>Українська</item>
         <item>中文（简体）</item>
         <item>中文（正體）</item>
     </string-array>
@@ -67,13 +58,9 @@
     <string-array name="LanguageValues">
         <item>0</item>
         <item>1</item>
-        <item>2</item>
-        <item>3</item>
         <item>4</item>
-        <item>5</item>
         <item>6</item>
         <item>7</item>
-        <item>8</item>
         <item>9</item>
         <item>10</item>
         <item>11</item>
@@ -84,12 +71,7 @@
         <item>16</item>
         <item>17</item>
         <item>18</item>
-        <item>19</item>
         <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
         <item>25</item>
         <item>26</item>
     </string-array>
