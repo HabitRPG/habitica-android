@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -27,7 +28,9 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -41,6 +44,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
+    public MainActivity activity;
     private PushNotificationManager pushNotificationManager;
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
@@ -200,13 +204,96 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 pushNotificationManager.removePushDeviceUsingStoredToken();
             }
         } else if (key.equals("language")) {
-            Log.v("test", sharedPreferences.getString(key,"0"));
-            Locale locale = new Locale("es");
+            Locale locale = null;
+            String languageCode = null;
+            Log.v("test",sharedPreferences.getString(key,"0"));
+            switch (sharedPreferences.getString(key,"en")){
+                case "en":
+                    locale = new Locale("en");
+                    languageCode = "en";
+                    break;
+                case "bg":
+                    locale = new Locale("bg");
+                    languageCode = "bg";
+                    break;
+                case "de":
+                    locale = new Locale("de");
+                    languageCode = "de";
+                    break;
+                case "en-rGB":
+                    locale = new Locale("en", "GB");
+                    languageCode = "en_GB";
+                    break;
+                case "es":
+                    locale = new Locale("es");
+                    languageCode = "es";
+                    break;
+                case "fr":
+                    locale = new Locale("fr");
+                    languageCode = "fr";
+                    break;
+                case "iw":
+                    locale = new Locale("iw");
+                    languageCode = "he";
+                    break;
+                case "hr-rHR":
+                    locale = new Locale("hr", "HR");
+                    languageCode = "hu";
+                    break;
+                case "in":
+                    locale = new Locale("in");
+                    languageCode = "id";
+                    break;
+                case "it":
+                    locale = new Locale("it");
+                    languageCode = "it";
+                    break;
+                case "ja":
+                    locale = new Locale("ja");
+                    languageCode = "ja";
+                    break;
+                case "nl":
+                    locale = new Locale("nl");
+                    languageCode = "nl";
+                    break;
+                case "pl":
+                    locale = new Locale("pl");
+                    languageCode = "pl";
+                    break;
+                case "pt-rPT":
+                    locale = new Locale("pt","PT");
+                    languageCode = "pt";
+                    break;
+                case "pt-rBR":
+                    locale = new Locale("pt","BR");
+                    languageCode = "pt_BR";
+                    break;
+                case "ru":
+                    locale = new Locale("ru");
+                    languageCode = "ru";
+                    break;
+                case "zh":
+                    locale = new Locale("zh");
+                    languageCode = "zh";
+                    break;
+                case "zh-rTW":
+                    locale = new Locale("zh","TW");
+                    languageCode = "zh_TW";
+                    break;
+            }
+
             Locale.setDefault(locale);
             Configuration configuration = new Configuration();
             configuration.locale = locale;
             getActivity().getResources().updateConfiguration(configuration,
                     getActivity().getResources().getDisplayMetrics());
+
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("preferences.language", languageCode);
+            apiHelper.apiService.updateUser(updateData)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
+                    });
 
 
         }
