@@ -7,6 +7,7 @@ public class UserAuthResponse {
     //we need apiToken and token, as both are possible returns
     private String apiToken;
     private String token;
+    private Boolean newUser = false;
     private String id;
 
     public String getToken() {
@@ -35,5 +36,13 @@ public class UserAuthResponse {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Boolean getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(Boolean newUser) {
+        this.newUser = newUser;
     }
 }

@@ -363,7 +363,8 @@ public class LoginActivity extends BaseActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (this.isRegistering) {
+        
+        if (this.isRegistering || userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
             JSONObject eventProperties = new JSONObject();
