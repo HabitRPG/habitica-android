@@ -1,5 +1,20 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
+
 import com.amplitude.api.Amplitude;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -20,11 +35,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.accounts.AccountManager;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.preference.PreferenceManager;
 import android.text.SpannableString;
@@ -40,11 +58,19 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.Exceptions;
 import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Mickael Goubin
@@ -54,6 +80,9 @@ public class LoginActivity extends BaseActivity
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
     private final static String TAG_APIKEY = "key";
+    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
+    private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
+
 
     @Inject
     public APIHelper apiHelper;
@@ -84,6 +113,7 @@ public class LoginActivity extends BaseActivity
     TextView mForgotPWTV;
     private Menu menu;
     private CallbackManager callbackManager;
+    private String googleEmail;
 
     @Override
     protected int getLayoutResId() {
@@ -113,7 +143,7 @@ public class LoginActivity extends BaseActivity
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                apiHelper.connectSocial(accessToken.getUserId(), accessToken.getToken())
+                apiHelper.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                         .compose(apiHelper.configureApiCallObserver())
                         .subscribe(LoginActivity.this, throwable -> {
                             hideProgress();
@@ -262,6 +292,16 @@ public class LoginActivity extends BaseActivity
                 Log.e("scanresult", "Could not parse scanResult", e);
             }
         }
+
+        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
+            if (resultCode == RESULT_OK) {
+                googleEmail = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                handleGoogleLoginResult();
+            }
+        }
+        if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
+            handleGoogleLoginResult();
+        }
     }
 
     private void parse(String contents) {
@@ -376,6 +416,58 @@ public class LoginActivity extends BaseActivity
             }
             Amplitude.getInstance().logEvent("login", eventProperties);
             this.startMainActivity();
+        }
+    }
+
+    @OnClick(R.id.google_login_button)
+    public void handleGoogleLogin() {
+        String[] accountTypes = new String[]{"com.google"};
+        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                accountTypes, false, null, null, null, null);
+        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+    }
+
+    private void handleGoogleLoginResult() {
+        String scopesString = Scopes.PLUS_LOGIN + " " + Scopes.PROFILE + " " + Scopes.EMAIL;
+        String scopes = "oauth2:" + scopesString;
+        Observable.defer(() -> {
+            try {
+                return Observable.just(GoogleAuthUtil.getToken(LoginActivity.this, googleEmail, scopes));
+            } catch (IOException e) {
+                throw Exceptions.propagate(e);
+            } catch (GoogleAuthException e) {
+                throw Exceptions.propagate(e);
+            }
+
+        })
+                .flatMap(token -> apiHelper.connectSocial("google", googleEmail, token))
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(LoginActivity.this, throwable -> {
+                    hideProgress();
+                    if (GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
+                        handleGoogleAuthException((GoogleAuthException)throwable.getCause());
+                    }
+                });
+    }
+
+    private void handleGoogleAuthException(final Exception e) {
+        if (e instanceof GooglePlayServicesAvailabilityException) {
+            // The Google Play services APK is old, disabled, or not present.
+            // Show a dialog created by Google Play services that allows
+            // the user to update the APK
+            int statusCode = ((GooglePlayServicesAvailabilityException)e)
+                    .getConnectionStatusCode();
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
+                    LoginActivity.this,
+                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+            dialog.show();
+        } else if (e instanceof UserRecoverableAuthException) {
+            // Unable to authenticate, such as when the user has not yet granted
+            // the app access to the account, but the user can fix this.
+            // Forward the user to an activity in Google Play services.
+            Intent intent = ((UserRecoverableAuthException)e).getIntent();
+            startActivityForResult(intent,
+                    REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
         }
     }
 }

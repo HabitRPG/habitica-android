@@ -281,9 +281,9 @@ public class APIHelper implements Action1<Throwable> {
         return this.apiService.connectLocal(auth);
     }
 
-    public Observable<UserAuthResponse> connectSocial(String userId, String accessToken) {
+    public Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken) {
         UserAuthSocial auth = new UserAuthSocial();
-        auth.setNetwork("facebook");
+        auth.setNetwork(network);
         UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
         authResponse.setClient_id(userId);
         authResponse.setAccess_token(accessToken);
