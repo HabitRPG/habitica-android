@@ -119,7 +119,7 @@ public class FullProfileActivity extends BaseActivity {
 
         apiHelper.apiService.GetMember(this.userId)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(habitRPGUser -> updateView(habitRPGUser),
+                .subscribe(this::updateView,
                         throwable -> {
                         });
 
@@ -223,27 +223,14 @@ public class FullProfileActivity extends BaseActivity {
 
         addLevelAttributes(stats, user);
 
-        petCount.setText(countEntries(user.getItems().getPets()) + "");
-        mountCount.setText(countEntriesBool(user.getItems().getMounts()) + "");
+        petCount.setText(String.valueOf(countEntries(user.getItems().getPets())));
+        mountCount.setText(String.valueOf(countEntries(user.getItems().getMounts())));
     }
 
-    private int countEntries(HashMap<String, Integer> hashMap) {
+    private int countEntries(HashMap<String, ?> hashMap) {
         int _count = 0;
 
-        for (Map.Entry<String, Integer> e : hashMap.entrySet()) {
-            if (e.getValue() == -1)
-                continue;
-
-            _count += e.getValue();
-        }
-
-        return _count;
-    }
-
-    private int countEntriesBool(HashMap<String, Boolean> hashMap) {
-        int _count = 0;
-
-        for (Map.Entry<String, Boolean> e : hashMap.entrySet()) {
+        for (Map.Entry<String, ?> e : hashMap.entrySet()) {
             if (e.getValue() == null)
                 continue;
 
