@@ -112,7 +112,18 @@ public class SkillsFragment extends BaseMainFragment {
         removeProgressDialog();
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
-        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), activity.getString(R.string.used_skill, skill.text, skill.mana), UiUtils.SnackbarDisplayType.NORMAL);
+        StringBuilder message = new StringBuilder();
+        message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        if (event.xp != 0) {
+            message.append(" + ").append(round(event.xp, 2)).append(" XP");
+        }
+        if (event.hp != 0) {
+            message.append(" + ").append(round(event.hp, 2)).append(" HP");
+        }
+        if (event.gold != 0) {
+            message.append(" + ").append(round(event.gold, 2)).append(" GP");
+        }
+        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
         apiHelper.apiService.getUser()
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new MergeUserCallback(activity, user), throwable -> {
@@ -161,6 +172,10 @@ public class SkillsFragment extends BaseMainFragment {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
 }
