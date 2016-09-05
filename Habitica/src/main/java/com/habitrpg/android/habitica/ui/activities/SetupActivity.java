@@ -1,5 +1,13 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
+
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
@@ -20,15 +28,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.Button;
-
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -149,6 +150,11 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         if (v == this.nextButton) {
+            String currentDeviceLanguage = Locale.getDefault().getLanguage();
+            apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new MergeUserCallback(this, user), throwable -> {
+                    });
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;

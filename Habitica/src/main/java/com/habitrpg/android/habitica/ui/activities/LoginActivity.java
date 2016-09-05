@@ -1,25 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.amplitude.api.Amplitude;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -39,6 +19,26 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.amplitude.api.Amplitude;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 

@@ -6,17 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
-import android.util.Log;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -204,98 +205,25 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 pushNotificationManager.removePushDeviceUsingStoredToken();
             }
         } else if (key.equals("language")) {
-            Locale locale = null;
-            String languageCode = null;
-            Log.v("test",sharedPreferences.getString(key,"0"));
-            switch (sharedPreferences.getString(key,"en")){
-                case "en":
-                    locale = new Locale("en");
-                    languageCode = "en";
-                    break;
-                case "bg":
-                    locale = new Locale("bg");
-                    languageCode = "bg";
-                    break;
-                case "de":
-                    locale = new Locale("de");
-                    languageCode = "de";
-                    break;
-                case "en-rGB":
-                    locale = new Locale("en", "GB");
-                    languageCode = "en_GB";
-                    break;
-                case "es":
-                    locale = new Locale("es");
-                    languageCode = "es";
-                    break;
-                case "fr":
-                    locale = new Locale("fr");
-                    languageCode = "fr";
-                    break;
-                case "iw":
-                    locale = new Locale("iw");
-                    languageCode = "he";
-                    break;
-                case "hr-rHR":
-                    locale = new Locale("hr", "HR");
-                    languageCode = "hu";
-                    break;
-                case "in":
-                    locale = new Locale("in");
-                    languageCode = "id";
-                    break;
-                case "it":
-                    locale = new Locale("it");
-                    languageCode = "it";
-                    break;
-                case "ja":
-                    locale = new Locale("ja");
-                    languageCode = "ja";
-                    break;
-                case "nl":
-                    locale = new Locale("nl");
-                    languageCode = "nl";
-                    break;
-                case "pl":
-                    locale = new Locale("pl");
-                    languageCode = "pl";
-                    break;
-                case "pt-rPT":
-                    locale = new Locale("pt","PT");
-                    languageCode = "pt";
-                    break;
-                case "pt-rBR":
-                    locale = new Locale("pt","BR");
-                    languageCode = "pt_BR";
-                    break;
-                case "ru":
-                    locale = new Locale("ru");
-                    languageCode = "ru";
-                    break;
-                case "zh":
-                    locale = new Locale("zh");
-                    languageCode = "zh";
-                    break;
-                case "zh-rTW":
-                    locale = new Locale("zh","TW");
-                    languageCode = "zh_TW";
-                    break;
+            LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
+            Locale.setDefault(languageHelper.getLocale());
+            Configuration configuration = new Configuration();
+
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+                configuration.locale = languageHelper.getLocale();
+            } else {
+                configuration.setLocale(languageHelper.getLocale());
             }
 
-            Locale.setDefault(locale);
-            Configuration configuration = new Configuration();
-            configuration.locale = locale;
             getActivity().getResources().updateConfiguration(configuration,
                     getActivity().getResources().getDisplayMetrics());
 
             Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.language", languageCode);
+            updateData.put("preferences.language", languageHelper.getLanguageCode());
             apiHelper.apiService.updateUser(updateData)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
-
-
         }
     }
 
