@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import org.robolectric.annotation.Config;
 
 import android.os.Build;
 
-import java.util.List;
 import java.util.UUID;
 
 import rx.observers.TestSubscriber;
@@ -36,21 +34,14 @@ public class TagAPITests extends BaseAPITests {
     @Test
     public void shouldUpdateTag() {
         TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
-        TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
 
         Tag t = new Tag();
         String newname = "BAR";
         t.setId(String.valueOf(UUID.randomUUID()));
         t.setName(newname);
 
-        //Get the test user so we can obtain their tags
-        apiHelper.apiService.getUser().subscribe(userSubscriber);
-        userSubscriber.assertNoErrors();
-        userSubscriber.assertCompleted();
-        List<HabitRPGUser> users = userSubscriber.getOnNextEvents();
-
-        //Attempt to update their first tag
-        String testId = users.get(0).getTags().get(0).getId();
+        //Attempt to update the test user's first tag
+        String testId = getUser().getTags().get(0).getId();
         apiHelper.apiService.updateTag(testId,t).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -61,14 +52,8 @@ public class TagAPITests extends BaseAPITests {
     @Test
     public void shouldDeleteTag() {
         TestSubscriber<Void> testSub = new TestSubscriber<>();
-        TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
 
-        apiHelper.apiService.getUser().subscribe(userSubscriber);
-        userSubscriber.assertNoErrors();
-        userSubscriber.assertCompleted();
-        List<HabitRPGUser> users = userSubscriber.getOnNextEvents();
-
-        String testId = users.get(0).getTags().get(0).getId();
+        String testId = getUser().getTags().get(0).getId();
         apiHelper.apiService.deleteTag(testId).subscribe(testSub);
         testSub.assertNoErrors();
         testSub.assertCompleted();
