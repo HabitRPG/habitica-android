@@ -157,23 +157,24 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         cal.set(Calendar.MINUTE, minute);
         long trigger_time = cal.getTimeInMillis();
 
+        PendingIntent displayIntent = getNotificationDisplayIntent();
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, displayIntent);
+    }
+
+    private void removeNotifications() {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent displayIntent = getNotificationDisplayIntent();
+        alarmManager.cancel(displayIntent);
+    }
+
+    private PendingIntent getNotificationDisplayIntent() {
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
 
-        if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
-    }
-
-    private void removeNotifications() {
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
-        alarmManager.cancel(displayIntent);
+        return PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     @Override
