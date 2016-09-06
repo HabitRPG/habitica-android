@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -79,6 +78,16 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } catch (JSONException exception) {
         }
         Amplitude.getInstance().logEvent("setup", eventProperties);
+
+        String currentDeviceLanguage = Locale.getDefault().getLanguage();
+        for (String language : getResources().getStringArray(R.array.LanguageValues)) {
+            if (language.equals(currentDeviceLanguage)) {
+                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                        });
+            }
+        }
     }
 
     @Override
@@ -151,14 +160,6 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         if (v == this.nextButton) {
-            String currentDeviceLanguage = Locale.getDefault().getLanguage();
-            LanguageHelper languageHelper = new LanguageHelper(currentDeviceLanguage);
-            if (languageHelper.isLanguageAvailable()){
-                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {
-                        });
-            }
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;

@@ -9,8 +9,6 @@ public class LanguageHelper {
 
     private Locale locale = null;
     private String languageCode = null;
-    private boolean languageAvailable = false;
-
 
     public LanguageHelper (String languageSharedPref) {
 
@@ -18,22 +16,18 @@ public class LanguageHelper {
             case "iw":
                 locale = new Locale("iw");
                 languageCode = "he";
-                languageAvailable = true;
                 break;
             case "hr":
                 locale = new Locale("hr", "HR");
                 languageCode = "hu";
-                languageAvailable = true;
                 break;
             case "in":
                 locale = new Locale("in");
                 languageCode = "id";
-                languageAvailable = true;
                 break;
             case "pt":
                 locale = new Locale("pt","PT");
                 languageCode = "pt";
-                languageAvailable = true;
                 break;
             default:
                 if (languageSharedPref.contains("_")) {
@@ -43,13 +37,8 @@ public class LanguageHelper {
                     locale = new Locale(languageSharedPref);
                 }
                 languageCode = languageSharedPref;
-                languageAvailable = true;
                 break;
         }
-    }
-
-    public boolean isLanguageAvailable() {
-        return languageAvailable;
     }
 
     public String getLanguageCode() {
