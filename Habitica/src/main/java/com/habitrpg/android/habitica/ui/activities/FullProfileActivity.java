@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -10,7 +11,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -28,8 +34,10 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
@@ -39,8 +47,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 
+import org.w3c.dom.Text;
+
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,6 +120,15 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.profile_mount_count)
     TextView mountCount;
+
+    @BindView(R.id.profile_achievements_card)
+    CardView achievementCard;
+
+    @BindView(R.id.avatar_achievements_progress)
+    ProgressBar achievementProgress;
+
+    @BindView(R.id.achievement_groupList)
+    LinearLayout achievementGroupList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,9 +248,61 @@ public class FullProfileActivity extends BaseActivity {
 
         petCount.setText(countEntries(user.getItems().getPets()) + "");
         mountCount.setText(countEntriesBool(user.getItems().getMounts()) + "");
+
+        // Load the members achievements now
+        apiHelper.apiService.GetMemberAchievements(this.userId)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(achievements -> fillAchievements(achievements),
+                        throwable -> {
+                        });
     }
 
+
+    private void fillAchievements(HashMap<String, Achievement> achievements){
+        LinkedHashMap<String, List<Achievement>> orderedSortedList = new LinkedHashMap<>();
+
+        // Order by ID first
+        ArrayList<Achievement> achievementList = new ArrayList<>(achievements.values());
+        Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
+
+        // Map to Category
+        for(Achievement achievement : achievementList){
+            if(orderedSortedList.containsKey(achievement.category)){
+                orderedSortedList.get(achievement.category).add(achievement);
+            } else {
+                ArrayList<Achievement> arrayList = new ArrayList<>();
+                arrayList.add(achievement);
+                orderedSortedList.put(achievement.category, arrayList);
+            }
+        }
+
+
+
+        for(Map.Entry<String, List<Achievement>> entry : orderedSortedList.entrySet())
+        {
+            LinearLayout groupRow = (LinearLayout) getLayoutInflater().inflate(R.layout.profile_achievement_group, null);
+
+            GridView groupGrid = (GridView) groupRow.findViewById(R.id.achievement_gridview);
+            TextView textView = (TextView) groupRow.findViewById(R.id.achievement_title);
+
+            textView.setText(entry.getKey());
+
+            AchievementAdapter adapter = new AchievementAdapter(this, entry.getValue());
+
+            groupGrid.setAdapter(adapter);
+
+            achievementGroupList.addView(groupRow);
+        }
+
+
+        stopAndHideProgress(achievementProgress);
+    }
+
+
     private int countEntries(HashMap<String, Integer> hashMap) {
+        if(hashMap == null)
+            return 0;
+
         int _count = 0;
 
         for (Map.Entry<String, Integer> e : hashMap.entrySet()) {
@@ -241,6 +316,9 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private int countEntriesBool(HashMap<String, Boolean> hashMap) {
+        if(hashMap == null)
+            return 0;
+
         int _count = 0;
 
         for (Map.Entry<String, Boolean> e : hashMap.entrySet()) {
@@ -523,4 +601,5 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     // endregion
+
 }

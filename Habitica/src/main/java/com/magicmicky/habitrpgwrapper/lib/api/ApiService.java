@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -238,6 +239,9 @@ public interface ApiService {
     //Members URL
     @GET("members/{mid}")
     Observable<HabitRPGUser> GetMember(@Path("mid") String memberId);
+
+    @GET("members/{mid}/achievements")
+    Observable<HashMap<String, Achievement>> GetMemberAchievements(@Path("mid") String memberId);
 
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);
