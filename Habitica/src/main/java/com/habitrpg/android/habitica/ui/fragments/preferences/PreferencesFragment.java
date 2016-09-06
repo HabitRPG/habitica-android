@@ -224,6 +224,16 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
+
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1){
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                this.startActivity(intent);
+                getActivity().finishAffinity();
+            }
         }
     }
 
