@@ -87,6 +87,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.achievement_text)
         TextView titleView;
 
+        @BindView(R.id.achievement_count_label)
+        TextView countText;
+
         @BindView(R.id.achievement_item_layout)
         LinearLayout item_layout;
 
@@ -118,6 +121,13 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             this.achievement = item;
             titleView.setText(item.title);
+
+            if(item.optionalCount == null) {
+                countText.setVisibility(View.GONE);
+            } else{
+                countText.setVisibility(View.VISIBLE);
+                countText.setText(item.optionalCount.toString());
+            }
         }
 
         @Override
@@ -137,6 +147,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             textView.setText(achievement.text);
 
             b.setView(customView);
+            b.setPositiveButton(R.string.profile_achievement_ok, (dialogInterface, i) -> {});
 
             b.show();
         }
