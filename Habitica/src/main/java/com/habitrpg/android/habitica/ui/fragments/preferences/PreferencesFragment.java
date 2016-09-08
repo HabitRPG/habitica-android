@@ -155,6 +155,14 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, minute);
+
+        // If the calendar represents a time in the past today, set it to first appear at that
+        // time tomorrow instead.
+        Calendar now = Calendar.getInstance();
+        if(cal.compareTo(now) < 0) {
+            cal.roll(Calendar.DATE, true);
+        }
+
         long trigger_time = cal.getTimeInMillis();
 
         PendingIntent displayIntent = getNotificationDisplayIntent();
