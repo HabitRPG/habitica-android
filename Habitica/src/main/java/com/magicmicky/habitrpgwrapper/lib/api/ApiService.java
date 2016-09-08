@@ -1,6 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
+import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -241,7 +240,7 @@ public interface ApiService {
     Observable<HabitRPGUser> GetMember(@Path("mid") String memberId);
 
     @GET("members/{mid}/achievements")
-    Observable<HashMap<String, Achievement>> GetMemberAchievements(@Path("mid") String memberId);
+    Observable<AchievementResult> GetMemberAchievements(@Path("mid") String memberId);
 
     @POST("members/send-private-message")
     Observable<PostChatMessageResult> postPrivateMessage(@Body HashMap<String, String> messageDetails);

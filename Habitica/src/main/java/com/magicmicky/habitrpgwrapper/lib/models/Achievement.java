@@ -10,4 +10,5 @@ public class Achievement {
     public String value;
     public boolean earned;
     public int index;
+    public int optionalCount;
 }

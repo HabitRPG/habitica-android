@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,8 @@ import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
+import com.magicmicky.habitrpgwrapper.lib.models.AchievementGroup;
+import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
@@ -127,8 +131,8 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.avatar_achievements_progress)
     ProgressBar achievementProgress;
 
-    @BindView(R.id.achievement_groupList)
-    LinearLayout achievementGroupList;
+    @BindView(R.id.recyclerView)
+    RecyclerView achievementGroupList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,45 +261,40 @@ public class FullProfileActivity extends BaseActivity {
                         });
     }
 
+    private void fillAchievements(AchievementResult achievements) {
+        List<Object> items = new ArrayList<>();
 
-    private void fillAchievements(HashMap<String, Achievement> achievements){
-        LinkedHashMap<String, List<Achievement>> orderedSortedList = new LinkedHashMap<>();
+        fillAchievements(achievements.basic, items);
+        fillAchievements(achievements.seasonal, items);
+        fillAchievements(achievements.special, items);
 
-        // Order by ID first
-        ArrayList<Achievement> achievementList = new ArrayList<>(achievements.values());
-        Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
+        AchievementAdapter adapter = new AchievementAdapter();
+        adapter.setItemList(items);
 
-        // Map to Category
-        for(Achievement achievement : achievementList){
-            if(orderedSortedList.containsKey(achievement.category)){
-                orderedSortedList.get(achievement.category).add(achievement);
-            } else {
-                ArrayList<Achievement> arrayList = new ArrayList<>();
-                arrayList.add(achievement);
-                orderedSortedList.put(achievement.category, arrayList);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == 0) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
             }
-        }
-
-
-
-        for(Map.Entry<String, List<Achievement>> entry : orderedSortedList.entrySet())
-        {
-            LinearLayout groupRow = (LinearLayout) getLayoutInflater().inflate(R.layout.profile_achievement_group, null);
-
-            GridView groupGrid = (GridView) groupRow.findViewById(R.id.achievement_gridview);
-            TextView textView = (TextView) groupRow.findViewById(R.id.achievement_title);
-
-            textView.setText(entry.getKey());
-
-            AchievementAdapter adapter = new AchievementAdapter(this, entry.getValue());
-
-            groupGrid.setAdapter(adapter);
-
-            achievementGroupList.addView(groupRow);
-        }
-
+        });
+        achievementGroupList.setLayoutManager(layoutManager);
+        achievementGroupList.setAdapter(adapter);
 
         stopAndHideProgress(achievementProgress);
+    }
+
+    private void fillAchievements(AchievementGroup achievementGroup, List<Object> targetList){
+        // Order by ID first
+        ArrayList<Achievement> achievementList = new ArrayList<>(achievementGroup.achievements.values());
+        Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
+
+        targetList.add(achievementGroup.label);
+        targetList.addAll(achievementList);
     }
 
 
