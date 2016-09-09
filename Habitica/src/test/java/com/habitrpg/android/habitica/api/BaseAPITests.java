@@ -10,6 +10,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +55,17 @@ public class BaseAPITests {
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         hostConfig.setUser(response.getId());
         hostConfig.setApi(response.getApiToken() != null ? response.getApiToken() : response.getToken());
+    }
+
+    public HabitRPGUser getUser() {
+        TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
+
+        apiHelper.apiService.getUser().subscribe(userSubscriber);
+        userSubscriber.assertNoErrors();
+        userSubscriber.assertCompleted();
+        List<HabitRPGUser> users = userSubscriber.getOnNextEvents();
+
+        return users.get(0);
     }
 
     @After
