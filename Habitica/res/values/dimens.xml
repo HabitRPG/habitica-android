@@ -17,6 +17,7 @@
 
 	<dimen name="bar_size">15dp</dimen>
 	<dimen name="bar_padding">5dp</dimen>
+	<dimen name="bar_padding_small">2dp</dimen>
 	<dimen name="bar_radius">5dp</dimen>
 	<dimen name="avatar_width">140dp</dimen>
     <dimen name="avatar_height">147dp</dimen>
@@ -77,4 +78,5 @@
 	<dimen name="task_right_border_width">5dp</dimen>
 	<dimen name="header_bar_spacing">7dp</dimen>
 	<dimen name="habit_circle_background_size">40dp</dimen>
+	<dimen name="bar_size_slim">13dp</dimen>
 </resources>

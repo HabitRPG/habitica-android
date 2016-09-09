@@ -100,4 +100,6 @@
     <color name="btn_warning">#fff0ad4e</color>
     <color name="btn_danger">#ffd9534f</color>
 
+    <color name="widget_background">#c8432874</color>
+
 </resources>
