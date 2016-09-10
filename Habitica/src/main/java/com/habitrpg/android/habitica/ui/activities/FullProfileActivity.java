@@ -100,11 +100,11 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.fullprofile_scrollview)
     ScrollView fullprofile_scrollview;
 
-    @BindView(R.id.profile_pet_count)
-    TextView petCount;
+    @BindView(R.id.profile_pets_found_count)
+    TextView petsFoundCount;
 
-    @BindView(R.id.profile_mount_count)
-    TextView mountCount;
+    @BindView(R.id.profile_mounts_tamed_count)
+    TextView mountsTamedCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,24 +222,8 @@ public class FullProfileActivity extends BaseActivity {
 
         addLevelAttributes(stats, user);
 
-        petCount.setText(String.valueOf(countEntries(user.getItems().getPets())));
-        mountCount.setText(String.valueOf(countEntries(user.getItems().getMounts())));
-    }
-
-    private int countEntries(HashMap<String, ?> hashMap) {
-        if(hashMap == null)
-            return 0;
-
-        int _count = 0;
-
-        for (Map.Entry<String, ?> e : hashMap.entrySet()) {
-            if (e.getValue() == null)
-                continue;
-
-            _count += 1;
-        }
-
-        return _count;
+        petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
+        mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
     }
 
     // region Utils
