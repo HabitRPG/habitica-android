@@ -281,9 +281,9 @@ public class APIHelper implements Action1<Throwable> {
         return this.apiService.connectLocal(auth);
     }
 
-    public Observable<UserAuthResponse> connectSocial(String userId, String accessToken) {
+    public Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken) {
         UserAuthSocial auth = new UserAuthSocial();
-        auth.setNetwork("facebook");
+        auth.setNetwork(network);
         UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
         authResponse.setClient_id(userId);
         authResponse.setAccess_token(accessToken);
@@ -347,6 +347,22 @@ public class APIHelper implements Action1<Throwable> {
                 habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
                 habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
                 habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
+                for (Task task : tasks.tasks.values()) {
+                    switch (task.getType()) {
+                        case "habit":
+                            habitRPGUser.getHabits().add(task);
+                            break;
+                        case "daily":
+                            habitRPGUser.getDailys().add(task);
+                            break;
+                        case "todo":
+                            habitRPGUser.getTodos().add(task);
+                            break;
+                        case "reward":
+                            habitRPGUser.getRewards().add(task);
+                            break;
+                    }
+                }
                 return habitRPGUser;
             });
         }
@@ -362,6 +378,7 @@ public class APIHelper implements Action1<Throwable> {
                 task.position = position;
                 taskList.add(task);
                 position++;
+                taskMap.remove(taskId);
             }
         }
         return taskList;

@@ -6,8 +6,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -16,35 +14,18 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import net.glxn.qrgen.android.QRCode;
-import net.glxn.qrgen.core.image.ImageType;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -67,9 +48,11 @@ public class GroupInformationFragment extends BaseFragment {
     RecyclerView collectionStats;
 
     @BindView(R.id.qrLayout)
+    @Nullable
     LinearLayout qrLayout;
 
     @BindView(R.id.qrWrapper)
+    @Nullable
     CardView qrWrapper;
 
     private View view;
@@ -123,10 +106,10 @@ public class GroupInformationFragment extends BaseFragment {
         if (this.group == null) {
             QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
             qrCodeManager.setUpView(qrLayout);
-        }
 
-        if (user != null && user.getParty().getId() != null) {
-            ((ViewGroup) qrWrapper.getParent()).removeView(qrWrapper);
+            if (user.getInvitations().getParty() != null && user.getInvitations().getParty().getId() != null) {
+                viewBinding.setInvitation(user.getInvitations().getParty());
+            }
         }
 
         return view;
@@ -330,5 +313,24 @@ public class GroupInformationFragment extends BaseFragment {
 
                 });
         builder.show();
+    }
+
+    @OnClick(R.id.btnPartyInviteAccept)
+    public void onPartyInviteAccepted() {
+        apiHelper.apiService.joinGroup(user.getInvitations().getParty().getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(group -> {
+                    setGroup(group);
+                    viewBinding.setInvitation(null);
+                }, throwable -> {});
+    }
+
+    @OnClick(R.id.btnPartyInviteReject)
+    public void onPartyInviteRejected() {
+        apiHelper.apiService.rejectGroupInvite(user.getInvitations().getParty().getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+                    viewBinding.setInvitation(null);
+                }, throwable -> {});
     }
 }
