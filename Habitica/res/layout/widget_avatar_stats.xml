@@ -8,6 +8,7 @@
         android:focusableInTouchMode="true"
         android:background="@drawable/rounded_purple_square"
         android:padding="8dp"
+        android:elevation="2dp"
         android:orientation="vertical">
 <LinearLayout
         android:orientation="horizontal"

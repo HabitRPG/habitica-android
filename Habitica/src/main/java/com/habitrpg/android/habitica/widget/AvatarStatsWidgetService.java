@@ -27,12 +27,6 @@ import android.widget.RemoteViews;
 
 import javax.inject.Inject;
 
-/**
- * The service that should update the simple widget
- *
- * @see com.habitrpg.android.habitica.widget.SimpleWidget
- * Created by Mickael on 01/11/13.
- */
 public class AvatarStatsWidgetService extends Service {
     private static final String LOG = ".avatarwidget.service";
     @Inject
@@ -102,11 +96,9 @@ public class AvatarStatsWidgetService extends Service {
         AvatarView avatarView = new AvatarView(this, true, true, true);;
         avatarView.setUser(user);
         avatarView.onAvatarImageReady(bitmap -> {
-            Log.e("AVATAR BITMAP", bitmap.toString());
-            remoteViews.setImageViewBitmap(R.id.avatar_view, bitmap);
+             remoteViews.setImageViewBitmap(R.id.avatar_view, bitmap);
             appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, remoteViews);
         });
-        Log.e("AVATAR THING", "BLA");
 
         //If user click on life and xp: open the app
         Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
