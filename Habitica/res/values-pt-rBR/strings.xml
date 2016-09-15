@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Atualizar</string>
   <string name="XP_default">Experiência</string>
   <string name="HP_default">Vida</string>
@@ -169,7 +168,7 @@
   <string name="quest.rejected">Rejeitado</string>
   <string name="quest.participants">Participantes</string>
   <string name="version_info" formatted="false">Versão %s (%d)</string>
-  <string name="sidebar_help">Ajuda &amp;amp: Perguntas Frequentes</string>
+  <string name="sidebar_help">Ajuda &amp; Perguntas Frequentes</string>
   <string name="complete_tutorial">Entendi!</string>
   <string name="dismiss_tutorial">Lembre-me novamente</string>
   <string name="intro_1_title">Bem vindo(a) ao Habitica</string>
@@ -226,7 +225,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="gems">Gemas</string>
   <string name="copy_as_todo">Copiar como Afazer</string>
   <string name="send_pm">Enviar mensagem privada</string>
-  <string name="flag">Bandeira</string>
+  <string name="flag">Reportar</string>
   <string name="delete">Excluir</string>
   <string name="name">Nome</string>
   <string name="description">Descrição</string>
@@ -235,7 +234,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="write_message">Escrever mensagem</string>
   <string name="post">Publicar</string>
   <string name="guild_search_hint">Busque guildas</string>
-  <string name="todo_due" formatted="false">Devido: %s</string>
+  <string name="todo_due" formatted="false">Data limite: %s</string>
   <string name="daily_streak" formatted="false">Raia atual: %d</string>
   <string name="todo_has_duedate">Tarefa com vencimento</string>
   <string name="battle_gear">Equipamento de batalha</string>
@@ -297,7 +296,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="sectionquestMounts">Montarias de Missões</string>
   <string name="sectionspecialMounts">Montarias Raras</string>
   <string name="world_quest">Missões Globais</string>
-  <string name="inn_description">Descanse na Pousada para prevenir suas metas incompletas de le causarem dano de um dia para o outro! (Nota: Não le previne de receber dano do Boss)</string>
+  <string name="inn_description">Descanse na Pousada para prevenir suas metas incompletas de lhe causarem dano de um dia para o outro! (Nota: Não lhe previne de receber dano do Chefe)</string>
   <string name="empty_items" formatted="false">Você não tem nenhum %s</string>
   <string name="user_level" formatted="false">Level %s</string>
   <string name="user_level_with_class" formatted="false">Level %1$s - %2$s</string>
@@ -356,8 +355,22 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="gold_plural">ouros</string>
   <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
   <string name="copy_chat_message">Mensagem copiada para Área de Transferência</string>
+  <string name="edit_tag_title">Editar marcador</string>
+  <string name="edit_tag_btn_edit">Editar</string>
+  <string name="edit_tag_btn_done">Feito</string>
+  <string name="edit_tag_btn_delete">Deletar</string>
+  <string name="confirm_delete_tag_title">Você tem certeza?</string>
+  <string name="confirm_delete_tag_message">Você realmente quer deletar?</string>
+  <string name="filter_drawer_edit_tags">Editar marcadores</string>
+  <string name="filter_drawer_filter_tags">Filtrar por marcadores</string>
   <!--QR Strings-->
   <string name="qr_section_title">Deixe que te convidem com esse código QR</string>
   <string name="qr_save_message">Código QR salvo</string>
   <string name="qr_dialogue_title">Seu código QR</string>
+  <string name="download">Baixar</string>
+  <string name="send_new_message">Enviar uma nova mensagem</string>
+  <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
+  <string name="action_continue">Continuar</string>
+  <string name="scan_qr_code">Escanear QR Code</string>
+  <string name="invited_to_party">Você foi convidado para um grupo!</string>
 </resources>

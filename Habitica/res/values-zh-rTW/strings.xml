@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">更新</string>
   <string name="XP_default">經驗值</string>
   <string name="HP_default">生命值</string>
@@ -13,12 +12,21 @@
   <string name="SP_userID_summary">你的用戶ID</string>
   <string name="SP_APIToken_title">API密碼</string>
   <string name="SP_APIToken_summary">你的API密碼</string>
+  <string name="SP_user_qr_code">你的 QR 碼</string>
   <string name="PS_contact_title">聯絡我</string>
   <string name="unknown_error">發生了一個錯誤……</string>
   <string name="pref_account_header">帳號</string>
   <string name="pref_reminder_header">每日任務提醒</string>
   <string name="pref_reminder_checkbox">啟用提醒</string>
   <string name="pref_reminder_picker">設置提醒時間</string>
+  <string name="pref_push_notifications_checkbox">開啟推送通知</string>
+  <string name="push_notifications">推送通知</string>
+  <string name="preference_push_you_won_challenge">你贏得了一個挑戰！</string>
+  <string name="preference_push_received_a_private_message">你收到一則私人訊息</string>
+  <string name="preference_push_invited_to_party">你受邀加入隊伍</string>
+  <string name="preference_push_invited_to_guild">你受邀加入公會</string>
+  <string name="preference_push_your_quest_has_begun">你的任務開始了</string>
+  <string name="preference_push_invited_to_quest">你受邀參加任務</string>
   <!--Adding tasks-->
   <string name="task_value">數值</string>
   <string name="new_todo">新待辦事項</string>
@@ -330,5 +338,7 @@
   <string name="timeTravelers">時光旅人</string>
   <string name="seasonalShop">季節限定商店</string>
   <string name="empty_inbox">你的收件匣裡面沒有任何信息。你可以利用聊天去傳送訊息給大家</string>
+  <string name="no_gold">金幣不足</string>
+  <string name="no_potion">你不需要購買治療藥水</string>
   <!--QR Strings-->
 </resources>

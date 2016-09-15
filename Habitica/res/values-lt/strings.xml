@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Atnaujinti</string>
   <string name="XP_default">Partirtis</string>
   <string name="HP_default">Gyvybingumas</string>
@@ -13,6 +12,7 @@
   <string name="SP_userID_summary">Tavo Vartotojo Identifikacijos Kodas</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Tavo API Token</string>
+  <string name="SP_user_qr_code">Tavo QR Kodas</string>
   <string name="PS_contact_title">Susisiekti</string>
   <string name="unknown_error">Įvyko klaida...</string>
   <string name="pref_account_header">Paskyra</string>
@@ -354,5 +354,22 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="gold_plural">aukso</string>
   <string name="chat_message_copied">Žinutė nukopijuota į Iškarpinę</string>
   <string name="copy_chat_message">Kopijuoti į Iškarpinę</string>
+  <string name="edit_tag_title">Keisti Žymę</string>
+  <string name="edit_tag_btn_edit">Keisti</string>
+  <string name="edit_tag_btn_done">Atlikta</string>
+  <string name="edit_tag_btn_delete">Trinti</string>
+  <string name="confirm_delete_tag_title">Ar esi įsitikinęs(us)?</string>
+  <string name="confirm_delete_tag_message">Ar tikrai nori ištrinti?</string>
+  <string name="filter_drawer_edit_tags">Keisti Žymes</string>
+  <string name="filter_drawer_filter_tags">Filtruoti pagal Žymes</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Leisk kitus tave pakviesti su šiuo QR Kodu</string>
+  <string name="qr_save_message">QR kodas išsaugotas</string>
+  <string name="qr_dialogue_title">Tavo QR Kodas</string>
+  <string name="download">Atsisiųsti</string>
+  <string name="send_new_message">Siųsti žinutę</string>
+  <string name="choose_recipient_title">PasirinkŽinutės Gavėją</string>
+  <string name="action_continue">Tęsti</string>
+  <string name="scan_qr_code">Nuskanuok QR Kodą</string>
+  <string name="invited_to_party">Tave pakvietė į grupę!</string>
 </resources>

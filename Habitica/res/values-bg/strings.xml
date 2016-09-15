@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Хабитика</string>
   <string name="action_refresh">Опресняване</string>
   <string name="XP_default">Опит</string>
   <string name="HP_default">Здраве</string>
@@ -355,8 +354,22 @@
   <string name="gold_plural">злато</string>
   <string name="chat_message_copied">Съобщението е копирано</string>
   <string name="copy_chat_message">Копиране</string>
+  <string name="edit_tag_title">Редактиране на етикет</string>
+  <string name="edit_tag_btn_edit">Редактиране</string>
+  <string name="edit_tag_btn_done">Готово</string>
+  <string name="edit_tag_btn_delete">Изтриване</string>
+  <string name="confirm_delete_tag_title">Сигурен/на ли сте?</string>
+  <string name="confirm_delete_tag_message">Наистина ли искате да изтриете това?</string>
+  <string name="filter_drawer_edit_tags">Редактиране на етикети</string>
+  <string name="filter_drawer_filter_tags">Филтриране по етикет</string>
   <!--QR Strings-->
   <string name="qr_section_title">С този QR-код можете да бъдете поканен(а) от някого</string>
   <string name="qr_save_message">QR-кодът е запазен в</string>
   <string name="qr_dialogue_title">Вашият QR-код</string>
+  <string name="download">Сваляне</string>
+  <string name="send_new_message">Изпр. на ново съобщение</string>
+  <string name="choose_recipient_title">Изберете получател</string>
+  <string name="action_continue">Продължаване</string>
+  <string name="scan_qr_code">Сканиране на QR-код</string>
+  <string name="invited_to_party">Получихте покана да се присъедините към група!</string>
 </resources>

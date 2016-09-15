@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Odśwież</string>
   <string name="XP_default">Doświadczenie</string>
   <string name="HP_default">Zdrowie</string>
@@ -8,10 +7,10 @@
   <string name="ERR_pb_barcode">Preferencje nie mogą być wczytane z kodu kreskowego</string>
   <!--Prefs-->
   <string name="PS_settings_title">Ustawienia</string>
-  <string name="SP_address_hint">Serwer na zamówienie</string>
-  <string name="SP_userID_title">ID użytkownika</string>
-  <string name="SP_userID_summary">Twoje ID</string>
-  <string name="SP_APIToken_title">API Token</string>
+  <string name="SP_address_hint">Domyślny serwer</string>
+  <string name="SP_userID_title">Identyfikator użytkownika</string>
+  <string name="SP_userID_summary">Twój identyfikator</string>
+  <string name="SP_APIToken_title">Token API</string>
   <string name="SP_APIToken_summary">Twój Token API</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
@@ -359,4 +358,9 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
   <string name="qr_save_message">Kod QR zapisany w</string>
   <string name="qr_dialogue_title">Twój kod QR</string>
+  <string name="download">Pobierz</string>
+  <string name="send_new_message">Wyślij nową wiadomość</string>
+  <string name="choose_recipient_title">Wybierz odbiorcę wiadomości</string>
+  <string name="action_continue">Kontynuuj</string>
+  <string name="scan_qr_code">Przeskanuj kod QR</string>
 </resources>

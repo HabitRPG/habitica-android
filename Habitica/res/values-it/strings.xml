@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Aggiorna</string>
   <string name="XP_default">Esperienza</string>
   <string name="HP_default">Salute</string>
@@ -13,15 +12,19 @@
   <string name="SP_userID_summary">Il tuo ID utente</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Il tuo API Token</string>
+  <string name="SP_user_qr_code">Il tuo codice QR</string>
   <string name="PS_contact_title">Contattami</string>
   <string name="unknown_error">Si è verificato un errore...</string>
   <string name="pref_account_header">Account</string>
   <string name="pref_reminder_header">Notifica giornaliera</string>
   <string name="pref_reminder_checkbox">Attiva notifica</string>
   <string name="pref_reminder_picker">Imposta ora notifica</string>
+  <string name="pref_push_notifications_checkbox">Notifiche push utente</string>
   <string name="push_notifications">Notifiche Push</string>
   <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
   <string name="preference_push_received_a_private_message">Ricevuto un messaggio</string>
+  <string name="preference_push_gifted_gems">Gemme regalate</string>
+  <string name="preference_push_gifted_subscription">Abbonamento regalato</string>
   <string name="preference_push_invited_to_party">Invito in una squadra</string>
   <string name="preference_push_invited_to_guild">Invito in una Gilda</string>
   <string name="preference_push_your_quest_has_begun">La tua Missione è cominciata</string>
@@ -94,7 +97,7 @@
   <string name="friday">Venerdì</string>
   <string name="saturday">Sabato</string>
   <string name="sunday">Domenica</string>
-  <string name="levelup_header">Sei salito di livello!</string>
+  <string name="levelup_header">Nuovo livello!</string>
   <string name="levelup_detail">Raggiungendo obiettivi nella vita reale, sei salito al Livello %1$d!</string>
   <string name="levelup_health">Sei stato completamente curato!</string>
   <string name="levelup_button">Urrà!</string>
@@ -221,7 +224,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="leader">Leader</string>
   <string name="gems">Gemme</string>
   <string name="copy_as_todo">Copia come ToDo</string>
-  <string name="send_pm">Invia messaggio</string>
+  <string name="send_pm">Invia messaggio privato</string>
   <string name="flag">Segnala</string>
   <string name="delete">Elimina</string>
   <string name="name">Nome</string>
@@ -230,6 +233,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Scrivi messaggio</string>
   <string name="post">Invia</string>
+  <string name="guild_search_hint">Cerca gilde</string>
   <string name="todo_due" formatted="false">Scade: %s</string>
   <string name="daily_streak" formatted="false">serie: %d</string>
   <string name="todo_has_duedate">L\' attività ha una scadenza</string>
@@ -348,7 +352,25 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="hourglass">clessidra</string>
   <string name="hourglasses">clessidre</string>
   <string name="gold_singular">oro</string>
+  <string name="gold_plural">oro</string>
   <string name="chat_message_copied">Messaggio copiato negli Appunti</string>
   <string name="copy_chat_message">Copia negli appunti</string>
+  <string name="edit_tag_title">Modifica etichetta</string>
+  <string name="edit_tag_btn_edit">Modifica</string>
+  <string name="edit_tag_btn_done">Fatto</string>
+  <string name="edit_tag_btn_delete">Elimina</string>
+  <string name="confirm_delete_tag_title">Sei sicuro?</string>
+  <string name="confirm_delete_tag_message">Vuoi davvero eliminare?</string>
+  <string name="filter_drawer_edit_tags">Modifica etichette</string>
+  <string name="filter_drawer_filter_tags">Filtra per etichette</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Fatti invitare da qualcuno con questo codice QR</string>
+  <string name="qr_save_message">Codice QR salvato a</string>
+  <string name="qr_dialogue_title">Il tuo codice QR</string>
+  <string name="download">Scarica</string>
+  <string name="send_new_message">Invia nuovo messaggio</string>
+  <string name="choose_recipient_title">Scegli destinatario messaggio</string>
+  <string name="action_continue">Continua</string>
+  <string name="scan_qr_code">Rileva codice QR</string>
+  <string name="invited_to_party">Hai ricevuto un invito per unirti a una squadra!</string>
 </resources>

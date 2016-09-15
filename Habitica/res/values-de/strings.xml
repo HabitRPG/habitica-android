@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Aktualisieren</string>
   <string name="XP_default">Erfahrung</string>
   <string name="HP_default">Gesundheit</string>
@@ -281,7 +280,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="invite_party">Gruppe einladen</string>
   <string name="dialog_feeding" formatted="false">Füttere %1$s %2$s mit:</string>
   <string name="use_animal">Nutzen</string>
-  <string name="feed">Verfüttern</string>
+  <string name="feed">Füttern</string>
   <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
   <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
@@ -355,8 +354,22 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="gold_plural">Gold</string>
   <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
   <string name="copy_chat_message">In Zwischenablage kopieren</string>
+  <string name="edit_tag_title">Tag bearbeiten</string>
+  <string name="edit_tag_btn_edit">Bearbeiten</string>
+  <string name="edit_tag_btn_done">Fertig</string>
+  <string name="edit_tag_btn_delete">Löschen</string>
+  <string name="confirm_delete_tag_title">Bist Du sicher?</string>
+  <string name="confirm_delete_tag_message">Wirklich löschen?</string>
+  <string name="filter_drawer_edit_tags">Tags bearbeiten</string>
+  <string name="filter_drawer_filter_tags">Nach Tags filtern</string>
   <!--QR Strings-->
   <string name="qr_section_title">Lass Dich durch diesen QR Code von jemandem einladen</string>
   <string name="qr_save_message">QR code gespeichert: </string>
   <string name="qr_dialogue_title">Dein QR Code</string>
+  <string name="download">Download</string>
+  <string name="send_new_message">Neue Nachricht schicken</string>
+  <string name="choose_recipient_title">Nachrichtenempfänger auswählen</string>
+  <string name="action_continue">Weiter</string>
+  <string name="scan_qr_code">QR Code scannen</string>
+  <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
 </resources>

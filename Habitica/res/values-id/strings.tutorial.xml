@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Lakukan Kebiasaan Baik untuk mendapatkan emas dan pengalaman! Kebiasaan Buruk akan menyakiti avatarmu jika kamu mengetuknya, jadi hindari melakukannya di dunia nyata!</string>
-  <string name="tutorial_dailies">Kalahkan tugas harianmu yang berulang untuk mendapatkan emas dan pengalaman. Bahaya! Keseharian akan menyakiti avatarmu jika kamu tidak menyelesaikannya tepat waktu.</string>
+  <string name="tutorial_habits">Lakukan Kebiasaan Baik untuk mendapatkan emas dan pengalaman! Kebiasaan Buruk akan menyakiti avatarmu jika kamu ketuk, jadi hindari melakukannya di dunia nyata!</string>
+  <string name="tutorial_dailies">Selesaikan tugas harianmu yang berulang untuk mendapatkan emas dan pengalaman. Bahaya! Keseharian akan menyakiti avatarmu jika kamu tidak menyelesaikannya tepat waktu.</string>
   <string name="tutorial_todos">Lakukan Tugasmu di dunia nyata, lalu ceklis daftar untuk EMAS dan PENGALAMAN sehingga kamu bisa mendapatkan Hadiah dan membuka fitur baru!</string>
   <string name="tutorial_rewards">Ini adalah Hadiahmu! Dapatkan emas dengan menyelesaikan Tugas dunia-nyata, Keseharian, dan Daftar Tugas. Kemudian habiskan untuk Hadiah dalam game atau Hadiah dunia nyata kustom!</string>
   <string name="tutorial_equipment">Perlengkapan yang kamu beli akan muncul di sini. Perlengkapan Bertarung milikmu akan mempengaruhi status, dan Kostum (jika dicentang) hanya mempengaruhi apa yang avatarmu kenakan.</string>

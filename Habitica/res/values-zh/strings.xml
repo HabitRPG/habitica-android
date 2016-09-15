@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">刷新</string>
   <string name="XP_default">经验值</string>
   <string name="HP_default">生命值</string>
@@ -99,12 +98,12 @@
   <string name="saturday">星期六</string>
   <string name="sunday">星期日</string>
   <string name="levelup_header">你升级了！</string>
-  <string name="levelup_detail">通过完成您现实生活中的目标，您已升至 %1$d 级！</string>
+  <string name="levelup_detail">通过完成您现实生活中的目标，你已升至 %1$d 级！</string>
   <string name="levelup_health">你被完全治愈了！</string>
   <string name="levelup_button">吼啊~！</string>
   <string name="faint_subtitle">别失望！</string>
-  <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你还可以把他们都拿回来的！加油！你做的很棒！</string>
-  <string name="faint_header">你没有生命值了！</string>
+  <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
+  <string name="faint_header">你失去了所有的生命值</string>
   <string name="faint_button">补满生命值 &amp; 再次尝试</string>
   <string name="filter">过滤器</string>
   <string name="profile_image">头像</string>
@@ -185,7 +184,7 @@
   <string name="setup_welcome_description">欢迎来到Habitica，在游戏中打怪升级的同时改善自己的真实生活。完成现实生活中的目标，解锁大量装备、宠物、任务卷轴，更多特色等你探索。</string>
   <string name="setup_welcome_title">欢迎你</string>
   <string name="avatar_setup_description">首先，你需要创建一个角色来代表你自己。你在现实生活中的行动会影响到你的角色的生命值、经验值以及金钱。</string>
-  <string name="task_setup_description">打鸡血！现在开始设定你的任务，开始赚取经验和金币吧。
+  <string name="task_setup_description">太棒了！现在开始设定你的任务，开始赚取经验和金币吧。
 
 首先，你想改善生活中的哪一部分呢？</string>
   <string name="setup_group_work">工作</string>
@@ -355,8 +354,22 @@
   <string name="gold_plural">金币</string>
   <string name="chat_message_copied">复制到剪帖板的信息</string>
   <string name="copy_chat_message">复制到剪贴板</string>
+  <string name="edit_tag_title">编辑按钮</string>
+  <string name="edit_tag_btn_edit">编辑</string>
+  <string name="edit_tag_btn_done">完成</string>
+  <string name="edit_tag_btn_delete">删除</string>
+  <string name="confirm_delete_tag_title">你确定吗？</string>
+  <string name="confirm_delete_tag_message">你确定要删除吗？</string>
+  <string name="filter_drawer_edit_tags">编辑按钮</string>
+  <string name="filter_drawer_filter_tags">过滤按钮</string>
   <!--QR Strings-->
   <string name="qr_section_title">让别人通过此二维码邀请你</string>
   <string name="qr_save_message">将二维码保存至</string>
   <string name="qr_dialogue_title">你的二维码</string>
+  <string name="download">下载</string>
+  <string name="send_new_message">发送新消息</string>
+  <string name="choose_recipient_title">选择消息接收者</string>
+  <string name="action_continue">继续</string>
+  <string name="scan_qr_code">扫描二维码</string>
+  <string name="invited_to_party">你被邀请加入一个队伍！</string>
 </resources>

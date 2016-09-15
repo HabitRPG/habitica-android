@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Verversen</string>
   <string name="XP_default">Ervaring</string>
   <string name="HP_default">Gezondheid</string>
@@ -13,6 +12,7 @@
   <string name="SP_userID_summary">Jouw gebruikers-ID</string>
   <string name="SP_APIToken_title">API-token</string>
   <string name="SP_APIToken_summary">Jouw API-token</string>
+  <string name="SP_user_qr_code">Je QR code</string>
   <string name="PS_contact_title">Contact</string>
   <string name="unknown_error">Er ging iets mis...</string>
   <string name="pref_account_header">Account</string>
@@ -68,7 +68,7 @@
   <string name="login_validation_error_title">Validatiefout</string>
   <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen.</string>
   <string name="save_changes">Opslaan</string>
-  <string name="notes">Aantekeningen</string>
+  <string name="notes">Notities</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Moeilijkheidsgraad</string>
   <string name="tags">Labels</string>
@@ -98,7 +98,7 @@
   <string name="saturday">Zaterdag</string>
   <string name="sunday">Zondag</string>
   <string name="levelup_header">Je bent een niveau omhoog gegaan!</string>
-  <string name="levelup_detail">Door het behalen van je doelen in het echte leven ben je uitgegroeid tot Level %1$d!</string>
+  <string name="levelup_detail">Door het behalen van je doelen in het echte leven ben je uitgegroeid tot Niveau %1$d!</string>
   <string name="levelup_health">Je bent volledig genezen!</string>
   <string name="levelup_button">Hoera!</string>
   <string name="faint_subtitle">Wanhoop niet!</string>
@@ -192,7 +192,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="setup_group_heathWellness">Gezondheid + Welzijn</string>
   <string name="setup_group_school">School</string>
   <string name="setup_group_teams">Teams</string>
-  <string name="setup_group_chores">Karweitjes</string>
+  <string name="setup_group_chores">Klusjes</string>
   <string name="setup_group_creativity">Creativiteit</string>
   <string name="setup_task_work_1">E-mail verwerken</string>
   <string name="setup_task_work_2">Belangrijkste taak</string>
@@ -252,7 +252,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="quest_cancel_message">Ben je zeker dat je deze queeste wilt beëindigen? Alle aangenomen uitnodigingen zullen verloren gaan. De eigenaar van de queeste zal de queesterol terug krijgen.</string>
   <string name="quest.invitation">Queeste uitnodiging</string>
   <string name="quest_begin_message">Ben je zeker dat je de queeste wilt beginnen? Zodra het actief is, kunnen er geen andere spelers zich bij de queeste aansluiten.</string>
-  <string name="quest.invitation.text">Je bent uitgenodigd om deel te nemen in een queeste!</string>
+  <string name="quest.invitation.text">Je bent uitgenodigd om deel te nemen aan een queeste!</string>
   <string name="ago_1day">1 dag geleden</string>
   <string name="ago_days" formatted="false">%d dagen geleden</string>
   <string name="ago_1Minute">1 minuut geleden</string>
@@ -267,12 +267,12 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="quests">Queestes</string>
   <string name="pets">Huisdieren</string>
   <string name="mounts">Rijdieren</string>
-  <string name="armoireEquipment" formatted="false">Je hebt een zeldzaam stuk van een Wapenrusting gevonden in het Kabinet: %s! Geweldig!</string>
+  <string name="armoireEquipment" formatted="false">Je hebt een zeldzaam stuk van een uitrusting gevonden in het Kabinet: %s! Geweldig!</string>
   <string name="armoireFood" formatted="false">Je rommelt wat rond in het Kabinet en vindt %1$s %2$s. Wat doet dat hier?</string>
   <string name="armoireExp">Je worstelt met het Kabinet en verdient Ervaring. Pak aan!</string>
-  <string name="armoireNotesFull" formatted="false">Open het Kabinet om willekeurig speciale Wapenrustingen, Ervaring of Voedsel te vinden! Stukken Wapenrusting die nog over zijn: %d</string>
-  <string name="armoireLastItem">Je hebt het laatste stuk zeldzame Wapenrusting gevonden in het Betoverde Kabinet.</string>
-  <string name="armoireNotesEmpty">Het Kabinet zal nieuwe stukken Wapenrusting hebben tijdens de eerste week van elke maand. Blijf tot die tijd klikken voor Ervaring en Voedsel!</string>
+  <string name="armoireNotesFull" formatted="false">Open het Kabinet om willekeurig speciale uitrustingen, Ervaring of Voedsel te vinden! Stukken uitrusting die nog over zijn: %d</string>
+  <string name="armoireLastItem">Je hebt het laatste stuk zeldzame uitrusting gevonden in het Betoverde Kabinet.</string>
+  <string name="armoireNotesEmpty">Het Kabinet zal nieuwe stukken uitrusting hebben tijdens de eerste week van elke maand. Blijf tot die tijd klikken voor Ervaring en Voedsel!</string>
   <string name="sell" formatted="false">Verkoop (%s Goud)</string>
   <string name="hatch_with_potion">Laten uitkomen met drankje</string>
   <string name="feed_to_pet">Aan huisdier voederen</string>
@@ -283,7 +283,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="feed">Voeder</string>
   <string name="hatch_with" formatted="false">Laat huisdier uitkomen met %s</string>
   <string name="hatched_pet_title" formatted="false">Je hebt een %1$s %2$s laten uitkomen!</string>
-  <string name="close">Dichtdoen</string>
+  <string name="close">Sluiten</string>
   <string name="share">Delen</string>
   <string name="notification_pet_fed" formatted="false">Je hebt je %1$s %2$s gevoederd!</string>
   <string name="notification_purchase" formatted="false">%s werd gekocht</string>
@@ -310,35 +310,35 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="healer_description">Helers staan onaangedaan tegenover schade en kunnen die bescherming tot anderen uitstrekken. Gemiste Dagelijkse Taken en slechte Gewoontes doen hen niet veel, en ze hebben hun manieren om er terug bovenop te raken na pech. Speel een Heler als je het leuk vindt om anderen in je Groep te helpen of als het idee om de Dood door hard werk te slim af te zijn jou inspireert!</string>
   <string name="select_class">Selecteer Klasse</string>
   <string name="opt_out_class">Trek je terug</string>
-  <string name="opt_out_description">Vindt je het klassesysteem te ingewikkeld voor nu? Wil je later pas kiezen? Trek je terug - je zal een krijger zijn zonder speciale talenten. Je kan later nog over het klassesysteem lezen op de wiki en je dan als één bepaalde klasse laten inschrijven.</string>
+  <string name="opt_out_description">Vind je het klassesysteem te ingewikkeld voor nu? Wil je later pas kiezen? Trek je terug - je zal een krijger zijn zonder speciale talenten. Je kan later nog over het klassesysteem lezen op de wiki en op eender welk moment klassen inschakelen.</string>
   <string name="class_confirmation" formatted="false">Weet je zeker dat je een %s wilt zijn?</string>
   <string name="choose_class">Kies een Klasse</string>
   <string name="dialog_go_back">Ga terug</string>
   <string name="opt_out_confirmation">Ben je zeker dat je je wilt terugtrekken?</string>
-  <string name="change_class">Verander je Klasse</string>
+  <string name="change_class">Verander je klasse</string>
   <string name="change_class_description">Verander je klasse en krijg je eigenschapspunten terug voor 3 edelstenen. Je kunt eigenschapspunten toewijzen via de website</string>
   <string name="enable_class">Zet het Klassesysteem aan</string>
-  <string name="changing_class_progress">Klasse aan het veranderen</string>
+  <string name="changing_class_progress">Van klasse veranderen</string>
   <string name="by_email">Via Email</string>
   <string name="invite_existing_users">Bestaande Gebruikers Uitnodigen</string>
   <string name="send">Versturen</string>
-  <string name="invite">Vrienden Uitnodigen</string>
+  <string name="invite">Vrienden uitnodigen</string>
   <string name="invite_id_description">Als je vrienden hebt die al Habitica spelen, nodig hen hier uit door hun Gebruikers ID.</string>
-  <string name="invite_email_description">Als een vriend zich inschrijft op Habitica door jouw email, zullen ze automatisch uitgenodigd worden naar jouw groep!</string>
-  <string name="add_invites">Uitnodigingen Toevoegen</string>
+  <string name="invite_email_description">Als een vriend zich inschrijft op Habitica door jouw email, zullen ze automatisch uitgenodigd worden voor jouw groep!</string>
+  <string name="add_invites">Uitnodigingen toevoegen</string>
   <string name="user_id">Gebruikers ID</string>
   <string name="email">Email</string>
-  <string name="invite_users">Nodig uit naar Groep</string>
+  <string name="invite_users">Nodig uit voor Groep</string>
   <string name="share_using">Deel door</string>
-  <string name="share_levelup" formatted="false">Ik ben in Habitica tot level %s geraakt door mijn echte gewoonten te verbeteren!</string>
+  <string name="share_levelup" formatted="false">Ik ben in Habitica tot level %s geraakt door mijn echte gewoontes te verbeteren!</string>
   <string name="share_hatched" formatted="false">Ik heb net een %1$s %2$s huisdier in Habitica laten uitkomen door mijn echte taken uit te voeren!</string>
   <string name="share_raised" formatted="false">Ik heb net een %1$s %2$s rijdier gekregen in Habitica door mijn echte taken uit te voeren!</string>
   <string name="open_in_store">Open in de play store</string>
-  <string name="change_class_confirmation">Weet je zeker dat je van klasse wil veranderen? Dit kost 3 edelstenen.</string>
+  <string name="change_class_confirmation">Weet je zeker dat je van klasse wilt veranderen? Dit kost 3 edelstenen.</string>
   <string name="leaderMessage" formatted="false">Bericht van %1$s</string>
   <string name="confirm">Bevestig</string>
   <string name="market">Markt</string>
-  <string name="timeTravelers">Tijd Reizigers</string>
+  <string name="timeTravelers">Tijdreizigers</string>
   <string name="seasonalShop">Seizoenswinkel</string>
   <string name="empty_inbox">Je hebt geen Inbox berichten. Je kan een gebruiker een nieuw bericht sturen vanuit hun publieke chat berichten.</string>
   <string name="party_invite">Ontgrendel door vrienden uit te nodigen</string>
@@ -354,5 +354,22 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="gold_plural">goud</string>
   <string name="chat_message_copied">Bericht gekopieerd naar klembord</string>
   <string name="copy_chat_message">Kopieer naar klembord</string>
+  <string name="edit_tag_title">Bewerk label</string>
+  <string name="edit_tag_btn_edit">Bewerk</string>
+  <string name="edit_tag_btn_done">Klaar</string>
+  <string name="edit_tag_btn_delete">Verwijder</string>
+  <string name="confirm_delete_tag_title">Weet je het zeker?</string>
+  <string name="confirm_delete_tag_message">Wil je het echt verwijderen?</string>
+  <string name="filter_drawer_edit_tags">Bewerk labels</string>
+  <string name="filter_drawer_filter_tags">Filter op labels</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Laat iemand je uitnodigen met deze QR code</string>
+  <string name="qr_save_message">QR code opgeslagen in</string>
+  <string name="qr_dialogue_title">Je QR code</string>
+  <string name="download">Installeer</string>
+  <string name="send_new_message">Stuur nieuw bericht</string>
+  <string name="choose_recipient_title">Kies een ontvanger voor het bericht</string>
+  <string name="action_continue">Ga verder</string>
+  <string name="scan_qr_code">Scan QR code</string>
+  <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
 </resources>

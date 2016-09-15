@@ -16,4 +16,5 @@
   <string name="sidebar.news">뉴스</string>
   <string name="sidebar.settings">설정</string>
   <string name="sidebar.about">소개</string>
+  <string name="sidebar_shops">가게</string>
 </resources>

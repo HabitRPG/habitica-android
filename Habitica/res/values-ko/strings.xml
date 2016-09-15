@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">해비티카</string>
   <string name="action_refresh">새로고침</string>
   <string name="XP_default">경험</string>
   <string name="HP_default">체력</string>
@@ -13,12 +12,18 @@
   <string name="SP_userID_summary">당신의 유저ID</string>
   <string name="SP_APIToken_title">API 토큰</string>
   <string name="SP_APIToken_summary">당신의 API 토큰</string>
+  <string name="SP_user_qr_code">당신의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
   <string name="unknown_error">오류가 발생했습니다...</string>
   <string name="pref_account_header">계정</string>
   <string name="pref_reminder_header">매일 알림</string>
   <string name="pref_reminder_checkbox">알림 활성화</string>
   <string name="pref_reminder_picker">알림 시간 설정</string>
+  <string name="pref_push_notifications_checkbox">사용자 알림</string>
+  <string name="push_notifications">공지를 하다</string>
+  <string name="preference_push_you_won_challenge">도전 기회를 얻었습니다.</string>
+  <string name="preference_push_received_a_private_message">개인 메시지를 받았습니다.</string>
+  <string name="preference_push_gifted_gems">선물받은 젬</string>
   <!--Adding tasks-->
   <string name="task_value">값</string>
   <string name="new_todo">새로운 할 일</string>

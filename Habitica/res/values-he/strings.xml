@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">האביטיקה</string>
   <string name="action_refresh">ריענון</string>
   <string name="XP_default">ניסיון</string>
   <string name="HP_default">בריאות</string>
@@ -355,8 +354,20 @@
   <string name="gold_plural">זהב</string>
   <string name="chat_message_copied">הודעה הועתקה ללוח</string>
   <string name="copy_chat_message">העתקה ללוח</string>
+  <string name="edit_tag_title">עריכת תג</string>
+  <string name="edit_tag_btn_edit">עריכה</string>
+  <string name="edit_tag_btn_delete">מחיקה</string>
+  <string name="confirm_delete_tag_title">האם אתם בטוחים?</string>
+  <string name="confirm_delete_tag_message">האם אתם באמת רוצים למחוק?</string>
+  <string name="filter_drawer_edit_tags">עריכת תגים</string>
+  <string name="filter_drawer_filter_tags">סינון לפי תגיות</string>
   <!--QR Strings-->
   <string name="qr_section_title">תנו למישהו להזמין אתכם עם קוד ה QR הזה</string>
   <string name="qr_save_message">קוד QR נשמר ב</string>
   <string name="qr_dialogue_title">קוד ה QR שלכם</string>
+  <string name="download">הורדה</string>
+  <string name="send_new_message">שליחת הודעה חדשה</string>
+  <string name="choose_recipient_title">בחרו נמען להודעה</string>
+  <string name="action_continue">המשך</string>
+  <string name="scan_qr_code">סריקת קוד QR</string>
 </resources>

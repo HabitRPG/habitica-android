@@ -15,5 +15,6 @@
   <string name="sidebar.stable">Estábulo</string>
   <string name="sidebar.news">Noticias</string>
   <string name="sidebar.settings">Definições</string>
-  <string name="sidebar.about">Acerca</string>
+  <string name="sidebar.about">Sobre</string>
+  <string name="sidebar_shops">Lojas</string>
 </resources>

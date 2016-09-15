@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">更新</string>
   <string name="XP_default">経験値</string>
   <string name="HP_default">体力</string>
@@ -109,7 +108,7 @@
   <string name="filter">フィルター</string>
   <string name="profile_image">プロフィール画像</string>
   <string name="mana_price_button" formatted="false">%d マナ</string>
-  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sをかけた。</string>
+  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sを唱えた。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
   <string name="reminder_title">日課をチェックした?</string>
@@ -356,8 +355,22 @@
   <string name="gold_plural">ゴールド</string>
   <string name="chat_message_copied">クリップボードにコピーされたメッセージ</string>
   <string name="copy_chat_message">クリップボードにコピー</string>
+  <string name="edit_tag_title">タグを編集</string>
+  <string name="edit_tag_btn_edit">編集</string>
+  <string name="edit_tag_btn_done">完了</string>
+  <string name="edit_tag_btn_delete">削除</string>
+  <string name="confirm_delete_tag_title">よろしいですか?</string>
+  <string name="confirm_delete_tag_message">削除します。いいですか?</string>
+  <string name="filter_drawer_edit_tags">タグを編集</string>
+  <string name="filter_drawer_filter_tags">タグでしぼる</string>
   <!--QR Strings-->
   <string name="qr_section_title">この QR コードで招待を受けます。</string>
   <string name="qr_save_message">QR コードの保存先</string>
   <string name="qr_dialogue_title">QR コード</string>
+  <string name="download">ダウンロード</string>
+  <string name="send_new_message">メッセージを送信</string>
+  <string name="choose_recipient_title">メッセージの送信先を選択</string>
+  <string name="action_continue">続行</string>
+  <string name="scan_qr_code">QR コードを読み取る</string>
+  <string name="invited_to_party">パーティーに招待されました!</string>
 </resources>

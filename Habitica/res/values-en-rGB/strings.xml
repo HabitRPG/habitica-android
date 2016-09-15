@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Refresh</string>
   <string name="XP_default">Experience</string>
   <string name="HP_default">Health</string>
@@ -13,12 +12,23 @@
   <string name="SP_userID_summary">Your User ID</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Your API Token</string>
+  <string name="SP_user_qr_code">Your QR Code</string>
   <string name="PS_contact_title">Contact me</string>
   <string name="unknown_error">An error happened…</string>
   <string name="pref_account_header">Account</string>
   <string name="pref_reminder_header">Daily Reminder</string>
   <string name="pref_reminder_checkbox">Activate Reminder</string>
   <string name="pref_reminder_picker">Set Reminder Time</string>
+  <string name="pref_push_notifications_checkbox">User Push Notifications</string>
+  <string name="push_notifications">Push Notifications</string>
+  <string name="preference_push_you_won_challenge">You won a Challenge!</string>
+  <string name="preference_push_received_a_private_message">Received a Private Message</string>
+  <string name="preference_push_gifted_gems">Gifted Gems</string>
+  <string name="preference_push_gifted_subscription">Gifted Subscription</string>
+  <string name="preference_push_invited_to_party">Invited to Party</string>
+  <string name="preference_push_invited_to_guild">Invited to Guild</string>
+  <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
+  <string name="preference_push_invited_to_quest">Invited to Quest</string>
   <!--Adding tasks-->
   <string name="task_value">Value</string>
   <string name="new_todo">New to-do</string>
@@ -223,6 +233,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Write Message</string>
   <string name="post">Post</string>
+  <string name="guild_search_hint">Search for guilds</string>
   <string name="todo_due" formatted="false">Due: %s</string>
   <string name="daily_streak" formatted="false">current streak: %d</string>
   <string name="todo_has_duedate">Task has Due Date</string>
@@ -325,5 +336,39 @@ To start, which parts of your life do you want to improve?</string>
   <string name="open_in_store">Open in Play Store</string>
   <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
   <string name="leaderMessage" formatted="false">Message from %1$s</string>
+  <string name="confirm">Confirm</string>
+  <string name="market">Market</string>
+  <string name="timeTravelers">Time Travelers</string>
+  <string name="seasonalShop">Seasonal Shop</string>
+  <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
+  <string name="party_invite">Unlock by inviting friends</string>
+  <string name="no_gold">Not enough Gold</string>
+  <string name="no_potion">You don\'t need to buy a health potion</string>
+  <string name="successful_purchase" formatted="false">%1$s successfully purchased</string>
+  <string name="purchase_confirmation_title">Confirm purchase</string>
+  <string name="confirm_purchase_text" formatted="false">Purchase %1$s for %2$s %3$s</string>
+  <string name="gem">gem</string>
+  <string name="hourglass">hourglass</string>
+  <string name="hourglasses">hourglasses</string>
+  <string name="gold_singular">gold</string>
+  <string name="gold_plural">gold</string>
+  <string name="chat_message_copied">Message copied to Clipboard</string>
+  <string name="copy_chat_message">Copy to clipboard</string>
+  <string name="edit_tag_title">Edit Tag</string>
+  <string name="edit_tag_btn_edit">Edit</string>
+  <string name="edit_tag_btn_done">Done</string>
+  <string name="edit_tag_btn_delete">Delete</string>
+  <string name="confirm_delete_tag_title">Are you sure?</string>
+  <string name="confirm_delete_tag_message">Do you really want to delete?</string>
+  <string name="filter_drawer_edit_tags">Edit Tags</string>
+  <string name="filter_drawer_filter_tags">Filter by Tags</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Have someone invite you with this QR Code?</string>
+  <string name="qr_save_message">QR Code saved at</string>
+  <string name="qr_dialogue_title">Your QR Code</string>
+  <string name="download">Download</string>
+  <string name="send_new_message">Send new message</string>
+  <string name="choose_recipient_title">Choose Message Recipient</string>
+  <string name="action_continue">Continue</string>
+  <string name="scan_qr_code">Scan QR Code</string>
 </resources>

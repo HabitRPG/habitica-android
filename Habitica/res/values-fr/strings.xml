@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Actualiser</string>
   <string name="XP_default">Expérience</string>
   <string name="HP_default">Santé</string>
@@ -13,6 +12,7 @@
   <string name="SP_userID_summary">Votre ID d\'utilisateur</string>
   <string name="SP_APIToken_title">Jeton d\'API</string>
   <string name="SP_APIToken_summary">Votre Jeton d\'API</string>
+  <string name="SP_user_qr_code">Votre QR code</string>
   <string name="PS_contact_title">Contactez-moi</string>
   <string name="unknown_error">Une erreur est survenue...</string>
   <string name="pref_account_header">Compte</string>
@@ -351,8 +351,25 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="hourglass">sablier</string>
   <string name="hourglasses">sabliers</string>
   <string name="gold_singular">pièce d\'or</string>
-  <string name="gold_plural">or</string>
+  <string name="gold_plural">pièces d\'or</string>
   <string name="chat_message_copied">Message copié dans le presse-papier</string>
   <string name="copy_chat_message">Copier dans le presse-papier</string>
+  <string name="edit_tag_title">Modifier l\'étiquette</string>
+  <string name="edit_tag_btn_edit">Modifier</string>
+  <string name="edit_tag_btn_done">Terminé</string>
+  <string name="edit_tag_btn_delete">Supprimer</string>
+  <string name="confirm_delete_tag_title">Êtes-vous sûr•e?</string>
+  <string name="confirm_delete_tag_message">Voulez-vous vraiment supprimer ceci?</string>
+  <string name="filter_drawer_edit_tags">Modifier les étiquettes</string>
+  <string name="filter_drawer_filter_tags">Filtrer par étiquette</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Laissez quelqu\'un vous inviter avec ce QR code</string>
+  <string name="qr_save_message">QR code enregistré à</string>
+  <string name="qr_dialogue_title">Votre QR code</string>
+  <string name="download">Télécharger</string>
+  <string name="send_new_message">Envoyer un nouveau message</string>
+  <string name="choose_recipient_title">Choisissez un destinataire</string>
+  <string name="action_continue">Continuer</string>
+  <string name="scan_qr_code">Scannez le QR code</string>
+  <string name="invited_to_party">Vous avez été invité·e à rejoindre une équipe !</string>
 </resources>
