@@ -439,58 +439,93 @@ public class HabitRPGUser extends BaseModel {
         Preferences prefs = getPreferences();
         Outfit outfit = (prefs.getCostume()) ? getItems().getGear().getCostume() : getItems().getGear().getEquipped();
 
-        if (!TextUtils.isEmpty(prefs.getChair())) {
-            layerMap.put(AvatarView.LayerType.CHAIR, prefs.getChair());
-        }
+        boolean hasVisualBuffs = false;
 
-        if (outfit != null) {
-            if (!TextUtils.isEmpty(outfit.getBack())) {
-                layerMap.put(AvatarView.LayerType.BACK, outfit.getBack());
+        if(stats != null && stats.getBuffs() != null){
+            Buffs buffs = stats.getBuffs();
+
+            if(buffs.getSnowball()){
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "snowman");
+                hasVisualBuffs = true;
             }
-            if (outfit.isAvailable(outfit.getArmor())) {
-                layerMap.put(AvatarView.LayerType.ARMOR, prefs.getSize() + "_" + outfit.getArmor());
+
+            if(buffs.getSeafoam()){
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "seafoam_star");
+                hasVisualBuffs = true;
             }
-            if (outfit.isAvailable(outfit.getBody())) {
-                layerMap.put(AvatarView.LayerType.BODY, outfit.getBody());
+
+            if(buffs.getShinySeed()){
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "avatar_floral_"+stats.get_class());
+                hasVisualBuffs = true;
             }
-            if (outfit.isAvailable(outfit.getEyeWear())) {
-                layerMap.put(AvatarView.LayerType.EYEWEAR, outfit.getEyeWear());
-            }
-            if (outfit.isAvailable(outfit.getHead())) {
-                layerMap.put(AvatarView.LayerType.HEAD, outfit.getHead());
-            }
-            if (outfit.isAvailable(outfit.getHeadAccessory())) {
-                layerMap.put(AvatarView.LayerType.HEAD_ACCESSORY, outfit.getHeadAccessory());
-            }
-            if (outfit.isAvailable(outfit.getShield())) {
-                layerMap.put(AvatarView.LayerType.SHIELD, outfit.getShield());
-            }
-            if (outfit.isAvailable(outfit.getWeapon())) {
-                layerMap.put(AvatarView.LayerType.WEAPON, outfit.getWeapon());
+
+            if(buffs.getSpookySparkles()){
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "ghost");
+                hasVisualBuffs = true;
             }
         }
 
-        layerMap.put(AvatarView.LayerType.SKIN, "skin_" + prefs.getSkin() + ((prefs.getSleep()) ? "_sleep" : ""));
-        layerMap.put(AvatarView.LayerType.SHIRT, prefs.getSize() + "_shirt_" + prefs.getShirt());
-        layerMap.put(AvatarView.LayerType.HEAD_0, "head_0");
+        if(!hasVisualBuffs) {
+            if (!TextUtils.isEmpty(prefs.getChair())) {
+                layerMap.put(AvatarView.LayerType.CHAIR, prefs.getChair());
+            }
 
-        Hair hair = prefs.getHair();
-        if (hair != null) {
-            String hairColor = hair.getColor();
+            if (outfit != null) {
+                if (!TextUtils.isEmpty(outfit.getBack())) {
+                    layerMap.put(AvatarView.LayerType.BACK, outfit.getBack());
+                }
+                if (outfit.isAvailable(outfit.getArmor())) {
+                    layerMap.put(AvatarView.LayerType.ARMOR, prefs.getSize() + "_" + outfit.getArmor());
+                }
+                if (outfit.isAvailable(outfit.getBody())) {
+                    layerMap.put(AvatarView.LayerType.BODY, outfit.getBody());
+                }
+                if (outfit.isAvailable(outfit.getEyeWear())) {
+                    layerMap.put(AvatarView.LayerType.EYEWEAR, outfit.getEyeWear());
+                }
+                if (outfit.isAvailable(outfit.getHead())) {
+                    layerMap.put(AvatarView.LayerType.HEAD, outfit.getHead());
+                }
+                if (outfit.isAvailable(outfit.getHeadAccessory())) {
+                    layerMap.put(AvatarView.LayerType.HEAD_ACCESSORY, outfit.getHeadAccessory());
+                }
+                if (outfit.isAvailable(outfit.getShield())) {
+                    layerMap.put(AvatarView.LayerType.SHIELD, outfit.getShield());
+                }
+                if (outfit.isAvailable(outfit.getWeapon())) {
+                    layerMap.put(AvatarView.LayerType.WEAPON, outfit.getWeapon());
+                }
+            }
 
-            if (hair.isAvailable(hair.getBase())) {
-                layerMap.put(AvatarView.LayerType.HAIR_BASE, "hair_base_" + hair.getBase() + "_" + hairColor);
+            layerMap.put(AvatarView.LayerType.SKIN, "skin_" + prefs.getSkin() + ((prefs.getSleep()) ? "_sleep" : ""));
+            layerMap.put(AvatarView.LayerType.SHIRT, prefs.getSize() + "_shirt_" + prefs.getShirt());
+            layerMap.put(AvatarView.LayerType.HEAD_0, "head_0");
+
+            Hair hair = prefs.getHair();
+            if (hair != null) {
+                String hairColor = hair.getColor();
+
+                if (hair.isAvailable(hair.getBase())) {
+                    layerMap.put(AvatarView.LayerType.HAIR_BASE, "hair_base_" + hair.getBase() + "_" + hairColor);
+                }
+                if (hair.isAvailable(hair.getBangs())) {
+                    layerMap.put(AvatarView.LayerType.HAIR_BANGS, "hair_bangs_" + hair.getBangs() + "_" + hairColor);
+                }
+                if (hair.isAvailable(hair.getMustache())) {
+                    layerMap.put(AvatarView.LayerType.HAIR_MUSTACHE, "hair_mustache_" + hair.getMustache() + "_" + hairColor);
+                }
+                if (hair.isAvailable(hair.getBeard())) {
+                    layerMap.put(AvatarView.LayerType.HAIR_BEARD, "hair_beard_" + hair.getBeard() + "_" + hairColor);
+                }
+                if (hair.isAvailable(hair.getFlower())) {
+                    layerMap.put(AvatarView.LayerType.HAIR_FLOWER, "hair_flower_" + hair.getFlower());
+                }
             }
-            if (hair.isAvailable(hair.getBangs())) {
-                layerMap.put(AvatarView.LayerType.HAIR_BANGS, "hair_bangs_" + hair.getBangs() + "_" + hairColor);
-            }
-            if (hair.isAvailable(hair.getMustache())) {
-                layerMap.put(AvatarView.LayerType.HAIR_MUSTACHE, "hair_mustache_" + hair.getMustache() + "_" + hairColor);
-            }
-            if (hair.isAvailable(hair.getBeard())) {
-                layerMap.put(AvatarView.LayerType.HAIR_BEARD, "hair_beard_" + hair.getBeard() + "_" + hairColor);
-            }
-            if (hair.isAvailable(hair.getFlower())) {
+        } else  {
+            Hair hair = prefs.getHair();
+
+            // Show flower all the time!
+            if (hair != null && hair.isAvailable(hair.getFlower())) {
                 layerMap.put(AvatarView.LayerType.HAIR_FLOWER, "hair_flower_" + hair.getFlower());
             }
         }
