@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -206,15 +207,14 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
         } else if (key.equals("language")) {
             LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
+
             Locale.setDefault(languageHelper.getLocale());
             Configuration configuration = new Configuration();
-
             if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
                 configuration.locale = languageHelper.getLocale();
             } else {
                 configuration.setLocale(languageHelper.getLocale());
             }
-
             getActivity().getResources().updateConfiguration(configuration,
                     getActivity().getResources().getDisplayMetrics());
 
@@ -224,7 +224,11 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
-            apiHelper.apiService.getContent(languageHelper.getLanguageCode())
+
+            Preferences preferences = user.getPreferences();
+            preferences.setLanguage(languageHelper.getLanguageCode());
+            apiHelper.languageCode = preferences.getLanguage();
+            apiHelper.apiService.getContent(apiHelper.languageCode)
                     .compose(apiHelper.configureApiCallObserver())
                     .subscribe(contentResult -> {
                     }, throwable -> {
