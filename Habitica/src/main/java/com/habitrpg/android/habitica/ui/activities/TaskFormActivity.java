@@ -66,7 +66,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -569,6 +571,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         this.frequencyContainer.removeAllViews();
         if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
+                    Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper = new FirstDayOfTheWeekHelper(dayOfTheWeek);
+
+            ArrayList<String> weekdaysTemp = new ArrayList<>(Arrays.asList(weekdays));
+            Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper.getDailyTaskFormOffset());
+            weekdays = weekdaysTemp.toArray(new String[1]);
+
             for (int i = 0; i < 7; i++) {
                 View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer, false);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
@@ -910,7 +921,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     calendar.get(Calendar.DAY_OF_MONTH));
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String dayOfTheWeek = sharedPreferences.getString("dayOfTheWeek", "1");
+            String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
+                    Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
             FirstDayOfTheWeekHelper firstDayOfTheWeekHelper = new FirstDayOfTheWeekHelper(dayOfTheWeek);
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
                 datePickerDialog.getDatePicker().getCalendarView().setFirstDayOfWeek(

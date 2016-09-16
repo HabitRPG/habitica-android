@@ -1,10 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,6 +30,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -148,6 +151,11 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("FirstDayOfTheWeek",
+                Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
+        editor.commit();
         if (v == this.nextButton) {
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();

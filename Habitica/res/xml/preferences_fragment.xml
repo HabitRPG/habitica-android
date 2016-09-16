@@ -63,8 +63,7 @@
             android:order="2"/>
 
         <ListPreference android:title="@string/pref_first_day_of_the_week_title"
-            android:defaultValue="@string/pref_first_day_of_the_week_default_value"
-            android:key="dayOfTheWeek"
+            android:key="@string/pref_first_day_of_the_week_key"
             android:entries="@array/weekdays"
             android:entryValues="@array/weekdayValues"
             android:summary="@string/pref_first_day_of_the_week_summary"
