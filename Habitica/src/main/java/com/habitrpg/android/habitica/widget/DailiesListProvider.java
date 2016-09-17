@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -18,11 +19,14 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactory {
+    private final int widgetId;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
 
     public DailiesListProvider(Context context, Intent intent) {
         this.context = context;
+        this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+
 
         Observable.defer(() -> Observable.from(new Select()
                 .from(Task.class)
@@ -35,7 +39,7 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasks -> {
                     taskList = tasks;
-                    DailiesListProvider.this.notify();
+                    AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
                 }, throwable -> {});
     }
 
@@ -57,21 +61,13 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
                 context.getPackageName(), R.layout.widget_dailies_list_row);
         Task task = taskList.get(position);
         remoteView.setTextViewText(R.id.dailies_text, task.text);
+        remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
+        remoteView.setOnClickPendingIntent();
         return remoteView;
     }
 
@@ -82,6 +78,17 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
 }

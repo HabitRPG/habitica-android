@@ -44,6 +44,7 @@
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
 
 	<dimen name="button_width">65dp</dimen>
+	<dimen name="button_compact_width">50dp</dimen>
 
 	<dimen name="hairline_height">0.5dp</dimen>
 	<dimen name="checklist_divider_width">14dp</dimen>
@@ -52,9 +53,11 @@
 
 	<dimen name="daily_checkbox_corner_radius">2dp</dimen>
 	<dimen name="checkbox_size">30dp</dimen>
+	<dimen name="checkbox_compact_size">25dp</dimen>
 
 	<dimen name="login_field_width">350dp</dimen>
 	<dimen name="task_top_bottom_padding">20dp</dimen>
+	<dimen name="task_top_bottom_compact_padding">16dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
 	<dimen name="grid_item_margin">6dp</dimen>
 	<dimen name="avatar_small_width">114dp</dimen>
@@ -75,6 +78,7 @@
 	<dimen name="shop_height">138dp</dimen>
 	<dimen name="bar_icon_padding">10dp</dimen>
 	<dimen name="task_text_padding">16dp</dimen>
+	<dimen name="task_text_compactpadding">4dp</dimen>
 	<dimen name="task_right_border_width">5dp</dimen>
 	<dimen name="header_bar_spacing">7dp</dimen>
 	<dimen name="habit_circle_background_size">40dp</dimen>

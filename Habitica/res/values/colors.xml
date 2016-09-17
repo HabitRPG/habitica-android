@@ -82,7 +82,7 @@
 
     <color name="btn_separator">#aaa</color>
     <color name="new_task_bar_color">#555555</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#ffffff</color>
 
     <color name="checkbox_tint_color">#ffd8dcdd</color>
 
