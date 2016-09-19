@@ -29,7 +29,7 @@
     <string name="preference_push_gifted_gems">Gifted Gems</string>
     <string name="preference_push_gifted_subscription">Gifted Subscription</string>
     <string name="preference_push_invited_to_party">Invited to Party</string>
-    <string name="preference_push_invited_to_guild">Invited to Guiild</string>
+    <string name="preference_push_invited_to_guild">Invited to Guild</string>
     <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
     <string name="preference_push_invited_to_quest">Invited to Quest</string>
 
