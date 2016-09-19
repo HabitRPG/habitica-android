@@ -574,8 +574,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper = new FirstDayOfTheWeekHelper(dayOfTheWeek);
-
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+                    FirstDayOfTheWeekHelper.newInstance(dayOfTheWeek);
             ArrayList<String> weekdaysTemp = new ArrayList<>(Arrays.asList(weekdays));
             Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper.getDailyTaskFormOffset());
             weekdays = weekdaysTemp.toArray(new String[1]);
@@ -923,7 +923,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper = new FirstDayOfTheWeekHelper(dayOfTheWeek);
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+                    FirstDayOfTheWeekHelper.newInstance(dayOfTheWeek);
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
                 datePickerDialog.getDatePicker().getCalendarView().setFirstDayOfWeek(
                         firstDayOfTheWeekHelper.getFirstDayOfTheWeek());

@@ -10,36 +10,29 @@ public class FirstDayOfTheWeekHelper {
     private int firstDayOfTheWeek;
     private int dailyTaskFormOffset;
 
-    public FirstDayOfTheWeekHelper(String firstDayOfTheWeekSharedPref) {
+    private FirstDayOfTheWeekHelper(int dailyTaskFormOffset, int firstDayOfTheWeek) {
+        this.dailyTaskFormOffset = dailyTaskFormOffset;
+        this.firstDayOfTheWeek = firstDayOfTheWeek;
+    }
+
+    public static FirstDayOfTheWeekHelper newInstance(String firstDayOfTheWeekSharedPref) {
         switch (firstDayOfTheWeekSharedPref){
             case "1":
-                firstDayOfTheWeek = Calendar.SUNDAY;
-                dailyTaskFormOffset = 1;
-                break;
+                return new FirstDayOfTheWeekHelper(1, Calendar.SUNDAY);
             case "2":
-                firstDayOfTheWeek = Calendar.MONDAY;
-                dailyTaskFormOffset = 0;
-                break;
+                return new FirstDayOfTheWeekHelper(0, Calendar.MONDAY);
             case "3":
-                firstDayOfTheWeek = Calendar.TUESDAY;
-                dailyTaskFormOffset = 6;
-                break;
+                return new FirstDayOfTheWeekHelper(6, Calendar.TUESDAY);
             case "4":
-                firstDayOfTheWeek = Calendar.WEDNESDAY;
-                dailyTaskFormOffset = 5;
-                break;
+                return new FirstDayOfTheWeekHelper(5, Calendar.WEDNESDAY);
             case "5":
-                firstDayOfTheWeek = Calendar.THURSDAY;
-                dailyTaskFormOffset = 4;
-                break;
+                return new FirstDayOfTheWeekHelper(4, Calendar.THURSDAY);
             case "6":
-                firstDayOfTheWeek = Calendar.FRIDAY;
-                dailyTaskFormOffset = 3;
-                break;
+                return new FirstDayOfTheWeekHelper(3, Calendar.FRIDAY);
             case "7":
-                firstDayOfTheWeek = Calendar.SATURDAY;
-                dailyTaskFormOffset = 2;
-                break;
+                return new FirstDayOfTheWeekHelper(2, Calendar.SATURDAY);
+            default:
+                return new FirstDayOfTheWeekHelper(1, Calendar.SUNDAY);
         }
     }
 
