@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
@@ -500,5 +501,23 @@ public class HabitRPGUser extends BaseModel {
         }
 
         return layerMap;
+    }
+
+    public int getPetsFoundCount() {
+        return getNullableMapSize(items.getPets());
+    }
+
+    public int getMountsTamedCount() {
+        return getNullableMapSize(items.getMounts());
+    }
+
+    private int getNullableMapSize(Map map) {
+        int mapSize = 0;
+
+        if (map != null) {
+            mapSize = map.size();
+        }
+
+        return mapSize;
     }
 }

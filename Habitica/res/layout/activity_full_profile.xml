@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fullprofile_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -328,10 +329,10 @@
                             android:text="@string/profile_pets_found" />
 
                         <TextView
-                            android:id="@+id/profile_pet_count"
+                            android:id="@+id/profile_pets_found_count"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="#" />
+                            tools:text="#" />
                     </TableRow>
 
                     <TableRow android:layout_height="wrap_content">
@@ -342,10 +343,10 @@
                             android:text="@string/profile_mounts_tamed" />
 
                         <TextView
-                            android:id="@+id/profile_mount_count"
+                            android:id="@+id/profile_mounts_tamed_count"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="#" />
+                            tools:text="#" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
