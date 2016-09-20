@@ -372,5 +372,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Escanear QR Code</string>
+  <string name="enter_recipient_uuid">Entre com o ID de usuário do destinatário</string>
   <string name="invited_to_party">Você foi convidado para um grupo!</string>
 </resources>

@@ -19,7 +19,7 @@
   <string name="pref_reminder_header">Rappel Quotidien</string>
   <string name="pref_reminder_checkbox">Activer le rappel</string>
   <string name="pref_reminder_picker">Changer l\'heure du rappel</string>
-  <string name="pref_push_notifications_checkbox">Utiliser les notifications Push</string>
+  <string name="pref_push_notifications_checkbox">Notifications Push de l\'utilisateur</string>
   <string name="push_notifications">Notifications Push</string>
   <string name="preference_push_you_won_challenge">Vous avez gagné un défi !</string>
   <string name="preference_push_received_a_private_message">Message privé reçu</string>
@@ -340,7 +340,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="market">Marché</string>
   <string name="timeTravelers">Voyageurs temporels</string>
   <string name="seasonalShop">Boutique saisonnière</string>
-  <string name="empty_inbox">Vous n\'avez pas de message dans votre boîte de réception. Vous pouvez envoyer un nouveau message à partir des messages de discussion publics de chaque personne.</string>
+  <string name="empty_inbox">Vous n\'avez pas de messages dans votre boîte de réception. Vous pouvez envoyer un nouveau message à partir des messages de discussion publics de chaque personne.</string>
   <string name="party_invite">Débloquer en invitant des ami•e•s</string>
   <string name="no_gold">Pas assez d\'or</string>
   <string name="no_potion">Vous n\'avez pas besoin d\'acheter une potion de santé</string>
@@ -364,12 +364,13 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="filter_drawer_filter_tags">Filtrer par étiquette</string>
   <!--QR Strings-->
   <string name="qr_section_title">Laissez quelqu\'un vous inviter avec ce QR code</string>
-  <string name="qr_save_message">QR code enregistré à</string>
+  <string name="qr_save_message">QR code enregistré sous</string>
   <string name="qr_dialogue_title">Votre QR code</string>
   <string name="download">Télécharger</string>
   <string name="send_new_message">Envoyer un nouveau message</string>
   <string name="choose_recipient_title">Choisissez un destinataire</string>
   <string name="action_continue">Continuer</string>
-  <string name="scan_qr_code">Scannez le QR code</string>
+  <string name="scan_qr_code">Scanner le QR code</string>
+  <string name="enter_recipient_uuid">Entrez l\'ID d\'utilisateur du destinataire</string>
   <string name="invited_to_party">Vous avez été invité·e à rejoindre une équipe !</string>
 </resources>

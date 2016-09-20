@@ -371,5 +371,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="choose_recipient_title">Nachrichtenempfänger auswählen</string>
   <string name="action_continue">Weiter</string>
   <string name="scan_qr_code">QR Code scannen</string>
+  <string name="enter_recipient_uuid">Benutzer ID des Empfängers eingeben</string>
   <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
 </resources>

@@ -112,7 +112,7 @@
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
   <string name="reminder_title">日課をチェックした?</string>
-  <string name="skill_progress_title">使っている特殊能力</string>
+  <string name="skill_progress_title">使用中のスキル</string>
   <string name="coming_soon">近日中</string>
   <string name="chat_flag_confirmation">このメッセージを違反として報告します。いいですか?</string>
   <string name="flag_confirm">メッセージに印をつける</string>
@@ -306,12 +306,12 @@
   <string name="mage">魔道士</string>
   <string name="healer">治療師</string>
   <string name="warrior_description">戦士はタスクを完了したときに、「会心の一撃」が出やすく、その効果も高い。「会心の一撃」が出ると、ゴールド、経験値、アイテムドロップの確率にボーナスがつく。また、戦士はボスに大きなダメージを与えられるぞ。予測できない一攫千金の報酬でやる気が出る、もしくはボス クエストで活躍したいなら、戦士でプレーしよう!</string>
-  <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、特殊能力を使つためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
+  <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、スキルを使うためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
   <string name="rogue_description">盗賊は富を集めることを愛するのです。ほかのどのクラスよりもゴールドを稼ぎ、アイテムを見つける確率が高い。盗賊の特徴、忍びの術をもってすれば、日課をやらなかったとしても、性格的に傷つかない。戦利品や勲章――Habitica では、ごほうびと実績に強く心動かされるなら、盗賊でプレーしよう!</string>
   <string name="healer_description">治療師は痛みに耐え、他人を守るのです。やらなかった日課や悪い習慣にも治療師は動揺せず、失敗から体力を回復させる能力がある。パーティーの他のメンバーを助けることに喜びを感じる、困難な仕事による死をも恐れぬ理想があるのなら、治療師でプレーしよう!</string>
   <string name="select_class">クラスを選ぶ</string>
   <string name="opt_out_class">選ばない</string>
-  <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。特殊能力のない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
+  <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
   <string name="class_confirmation" formatted="false">%s になります。いいですか?</string>
   <string name="choose_class">クラスを選ぶ</string>
   <string name="dialog_go_back">戻る</string>
@@ -372,5 +372,6 @@
   <string name="choose_recipient_title">メッセージの送信先を選択</string>
   <string name="action_continue">続行</string>
   <string name="scan_qr_code">QR コードを読み取る</string>
+  <string name="enter_recipient_uuid">送信先の ユーザー ID を入力</string>
   <string name="invited_to_party">パーティーに招待されました!</string>
 </resources>

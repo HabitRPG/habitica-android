@@ -17,14 +17,14 @@
   <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_reminder_header">Przypominienie</string>
-  <string name="pref_reminder_checkbox">Aktywuj Przypomnienie</string>
-  <string name="pref_reminder_picker">Ustaw Czas Przypomnienia</string>
+  <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
+  <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
   <string name="pref_push_notifications_checkbox">Notyfikacje użytkownika</string>
   <string name="push_notifications">Notyfikacje</string>
   <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
   <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
   <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
-  <string name="preference_push_gifted_subscription">Otrzymałeś Subskrypcję</string>
+  <string name="preference_push_gifted_subscription">Otrzymałeś subskrypcję</string>
   <string name="preference_push_invited_to_party">Otrzymano zaproszenie do drużyny</string>
   <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do gildii</string>
   <string name="preference_push_your_quest_has_begun">Twoja misja się rozpoczęła</string>

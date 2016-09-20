@@ -6,7 +6,7 @@
     <string name="SP_APIToken" translatable="false">APIToken</string>
     <string name="SP_username" translatable="false">Username</string>
     <string name="SP_email" translatable="false">E-mail</string>
-    <string name="base_url" translatable="false">https://habitica.com</string>
+    <string name="base_url" translatable="false">https://habitrpg-beta.herokuapp.com</string>
 
     <!-- Local notification actions -->
     <string name="accept_party_invite" translatable="false">ACCEPT_PARTY_INVITE</string>

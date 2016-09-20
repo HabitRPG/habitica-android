@@ -371,5 +371,6 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="choose_recipient_title">Kies een ontvanger voor het bericht</string>
   <string name="action_continue">Ga verder</string>
   <string name="scan_qr_code">Scan QR code</string>
+  <string name="enter_recipient_uuid">Voer Gebruikers ID van ontvanger in</string>
   <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
 </resources>

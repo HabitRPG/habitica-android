@@ -371,5 +371,6 @@
   <string name="choose_recipient_title">Изберете получател</string>
   <string name="action_continue">Продължаване</string>
   <string name="scan_qr_code">Сканиране на QR-код</string>
+  <string name="enter_recipient_uuid">Въведете потр. ид. на получателя</string>
   <string name="invited_to_party">Получихте покана да се присъедините към група!</string>
 </resources>

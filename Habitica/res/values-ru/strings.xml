@@ -111,7 +111,7 @@
   <string name="used_skill" formatted="false">Вы использовали %1$s за %2$d маны.</string>
   <string name="new_checklist_item">новый пункт списка</string>
   <string name="add_checklist_item">Добавить</string>
-  <string name="reminder_title">Проверьте свои ежедневные задания!</string>
+  <string name="reminder_title">Не забудьте отметить ежедневные задания!</string>
   <string name="skill_progress_title">Использовать навык</string>
   <string name="coming_soon">Скоро</string>
   <string name="chat_flag_confirmation">Вы уверены, что хотите пожаловаться на это сообщение?</string>
@@ -316,7 +316,7 @@
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
   <string name="change_class">Изменить ваш класс</string>
-  <string name="change_class_description">Поменяй свой класс, и получите назад ваши очки атрибутов за 3 кристалла.</string>
+  <string name="change_class_description">Поменяйте класс, и получите назад ваши очки характеристик за 3 кристалла. Распределить очки характеристик можно на сайте.</string>
   <string name="enable_class">Включить систему классов</string>
   <string name="changing_class_progress">Изменение класса</string>
   <string name="by_email">По электронной почте</string>
@@ -330,7 +330,7 @@
   <string name="email">Электронная почта</string>
   <string name="invite_users">Пригласить в команду</string>
   <string name="share_using">Поделиться с помощью</string>
-  <string name="share_levelup" formatted="false">Я получил %s уровень в Habitica улучшая свой привычки в реальной жизни!</string>
+  <string name="share_levelup" formatted="false">Я получил %s уровень в Habitica, улучшая привычки в реальной жизни!</string>
   <string name="share_hatched" formatted="false">У меня только что вылупился питомец %1$s %2$s в Habitica, потому что я выполнял задачи в реальной жизни!</string>
   <string name="share_raised" formatted="false">Я только что получил скакуна %1$s %2$s в Habitica, выполняя задачи в реальной жизни!</string>
   <string name="open_in_store">Откройте в Play маркет</string>
@@ -371,5 +371,6 @@
   <string name="choose_recipient_title">Выберите получателя</string>
   <string name="action_continue">Продолжить</string>
   <string name="scan_qr_code">Сканировать QR код</string>
+  <string name="enter_recipient_uuid">Ввести пользовательский ID получателей</string>
   <string name="invited_to_party">Вас пригласили в команду!</string>
 </resources>
