@@ -91,6 +91,12 @@ public class AvatarView extends View {
         isOrphan = true;
     }
 
+    public void configureView(boolean showBackground, boolean showMount, boolean showPet) {
+        this.showBackground = showBackground;
+        this.showMount = showMount;
+        this.showPet = showPet;
+    }
+
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
@@ -242,6 +248,7 @@ public class AvatarView extends View {
                 case HAIR_MUSTACHE:
                 case HAIR_BEARD:
                 case EYEWEAR:
+                case VISUAL_BUFF:
                 case HEAD:
                 case HEAD_ACCESSORY:
                 case HAIR_FLOWER:
@@ -316,7 +323,7 @@ public class AvatarView extends View {
         if (oldUser != null) {
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
 
-            boolean equals = currentLayers.equals(newLayerMap);
+            boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
             
             if (!equals) {
                 multiDraweeHolder.clear();
@@ -445,14 +452,15 @@ public class AvatarView extends View {
         HAIR_MUSTACHE(11),
         HAIR_BEARD(12),
         EYEWEAR(13),
-        HEAD(14),
-        HEAD_ACCESSORY(15),
-        HAIR_FLOWER(16),
-        SHIELD(17),
-        WEAPON(18),
-        MOUNT_HEAD(19),
-        ZZZ(20),
-        PET(21);
+        VISUAL_BUFF(14),
+        HEAD(15),
+        HEAD_ACCESSORY(16),
+        HAIR_FLOWER(17),
+        SHIELD(18),
+        WEAPON(19),
+        MOUNT_HEAD(20),
+        ZZZ(21),
+        PET(22);
 
         final int order;
 

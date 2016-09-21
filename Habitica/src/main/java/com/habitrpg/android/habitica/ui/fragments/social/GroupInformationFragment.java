@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.helpers.QrCodeManager;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -17,6 +18,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,12 +37,24 @@ public class GroupInformationFragment extends BaseFragment {
 
 
     FragmentGroupInfoBinding viewBinding;
+
     @Inject
     APIHelper apiHelper;
+
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
+
     @BindView(R.id.collectionStats)
     RecyclerView collectionStats;
+
+    @BindView(R.id.qrLayout)
+    @Nullable
+    LinearLayout qrLayout;
+
+    @BindView(R.id.qrWrapper)
+    @Nullable
+    CardView qrWrapper;
+
     private View view;
     private Group group;
     private HabitRPGUser user;
@@ -55,7 +69,6 @@ public class GroupInformationFragment extends BaseFragment {
     }
 
     public static GroupInformationFragment newInstance(Group group, HabitRPGUser user) {
-
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();
@@ -74,6 +87,7 @@ public class GroupInformationFragment extends BaseFragment {
 
         viewBinding = DataBindingUtil.bind(view);
         viewBinding.setHideParticipantCard(false);
+
         if (user != null) {
             viewBinding.setUser(user);
         }
@@ -88,6 +102,15 @@ public class GroupInformationFragment extends BaseFragment {
         collectionStats.setAdapter(questCollectViewAdapter);
         bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
+
+        if (this.group == null) {
+            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+            qrCodeManager.setUpView(qrLayout);
+
+            if (user.getInvitations().getParty() != null && user.getInvitations().getParty().getId() != null) {
+                viewBinding.setInvitation(user.getInvitations().getParty());
+            }
+        }
 
         return view;
     }
@@ -292,4 +315,22 @@ public class GroupInformationFragment extends BaseFragment {
         builder.show();
     }
 
+    @OnClick(R.id.btnPartyInviteAccept)
+    public void onPartyInviteAccepted() {
+        apiHelper.apiService.joinGroup(user.getInvitations().getParty().getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(group -> {
+                    setGroup(group);
+                    viewBinding.setInvitation(null);
+                }, throwable -> {});
+    }
+
+    @OnClick(R.id.btnPartyInviteReject)
+    public void onPartyInviteRejected() {
+        apiHelper.apiService.rejectGroupInvite(user.getInvitations().getParty().getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+                    viewBinding.setInvitation(null);
+                }, throwable -> {});
+    }
 }

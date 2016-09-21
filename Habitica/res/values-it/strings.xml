@@ -19,6 +19,13 @@
   <string name="pref_reminder_header">Notifica giornaliera</string>
   <string name="pref_reminder_checkbox">Attiva notifica</string>
   <string name="pref_reminder_picker">Imposta ora notifica</string>
+  <string name="push_notifications">Notifiche Push</string>
+  <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
+  <string name="preference_push_received_a_private_message">Ricevuto un messaggio</string>
+  <string name="preference_push_invited_to_party">Invito in una squadra</string>
+  <string name="preference_push_invited_to_guild">Invito in una Gilda</string>
+  <string name="preference_push_your_quest_has_begun">La tua Missione è cominciata</string>
+  <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
   <!--Adding tasks-->
   <string name="task_value">Valore</string>
   <string name="new_todo">Nuova to-do</string>
@@ -331,4 +338,17 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="timeTravelers">Viaggiatori del Tempo</string>
   <string name="seasonalShop">Negozio Stagionale</string>
   <string name="empty_inbox">Non hai nessun messaggio. Puoi inviare un messaggio privato ad un utente dai loro messaggi nelle chat pubbliche!</string>
+  <string name="party_invite">Sblocca invitando amici</string>
+  <string name="no_gold">Non hai abbastanza Oro</string>
+  <string name="no_potion">Non hai bisogno di comprare una pozione di salute</string>
+  <string name="successful_purchase" formatted="false">%1$s comprato con successo</string>
+  <string name="purchase_confirmation_title">Conferma acquisto</string>
+  <string name="confirm_purchase_text" formatted="false">Compra %1$s per %2$s %3$s</string>
+  <string name="gem">gemma</string>
+  <string name="hourglass">clessidra</string>
+  <string name="hourglasses">clessidre</string>
+  <string name="gold_singular">oro</string>
+  <string name="chat_message_copied">Messaggio copiato negli Appunti</string>
+  <string name="copy_chat_message">Copia negli appunti</string>
+  <!--QR Strings-->
 </resources>

@@ -16,6 +16,15 @@ public class Buffs extends BasicStats {
     @Column
     private Boolean streaks;
 
+    @Column
+    private Boolean seafoam;
+
+    @Column
+    private Boolean spookySparkles;
+
+    @Column
+    private Boolean shinySeed;
+
     public Buffs() {
         this(false, false);
     }
@@ -31,6 +40,30 @@ public class Buffs extends BasicStats {
 
     public void setSnowball(Boolean snowball) {
         this.snowball = snowball;
+    }
+
+    public Boolean getSeafoam() {
+        return seafoam != null ? seafoam : Boolean.FALSE;
+    }
+
+    public void setSeafoam(Boolean seafoam) {
+        this.seafoam = seafoam;
+    }
+
+    public Boolean getSpookySparkles() {
+        return spookySparkles != null ? spookySparkles : Boolean.FALSE;
+    }
+
+    public void setSpookySparkles(Boolean spookySparkles) {
+        this.spookySparkles = spookySparkles;
+    }
+
+    public Boolean getShinySeed() {
+        return shinySeed != null ? shinySeed : Boolean.FALSE;
+    }
+
+    public void setShinySeed(Boolean shinySeed) {
+        this.shinySeed = shinySeed;
     }
 
     public Boolean getStreaks() {

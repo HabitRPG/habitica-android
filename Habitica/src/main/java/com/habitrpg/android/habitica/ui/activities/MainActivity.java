@@ -1,42 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDoneException;
-import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -57,6 +20,7 @@ import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -70,8 +34,9 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -130,6 +95,42 @@ import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.sqlite.SQLiteDoneException;
+import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -137,7 +138,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -223,18 +223,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language","en"));
-        Locale.setDefault(languageHelper.getLocale());
-        Configuration configuration = new Configuration();
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
-            configuration.locale = languageHelper.getLocale();
-        } else {
-            configuration.setLocale(languageHelper.getLocale());
-        }
-        getResources().updateConfiguration(configuration,
-                getResources().getDisplayMetrics());
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
@@ -829,6 +817,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             drawer.closeDrawer();
         } else if (drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
             drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
+            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
         } else {
             super.onBackPressed();
             if (this.activeFragment != null) {
@@ -839,8 +828,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
         if (resultCode == SELECT_CLASS_RESULT) {
             if (this.apiHelper != null) {
                 this.apiHelper.retrieveUser(true)
@@ -849,6 +836,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         });
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
     }
 
     // region Events
@@ -1520,6 +1509,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             drawer = this.filterDrawer;
         }
         if (drawer != null) {
+            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
             drawer.openDrawer();
         }
     }
@@ -1550,5 +1540,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    public void removeFilterDrawerItem(int position) {
+        this.filterDrawer.removeItemByPosition(position);
+    }
+
+    public void updateFilterDrawerItem (IDrawerItem item, int position) {
+        this.filterDrawer.removeItemByPosition(position);
+        this.filterDrawer.addItemAtPosition(item,position);
     }
 }

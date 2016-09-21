@@ -311,4 +311,5 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="open_in_store">Abrir na Play Store</string>
   <string name="change_class_confirmation">Tem a certeza de que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
   <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
+  <!--QR Strings-->
 </resources>

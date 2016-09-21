@@ -325,4 +325,5 @@ To start, which parts of your life do you want to improve?</string>
   <string name="open_in_store">Open in Play Store</string>
   <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
   <string name="leaderMessage" formatted="false">Message from %1$s</string>
+  <!--QR Strings-->
 </resources>

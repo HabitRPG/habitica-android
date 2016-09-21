@@ -123,7 +123,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
         public void bind(Pet item) {
             this.animal = item;
             this.titleView.setText(item.getColorText());
-            this.trainedProgressbar.setVisibility(View.VISIBLE);
+            this.trainedProgressbar.setVisibility(animal.getAnimalGroup().equals("specialPets") ? View.GONE : View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (this.getOwnedStatus() > 0) {
                 if (this.isMountOwned()) {
@@ -150,7 +150,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            if (!this.isMountOwned()) {
+            if (!animal.getAnimalGroup().equals("specialPets") && !this.isMountOwned()) {
                 menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
             }
             menu.setSelectionRunnable(index -> {

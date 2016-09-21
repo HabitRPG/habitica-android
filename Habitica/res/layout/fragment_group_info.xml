@@ -6,6 +6,7 @@
     <data>
         <import type="com.magicmicky.habitrpgwrapper.lib.models.Group" />
         <import type="com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent" />
+        <import type="com.magicmicky.habitrpgwrapper.lib.models.invitations.PartyInvite" />
         <import type="com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>
@@ -26,6 +27,10 @@
             name="hideParticipantCard"
             type="Boolean" />
 
+        <variable
+            name="invitation"
+            type="PartyInvite" />
+
     </data>
 
 
@@ -34,13 +39,72 @@
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
-
         android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CardView.Default"
+                    android:id="@+id/invitationWrapper"
+                    android:visibility="@{invitation == null ? View.GONE : View.VISIBLE}"
+                    >
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/CardContent">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invited_to_party" />
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="right">
+
+                    <Button
+                            android:id="@+id/btnPartyInviteAccept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.accept"
+                            android:textColor="@color/btn_success"
+                            style="?android:buttonBarButtonStyle" />
+
+                    <Button
+                            android:id="@+id/btnPartyInviteReject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quest.reject"
+                            android:textColor="@color/btn_danger"
+                            style="?android:buttonBarButtonStyle" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CardView.Default"
+                android:id="@+id/qrWrapper"
+                android:visibility="@{group == null ? View.VISIBLE : View.GONE}"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/CardContent">
+
+                    <include layout="@layout/qr_code" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:layout_width="wrap_content"

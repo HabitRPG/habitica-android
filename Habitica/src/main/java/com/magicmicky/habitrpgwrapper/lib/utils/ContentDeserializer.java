@@ -73,6 +73,8 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         }.getType());
         result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<HashMap<String, Mount>>() {
         }.getType());
+        result.premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<HashMap<String, Mount>>() {
+        }.getType());
         result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<HashMap<String, Mount>>() {
         }.getType());
 
@@ -96,6 +98,9 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
                 }
                 if (result.specialMounts.containsKey(key)) {
                     result.specialMounts.put(key, this.popupateMount(result.specialMounts.get(key), egg, potion));
+                }
+                if (result.premiumMounts.containsKey(key)) {
+                    result.premiumMounts.put(key, this.popupateMount(result.premiumMounts.get(key), egg, potion));
                 }
                 if (result.questMounts.containsKey(key)) {
                     result.questMounts.put(key, this.popupateMount(result.questMounts.get(key), egg, potion));
@@ -126,6 +131,10 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         }
         for (Mount mount : result.specialMounts.values()) {
             mount.setAnimalGroup("specialMounts");
+            items.add(mount);
+        }
+        for (Mount mount : result.premiumMounts.values()) {
+            mount.setAnimalGroup("premiumMounts");
             items.add(mount);
         }
         for (Mount mount : result.questMounts.values()) {

@@ -13,6 +13,7 @@
   <string name="SP_userID_summary">Seu ID de usuário</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Seu API Token</string>
+  <string name="SP_user_qr_code">Seu código QR</string>
   <string name="PS_contact_title">Contate-me</string>
   <string name="unknown_error">Um erro aconteceu...</string>
   <string name="pref_account_header">Conta</string>
@@ -24,6 +25,7 @@
   <string name="preference_push_you_won_challenge">Você venceu um Desafio!</string>
   <string name="preference_push_received_a_private_message">Recebeu uma Mensagem Privada</string>
   <string name="preference_push_gifted_gems">Gemas de presente</string>
+  <string name="preference_push_gifted_subscription">Assinatura Presenteada</string>
   <string name="preference_push_invited_to_party">Convidado para um grupo</string>
   <string name="preference_push_invited_to_guild">Convidado para uma Guilda</string>
   <string name="preference_push_your_quest_has_begun">Sua missão começou</string>
@@ -232,6 +234,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="privacy">Privacidade</string>
   <string name="write_message">Escrever mensagem</string>
   <string name="post">Publicar</string>
+  <string name="guild_search_hint">Busque guildas</string>
   <string name="todo_due" formatted="false">Devido: %s</string>
   <string name="daily_streak" formatted="false">Raia atual: %d</string>
   <string name="todo_has_duedate">Tarefa com vencimento</string>
@@ -350,8 +353,11 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="hourglass">ampulheta</string>
   <string name="hourglasses">ampulhetas</string>
   <string name="gold_singular">ouro</string>
-  <string name="gems_plural">ouro</string>
+  <string name="gold_plural">ouros</string>
   <string name="chat_message_copied">Mensagem copiada para Área de Transferência</string>
-  <string name="copy_chat_message">Copiar para Área e Transferência
-</string>
+  <string name="copy_chat_message">Mensagem copiada para Área de Transferência</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">Deixe que te convidem com esse código QR</string>
+  <string name="qr_save_message">Código QR salvo</string>
+  <string name="qr_dialogue_title">Seu código QR</string>
 </resources>
