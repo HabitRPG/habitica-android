@@ -87,9 +87,8 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public RemoteViews getLoadingView() {
-        final RemoteViews remoteView = new RemoteViews(
+        return new RemoteViews(
                 context.getPackageName(), R.layout.widget_dailies_list_row);
-        return remoteView;
     }
 
     @Override

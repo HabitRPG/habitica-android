@@ -10,7 +10,7 @@ import butterknife.BindView;
 
 public class DailyViewHolder extends ChecklistedViewHolder {
 
-    public final int dailyResetOffset;
+    private final int dailyResetOffset;
     @BindView(R.id.streakTextView)
     TextView streakTextView;
 

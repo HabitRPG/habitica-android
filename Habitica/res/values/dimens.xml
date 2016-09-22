@@ -83,4 +83,5 @@
 	<dimen name="header_bar_spacing">7dp</dimen>
 	<dimen name="habit_circle_background_size">40dp</dimen>
 	<dimen name="bar_size_slim">13dp</dimen>
+	<dimen name="widget_rounding">5dp</dimen>
 </resources>

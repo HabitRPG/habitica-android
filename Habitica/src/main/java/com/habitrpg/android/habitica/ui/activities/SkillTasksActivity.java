@@ -20,7 +20,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-public class SkillTasksActivity extends BaseActivity {
+public class SkillTasksActivity extends BaseActivity implements TaskClickActivity {
 
     @BindView(R.id.viewpager)
     public ViewPager viewPager;
@@ -100,3 +100,4 @@ public class SkillTasksActivity extends BaseActivity {
         finish();
     }
 }
+

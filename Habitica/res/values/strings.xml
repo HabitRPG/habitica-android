@@ -404,5 +404,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="add_todo">Add To-Do</string>
     <string name="add_reward">Add Reward</string>
     <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
+    <string name="widget_habit_button">Habitica Do Habit</string>
+    <string name="widget_dailies">Habitica Dailies</string>
+    <string name="widget_add_task">Habitica Add Task</string>
 
 </resources>

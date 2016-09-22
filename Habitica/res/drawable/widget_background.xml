@@ -10,7 +10,7 @@
 
     <!-- Here is the corner radius -->
     <corners
-            android:radius="2dp"   >
+            android:radius="@dimen/widget_rounding"   >
     </corners>
 
 </shape>
