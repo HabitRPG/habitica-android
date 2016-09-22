@@ -22,12 +22,16 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
     private final int widgetId;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
+    private boolean reloadData;
 
     public DailiesListProvider(Context context, Intent intent) {
         this.context = context;
         this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+        this.reloadData = false;
+        this.loadData();
+    }
 
-
+    private void loadData() {
         Observable.defer(() -> Observable.from(new Select()
                 .from(Task.class)
                 .where(Condition.column("type").eq(Task.TYPE_DAILY))
@@ -39,9 +43,11 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasks -> {
                     taskList = tasks;
+                    this.reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
                 }, throwable -> {});
     }
+
 
     @Override
     public void onCreate() {
@@ -49,6 +55,10 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onDataSetChanged() {
+        if (this.reloadData) {
+            this.loadData();
+        }
+        this.reloadData = true;
     }
 
     @Override
@@ -64,16 +74,22 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
                 context.getPackageName(), R.layout.widget_dailies_list_row);
-        Task task = taskList.get(position);
-        remoteView.setTextViewText(R.id.dailies_text, task.text);
-        remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
-        remoteView.setOnClickPendingIntent();
+        if (taskList.size() > position) {
+            Task task = taskList.get(position);
+            remoteView.setTextViewText(R.id.dailies_text, task.text);
+            remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtra(DailiesWidgetProvider.TASK_ID_ITEM, task.getId());
+            remoteView.setOnClickFillInIntent(R.id.dailies_list_row, fillInIntent);
+        }
         return remoteView;
     }
 
     @Override
     public RemoteViews getLoadingView() {
-        return null;
+        final RemoteViews remoteView = new RemoteViews(
+                context.getPackageName(), R.layout.widget_dailies_list_row);
+        return remoteView;
     }
 
     @Override
@@ -83,12 +99,16 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public long getItemId(int position) {
+        if (taskList.size() > position) {
+            Task task = taskList.get(position);
+            return task.getId().hashCode();
+        }
         return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
 }

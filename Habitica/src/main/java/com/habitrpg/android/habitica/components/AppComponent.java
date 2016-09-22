@@ -54,6 +54,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFr
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetService;
+import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 
 import javax.inject.Singleton;
 
@@ -165,4 +166,6 @@ public interface AppComponent {
     void inject(LocalNotificationActionReceiver localNotificationActionReceiver);
 
     void inject(FullProfileActivity fullProfileActivity);
+
+    void inject(DailiesWidgetProvider dailiesWidgetProvider);
 }
