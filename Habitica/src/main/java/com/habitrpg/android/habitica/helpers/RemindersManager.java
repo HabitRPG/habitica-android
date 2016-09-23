@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.helpers;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.view.View;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.v7.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,7 +17,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -68,6 +69,18 @@ public class RemindersManager {
             Button dialogConfirmButton = (Button) dialog.findViewById(R.id.customDialogConfirmButton);
             TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
             DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
+                    Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+                    FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+                dialogDatePicker.getCalendarView().setFirstDayOfWeek(
+                        firstDayOfTheWeekHelper.getFirstDayOfTheWeek());
+            } else {
+                dialogDatePicker.setFirstDayOfWeek(firstDayOfTheWeekHelper.getFirstDayOfTheWeek());
+            }
 
             dialogConfirmButton.setOnClickListener(view -> {
                 int day = dialogDatePicker.getDayOfMonth();

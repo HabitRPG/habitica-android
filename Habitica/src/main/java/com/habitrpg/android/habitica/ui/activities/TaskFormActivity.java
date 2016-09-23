@@ -1,42 +1,17 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
-import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
-import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import net.pherth.android.emoji_library.EmojiEditText;
-import net.pherth.android.emoji_library.EmojiPopup;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -58,19 +33,45 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
+import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiPopup;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -570,6 +571,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         this.frequencyContainer.removeAllViews();
         if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
             String[] weekdays = getResources().getStringArray(R.array.weekdays);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
+                    Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+                    FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
+            ArrayList<String> weekdaysTemp = new ArrayList<>(Arrays.asList(weekdays));
+            Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper.getDailyTaskFormOffset());
+            weekdays = weekdaysTemp.toArray(new String[1]);
+
             for (int i = 0; i < 7; i++) {
                 View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.frequencyContainer, false);
                 CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
@@ -901,6 +911,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         public DateEditTextListener(EditText dateText) {
             calendar = Calendar.getInstance();
+
             this.datePickerText = dateText;
             this.datePickerText.setOnClickListener(this);
             this.dateFormatter = DateFormat.getDateInstance();
@@ -908,6 +919,20 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH));
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
+                    Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
+            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+                    FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+                datePickerDialog.getDatePicker().getCalendarView().setFirstDayOfWeek(
+                        firstDayOfTheWeekHelper.getFirstDayOfTheWeek());
+            } else {
+                datePickerDialog.getDatePicker().setFirstDayOfWeek(firstDayOfTheWeekHelper
+                        .getFirstDayOfTheWeek());
+            }
+
             this.datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, getResources().getString(R.string.today), (dialog, which) -> {
                 setCalendar(Calendar.getInstance().getTime());
             });
