@@ -74,7 +74,7 @@ public class RemindersManager {
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
             FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
-                    FirstDayOfTheWeekHelper.newInstance(dayOfTheWeek);
+                    FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
                 dialogDatePicker.getCalendarView().setFirstDayOfWeek(
                         firstDayOfTheWeekHelper.getFirstDayOfTheWeek());

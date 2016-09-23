@@ -15,21 +15,21 @@ public class FirstDayOfTheWeekHelper {
         this.firstDayOfTheWeek = firstDayOfTheWeek;
     }
 
-    public static FirstDayOfTheWeekHelper newInstance(String firstDayOfTheWeekSharedPref) {
+    public static FirstDayOfTheWeekHelper newInstance(int firstDayOfTheWeekSharedPref) {
         switch (firstDayOfTheWeekSharedPref){
-            case "1":
+            case Calendar.SUNDAY:
                 return new FirstDayOfTheWeekHelper(1, Calendar.SUNDAY);
-            case "2":
+            case Calendar.MONDAY:
                 return new FirstDayOfTheWeekHelper(0, Calendar.MONDAY);
-            case "3":
+            case Calendar.TUESDAY:
                 return new FirstDayOfTheWeekHelper(6, Calendar.TUESDAY);
-            case "4":
+            case Calendar.WEDNESDAY:
                 return new FirstDayOfTheWeekHelper(5, Calendar.WEDNESDAY);
-            case "5":
+            case Calendar.THURSDAY:
                 return new FirstDayOfTheWeekHelper(4, Calendar.THURSDAY);
-            case "6":
+            case Calendar.FRIDAY:
                 return new FirstDayOfTheWeekHelper(3, Calendar.FRIDAY);
-            case "7":
+            case Calendar.SATURDAY:
                 return new FirstDayOfTheWeekHelper(2, Calendar.SATURDAY);
             default:
                 return new FirstDayOfTheWeekHelper(1, Calendar.SUNDAY);
