@@ -68,11 +68,18 @@
             android:entryValues="@array/weekdayValues"
             android:summary="@string/pref_first_day_of_the_week_summary"
             android:order="4"/>
+        <ListPreference android:title="@string/Language_title"
+            android:key="language"
+            android:entries="@array/Language"
+            android:entryValues="@array/LanguageValues"
+            android:summary="@string/Language_summary"
+            android:order="3"/>
 
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"
             android:order="99"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

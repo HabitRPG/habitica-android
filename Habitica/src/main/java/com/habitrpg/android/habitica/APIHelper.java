@@ -1,13 +1,15 @@
 package com.habitrpg.android.habitica;
 
+import android.app.Activity;
+import android.support.v7.app.AlertDialog;
+
+import com.amplitude.api.Amplitude;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import com.amplitude.api.Amplitude;
-import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
@@ -64,10 +66,6 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

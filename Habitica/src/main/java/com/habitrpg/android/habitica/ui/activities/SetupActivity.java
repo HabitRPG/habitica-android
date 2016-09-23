@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -80,6 +81,16 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } catch (JSONException exception) {
         }
         Amplitude.getInstance().logEvent("setup", eventProperties);
+
+        String currentDeviceLanguage = Locale.getDefault().getLanguage();
+        for (String language : getResources().getStringArray(R.array.LanguageValues)) {
+            if (language.equals(currentDeviceLanguage)) {
+                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                        });
+            }
+        }
     }
 
     @Override

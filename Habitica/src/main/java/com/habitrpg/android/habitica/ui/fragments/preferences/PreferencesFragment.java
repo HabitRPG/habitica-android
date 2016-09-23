@@ -1,31 +1,38 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.NotificationPublisher;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-import com.habitrpg.android.habitica.prefs.TimePreference;
-import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
-import android.util.Log;
+
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.NotificationPublisher;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
+import com.habitrpg.android.habitica.prefs.TimePreference;
+import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,6 +46,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
+    public MainActivity activity;
     private PushNotificationManager pushNotificationManager;
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
@@ -196,6 +204,44 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 pushNotificationManager.addPushDeviceUsingStoredToken();
             } else {
                 pushNotificationManager.removePushDeviceUsingStoredToken();
+            }
+        } else if (key.equals("language")) {
+            LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
+
+            Locale.setDefault(languageHelper.getLocale());
+            Configuration configuration = new Configuration();
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+                configuration.locale = languageHelper.getLocale();
+            } else {
+                configuration.setLocale(languageHelper.getLocale());
+            }
+            getActivity().getResources().updateConfiguration(configuration,
+                    getActivity().getResources().getDisplayMetrics());
+
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("preferences.language", languageHelper.getLanguageCode());
+            apiHelper.apiService.updateUser(updateData)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
+                    });
+
+            Preferences preferences = user.getPreferences();
+            preferences.setLanguage(languageHelper.getLanguageCode());
+            apiHelper.languageCode = preferences.getLanguage();
+            apiHelper.apiService.getContent(apiHelper.languageCode)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(contentResult -> {
+                    }, throwable -> {
+                    });
+
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1){
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                this.startActivity(intent);
+                getActivity().finishAffinity();
             }
         }
     }
