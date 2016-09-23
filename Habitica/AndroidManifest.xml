@@ -189,14 +189,6 @@
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/avatar_widget_info" />
         </receiver>
-        <receiver android:name=".widget.AddTaskWidgetProvider"
-            android:label="@string/widget_add_task">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/add_task_widget_info" />
-        </receiver>
         <receiver android:name=".widget.DailiesWidgetProvider"
             android:label="@string/widget_dailies">
             <intent-filter>
