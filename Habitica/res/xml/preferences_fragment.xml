@@ -62,6 +62,13 @@
             android:key="choose_class"
             android:order="2"/>
 
+        <ListPreference android:title="@string/pref_first_day_of_the_week_title"
+            android:key="@string/pref_first_day_of_the_week_key"
+            android:entries="@array/weekdays"
+            android:entryValues="@array/weekdayValues"
+            android:summary="@string/pref_first_day_of_the_week_summary"
+            android:order="4"/>
+
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"

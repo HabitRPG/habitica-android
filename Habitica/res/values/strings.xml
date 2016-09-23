@@ -18,6 +18,10 @@
     <string name="PS_contact_title">Contact me</string>
     <string name="unknown_error">An error happened…</string>
     <string name="pref_account_header">Account</string>
+    <string name="pref_first_day_of_the_week_title">First Day of the Week</string>
+    <string name="pref_first_day_of_the_week_summary">First day of the week in all calendars</string>
+    <string name="pref_first_day_of_the_week_default_value">1</string>
+    <string name="pref_first_day_of_the_week_key">FirstDayOfTheWeek</string>
     <string name="pref_reminder_header">Daily Reminder</string>
     <string name="pref_reminder_checkbox">Activate Reminder</string>
     <string name="pref_reminder_picker">Set Reminder Time</string>
