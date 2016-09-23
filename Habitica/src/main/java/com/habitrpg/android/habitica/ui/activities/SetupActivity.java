@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -31,8 +32,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -72,15 +75,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         this.previousButton.setOnClickListener(this);
         this.completedSetup = false;
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "setup");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("status", "displayed");
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("setup", eventProperties);
+        Map<String, String> additionalData = new HashMap<>();
+        additionalData.put("status", "displayed");
+        AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
 
         String currentDeviceLanguage = Locale.getDefault().getLanguage();
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
@@ -183,15 +180,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } else if (v == this.previousButton) {
             this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
         } else if (v == this.skipButton) {
-            JSONObject eventProperties = new JSONObject();
-            try {
-                eventProperties.put("eventAction", "setup");
-                eventProperties.put("eventCategory", "behaviour");
-                eventProperties.put("hitType", "event");
-                eventProperties.put("status", "skipped");
-            } catch (JSONException exception) {
-            }
-            Amplitude.getInstance().logEvent("setup", eventProperties);
+            Map<String, String> additionalData = new HashMap<>();
+            additionalData.put("status", "skipped");
+            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
             this.startMainActivity();
         }
     }
@@ -232,15 +223,9 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "setup");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("status", "completed");
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("setup", eventProperties);
+        Map<String, String> additionalData = new HashMap<>();
+        additionalData.put("status", "completed");
+        AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
     private void startMainActivity() {

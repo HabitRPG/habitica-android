@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -59,6 +60,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -163,15 +166,9 @@ public class LoginActivity extends BaseActivity
 
         this.isRegistering = true;
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "navigate");
-            eventProperties.put("eventCategory", "navigation");
-            eventProperties.put("hitType", "pageview");
-            eventProperties.put("page", this.getClass().getSimpleName());
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("navigate", eventProperties);
+        Map<String, String> additionalData = new HashMap<>();
+        additionalData.put("page", this.getClass().getSimpleName());
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
     }
 
     @Override
@@ -407,14 +404,7 @@ public class LoginActivity extends BaseActivity
         if (this.isRegistering || userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
-            JSONObject eventProperties = new JSONObject();
-            try {
-                eventProperties.put("eventAction", "login");
-                eventProperties.put("eventCategory", "behaviour");
-                eventProperties.put("hitType", "event");
-            } catch (JSONException exception) {
-            }
-            Amplitude.getInstance().logEvent("login", eventProperties);
+            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
             this.startMainActivity();
         }
     }

@@ -75,6 +75,7 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -145,6 +146,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -1391,17 +1393,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.overlayFrameLayout.addView(view);
         this.activeTutorialView = view;
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "tutorial");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
-            eventProperties.put("eventValue", step.getIdentifier());
-            eventProperties.put("complete", false);
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("tutorial", eventProperties);
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", false);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
     @Override
@@ -1416,17 +1412,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.overlayFrameLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "tutorial");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
-            eventProperties.put("eventValue", step.getIdentifier());
-            eventProperties.put("complete", true);
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("tutorial", eventProperties);
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", true);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
     @Override

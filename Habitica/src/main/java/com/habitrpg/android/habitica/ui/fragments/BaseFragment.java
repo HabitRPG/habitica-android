@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.activities.BaseActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -67,15 +70,9 @@ public abstract class BaseFragment extends DialogFragment {
             String displayedClassName = this.getDisplayedClassName();
 
             if (displayedClassName != null) {
-                JSONObject eventProperties = new JSONObject();
-                try {
-                    eventProperties.put("eventAction", "navigate");
-                    eventProperties.put("eventCategory", "navigation");
-                    eventProperties.put("hitType", "pageview");
-                    eventProperties.put("page", displayedClassName);
-                } catch (JSONException exception) {
-                }
-                Amplitude.getInstance().logEvent("navigate", eventProperties);
+                Map<String, String> additionalData = new HashMap<>();
+                additionalData.put("page", displayedClassName);
+                AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
             }
         }
     }
