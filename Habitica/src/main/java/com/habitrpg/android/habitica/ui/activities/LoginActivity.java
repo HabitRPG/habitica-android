@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity
 
         this.isRegistering = true;
 
-        Map<String, String> additionalData = new HashMap<>();
+        Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("page", this.getClass().getSimpleName());
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
     }

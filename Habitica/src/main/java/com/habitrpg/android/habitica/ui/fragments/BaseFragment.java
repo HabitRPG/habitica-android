@@ -1,6 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.amplitude.api.Amplitude;
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
@@ -13,16 +20,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -70,7 +67,7 @@ public abstract class BaseFragment extends DialogFragment {
             String displayedClassName = this.getDisplayedClassName();
 
             if (displayedClassName != null) {
-                Map<String, String> additionalData = new HashMap<>();
+                Map<String, Object> additionalData = new HashMap<>();
                 additionalData.put("page", displayedClassName);
                 AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
             }

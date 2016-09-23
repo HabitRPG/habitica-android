@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -75,7 +76,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         this.previousButton.setOnClickListener(this);
         this.completedSetup = false;
 
-        Map<String, String> additionalData = new HashMap<>();
+        Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
 
@@ -180,7 +181,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         } else if (v == this.previousButton) {
             this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
         } else if (v == this.skipButton) {
-            Map<String, String> additionalData = new HashMap<>();
+            Map<String, Object> additionalData = new HashMap<>();
             additionalData.put("status", "skipped");
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
             this.startMainActivity();
@@ -223,7 +224,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
-        Map<String, String> additionalData = new HashMap<>();
+        Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "completed");
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
