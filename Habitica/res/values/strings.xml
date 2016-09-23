@@ -397,5 +397,15 @@ To start, which parts of your life do you want to improve?</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="enter_recipient_uuid">Enter Recipients User ID</string>
     <string name="invited_to_party">You were invited to join a party!</string>
+    <string name="stats_widget_label">Habitica Stats</string>
+    <string name="add_task">Add Task</string>
+    <string name="add_habit">Add Habit</string>
+    <string name="add_daily">Add Daily</string>
+    <string name="add_todo">Add To-Do</string>
+    <string name="add_reward">Add Reward</string>
+    <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
+    <string name="widget_habit_button">Habitica Do Habit</string>
+    <string name="widget_dailies">Habitica Dailies</string>
+    <string name="widget_add_task">Habitica Add Task</string>
 
 </resources>

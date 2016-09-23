@@ -117,18 +117,15 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             switch (stats.get_class()) {
                 case warrior:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
-
                     break;
                 case rogue:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
                     break;
                 case wizard:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
-
                     break;
                 case healer:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
-
                     break;
                 case base:
                 default:

@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.helpers.TagsHelper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.preference.PreferenceManager;
 
 import javax.inject.Named;
@@ -46,5 +47,10 @@ public class AppModule {
     @Singleton
     public TagsHelper providesTagsHelper() {
         return new TagsHelper();
+    }
+
+    @Provides
+    public Resources providesResources(Context context) {
+        return context.getResources();
     }
 }

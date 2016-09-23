@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -53,7 +54,10 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
-import com.habitrpg.android.habitica.widget.UpdateWidgetService;
+import com.habitrpg.android.habitica.widget.AvatarStatsWidgetService;
+import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
 
 import javax.inject.Singleton;
 
@@ -62,7 +66,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class, ApiModule.class})
 public interface AppComponent {
-    void inject(UpdateWidgetService target);
+    void inject(AvatarStatsWidgetService target);
 
     void inject(ClassSelectionActivity classSelectionActivity);
 
@@ -165,4 +169,12 @@ public interface AppComponent {
     void inject(LocalNotificationActionReceiver localNotificationActionReceiver);
 
     void inject(FullProfileActivity fullProfileActivity);
+
+    void inject(DailiesWidgetProvider dailiesWidgetProvider);
+
+    void inject(HabitButtonWidgetService habitButtonWidgetService);
+
+    void inject(HabitButtonWidgetActivity habitButtonWidgetActivity);
+
+    void inject(HabitButtonWidgetProvider habitButtonWidgetProvider);
 }

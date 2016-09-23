@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
+import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
@@ -97,6 +98,8 @@ import org.solovyev.android.checkout.Checkout;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -284,6 +287,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             activeFragment = null;
             drawer.setSelectionAtPosition(1);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        updateWidgets(AvatarStatsWidgetProvider.class);
+        super.onPause();
+    }
+
+    private void updateWidgets(Class widgetClass) {
+        Intent intent = new Intent(this,widgetClass);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), widgetClass));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        sendBroadcast(intent);
     }
 
     private void setupCheckout() {
