@@ -8,10 +8,31 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import javax.inject.Inject;
 
 public class HabitButtonWidgetProvider extends BaseWidgetProvider {
-    public static String TASK_ID = "TASK_ID";
+
+    public static final String HABIT_ACTION = "com.habitrpg.android.habitica.HABIT_ACTION";
+    public static final String TASK_ID = "com.habitrpg.android.habitica.TASK_ID_ITEM";
+    public static final String TASK_DIRECTION = "com.habitrpg.android.habitica.TASK_DIRECTION";
+    @Inject
+    public APIHelper apiHelper;
+
+    public APIHelper getApiHelper(Context context) {
+        if (apiHelper == null) {
+            HabiticaApplication application = HabiticaApplication.getInstance(context);
+            application.getComponent().inject(this);
+        }
+        return apiHelper;
+    }
 
     @Override
     public int layoutResourceId() {
@@ -20,7 +41,6 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // Get all ids
         ComponentName thisWidget = new ComponentName(context,
                 HabitButtonWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
@@ -39,6 +59,33 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds);
 
         context.startService(intent);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals(HABIT_ACTION)) {
+            AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            String taskId = intent.getStringExtra(TASK_ID);
+            String direction = intent.getStringExtra(TASK_DIRECTION);
+
+            int[] ids = {appWidgetId};
+
+            if (taskId != null) {
+                getApiHelper(context).apiService.postTaskDirection(taskId, direction)
+                        .compose(getApiHelper(context).configureApiCallObserver())
+                        .subscribe(taskDirectionData -> {
+                            Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
+                            task.value = task.value + taskDirectionData.getDelta();
+                            task.save();
+                            this.onUpdate(context, mgr, ids);
+                        }, throwable -> {
+                            this.onUpdate(context, mgr, ids);
+                        });
+            }
+        }
+        super.onReceive(context, intent);
     }
 
     @Override
