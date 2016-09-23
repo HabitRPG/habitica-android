@@ -12,6 +12,7 @@ import android.widget.RemoteViews;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -26,9 +27,19 @@ public class DailiesWidgetProvider extends BaseWidgetProvider {
 
     @Inject
     APIHelper apiHelper;
+    @Inject
+    HostConfig hostConfig;
+
+    private void setUp(Context context) {
+        if (apiHelper == null) {
+            HabiticaApplication application = HabiticaApplication.getInstance(context);
+            application.getComponent().inject(this);
+        }
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        setUp(context);
         if (intent.getAction().equals(DAILY_ACTION)) {
             AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -36,16 +47,13 @@ public class DailiesWidgetProvider extends BaseWidgetProvider {
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                if (apiHelper == null) {
-                    HabiticaApplication application = HabiticaApplication.getInstance(context);
-                    application.getComponent().inject(this);
-                }
                 apiHelper.apiService.postTaskDirection(taskId, TaskDirection.up.toString())
                         .compose(apiHelper.configureApiCallObserver())
                         .subscribe(taskDirectionData -> {
                             Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
                             task.completed = true;
                             task.save();
+                            showToastForTaskDirection(context, taskDirectionData, hostConfig.getUser());
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
                         }, throwable -> {
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
@@ -57,7 +65,7 @@ public class DailiesWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // Get all ids
+        setUp(context);
         ComponentName thisWidget = new ComponentName(context,
                 DailiesWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);

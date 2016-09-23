@@ -160,7 +160,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
-    private static final int MIN_LEVEL_FOR_SKILLS = 11;
+    public static final int MIN_LEVEL_FOR_SKILLS = 11;
     // Checkout needs to be in the Activity..
     public ActivityCheckout checkout = null;
     @Inject
