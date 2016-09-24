@@ -25,7 +25,6 @@ public class AmplitudeManager {
     }
 
     public static void sendEvent(String eventAction, String eventCategory, String hitType, Map<String, Object> additionalData) {
-        Amplitude.getInstance()
         JSONObject eventProperties = new JSONObject();
         try {
             eventProperties.put("eventAction", eventAction);
