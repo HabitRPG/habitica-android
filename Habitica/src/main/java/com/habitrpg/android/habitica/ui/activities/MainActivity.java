@@ -88,6 +88,8 @@ import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
+import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
@@ -308,11 +310,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Override
     protected void onPause() {
-        updateWidgets(AvatarStatsWidgetProvider.class);
+        updateWidget(AvatarStatsWidgetProvider.class);
+        updateWidget(DailiesWidgetProvider.class);
+        updateWidget(HabitButtonWidgetProvider.class);
         super.onPause();
     }
 
-    private void updateWidgets(Class widgetClass) {
+    private void updateWidget(Class widgetClass) {
         Intent intent = new Intent(this,widgetClass);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), widgetClass));
