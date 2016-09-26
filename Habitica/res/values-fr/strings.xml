@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Votre ID d\'utilisateur</string>
   <string name="SP_APIToken_title">Jeton d\'API</string>
   <string name="SP_APIToken_summary">Votre Jeton d\'API</string>
+  <string name="Language_title">Langage</string>
+  <string name="Language_summary">Changer le langage d\'Habitica</string>
   <string name="SP_user_qr_code">Votre QR code</string>
   <string name="PS_contact_title">Contactez-moi</string>
   <string name="unknown_error">Une erreur est survenue...</string>
   <string name="pref_account_header">Compte</string>
+  <string name="pref_first_day_of_the_week_title">Premier jour de la semaine</string>
+  <string name="pref_first_day_of_the_week_summary">Premier jour de la semaine dans tous les calendriers</string>
   <string name="pref_reminder_header">Rappel Quotidien</string>
   <string name="pref_reminder_checkbox">Activer le rappel</string>
   <string name="pref_reminder_picker">Changer l\'heure du rappel</string>
@@ -371,6 +375,5 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="choose_recipient_title">Choisissez un destinataire</string>
   <string name="action_continue">Continuer</string>
   <string name="scan_qr_code">Scanner le QR code</string>
-  <string name="enter_recipient_uuid">Entrez l\'ID d\'utilisateur du destinataire</string>
   <string name="invited_to_party">Vous avez été invité·e à rejoindre une équipe !</string>
 </resources>

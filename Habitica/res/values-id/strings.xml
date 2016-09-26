@@ -26,7 +26,6 @@
   <string name="preference_push_gifted_gems">Permata terhadiahkan</string>
   <string name="preference_push_gifted_subscription">Langganan terhadiahkan</string>
   <string name="preference_push_invited_to_party">Terundang ke Kelompok</string>
-  <string name="preference_push_invited_to_guild">Terundang ke Perserikatan</string>
   <string name="preference_push_your_quest_has_begun">Tugasmu telah Dimulai</string>
   <string name="preference_push_invited_to_quest">Terundang ke Tugas</string>
   <!--Adding tasks-->

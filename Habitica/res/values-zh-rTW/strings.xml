@@ -24,7 +24,6 @@
   <string name="preference_push_you_won_challenge">你贏得了一個挑戰！</string>
   <string name="preference_push_received_a_private_message">你收到一則私人訊息</string>
   <string name="preference_push_invited_to_party">你受邀加入隊伍</string>
-  <string name="preference_push_invited_to_guild">你受邀加入公會</string>
   <string name="preference_push_your_quest_has_begun">你的任務開始了</string>
   <string name="preference_push_invited_to_quest">你受邀參加任務</string>
   <!--Adding tasks-->

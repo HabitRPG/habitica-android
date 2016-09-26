@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Ваш ID</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Ваш API Token</string>
+  <string name="Language_title">Язык</string>
+  <string name="Language_summary">Изменить язык Habitica</string>
   <string name="SP_user_qr_code">Ваш QR код</string>
   <string name="PS_contact_title">Свяжитесь со мной</string>
   <string name="unknown_error">Произошла ошибка...</string>
   <string name="pref_account_header">Аккаунт</string>
+  <string name="pref_first_day_of_the_week_title">Первый день недели</string>
+  <string name="pref_first_day_of_the_week_summary">Первый день недели во всех календарях</string>
   <string name="pref_reminder_header">Ежедневное напоминание</string>
   <string name="pref_reminder_checkbox">Активируйте напоминание</string>
   <string name="pref_reminder_picker">Установите время напоминания</string>
@@ -26,7 +30,7 @@
   <string name="preference_push_gifted_gems">Подаренные самоцветы</string>
   <string name="preference_push_gifted_subscription">Подаренная подписка</string>
   <string name="preference_push_invited_to_party">Приглашены в команду</string>
-  <string name="preference_push_invited_to_guild">Приглашены в Гильдию</string>
+  <string name="preference_push_invited_to_guild">Приглашены в гильдию</string>
   <string name="preference_push_your_quest_has_begun">Ваш Квест начался</string>
   <string name="preference_push_invited_to_quest">Приглашены в Квест</string>
   <!--Adding tasks-->
@@ -371,6 +375,16 @@
   <string name="choose_recipient_title">Выберите получателя</string>
   <string name="action_continue">Продолжить</string>
   <string name="scan_qr_code">Сканировать QR код</string>
-  <string name="enter_recipient_uuid">Ввести пользовательский ID получателей</string>
+  <string name="enter_recipient_uuid">Ввести пользовательский ID участника</string>
   <string name="invited_to_party">Вас пригласили в команду!</string>
+  <string name="stats_widget_label">Характеристики Habitica</string>
+  <string name="add_task">Добавить задачу</string>
+  <string name="add_habit">Добавить привычку</string>
+  <string name="add_daily">Добавить ежедневное задание</string>
+  <string name="add_todo">Добавить задачу</string>
+  <string name="add_reward">Добавить награду</string>
+  <string name="all_dailies_completed">Вы справились со всеми ежедневными заданиями. Так держать!</string>
+  <string name="widget_habit_button">Привычки Habitica</string>
+  <string name="widget_dailies">Ежедневные задания Habitica</string>
+  <string name="widget_add_task">Добавить задачу Habitica</string>
 </resources>

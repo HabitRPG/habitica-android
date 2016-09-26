@@ -26,7 +26,6 @@
   <string name="preference_push_gifted_gems">Gemas regaladas</string>
   <string name="preference_push_gifted_subscription">Suscripción regalada</string>
   <string name="preference_push_invited_to_party">Invitado a un grupo</string>
-  <string name="preference_push_invited_to_guild">Invitado a un gremio</string>
   <string name="preference_push_your_quest_has_begun">La misión ha comenzado</string>
   <string name="preference_push_invited_to_quest">Invitado a una misión</string>
   <!--Adding tasks-->

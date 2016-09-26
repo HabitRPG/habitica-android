@@ -26,7 +26,6 @@
   <string name="preference_push_gifted_gems">אבני חן ניתנו במתנה</string>
   <string name="preference_push_gifted_subscription">מנוי ניתן במתנה</string>
   <string name="preference_push_invited_to_party">הוזמנו לחבורה</string>
-  <string name="preference_push_invited_to_guild">הוזמנו לגילדה</string>
   <string name="preference_push_your_quest_has_begun">ההרפתקה שלכם החלה</string>
   <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
   <!--Adding tasks-->

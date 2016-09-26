@@ -26,7 +26,6 @@
   <string name="preference_push_gifted_gems">赠送的钻石</string>
   <string name="preference_push_gifted_subscription">赠送的订阅</string>
   <string name="preference_push_invited_to_party">被邀请加入队伍</string>
-  <string name="preference_push_invited_to_guild">被邀请加入公会</string>
   <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->

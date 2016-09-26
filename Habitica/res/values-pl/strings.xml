@@ -354,6 +354,14 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="gold_plural">złoto</string>
   <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
   <string name="copy_chat_message">Kopiuj do schowka</string>
+  <string name="edit_tag_title">Edytuj tag</string>
+  <string name="edit_tag_btn_edit">Edytuj</string>
+  <string name="edit_tag_btn_done">Zrobione</string>
+  <string name="edit_tag_btn_delete">Usuń</string>
+  <string name="confirm_delete_tag_title">Jesteś pewien?</string>
+  <string name="confirm_delete_tag_message">Czy na pewno chcesz usunąć?</string>
+  <string name="filter_drawer_edit_tags">Edytuj tagi</string>
+  <string name="filter_drawer_filter_tags">Filtruj po tagach</string>
   <!--QR Strings-->
   <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
   <string name="qr_save_message">Kod QR zapisany w</string>
@@ -363,4 +371,5 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="choose_recipient_title">Wybierz odbiorcę wiadomości</string>
   <string name="action_continue">Kontynuuj</string>
   <string name="scan_qr_code">Przeskanuj kod QR</string>
+  <string name="invited_to_party">Zostałeś zaproszony do drużyny!</string>
 </resources>

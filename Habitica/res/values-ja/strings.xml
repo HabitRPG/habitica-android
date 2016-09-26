@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">あなたのユーザーID</string>
   <string name="SP_APIToken_title">API トークン</string>
   <string name="SP_APIToken_summary">あなたの API トークン</string>
+  <string name="Language_title">言語</string>
+  <string name="Language_summary">Habitica の言語を変更する</string>
   <string name="SP_user_qr_code">QR コード</string>
   <string name="PS_contact_title">開発者に連絡する</string>
   <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
+  <string name="pref_first_day_of_the_week_title">週の最初の曜日</string>
+  <string name="pref_first_day_of_the_week_summary">すべてのカレンダーでの週の最初の曜日</string>
   <string name="pref_reminder_header">毎日の通知</string>
   <string name="pref_reminder_checkbox">通知を有効にする</string>
   <string name="pref_reminder_picker">通知時間を設定</string>
@@ -374,4 +378,14 @@
   <string name="scan_qr_code">QR コードを読み取る</string>
   <string name="enter_recipient_uuid">送信先の ユーザー ID を入力</string>
   <string name="invited_to_party">パーティーに招待されました!</string>
+  <string name="stats_widget_label">Habitica での統計</string>
+  <string name="add_task">タスクを追加</string>
+  <string name="add_habit">習慣を追加</string>
+  <string name="add_daily">日課を追加</string>
+  <string name="add_todo">To-Do を追加</string>
+  <string name="add_reward">ごほうびを追加</string>
+  <string name="all_dailies_completed">日課をすべて完了した。お見事!</string>
+  <string name="widget_habit_button">Habitica の習慣</string>
+  <string name="widget_dailies">Habitica の日課</string>
+  <string name="widget_add_task">Habitica のタスク追加</string>
 </resources>

@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Jouw gebruikers-ID</string>
   <string name="SP_APIToken_title">API-token</string>
   <string name="SP_APIToken_summary">Jouw API-token</string>
+  <string name="Language_title">Taal</string>
+  <string name="Language_summary">Verander Habitica\'s taal</string>
   <string name="SP_user_qr_code">Je QR code</string>
   <string name="PS_contact_title">Contact</string>
   <string name="unknown_error">Er ging iets mis...</string>
   <string name="pref_account_header">Account</string>
+  <string name="pref_first_day_of_the_week_title">Eerste dag van de week</string>
+  <string name="pref_first_day_of_the_week_summary">Eerste dag van de week op alle kalenders</string>
   <string name="pref_reminder_header">Dagelijkse herinnering</string>
   <string name="pref_reminder_checkbox">Activeer herinnering</string>
   <string name="pref_reminder_picker">Stel tijd van herinnering In</string>
@@ -26,7 +30,6 @@
   <string name="preference_push_gifted_gems">Edelstenen geschonken</string>
   <string name="preference_push_gifted_subscription">Abonnement geschonken</string>
   <string name="preference_push_invited_to_party">Uitgenodigd voor groep</string>
-  <string name="preference_push_invited_to_guild">Uitgenodigd voor gilde</string>
   <string name="preference_push_your_quest_has_begun">Je queeste is begonnen</string>
   <string name="preference_push_invited_to_quest">Uitgenodigd voor queeste</string>
   <!--Adding tasks-->
@@ -371,6 +374,10 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="choose_recipient_title">Kies een ontvanger voor het bericht</string>
   <string name="action_continue">Ga verder</string>
   <string name="scan_qr_code">Scan QR code</string>
-  <string name="enter_recipient_uuid">Voer Gebruikers ID van ontvanger in</string>
   <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
+  <string name="add_task">Voeg taak toe</string>
+  <string name="add_habit">Voeg Gewoonte toe</string>
+  <string name="add_daily">Voeg Dagelijkse taak toe</string>
+  <string name="add_reward">Voeg Beloning toe</string>
+  <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
 </resources>

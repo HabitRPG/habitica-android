@@ -26,7 +26,6 @@
   <string name="preference_push_gifted_gems">Padovanoti Brangakmeniai</string>
   <string name="preference_push_gifted_subscription">Padovanota Prenumerata</string>
   <string name="preference_push_invited_to_party">Pakvietimas į Grupę</string>
-  <string name="preference_push_invited_to_guild">Pakvietimas į Gildiją</string>
   <string name="preference_push_your_quest_has_begun">Tavo Misija Prasidėjo</string>
   <string name="preference_push_invited_to_quest">Pakvietimas į Misiją</string>
   <!--Adding tasks-->

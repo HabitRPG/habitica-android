@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Seu ID de usuário</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Seu API Token</string>
+  <string name="Language_title">Idioma</string>
+  <string name="Language_summary">Mudar idioma do Habitica</string>
   <string name="SP_user_qr_code">Seu código QR</string>
   <string name="PS_contact_title">Contate-me</string>
   <string name="unknown_error">Um erro aconteceu...</string>
   <string name="pref_account_header">Conta</string>
+  <string name="pref_first_day_of_the_week_title">Primeiro dia da semana</string>
+  <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários</string>
   <string name="pref_reminder_header">Lembrete Diário</string>
   <string name="pref_reminder_checkbox">Ativar Lembrete</string>
   <string name="pref_reminder_picker">Definir Tempo do Lembrete</string>
@@ -372,6 +376,16 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Escanear QR Code</string>
-  <string name="enter_recipient_uuid">Entre com o ID de usuário do destinatário</string>
+  <string name="enter_recipient_uuid">Insira o ID de Usuário do convidado</string>
   <string name="invited_to_party">Você foi convidado para um grupo!</string>
+  <string name="stats_widget_label">Estatísticas Habitica</string>
+  <string name="add_task">Adicionar Tarefa</string>
+  <string name="add_habit">Adicionar Hábito</string>
+  <string name="add_daily">Adicionar Ação Diária</string>
+  <string name="add_todo">Adicionar Tarefa</string>
+  <string name="add_reward">Adicionar recompensa</string>
+  <string name="all_dailies_completed">Você completou todas as suas ações diárias. Parabéns!</string>
+  <string name="widget_habit_button">Habitica Fazer Hábito</string>
+  <string name="widget_dailies">Habitica Diárias</string>
+  <string name="widget_add_task">Habitica Adicionar Afazer</string>
 </resources>
