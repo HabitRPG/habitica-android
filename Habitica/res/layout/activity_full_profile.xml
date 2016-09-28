@@ -140,6 +140,7 @@
                     android:id="@+id/profile_blurb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+		    android:textIsSelectable="true"
                     android:text="Blurb" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
