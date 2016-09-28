@@ -213,8 +213,11 @@ public class FullProfileActivity extends BaseActivity {
         }
 
         String blurbText = profile.getBlurb();
+        String formattedUserId = "\n\n" + userId;
         if (blurbText != null && !blurbText.isEmpty()) {
-            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText));
+            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText) + formattedUserId);
+        } else {
+            blurbTextView.setText(formattedUserId);
         }
 
         avatarView.setUser(user);
