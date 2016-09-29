@@ -34,7 +34,6 @@ import io.fabric.sdk.android.Fabric;
 public class GemsPurchaseFragment extends BaseMainFragment {
 
     private static final int GEMS_TO_ADD = 21;
-    @BindView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
     private Listener listener;
     private BillingRequests billingRequests;
@@ -64,11 +63,8 @@ public class GemsPurchaseFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnPurchaseGems.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(getContext(), R.color.brand));
-
         final ActivityCheckout checkout = listener.getActivityCheckout();
-
+        /*
         if (checkout != null) {
             checkout.destroyPurchaseFlow();
 
@@ -126,7 +122,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
                 }
             });
-        }
+        }*/
     }
 
     private void updateBuyButtonText(String price) {
@@ -165,7 +161,6 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         });
     }
 
-    @OnClick(R.id.btn_purchase_gems)
     public void doPurchaseGems(Button button) {
         // check if the user already bought and if it hasn't validated yet
         billingRequests.isPurchased(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, new RequestListener<Boolean>() {

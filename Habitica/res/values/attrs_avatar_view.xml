@@ -4,4 +4,10 @@
         <attr name="showMount" format="boolean" />
         <attr name="showPet" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="GemPurchaseOptionsView">
+        <attr name="gemAmount" format="integer" />
+        <attr name="priceText" format="string" />
+        <attr name="gemDrawable" format="integer" />
+    </declare-styleable>
 </resources>
