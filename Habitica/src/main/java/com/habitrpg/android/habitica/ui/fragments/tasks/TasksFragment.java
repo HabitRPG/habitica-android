@@ -484,23 +484,27 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             if(this.editingTags) {
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_edit_tags)));
                 items.add(new EditTextDrawer());
-                for (Tag t : tagList) {
-                    items.add(new EditTagsDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                    );
+                if (tagList != null) {
+                    for (Tag t : tagList) {
+                        items.add(new EditTagsDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                        );
+                    }
                 }
                 this.activity.fillFilterDrawer(items);
             }else {
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_filter_tags)));
                 items.add(new EditTextDrawer());
-                for (Tag t : tagList) {
-                    items.add(new SwitchDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                            .withOnCheckedChangeListener(this)
-                    );
+                if (tagList != null) {
+                    for (Tag t : tagList) {
+                        items.add(new SwitchDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                                .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                                .withOnCheckedChangeListener(this)
+                        );
+                    }
                 }
                 this.activity.fillFilterDrawer(items);
             }
