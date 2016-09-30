@@ -631,7 +631,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save_changes) {
-            finishActivitySuccessfuly();
+            finishActivitySuccessfully();
             return true;
         }
 
@@ -847,7 +847,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void prepareSave() {
-
         if (this.task == null) {
             this.task = new Task();
             this.task.setType(taskType);
@@ -888,10 +887,17 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         dismissKeyboard();
     }
 
-    private void finishActivitySuccessfuly() {
+    private void finishActivitySuccessfully() {
         this.prepareSave();
-        finish();
+        finishWithSuccess();
         dismissKeyboard();
+    }
+
+    private void finishWithSuccess() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     private void dismissKeyboard() {
