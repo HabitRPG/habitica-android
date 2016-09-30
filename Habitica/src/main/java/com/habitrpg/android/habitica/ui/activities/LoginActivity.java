@@ -442,7 +442,7 @@ public class LoginActivity extends BaseActivity
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
-                    if (GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
+                    if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
                         handleGoogleAuthException((GoogleAuthException)throwable.getCause());
                     }
                 });
