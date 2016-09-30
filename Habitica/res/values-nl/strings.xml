@@ -30,6 +30,7 @@
   <string name="preference_push_gifted_gems">Edelstenen geschonken</string>
   <string name="preference_push_gifted_subscription">Abonnement geschonken</string>
   <string name="preference_push_invited_to_party">Uitgenodigd voor groep</string>
+  <string name="preference_push_invited_to_guild">Uitgenodigd voor gilde</string>
   <string name="preference_push_your_quest_has_begun">Je queeste is begonnen</string>
   <string name="preference_push_invited_to_quest">Uitgenodigd voor queeste</string>
   <!--Adding tasks-->
