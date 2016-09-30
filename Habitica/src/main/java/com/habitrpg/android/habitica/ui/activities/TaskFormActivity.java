@@ -160,9 +160,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.reminders_recycler_view)
     RecyclerView remindersRecyclerView;
 
-    @BindView(R.id.add_reminder_button)
-    Button addReminderButton;
-
     @BindView(R.id.emoji_toggle_btn0)
     ImageButton emojiToggle0;
 
@@ -488,22 +485,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
     }
 
-    @OnClick(R.id.add_reminder_button)
-    public void addReminder() {
-        if (newRemindersEditText.getText().length() > 0) {
-            RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
-            if (item == null) {
-                return;
-            }
-            item.setType(taskType);
-            remindersAdapter.addItem(item);
-            newRemindersEditText.setText("");
-        }
+    private void addNewReminder(RemindersItem remindersItem) {
+        remindersAdapter.addItem(remindersItem);
     }
 
     @OnClick(R.id.new_reminder_edittext)
-    public void changeNewReminderTime() {
-        remindersManager.createDialogeForEditText(newRemindersEditText, taskType, this, null);
+    public void selectNewReminderTime() {
+        remindersManager.createReminderTimeDialog(this::addNewReminder, taskType, this, null);
     }
 
     private void createTagsCheckBoxes() {

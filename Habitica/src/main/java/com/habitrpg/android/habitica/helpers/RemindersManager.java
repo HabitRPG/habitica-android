@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,7 +27,7 @@ import java.util.UUID;
  */
 public class RemindersManager {
 
-    DateFormat dateFormater;
+    private DateFormat dateFormater;
 
     public RemindersManager(String taskType) {
         if (taskType.equals("todo")) {
@@ -56,7 +57,8 @@ public class RemindersManager {
         return dateFormater.format(time);
     }
 
-    public void createDialogeForEditText(EditText editText, String taskType, Context context, RemindersItem reminder) {
+    public void createReminderTimeDialog(@Nullable ReminderTimeSelectedCallback callback, String taskType,
+                                         Context context, @Nullable RemindersItem reminder) {
         Calendar currentTime = Calendar.getInstance();
         int hour = currentTime.get(Calendar.HOUR_OF_DAY);
         int minute = currentTime.get(Calendar.MINUTE);
@@ -92,11 +94,7 @@ public class RemindersManager {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day, hour1, minute1, 0);
 
-                if (reminder != null) {
-                    reminder.setTime(calendar.getTime());
-                }
-
-                editText.setText(dateFormater.format(calendar.getTime()));
+                onReminderTimeSelected(callback, reminder, calendar);
                 dialog.hide();
             });
             dialog.show();
@@ -106,15 +104,26 @@ public class RemindersManager {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
 
-                if (reminder != null) {
-                    reminder.setTime(calendar.getTime());
-                }
-
-                editText.setText(dateFormater.format(calendar.getTime()));
+                onReminderTimeSelected(callback, reminder, calendar);
             }, hour, minute, true);
             timePickerDialog.setTitle("Select Time");
             timePickerDialog.show();
         }
     }
 
+    private void onReminderTimeSelected(ReminderTimeSelectedCallback callback, RemindersItem reminder, Calendar calendar) {
+        RemindersItem remindersItem = reminder;
+        if (remindersItem == null) {
+            remindersItem = createReminderFromDateString(dateFormater.format(calendar.getTime()));
+        } else {
+            remindersItem.setTime(calendar.getTime());
+        }
+        if (callback != null) {
+            callback.onReminderTimeSelected(remindersItem);
+        }
+    }
+
+    public interface ReminderTimeSelectedCallback {
+        void onReminderTimeSelected(RemindersItem remindersItem);
+    }
 }
