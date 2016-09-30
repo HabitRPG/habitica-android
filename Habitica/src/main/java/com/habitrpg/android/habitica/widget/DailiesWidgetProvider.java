@@ -94,7 +94,11 @@ public class DailiesWidgetProvider extends BaseWidgetProvider {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent);
 
-            appWidgetManager.partiallyUpdateAppWidget(appWidgetIds[i], rv);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                appWidgetManager.partiallyUpdateAppWidget(appWidgetIds[i], rv);
+            } else {
+                appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
+            }
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }

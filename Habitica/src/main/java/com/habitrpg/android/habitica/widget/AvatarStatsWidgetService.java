@@ -5,6 +5,7 @@ import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -100,7 +101,11 @@ public class AvatarStatsWidgetService extends Service {
         Intent openAppIntent = new Intent(this.getApplicationContext(), MainActivity.class);
         PendingIntent openApp = PendingIntent.getActivity(this, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.widget_main_view, openApp);
-        appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, remoteViews);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            appWidgetManager.partiallyUpdateAppWidget(allWidgetIds, remoteViews);
+        } else {
+            appWidgetManager.updateAppWidget(allWidgetIds, remoteViews);
+        }
     }
 
     @Override
