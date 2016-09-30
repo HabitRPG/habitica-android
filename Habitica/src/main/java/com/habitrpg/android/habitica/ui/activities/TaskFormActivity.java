@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
@@ -73,12 +74,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
@@ -192,6 +194,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @BindView(R.id.task_tags_checklist)
     LinearLayout tagsContainerLinearLayout;
+
+    @Inject
+    TagsHelper tagsHelper;
+
     EmojiPopup popup;
 
     private String taskType;
@@ -364,8 +370,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onKeyboardClose() {
-                if (popup.isShowing())
+                if (popup.isShowing()) {
                     popup.dismiss();
+                }
             }
         });
 
@@ -527,6 +534,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
             });
+            checkbox.setChecked(tagsHelper.isTagChecked(tag.getId()));
             tagsContainerLinearLayout.addView(row);
             tagCheckBoxList.add(checkbox);
             position++;
@@ -743,8 +751,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
-        if (task.text.isEmpty())
+        if (task.text.isEmpty()) {
             return false;
+        }
 
         task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
@@ -907,7 +916,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         DatePickerDialog datePickerDialog;
         EditText datePickerText;
         DateFormat dateFormatter;
-
 
         public DateEditTextListener(EditText dateText) {
             calendar = Calendar.getInstance();
