@@ -114,11 +114,13 @@ public class PartyFragment extends BaseMainFragment {
     private void updateGroupUI() {
         viewPagerAdapter.notifyDataSetChanged();
 
-        if (group == null) {
-            tabLayout.setVisibility(View.GONE);
-            return;
-        } else {
-            tabLayout.setVisibility(View.VISIBLE);
+        if (tabLayout != null) {
+            if (group == null) {
+                tabLayout.setVisibility(View.GONE);
+                return;
+            } else {
+                tabLayout.setVisibility(View.VISIBLE);
+            }
         }
 
         if (partyMemberListFragment != null) {

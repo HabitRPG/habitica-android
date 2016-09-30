@@ -44,7 +44,7 @@ public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
                 }
             }
         }
-        
+
         return taskTags;
     }
 
