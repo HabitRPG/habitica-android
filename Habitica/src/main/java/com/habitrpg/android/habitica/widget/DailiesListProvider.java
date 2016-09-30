@@ -45,7 +45,9 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
                     taskList = tasks;
                     this.reloadData = false;
                     AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view);
-                }, throwable -> {});
+                }, throwable -> {
+                    this.reloadData = false;
+                });
     }
 
 
