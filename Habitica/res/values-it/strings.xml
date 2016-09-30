@@ -376,6 +376,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="choose_recipient_title">Scegli destinatario messaggio</string>
   <string name="action_continue">Continua</string>
   <string name="scan_qr_code">Rileva codice QR</string>
+  <string name="enter_recipient_uuid">Inserisci ID Utente destinatario</string>
   <string name="invited_to_party">Hai ricevuto un invito per unirti a una squadra!</string>
   <string name="stats_widget_label">Statistiche Habitica</string>
   <string name="add_task">Aggiungi Attività</string>
