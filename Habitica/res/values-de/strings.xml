@@ -377,13 +377,14 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="scan_qr_code">QR Code scannen</string>
   <string name="enter_recipient_uuid">ID des Empfängers eingeben</string>
   <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
-  <string name="stats_widget_label">Habitica Statistiken</string>
+  <string name="stats_widget_label">Habitica: Avatar</string>
   <string name="add_task">Neue Aufgabe</string>
   <string name="add_habit">Neue Gewohnheit</string>
   <string name="add_daily">Neue Tägliche Aufgabe</string>
   <string name="add_todo">Neue To-Do</string>
   <string name="add_reward">Neue Belohnung</string>
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
+  <string name="widget_habit_button">Habitica: Gewohnheit</string>
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
 </resources>

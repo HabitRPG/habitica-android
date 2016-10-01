@@ -252,7 +252,7 @@
   <string name="costume">의상</string>
   <string name="outfit_head">머리</string>
   <string name="outfit_headAccessory">머리 장식</string>
-  <string name="outfit_eyewear">안경휴</string>
+  <string name="outfit_eyewear">안경</string>
   <string name="outfit_armor">갑옷</string>
   <string name="outfit_back">뒤</string>
   <string name="outfit_body">몸</string>
@@ -374,4 +374,5 @@
   <string name="filter_drawer_edit_tags">태그 편집</string>
   <string name="filter_drawer_filter_tags">태그로 정렬</string>
   <!--QR Strings-->
+  <string name="qr_dialogue_title">나의 QR 코드</string>
 </resources>

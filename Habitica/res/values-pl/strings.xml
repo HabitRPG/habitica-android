@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Twój identyfikator</string>
   <string name="SP_APIToken_title">Token API</string>
   <string name="SP_APIToken_summary">Twój Token API</string>
+  <string name="Language_title">Język</string>
+  <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
   <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
+  <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
+  <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
   <string name="pref_reminder_header">Przypominienie</string>
   <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
   <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
@@ -372,4 +376,10 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="action_continue">Kontynuuj</string>
   <string name="scan_qr_code">Przeskanuj kod QR</string>
   <string name="invited_to_party">Zostałeś zaproszony do drużyny!</string>
+  <string name="add_task">Dodaj Zadanie</string>
+  <string name="add_habit">Dodaj Nawyk</string>
+  <string name="add_daily">Dodaj Codzienne</string>
+  <string name="add_todo">Dodaj Do-Zrobienia</string>
+  <string name="add_reward">Dodaj Nagrodę</string>
+  <string name="all_dailies_completed">Wykonałeś wszystkie codzienne. Brawo!</string>
 </resources>
