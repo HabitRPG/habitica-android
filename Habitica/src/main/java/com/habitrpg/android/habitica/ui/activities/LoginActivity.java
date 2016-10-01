@@ -403,7 +403,7 @@ public class LoginActivity extends BaseActivity
             e.printStackTrace();
         }
         
-        if (this.isRegistering || userAuthResponse.getNewUser()) {
+        if (userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
             AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);

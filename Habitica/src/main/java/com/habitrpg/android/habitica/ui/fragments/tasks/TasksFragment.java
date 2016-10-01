@@ -492,7 +492,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         );
                     }
                 }
-                this.activity.fillFilterDrawer(items);
+                if (isAdded()) {
+                    this.activity.fillFilterDrawer(items);
+                }
             }else {
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_filter_tags)));
                 items.add(new EditTextDrawer());
@@ -506,7 +508,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         );
                     }
                 }
-                this.activity.fillFilterDrawer(items);
+                if (isAdded()) {
+                    this.activity.fillFilterDrawer(items);
+                }
             }
         }
     }
