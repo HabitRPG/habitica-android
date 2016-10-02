@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
+import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -23,6 +24,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,6 +41,9 @@ public class AvatarSetupFragment extends BaseFragment {
     CustomizationSetupAdapter adapter;
     GridLayoutManager layoutManager;
     private HabitRPGUser user;
+
+    @Inject
+    APIHelper apiHelper;
 
     @Nullable
     @Override
@@ -96,12 +102,17 @@ public class AvatarSetupFragment extends BaseFragment {
 
         Where<Customization> select = new Select()
                 .from(Customization.class)
-                .where(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
-                        .or(Condition.column("price").eq(0))
+                .where(Condition.CombinedCondition.begin(Condition.column("price").eq(0))
                         .or(Condition.column("price").isNull())
                 );
 
         List<Customization> customizations = select.queryList();
+        if (customizations.size() == 0) {
+            this.apiHelper.getContent().compose(this.apiHelper.configureApiCallObserver())
+                    .subscribe(contentResult -> {
+                        this.loadCustomizations();
+                    }, throwable -> {});
+        }
         this.adapter.setCustomizationList(customizations);
     }
 

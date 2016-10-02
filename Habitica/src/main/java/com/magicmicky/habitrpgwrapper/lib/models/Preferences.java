@@ -213,6 +213,9 @@ public class Preferences extends BaseModel {
 
     @Override
     public void save() {
+        if (user_id == null) {
+            return;
+        }
         hair.userId = user_id;
 
         if (suppressModals != null)
