@@ -313,7 +313,9 @@ public class HabiticaApplication extends MultiDexApplication {
 
     @Override
     public File getDatabasePath(String name) {
-        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+        File dbFile = new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
+        Crashlytics.setString("Database File", dbFile.getAbsolutePath());
+        return dbFile;
     }
 
     private void createBillingAndCheckout() {
