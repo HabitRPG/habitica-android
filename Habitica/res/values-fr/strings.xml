@@ -375,5 +375,16 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="choose_recipient_title">Choisissez un destinataire</string>
   <string name="action_continue">Continuer</string>
   <string name="scan_qr_code">Scanner le QR code</string>
+  <string name="enter_recipient_uuid">Saisissez l\'identifiant du destinataire</string>
   <string name="invited_to_party">Vous avez été invité·e à rejoindre une équipe !</string>
+  <string name="stats_widget_label">Statistiques d\'Habitica</string>
+  <string name="add_task">Ajouter une tâche</string>
+  <string name="add_habit">Ajouter une habitude</string>
+  <string name="add_daily">Ajouter une quotidienne</string>
+  <string name="add_todo">Ajouter une tâche à faire</string>
+  <string name="add_reward">Ajouter une récompense</string>
+  <string name="all_dailies_completed">Vous avez accompli toutes vos quotidiennes. Bravo !</string>
+  <string name="widget_habit_button">Réaliser une tâche Habitica</string>
+  <string name="widget_dailies">Quotidiennes Habitica</string>
+  <string name="widget_add_task">Ajouter une tâche Habitica</string>
 </resources>

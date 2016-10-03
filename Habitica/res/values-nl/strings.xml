@@ -30,6 +30,7 @@
   <string name="preference_push_gifted_gems">Edelstenen geschonken</string>
   <string name="preference_push_gifted_subscription">Abonnement geschonken</string>
   <string name="preference_push_invited_to_party">Uitgenodigd voor groep</string>
+  <string name="preference_push_invited_to_guild">Uitgenodigd voor gilde</string>
   <string name="preference_push_your_quest_has_begun">Je queeste is begonnen</string>
   <string name="preference_push_invited_to_quest">Uitgenodigd voor queeste</string>
   <!--Adding tasks-->
@@ -374,10 +375,12 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="choose_recipient_title">Kies een ontvanger voor het bericht</string>
   <string name="action_continue">Ga verder</string>
   <string name="scan_qr_code">Scan QR code</string>
+  <string name="enter_recipient_uuid">Voer ontvanger\'s Gebruikers ID in</string>
   <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
   <string name="add_task">Voeg taak toe</string>
   <string name="add_habit">Voeg Gewoonte toe</string>
   <string name="add_daily">Voeg Dagelijkse taak toe</string>
+  <string name="add_todo">To-Do toevoegen</string>
   <string name="add_reward">Voeg Beloning toe</string>
   <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
 </resources>

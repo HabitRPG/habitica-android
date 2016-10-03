@@ -7,15 +7,19 @@
   <string name="ERR_pb_barcode">데이터를 가져오지 못했습니다</string>
   <!--Prefs-->
   <string name="PS_settings_title">설정</string>
-  <string name="SP_address_hint">당신의 개인서버</string>
-  <string name="SP_userID_title">유저 ID</string>
-  <string name="SP_userID_summary">당신의 유저ID</string>
+  <string name="SP_address_hint">당신의 사용자 지정 서버</string>
+  <string name="SP_userID_title">사용자 ID</string>
+  <string name="SP_userID_summary">당신의 사용자 ID</string>
   <string name="SP_APIToken_title">API 토큰</string>
   <string name="SP_APIToken_summary">당신의 API 토큰</string>
+  <string name="Language_title">언어</string>
+  <string name="Language_summary">Habitica의 언어 바꾸기</string>
   <string name="SP_user_qr_code">당신의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
   <string name="unknown_error">오류가 발생했습니다...</string>
   <string name="pref_account_header">계정</string>
+  <string name="pref_first_day_of_the_week_title">주의 첫날</string>
+  <string name="pref_first_day_of_the_week_summary">모든 캘린더에서 주의 첫날</string>
   <string name="pref_reminder_header">매일 알림</string>
   <string name="pref_reminder_checkbox">알림 활성화</string>
   <string name="pref_reminder_picker">알림 시간 설정</string>
@@ -24,6 +28,11 @@
   <string name="preference_push_you_won_challenge">도전 기회를 얻었습니다.</string>
   <string name="preference_push_received_a_private_message">개인 메시지를 받았습니다.</string>
   <string name="preference_push_gifted_gems">선물받은 젬</string>
+  <string name="preference_push_gifted_subscription">선물 받은 구독</string>
+  <string name="preference_push_invited_to_party">파티에 초대 받음</string>
+  <string name="preference_push_invited_to_guild">길드에 초대 받음</string>
+  <string name="preference_push_your_quest_has_begun">퀘스트가 시작되었음</string>
+  <string name="preference_push_invited_to_quest">퀘스트에 초대를 받았음</string>
   <!--Adding tasks-->
   <string name="task_value">값</string>
   <string name="new_todo">새로운 할 일</string>
@@ -235,6 +244,7 @@
   <string name="privacy">사생활 보호</string>
   <string name="write_message">메세지 작성</string>
   <string name="post">게시</string>
+  <string name="guild_search_hint">길드 검색</string>
   <string name="todo_due" formatted="false">만기: %s</string>
   <string name="daily_streak" formatted="false">연속 달성: %d</string>
   <string name="todo_has_duedate">과제가 만기일이 있습니다</string>
@@ -242,7 +252,7 @@
   <string name="costume">의상</string>
   <string name="outfit_head">머리</string>
   <string name="outfit_headAccessory">머리 장식</string>
-  <string name="outfit_eyewear">안경휴</string>
+  <string name="outfit_eyewear">안경</string>
   <string name="outfit_armor">갑옷</string>
   <string name="outfit_back">뒤</string>
   <string name="outfit_body">몸</string>
@@ -337,5 +347,32 @@
   <string name="open_in_store">플레이스토어로 열기</string>
   <string name="change_class_confirmation">보석 3개를 사용하여 클레스를 바꾸시겠습니까? </string>
   <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
+  <string name="confirm">확인</string>
+  <string name="market">시장</string>
+  <string name="timeTravelers">시간 여행자들</string>
+  <string name="seasonalShop">계절 상점</string>
+  <string name="empty_inbox">받은 편지함 메시지가 없습니다. 공개 채팅 메시지를 통해 사용자에게 새 메시지를 보낼 수 있습니다!</string>
+  <string name="party_invite">친구를 초대하여 잠금 해제하기</string>
+  <string name="no_gold">골드가 충분하지 않음</string>
+  <string name="no_potion">체력 물약을 살 필요가 없음</string>
+  <string name="successful_purchase" formatted="false">%1$s을(를) 성공적으로 구매했음</string>
+  <string name="purchase_confirmation_title">구매 확인</string>
+  <string name="confirm_purchase_text" formatted="false">%1$s을(를) %2$s %3$s(으)로 구매함</string>
+  <string name="gem">보석</string>
+  <string name="hourglass">모래시계</string>
+  <string name="hourglasses">모래시계</string>
+  <string name="gold_singular">골드</string>
+  <string name="gold_plural">골드</string>
+  <string name="chat_message_copied">메시지를 클립보드에 복사했음</string>
+  <string name="copy_chat_message">클립보드로 복사함</string>
+  <string name="edit_tag_title">태그 편집</string>
+  <string name="edit_tag_btn_edit">편집</string>
+  <string name="edit_tag_btn_done">완료</string>
+  <string name="edit_tag_btn_delete">삭제</string>
+  <string name="confirm_delete_tag_title">정말이요?</string>
+  <string name="confirm_delete_tag_message">정말 삭제할까요?</string>
+  <string name="filter_drawer_edit_tags">태그 편집</string>
+  <string name="filter_drawer_filter_tags">태그로 정렬</string>
   <!--QR Strings-->
+  <string name="qr_dialogue_title">나의 QR 코드</string>
 </resources>

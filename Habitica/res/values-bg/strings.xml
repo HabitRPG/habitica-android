@@ -384,6 +384,7 @@
   <string name="add_todo">Добавяне на задача</string>
   <string name="add_reward">Добавяне на награда</string>
   <string name="all_dailies_completed">Изпълнихте всичките си ежедневни задачи. Добра работа!</string>
+  <string name="widget_habit_button">Положителен навик в Хаибитика</string>
   <string name="widget_dailies">Ежедневни задачи в Хабитика</string>
   <string name="widget_add_task">Добавяне на задача в Хабитика</string>
 </resources>

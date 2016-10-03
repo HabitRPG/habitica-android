@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="120"
-    android:versionName="0.0.34"
+    android:versionCode="125"
+    android:versionName="0.0.34.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -210,7 +210,7 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/habit_button_widget_info" />
         </receiver>
-        <service android:name=".widget.AvatarStatsWidgetService"/>
+
         <service
             android:name=".widget.DailiesWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

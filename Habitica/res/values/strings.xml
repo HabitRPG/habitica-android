@@ -414,6 +414,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="widget_habit_button">Habitica Do Habit</string>
     <string name="widget_dailies">Habitica Dailies</string>
     <string name="widget_add_task">Habitica Add Task</string>
+    <string name="google_services_missing">Google play services could not be found.</string>
     <string name="skill_transformation_use">use</string>
 
 </resources>

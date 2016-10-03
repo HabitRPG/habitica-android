@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import android.accounts.AccountManager;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -45,6 +46,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -401,7 +403,7 @@ public class LoginActivity extends BaseActivity
             e.printStackTrace();
         }
         
-        if (this.isRegistering || userAuthResponse.getNewUser()) {
+        if (userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
             AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
@@ -414,7 +416,16 @@ public class LoginActivity extends BaseActivity
         String[] accountTypes = new String[]{"com.google"};
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 accountTypes, false, null, null, null, null);
-        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+        try {
+            startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+        } catch (ActivityNotFoundException e) {
+            Dialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.authentication_error_title)
+                    .setMessage(R.string.google_services_missing)
+                    .setNegativeButton(R.string.close, (dialogInterface, i) -> dialogInterface.dismiss())
+                    .create();
+            dialog.show();
+        }
     }
 
     private void handleGoogleLoginResult() {
@@ -423,18 +434,15 @@ public class LoginActivity extends BaseActivity
         Observable.defer(() -> {
             try {
                 return Observable.just(GoogleAuthUtil.getToken(LoginActivity.this, googleEmail, scopes));
-            } catch (IOException e) {
-                throw Exceptions.propagate(e);
-            } catch (GoogleAuthException e) {
+            } catch (IOException | GoogleAuthException e) {
                 throw Exceptions.propagate(e);
             }
-
         })
                 .flatMap(token -> apiHelper.connectSocial("google", googleEmail, token))
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
-                    if (GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
+                    if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
                         handleGoogleAuthException((GoogleAuthException)throwable.getCause());
                     }
                 });

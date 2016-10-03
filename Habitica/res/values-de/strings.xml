@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Deine Benutzer-ID</string>
   <string name="SP_APIToken_title">API-Token</string>
   <string name="SP_APIToken_summary">Dein API-Token</string>
+  <string name="Language_title">Sprache</string>
+  <string name="Language_summary">Habitica\'s Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
+  <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
+  <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
   <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
@@ -371,5 +375,16 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="choose_recipient_title">Nachrichtenempfänger auswählen</string>
   <string name="action_continue">Weiter</string>
   <string name="scan_qr_code">QR Code scannen</string>
+  <string name="enter_recipient_uuid">ID des Empfängers eingeben</string>
   <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
+  <string name="stats_widget_label">Habitica: Avatar</string>
+  <string name="add_task">Neue Aufgabe</string>
+  <string name="add_habit">Neue Gewohnheit</string>
+  <string name="add_daily">Neue Tägliche Aufgabe</string>
+  <string name="add_todo">Neue To-Do</string>
+  <string name="add_reward">Neue Belohnung</string>
+  <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
+  <string name="widget_habit_button">Habitica: Gewohnheit</string>
+  <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
+  <string name="widget_add_task">Habitica: Neue Aufgabe</string>
 </resources>

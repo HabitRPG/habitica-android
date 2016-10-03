@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">좋은 습관을 달성하고 골드와 경험치를 얻으세요! 나쁜 습관은 당신의 아바타를 다치게하니, 일상생활을 열심히 하세요!</string>
+  <string name="tutorial_habits">좋은 습관을 달성하고 골드와 경험치를 얻으세요! 나쁜 습관은 당신의 아바타를 다치게 하니, 일상생활을 열심히 하세요!</string>
   <string name="tutorial_dailies">골드와 경험치를 위해 일일과제를 달성하세요. 주의할 점! 일일과제는 제때 끝내지 못하면 당신의 아바타를 다치게 만들어요.</string>
   <string name="tutorial_todos">일상생활을 할일을 달성함으로써 골드와 경험치를 얻으세요. 경험치와 골드로 새로운 보상과 기능을 여세요!</string>
   <string name="tutorial_rewards">이것들은 당신의 보상들이에요! 습관, 일일과제, 해야할 일들을 일상생활에서 달성하면 골드를 모을 수 있어요. 이 골드를 게임의 보상들이나 스스로 설정한 보상을 구입하는데 사용하세요!</string>

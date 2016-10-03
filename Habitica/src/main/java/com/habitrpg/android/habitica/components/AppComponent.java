@@ -55,7 +55,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
-import com.habitrpg.android.habitica.widget.AvatarStatsWidgetService;
+import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
@@ -67,7 +67,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class, ApiModule.class})
 public interface AppComponent {
-    void inject(AvatarStatsWidgetService target);
 
     void inject(ClassSelectionActivity classSelectionActivity);
 
@@ -180,4 +179,6 @@ public interface AppComponent {
     void inject(HabitButtonWidgetActivity habitButtonWidgetActivity);
 
     void inject(HabitButtonWidgetProvider habitButtonWidgetProvider);
+
+    void inject(AvatarStatsWidgetProvider avatarStatsWidgetProvider);
 }

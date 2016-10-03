@@ -79,26 +79,27 @@ public class HabitButtonWidgetService extends Service {
 
     private void updateData(Task task) {
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.widget_habit_button);
-        remoteViews.setTextViewText(R.id.habit_title, task.text);
+        if (task != null) {
+            remoteViews.setTextViewText(R.id.habit_title, task.text);
 
-        if (!task.getUp()) {
-            remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE);
-            remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, null);
-        } else {
-            remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.VISIBLE);
-            remoteViews.setInt(R.id.btnPlus, "setBackgroundColor", resources.getColor(task.getLightTaskColor()));
-            remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, getPendingIntent(task.getId(), TaskDirection.up.toString(), taskMapping.get(task.getId())));
+            if (!task.getUp()) {
+                remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE);
+                remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, null);
+            } else {
+                remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.VISIBLE);
+                remoteViews.setInt(R.id.btnPlus, "setBackgroundColor", resources.getColor(task.getLightTaskColor()));
+                remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, getPendingIntent(task.getId(), TaskDirection.up.toString(), taskMapping.get(task.getId())));
+            }
+            if (!task.getDown()) {
+                remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.GONE);
+                remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, null);
+            } else {
+                remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.VISIBLE);
+                remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", resources.getColor(task.getMediumTaskColor()));
+                remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString() , taskMapping.get(task.getId())));
+            }
+            appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
         }
-        if (!task.getDown()) {
-            remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.GONE);
-            remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, null);
-        } else {
-            remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.VISIBLE);
-            remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", resources.getColor(task.getMediumTaskColor()));
-            remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.getId(), TaskDirection.down.toString() , taskMapping.get(task.getId())));
-        }
-
-        appWidgetManager.updateAppWidget(taskMapping.get(task.getId()), remoteViews);
     }
 
     @Override
