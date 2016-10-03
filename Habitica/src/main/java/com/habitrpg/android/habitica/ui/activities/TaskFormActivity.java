@@ -212,6 +212,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private RemindersManager remindersManager;
     private TaskAlarmManager taskAlarmManager;
+    private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
 
     @Override
     protected int getLayoutResId() {
@@ -570,7 +571,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+            firstDayOfTheWeekHelper =
                     FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
             ArrayList<String> weekdaysTemp = new ArrayList<>(Arrays.asList(weekdays));
             Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper.getDailyTaskFormOffset());
@@ -597,13 +598,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (this.task != null) {
 
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                this.weekdayCheckboxes.get(0).setChecked(this.task.getRepeat().getM());
-                this.weekdayCheckboxes.get(1).setChecked(this.task.getRepeat().getT());
-                this.weekdayCheckboxes.get(2).setChecked(this.task.getRepeat().getW());
-                this.weekdayCheckboxes.get(3).setChecked(this.task.getRepeat().getTh());
-                this.weekdayCheckboxes.get(4).setChecked(this.task.getRepeat().getF());
-                this.weekdayCheckboxes.get(5).setChecked(this.task.getRepeat().getS());
-                this.weekdayCheckboxes.get(6).setChecked(this.task.getRepeat().getSu());
+                int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
+                this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
+                this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
+                this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
+                this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
+                this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
             } else {
                 this.frequencyPicker.setValue(this.task.getEveryX());
             }
@@ -690,13 +692,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             if (task.getFrequency().equals("weekly")) {
                 this.dailyFrequencySpinner.setSelection(0);
                 if (weekdayCheckboxes.size() == 7) {
-                    this.weekdayCheckboxes.get(0).setChecked(task.getRepeat().getM());
-                    this.weekdayCheckboxes.get(1).setChecked(task.getRepeat().getT());
-                    this.weekdayCheckboxes.get(2).setChecked(task.getRepeat().getW());
-                    this.weekdayCheckboxes.get(3).setChecked(task.getRepeat().getTh());
-                    this.weekdayCheckboxes.get(4).setChecked(task.getRepeat().getF());
-                    this.weekdayCheckboxes.get(5).setChecked(task.getRepeat().getS());
-                    this.weekdayCheckboxes.get(6).setChecked(task.getRepeat().getSu());
+                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                    this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                    this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
+                    this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
+                    this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
+                    this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
+                    this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
+                    this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
                 }
             } else {
                 this.dailyFrequencySpinner.setSelection(1);
@@ -792,13 +795,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         task.setRepeat(repeat);
                     }
 
-                    repeat.setM(this.weekdayCheckboxes.get(0).isChecked());
-                    repeat.setT(this.weekdayCheckboxes.get(1).isChecked());
-                    repeat.setW(this.weekdayCheckboxes.get(2).isChecked());
-                    repeat.setTh(this.weekdayCheckboxes.get(3).isChecked());
-                    repeat.setF(this.weekdayCheckboxes.get(4).isChecked());
-                    repeat.setS(this.weekdayCheckboxes.get(5).isChecked());
-                    repeat.setSu(this.weekdayCheckboxes.get(6).isChecked());
+                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                    repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
+                    repeat.setT(this.weekdayCheckboxes.get((offset+1) % 7).isChecked());
+                    repeat.setW(this.weekdayCheckboxes.get((offset+2) % 7).isChecked());
+                    repeat.setTh(this.weekdayCheckboxes.get((offset+3) % 7).isChecked());
+                    repeat.setF(this.weekdayCheckboxes.get((offset+4) % 7).isChecked());
+                    repeat.setS(this.weekdayCheckboxes.get((offset+5) % 7).isChecked());
+                    repeat.setSu(this.weekdayCheckboxes.get((offset+6) % 7).isChecked());
                 } else {
                     task.setFrequency("daily");
                     task.setEveryX(this.frequencyPicker.getValue());
