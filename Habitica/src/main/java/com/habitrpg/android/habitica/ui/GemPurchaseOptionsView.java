@@ -45,4 +45,8 @@ public class GemPurchaseOptionsView extends FrameLayout {
             gemImageView.setImageDrawable(iconRes);
         }
     }
+
+    public void setOnPurchaseClickListener(Button.OnClickListener listener) {
+        purchaseButton.setOnClickListener(listener);
+    }
 }

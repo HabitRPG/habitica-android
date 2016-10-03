@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,11 +29,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
 public class GemsPurchaseFragment extends BaseMainFragment {
+
+    @BindView(R.id.gems_4_view)
+    GemPurchaseOptionsView gems4View;
+    @BindView(R.id.gems_21_view)
+    GemPurchaseOptionsView gems21View;
+    @BindView(R.id.gems_42_view)
+    GemPurchaseOptionsView gems42View;
+    @BindView(R.id.gems_84_view)
+    GemPurchaseOptionsView gems84View;
+
+    private HashMap<String, String> priceMap;
 
     private static final int GEMS_TO_ADD = 21;
     Button btnPurchaseGems;
@@ -51,6 +66,11 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
+        gems4View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase4Gems));
+        gems21View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase21Gems));
+        gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
+        gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
+
         return inflater.inflate(R.layout.fragment_gem_purchase, container, false);
     }
 
@@ -64,14 +84,14 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
-        /*
+
         if (checkout != null) {
             checkout.destroyPurchaseFlow();
 
             checkout.createPurchaseFlow(new RequestListener<Purchase>() {
                 @Override
                 public void onSuccess(@NonNull Purchase purchase) {
-                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                    if (PurchaseTypes.allTypes.contains(purchase.sku)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
@@ -116,21 +136,18 @@ public class GemsPurchaseFragment extends BaseMainFragment {
                         java.util.List<Sku> skus = gems.getSkus();
 
                         for (Sku sku : skus) {
-                            updateBuyButtonText(sku.price);
+                            priceMap.put(sku.id, sku.price);
+                            updateButtonLabel(sku.id, sku.price);
                         }
                     });
 
                 }
             });
-        }*/
+        }
     }
 
-    private void updateBuyButtonText(String price) {
-        if (price == null || price.isEmpty()) {
-            btnPurchaseGems.setText("+" + GEMS_TO_ADD);
-        } else {
-            btnPurchaseGems.setText(price + " = " + "+" + GEMS_TO_ADD);
-        }
+    private void updateButtonLabel(String sku, String price) {
+        
     }
 
     private void checkIfPendingPurchases() {
@@ -138,7 +155,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             @Override
             public void onSuccess(@NonNull Purchases purchases) {
                 for (Purchase purchase : purchases.list) {
-                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                    if (PurchaseTypes.allTypes.contains(purchase.sku)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
@@ -161,15 +178,15 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         });
     }
 
-    public void doPurchaseGems(Button button) {
+    public void purchaseGems(String sku) {
         // check if the user already bought and if it hasn't validated yet
-        billingRequests.isPurchased(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, new RequestListener<Boolean>() {
+        billingRequests.isPurchased(ProductTypes.IN_APP, sku, new RequestListener<Boolean>() {
             @Override
             public void onSuccess(@NonNull Boolean aBoolean) {
                 if (!aBoolean) {
                     // no current product exist
                     final ActivityCheckout checkout = listener.getActivityCheckout();
-                    billingRequests.purchase(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, null, checkout.getPurchaseFlow());
+                    billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
                 } else {
                     checkIfPendingPurchases();
                 }

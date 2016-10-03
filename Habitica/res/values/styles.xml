@@ -187,7 +187,7 @@
         <item name="android:textColor">@color/brand_100</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:drawableLeft">@drawable/ic_check</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:paddingTop">12dp</item>
     </style>
