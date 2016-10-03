@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.5'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.4.4'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
@@ -171,8 +171,6 @@ android {
             debuggable true
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
-            multiDexEnabled true
-
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }

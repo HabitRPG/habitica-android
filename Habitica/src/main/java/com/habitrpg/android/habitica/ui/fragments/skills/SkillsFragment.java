@@ -6,12 +6,14 @@ import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
+import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
+import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -37,6 +39,8 @@ import rx.Observable;
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
+    private final int MEMBER_SELECTION_ACTIVITY = 11;
+
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     SkillsRecyclerViewAdapter adapter;
@@ -86,6 +90,42 @@ public class SkillsFragment extends BaseMainFragment {
                 .and(Condition.column("lvl").lessThanOrEq(user.getStats().getLvl()))
                 .queryList();
         adapter.setSkillList(skills);
+
+
+        SpecialItems specialItems = this.user.getItems().getSpecial();
+        if (specialItems != null) {
+            Condition.In specialsWhere = Condition.column("key").in("");
+
+            if (specialItems.getSnowball() > 1) {
+                specialsWhere.and("snowball");
+            }
+
+            if (specialItems.getShinySeed() > 1) {
+                specialsWhere.and("shinySeed");
+            }
+
+            if (specialItems.getSeafoam() > 1) {
+                specialsWhere.and("seafoam");
+            }
+
+            if (specialItems.getSpookySparkles() > 1) {
+                specialsWhere.and("spookySparkles");
+            }
+
+            List<Skill> specials = new Select()
+                    .from(Skill.class)
+                    .where(specialsWhere)
+                    .queryList();
+
+            for (Skill item : specials) {
+                item.isSpecialItem = true;
+                item.target = "party";
+
+                skills.add(item);
+            }
+        }
+
+        adapter.setSkillList(skills);
     }
 
     @Override
@@ -98,7 +138,12 @@ public class SkillsFragment extends BaseMainFragment {
     @Subscribe
     public void onEvent(UseSkillCommand command) {
         Skill skill = command.skill;
-        if (skill.target.equals("task")) {
+
+        if (skill.isSpecialItem) {
+            selectedSkill = skill;
+            Intent intent = new Intent(activity, SkillMemberActivity.class);
+            startActivityForResult(intent, MEMBER_SELECTION_ACTIVITY);
+        } else if (skill.target.equals("task")) {
             selectedSkill = skill;
             Intent intent = new Intent(activity, SkillTasksActivity.class);
             startActivityForResult(intent, TASK_SELECTION_ACTIVITY);
@@ -113,7 +158,12 @@ public class SkillsFragment extends BaseMainFragment {
         Skill skill = event.usedSkill;
         adapter.setMana(event.newMana);
         StringBuilder message = new StringBuilder();
-        message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        if (skill.isSpecialItem) {
+            message.append(activity.getString(R.string.used_skill_without_mana));
+        } else {
+            message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
+        }
+
         if (event.xp != 0) {
             message.append(" + ").append(round(event.xp, 2)).append(" XP");
         }
@@ -137,6 +187,12 @@ public class SkillsFragment extends BaseMainFragment {
             case (TASK_SELECTION_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     useSkill(selectedSkill, data.getStringExtra("task_id"));
+                }
+                break;
+            }
+            case (MEMBER_SELECTION_ACTIVITY): {
+                if (resultCode == Activity.RESULT_OK) {
+                    useSkill(selectedSkill, data.getStringExtra("member_id"));
                 }
                 break;
             }
