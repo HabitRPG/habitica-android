@@ -25,6 +25,7 @@ public class GemPurchaseOptionsView extends FrameLayout {
 
     @BindView(R.id.purchase_button)
     Button purchaseButton;
+    private String sku;
 
     public GemPurchaseOptionsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,5 +49,17 @@ public class GemPurchaseOptionsView extends FrameLayout {
 
     public void setOnPurchaseClickListener(Button.OnClickListener listener) {
         purchaseButton.setOnClickListener(listener);
+    }
+
+    public void setPurchaseButtonText(String price) {
+        purchaseButton.setText(price);
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getSku() {
+        return sku;
     }
 }

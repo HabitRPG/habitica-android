@@ -147,7 +147,20 @@ public class GemsPurchaseFragment extends BaseMainFragment {
     }
 
     private void updateButtonLabel(String sku, String price) {
-        
+        GemPurchaseOptionsView matchingView;
+        if (sku.equals(PurchaseTypes.Purchase4Gems)) {
+            matchingView = gems4View;
+        } else if (sku.equals(PurchaseTypes.Purchase21Gems)) {
+            matchingView = gems21View;
+        } else if (sku.equals(PurchaseTypes.Purchase42Gems)) {
+            matchingView = gems42View;
+        } else if (sku.equals(PurchaseTypes.Purchase84Gems)) {
+            matchingView = gems84View;
+        } else {
+            return;
+        }
+        matchingView.setPurchaseButtonText(price);
+        matchingView.setSku(sku);
     }
 
     private void checkIfPendingPurchases() {
@@ -156,7 +169,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             public void onSuccess(@NonNull Purchases purchases) {
                 for (Purchase purchase : purchases.list) {
                     if (PurchaseTypes.allTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
+                        billingRequests.consume(purchase.token, new RequestListener<Object>) {
                             @Override
                             public void onSuccess(@NonNull Object o) {
                                 EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
