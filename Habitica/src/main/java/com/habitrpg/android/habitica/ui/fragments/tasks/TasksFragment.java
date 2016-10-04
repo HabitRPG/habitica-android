@@ -47,6 +47,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -582,11 +583,30 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case (TASK_CREATED_RESULT):
+                this.displayingTaskForm = false;
+                onTaskCreatedResult(resultCode, data);
+                break;
             case (TASK_UPDATED_RESULT):
                 this.displayingTaskForm = false;
                 break;
+        }
+    }
+
+    private void onTaskCreatedResult(int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            String taskType = data.getStringExtra(TaskFormActivity.TASK_TYPE_KEY);
+            switchToTaskTab(taskType);
+        }
+    }
+
+    private void switchToTaskTab(String taskType) {
+        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : ViewFragmentsDictionary.entrySet()) {
+            if (tabEntry.getValue().getClassName().equals(taskType)) {
+                viewPager.setCurrentItem(tabEntry.getKey());
+            }
         }
     }
 
