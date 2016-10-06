@@ -163,8 +163,7 @@ import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayTy
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored,
-        GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
+        TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
@@ -274,7 +273,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .append(this.drawer);
         }
 
-        setupCheckout();
         EventBus.getDefault().register(this);
     }
 
@@ -324,15 +322,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         sendBroadcast(intent);
     }
 
-    private void setupCheckout() {
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
-        checkout.start();
-    }
-
-    @Override
-    public ActivityCheckout getActivityCheckout() {
-        return checkout;
-    }
 
     private void saveLoginInformation() {
         HabiticaApplication.User = user;

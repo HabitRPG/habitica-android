@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
-public class GemsPurchaseFragment extends BaseMainFragment {
+public class GemsPurchaseFragment extends BaseFragment {
 
     @BindView(R.id.gems_4_view)
     GemPurchaseOptionsView gems4View;
@@ -66,10 +66,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        gems4View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase4Gems));
-        gems21View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase21Gems));
-        gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
-        gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
+        priceMap = new HashMap<>();
 
         return inflater.inflate(R.layout.fragment_gem_purchase, container, false);
     }
@@ -82,6 +79,11 @@ public class GemsPurchaseFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        gems4View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase4Gems));
+        gems21View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase21Gems));
+        gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
+        gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
@@ -169,7 +171,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             public void onSuccess(@NonNull Purchases purchases) {
                 for (Purchase purchase : purchases.list) {
                     if (PurchaseTypes.allTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>) {
+                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
                                 EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
