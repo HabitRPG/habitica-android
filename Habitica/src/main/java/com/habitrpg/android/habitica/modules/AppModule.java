@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.modules;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.AudioFileLoader;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -52,5 +53,10 @@ public class AppModule {
     @Provides
     public Resources providesResources(Context context) {
         return context.getResources();
+    }
+
+    @Provides
+    public AudioFileLoader providesAudioFileLoad(){
+        return new AudioFileLoader();
     }
 }

@@ -43,6 +43,8 @@ import android.widget.TextView;
 
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.AudioFile;
+import com.habitrpg.android.habitica.AudioFileLoader;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
@@ -159,6 +161,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
+import static com.habitrpg.android.habitica.AudioFileLoader.*;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -172,6 +175,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public ActivityCheckout checkout = null;
     @Inject
     public APIHelper apiHelper;
+    @Inject
+    public AudioFileLoader audioFileLoader;
     @Inject
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
@@ -245,6 +250,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
+
+        ArrayList<AudioFile> audioFiles = new ArrayList<>();
+        audioFiles.add(new AudioFile("danielTheBard", "Chat"));
+        audioFileLoader.download(audioFiles).subscribe(audioFiles1 -> {
+            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded", SnackbarDisplayType.NORMAL);
+        }, throwable -> {
+            showSnackbar(this, floatingMenuWrapper, "Error: "+throwable.getMessage(), SnackbarDisplayType.NORMAL);
+        });
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
