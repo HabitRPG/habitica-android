@@ -416,66 +416,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Subscribe
-    public void onEvent(TaskCheckedCommand event) {
-        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(ChecklistCheckedCommand event) {
-        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskUpdateCallback(), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
-        Task task = event.task;
-        if (event.created) {
-            this.apiHelper.apiService.createItem(task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskCreationCallback(), throwable -> {
-                    });
-            floatingMenu.close(true);
-        } else {
-            this.apiHelper.apiService.updateTask(task.getId(), task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskUpdateCallback(), throwable -> {
-                    });
-        }
+        floatingMenu.close(true);
     }
 
-    @Subscribe
-    public void onEvent(ToggledInnStateEvent event) {
-        user.getPreferences().setSleep(event.Inn);
-    }
-
-    @Subscribe
-    public void onEvent(ToggledEditTagsEvent event) {
-        if(user != null) {
-            if(this.editingTags == event.editing) {
-                return;
-            }
-            this.editingTags = event.editing;
-            fillTagFilterDrawer(tags);
-        }
-    }
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {

@@ -33,7 +33,6 @@ public abstract class BaseFragment extends DialogFragment {
     public String tutorialStepIdentifier;
     public String tutorialText;
     public Unbinder unbinder;
-    private boolean registerEventBus = false;
     private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
         @Override
         public void onResultReceived(TutorialStep step) {
@@ -87,7 +86,6 @@ public abstract class BaseFragment extends DialogFragment {
         // Receive Events
         try {
             EventBus.getDefault().register(this);
-            registerEventBus = true;
         } catch (EventBusException ignored) {
 
         }
@@ -109,7 +107,7 @@ public abstract class BaseFragment extends DialogFragment {
 
     @Override
     public void onDestroyView() {
-        if (registerEventBus) {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         if (unbinder != null) {

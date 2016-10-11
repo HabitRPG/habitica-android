@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -25,6 +26,12 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
     @Override
     protected void injectActivity(AppComponent component) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        checkout.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -47,6 +54,13 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
                 .add(R.id.fragment_container, firstFragment).commit();
     }
 
+    @Override
+    public void onDestroy() {
+        if (checkout != null) {
+            checkout.stop();
+        }
+        super.onDestroy();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
