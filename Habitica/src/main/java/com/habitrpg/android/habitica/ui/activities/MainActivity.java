@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -142,6 +143,7 @@ import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -251,10 +253,22 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
 
+        MediaPlayer mp = new MediaPlayer();
+        long start = System.currentTimeMillis();
         ArrayList<AudioFile> audioFiles = new ArrayList<>();
         audioFiles.add(new AudioFile("danielTheBard", "Chat"));
         audioFileLoader.download(audioFiles).subscribe(audioFiles1 -> {
-            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded", SnackbarDisplayType.NORMAL);
+            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded in "+(System.currentTimeMillis()-start), SnackbarDisplayType.NORMAL);
+
+            try {
+                String path = audioFileLoader.getFullAudioFilePath(audioFiles.get(0));
+                mp.setDataSource(audioFiles.get(0).getFile().);
+                mp.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mp.start();
         }, throwable -> {
             showSnackbar(this, floatingMenuWrapper, "Error: "+throwable.getMessage(), SnackbarDisplayType.NORMAL);
         });

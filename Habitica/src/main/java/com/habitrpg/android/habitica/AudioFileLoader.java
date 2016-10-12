@@ -25,8 +25,10 @@ public class AudioFileLoader {
     public Observable<List<AudioFile>> download(List<AudioFile> files) {
         return Observable.from(files)
                 .flatMap(audioFile -> {
-                    File file = new File(getExternalCacheDir() + File.separator + audioFile.getFilePath());
+                    File file = new File(getFullAudioFilePath(audioFile));
                     if (file.exists()) {
+                        // Important, or else the MediaPlayer can't access this file
+                        file.setReadable(true, false);
                         audioFile.setFile(file);
                         return Observable.just(audioFile);
                     }
@@ -54,6 +56,7 @@ public class AudioFileLoader {
                                     throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
                                 }
 
+                                file.setReadable(true, false);
                                 audioFile.setFile(file);
                                 sub.onNext(audioFile);
                                 sub.onCompleted();
@@ -68,5 +71,9 @@ public class AudioFileLoader {
 
     private String getExternalCacheDir() {
         return HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getExternalCacheDir().getPath();
+    }
+
+    public String getFullAudioFilePath(AudioFile audioFile) {
+        return getExternalCacheDir() + File.separator + audioFile.getFilePath();
     }
 }
