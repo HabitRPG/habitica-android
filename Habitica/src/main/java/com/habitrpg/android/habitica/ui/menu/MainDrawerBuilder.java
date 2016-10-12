@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -148,7 +149,7 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_PURCHASE: {
-                            fragment = new GemsPurchaseFragment();
+                            newActivityClass = GemPurchaseActivity.class;
                             break;
                         }
                         case SIDEBAR_NEWS: {

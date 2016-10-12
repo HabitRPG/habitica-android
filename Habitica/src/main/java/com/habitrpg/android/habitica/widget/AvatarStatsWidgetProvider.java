@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -51,6 +52,9 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         this.setUp(context);
         this.appWidgetManager = appWidgetManager;
         this.context = context;
+        ComponentName thisWidget = new ComponentName(context,
+                AvatarStatsWidgetProvider.class);
+        int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
     }

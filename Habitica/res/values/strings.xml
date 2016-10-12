@@ -415,6 +415,14 @@ To start, which parts of your life do you want to improve?</string>
     <string name="widget_dailies">Habitica Dailies</string>
     <string name="widget_add_task">Habitica Add Task</string>
     <string name="google_services_missing">Google play services could not be found.</string>
+    <string name="gem.purchase.toolbartitle">Purchase</string>
+    <string name="gem.purchase.title">Buying gems supports the developers and helps keep Habitica running</string>
+    <string name="gem.purchase.subtitle">Gems allow you to buy fun extras for you account, including:</string>
+    <string name="gem.purchase.listitem1">Cool costumes for your avatar</string>
+    <string name="gem.purchase.listitem2">Awesome backgrounds</string>
+    <string name="gem.purchase.listitem3">Quests that reward you with pet eggs</string>
+    <string name="gem.purchase.listitem4">The ability to change your class before level 100</string>
+    <string name="support_habitica">Support Habitica</string>
     <string name="skill_transformation_use">use</string>
 
 </resources>

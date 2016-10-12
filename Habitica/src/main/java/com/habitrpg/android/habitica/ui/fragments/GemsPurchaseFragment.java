@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,14 +29,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
-public class GemsPurchaseFragment extends BaseMainFragment {
+public class GemsPurchaseFragment extends BaseFragment {
+
+    @BindView(R.id.gems_4_view)
+    GemPurchaseOptionsView gems4View;
+    @BindView(R.id.gems_21_view)
+    GemPurchaseOptionsView gems21View;
+    @BindView(R.id.gems_42_view)
+    GemPurchaseOptionsView gems42View;
+    @BindView(R.id.gems_84_view)
+    GemPurchaseOptionsView gems84View;
+
+    private HashMap<String, String> priceMap;
 
     private static final int GEMS_TO_ADD = 21;
-    @BindView(R.id.btn_purchase_gems)
     Button btnPurchaseGems;
     private Listener listener;
     private BillingRequests billingRequests;
@@ -52,6 +66,8 @@ public class GemsPurchaseFragment extends BaseMainFragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
+        priceMap = new HashMap<>();
+
         return inflater.inflate(R.layout.fragment_gem_purchase, container, false);
     }
 
@@ -64,8 +80,10 @@ public class GemsPurchaseFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnPurchaseGems.setEnabled(false);
-        ViewHelper.SetBackgroundTint(btnPurchaseGems, ContextCompat.getColor(getContext(), R.color.brand));
+        gems4View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase4Gems));
+        gems21View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase21Gems));
+        gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
+        gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
@@ -75,7 +93,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             checkout.createPurchaseFlow(new RequestListener<Purchase>() {
                 @Override
                 public void onSuccess(@NonNull Purchase purchase) {
-                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                    if (PurchaseTypes.allTypes.contains(purchase.sku)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
@@ -120,7 +138,8 @@ public class GemsPurchaseFragment extends BaseMainFragment {
                         java.util.List<Sku> skus = gems.getSkus();
 
                         for (Sku sku : skus) {
-                            updateBuyButtonText(sku.price);
+                            priceMap.put(sku.id, sku.price);
+                            updateButtonLabel(sku.id, sku.price);
                         }
                     });
 
@@ -129,12 +148,21 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         }
     }
 
-    private void updateBuyButtonText(String price) {
-        if (price == null || price.isEmpty()) {
-            btnPurchaseGems.setText("+" + GEMS_TO_ADD);
+    private void updateButtonLabel(String sku, String price) {
+        GemPurchaseOptionsView matchingView;
+        if (sku.equals(PurchaseTypes.Purchase4Gems)) {
+            matchingView = gems4View;
+        } else if (sku.equals(PurchaseTypes.Purchase21Gems)) {
+            matchingView = gems21View;
+        } else if (sku.equals(PurchaseTypes.Purchase42Gems)) {
+            matchingView = gems42View;
+        } else if (sku.equals(PurchaseTypes.Purchase84Gems)) {
+            matchingView = gems84View;
         } else {
-            btnPurchaseGems.setText(price + " = " + "+" + GEMS_TO_ADD);
+            return;
         }
+        matchingView.setPurchaseButtonText(price);
+        matchingView.setSku(sku);
     }
 
     private void checkIfPendingPurchases() {
@@ -142,7 +170,7 @@ public class GemsPurchaseFragment extends BaseMainFragment {
             @Override
             public void onSuccess(@NonNull Purchases purchases) {
                 for (Purchase purchase : purchases.list) {
-                    if (purchase.sku.equals(HabiticaApplication.Purchase20Gems)) {
+                    if (PurchaseTypes.allTypes.contains(purchase.sku)) {
                         billingRequests.consume(purchase.token, new RequestListener<Object>() {
                             @Override
                             public void onSuccess(@NonNull Object o) {
@@ -165,16 +193,15 @@ public class GemsPurchaseFragment extends BaseMainFragment {
         });
     }
 
-    @OnClick(R.id.btn_purchase_gems)
-    public void doPurchaseGems(Button button) {
+    public void purchaseGems(String sku) {
         // check if the user already bought and if it hasn't validated yet
-        billingRequests.isPurchased(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, new RequestListener<Boolean>() {
+        billingRequests.isPurchased(ProductTypes.IN_APP, sku, new RequestListener<Boolean>() {
             @Override
             public void onSuccess(@NonNull Boolean aBoolean) {
                 if (!aBoolean) {
                     // no current product exist
                     final ActivityCheckout checkout = listener.getActivityCheckout();
-                    billingRequests.purchase(ProductTypes.IN_APP, HabiticaApplication.Purchase20Gems, null, checkout.getPurchaseFlow());
+                    billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
                 } else {
                     checkIfPendingPurchases();
                 }

@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
@@ -73,12 +74,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
@@ -160,9 +162,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     @BindView(R.id.reminders_recycler_view)
     RecyclerView remindersRecyclerView;
 
-    @BindView(R.id.add_reminder_button)
-    Button addReminderButton;
-
     @BindView(R.id.emoji_toggle_btn0)
     ImageButton emojiToggle0;
 
@@ -192,6 +191,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @BindView(R.id.task_tags_checklist)
     LinearLayout tagsContainerLinearLayout;
+
+    @Inject
+    TagsHelper tagsHelper;
+
     EmojiPopup popup;
 
     private String taskType;
@@ -209,6 +212,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private RemindersManager remindersManager;
     private TaskAlarmManager taskAlarmManager;
+    private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
 
     @Override
     protected int getLayoutResId() {
@@ -364,8 +368,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onKeyboardClose() {
-                if (popup.isShowing())
+                if (popup.isShowing()) {
                     popup.dismiss();
+                }
             }
         });
 
@@ -488,22 +493,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
     }
 
-    @OnClick(R.id.add_reminder_button)
-    public void addReminder() {
-        if (newRemindersEditText.getText().length() > 0) {
-            RemindersItem item = remindersManager.createReminderFromDateString(newRemindersEditText.getText().toString());
-            if (item == null) {
-                return;
-            }
-            item.setType(taskType);
-            remindersAdapter.addItem(item);
-            newRemindersEditText.setText("");
-        }
+    private void addNewReminder(RemindersItem remindersItem) {
+        remindersAdapter.addItem(remindersItem);
     }
 
     @OnClick(R.id.new_reminder_edittext)
-    public void changeNewReminderTime() {
-        remindersManager.createDialogeForEditText(newRemindersEditText, taskType, this, null);
+    public void selectNewReminderTime() {
+        remindersManager.createReminderTimeDialog(this::addNewReminder, taskType, this, null);
     }
 
     private void createTagsCheckBoxes() {
@@ -527,6 +523,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
             });
+            checkbox.setChecked(tagsHelper.isTagChecked(tag.getId()));
             tagsContainerLinearLayout.addView(row);
             tagCheckBoxList.add(checkbox);
             position++;
@@ -574,7 +571,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-            FirstDayOfTheWeekHelper firstDayOfTheWeekHelper =
+            firstDayOfTheWeekHelper =
                     FirstDayOfTheWeekHelper.newInstance(Integer.parseInt(dayOfTheWeek));
             ArrayList<String> weekdaysTemp = new ArrayList<>(Arrays.asList(weekdays));
             Collections.rotate(weekdaysTemp, firstDayOfTheWeekHelper.getDailyTaskFormOffset());
@@ -601,13 +598,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         if (this.task != null) {
 
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                this.weekdayCheckboxes.get(0).setChecked(this.task.getRepeat().getM());
-                this.weekdayCheckboxes.get(1).setChecked(this.task.getRepeat().getT());
-                this.weekdayCheckboxes.get(2).setChecked(this.task.getRepeat().getW());
-                this.weekdayCheckboxes.get(3).setChecked(this.task.getRepeat().getTh());
-                this.weekdayCheckboxes.get(4).setChecked(this.task.getRepeat().getF());
-                this.weekdayCheckboxes.get(5).setChecked(this.task.getRepeat().getS());
-                this.weekdayCheckboxes.get(6).setChecked(this.task.getRepeat().getSu());
+                int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
+                this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
+                this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
+                this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
+                this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
+                this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
             } else {
                 this.frequencyPicker.setValue(this.task.getEveryX());
             }
@@ -631,7 +629,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save_changes) {
-            finishActivitySuccessfuly();
+            finishActivitySuccessfully();
             return true;
         }
 
@@ -694,13 +692,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             if (task.getFrequency().equals("weekly")) {
                 this.dailyFrequencySpinner.setSelection(0);
                 if (weekdayCheckboxes.size() == 7) {
-                    this.weekdayCheckboxes.get(0).setChecked(task.getRepeat().getM());
-                    this.weekdayCheckboxes.get(1).setChecked(task.getRepeat().getT());
-                    this.weekdayCheckboxes.get(2).setChecked(task.getRepeat().getW());
-                    this.weekdayCheckboxes.get(3).setChecked(task.getRepeat().getTh());
-                    this.weekdayCheckboxes.get(4).setChecked(task.getRepeat().getF());
-                    this.weekdayCheckboxes.get(5).setChecked(task.getRepeat().getS());
-                    this.weekdayCheckboxes.get(6).setChecked(task.getRepeat().getSu());
+                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                    this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
+                    this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
+                    this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
+                    this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
+                    this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
+                    this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
+                    this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
                 }
             } else {
                 this.dailyFrequencySpinner.setSelection(1);
@@ -743,8 +742,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
-        if (task.text.isEmpty())
+        if (task.text.isEmpty()) {
             return false;
+        }
 
         task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
 
@@ -795,13 +795,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         task.setRepeat(repeat);
                     }
 
-                    repeat.setM(this.weekdayCheckboxes.get(0).isChecked());
-                    repeat.setT(this.weekdayCheckboxes.get(1).isChecked());
-                    repeat.setW(this.weekdayCheckboxes.get(2).isChecked());
-                    repeat.setTh(this.weekdayCheckboxes.get(3).isChecked());
-                    repeat.setF(this.weekdayCheckboxes.get(4).isChecked());
-                    repeat.setS(this.weekdayCheckboxes.get(5).isChecked());
-                    repeat.setSu(this.weekdayCheckboxes.get(6).isChecked());
+                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                    repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
+                    repeat.setT(this.weekdayCheckboxes.get((offset+1) % 7).isChecked());
+                    repeat.setW(this.weekdayCheckboxes.get((offset+2) % 7).isChecked());
+                    repeat.setTh(this.weekdayCheckboxes.get((offset+3) % 7).isChecked());
+                    repeat.setF(this.weekdayCheckboxes.get((offset+4) % 7).isChecked());
+                    repeat.setS(this.weekdayCheckboxes.get((offset+5) % 7).isChecked());
+                    repeat.setSu(this.weekdayCheckboxes.get((offset+6) % 7).isChecked());
                 } else {
                     task.setFrequency("daily");
                     task.setEveryX(this.frequencyPicker.getValue());
@@ -847,7 +848,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void prepareSave() {
-
         if (this.task == null) {
             this.task = new Task();
             this.task.setType(taskType);
@@ -888,10 +888,17 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         dismissKeyboard();
     }
 
-    private void finishActivitySuccessfuly() {
+    private void finishActivitySuccessfully() {
         this.prepareSave();
-        finish();
+        finishWithSuccess();
         dismissKeyboard();
+    }
+
+    private void finishWithSuccess() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, taskType);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     private void dismissKeyboard() {
@@ -907,7 +914,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         DatePickerDialog datePickerDialog;
         EditText datePickerText;
         DateFormat dateFormatter;
-
 
         public DateEditTextListener(EditText dateText) {
             calendar = Calendar.getInstance();

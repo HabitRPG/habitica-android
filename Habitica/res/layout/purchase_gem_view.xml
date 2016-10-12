@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gem_view_background"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:scaleType="center"
+        android:id="@+id/gem_image"
+        tools:src="@drawable/gems_21"
+        android:contentDescription="@string/gems"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gem_amount"
+        android:textColor="@color/best_10"
+        android:gravity="center"
+        android:textSize="36sp"
+        tools:text="21" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gems"
+        android:textColor="@color/best_10"
+        android:gravity="center" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/purchase_button"
+        android:background="@drawable/purchase_button_background"
+        android:textColor="@color/white"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginTop="13dp"
+        tools:text="$ 4.99"/>
+</LinearLayout>

@@ -47,6 +47,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -415,66 +416,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Subscribe
-    public void onEvent(TaskCheckedCommand event) {
-        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(ChecklistCheckedCommand event) {
-        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskUpdateCallback(), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
-        Task task = event.task;
-        if (event.created) {
-            this.apiHelper.apiService.createItem(task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskCreationCallback(), throwable -> {
-                    });
-            floatingMenu.close(true);
-        } else {
-            this.apiHelper.apiService.updateTask(task.getId(), task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskUpdateCallback(), throwable -> {
-                    });
-        }
+        floatingMenu.close(true);
     }
 
-    @Subscribe
-    public void onEvent(ToggledInnStateEvent event) {
-        user.getPreferences().setSleep(event.Inn);
-    }
-
-    @Subscribe
-    public void onEvent(ToggledEditTagsEvent event) {
-        if(user != null) {
-            if(this.editingTags == event.editing) {
-                return;
-            }
-            this.editingTags = event.editing;
-            fillTagFilterDrawer(tags);
-        }
-    }
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
@@ -582,11 +532,30 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case (TASK_CREATED_RESULT):
+                this.displayingTaskForm = false;
+                onTaskCreatedResult(resultCode, data);
+                break;
             case (TASK_UPDATED_RESULT):
                 this.displayingTaskForm = false;
                 break;
+        }
+    }
+
+    private void onTaskCreatedResult(int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            String taskType = data.getStringExtra(TaskFormActivity.TASK_TYPE_KEY);
+            switchToTaskTab(taskType);
+        }
+    }
+
+    private void switchToTaskTab(String taskType) {
+        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : ViewFragmentsDictionary.entrySet()) {
+            if (tabEntry.getValue().getClassName().equals(taskType)) {
+                viewPager.setCurrentItem(tabEntry.getKey());
+            }
         }
     }
 

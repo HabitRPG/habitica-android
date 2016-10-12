@@ -6,23 +6,15 @@ import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +107,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
                     taskType = reminder.getTask().getType();
                 }
 
-                remindersManager.createDialogeForEditText(reminderItemTextView, taskType, v.getContext(), reminder);
+                remindersManager.createReminderTimeDialog(null, taskType, v.getContext(), reminder);
             });
         }
 
