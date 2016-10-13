@@ -133,6 +133,7 @@
 
     <string name="mana_price_button" formatted="false">%d MP</string>
     <string name="used_skill" formatted="false">You used %1$s for %2$d mana.</string>
+    <string name="used_skill_without_mana" formatted="false">You used %1$s.</string>
     <string name="new_checklist_item">new checklist item</string>
     <string name="add_checklist_item">Add</string>
 
@@ -422,5 +423,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="gem.purchase.listitem3">Quests that reward you with pet eggs</string>
     <string name="gem.purchase.listitem4">The ability to change your class before level 100</string>
     <string name="support_habitica">Support Habitica</string>
+    <string name="skill_transformation_use">use</string>
 
 </resources>

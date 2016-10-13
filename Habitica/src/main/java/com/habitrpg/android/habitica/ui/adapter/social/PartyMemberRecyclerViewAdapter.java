@@ -3,14 +3,13 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
@@ -32,9 +31,11 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
     public Context context;
     private List<HabitRPGUser> memberList;
+    private boolean isMemberSelection;
 
-    public void setMemberList(List<HabitRPGUser> memberList) {
+    public void setMemberList(List<HabitRPGUser> memberList, boolean isMemberSelection) {
         this.memberList = memberList;
+        this.isMemberSelection = isMemberSelection;
         this.notifyDataSetChanged();
     }
 
@@ -129,9 +130,15 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             itemView.setClickable(true);
             itemView.setOnClickListener(view -> {
-                OpenFullProfileCommand cmd = new OpenFullProfileCommand(user.getId());
+                if (isMemberSelection) {
+                    SelectMemberCommand cmd = new SelectMemberCommand(user.getId());
 
-                EventBus.getDefault().post(cmd);
+                    EventBus.getDefault().post(cmd);
+                } else {
+                    OpenFullProfileCommand cmd = new OpenFullProfileCommand(user.getId());
+
+                    EventBus.getDefault().post(cmd);
+                }
             });
         }
 

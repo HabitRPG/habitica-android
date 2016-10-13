@@ -171,8 +171,6 @@ android {
             debuggable true
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
-            multiDexEnabled true
-
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }

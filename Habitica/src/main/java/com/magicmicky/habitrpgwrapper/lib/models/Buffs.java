@@ -81,5 +81,8 @@ public class Buffs extends BasicStats {
         super.merge(stats);
         this.snowball = stats.snowball != null ? stats.snowball : this.snowball;
         this.streaks = stats.streaks != null ? stats.streaks : this.streaks;
+        this.seafoam = stats.seafoam != null ? stats.seafoam : this.seafoam;
+        this.shinySeed = stats.shinySeed != null ? stats.shinySeed : this.shinySeed;
+        this.spookySparkles = stats.spookySparkles != null ? stats.spookySparkles : this.spookySparkles;
     }
 }
