@@ -85,6 +85,7 @@
     <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
 
     <string name="save_changes">Save</string>
+    <string name="copy">Copy</string>
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
