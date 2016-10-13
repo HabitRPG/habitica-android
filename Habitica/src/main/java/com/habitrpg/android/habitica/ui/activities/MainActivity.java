@@ -173,6 +173,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
+    public static final int GEM_PURCHASE_REQUEST = 111;
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
     @Inject
     public APIHelper apiHelper;
@@ -867,6 +868,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
+        } else if (requestCode == GEM_PURCHASE_REQUEST) {
+            this.apiHelper.retrieveUser(true)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                    });
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -30,6 +30,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 
+import static com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST;
+
 public class MainDrawerBuilder {
 
     // Change the identificationIDs to the position IDs so that its easier to set the selected entry
@@ -178,7 +180,11 @@ public class MainDrawerBuilder {
                     if (newActivityClass != null) {
                         Intent passUserId = new Intent(activity, newActivityClass);
                         passUserId.putExtra("userId", activity.getUserID());
-                        activity.startActivity(passUserId);
+                        if (identifier == SIDEBAR_PURCHASE) {
+                            activity.startActivityForResult(passUserId, GEM_PURCHASE_REQUEST);
+                        } else {
+                            activity.startActivity(passUserId);
+                        }
                         return false;
                     }
 
