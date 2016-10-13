@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.content.ClipboardManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -37,6 +40,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +70,12 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.avatarView)
     AvatarView avatarView;
+
+    @BindView(R.id.copy_userid)
+    Button copyUserIdButton;
+
+    @BindView(R.id.userid)
+    TextView userIdText;
 
     @BindView(R.id.profile_attributes_card)
     CardView attributesCardView;
@@ -213,12 +224,23 @@ public class FullProfileActivity extends BaseActivity {
         }
 
         String blurbText = profile.getBlurb();
-        String formattedUserId = "\n\n" + userId;
         if (blurbText != null && !blurbText.isEmpty()) {
-            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText) + formattedUserId);
-        } else {
-            blurbTextView.setText(formattedUserId);
+            blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText));
         }
+        userIdText.setText(userId);
+        copyUserIdButton.setVisibility(View.VISIBLE);
+        copyUserIdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
+                            .getSystemService(view.getContext().CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData
+                            .newPlainText(
+                                    userId, userId);
+                    clipboard.setPrimaryClip(clip);
+            }
+        });
+
 
         avatarView.setUser(user);
         avatarWithBars.updateData(user);
@@ -228,6 +250,8 @@ public class FullProfileActivity extends BaseActivity {
         petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
     }
+
+
 
     // region Utils
 
