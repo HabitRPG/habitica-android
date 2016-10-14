@@ -96,19 +96,19 @@ public class SkillsFragment extends BaseMainFragment {
         if (specialItems != null) {
             Condition.In specialsWhere = Condition.column("key").in("");
 
-            if (specialItems.getSnowball() > 1) {
+            if (specialItems.getSnowball() > 0) {
                 specialsWhere.and("snowball");
             }
 
-            if (specialItems.getShinySeed() > 1) {
+            if (specialItems.getShinySeed() > 0) {
                 specialsWhere.and("shinySeed");
             }
 
-            if (specialItems.getSeafoam() > 1) {
+            if (specialItems.getSeafoam() > 0) {
                 specialsWhere.and("seafoam");
             }
 
-            if (specialItems.getSpookySparkles() > 1) {
+            if (specialItems.getSpookySparkles() > 0) {
                 specialsWhere.and("spookySparkles");
             }
 
@@ -159,7 +159,7 @@ public class SkillsFragment extends BaseMainFragment {
         adapter.setMana(event.newMana);
         StringBuilder message = new StringBuilder();
         if (skill.isSpecialItem) {
-            message.append(activity.getString(R.string.used_skill_without_mana));
+            message.append(activity.getString(R.string.used_skill_without_mana, skill.text));
         } else {
             message.append(activity.getString(R.string.used_skill, skill.text, skill.mana));
         }
