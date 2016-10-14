@@ -12,6 +12,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
@@ -21,7 +22,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaDataSource;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,6 +148,7 @@ import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -162,6 +168,7 @@ import butterknife.BindView;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.habitrpg.android.habitica.AudioFileLoader.*;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
@@ -253,25 +260,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
 
-        MediaPlayer mp = new MediaPlayer();
-        long start = System.currentTimeMillis();
-        ArrayList<AudioFile> audioFiles = new ArrayList<>();
-        audioFiles.add(new AudioFile("danielTheBard", "Chat"));
-        audioFileLoader.download(audioFiles).subscribe(audioFiles1 -> {
-            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded in "+(System.currentTimeMillis()-start), SnackbarDisplayType.NORMAL);
 
-            try {
-                String path = audioFileLoader.getFullAudioFilePath(audioFiles.get(0));
-                mp.setDataSource(audioFiles.get(0).getFile().);
-                mp.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            mp.start();
-        }, throwable -> {
-            showSnackbar(this, floatingMenuWrapper, "Error: "+throwable.getMessage(), SnackbarDisplayType.NORMAL);
-        });
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
@@ -861,12 +850,86 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
     }
-
+    int poolId = -1;
     @Override
     public void onUserReceived(HabitRPGUser user) {
-        this.user = user;
+        /*this.user = user;
         this.lastSync = new Date();
         MainActivity.this.setUserData(false);
+*/
+
+        // AudioManager audio settings for adjusting the volume
+        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+
+        SoundPool soundPool;
+
+        // For Android SDK >= 21
+        if (Build.VERSION.SDK_INT >= 21 ) {
+
+            AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            SoundPool.Builder builder= new SoundPool.Builder();
+            builder.setAudioAttributes(audioAttrib).setMaxStreams(2);
+
+            soundPool = builder.build();
+        }
+        // for Android SDK < 21
+        else {
+            // SoundPool(int maxStreams, int streamType, int srcQuality)
+            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        }
+
+
+        MediaPlayer mp = new MediaPlayer();
+        long start = System.currentTimeMillis();
+        ArrayList<AudioFile> audioFiles = new ArrayList<>();
+        audioFiles.add(new AudioFile("danielTheBard", "Chat"));
+        audioFileLoader.download(audioFiles).observeOn(Schedulers.newThread()).subscribe(audioFiles1 -> {
+            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded in "+(System.currentTimeMillis()-start), SnackbarDisplayType.NORMAL);
+
+            try {
+                File file = audioFiles.get(0).getFile();
+/*
+                mp.setDataSource("file://"+file.getAbsolutePath());
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.prepare();*/
+
+                // Current volumn Index of particular stream type.
+                float currentVolumeIndex = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+                // Get the maximum volume index for a particular stream type.
+                float maxVolumeIndex  = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+                // Volumn (0 --> 1)
+                float volume = currentVolumeIndex / maxVolumeIndex;
+
+
+                // When Sound Pool load complete.
+                soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                    @Override
+                    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                        int streamId = soundPool.play(MainActivity.this.poolId,volume, volume, 1, 0, 1f);
+                    }
+                });
+
+
+                poolId = soundPool.load(file.getPath(),1 );
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //mp.start();
+        }, throwable -> {
+            showSnackbar(this, floatingMenuWrapper, "Error: "+throwable.getMessage(), SnackbarDisplayType.NORMAL);
+        });
+
+
     }
 
     public void setActiveFragment(BaseMainFragment fragment) {
