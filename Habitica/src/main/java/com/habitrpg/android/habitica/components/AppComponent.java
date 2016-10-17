@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.components;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
@@ -178,4 +179,6 @@ public interface AppComponent {
     void inject(HabitButtonWidgetProvider habitButtonWidgetProvider);
 
     void inject(AvatarStatsWidgetProvider avatarStatsWidgetProvider);
+
+    void inject(SoundManager soundManager);
 }

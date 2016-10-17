@@ -1,4 +1,6 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.helpers;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,14 +17,14 @@ import rx.exceptions.OnErrorThrowable;
 import rx.schedulers.Schedulers;
 
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
-public class AudioFileLoader {
+public class SoundFileLoader {
     OkHttpClient client;
 
-    public AudioFileLoader(){
+    public SoundFileLoader(){
         client = new OkHttpClient();
     }
 
-    public Observable<List<AudioFile>> download(List<AudioFile> files) {
+    public Observable<List<SoundFile>> download(List<SoundFile> files) {
         return Observable.from(files)
                 .flatMap(audioFile -> {
                     File file = new File(getFullAudioFilePath(audioFile));
@@ -33,7 +35,7 @@ public class AudioFileLoader {
                         return Observable.just(audioFile);
                     }
 
-                    final Observable<AudioFile> fileObservable = Observable.create(sub -> {
+                    final Observable<SoundFile> fileObservable = Observable.create(sub -> {
                         if (sub.isUnsubscribed()) {
                             return;
                         }
@@ -50,8 +52,11 @@ public class AudioFileLoader {
 
                         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                             if (!sub.isUnsubscribed()) {
-                                try (BufferedSink sink = Okio.buffer(Okio.sink(file))) {
+                                try {
+                                    BufferedSink sink = Okio.buffer(Okio.sink(file));
                                     sink.writeAll(response.body().source());
+                                    sink.flush();
+                                    sink.close();
                                 } catch (IOException io) {
                                     throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
                                 }
@@ -73,7 +78,7 @@ public class AudioFileLoader {
         return HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getExternalCacheDir().getPath();
     }
 
-    public String getFullAudioFilePath(AudioFile audioFile) {
-        return getExternalCacheDir() + File.separator + audioFile.getFilePath();
+    public String getFullAudioFilePath(SoundFile soundFile) {
+        return getExternalCacheDir() + File.separator + soundFile.getFilePath();
     }
 }

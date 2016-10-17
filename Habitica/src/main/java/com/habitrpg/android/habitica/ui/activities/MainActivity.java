@@ -4,15 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-
-import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
@@ -24,7 +21,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
@@ -47,14 +43,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.AudioFile;
-import com.habitrpg.android.habitica.AudioFileLoader;
+import com.habitrpg.android.habitica.helpers.SoundFile;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
@@ -85,6 +80,7 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -142,14 +138,10 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -158,7 +150,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -170,7 +161,6 @@ import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static com.habitrpg.android.habitica.AudioFileLoader.*;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -184,8 +174,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public ActivityCheckout checkout = null;
     @Inject
     public APIHelper apiHelper;
+
     @Inject
-    public AudioFileLoader audioFileLoader;
+    public SoundManager soundManager;
     @Inject
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
@@ -396,6 +387,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if(preferences!= null) {
                 apiHelper.languageCode = preferences.getLanguage();
             }
+
+            soundManager.setSoundTheme(preferences.getSound());
 
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
@@ -858,76 +851,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         MainActivity.this.setUserData(false);
 */
 
-        // AudioManager audio settings for adjusting the volume
-        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-
-        SoundPool soundPool;
-
-        // For Android SDK >= 21
-        if (Build.VERSION.SDK_INT >= 21 ) {
-
-            AudioAttributes audioAttrib = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-
-            SoundPool.Builder builder= new SoundPool.Builder();
-            builder.setAudioAttributes(audioAttrib).setMaxStreams(2);
-
-            soundPool = builder.build();
-        }
-        // for Android SDK < 21
-        else {
-            // SoundPool(int maxStreams, int streamType, int srcQuality)
-            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        }
-
-
-        MediaPlayer mp = new MediaPlayer();
-        long start = System.currentTimeMillis();
-        ArrayList<AudioFile> audioFiles = new ArrayList<>();
-        audioFiles.add(new AudioFile("danielTheBard", "Chat"));
-        audioFileLoader.download(audioFiles).observeOn(Schedulers.newThread()).subscribe(audioFiles1 -> {
-            showSnackbar(this, floatingMenuWrapper, audioFiles.get(0).getFileName()+" loaded in "+(System.currentTimeMillis()-start), SnackbarDisplayType.NORMAL);
-
-            try {
-                File file = audioFiles.get(0).getFile();
-/*
-                mp.setDataSource("file://"+file.getAbsolutePath());
-                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mp.prepare();*/
-
-                // Current volumn Index of particular stream type.
-                float currentVolumeIndex = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-
-                // Get the maximum volume index for a particular stream type.
-                float maxVolumeIndex  = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-
-                // Volumn (0 --> 1)
-                float volume = currentVolumeIndex / maxVolumeIndex;
-
-
-                // When Sound Pool load complete.
-                soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-                    @Override
-                    public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                        int streamId = soundPool.play(MainActivity.this.poolId,volume, volume, 1, 0, 1f);
-                    }
-                });
-
-
-                poolId = soundPool.load(file.getPath(),1 );
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //mp.start();
-        }, throwable -> {
-            showSnackbar(this, floatingMenuWrapper, "Error: "+throwable.getMessage(), SnackbarDisplayType.NORMAL);
-        });
+    soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
 
 
     }

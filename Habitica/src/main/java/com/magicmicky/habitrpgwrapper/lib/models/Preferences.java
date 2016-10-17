@@ -33,7 +33,7 @@ public class Preferences extends BaseModel {
     @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
     @Column
-    private String allocationMode, shirt, skin, size, background, chair, language;
+    private String allocationMode, shirt, skin, size, background, chair, language, sound;
     @Column
     private int dayStart, timezoneOffset;
 
@@ -150,6 +150,14 @@ public class Preferences extends BaseModel {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
     }
 
     public int getTimezoneOffset() {

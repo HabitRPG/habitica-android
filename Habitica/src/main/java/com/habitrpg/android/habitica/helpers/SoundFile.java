@@ -1,13 +1,13 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.helpers;
 
 import java.io.File;
 
-public class AudioFile{
+public class SoundFile {
     private String theme;
     private String fileName;
     private File file;
 
-    public AudioFile(String theme, String fileName){
+    public SoundFile(String theme, String fileName){
 
         this.theme = theme;
         this.fileName = fileName;
@@ -22,7 +22,7 @@ public class AudioFile{
     }
 
     public String getWebUrl(){
-        return "https://github.com/HabitRPG/habitica/blob/develop/website/assets/audio/"+
+        return "https://habitica.com/assets/audio/"+
                 getTheme()+"/"+getFileName()+".mp3";
     }
 

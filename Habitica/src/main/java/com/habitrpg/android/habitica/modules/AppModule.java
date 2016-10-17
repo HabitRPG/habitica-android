@@ -1,15 +1,15 @@
 package com.habitrpg.android.habitica.modules;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.AudioFileLoader;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.preference.PreferenceManager;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.SoundFileLoader;
+import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -56,7 +56,12 @@ public class AppModule {
     }
 
     @Provides
-    public AudioFileLoader providesAudioFileLoad(){
-        return new AudioFileLoader();
+    public SoundFileLoader providesSoundFileLoader(){
+        return new SoundFileLoader();
+    }
+
+    @Provides
+    public SoundManager providesSoundManager() {
+        return new SoundManager();
     }
 }
