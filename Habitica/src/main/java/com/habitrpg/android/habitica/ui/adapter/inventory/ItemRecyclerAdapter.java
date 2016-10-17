@@ -34,6 +34,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     public Boolean isHatching;
     public Boolean isFeeding;
+    public Boolean showShopAd;
+    public String shopIdentifier;
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;

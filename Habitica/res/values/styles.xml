@@ -191,4 +191,13 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:paddingTop">12dp</item>
     </style>
+
+    <style name="FragmentDialogTitle">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">@dimen/section_leftright_padding</item>
+        <item name="android:paddingRight">@dimen/section_leftright_padding</item>
+        <item name="android:paddingTop">@dimen/section_top_padding</item>
+        <item name="android:paddingBottom">@dimen/section_top_padding</item>
+    </style>
 </resources>
