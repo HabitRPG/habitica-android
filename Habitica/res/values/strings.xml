@@ -424,5 +424,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="gem.purchase.listitem4">The ability to change your class before level 100</string>
     <string name="support_habitica">Support Habitica</string>
     <string name="skill_transformation_use">use</string>
+    <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>
+    <string name="feeding_market_info">Need different food? Buy more from the market!</string>
+    <string name="open_market">Open Market</string>
 
 </resources>
