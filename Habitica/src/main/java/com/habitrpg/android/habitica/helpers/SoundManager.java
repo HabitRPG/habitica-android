@@ -2,11 +2,13 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,10 +33,13 @@ public class SoundManager {
     private String soundTheme;
 
     private MediaPlayer mp = new MediaPlayer();
-    private String currentSound = "";
+
+    private HashMap<String, SoundFile> loadedSoundFiles;
 
     public SoundManager(){
         HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getComponent().inject(this);
+
+        loadedSoundFiles = new HashMap<>();
     }
 
     public void setSoundTheme(String soundTheme){
@@ -62,36 +67,29 @@ public class SoundManager {
         return soundFileLoader.download(soundFiles);
     }
 
+    public void clearLoadedFiles(){
+        loadedSoundFiles.clear();
+    }
+
     public void loadAndPlayAudio(String type){
         if(soundTheme == "off")
         {
             return;
         }
 
-        ArrayList<SoundFile> soundFiles = new ArrayList<>();
-
-        String soundFileKey = soundTheme+"_"+type;
-
-        if(currentSound == soundFileKey){
-            mp.start();
+        if(loadedSoundFiles.containsKey(type)){
+            loadedSoundFiles.get(type).play();
         } else {
+            ArrayList<SoundFile> soundFiles = new ArrayList<>();
+
             soundFiles.add(new SoundFile(soundTheme, type));
             soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(audioFiles1 -> {
-                File file = soundFiles.get(0).getFile();
-                String path = file.getPath();
+                SoundFile file = soundFiles.get(0);
 
-                try {
-                    mp.setDataSource(path);
-                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mp.prepare();
-                    currentSound = soundFileKey;
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+                loadedSoundFiles.put(type, file);
+                file.play();
 
-                mp.start();
-            });
+            }, throwable -> throwable.printStackTrace());
         }
     }
 

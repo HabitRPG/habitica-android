@@ -1,16 +1,22 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+
 import java.io.File;
 
 public class SoundFile {
     private String theme;
     private String fileName;
     private File file;
+    private MediaPlayer mp;
+    private Boolean playerPrepared = false;
 
     public SoundFile(String theme, String fileName){
 
         this.theme = theme;
         this.fileName = fileName;
+        mp = new MediaPlayer();
     }
 
     public String getTheme() {
@@ -22,8 +28,7 @@ public class SoundFile {
     }
 
     public String getWebUrl(){
-        return "https://habitica.com/assets/audio/"+
-                getTheme()+"/"+getFileName()+".mp3";
+        return "https://habitica.com/assets/audio/"+getTheme()+"/"+getFileName()+".mp3";
     }
 
     public String getFilePath() {
@@ -36,5 +41,33 @@ public class SoundFile {
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public void prepareMediaPlayer(){
+        if(playerPrepared) {
+            return;
+        }
+
+        String path = file.getPath();
+
+        try {
+            mp.setDataSource(path);
+            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.prepare();
+
+            playerPrepared = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void play(){
+        prepareMediaPlayer();
+        if(mp.isPlaying()) {
+            mp.stop();
+        }
+
+        mp.start();
     }
 }

@@ -846,14 +846,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     int poolId = -1;
     @Override
     public void onUserReceived(HabitRPGUser user) {
-        /*this.user = user;
+        this.user = user;
         this.lastSync = new Date();
         MainActivity.this.setUserData(false);
-*/
-
-    soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
-
-
     }
 
     public void setActiveFragment(BaseMainFragment fragment) {

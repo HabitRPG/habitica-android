@@ -61,6 +61,7 @@ public class AppModule {
     }
 
     @Provides
+    @Singleton
     public SoundManager providesSoundManager() {
         return new SoundManager();
     }

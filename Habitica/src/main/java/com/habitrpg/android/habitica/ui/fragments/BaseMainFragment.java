@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -20,6 +21,9 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Inject
     public APIHelper apiHelper;
+
+    @Inject
+    protected SoundManager soundManager;
 
     public MainActivity activity;
     public TabLayout tabLayout;
