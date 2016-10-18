@@ -101,6 +101,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -802,21 +803,28 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
+        SpecialItems specialItems = user.getItems().getSpecial();
+        Boolean hasSpecialItems = false;
+        if (specialItems != null) {
+            hasSpecialItems = specialItems.hasSpecialItems();
+        }
+
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if ((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                || (user.getFlags() != null && !user.getFlags().getClassSelected())) {
+        if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
+                || (user.getFlags() != null && !user.getFlags().getClassSelected())) &&
+                !hasSpecialItems) {
             if (item != null) {
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }
         } else {
             IDrawerItem newItem = item;
-            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS) {
+            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withEnabled(false)
                         .withBadge(this.getString(R.string.unlock_lvl_11))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS) {
+            } else {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);

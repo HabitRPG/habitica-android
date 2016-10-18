@@ -58,4 +58,8 @@ public class SpecialItems extends BaseModel {
     public void setSpookySparkles(int spookySparkles) {
         this.spookySparkles = spookySparkles;
     }
+
+    public Boolean hasSpecialItems() {
+        return seafoam > 0 || shinySeed > 0 || snowball > 0 || spookySparkles > 0;
+    }
 }
