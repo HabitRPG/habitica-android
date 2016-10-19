@@ -422,6 +422,15 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
                 });
+
+        switch(event.Task.type){
+            case Task.TYPE_DAILY: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
+            } break;
+            case Task.TYPE_TODO: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
+            } break;
+        }
     }
 
     @Subscribe

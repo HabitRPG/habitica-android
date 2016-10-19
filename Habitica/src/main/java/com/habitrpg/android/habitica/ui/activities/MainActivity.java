@@ -1003,6 +1003,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             } else {
                                 snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
                             }
+                            soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                         } else if (!event.Reward.getId().equals("potion")) {
                             EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                         }
@@ -1032,6 +1033,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     }, throwable -> {
                     });
         } else {
+            soundManager.loadAndPlayAudio(SoundManager.SoundReward);
             // user created Rewards
             apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
                     .compose(apiHelper.configureApiCallObserver())
@@ -1206,7 +1208,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private void showSnackBarForDataReceived(final TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                new Handler().postDelayed(() -> showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP), 3000L);
+                new Handler().postDelayed(() -> {
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                    soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
+                }, 3000L);
             }
         }
     }
@@ -1285,12 +1290,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     })
                     .create();
 
-
+            soundManager.loadAndPlayAudio(SoundManager.SoundDeath);
             this.faintDialog.show();
         }
     }
 
     private void displayLevelUpDialog(int level) {
+        soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
+
         SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
         if (suppressedModals != null) {
             if (suppressedModals.getLevelUp()) {
