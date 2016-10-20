@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -427,7 +428,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         component.inject(this);
     }
 
-    private boolean isEmojiEditText(View view) {
+    private boolean isEmojiEditText(@Nullable View view) {
         return view instanceof EmojiEditText;
     }
 
@@ -534,7 +535,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
 
-    private void setTitle(Task task) {
+    private void setTitle(@Nullable Task task) {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {

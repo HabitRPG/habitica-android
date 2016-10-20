@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
 
 import com.crashlytics.android.Crashlytics;
@@ -22,9 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by keithholliday on 7/12/16.
- */
 public class RemindersManager {
 
     private DateFormat dateFormater;
@@ -37,7 +33,8 @@ public class RemindersManager {
         }
     }
 
-    public RemindersItem createReminderFromDateString(String dateString) {
+    @Nullable
+    private RemindersItem createReminderFromDateString(String dateString) {
         try {
             Date date = dateFormater.parse(dateString);
             RemindersItem item = new RemindersItem();
@@ -72,6 +69,8 @@ public class RemindersManager {
             TimePicker dialogTimePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
             DatePicker dialogDatePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
 
+            dialogTimePicker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context));
+
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
                     Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
@@ -105,13 +104,13 @@ public class RemindersManager {
                 calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), selectedHour, selectedMinute, 0);
 
                 onReminderTimeSelected(callback, reminder, calendar);
-            }, hour, minute, true);
+            }, hour, minute, android.text.format.DateFormat.is24HourFormat(context));
             timePickerDialog.setTitle("Select Time");
             timePickerDialog.show();
         }
     }
 
-    private void onReminderTimeSelected(ReminderTimeSelectedCallback callback, RemindersItem reminder, Calendar calendar) {
+    private void onReminderTimeSelected(@Nullable ReminderTimeSelectedCallback callback, @Nullable RemindersItem reminder, Calendar calendar) {
         RemindersItem remindersItem = reminder;
         if (remindersItem == null) {
             remindersItem = createReminderFromDateString(dateFormater.format(calendar.getTime()));
@@ -124,6 +123,6 @@ public class RemindersManager {
     }
 
     public interface ReminderTimeSelectedCallback {
-        void onReminderTimeSelected(RemindersItem remindersItem);
+        void onReminderTimeSelected(@Nullable RemindersItem remindersItem);
     }
 }
