@@ -16,6 +16,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -109,6 +111,10 @@ public class TaskAlarmManager {
         for (Task task : tasks) {
             this.setAlarmsForTask(task);
         }
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putLong("lastReminderSchedule", new Date().getTime());
+        editor.apply();
     }
 
     private RemindersItem setTimeForDailyReminder(RemindersItem remindersItem, Task task) {

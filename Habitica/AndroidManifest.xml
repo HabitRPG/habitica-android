@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="129"
-    android:versionName="0.0.34.2"
+    android:versionCode="131"
+    android:versionName="0.0.34.3"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -138,7 +138,9 @@
                   android:screenOrientation="portrait" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
-        <receiver android:process=":remote" android:name=".receivers.TaskReceiver"></receiver>
+        <receiver
+                android:process=":remote"
+                android:name=".receivers.TaskReceiver"/>
 
         <receiver android:name=".receivers.LocalNotificationActionReceiver">
             <intent-filter>
@@ -150,7 +152,7 @@
         </receiver>
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.intent.action._BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
