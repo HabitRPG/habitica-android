@@ -415,4 +415,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="widget_add_task">Habitica Add Task</string>
     <string name="google_services_missing">Google play services could not be found.</string>
 
+
+    <string name="AudioTheme_title">Audio Theme</string>
+    <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
 </resources>

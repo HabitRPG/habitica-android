@@ -36,10 +36,6 @@ public class SoundFileLoader {
                     }
 
                     final Observable<SoundFile> fileObservable = Observable.create(sub -> {
-                        if (sub.isUnsubscribed()) {
-                            return;
-                        }
-
                         Request request = new Request.Builder().url(audioFile.getWebUrl()).build();
 
                         Response response;

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
@@ -18,6 +19,7 @@ import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -41,10 +43,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     @Inject
     public APIHelper apiHelper;
+
+    @Inject
+    public SoundManager soundManager;
+
     private Context context;
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
+    private Preference audioThemePreference;
     private HabitRPGUser user;
     public MainActivity activity;
     private PushNotificationManager pushNotificationManager;
@@ -73,7 +80,10 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         ((HabiticaApplication) getActivity().getApplication()).getComponent().inject(this);
         context = getActivity();
 
-        String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
+        android.support.v7.preference.PreferenceManager preferenceManager = getPreferenceManager();
+        SharedPreferences sharedPreferences = preferenceManager.getSharedPreferences();
+
+        String userID = sharedPreferences.getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
         }
@@ -95,6 +105,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         classSelectionPreference = findPreference("choose_class");
         classSelectionPreference.setVisible(false);
+
+        audioThemePreference = findPreference("audioTheme");
     }
 
     @Override
@@ -186,62 +198,88 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("use_reminder")) {
-            boolean use_reminder = sharedPreferences.getBoolean(key, false);
-            timePreference.setEnabled(use_reminder);
-            if (use_reminder) {
-                scheduleNotifications();
-            } else {
+        switch(key) {
+            case "use_reminder": {
+                boolean use_reminder = sharedPreferences.getBoolean(key, false);
+                timePreference.setEnabled(use_reminder);
+                if (use_reminder) {
+                    scheduleNotifications();
+                } else {
+                    removeNotifications();
+                }
+            }
+            break;
+            case "reminder_time": {
                 removeNotifications();
+                scheduleNotifications();
             }
-        } else if (key.equals("reminder_time")) {
-            removeNotifications();
-            scheduleNotifications();
-        } else if (key.equals("usePushNotifications")) {
-            boolean userPushNotifications = sharedPreferences.getBoolean(key, false);
-            pushNotificationsPreference.setEnabled(userPushNotifications);
-            if (userPushNotifications) {
-                pushNotificationManager.addPushDeviceUsingStoredToken();
-            } else {
-                pushNotificationManager.removePushDeviceUsingStoredToken();
+            break;
+            case "usePushNotifications": {
+                boolean userPushNotifications = sharedPreferences.getBoolean(key, false);
+                pushNotificationsPreference.setEnabled(userPushNotifications);
+                if (userPushNotifications) {
+                    pushNotificationManager.addPushDeviceUsingStoredToken();
+                } else {
+                    pushNotificationManager.removePushDeviceUsingStoredToken();
+                }
             }
-        } else if (key.equals("language")) {
-            LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
+            break;
+            case "language": {
+                LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key, "en"));
 
-            Locale.setDefault(languageHelper.getLocale());
-            Configuration configuration = new Configuration();
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
-                configuration.locale = languageHelper.getLocale();
-            } else {
-                configuration.setLocale(languageHelper.getLocale());
+                Locale.setDefault(languageHelper.getLocale());
+                Configuration configuration = new Configuration();
+                if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
+                    configuration.locale = languageHelper.getLocale();
+                } else {
+                    configuration.setLocale(languageHelper.getLocale());
+                }
+                getActivity().getResources().updateConfiguration(configuration,
+                        getActivity().getResources().getDisplayMetrics());
+
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("preferences.language", languageHelper.getLanguageCode());
+                apiHelper.apiService.updateUser(updateData)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(new MergeUserCallback(activity, user), throwable -> {
+                        });
+
+                Preferences preferences = user.getPreferences();
+                preferences.setLanguage(languageHelper.getLanguageCode());
+                apiHelper.languageCode = preferences.getLanguage();
+                apiHelper.apiService.getContent(apiHelper.languageCode)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(contentResult -> {
+                        }, throwable -> {
+                        });
+
+                if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    this.startActivity(intent);
+                    getActivity().finishAffinity();
+                }
             }
-            getActivity().getResources().updateConfiguration(configuration,
-                    getActivity().getResources().getDisplayMetrics());
+            case "audioTheme": {
+                String newAudioTheme = sharedPreferences.getString(key, "off");
 
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.language", languageHelper.getLanguageCode());
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
-                    });
+                Map<String, Object> updateData = new HashMap<>();
+                updateData.put("preferences.sound", newAudioTheme);
+                MergeUserCallback mergeUserCallback = new MergeUserCallback(activity, user);
+                apiHelper.apiService.updateUser(updateData)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(mergeUserCallback, throwable -> {
+                        });
 
-            Preferences preferences = user.getPreferences();
-            preferences.setLanguage(languageHelper.getLanguageCode());
-            apiHelper.languageCode = preferences.getLanguage();
-            apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(contentResult -> {
-                    }, throwable -> {
-                    });
+                Preferences preferences = user.getPreferences();
+                preferences.setSound(newAudioTheme);
 
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1){
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                this.startActivity(intent);
-                getActivity().finishAffinity();
+                soundManager.setSoundTheme(newAudioTheme);
+
+                soundManager.preloadAllFiles();
             }
         }
     }
@@ -260,19 +298,26 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     public void setUser(HabitRPGUser user) {
         this.user = user;
-        if (user != null && user.getFlags() != null && user.getStats() != null) {
-            if (user.getStats().getLvl() >= 10) {
-                if (user.getFlags().getClassSelected()) {
-                    if (user.getPreferences().getDisableClasses()) {
-                        classSelectionPreference.setTitle(getString(R.string.enable_class));
+        if (user != null) {
+            if(user.getPreferences() != null){
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                prefs.edit().putString("audioTheme", user.getPreferences().getSound()).apply();
+            }
+
+            if (user.getFlags() != null && user.getStats() != null) {
+                if (user.getStats().getLvl() >= 10) {
+                    if (user.getFlags().getClassSelected()) {
+                        if (user.getPreferences().getDisableClasses()) {
+                            classSelectionPreference.setTitle(getString(R.string.enable_class));
+                        } else {
+                            classSelectionPreference.setTitle(getString(R.string.change_class));
+                            classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                        }
+                        classSelectionPreference.setVisible(true);
                     } else {
-                        classSelectionPreference.setTitle(getString(R.string.change_class));
-                        classSelectionPreference.setSummary(getString(R.string.change_class_description));
+                        classSelectionPreference.setTitle(getString(R.string.enable_class));
+                        classSelectionPreference.setVisible(true);
                     }
-                    classSelectionPreference.setVisible(true);
-                } else {
-                    classSelectionPreference.setTitle(getString(R.string.enable_class));
-                    classSelectionPreference.setVisible(true);
                 }
             }
         }

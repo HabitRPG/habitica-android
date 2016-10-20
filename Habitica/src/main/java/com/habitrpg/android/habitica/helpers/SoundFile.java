@@ -56,6 +56,8 @@ public class SoundFile {
             mp.prepare();
 
             playerPrepared = true;
+
+            file = null;
         }
         catch(Exception e){
             e.printStackTrace();
