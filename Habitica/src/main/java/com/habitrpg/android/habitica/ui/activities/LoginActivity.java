@@ -4,18 +4,10 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
 
-import com.amplitude.api.Amplitude;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -44,7 +36,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
@@ -58,7 +49,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -71,11 +61,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.schedulers.Schedulers;
 
 /**
  * @author Mickael Goubin
@@ -108,10 +95,6 @@ public class LoginActivity extends BaseActivity
     EditText mEmail;
     @BindView(R.id.confirm_password)
     EditText mConfirmPassword;
-    @BindView(R.id.email_row)
-    TableRow mEmailRow;
-    @BindView(R.id.confirm_password_row)
-    TableRow mConfirmPasswordRow;
     @BindView(R.id.login_button)
     LoginButton mFacebookLoginBtn;
     @BindView(R.id.forgot_pw_tv)
@@ -180,18 +163,18 @@ public class LoginActivity extends BaseActivity
 
     private void resetLayout() {
         if (this.isRegistering) {
-            if (this.mEmailRow.getVisibility() == View.GONE) {
-                show(this.mEmailRow);
+            if (this.mEmail.getVisibility() == View.GONE) {
+                show(this.mEmail);
             }
-            if (this.mConfirmPasswordRow.getVisibility() == View.GONE) {
-                show(this.mConfirmPasswordRow);
+            if (this.mEmail.getVisibility() == View.GONE) {
+                show(this.mEmail);
             }
         } else {
-            if (this.mEmailRow.getVisibility() == View.VISIBLE) {
-                hide(this.mEmailRow);
+            if (this.mEmail.getVisibility() == View.VISIBLE) {
+                hide(this.mEmail);
             }
-            if (this.mConfirmPasswordRow.getVisibility() == View.VISIBLE) {
-                hide(this.mConfirmPasswordRow);
+            if (this.mEmail.getVisibility() == View.VISIBLE) {
+                hide(this.mEmail);
             }
         }
 	}
