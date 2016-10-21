@@ -14,7 +14,6 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:drawableLeft="@drawable/ic_username"
                 android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="@dimen/spacing_large"
@@ -26,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:drawableLeft="@drawable/ic_email"
                 android:drawableStart="@drawable/ic_email"
@@ -38,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:drawableLeft="@drawable/ic_email"
                 android:drawableStart="@drawable/ic_email"
@@ -86,6 +83,8 @@
         <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"/>
