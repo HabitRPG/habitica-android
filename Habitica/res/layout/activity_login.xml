@@ -18,6 +18,8 @@
                 android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="@dimen/spacing_large"
                 android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@+id/email"
                 android:hint="@string/username"/>
 
         <EditText
@@ -27,6 +29,7 @@
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
                 android:drawableLeft="@drawable/ic_email"
+                android:nextFocusDown="@+id/password"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/spacing_large"
                 android:hint="@string/emailAddress"/>
@@ -37,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/confirm_password"
                 android:drawableLeft="@drawable/ic_email"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/spacing_large"
@@ -50,7 +54,6 @@
                 android:drawableLeft="@drawable/ic_email"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/spacing_large"
-                android:singleLine="true"
                 android:imeOptions="actionDone"
                 android:hint="@string/confirmpassword"/>
 
@@ -69,13 +72,13 @@
                 android:text="@string/register_btn"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
-                android:layout_marginTop="@dimen/spacing_xlarge"
+                android:layout_marginTop="@dimen/spacing_large"
                 android:background="@drawable/rounded_purple_square"/>
 
         <com.google.android.gms.common.SignInButton
                 android:id="@+id/google_login_button"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
                 app:buttonSize="wide"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"/>
