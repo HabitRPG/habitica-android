@@ -10,6 +10,20 @@
             android:id="@+id/login.linear.layout"
             android:orientation="vertical">
 
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_gryphon"/>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_habitica"
+                android:layout_gravity="center"/>
+
         <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
