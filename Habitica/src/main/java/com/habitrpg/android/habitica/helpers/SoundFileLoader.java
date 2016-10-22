@@ -47,21 +47,19 @@ public class SoundFileLoader {
                         }
 
                         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                            if (!sub.isUnsubscribed()) {
-                                try {
-                                    BufferedSink sink = Okio.buffer(Okio.sink(file));
-                                    sink.writeAll(response.body().source());
-                                    sink.flush();
-                                    sink.close();
-                                } catch (IOException io) {
-                                    throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
-                                }
-
-                                file.setReadable(true, false);
-                                audioFile.setFile(file);
-                                sub.onNext(audioFile);
-                                sub.onCompleted();
+                            try {
+                                BufferedSink sink = Okio.buffer(Okio.sink(file));
+                                sink.writeAll(response.body().source());
+                                sink.flush();
+                                sink.close();
+                            } catch (IOException io) {
+                                throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
                             }
+
+                            file.setReadable(true, false);
+                            audioFile.setFile(file);
+                            sub.onNext(audioFile);
+                            sub.onCompleted();
                         }
                     });
                     return fileObservable.subscribeOn(Schedulers.io());
