@@ -80,10 +80,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         ((HabiticaApplication) getActivity().getApplication()).getComponent().inject(this);
         context = getActivity();
 
-        android.support.v7.preference.PreferenceManager preferenceManager = getPreferenceManager();
-        SharedPreferences sharedPreferences = preferenceManager.getSharedPreferences();
-
-        String userID = sharedPreferences.getString(context.getString(R.string.SP_userID), null);
+        String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
         }

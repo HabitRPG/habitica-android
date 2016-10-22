@@ -843,7 +843,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
     }
-    int poolId = -1;
+
     @Override
     public void onUserReceived(HabitRPGUser user) {
         this.user = user;
