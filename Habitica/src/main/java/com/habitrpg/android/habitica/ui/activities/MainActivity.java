@@ -53,21 +53,27 @@ import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
@@ -76,6 +82,7 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
@@ -98,6 +105,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -165,13 +173,11 @@ import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayTy
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored,
-        GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
+        TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
+    public static final int GEM_PURCHASE_REQUEST = 111;
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
-    // Checkout needs to be in the Activity..
-    public ActivityCheckout checkout = null;
     @Inject
     public APIHelper apiHelper;
 
@@ -281,7 +287,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .append(this.drawer);
         }
 
-        setupCheckout();
         EventBus.getDefault().register(this);
     }
 
@@ -331,15 +336,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         sendBroadcast(intent);
     }
 
-    private void setupCheckout() {
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
-        checkout.start();
-    }
-
-    @Override
-    public ActivityCheckout getActivityCheckout() {
-        return checkout;
-    }
 
     private void saveLoginInformation() {
         HabiticaApplication.User = user;
@@ -816,21 +812,28 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
+        SpecialItems specialItems = user.getItems().getSpecial();
+        Boolean hasSpecialItems = false;
+        if (specialItems != null) {
+            hasSpecialItems = specialItems.hasSpecialItems();
+        }
+
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if ((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                || (user.getFlags() != null && !user.getFlags().getClassSelected())) {
+        if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
+                || (user.getFlags() != null && !user.getFlags().getClassSelected())) &&
+                !hasSpecialItems) {
             if (item != null) {
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }
         } else {
             IDrawerItem newItem = item;
-            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS) {
+            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withEnabled(false)
                         .withBadge(this.getString(R.string.unlock_lvl_11))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS) {
+            } else {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
@@ -882,19 +885,19 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
+        } else if (requestCode == GEM_PURCHASE_REQUEST) {
+            this.apiHelper.retrieveUser(true)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                    });
         }
         super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
     }
 
     // region Events
 
     @Override
     public void onDestroy() {
-        if (checkout != null) {
-            checkout.stop();
-        }
-
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -1476,6 +1479,46 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
+    }
+
+    @Subscribe
+    public void onEvent(TaskCheckedCommand event) {
+        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(ChecklistCheckedCommand event) {
+        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskUpdateCallback(), throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(HabitScoreEvent event) {
+        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(this, event.habit.getId()), throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(final TaskSaveEvent event) {
+        Task task = event.task;
+        if (event.created) {
+            this.apiHelper.apiService.createItem(task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskCreationCallback(), throwable -> {
+                    });
+        } else {
+            this.apiHelper.apiService.updateTask(task.getId(), task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskUpdateCallback(), throwable -> {
+                    });
+        }
     }
 
     private void checkMaintenance() {

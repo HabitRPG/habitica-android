@@ -182,4 +182,22 @@
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
+    <style name="GemPurchaseListItem">
+        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:paddingTop">12dp</item>
+    </style>
+
+    <style name="FragmentDialogTitle">
+        <item name="android:textSize">@dimen/card_medium_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">@dimen/section_leftright_padding</item>
+        <item name="android:paddingRight">@dimen/section_leftright_padding</item>
+        <item name="android:paddingTop">@dimen/section_top_padding</item>
+        <item name="android:paddingBottom">@dimen/section_top_padding</item>
+    </style>
 </resources>

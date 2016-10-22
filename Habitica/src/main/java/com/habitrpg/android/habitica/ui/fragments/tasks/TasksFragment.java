@@ -458,36 +458,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
-        Task task = event.task;
-        if (event.created) {
-            this.apiHelper.apiService.createItem(task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskCreationCallback(), throwable -> {
-                    });
-            floatingMenu.close(true);
-        } else {
-            this.apiHelper.apiService.updateTask(task.getId(), task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskUpdateCallback(), throwable -> {
-                    });
-        }
+        floatingMenu.close(true);
     }
 
-    @Subscribe
-    public void onEvent(ToggledInnStateEvent event) {
-        user.getPreferences().setSleep(event.Inn);
-    }
-
-    @Subscribe
-    public void onEvent(ToggledEditTagsEvent event) {
-        if(user != null) {
-            if(this.editingTags == event.editing) {
-                return;
-            }
-            this.editingTags = event.editing;
-            fillTagFilterDrawer(tags);
-        }
-    }
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {

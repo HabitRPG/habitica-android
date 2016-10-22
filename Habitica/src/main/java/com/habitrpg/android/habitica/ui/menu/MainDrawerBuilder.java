@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -28,6 +29,8 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+
+import static com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST;
 
 public class MainDrawerBuilder {
 
@@ -148,7 +151,7 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_PURCHASE: {
-                            fragment = new GemsPurchaseFragment();
+                            newActivityClass = GemPurchaseActivity.class;
                             break;
                         }
                         case SIDEBAR_NEWS: {
@@ -177,7 +180,11 @@ public class MainDrawerBuilder {
                     if (newActivityClass != null) {
                         Intent passUserId = new Intent(activity, newActivityClass);
                         passUserId.putExtra("userId", activity.getUserID());
-                        activity.startActivity(passUserId);
+                        if (identifier == SIDEBAR_PURCHASE) {
+                            activity.startActivityForResult(passUserId, GEM_PURCHASE_REQUEST);
+                        } else {
+                            activity.startActivity(passUserId);
+                        }
                         return false;
                     }
 

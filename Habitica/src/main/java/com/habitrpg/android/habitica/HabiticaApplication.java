@@ -7,6 +7,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.components.DaggerAppComponent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -49,7 +50,6 @@ import io.fabric.sdk.android.Fabric;
 
 public class HabiticaApplication extends MultiDexApplication {
 
-    public static String Purchase20Gems = "com.habitrpg.android.habitica.iap.20.gems";
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
     @Inject
@@ -338,7 +338,8 @@ public class HabiticaApplication extends MultiDexApplication {
             }
         });
 
-        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, Arrays.asList(Purchase20Gems)));
+
+        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, PurchaseTypes.allTypes));
     }
 
     @NonNull

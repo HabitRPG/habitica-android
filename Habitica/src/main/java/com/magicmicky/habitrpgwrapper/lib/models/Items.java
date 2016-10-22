@@ -43,6 +43,12 @@ public class Items extends BaseModel {
             foreignColumnName = "user_id")})
     private Gear gear;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "special_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
+    private SpecialItems special;
+
     public Items(String currentMount, String currentPet, int lastDrop_count, Date lastDrop_date) {
         this.currentMount = currentMount;
         this.currentPet = currentPet;
@@ -91,6 +97,14 @@ public class Items extends BaseModel {
 
     public void setGear(Gear gear) {
         this.gear = gear;
+    }
+
+    public SpecialItems getSpecial() {
+        return special;
+    }
+
+    public void setSpecial(SpecialItems specialItems) {
+        this.special = specialItems;
     }
 
     public String getUser_id() {
@@ -152,6 +166,8 @@ public class Items extends BaseModel {
     @Override
     public void save() {
         gear.user_id = user_id;
+        special.user_id = user_id;
+
         super.save();
     }
 }

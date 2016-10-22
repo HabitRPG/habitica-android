@@ -317,7 +317,8 @@ public class TaskAlarmManagerTest {
         Assert.assertNotNull(alarmId);
         Assert.assertEquals(true, alarmUp);
 
-        int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
+        int expectedDay = (currentDayOfTheWeek + everyXDay) % 8;
+        if (expectedDay == 0) { expectedDay = 7;};
 
         Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
     }
@@ -332,7 +333,7 @@ public class TaskAlarmManagerTest {
         int everyXDay = 2;
         task.setEveryX(everyXDay);
 
-        List<RemindersItem> reminders = new ArrayList<RemindersItem>();
+        List<RemindersItem> reminders = new ArrayList<>();
         RemindersItem remindersItem1 = new RemindersItem();
         UUID randomUUID = UUID.randomUUID();
         remindersItem1.setId(randomUUID.toString());
@@ -363,6 +364,7 @@ public class TaskAlarmManagerTest {
         Assert.assertEquals(true, alarmUp);
 
         int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
+        if (expectedDay == 0) { expectedDay = 7;};
 
         Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
     }

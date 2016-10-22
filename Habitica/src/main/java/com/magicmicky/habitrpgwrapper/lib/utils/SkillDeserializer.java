@@ -28,9 +28,7 @@ public class SkillDeserializer
         for (Map.Entry<String, JsonElement> classEntry : object.entrySet()) {
             String classname = classEntry.getKey();
             JsonObject classObject = classEntry.getValue().getAsJsonObject();
-            if (classname.equals("special")) {
-                continue;
-            }
+
             for (Map.Entry<String, JsonElement> skillEntry : classObject.entrySet()) {
                 JsonObject skillObject = skillEntry.getValue().getAsJsonObject();
                 Skill skill = new Skill();
@@ -41,7 +39,14 @@ public class SkillDeserializer
                 skill.target = skillObject.get("target").getAsString();
                 skill.habitClass = classname;
                 skill.mana = skillObject.get("mana").getAsInt();
-                skill.lvl = skillObject.get("lvl").getAsInt();
+
+                JsonElement lvlElement = skillObject.get("lvl");
+
+                if(lvlElement != null)
+                {
+                    skill.lvl = lvlElement.getAsInt();
+                }
+
                 skills.add(skill);
             }
         }

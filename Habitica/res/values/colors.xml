@@ -3,10 +3,10 @@
 
     <color name="brand_50">#36205D</color>
     <color name="brand_100">#432874</color>
-    <color name="brand_200">#4F2A93</color>
+    <color name="brand_200">#4f2a93</color>
     <color name="brand_300">#6133B4</color>
     <color name="brand_400">#9A62FF</color>
-    <color name="brand_500">#BDA8FF</color>
+    <color name="brand_500">#bda8ff</color>
     <color name="brand_700">#ede7f6</color>
     <color name="brand">@color/brand_100</color>
 
@@ -37,7 +37,7 @@
 
     <color name="best_100">#50B5E9</color>
     <color name="best_50">#46A7D9</color>
-    <color name="best_10">#2995CD</color>
+    <color name="best_10">#2995cd</color>
 
     <color name="completed">#D9D9D9</color>
     <color name="completed_btn">#989898</color>
@@ -96,10 +96,12 @@
     <!-- Preferences -->
     <color name="preference_fallback_accent_color">@color/colorAccent</color>
     <!-- buttons -->
-    <color name="btn_success">#ff5cb85c</color>
-    <color name="btn_warning">#fff0ad4e</color>
-    <color name="btn_danger">#ffd9534f</color>
+    <color name="btn_success">@color/good_10</color>
+    <color name="btn_warning">@color/neutral_10</color>
+    <color name="btn_danger">@color/worse_10</color>
 
     <color name="widget_background">#c8432874</color>
+
+    <color name="gem_view_background">#10bda8ff</color>
 
 </resources>
