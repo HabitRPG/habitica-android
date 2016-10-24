@@ -166,15 +166,15 @@ public class LoginActivity extends BaseActivity
             if (this.mEmail.getVisibility() == View.GONE) {
                 show(this.mEmail);
             }
-            if (this.mEmail.getVisibility() == View.GONE) {
-                show(this.mEmail);
+            if (this.mConfirmPassword.getVisibility() == View.GONE) {
+                show(this.mConfirmPassword);
             }
         } else {
             if (this.mEmail.getVisibility() == View.VISIBLE) {
                 hide(this.mEmail);
             }
-            if (this.mEmail.getVisibility() == View.VISIBLE) {
-                hide(this.mEmail);
+            if (this.mConfirmPassword.getVisibility() == View.VISIBLE) {
+                hide(this.mConfirmPassword);
             }
         }
 	}
