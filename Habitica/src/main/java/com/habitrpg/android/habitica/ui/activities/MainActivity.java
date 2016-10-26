@@ -84,6 +84,7 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -183,6 +184,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public HabitRPGUser user;
     @Inject
     protected HostConfig hostConfig;
+    @Inject
+    protected SharedPreferences sharedPreferences;
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
@@ -301,6 +304,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         });
                 this.checkMaintenance();
             }
+        }
+
+        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) > new Date().getTime() - 86400000) {
+            TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
+            taskAlarmManager.scheduleAllSavedAlarms();
         }
 
         //after the activity has been stopped and is thereafter resumed,
