@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
@@ -16,6 +17,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -109,6 +111,8 @@ public class TaskAlarmManager {
         for (Task task : tasks) {
             this.setAlarmsForTask(task);
         }
+
+        scheduleDailyReminder(context);
     }
 
     private RemindersItem setTimeForDailyReminder(RemindersItem remindersItem, Task task) {
@@ -160,5 +164,34 @@ public class TaskAlarmManager {
         sender.cancel();
         am.cancel(sender);
 
+    }
+
+    public static void scheduleDailyReminder(Context context) {
+        String timeval = PreferenceManager.getDefaultSharedPreferences(context).getString("reminder_time", "19:00");
+        String[] pieces = timeval.split(":");
+        int hour = Integer.parseInt(pieces[0]);
+        int minute = Integer.parseInt(pieces[1]);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        long trigger_time = cal.getTimeInMillis();
+
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
+
+        if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
+    }
+
+    public static void removeDailyReminder(Context context) {
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
+        alarmManager.cancel(displayIntent);
     }
 }
