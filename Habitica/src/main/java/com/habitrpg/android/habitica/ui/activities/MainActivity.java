@@ -306,7 +306,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
 
-        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) > new Date().getTime() - 86400000) {
+        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
             taskAlarmManager.scheduleAllSavedAlarms();
         }
