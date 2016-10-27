@@ -98,6 +98,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            android:title="@string/pref_cds_header">
+
+        <com.habitrpg.android.habitica.prefs.TimePreference
+                android:key="cds_time"
+                android:defaultValue="00:00"
+                android:title="@string/pref_cds_picker" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/push_notifications">
 
         <CheckBoxPreference

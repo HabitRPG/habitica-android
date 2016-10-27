@@ -177,6 +177,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             } else {
                 pushNotificationManager.removePushDeviceUsingStoredToken();
             }
+        } else if (key.equals("cds_time")) {
+            String timeval = sharedPreferences.getString("cds_time", "00:00");
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            Map<String, Object> updateObject = new HashMap<>();
+            updateObject.put("dayStart", hour);
+            apiHelper.apiService.changeCustomDayStart(updateObject)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(user -> {}, throwable -> {});
         } else if (key.equals("language")) {
             LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
 
@@ -221,9 +230,16 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
         if (preference instanceof TimePreference) {
-            if (getFragmentManager().findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                        .show(getFragmentManager(), TimePreferenceDialogFragment.TAG);
+            if (preference.getKey().equals("cds_time")) {
+                if (getFragmentManager().findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
+                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
+                            .show(getFragmentManager(), DayStartPreferenceDialogFragment.TAG);
+                }
+            } else {
+                if (getFragmentManager().findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
+                    TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                            .show(getFragmentManager(), TimePreferenceDialogFragment.TAG);
+                }
             }
         } else {
             super.onDisplayPreferenceDialog(preference);
@@ -247,6 +263,10 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     classSelectionPreference.setVisible(true);
                 }
             }
+        }
+        if (user != null && user.getPreferences() != null) {
+            TimePreference cdsTimePreference = (TimePreference) findPreference("cds_time");
+            cdsTimePreference.setText(user.getPreferences().getDayStart()+":00");
         }
     }
 }
