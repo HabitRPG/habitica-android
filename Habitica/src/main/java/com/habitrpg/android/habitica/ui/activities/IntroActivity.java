@@ -73,7 +73,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
                     case 0: {
                         fragment.setImage(ResourcesCompat.getDrawable(getResources(), R.drawable.intro_1, null));
                         fragment.setTitle(getString(R.string.intro_1_title));
-                        fragment.setDescription(getString(R.string.intro_1_description));
+                        fragment.setDescription(getString(R.string.intro_1_description, getString(R.string.habitica_user_count)));
                         break;
                     }
                     case 1: {

@@ -19,12 +19,15 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * Created by keithholliday on 5/29/16.
@@ -155,7 +158,7 @@ public class TaskAlarmManager {
 
         PendingIntent sender = PendingIntent.getBroadcast(context, intentId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+        setAlarm(context, cal.getTimeInMillis(), sender);
 
         remindersItem.save();
     }
@@ -183,6 +186,10 @@ public class TaskAlarmManager {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.HOUR_OF_DAY, hour);
             cal.set(Calendar.MINUTE, minute);
+            cal.set(Calendar.SECOND, 0);
+            if (cal.getTimeInMillis() < new Date().getTime()) {
+                cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR)+1);
+            }
             long trigger_time = cal.getTimeInMillis();
 
             Intent notificationIntent = new Intent(context, NotificationPublisher.class);
@@ -198,7 +205,7 @@ public class TaskAlarmManager {
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, trigger_time, pendingIntent);
+            setAlarm(context, trigger_time, pendingIntent);
         }
     }
 
@@ -207,5 +214,16 @@ public class TaskAlarmManager {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
         alarmManager.cancel(displayIntent);
+    }
+
+    private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (SDK_INT < Build.VERSION_CODES.KITKAT)
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M)
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time, time+60000, pendingIntent);
+        else if (SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 }
