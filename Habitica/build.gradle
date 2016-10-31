@@ -177,7 +177,7 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            debuggable false
+            debuggable true
             multiDexEnabled true
 
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
