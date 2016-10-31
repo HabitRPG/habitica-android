@@ -1487,6 +1487,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
                 });
+
+        switch(event.Task.type){
+            case Task.TYPE_DAILY: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
+            } break;
+            case Task.TYPE_TODO: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
+            } break;
+        }
     }
 
     @Subscribe
@@ -1503,6 +1512,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(this, event.habit.getId()), throwable -> {
                 });
+
+        soundManager.loadAndPlayAudio(event.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
     }
 
     @Subscribe

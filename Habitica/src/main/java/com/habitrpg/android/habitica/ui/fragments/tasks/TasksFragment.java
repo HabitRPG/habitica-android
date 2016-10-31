@@ -417,41 +417,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Subscribe
-    public void onEvent(TaskCheckedCommand event) {
-        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
-                });
-
-        switch(event.Task.type){
-            case Task.TYPE_DAILY: {
-                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
-            } break;
-            case Task.TYPE_TODO: {
-                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
-            } break;
-        }
-    }
-
-    @Subscribe
-    public void onEvent(ChecklistCheckedCommand event) {
-        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskUpdateCallback(), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {
-                });
-
-        soundManager.loadAndPlayAudio(event.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
-    }
-
-    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }

@@ -47,9 +47,8 @@ public class SoundManager {
     }
 
     public Observable<List<SoundFile>> preloadAllFiles() {
-        if(soundTheme == "off")
-        {
-            return Observable.never();
+        if(soundTheme == "off") {
+            return Observable.empty();
         }
 
         ArrayList<SoundFile> soundFiles = new ArrayList<>();
