@@ -237,6 +237,9 @@ public interface ApiService {
     @POST("/iap/android/verify")
     Observable<PurchaseValidationResult> validatePurchase(@Body PurchaseValidationRequest request);
 
+    @POST("user/custom-day-start")
+    Observable<HabitRPGUser> changeCustomDayStart(@Body Map<String, Object> updateObject);
+
     //Members URL
     @GET("members/{mid}")
     Observable<HabitRPGUser> GetMember(@Path("mid") String memberId);

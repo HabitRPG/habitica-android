@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -46,6 +47,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                     break;
                 }
             }
+            TaskAlarmManager.scheduleDailyReminder(context);
         }
         if (show_notification) {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

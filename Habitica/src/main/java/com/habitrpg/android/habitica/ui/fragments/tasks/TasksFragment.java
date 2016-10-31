@@ -426,6 +426,17 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         floatingMenu.close(true);
     }
 
+    @Subscribe
+    public void onEvent(ToggledEditTagsEvent event) {
+        if(user != null) {
+            if(this.editingTags == event.editing) {
+                return;
+            }
+            this.editingTags = event.editing;
+            fillTagFilterDrawer(tags);
+        }
+    }
+
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
