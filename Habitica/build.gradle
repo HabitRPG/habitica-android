@@ -168,8 +168,8 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            debuggable true
             multiDexEnabled true
+
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
@@ -177,7 +177,6 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            debuggable true
             multiDexEnabled true
 
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
