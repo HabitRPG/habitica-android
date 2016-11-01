@@ -23,8 +23,8 @@
   <string name="pref_reminder_header">Przypominienie</string>
   <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
   <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
-  <string name="pref_push_notifications_checkbox">Notyfikacje użytkownika</string>
-  <string name="push_notifications">Notyfikacje</string>
+  <string name="pref_push_notifications_checkbox">Powiadomienia użytkownika</string>
+  <string name="push_notifications">Powiadomienia</string>
   <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
   <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
   <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
@@ -113,6 +113,7 @@
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
   <string name="used_skill" formatted="false">Użyłeś %1$s za %2$d pkt. many.</string>
+  <string name="used_skill_without_mana" formatted="false">Użyto %1$s.</string>
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="reminder_title">Pamiętaj o odhaczaniu Codziennych!</string>
@@ -176,7 +177,6 @@
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
-  <string name="intro_1_description">Dołącz do ponad 1 100 000 osób wykonujących obowiązki poprzez zabawę. Stwórz awatara i pilnuj swoich zadań z prawdziwego życia.</string>
   <string name="intro_2_title">Awans w grze = Awans w życiu</string>
   <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
   <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
@@ -375,11 +375,29 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="choose_recipient_title">Wybierz odbiorcę wiadomości</string>
   <string name="action_continue">Kontynuuj</string>
   <string name="scan_qr_code">Przeskanuj kod QR</string>
+  <string name="enter_recipient_uuid">Wpisz ID odbiorcy</string>
   <string name="invited_to_party">Zostałeś zaproszony do drużyny!</string>
+  <string name="stats_widget_label">Statystyki Habitiki</string>
   <string name="add_task">Dodaj Zadanie</string>
   <string name="add_habit">Dodaj Nawyk</string>
   <string name="add_daily">Dodaj Codzienne</string>
   <string name="add_todo">Dodaj Do-Zrobienia</string>
   <string name="add_reward">Dodaj Nagrodę</string>
   <string name="all_dailies_completed">Wykonałeś wszystkie codzienne. Brawo!</string>
+  <string name="widget_habit_button">Nawyk Habitiki</string>
+  <string name="widget_dailies">Codzienne Habitiki</string>
+  <string name="widget_add_task">Dodaj zadanie do Habitiki</string>
+  <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
+  <string name="gem.purchase.toolbartitle">Zamów</string>
+  <string name="gem.purchase.title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
+  <string name="gem.purchase.subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta, na przykład:</string>
+  <string name="gem.purchase.listitem1">Świetne kostiumy dla awatara</string>
+  <string name="gem.purchase.listitem2">Genialne tła</string>
+  <string name="gem.purchase.listitem3">Zadania, w których nagrodą są jaja</string>
+  <string name="gem.purchase.listitem4">Możliwość zmiany klasy przed osiągnięciem 100. poziomu</string>
+  <string name="support_habitica">Wesprzyj Habitikę</string>
+  <string name="skill_transformation_use">użyj</string>
+  <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
+  <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
+  <string name="open_market">Otwórz Targ</string>
 </resources>

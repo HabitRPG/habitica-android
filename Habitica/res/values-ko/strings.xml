@@ -27,7 +27,7 @@
   <string name="push_notifications">공지를 하다</string>
   <string name="preference_push_you_won_challenge">도전 기회를 얻었습니다.</string>
   <string name="preference_push_received_a_private_message">개인 메시지를 받았습니다.</string>
-  <string name="preference_push_gifted_gems">선물받은 젬</string>
+  <string name="preference_push_gifted_gems">선물받은 보석</string>
   <string name="preference_push_gifted_subscription">선물 받은 구독</string>
   <string name="preference_push_invited_to_party">파티에 초대 받음</string>
   <string name="preference_push_invited_to_guild">길드에 초대 받음</string>
@@ -113,6 +113,7 @@
   <string name="profile_image">프로필 사진</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">당신은 %1$s을 사용해 %2$d 마나를 얻었습니다.</string>
+  <string name="used_skill_without_mana" formatted="false">%1$s을(를) 사용했습니다.</string>
   <string name="new_checklist_item">새로운 체크리스트 아이템</string>
   <string name="add_checklist_item">더하기</string>
   <string name="reminder_title">일일과제를 체크하는것도 잊지마세요!</string>
@@ -176,7 +177,6 @@
   <string name="complete_tutorial">네, 알겠어요!</string>
   <string name="dismiss_tutorial">나중에 알려주세요</string>
   <string name="intro_1_title">Habitica에 오신걸 환영합니다</string>
-  <string name="intro_1_description">1,100,000이 넘는 사람들과 함께 재미있게 해야할 일도 달성하세요. 아바타를 만들고 일상생활의 과제의 달성률을 체크하세요. </string>
   <string name="intro_2_title">게임 진행도 = 인생 진행도</string>
   <string name="intro_2_description">일상생활의 과제들을 해결하면서 게임의 새로운 기능을 언락하세요. 당신이 목표를 달성할 때 마다 갑옷, 펫과 같은 다양한 보상들을 얻을 수 있습니다!</string>
   <string name="intro_3_title">친구들과 몬스터를 물리치세요</string>
@@ -222,9 +222,9 @@
   <string name="gem.purchase.support">Habitica가 계속되었으면 좋겠나요? 보석을 구매하여 개발자들을 지원해주세요. 보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:
 
 - 아바타를 위한 멋진 의상
-- 멋진 배경들
+- 환상적인 배경들
 - 펫 알을 얻을 수 있는 재미있는 퀘스트들
-- 레벨 100 이전에 클라스를 변경
+- 레벨 100 이전에 직업 변경 가능
 
 더 나은 Habitica를 만들 수 있도록 도와주셔서 감사합니다. 당신의 지원은 큰 의미로 다가옵니다!</string>
   <string name="my_guilds">나의 길드</string>
@@ -285,15 +285,15 @@
   <string name="armoireLastItem">당신은 마지막 귀한 장비를 마법의 옷장에서 찾았습니다.</string>
   <string name="armoireNotesEmpty">옷장에는 매달 첫째주에 새로운 장비가 들어있을 것입니다. 그때까지는 계속 클릭하여 경험치와 음식을 얻으세요!</string>
   <string name="sell" formatted="false">팔기 (%s 골드)</string>
-  <string name="hatch_with_potion">포션으로 알 깨기</string>
+  <string name="hatch_with_potion">포션으로 알 부화</string>
   <string name="feed_to_pet">펫 먹이주기</string>
-  <string name="hatch_egg">알로 알 깨기</string>
+  <string name="hatch_egg">알 부화</string>
   <string name="invite_party">파티에 초대</string>
   <string name="dialog_feeding" formatted="false">%1$s %2$s 에게 다음의 먹이 주기:</string>
   <string name="use_animal">사용</string>
   <string name="feed">먹이주기</string>
-  <string name="hatch_with" formatted="false">%s 으로 펫 깨우기</string>
-  <string name="hatched_pet_title" formatted="false">당신은 %1$s %2$s 를 깨웠습니다!</string>
+  <string name="hatch_with" formatted="false">%s 으로 펫 부화</string>
+  <string name="hatched_pet_title" formatted="false">당신은 %1$s %2$s 를 부화시켰습니다!</string>
   <string name="close">닫기</string>
   <string name="share">나누기</string>
   <string name="notification_pet_fed" formatted="false">%1$s %2$s 에게 먹이를 줬습니다!</string>
@@ -307,29 +307,29 @@
   <string name="sectionquestMounts">퀘스트 탈 것</string>
   <string name="sectionspecialMounts">레어 탈 것</string>
   <string name="world_quest">세계 퀘스트</string>
-  <string name="inn_description">여관에서 쉬어서 완료하지 못한 일일과제가 당신을 다치게 하는 것을 막을 수 있습니다. (주의: 보스로부터 받는 데미지는 피하지 못합니다.)</string>
+  <string name="inn_description">여관에서 쉬면 완료하지 못한 일일과제가 당신을 다치게 하는 것을 막을 수 있습니다. (주의: 보스로부터 받는 데미지는 피하지 못합니다.)</string>
   <string name="empty_items" formatted="false">%s 가 하나도 없습니다</string>
   <string name="user_level" formatted="false">LVL %s</string>
   <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
   <string name="warrior">전사</string>
   <string name="rogue">도적</string>
-  <string name="mage">법사</string>
+  <string name="mage">마법사</string>
   <string name="healer">힐러</string>
-  <string name="warrior_description">전사들은 보너스 골드, 경험치를 증가시키고 과제를 달성하는 \"크리터컬 히트\"를 더 강하게, 자주 발생시킬 수 있습니다. 또 보스몬스터에 강한 피해를 입힐 수 있습니다. 예측 불가능한 대박을 터트리거나 보스 공격에서 활약하는 것을 원한다면 전사를 추천합니다!</string>
-  <string name="mage_description">법사는 경험치와 레벨을 다른 클래스에 비해 빠르게 성장해 나아갑니다. 또 특수 능력을 사요하기 위한 마나도 훨씬 많습니다. 계획적은 과제달성 게임을 하시고 싶거나 빠른 레벨업으로 다양한 기능들을 체험하시고 싶으시다면 법사를 추천합니다!</string>
-  <string name="rogue_description">도적은 다른 클래스에 비해 골드를 더 많이 받고 랜덤한 아이템들을 잘 찾아냅니다. 그들의 민첩 능력은 일일과제를 놓쳐서 발생하는 위험을 잘 피할 수 있도록 합니다. 보상과 달성과제, 아이템과 뱃지 모으기를 좋아하신다면 도적을 추천합니다!</string>
-  <string name="healer_description">힐러는 공격에 휘들리지 않고 동료들을 보호해 줍니다. 놓친 일일과제와 나쁜 습관들은 그들에게 큰 피해를 입히지 못하고, 설령 실패를 하더라도 치료가 가능합니다. 파티원들을 도와주길 좋아하고 노력으로 죽음을 이겨내는 것이 매력적이라면 힐러를 추천합니다!</string>
-  <string name="select_class">클레스 고르기</string>
+  <string name="warrior_description">전사들은 보너스 골드, 경험치를 주고 아이템 드롭 확률을 증가시키는 \"크리터컬 히트\"를 더 강하게, 자주 발생시킬 수 있습니다. 또, 보스몬스터에 강한 피해를 입힐 수 있습니다. 예측 불가능한 대박을 터트리거나 보스 공격에서 활약하는 것을 원한다면 전사를 추천합니다!</string>
+  <string name="mage_description">마법사는 경험치와 레벨이 다른 클래스에 비해 빠르게 성장합니다. 또, 특수 능력을 사용하기 위한 마나도 훨씬 많습니다. 계획적인 과제달성 게임을 하시고 싶거나 빠른 레벨업으로 다양한 기능들을 체험하시고 싶으시다면 마법사를 추천합니다!</string>
+  <string name="rogue_description">도적은 다른 클래스에 비해 골드를 더 많이 받고 랜덤한 아이템들을 잘 찾아냅니다. 그들의 민첩 능력은 일일과제를 놓쳐서 발생하는 위험을 잘 피할 수 있도록 합니다. 보상과 업적, 아이템과 뱃지 모으기를 좋아하신다면 도적을 추천합니다!</string>
+  <string name="healer_description">힐러는 공격에 휘둘리지 않고 동료들을 보호해 줍니다. 놓친 일일과제와 나쁜 습관들은 그들에게 큰 피해를 입히지 못하고, 설령 실패를 하더라도 치료가 가능합니다. 파티원들을 도와주길 좋아하고 노력으로 죽음을 이겨내는 것이 매력적이라면 힐러를 추천합니다!</string>
+  <string name="select_class">직업 고르기</string>
   <string name="opt_out_class">선택 유예</string>
-  <string name="opt_out_description">클래스에 신경쓰고 싶지 않으신가요? 나중에 고르고 싶으시다고요? 선택유예 하세요 - 당신은 아무런 능력이 없는 전사가 되어있을 꺼에요. 관련된 내용은 wiki를 방문하여 이후에 클래스를 선택하는 방법을 찾을 수 있습니다.</string>
+  <string name="opt_out_description">직업을 신경쓰고 싶지 않으신가요? 나중에 고르고 싶으시다고요? 선택유예 하세요 - 당신은 아무런 능력이 없는 전사가 되어있을 꺼에요. wiki를 방문하면 직업시스템에 대해서 자세히 알 수 있고, 이후에 언제라도 직업을 선택할 수 있습니다.</string>
   <string name="class_confirmation" formatted="false">%s 가 되고싶은 것이 확실한가요?</string>
-  <string name="choose_class">클레스 고르기</string>
+  <string name="choose_class">직업 선택</string>
   <string name="dialog_go_back">뒤로 가기</string>
   <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
-  <string name="change_class">클레스 바꾸기</string>
-  <string name="change_class_description">보석 3개를 사용하여 클래스를 바꾸고 능력치를 초기화 하세요. 웹사이트에서 능력치를 배분할 수 있습니다. </string>
-  <string name="enable_class">클레스 사용 여부</string>
-  <string name="changing_class_progress">클레스 바꾸기</string>
+  <string name="change_class">직업 바꾸기</string>
+  <string name="change_class_description">보석 3개를 사용하여 직업을 바꾸고 능력치를 초기화 하세요. 웹사이트에서 능력치를 배분할 수 있습니다. </string>
+  <string name="enable_class">직업시스템 활성화</string>
+  <string name="changing_class_progress">직업 바꾸기</string>
   <string name="by_email">이메일로</string>
   <string name="invite_existing_users">등록된 사용자 초대</string>
   <string name="send">보내기</string>
@@ -345,7 +345,7 @@
   <string name="share_hatched" formatted="false">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
   <string name="share_raised" formatted="false">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
   <string name="open_in_store">플레이스토어로 열기</string>
-  <string name="change_class_confirmation">보석 3개를 사용하여 클레스를 바꾸시겠습니까? </string>
+  <string name="change_class_confirmation">보석 3개를 사용하여 직업을 바꾸시겠습니까? </string>
   <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
   <string name="confirm">확인</string>
   <string name="market">시장</string>
@@ -374,5 +374,37 @@
   <string name="filter_drawer_edit_tags">태그 편집</string>
   <string name="filter_drawer_filter_tags">태그로 정렬</string>
   <!--QR Strings-->
+  <string name="qr_section_title">이 QR 코드로 다른 사람이 초대할 수 있게 하세요</string>
+  <string name="qr_save_message">QR 코드 저장:</string>
   <string name="qr_dialogue_title">나의 QR 코드</string>
+  <string name="download">다운로드</string>
+  <string name="send_new_message">새 메시지 보내기</string>
+  <string name="choose_recipient_title">메시지 받는 사람 선택</string>
+  <string name="action_continue">계속</string>
+  <string name="scan_qr_code">QR 코드 스캔</string>
+  <string name="enter_recipient_uuid">받는 사람의 사용자 ID 입력</string>
+  <string name="invited_to_party">파티에 참가를 초대 받았습니다!</string>
+  <string name="stats_widget_label">Habitica 통계</string>
+  <string name="add_task">과제 추가</string>
+  <string name="add_habit">습관 추가</string>
+  <string name="add_daily">일일과제 추가</string>
+  <string name="add_todo">할 일 추가</string>
+  <string name="add_reward">보상 추가</string>
+  <string name="all_dailies_completed">오늘의 모든 일일과제를 달성하셨습니다. 잘 했어요!</string>
+  <string name="widget_habit_button">Habitica 습관</string>
+  <string name="widget_dailies">Habitica 일일과제</string>
+  <string name="widget_add_task">Habitica 과제 추가</string>
+  <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
+  <string name="gem.purchase.toolbartitle">구매</string>
+  <string name="gem.purchase.title">보석을 구매하시면 개발자를 지원하고 Habitica가 계속될 수 있도록 도울 수 있습니다.</string>
+  <string name="gem.purchase.subtitle">보석들은 당신의 계정에 다양한 요소를 추가해줍니다. 예를들어:</string>
+  <string name="gem.purchase.listitem1">아바타를 위한 멋진 의상</string>
+  <string name="gem.purchase.listitem2">환상적인 배경들</string>
+  <string name="gem.purchase.listitem3">펫알을 얻을 수 있는 재미있는 퀘스트들</string>
+  <string name="gem.purchase.listitem4">레벨 100 이전에도 직업 변경 가능</string>
+  <string name="support_habitica">Habitica 지원하기</string>
+  <string name="skill_transformation_use">사용</string>
+  <string name="hatching_market_info">필요한 아이템이 드롭되지 않나요? 시장으로 가보세요!</string>
+  <string name="feeding_market_info">다른 종류의 음식이 필요한가요? 시장에서 음식을 구매해보세요!</string>
+  <string name="open_market">시장으로</string>
 </resources>

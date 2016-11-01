@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Tavo Vartotojo Identifikacijos Kodas</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Tavo API Token</string>
+  <string name="Language_title">Kalba</string>
+  <string name="Language_summary">Pakeisti Habitica kalbą</string>
   <string name="SP_user_qr_code">Tavo QR Kodas</string>
   <string name="PS_contact_title">Susisiekti</string>
   <string name="unknown_error">Įvyko klaida...</string>
   <string name="pref_account_header">Paskyra</string>
+  <string name="pref_first_day_of_the_week_title">Pirma Savaitės Diena</string>
+  <string name="pref_first_day_of_the_week_summary">Pirma savaitės diena visuose kalendoriuose</string>
   <string name="pref_reminder_header">Kasdienis Priminimas</string>
   <string name="pref_reminder_checkbox">Įjungti Priminimą</string>
   <string name="pref_reminder_picker">Nustatyti Priminimo Laiką</string>
@@ -26,6 +30,7 @@
   <string name="preference_push_gifted_gems">Padovanoti Brangakmeniai</string>
   <string name="preference_push_gifted_subscription">Padovanota Prenumerata</string>
   <string name="preference_push_invited_to_party">Pakvietimas į Grupę</string>
+  <string name="preference_push_invited_to_guild">Pakvietimas į Gildiją</string>
   <string name="preference_push_your_quest_has_begun">Tavo Misija Prasidėjo</string>
   <string name="preference_push_invited_to_quest">Pakvietimas į Misiją</string>
   <!--Adding tasks-->
@@ -108,6 +113,7 @@
   <string name="profile_image">Profilis Paveikslėlis</string>
   <string name="mana_price_button" formatted="false">%d Magijos Taškai</string>
   <string name="used_skill" formatted="false">Panaudojai [%1$s] už %2$d magijos taškus.</string>
+  <string name="used_skill_without_mana" formatted="false">Panaudojai %1$s.</string>
   <string name="new_checklist_item">naujas sąrašo punktas</string>
   <string name="add_checklist_item">Pridėti</string>
   <string name="reminder_title">Nepamiršk pažymėti savo Užduočių!</string>
@@ -171,7 +177,6 @@
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
   <string name="intro_1_title">Sveiki užsukę į Habitica</string>
-  <string name="intro_1_description">Prisidėk prie virš 1,100,000 žmonių, kurie linksminasi darydami savo darbus. Susikurk veikėją ir sek savo gyvenimo užduotis.</string>
   <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
   <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
   <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
@@ -370,5 +375,26 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="choose_recipient_title">PasirinkŽinutės Gavėją</string>
   <string name="action_continue">Tęsti</string>
   <string name="scan_qr_code">Nuskanuok QR Kodą</string>
+  <string name="enter_recipient_uuid">Įvesti adresato Vartotojo ID</string>
   <string name="invited_to_party">Tave pakvietė į grupę!</string>
+  <string name="stats_widget_label">Habitica Statistika</string>
+  <string name="add_task">Pridėti Užduotį</string>
+  <string name="add_habit">Pridėti Įprotį</string>
+  <string name="add_daily">Pridėti Kasdienė Užduotį</string>
+  <string name="add_todo">Pridėti Vienkartinę Užduotį</string>
+  <string name="add_reward">Pridėti Atlygį</string>
+  <string name="all_dailies_completed">Atlikai visas savo dienos užduotis. Puiku!</string>
+  <string name="widget_habit_button">Habitica Pažymėti Įprotį</string>
+  <string name="widget_dailies">Habitica Kasdienės Užduotys</string>
+  <string name="widget_add_task">Habitica Prodėti Užduotį</string>
+  <string name="google_services_missing">Nepavyko rasti Google play paslaugos.</string>
+  <string name="gem.purchase.toolbartitle">Pirkti</string>
+  <string name="gem.purchase.title">Brangakmenių pirkimas remia kūrėjus ir padeda išlaikiti Habitica</string>
+  <string name="gem.purchase.subtitle">Brangakmeniai tau leidžia pirkti įdomus paskyros priedus, įskaitant:</string>
+  <string name="gem.purchase.listitem1">Gražūs veikėjo kostiumai</string>
+  <string name="gem.purchase.listitem2">Nuostabūs fonai</string>
+  <string name="gem.purchase.listitem3">Misijos kuriose gali rasti augintinių kiaušinių</string>
+  <string name="gem.purchase.listitem4">Galimybė pakeisti savo klasę nepasiekus 100 lygio</string>
+  <string name="support_habitica">Paremti Habitica</string>
+  <string name="skill_transformation_use">naudoti</string>
 </resources>

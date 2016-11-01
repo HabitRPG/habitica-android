@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">ID Pengguna Anda</string>
   <string name="SP_APIToken_title">Token API</string>
   <string name="SP_APIToken_summary">Token API Anda</string>
+  <string name="Language_title">Bahasa</string>
+  <string name="Language_summary">Ganti bahasa dalam Habitica</string>
   <string name="SP_user_qr_code">QR Kodemu</string>
   <string name="PS_contact_title">Kontak saya</string>
   <string name="unknown_error">Terjadi kesalahan...</string>
   <string name="pref_account_header">Akun</string>
+  <string name="pref_first_day_of_the_week_title">Hari Pertama dalam Minggu</string>
+  <string name="pref_first_day_of_the_week_summary">Hari pertama dalam minggu di semua kalender</string>
   <string name="pref_reminder_header">Peringatan Harian</string>
   <string name="pref_reminder_checkbox">Aktifkan Peringatan</string>
   <string name="pref_reminder_picker">Atur Waktu Peringatan</string>
@@ -26,6 +30,7 @@
   <string name="preference_push_gifted_gems">Permata terhadiahkan</string>
   <string name="preference_push_gifted_subscription">Langganan terhadiahkan</string>
   <string name="preference_push_invited_to_party">Terundang ke Kelompok</string>
+  <string name="preference_push_invited_to_guild">Telah diundang ke dalam Guild</string>
   <string name="preference_push_your_quest_has_begun">Tugasmu telah Dimulai</string>
   <string name="preference_push_invited_to_quest">Terundang ke Tugas</string>
   <!--Adding tasks-->
@@ -67,6 +72,7 @@
   <string name="login_validation_error_title">Validasi Gagal</string>
   <string name="login_validation_error_fieldsmissing">Anda harus mengisi semua kolom.</string>
   <string name="save_changes">Simpan</string>
+  <string name="copy">Salin</string>
   <string name="notes">Catatan</string>
   <string name="text">Teks</string>
   <string name="difficulty">Tingkat Kesulitan</string>
@@ -108,6 +114,7 @@
   <string name="profile_image">Gambar Profil</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Kamu menggunakan %1$s dengan %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Kamu menggunakan %1$s</string>
   <string name="new_checklist_item">ceklis item baru</string>
   <string name="add_checklist_item">Tambahkan</string>
   <string name="reminder_title">Ingatlah untuk mencentang Keseharianmu!</string>
@@ -171,7 +178,6 @@
   <string name="complete_tutorial">Aku mengerti!</string>
   <string name="dismiss_tutorial">Peringatkan aku lagi</string>
   <string name="intro_1_title">Selamat datang di Habitica</string>
-  <string name="intro_1_description">Bergabunglah dengan lebih dari 1.100.000 orang bersenang-senang dalam menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
   <string name="intro_2_title">Kemajuan dalam Permainan = Kemajuan dalam Hidup</string>
   <string name="intro_2_description">Buka fitur dalam game dengan mencentang tugas harianmu. Dapatkan baju, peliharaan, dan banyak lagi untuk hadiahmu menyelesaikan tujuan!</string>
   <string name="intro_3_title">Bersosialisasi sambil Mengalahkan Monster</string>
@@ -370,4 +376,24 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="choose_recipient_title">Pilih Penerima Pesan</string>
   <string name="action_continue">Lanjutkan</string>
   <string name="scan_qr_code">Pindai Kode QR</string>
+  <string name="enter_recipient_uuid">Masukan User ID Penerima</string>
+  <string name="invited_to_party">Kamu telah diundang untuk bergabung dalam sebuah party!</string>
+  <string name="stats_widget_label">Status Habitica</string>
+  <string name="add_task">Tambah Tugas</string>
+  <string name="add_habit">Tambah Kebiasaan</string>
+  <string name="add_daily">Tambah Kegiatan Harian</string>
+  <string name="add_todo">Tambah Untuk Dilakukan</string>
+  <string name="add_reward">Tambah Hadiah</string>
+  <string name="all_dailies_completed">Anda telah menyelesaikan semua keseharianmu. Selamat!</string>
+  <string name="widget_habit_button">Habitica Melakukan Kebiasaan</string>
+  <string name="widget_dailies">Keseharian Habitica</string>
+  <string name="widget_add_task">Habitica Menambahkan Tugas</string>
+  <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
+  <string name="gem.purchase.toolbartitle">Bayar</string>
+  <string name="gem.purchase.title">Membeli gem dapat mendukung pengembang dan menjaga Habitica tetap berjalan</string>
+  <string name="gem.purchase.listitem1">Kostum keren untuk avatarmu</string>
+  <string name="support_habitica">Dukung Habitica</string>
+  <string name="skill_transformation_use">gunakan</string>
+  <string name="feeding_market_info">Butuh makanan yang berbeda? Beli lebih dari pasar!</string>
+  <string name="open_market">Buka Pasar</string>
 </resources>

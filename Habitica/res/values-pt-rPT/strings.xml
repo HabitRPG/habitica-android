@@ -12,13 +12,19 @@
   <string name="SP_userID_summary">A Sua Id. de Utilizador</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">O teu token API</string>
+  <string name="Language_title">Língua </string>
+  <string name="Language_summary">Mudar a língua do Habitica</string>
   <string name="SP_user_qr_code">O Seu Código QR</string>
   <string name="PS_contact_title">Contactar-me</string>
   <string name="unknown_error">Ocorreu um erro...</string>
   <string name="pref_account_header">Conta</string>
+  <string name="pref_first_day_of_the_week_title">Primeiro Dia da Semana</string>
+  <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários </string>
   <string name="pref_reminder_header">Lembrete Diário</string>
   <string name="pref_reminder_checkbox">Ativar Lembrete</string>
   <string name="pref_reminder_picker">Definir Hora do Lembrete</string>
+  <string name="pref_cds_header">Início do Dia Personalizado</string>
+  <string name="pref_cds_picker">Definir Hora do Início do Dia Personalizado</string>
   <string name="pref_push_notifications_checkbox">Enviar Notificações do Utilizador</string>
   <string name="push_notifications">Enviar Notificações</string>
   <string name="preference_push_you_won_challenge">Ganhou um Desafio!</string>
@@ -26,7 +32,7 @@
   <string name="preference_push_gifted_gems">Gemas Oferecidas</string>
   <string name="preference_push_gifted_subscription">Subscriação Oferecida</string>
   <string name="preference_push_invited_to_party">Convidado para a Equipa</string>
-  <string name="preference_push_invited_to_guild">Convidado para uma Guilda</string>
+  <string name="preference_push_invited_to_guild">Convidado para uma Corporação</string>
   <string name="preference_push_your_quest_has_begun">A Sua Missão Começou</string>
   <string name="preference_push_invited_to_quest">Convidado para a Missão</string>
   <!--Adding tasks-->
@@ -68,6 +74,7 @@
   <string name="login_validation_error_title">Erro de Validação</string>
   <string name="login_validation_error_fieldsmissing">Tem de preencher todos os campos.</string>
   <string name="save_changes">Guardar</string>
+  <string name="copy">Copiar</string>
   <string name="notes">Notas</string>
   <string name="text">Texto</string>
   <string name="difficulty">Dificuldade</string>
@@ -109,6 +116,7 @@
   <string name="profile_image">Imagem de Perfil</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Usou %1$s de %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Utilizou %1$s.</string>
   <string name="new_checklist_item">novo item da lista de verificações</string>
   <string name="add_checklist_item">Adicionar</string>
   <string name="reminder_title">Lembre-se de verificar as suas Tarefas Diárias!</string>
@@ -159,7 +167,7 @@
   <string name="due_date">Data Limite</string>
   <string name="quest.accept">Aceitar</string>
   <string name="quest.reject">Rejeitar</string>
-  <string name="quest.begin">Começar Missão</string>
+  <string name="quest.begin">Iniciar Missão</string>
   <string name="quest.cancel">Cancelar Convite</string>
   <string name="quest.abort">Abortar Missão</string>
   <string name="quest.leave">Sair da Missão</string>
@@ -172,7 +180,6 @@
   <string name="complete_tutorial">Percebi!</string>
   <string name="dismiss_tutorial">Lembrar-me novamente</string>
   <string name="intro_1_title">Bem-vindo ao Habitica</string>
-  <string name="intro_1_description">Junta-te a mais de 1,100,000 de pessoas divertindo-se enquanto fazem as suas coisas. Cria um avatar e vigia as tuas tarefas da vida real.</string>
   <string name="intro_2_title">Progresso do Jogo = Progresso da Vida Real</string>
   <string name="intro_2_description">Desbloqueie funcionalidades no jogo, ao cumprires as tuas tarefas da vida real. Ganhe armaduras, animais, e muito mais para o recompensar por cumprir os seus objetivos!</string>
   <string name="intro_3_title">Socialize e Lute Contra Monstros</string>
@@ -215,10 +222,10 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="setup_task_creativity_1">Estudar a mestria de um ofício</string>
   <string name="setup_task_creativity_2">Trabalhe num projeto criativo</string>
   <string name="setup_task_creativity_3">Termine um projeto criativo</string>
-  <string name="gem.purchase.support">Queres ajudar o Habitica a persistir? Podes suportar os desenvolvedores ao comprar gemas!\n\n As gemas permitem-te comprar extras divertidos para a tua conta, incluindo: \n\n - Fatos engraçados para o teu avatar\n - Fantásticos fundos\n - Missões engraçadas que te recompensam com ovos de animais\n - A posibilidade de mudares a tua classe antes do nivel 100\n\n Muito obrigado por nos ajudares a tornar o Habitica no melhor que pode ser. O teu suporte significa muito para nós!</string>
-  <string name="my_guilds">As minhas Guildas</string>
-  <string name="public_guilds">Guildas Públicas</string>
-  <string name="guild">Guilda</string>
+  <string name="gem.purchase.support">Quer ajudar-nos a manter o Habitica a funcionar? Pode suportar os programadores ao comprar gemas!\n\nAs gemas permitem-te comprar extras divertidos para a sua conta, incluindo: \n\n - Fatos engraçados para o teu avatar\n - Fundos fantásticos\n - Missões engraçadas que o recompensam com ovos de mascotes\n - A possibilidade de alterar a sua classe antes do nível 100\n\nMuito obrigado por nos ajudar a tornar o Habitica no melhor que este pode ser. O seu suporte significa muito para nós!</string>
+  <string name="my_guilds">As Minhas Corporações</string>
+  <string name="public_guilds">Corporações Públicas</string>
+  <string name="guild">Corporação</string>
   <string name="leave">Sair</string>
   <string name="join">Aderir</string>
   <string name="leader">Líder</string>
@@ -233,7 +240,7 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="privacy">Privacidade</string>
   <string name="write_message">Escrever Mensagem</string>
   <string name="post">Publicar</string>
-  <string name="guild_search_hint">Procurar por guilds</string>
+  <string name="guild_search_hint">Procurar por corporações</string>
   <string name="todo_due" formatted="false">Data limite: %s</string>
   <string name="daily_streak" formatted="false">elemento atual: %d</string>
   <string name="todo_has_duedate">A Tarefa tem Data Limite</string>
@@ -251,7 +258,7 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="equipped">Equipado</string>
   <string name="quest_cancel_message">Tem a certeza que deseja cancelar esta missão? Todos os convites aceites serão perdidos. O dono da missão manterá a posse do pergaminho da missão.</string>
   <string name="quest.invitation">Convite de Missão</string>
-  <string name="quest_begin_message">Tem a certeza que pretende iniciar a missão? Assim que iniciada, nenhum membro adicional da equipa pode juntar-se à missão.</string>
+  <string name="quest_begin_message">Tem a certeza que pretende iniciar a missão? Assim que esta seja iniciada, nenhum membro da equipa adicional pode juntar-se à missão.</string>
   <string name="quest.invitation.text">Foi convidado para participar numa missão!</string>
   <string name="ago_1day">Há 1 dia</string>
   <string name="ago_days" formatted="false">Há %d dias</string>
@@ -311,6 +318,7 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="dialog_go_back">Recuar</string>
   <string name="opt_out_confirmation">Tem a certeza que deseja Optar?</string>
   <string name="change_class">Altere a sua classe</string>
+  <string name="change_class_description">Altere a sua classe e reembolse os seus pontos de atrubuto em 3 gemas. Pode atribuir pontos através do site da Web</string>
   <string name="enable_class">Ativar Sistema de Classe</string>
   <string name="changing_class_progress">Alteração de Classe</string>
   <string name="by_email">Por E-mail</string>
@@ -325,8 +333,9 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="invite_users">Convidar para a Equipa</string>
   <string name="share_using">Partilhe, utilizando</string>
   <string name="share_levelup" formatted="false">Eu cheguei até ao níve l%s em Habitica melhorando meus hábitos na vida real!</string>
+  <string name="share_raised" formatted="false">Eu acabei de ganhar uma montada %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
   <string name="open_in_store">Abrir na Play Store</string>
-  <string name="change_class_confirmation">Tem a certeza de que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
+  <string name="change_class_confirmation">Tem a certeza que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
   <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
   <string name="confirm">Confirmar</string>
   <string name="market">Mercado</string>
@@ -363,5 +372,20 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="choose_recipient_title">Escolher Destinatário da Mensagem</string>
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Digitalizar Código QR</string>
+  <string name="enter_recipient_uuid">Insira a Id. do Utilizador Destinatário</string>
   <string name="invited_to_party">Foi convidado para se juntar à equipa!</string>
+  <string name="stats_widget_label">Habitica Estatísticas </string>
+  <string name="add_task">Adicionar uma Tarefa</string>
+  <string name="add_habit">Adicionar um Hábito </string>
+  <string name="add_daily">Adicionar uma Tarefa Diária </string>
+  <string name="add_reward">Adicionar uma Recompensa</string>
+  <string name="all_dailies_completed">Você completou todas suas tarefas diárias. Parabéns!</string>
+  <string name="widget_habit_button">Habitica Fazer Hábito</string>
+  <string name="widget_dailies">Habitica Tarefas Diárias </string>
+  <string name="widget_add_task">Habitica Adicionar Tarefa</string>
+  <string name="google_services_missing">Os serviços Google play não pode ser achado.</string>
+  <string name="gem.purchase.toolbartitle">Comprar</string>
+  <string name="gem.purchase.title">Ao comprar gemas apoia os programadores e ajuda a manter o Habitica em funcionamento</string>
+  <string name="gem.purchase.subtitle">As gemas permitem-lhe com extras engraçados para a sua conta, incluíndo:</string>
+  <string name="gem.purchase.listitem3">Missões que recompensam com ovos de animal</string>
 </resources>

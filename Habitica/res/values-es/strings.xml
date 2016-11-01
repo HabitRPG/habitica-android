@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">Tu ID de usuario</string>
   <string name="SP_APIToken_title">Token de API</string>
   <string name="SP_APIToken_summary">Tu token de API</string>
+  <string name="Language_title">Idioma</string>
+  <string name="Language_summary">Cambiar el idioma de Habitica</string>
   <string name="SP_user_qr_code">Tu código QR</string>
   <string name="PS_contact_title">Contactar</string>
   <string name="unknown_error">Se produjo un error...</string>
   <string name="pref_account_header">Cuenta</string>
+  <string name="pref_first_day_of_the_week_title">El primer día de la semana</string>
+  <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
   <string name="pref_reminder_header">Recordatorio diario</string>
   <string name="pref_reminder_checkbox">Activar recordatorio</string>
   <string name="pref_reminder_picker">Establecer hora de recordatorio</string>
@@ -171,7 +175,6 @@
   <string name="complete_tutorial">¡Ya está!</string>
   <string name="dismiss_tutorial">Vuelve a recordármelo</string>
   <string name="intro_1_title">Te damos la bienvenida a Habitica</string>
-  <string name="intro_1_description">Únete a más de 1 100 000 personas que ya están siendo eficientes y pasándolo bien al mismo tiempo. Crea tu personaje y registra tus tareas en el mundo real.</string>
   <string name="intro_2_title">Progreso en el juego = Progreso en la vida</string>
   <string name="intro_2_description">Desbloquea funciones del juego completando tareas en el mundo real. Obtén recompensas, como armaduras, mascotas y otras cosas, por cumplir tus objetivos.</string>
   <string name="intro_3_title">Socializa y combate monstruos</string>
@@ -371,4 +374,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Leer código QR</string>
   <string name="invited_to_party">¡Te han invitado a un grupo!</string>
+  <string name="all_dailies_completed">Ha completado todas las tareas. ¡Buen trabajo!</string>
+  <string name="google_services_missing">Los servicios de Google play no pueden ser encontrados</string>
+  <string name="gem.purchase.toolbartitle">Comprar</string>
 </resources>

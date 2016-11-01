@@ -113,6 +113,7 @@
   <string name="profile_image">Immagine profilo</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Hai usato %1$s per %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Hai usato %1$s.</string>
   <string name="new_checklist_item">Nuovo elemento checklist</string>
   <string name="add_checklist_item">Aggiungi</string>
   <string name="reminder_title">Ricorda di completare le tue Daily!</string>
@@ -176,7 +177,6 @@
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
-  <string name="intro_1_description">Unisciti ad oltre 1.100.000 persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
   <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
   <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
@@ -388,4 +388,16 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="widget_habit_button">Habitica esegui abitudine</string>
   <string name="widget_dailies">Habitica Daily</string>
   <string name="widget_add_task">Habitica aggiungi attività</string>
+  <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
+  <string name="gem.purchase.toolbartitle">Compra</string>
+  <string name="gem.purchase.title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
+  <string name="gem.purchase.subtitle">Le Gemme ti permettono di ottenere simpatici extra per il tuo account, tra cui:</string>
+  <string name="gem.purchase.listitem1">Costumi per il tuo avatar</string>
+  <string name="gem.purchase.listitem2">Magnifici sfondi</string>
+  <string name="gem.purchase.listitem3">Missioni che ti premiano con uova di animali</string>
+  <string name="gem.purchase.listitem4">La possibilità di cambiare classe prima del livello 100</string>
+  <string name="support_habitica">Supporta Habitica</string>
+  <string name="skill_transformation_use">usa</string>
+  <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
+  <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
 </resources>

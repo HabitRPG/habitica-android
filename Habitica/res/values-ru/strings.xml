@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">Ежедневное напоминание</string>
   <string name="pref_reminder_checkbox">Активируйте напоминание</string>
   <string name="pref_reminder_picker">Установите время напоминания</string>
+  <string name="pref_cds_header">Персональное начало суток</string>
+  <string name="pref_cds_picker">Установить персональное начало суток</string>
   <string name="pref_push_notifications_checkbox">Push-уведомления пользователя</string>
   <string name="push_notifications">Push-уведомления</string>
   <string name="preference_push_you_won_challenge">Вы прошли испытание!</string>
@@ -72,6 +74,7 @@
   <string name="login_validation_error_title">Ошибка проверки</string>
   <string name="login_validation_error_fieldsmissing">Вы должны заполнить все поля.</string>
   <string name="save_changes">Сохранить</string>
+  <string name="copy">Копировать</string>
   <string name="notes">Заметки</string>
   <string name="text">Текст</string>
   <string name="difficulty">Сложность</string>
@@ -113,6 +116,7 @@
   <string name="profile_image">Аватар</string>
   <string name="mana_price_button" formatted="false">%d М</string>
   <string name="used_skill" formatted="false">Вы использовали %1$s за %2$d маны.</string>
+  <string name="used_skill_without_mana" formatted="false">Вы использовали %1$s.</string>
   <string name="new_checklist_item">новый пункт списка</string>
   <string name="add_checklist_item">Добавить</string>
   <string name="reminder_title">Не забудьте отметить ежедневные задания!</string>
@@ -176,7 +180,6 @@
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
   <string name="intro_1_title">Добро пожаловать в Habitica</string>
-  <string name="intro_1_description">Присоединитесь к 1.100.000 участников, которые развлекаются и добиваются успехов. Создайте аватар и отслеживайте ваши задачи.</string>
   <string name="intro_2_title">Прогресс в игре = Прогресс в жизни</string>
   <string name="intro_2_description">Разблокируйте функции в игре, выполняя реальные задачи. Зарабатывайте оружие, питомцев и многое другое в качестве награды!</string>
   <string name="intro_3_title">Общайтесь и сражайтесь с монстрами</string>
@@ -387,4 +390,18 @@
   <string name="widget_habit_button">Привычки Habitica</string>
   <string name="widget_dailies">Ежедневные задания Habitica</string>
   <string name="widget_add_task">Добавить задачу Habitica</string>
+  <string name="google_services_missing">Сервис Google play не найден.</string>
+  <string name="gem.purchase.toolbartitle">Купить</string>
+  <string name="gem.purchase.title">Покупка самоцветов поддерживает разработчиков и помогает развивать Habitica</string>
+  <string name="gem.purchase.subtitle">Самоцветы позволяют получить интересные дополнительные возможности, включая:</string>
+  <string name="gem.purchase.listitem1">Крутые костюмы для аватара</string>
+  <string name="gem.purchase.listitem2">Отличные фоны</string>
+  <string name="gem.purchase.listitem3">Задания с яйцами питомцев в качестве награды</string>
+  <string name="gem.purchase.listitem4">Способность изменить свой класс, если уровень менее 100</string>
+  <string name="support_habitica">Поддержать Habitica</string>
+  <string name="skill_transformation_use">использовать</string>
+  <string name="hatching_market_info">Не выпадает то, что нужно? Посмотри на рынке!</string>
+  <string name="feeding_market_info">Нужна определенная еда? Купи сколько угодно на рынке!</string>
+  <string name="open_market">Зайти на рынок</string>
+  <string name="cds_description" formatted="false">Ваши ежедневные задания будут обновлены после %1$s. Выполните их до этого времени!</string>
 </resources>

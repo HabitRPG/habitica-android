@@ -72,6 +72,7 @@
   <string name="login_validation_error_title">Erreur de validation</string>
   <string name="login_validation_error_fieldsmissing">Vous devez renseigner tous les champs.</string>
   <string name="save_changes">Enregistrer</string>
+  <string name="copy">Copier</string>
   <string name="notes">Notes</string>
   <string name="text">Texte</string>
   <string name="difficulty">Difficulté</string>
@@ -113,6 +114,7 @@
   <string name="profile_image">Image de Profil</string>
   <string name="mana_price_button" formatted="false">%d Points de Mana</string>
   <string name="used_skill" formatted="false">Vous avez utilisé %1$s pour %2$d points de mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Vous avez utilisé %1$s.</string>
   <string name="new_checklist_item">Nouvelle vérification</string>
   <string name="add_checklist_item">Ajouter</string>
   <string name="reminder_title">N\'oubliez pas de cocher vos tâches Quotidiennes !</string>
@@ -176,7 +178,6 @@
   <string name="complete_tutorial">J\'ai compris !</string>
   <string name="dismiss_tutorial">Rappelez-le moi plus tard</string>
   <string name="intro_1_title">Bienvenue sur Habitica</string>
-  <string name="intro_1_description">Rejoignez plus de 1\'100\'000 personnes qui s\'amusent en accomplissant des choses ! Créez un avatar et suivez la piste des tâches de votre vraie vie.</string>
   <string name="intro_2_title">Progrès dans le jeu = Progrès dans la vie</string>
   <string name="intro_2_description">Débloquez du contenu dans le jeu en accomplissant vos tâches dans la vie réelle. Recevez des armures, des animaux, et plus, pour vous récompenser d\'avoir atteint vos buts !</string>
   <string name="intro_3_title">Réunissez-vous et battez-vous contre des monstres</string>
@@ -387,4 +388,17 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="widget_habit_button">Réaliser une tâche Habitica</string>
   <string name="widget_dailies">Quotidiennes Habitica</string>
   <string name="widget_add_task">Ajouter une tâche Habitica</string>
+  <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
+  <string name="gem.purchase.toolbartitle">Acheter</string>
+  <string name="gem.purchase.title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
+  <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme:</string>
+  <string name="gem.purchase.listitem1">Des costumes cool pour votre avatar</string>
+  <string name="gem.purchase.listitem2">De magnifiques arrière-plans</string>
+  <string name="gem.purchase.listitem3">Des quêtes qui vous récompenses avec des oeufs de familiers</string>
+  <string name="gem.purchase.listitem4">La possibilité de changer de classe avant le niveau 100</string>
+  <string name="support_habitica">Soutenir Habitica</string>
+  <string name="skill_transformation_use">Utiliser</string>
+  <string name="hatching_market_info">Vous ne recevez pas le bon butin ? Allez voir au marché !</string>
+  <string name="feeding_market_info">Besoin de plus de nourriture ? Achetez-en au marché !</string>
+  <string name="open_market">Ouvrir le Marché</string>
 </resources>

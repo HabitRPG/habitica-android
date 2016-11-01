@@ -12,10 +12,14 @@
   <string name="SP_userID_summary">你的用户ID</string>
   <string name="SP_APIToken_title">API令牌</string>
   <string name="SP_APIToken_summary">你的API令牌</string>
+  <string name="Language_title">语言</string>
+  <string name="Language_summary">更改 Habitica的语言</string>
   <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
   <string name="unknown_error">发生了一个错误……</string>
   <string name="pref_account_header">账号</string>
+  <string name="pref_first_day_of_the_week_title">每周的第一天</string>
+  <string name="pref_first_day_of_the_week_summary">在所有的日程表中，每周的第一天</string>
   <string name="pref_reminder_header">每日任务提醒</string>
   <string name="pref_reminder_checkbox">激活提醒</string>
   <string name="pref_reminder_picker">设置提醒时间</string>
@@ -26,6 +30,7 @@
   <string name="preference_push_gifted_gems">赠送的钻石</string>
   <string name="preference_push_gifted_subscription">赠送的订阅</string>
   <string name="preference_push_invited_to_party">被邀请加入队伍</string>
+  <string name="preference_push_invited_to_guild">已邀请至工会</string>
   <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
@@ -108,6 +113,7 @@
   <string name="profile_image">头像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="used_skill_without_mana" formatted="false">你使用了 %1$s.</string>
   <string name="new_checklist_item">新增清单内容</string>
   <string name="add_checklist_item">添加</string>
   <string name="reminder_title">记得完成你的每日任务！</string>
@@ -171,7 +177,6 @@
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
   <string name="intro_1_title">欢迎来到Habitica</string>
-  <string name="intro_1_description">超过1,100,000加入我们，在完成现实事情的同时玩的愉快。 创建一个角色记录你的真实人生。</string>
   <string name="intro_2_title">生活即游戏！</string>
   <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧！</string>
   <string name="intro_3_title">与小伙伴一起，并肩击退怪兽</string>
@@ -370,5 +375,29 @@
   <string name="choose_recipient_title">选择消息接收者</string>
   <string name="action_continue">继续</string>
   <string name="scan_qr_code">扫描二维码</string>
+  <string name="enter_recipient_uuid">输入接受者的用户ID</string>
   <string name="invited_to_party">你被邀请加入一个队伍！</string>
+  <string name="stats_widget_label">Habitica状态</string>
+  <string name="add_task">添加任务</string>
+  <string name="add_habit">添加习惯</string>
+  <string name="add_daily">添加每日任务</string>
+  <string name="add_todo">添加待办事项</string>
+  <string name="add_reward">添加奖励</string>
+  <string name="all_dailies_completed">你完成了所有没有任务。干得漂亮！</string>
+  <string name="widget_habit_button">Habitica完成习惯</string>
+  <string name="widget_dailies">Habitica每日任务</string>
+  <string name="widget_add_task">Habitica增加任务</string>
+  <string name="google_services_missing">没有找到Google play服务。</string>
+  <string name="gem.purchase.toolbartitle">购买</string>
+  <string name="gem.purchase.title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
+  <string name="gem.purchase.subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
+  <string name="gem.purchase.listitem1">角色形象的炫酷装扮</string>
+  <string name="gem.purchase.listitem2">超棒的背景</string>
+  <string name="gem.purchase.listitem3">任务会奖励你宠物蛋</string>
+  <string name="gem.purchase.listitem4">100级前改变你职业的能力</string>
+  <string name="support_habitica">支持Habitica</string>
+  <string name="skill_transformation_use">使用</string>
+  <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
+  <string name="feeding_market_info">需要不同的食物？在市场可以买到更多！</string>
+  <string name="open_market">打开市场</string>
 </resources>

@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">Dagelijkse herinnering</string>
   <string name="pref_reminder_checkbox">Activeer herinnering</string>
   <string name="pref_reminder_picker">Stel tijd van herinnering In</string>
+  <string name="pref_cds_header">Begin van de dag aanpassen</string>
+  <string name="pref_cds_picker">Begin van de dag opslaan</string>
   <string name="pref_push_notifications_checkbox">Gebruiker pushnotificaties</string>
   <string name="push_notifications">Pushnotificaties</string>
   <string name="preference_push_you_won_challenge">Je hebt een uitdaging gewonnen!</string>
@@ -66,12 +68,13 @@
   <!--Network Errors-->
   <string name="network_error_title">Verbindingsfout</string>
   <string name="network_error_no_network_body">Je bent niet verbonden met het internet.</string>
-  <string name="internal_error_api">Het lijkt erop dat er een probleem met de server is. Probeer het later opnieuw.</string>
+  <string name="internal_error_api">Het lijkt erop dat er een probleem is met de server. Probeer het later opnieuw.</string>
   <string name="authentication_error_title">Authenticatiefout</string>
   <string name="authentication_error_body">Je Gebruikersnaam en/of Wachtwoord is onjuist.</string>
   <string name="login_validation_error_title">Validatiefout</string>
   <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen.</string>
   <string name="save_changes">Opslaan</string>
+  <string name="copy">Kopie</string>
   <string name="notes">Notities</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Moeilijkheidsgraad</string>
@@ -113,6 +116,7 @@
   <string name="profile_image">Profielfoto</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Je hebt %1$s voor %2$d mana gebruikt.</string>
+  <string name="used_skill_without_mana" formatted="false">Je hebt %1$s gebruikt.</string>
   <string name="new_checklist_item">nieuw checklijst punt</string>
   <string name="add_checklist_item">Toevoegen</string>
   <string name="reminder_title">Vergeet niet om je Dagelijkse taken af te vinken!</string>
@@ -176,7 +180,6 @@
   <string name="complete_tutorial">Begrepen!</string>
   <string name="dismiss_tutorial">Herinner me opnieuw</string>
   <string name="intro_1_title">Welkom bij Habitica</string>
-  <string name="intro_1_description">Sluit je aan bij meer dan 1.100.000 anderen en heb plezier terwijl je dingen gedaan krijgt. Maak een avatar en houd je taken in de echte wereld bij.</string>
   <string name="intro_2_title">Vooruitgang in het Spel = Vooruitgang in je Leven</string>
   <string name="intro_2_description">Speel mogelijkheden vrij in het spel door je echte taken af te strepen. Verdien uitrusting, huisdieren, en meer als beloning voor het bereiken van je doelen.</string>
   <string name="intro_3_title">Wees sociaal en vecht tegen monsters</string>
@@ -220,8 +223,8 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="setup_task_creativity_2">Aan een creatief project werken</string>
   <string name="setup_task_creativity_3">Een creatief project afronden</string>
   <string name="gem.purchase.support">Wil je helpen om Habitica draaiende te houden? Je kan de ontwikkelaars ondersteunen door edelstenen te kopen!\n\nMet edelstenen kun je leuke extra\'s voor je account kopen, zoals: \n\n - Geweldige kostuums voor je avatar\n - Adembenemende achtergronden\n - Leuke queestes met huisdiereieren als beloning\n - De mogelijkheid om je klasse te veranderen voor je level 100 bent\n\nOntzettend bedankt voor je hulp om Habitica het beste te maken wat het kan zijn. Jouw steun betekent heel veel voor ons!</string>
-  <string name="my_guilds">Mijn Gildes</string>
-  <string name="public_guilds">Publieke Gildes</string>
+  <string name="my_guilds">Mijn Gilden</string>
+  <string name="public_guilds">Publieke Gilden</string>
   <string name="guild">Gilde</string>
   <string name="leave">Verlaten</string>
   <string name="join">Toetreden</string>
@@ -237,7 +240,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Bericht schrijven</string>
   <string name="post">Post</string>
-  <string name="guild_search_hint">Zoek naar gildes</string>
+  <string name="guild_search_hint">Zoek naar gilden</string>
   <string name="todo_due" formatted="false">Tegen: %s</string>
   <string name="daily_streak" formatted="false">huidige serie: %d</string>
   <string name="todo_has_duedate">Taak heeft een Deadline</string>
@@ -268,7 +271,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="eggs">Eieren</string>
   <string name="hatching_potions">Uitbroedtoverdranken</string>
   <string name="food">Voedsel</string>
-  <string name="quests">Queestes</string>
+  <string name="quests">Queesten</string>
   <string name="pets">Huisdieren</string>
   <string name="mounts">Rijdieren</string>
   <string name="armoireEquipment" formatted="false">Je hebt een zeldzaam stuk van een uitrusting gevonden in het Kabinet: %s! Geweldig!</string>
@@ -377,10 +380,28 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="scan_qr_code">Scan QR code</string>
   <string name="enter_recipient_uuid">Voer ontvanger\'s Gebruikers ID in</string>
   <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
+  <string name="stats_widget_label">Habitica Statistieken.</string>
   <string name="add_task">Voeg taak toe</string>
   <string name="add_habit">Voeg Gewoonte toe</string>
   <string name="add_daily">Voeg Dagelijkse taak toe</string>
   <string name="add_todo">To-Do toevoegen</string>
   <string name="add_reward">Voeg Beloning toe</string>
   <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
+  <string name="widget_habit_button">Habitica Doe Gewoonte</string>
+  <string name="widget_dailies">Habitica Dagelijkse taken</string>
+  <string name="widget_add_task">Habitica Voeg taak toe</string>
+  <string name="google_services_missing">Google play diensten niet gevonden.</string>
+  <string name="gem.purchase.toolbartitle">Aankoop</string>
+  <string name="gem.purchase.title">Door het kopen van edelstenen steun je de ontwikkelaars en help je Habitica online te houden</string>
+  <string name="gem.purchase.subtitle">Met edelstenen kun je leuke extra\'s voor je account kopen, inclusief:</string>
+  <string name="gem.purchase.listitem1">Gave kostuums voor je avatar</string>
+  <string name="gem.purchase.listitem2">Gave achtergronden</string>
+  <string name="gem.purchase.listitem3">Queesten die je belonen met huisdiereieren</string>
+  <string name="gem.purchase.listitem4">De mogelijkheid om je klasse te veranderen voor niveau 100</string>
+  <string name="support_habitica">Steun Habitica</string>
+  <string name="skill_transformation_use">gebruik</string>
+  <string name="hatching_market_info">Krijg je de goede vondsten niet? Neem een kijkje op de Markt!</string>
+  <string name="feeding_market_info">Ander voedsel nodig? Koop meer op de markt!</string>
+  <string name="open_market">Open Markt</string>
+  <string name="cds_description" formatted="false">Je dagelijkse taken zullen worden gereset wanneer je Habitica voor het eerst gebruikt na %1$s. Zorg er voor dat je je dagelijkse taken voor dit tijdstip afwerkt!</string>
 </resources>
