@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -153,36 +154,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         return super.onPreferenceTreeClick(preference);
     }
 
-    private void scheduleNotifications() {
 
-        String timeval = getPreferenceManager().getSharedPreferences().getString("reminder_time", "19:00");
-
-        String[] pieces = timeval.split(":");
-        int hour = Integer.parseInt(pieces[0]);
-        int minute = Integer.parseInt(pieces[1]);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.set(Calendar.MINUTE, minute);
-        long trigger_time = cal.getTimeInMillis();
-
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-
-        if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
-    }
-
-    private void removeNotifications() {
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
-        alarmManager.cancel(displayIntent);
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -190,13 +162,13 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             boolean use_reminder = sharedPreferences.getBoolean(key, false);
             timePreference.setEnabled(use_reminder);
             if (use_reminder) {
-                scheduleNotifications();
+                TaskAlarmManager.scheduleDailyReminder(context);
             } else {
-                removeNotifications();
+                TaskAlarmManager.removeDailyReminder(context);
             }
         } else if (key.equals("reminder_time")) {
-            removeNotifications();
-            scheduleNotifications();
+            TaskAlarmManager.removeDailyReminder(context);
+            TaskAlarmManager.scheduleDailyReminder(context);
         } else if (key.equals("usePushNotifications")) {
             boolean userPushNotifications = sharedPreferences.getBoolean(key, false);
             pushNotificationsPreference.setEnabled(userPushNotifications);
@@ -205,6 +177,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             } else {
                 pushNotificationManager.removePushDeviceUsingStoredToken();
             }
+        } else if (key.equals("cds_time")) {
+            String timeval = sharedPreferences.getString("cds_time", "00:00");
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            Map<String, Object> updateObject = new HashMap<>();
+            updateObject.put("dayStart", hour);
+            apiHelper.apiService.changeCustomDayStart(updateObject)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(user -> {}, throwable -> {});
         } else if (key.equals("language")) {
             LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
 
@@ -249,9 +230,16 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
         if (preference instanceof TimePreference) {
-            if (getFragmentManager().findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                        .show(getFragmentManager(), TimePreferenceDialogFragment.TAG);
+            if (preference.getKey().equals("cds_time")) {
+                if (getFragmentManager().findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
+                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
+                            .show(getFragmentManager(), DayStartPreferenceDialogFragment.TAG);
+                }
+            } else {
+                if (getFragmentManager().findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
+                    TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                            .show(getFragmentManager(), TimePreferenceDialogFragment.TAG);
+                }
             }
         } else {
             super.onDisplayPreferenceDialog(preference);
@@ -275,6 +263,10 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     classSelectionPreference.setVisible(true);
                 }
             }
+        }
+        if (user != null && user.getPreferences() != null) {
+            TimePreference cdsTimePreference = (TimePreference) findPreference("cds_time");
+            cdsTimePreference.setText(user.getPreferences().getDayStart()+":00");
         }
     }
 }

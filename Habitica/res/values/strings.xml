@@ -28,6 +28,9 @@
     <string name="pref_reminder_checkbox">Activate Reminder</string>
     <string name="pref_reminder_picker">Set Reminder Time</string>
 
+    <string name="pref_cds_header">Custom Day Start</string>
+    <string name="pref_cds_picker">Set Custom Day Start Time</string>
+
     <string name="pref_push_notifications_checkbox">User Push Notifications</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
@@ -85,6 +88,7 @@
     <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
 
     <string name="save_changes">Save</string>
+    <string name="copy">Copy</string>
     <string name="notes">Notes</string>
     <string name="text">Text</string>
     <string name="difficulty">Difficulty</string>
@@ -199,7 +203,7 @@
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
     <string name="intro_1_title">Welcome to Habitica</string>
-    <string name="intro_1_description">Join over 1,100,000 people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
+    <string name="intro_1_description" formatted="false">Join over %s people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
     <string name="intro_2_title">Game Progress = Life Progress</string>
     <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armor, pets, and more to reward you for meeting your goals!</string>
     <string name="intro_3_title">Get Social and Fight Monsters</string>
@@ -427,5 +431,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>
     <string name="feeding_market_info">Need different food? Buy more from the market!</string>
     <string name="open_market">Open Market</string>
+    <string name="cds_description" formatted="false">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
 
 </resources>

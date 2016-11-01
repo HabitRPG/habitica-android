@@ -5,23 +5,16 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
 import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -38,7 +31,6 @@ import com.habitrpg.android.habitica.ui.menu.EditTagsSectionDrawer;
 import com.habitrpg.android.habitica.ui.menu.EditTextDrawer;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
@@ -425,6 +417,17 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         floatingMenu.close(true);
     }
 
+    @Subscribe
+    public void onEvent(ToggledEditTagsEvent event) {
+        if(user != null) {
+            if(this.editingTags == event.editing) {
+                return;
+            }
+            this.editingTags = event.editing;
+            fillTagFilterDrawer(tags);
+        }
+    }
+
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
@@ -552,7 +555,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     private void switchToTaskTab(String taskType) {
-        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : ViewFragmentsDictionary.entrySet()) {
+        HashMap<Integer, TaskRecyclerViewFragment> dict = new HashMap<>(ViewFragmentsDictionary);
+        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : dict.entrySet()) {
             if (tabEntry.getValue().getClassName().equals(taskType)) {
                 viewPager.setCurrentItem(tabEntry.getKey());
             }
