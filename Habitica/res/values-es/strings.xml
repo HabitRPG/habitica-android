@@ -18,11 +18,13 @@
   <string name="PS_contact_title">Contactar</string>
   <string name="unknown_error">Se produjo un error...</string>
   <string name="pref_account_header">Cuenta</string>
-  <string name="pref_first_day_of_the_week_title">El primer día de la semana</string>
+  <string name="pref_first_day_of_the_week_title">Primer día de la semana</string>
   <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
   <string name="pref_reminder_header">Recordatorio diario</string>
   <string name="pref_reminder_checkbox">Activar recordatorio</string>
   <string name="pref_reminder_picker">Establecer hora de recordatorio</string>
+  <string name="pref_cds_header">Personalizar comienzo del día</string>
+  <string name="pref_cds_picker">Establecer hora del comienzo del día personalizado</string>
   <string name="pref_push_notifications_checkbox">Notificaciones push del usuario</string>
   <string name="push_notifications">Notificaciones push</string>
   <string name="preference_push_you_won_challenge">¡Has ganado un desafío!</string>
@@ -30,6 +32,7 @@
   <string name="preference_push_gifted_gems">Gemas regaladas</string>
   <string name="preference_push_gifted_subscription">Suscripción regalada</string>
   <string name="preference_push_invited_to_party">Invitado a un grupo</string>
+  <string name="preference_push_invited_to_guild">Invitado a un Gremio</string>
   <string name="preference_push_your_quest_has_begun">La misión ha comenzado</string>
   <string name="preference_push_invited_to_quest">Invitado a una misión</string>
   <!--Adding tasks-->
@@ -71,6 +74,7 @@
   <string name="login_validation_error_title">Error de validación</string>
   <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
   <string name="save_changes">Guardar</string>
+  <string name="copy">Copiar</string>
   <string name="notes">Notas</string>
   <string name="text">Texto</string>
   <string name="difficulty">Dificultad</string>
@@ -112,6 +116,7 @@
   <string name="profile_image">Imagen de perfil</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
   <string name="used_skill" formatted="false">Has usado %1$s por %2$d de maná.</string>
+  <string name="used_skill_without_mana" formatted="false">Has usado %1$s.</string>
   <string name="new_checklist_item">nuevo elemento de lista</string>
   <string name="add_checklist_item">Añadir</string>
   <string name="reminder_title">¡Acuérdate de completar tus tareas diarias!</string>
@@ -175,6 +180,7 @@
   <string name="complete_tutorial">¡Ya está!</string>
   <string name="dismiss_tutorial">Vuelve a recordármelo</string>
   <string name="intro_1_title">Te damos la bienvenida a Habitica</string>
+  <string name="intro_1_description" formatted="false">Únete a mas de %s de personas que se divierten mientras van realizando sus quehaceres. Crea un personaje y registra tus tareas del mundo real.</string>
   <string name="intro_2_title">Progreso en el juego = Progreso en la vida</string>
   <string name="intro_2_description">Desbloquea funciones del juego completando tareas en el mundo real. Obtén recompensas, como armaduras, mascotas y otras cosas, por cumplir tus objetivos.</string>
   <string name="intro_3_title">Socializa y combate monstruos</string>
@@ -373,8 +379,30 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="choose_recipient_title">Elige el destinatario del mensaje</string>
   <string name="action_continue">Continuar</string>
   <string name="scan_qr_code">Leer código QR</string>
+  <string name="enter_recipient_uuid">Introduce el ID de usuario del destinatario</string>
   <string name="invited_to_party">¡Te han invitado a un grupo!</string>
-  <string name="all_dailies_completed">Ha completado todas las tareas. ¡Buen trabajo!</string>
-  <string name="google_services_missing">Los servicios de Google play no pueden ser encontrados</string>
+  <string name="stats_widget_label">Estadísticas de Habitica</string>
+  <string name="add_task">Añadir tarea</string>
+  <string name="add_habit">Añadir hábito</string>
+  <string name="add_daily">Añadir tarea diaria</string>
+  <string name="add_todo">Añadir quehacer</string>
+  <string name="add_reward">Añadir recompensa</string>
+  <string name="all_dailies_completed">Ha completado todas las tareas diarias. ¡Buen trabajo!</string>
+  <string name="widget_habit_button">Hábitos Habitica</string>
+  <string name="widget_dailies">Tareas diarias Habitica</string>
+  <string name="widget_add_task">Añade tareas Habitica</string>
+  <string name="google_services_missing">Los servidores de Google Play no pueden ser encontrados.</string>
   <string name="gem.purchase.toolbartitle">Comprar</string>
+  <string name="gem.purchase.title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
+  <string name="gem.purchase.subtitle">Las gemas te permiten comprar diversion extra a tu cuenta, incluyendo:</string>
+  <string name="gem.purchase.listitem1">Asombrosos disfrases para tu personaje</string>
+  <string name="gem.purchase.listitem2">Increibles fondos</string>
+  <string name="gem.purchase.listitem3">Misiones que te recompensan con huevos de mascotas</string>
+  <string name="gem.purchase.listitem4">La habilidad de cambiar tu clase antes del nivel 100</string>
+  <string name="support_habitica">Ayuda Habitica</string>
+  <string name="skill_transformation_use">Usar</string>
+  <string name="hatching_market_info">¿No tienes la poción correcta? Revisa el Mercado</string>
+  <string name="feeding_market_info">¿Necesitas un alimento diferente? ¡Compra más desde el Mercado!</string>
+  <string name="open_market">Abrir Mercado</string>
+  <string name="cds_description" formatted="false">Tus Tareas Diarias serán reiniciadas la próxima vez que uses Habitica por primera vez despues de %1$s. ¡Asegurate de completar todas tus Tareas Diarias antes de tiempo!</string>
 </resources>

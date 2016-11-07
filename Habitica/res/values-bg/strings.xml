@@ -180,6 +180,7 @@
   <string name="complete_tutorial">Разбрано!</string>
   <string name="dismiss_tutorial">Напомнете ми отново</string>
   <string name="intro_1_title">Добре дошли в Хабитика</string>
+  <string name="intro_1_description" formatted="false">Присъединете се към останалите %s човека, които се забавляват, докато изпълняват ежедневните си задължения. Създайте си герой и следете истинските си задачи.</string>
   <string name="intro_2_title">Напредък в играта = напредък в живота</string>
   <string name="intro_2_description">Отключвайте функционалностите на играта като изпълнявате задачите в истинския си живот. Печелете екипировка, любимци и още, като награда за постигането на целите си!</string>
   <string name="intro_3_title">Общност и битки с чудовища</string>

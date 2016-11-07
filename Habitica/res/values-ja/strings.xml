@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">毎日の通知</string>
   <string name="pref_reminder_checkbox">通知を有効にする</string>
   <string name="pref_reminder_picker">通知時間を設定</string>
+  <string name="pref_cds_header">日付更新の設定</string>
+  <string name="pref_cds_picker">日付更新の時間を設定する</string>
   <string name="pref_push_notifications_checkbox">ユーザーへのプッシュ通知</string>
   <string name="push_notifications">プッシュ通知</string>
   <string name="preference_push_you_won_challenge">チャレンジで勝ちました!</string>
@@ -72,6 +74,7 @@
   <string name="login_validation_error_title">確認エラー</string>
   <string name="login_validation_error_fieldsmissing">入力欄のすべてに入力してください。</string>
   <string name="save_changes">保存</string>
+  <string name="copy">コピー</string>
   <string name="notes">メモ</string>
   <string name="text">テキスト</string>
   <string name="difficulty">難易度</string>

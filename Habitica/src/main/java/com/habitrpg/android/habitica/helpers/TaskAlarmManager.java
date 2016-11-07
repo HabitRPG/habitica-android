@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
@@ -26,6 +27,9 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -109,13 +113,12 @@ public class TaskAlarmManager {
     }
 
     public void scheduleAllSavedAlarms() {
-        List<Task> tasks = new Select()
+        Observable.defer(() -> Observable.from(new Select()
                 .from(Task.class)
-                .queryList();
-
-        for (Task task : tasks) {
-            this.setAlarmsForTask(task);
-        }
+                .queryList()))
+                .doOnNext(this::setAlarmsForTask)
+                .subscribeOn(Schedulers.io())
+                .subscribe(task -> {}, Crashlytics::logException);
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();

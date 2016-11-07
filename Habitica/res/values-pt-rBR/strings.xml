@@ -180,6 +180,7 @@
   <string name="complete_tutorial">Entendi!</string>
   <string name="dismiss_tutorial">Lembre-me novamente</string>
   <string name="intro_1_title">Bem vindo(a) ao Habitica</string>
+  <string name="intro_1_description" formatted="false">Junte-se a mais de %s pessoas se divertindo enquanto realiza suas tarefas. Crie um avatar e acompanhe suas tarefas da vida real.</string>
   <string name="intro_2_title">Progresso no jogo = Progresso na vida</string>
   <string name="intro_2_description">Desbloqueie recursos no jogo ao completar suas tarefas da vida real. Ganhe armaduras, animais de estimação, montarias e mais para recompensá-lo por atingir suas metas!</string>
   <string name="intro_3_title">Socialize e lute contra monstros</string>

@@ -180,6 +180,7 @@
   <string name="complete_tutorial">Begrepen!</string>
   <string name="dismiss_tutorial">Herinner me opnieuw</string>
   <string name="intro_1_title">Welkom bij Habitica</string>
+  <string name="intro_1_description" formatted="false">Sluit je aan bij meer dan %s mensen en heb plezier terwijl je dingen gedaan krijgt. Maak een avatar en houd je taken in de echte wereld bij.</string>
   <string name="intro_2_title">Vooruitgang in het Spel = Vooruitgang in je Leven</string>
   <string name="intro_2_description">Speel mogelijkheden vrij in het spel door je echte taken af te strepen. Verdien uitrusting, huisdieren, en meer als beloning voor het bereiken van je doelen.</string>
   <string name="intro_3_title">Wees sociaal en vecht tegen monsters</string>

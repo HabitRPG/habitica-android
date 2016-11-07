@@ -13,7 +13,7 @@
   <string name="SP_APIToken_title">API-Token</string>
   <string name="SP_APIToken_summary">Dein API-Token</string>
   <string name="Language_title">Sprache</string>
-  <string name="Language_summary">Habitica\'s Sprache ändern</string>
+  <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
   <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
+  <string name="pref_cds_header">Persönlicher Tagesstart</string>
+  <string name="pref_cds_picker">Persönlicher Tagesstart einstellen</string>
   <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
   <string name="push_notifications">Push-Benachrichtigungen</string>
   <string name="preference_push_you_won_challenge">Du hast einen Wettbewerb gewonnen!</string>
@@ -66,16 +68,17 @@
   <!--Network Errors-->
   <string name="network_error_title">Verbindungsfehler</string>
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
-  <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuch es später noch mal.</string>
+  <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuche es später noch mal.</string>
   <string name="authentication_error_title">Authentifikationsfehler</string>
   <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort</string>
   <string name="login_validation_error_title">Validierungsfehler</string>
   <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
   <string name="save_changes">Speichern</string>
+  <string name="copy">Kopieren</string>
   <string name="notes">Notizen</string>
   <string name="text">Text</string>
   <string name="difficulty">Schwierigkeit</string>
-  <string name="tags">Bezeichnung</string>
+  <string name="tags">Tags</string>
   <string name="trivial">Trivial</string>
   <string name="easy">Einfach</string>
   <string name="medium">Mittel</string>
@@ -91,7 +94,7 @@
   <string name="mental">Mental</string>
   <string name="social">Sozial</string>
   <string name="other">Anderes</string>
-  <string name="frequency">Wiederholen</string>
+  <string name="frequency">Häufigkeit</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
   <string name="monday">Montag</string>

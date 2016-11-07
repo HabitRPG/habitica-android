@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">Przypominienie</string>
   <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
   <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
+  <string name="pref_cds_header">Własny początek dnia</string>
+  <string name="pref_cds_picker">Ustaw czas własnego początku dnia</string>
   <string name="pref_push_notifications_checkbox">Powiadomienia użytkownika</string>
   <string name="push_notifications">Powiadomienia</string>
   <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
@@ -72,6 +74,7 @@
   <string name="login_validation_error_title">Błąd walidacji</string>
   <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
   <string name="save_changes">Zapisz</string>
+  <string name="copy">Kopiuj</string>
   <string name="notes">Notatki</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Trudność</string>
@@ -177,6 +180,7 @@
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
+  <string name="intro_1_description" formatted="false">Dołącz do ponad %s ludzi bawiących się podczas wypełniania swoich zadań. Stwórz awatar i śledź swoje zadania w życiu codziennym.</string>
   <string name="intro_2_title">Awans w grze = Awans w życiu</string>
   <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
   <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
@@ -400,4 +404,5 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
   <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
   <string name="open_market">Otwórz Targ</string>
+  <string name="cds_description" formatted="false">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
 </resources>

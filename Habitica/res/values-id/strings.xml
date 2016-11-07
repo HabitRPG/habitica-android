@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">Peringatan Harian</string>
   <string name="pref_reminder_checkbox">Aktifkan Peringatan</string>
   <string name="pref_reminder_picker">Atur Waktu Peringatan</string>
+  <string name="pref_cds_header">Awal Hari</string>
+  <string name="pref_cds_picker">Atur Awal Hari</string>
   <string name="pref_push_notifications_checkbox">Notifikasi Tampil Pengguna</string>
   <string name="push_notifications">Notifikasi Tampil</string>
   <string name="preference_push_you_won_challenge">Kamu memenangkan sebuah Tantangan!</string>
@@ -178,6 +180,7 @@
   <string name="complete_tutorial">Aku mengerti!</string>
   <string name="dismiss_tutorial">Peringatkan aku lagi</string>
   <string name="intro_1_title">Selamat datang di Habitica</string>
+  <string name="intro_1_description" formatted="false">Bergabunglah dengan lebih dari %s orang yang bersenang-senang sambil menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
   <string name="intro_2_title">Kemajuan dalam Permainan = Kemajuan dalam Hidup</string>
   <string name="intro_2_description">Buka fitur dalam game dengan mencentang tugas harianmu. Dapatkan baju, peliharaan, dan banyak lagi untuk hadiahmu menyelesaikan tujuan!</string>
   <string name="intro_3_title">Bersosialisasi sambil Mengalahkan Monster</string>
@@ -391,9 +394,15 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
   <string name="gem.purchase.toolbartitle">Bayar</string>
   <string name="gem.purchase.title">Membeli gem dapat mendukung pengembang dan menjaga Habitica tetap berjalan</string>
+  <string name="gem.purchase.subtitle">Permata membuatmu dapat membeli tambahan yang menyenangkan untuk akunmu, termasuk:</string>
   <string name="gem.purchase.listitem1">Kostum keren untuk avatarmu</string>
+  <string name="gem.purchase.listitem2">Latar belakang yang keren</string>
+  <string name="gem.purchase.listitem3">Misi yang memberikanmu hadiah telur</string>
+  <string name="gem.purchase.listitem4">Kemampuan untuk mengganti profesi sebelum level 100</string>
   <string name="support_habitica">Dukung Habitica</string>
   <string name="skill_transformation_use">gunakan</string>
+  <string name="hatching_market_info">Tidak mendapatkan item yang diinginkan? Beli di Market!</string>
   <string name="feeding_market_info">Butuh makanan yang berbeda? Beli lebih dari pasar!</string>
   <string name="open_market">Buka Pasar</string>
+  <string name="cds_description" formatted="false">Keseharianmu akan reset pada saat kamu membuka Habitica di atas %1$s. Pastikan kamu telah menyelesaikan Keseharianmu sebelum jam tersebut!</string>
 </resources>

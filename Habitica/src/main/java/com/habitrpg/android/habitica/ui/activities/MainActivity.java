@@ -43,6 +43,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplitude.api.Amplitude;
+import com.crashlytics.android.Crashlytics;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.helpers.SoundFile;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -312,7 +314,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
-            taskAlarmManager.scheduleAllSavedAlarms();
+            try {
+                taskAlarmManager.scheduleAllSavedAlarms();
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
         }
 
         //after the activity has been stopped and is thereafter resumed,

@@ -180,6 +180,7 @@
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
   <string name="intro_1_title">Добро пожаловать в Habitica</string>
+  <string name="intro_1_description" formatted="false">Присоединитесь к более %s участникам, которые развлекаются и добиваются успехов. Создайте аватар и отслеживайте ваши задачи.</string>
   <string name="intro_2_title">Прогресс в игре = Прогресс в жизни</string>
   <string name="intro_2_description">Разблокируйте функции в игре, выполняя реальные задачи. Зарабатывайте оружие, питомцев и многое другое в качестве награды!</string>
   <string name="intro_3_title">Общайтесь и сражайтесь с монстрами</string>
