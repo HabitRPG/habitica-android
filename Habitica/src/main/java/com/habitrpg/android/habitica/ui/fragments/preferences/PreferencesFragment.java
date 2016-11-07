@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,10 +12,10 @@ import android.support.v7.preference.PreferenceScreen;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.prefs.TimePreference;
@@ -30,7 +28,6 @@ import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -42,6 +39,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     @Inject
     public APIHelper apiHelper;
+    @Inject
+    public SoundManager soundManager;
     private Context context;
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
@@ -224,6 +223,23 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 this.startActivity(intent);
                 getActivity().finishAffinity();
             }
+        } else if (key.equals("audioTheme")) {
+            String newAudioTheme = sharedPreferences.getString(key, "off");
+
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("preferences.sound", newAudioTheme);
+            MergeUserCallback mergeUserCallback = new MergeUserCallback(activity, user);
+            apiHelper.apiService.updateUser(updateData)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(mergeUserCallback, throwable -> {
+                    });
+
+            Preferences preferences = user.getPreferences();
+            preferences.setSound(newAudioTheme);
+
+            soundManager.setSoundTheme(newAudioTheme);
+
+            soundManager.preloadAllFiles();
         }
     }
 

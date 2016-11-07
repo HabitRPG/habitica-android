@@ -4,14 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
@@ -21,6 +19,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,12 +43,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.helpers.SoundFile;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
@@ -84,6 +87,7 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -143,8 +147,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
 
@@ -157,7 +159,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -167,6 +168,7 @@ import butterknife.BindView;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
@@ -179,6 +181,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
     @Inject
     public APIHelper apiHelper;
+
+    @Inject
+    public SoundManager soundManager;
     @Inject
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
@@ -254,6 +259,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
+
+
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
@@ -381,6 +388,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if(preferences!= null) {
                 apiHelper.languageCode = preferences.getLanguage();
             }
+
+            soundManager.setSoundTheme(preferences.getSound());
 
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
@@ -1002,6 +1011,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             } else {
                                 snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
                             }
+                            soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                         } else if (!event.Reward.getId().equals("potion")) {
                             EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                         }
@@ -1031,6 +1041,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     }, throwable -> {
                     });
         } else {
+            soundManager.loadAndPlayAudio(SoundManager.SoundReward);
             // user created Rewards
             apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
                     .compose(apiHelper.configureApiCallObserver())
@@ -1205,7 +1216,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private void showSnackBarForDataReceived(final TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                new Handler().postDelayed(() -> showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP), 3000L);
+                new Handler().postDelayed(() -> {
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                    soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
+                }, 3000L);
             }
         }
     }
@@ -1284,12 +1298,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     })
                     .create();
 
-
+            soundManager.loadAndPlayAudio(SoundManager.SoundDeath);
             this.faintDialog.show();
         }
     }
 
     private void displayLevelUpDialog(int level) {
+        soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
+
         SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
         if (suppressedModals != null) {
             if (suppressedModals.getLevelUp()) {
@@ -1447,6 +1463,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
                 });
+
+        switch(event.Task.type){
+            case Task.TYPE_DAILY: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
+            } break;
+            case Task.TYPE_TODO: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
+            } break;
+        }
     }
 
     @Subscribe
@@ -1463,6 +1488,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(this, event.habit.getId()), throwable -> {
                 });
+
+        soundManager.loadAndPlayAudio(event.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
     }
 
     @Subscribe

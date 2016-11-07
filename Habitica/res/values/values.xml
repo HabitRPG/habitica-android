@@ -86,4 +86,24 @@
         <item>zh_TW</item>
     </string-array>
 
+
+    <string-array name="AudioThemes">
+        <item>Off</item>
+        <item>Daniel the Bard</item>
+        <item>Watts\' Theme</item>
+        <item>Gokul Theme</item>
+        <item>LuneFox\'s Theme</item>
+        <item>Rosstavo\'s Theme</item>
+        <item>Dewin\'s Theme</item>
+    </string-array>
+
+    <string-array name="AudioValues">
+        <item>off</item>
+        <item>danielTheBard</item>
+        <item>wattsTheme</item>
+        <item>gokulTheme</item>
+        <item>luneFoxTheme</item>
+        <item>rosstavoTheme</item>
+        <item>dewinTheme</item>
+    </string-array>
 </resources>
