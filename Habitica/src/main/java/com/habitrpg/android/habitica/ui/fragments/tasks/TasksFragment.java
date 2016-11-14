@@ -107,16 +107,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (user != null) {
-            tags = user.getTags();
-            fillTagFilterDrawer(tags);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -149,6 +139,16 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         loadTaskLists();
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (user != null) {
+            tags = user.getTags();
+            fillTagFilterDrawer(tags);
+        }
     }
 
     @Override
