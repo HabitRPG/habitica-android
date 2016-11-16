@@ -113,9 +113,7 @@ dependencies {
     compile('com.facebook.android:facebook-android-sdk:4.11.0') {
         transitive = true
     }
-
-    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
-
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.0'
@@ -170,7 +168,8 @@ android {
             applicationIdSuffix ".debug"
             debuggable true
             multiDexEnabled true
-            // Disable fabric build ID generation for debug builds
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.enableCrashlytics = false
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
@@ -178,8 +177,9 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            multiDexEnabled true
-
+            multiDexEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
         }
@@ -208,7 +208,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
+
     dexOptions {
         preDexLibraries false
         javaMaxHeapSize "4g" // Use gig increments depending on needs
