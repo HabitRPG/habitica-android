@@ -3,13 +3,20 @@ package com.habitrpg.android.habitica.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +43,7 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
                 .from(Task.class)
                 .where(Condition.column("type").eq(Task.TYPE_DAILY))
                 .and(Condition.column("completed").eq(false))
+                .orderBy(OrderBy.columns("position", "dateCreated").descending())
                 .queryList()))
                 .filter(task -> task.isDisplayedActive(0))
                 .toList()
@@ -78,7 +86,13 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
                 context.getPackageName(), R.layout.widget_dailies_list_row);
         if (taskList.size() > position) {
             Task task = taskList.get(position);
-            remoteView.setTextViewText(R.id.dailies_text, task.text);
+
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+
+            SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
+            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);
+
+            remoteView.setTextViewText(R.id.dailies_text, builder);
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
             Intent fillInIntent = new Intent();
             fillInIntent.putExtra(DailiesWidgetProvider.TASK_ID_ITEM, task.getId());
