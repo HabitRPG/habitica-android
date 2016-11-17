@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.ActivityCheckout;
@@ -23,7 +22,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +29,9 @@ import android.widget.Button;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import butterknife.OnClick;
-import io.fabric.sdk.android.Fabric;
 
 public class GemsPurchaseFragment extends BaseFragment {
 
@@ -45,6 +43,9 @@ public class GemsPurchaseFragment extends BaseFragment {
     GemPurchaseOptionsView gems42View;
     @BindView(R.id.gems_84_view)
     GemPurchaseOptionsView gems84View;
+
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
 
     private HashMap<String, String> priceMap;
 
@@ -102,7 +103,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
                             @Override
                             public void onError(int i, @NonNull Exception e) {
-                                Fabric.getLogger().e("Purchase", "Consume", e);
+                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
                             }
                         });
                     }
@@ -110,7 +111,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
                 @Override
                 public void onError(int i, @NonNull Exception e) {
-                    Fabric.getLogger().e("Purchase", "Error", e);
+                    crashlyticsProxy.fabricLogE("Purchase", "Error", e);
                 }
             });
 
@@ -179,7 +180,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
                             @Override
                             public void onError(int i, @NonNull Exception e) {
-                                Fabric.getLogger().e("Purchase", "Consume", e);
+                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
                             }
                         });
                     }
@@ -188,7 +189,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
             @Override
             public void onError(int i, @NonNull Exception e) {
-                Fabric.getLogger().e("Purchase", "getAllPurchases", e);
+                crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e);
             }
         });
     }
@@ -209,7 +210,7 @@ public class GemsPurchaseFragment extends BaseFragment {
 
             @Override
             public void onError(int i, @NonNull Exception e) {
-                Fabric.getLogger().e("Purchase", "Error", e);
+                crashlyticsProxy.fabricLogE("Purchase", "Error", e);
             }
         });
 

@@ -55,7 +55,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     //Crash Logging
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+    releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
         transitive = true;
     }
 
@@ -179,7 +179,6 @@ android {
             signingConfig signingConfigs.release
             debuggable false
             multiDexEnabled true
-
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
         }
@@ -200,15 +199,15 @@ android {
             java.srcDir file('src/test/java/')
             res.srcDirs = ['res']
         }
-        release.setRoot('build-types/release')
         instrumentTest.setRoot('tests')
+        release { java.srcDirs = ['src/release/java'] }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
+
     dexOptions {
         preDexLibraries false
         javaMaxHeapSize "4g" // Use gig increments depending on needs

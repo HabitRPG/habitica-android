@@ -1,10 +1,14 @@
 package com.habitrpg.android.habitica.components;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.modules.DeveloperModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -21,6 +25,11 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
@@ -56,6 +65,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
@@ -66,7 +76,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class})
+@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);
@@ -155,7 +165,7 @@ public interface AppComponent {
 
     void inject(NewsFragment newsFragment);
 
-    void inject(HabiticaApplication habiticaApplication);
+    void inject(HabiticaBaseApplication habiticaApplication);
 
     void inject(PreferencesFragment preferencesFragment);
 
@@ -184,4 +194,20 @@ public interface AppComponent {
     void inject(AvatarStatsWidgetProvider avatarStatsWidgetProvider);
 
     void inject(SoundManager soundManager);
+
+    void inject(APIHelper apiHelper);
+
+    //void inject(BaseTasksRecyclerViewAdapter vhBaseTasksRecyclerViewAdapter);
+
+    void inject(RemindersManager remindersManager);
+
+    void inject(TaskAlarmManager taskAlarmManager);
+
+    void inject(DailiesRecyclerViewHolder dailiesRecyclerViewHolder);
+
+    void inject(HabitsRecyclerViewAdapter habitsRecyclerViewAdapter);
+
+    void inject(RewardsRecyclerViewAdapter rewardsRecyclerViewAdapter);
+
+    void inject(TodosRecyclerViewAdapter todosRecyclerViewAdapter);
 }

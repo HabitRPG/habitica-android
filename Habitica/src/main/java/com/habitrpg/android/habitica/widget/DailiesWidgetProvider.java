@@ -12,6 +12,7 @@ import android.widget.RemoteViews;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -32,7 +33,7 @@ public class DailiesWidgetProvider extends BaseWidgetProvider {
 
     private void setUp(Context context) {
         if (apiHelper == null) {
-            HabiticaApplication application = HabiticaApplication.getInstance(context);
+            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }
     }
