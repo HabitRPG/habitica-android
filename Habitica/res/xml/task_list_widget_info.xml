@@ -4,6 +4,7 @@
     android:minHeight="120dp"
     android:minWidth="120dp"
     android:updatePeriodMillis="1800000"
-    android:resizeMode="horizontal|vertical">
+    android:resizeMode="horizontal|vertical"
+    android:configure="com.habitrpg.android.habitica.ui.activities.TaskListWidgetActivity">
 
 </appwidget-provider>
