@@ -11,10 +11,9 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.5'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
 
@@ -44,11 +43,10 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //Networking
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //REST API handling
-    compile ('com.squareup.retrofit2:retrofit:2.1.0') {
+    compile('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude module: 'okhttp'
     }
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -60,12 +58,12 @@ dependencies {
     }
 
     // View Elements Binding :)
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     //Dependency Injection
-    compile 'com.google.dagger:dagger:2.5'
-    apt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.google.dagger:dagger:2.7'
+    apt 'com.google.dagger:dagger-compiler:2.7'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     compile('com.mikepenz:materialdrawer:5.3.6@aar') {
@@ -73,7 +71,6 @@ dependencies {
     }
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:gridlayout-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:preference-v14:24.2.1'
     compile 'com.android.support:multidex:1.0.1'
@@ -110,7 +107,7 @@ dependencies {
     compile 'org.solovyev.android:checkout:0.7.5@aar'
 
     //Facebook
-    compile('com.facebook.android:facebook-android-sdk:4.11.0') {
+    compile('com.facebook.android:facebook-android-sdk:4.17.0') {
         transitive = true
     }
 
@@ -124,10 +121,10 @@ dependencies {
     compile 'com.amplitude:android-sdk:2.9.2'
 
     // Fresco Image Management Library
-    compile('com.facebook.fresco:fresco:0.11.0') {
+    compile('com.facebook.fresco:fresco:0.14.0') {
         exclude module: 'bolts-android'
     }
-    compile('com.facebook.fresco:animated-gif:0.11.0') {
+    compile('com.facebook.fresco:animated-gif:0.14.0') {
         exclude module: 'bolts-android'
     }
     //Tests
@@ -286,5 +283,4 @@ tasks.whenTaskAdded { task ->
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.google.gms.google-services'
