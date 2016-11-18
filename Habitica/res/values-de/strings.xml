@@ -16,7 +16,7 @@
   <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
-  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
+  <string name="unknown_error">Ein Fehler ist aufgetreten…</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
   <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Persönlicher Tagesstart einstellen</string>
   <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
   <string name="push_notifications">Push-Benachrichtigungen</string>
+  <string name="push_notifications_sum">Ändere die Einstellungen deiner Push-Benachrichtigungen</string>
   <string name="preference_push_you_won_challenge">Du hast einen Wettbewerb gewonnen!</string>
   <string name="preference_push_received_a_private_message">Private Nachricht erhalten</string>
   <string name="preference_push_gifted_gems">Geschenkte Edelsteine</string>
@@ -35,6 +36,8 @@
   <string name="preference_push_invited_to_guild">Zur Gilde eingeladen</string>
   <string name="preference_push_your_quest_has_begun">Deine Quest hat begonnen</string>
   <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
+  <string name="AudioTheme_title">Audio Thema</string>
+  <string name="AudioTheme_summary">Ändern des Habitica Audio Themas</string>
   <!--Adding tasks-->
   <string name="task_value">Wert</string>
   <string name="new_todo">Neuer To-Do-Eintrag</string>
@@ -54,6 +57,7 @@
   <string name="logout">Ausloggen</string>
   <string name="logout_description">Logge Dich aus</string>
   <string name="account_details">Kontodetails</string>
+  <string name="account_details_sum">Überprüfe deine Accountdetails</string>
   <string name="LoginActivityName">Willkommen</string>
   <string name="string_revive">Wiederbeleben</string>
   <string name="please_connect">Baue eine Verbindung mit Hilfe der App auf, bevor Du ein Widget benutzt</string>
@@ -384,7 +388,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="add_task">Neue Aufgabe</string>
   <string name="add_habit">Neue Gewohnheit</string>
   <string name="add_daily">Neue Tägliche Aufgabe</string>
-  <string name="add_todo">Neue To-Do</string>
+  <string name="add_todo">Neues To-Do</string>
   <string name="add_reward">Neue Belohnung</string>
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
   <string name="widget_habit_button">Habitica: Gewohnheit</string>
