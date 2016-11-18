@@ -21,7 +21,6 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.activities.TaskListWidgetActivity;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
@@ -61,6 +60,7 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
+import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
 
 import javax.inject.Singleton;
 
@@ -186,5 +186,5 @@ public interface AppComponent {
 
     void inject(SoundManager soundManager);
 
-    void inject(TaskListWidgetActivity taskListWidgetActivity);
+    void inject(TaskListWidgetProvider taskListWidgetProvider);
 }

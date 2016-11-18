@@ -416,7 +416,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="add_reward">Add Reward</string>
     <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
     <string name="widget_habit_button">Habitica Do Habit</string>
-    <string name="widget_task_list">Habitica Task List</string>
+    <string name="widget_dailies">Habitica Dailies</string>
+    <string name="widget_todo_list">Habitica Todo List</string>
     <string name="widget_add_task">Habitica Add Task</string>
     <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem.purchase.toolbartitle">Purchase</string>
