@@ -5,8 +5,10 @@ import android.content.Intent;
 
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
-public class TodoListProvider extends TaskListProvider {
-    public TodoListProvider(Context context, Intent intent) {
-        super(context, intent, Task.TYPE_TODO);
+
+public class DailiesListFactory extends TaskListFactory {
+    public DailiesListFactory(Context context, Intent intent) {
+        super(context, intent, Task.TYPE_DAILY);
     }
 }
+

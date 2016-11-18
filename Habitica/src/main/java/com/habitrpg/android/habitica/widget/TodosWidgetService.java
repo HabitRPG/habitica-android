@@ -7,6 +7,6 @@ public class TodosWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new TodoListProvider(this.getApplicationContext(), intent);
+        return new TodoListFactory(this.getApplicationContext(), intent);
     }
 }

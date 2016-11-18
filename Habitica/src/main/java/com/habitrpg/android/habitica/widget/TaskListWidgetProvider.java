@@ -30,8 +30,6 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     APIHelper apiHelper;
     @Inject
     HostConfig hostConfig;
-    @Inject
-    public SharedPreferences sharedPreferences;
 
     private void setUp(Context context) {
         if (apiHelper == null) {
@@ -41,6 +39,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     }
 
     protected abstract Class getServiceClass();
+    protected abstract Class getProviderClass();
 
 
     @Override
@@ -72,8 +71,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         setUp(context);
-        ComponentName thisWidget = new ComponentName(context,
-                DailiesWidgetProvider.class);
+        ComponentName thisWidget = new ComponentName(context, getProviderClass());
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -92,7 +90,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
             rv.setEmptyView(R.id.list, R.id.empty_view);
 
-            Intent taskIntent = new Intent(context, DailiesWidgetProvider.class);
+            Intent taskIntent = new Intent(context, getProviderClass());
             taskIntent.setAction(DAILY_ACTION);
             taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
@@ -106,11 +104,6 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-    }
-
-    @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
     @Override

@@ -24,14 +24,14 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public abstract class TaskListProvider implements RemoteViewsService.RemoteViewsFactory {
+public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
     private String taskType;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
 
-    public TaskListProvider(Context context, Intent intent, String taskType) {
+    public TaskListFactory(Context context, Intent intent, String taskType) {
         this.context = context;
         this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         this.reloadData = false;

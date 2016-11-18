@@ -6,5 +6,10 @@ public class DailiesWidgetProvider extends TaskListWidgetProvider{
     protected Class getServiceClass() {
         return DailiesWidgetService.class;
     }
+
+    @Override
+    protected Class getProviderClass() {
+        return DailiesWidgetProvider.class;
+    }
 }
 

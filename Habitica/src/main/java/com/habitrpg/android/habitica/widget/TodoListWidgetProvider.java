@@ -6,4 +6,9 @@ public class TodoListWidgetProvider extends TaskListWidgetProvider{
     protected Class getServiceClass() {
         return TodosWidgetService.class;
     }
+
+    @Override
+    protected Class getProviderClass() {
+        return TodoListWidgetProvider.class;
+    }
 }
