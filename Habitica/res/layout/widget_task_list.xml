@@ -6,10 +6,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dailies"
         android:background="@drawable/rounded_purple_square"
         android:padding="4dp"
         android:textSize="18sp"
+        android:id="@+id/widget_title"
         android:textColor="@android:color/white"/>
     <FrameLayout
         android:layout_width="match_parent"

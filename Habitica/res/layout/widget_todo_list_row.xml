@@ -19,7 +19,7 @@
                 android:layout_width="@dimen/checkbox_compact_size"
                 android:layout_height="@dimen/checkbox_compact_size"
                 android:layout_gravity="center"
-                android:src="@drawable/daily_unchecked" />
+                android:src="@drawable/todo_unchecked" />
         </FrameLayout>
 
         <TextView

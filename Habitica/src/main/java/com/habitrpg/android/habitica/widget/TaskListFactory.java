@@ -26,14 +26,16 @@ import rx.schedulers.Schedulers;
 
 public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
+    private int listItemResId;
     private String taskType;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
 
-    public TaskListFactory(Context context, Intent intent, String taskType) {
+    public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId) {
         this.context = context;
         this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+        this.listItemResId = listItemResId;
         this.reloadData = false;
         this.taskType = taskType;
 
@@ -85,7 +87,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
     @Override
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
-                context.getPackageName(), R.layout.widget_dailies_list_row);
+                context.getPackageName(), listItemResId);
         if (taskList.size() > position) {
             Task task = taskList.get(position);
 
@@ -98,14 +100,14 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
             Intent fillInIntent = new Intent();
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.getId());
-            remoteView.setOnClickFillInIntent(R.id.dailies_list_row, fillInIntent);
+            remoteView.setOnClickFillInIntent(R.id.widget_list_row, fillInIntent);
         }
         return remoteView;
     }
 
     @Override
     public RemoteViews getLoadingView() {
-        return new RemoteViews(context.getPackageName(), R.layout.widget_dailies_list_row);
+        return new RemoteViews(context.getPackageName(), listItemResId);
     }
 
     @Override

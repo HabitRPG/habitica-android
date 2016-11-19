@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -40,6 +40,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
 
     protected abstract Class getServiceClass();
     protected abstract Class getProviderClass();
+    protected abstract int getTitleResId();
 
 
     @Override
@@ -86,9 +87,15 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             Intent intent = new Intent(context, getServiceClass());
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_dailies);
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_task_list);
             rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
             rv.setEmptyView(R.id.list, R.id.empty_view);
+            rv.setTextViewText(R.id.widget_title, context.getString(getTitleResId()));
+
+            // if the user click on the title: open App
+            Intent openAppIntent = new Intent(context.getApplicationContext(), MainActivity.class);
+            PendingIntent openApp = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            rv.setOnClickPendingIntent(R.id.widget_title, openApp);
 
             Intent taskIntent = new Intent(context, getProviderClass());
             taskIntent.setAction(DAILY_ACTION);
@@ -108,7 +115,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public int layoutResourceId() {
-        return R.layout.widget_dailies;
+        return R.layout.widget_task_list;
     }
 
     @Override
