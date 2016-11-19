@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -134,7 +135,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -1097,7 +1097,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                    ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
+                    SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
                     String potionName = event.usingHatchingPotion.getText();
@@ -1142,7 +1142,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                        ImageView mountImageView = (ImageView) mountWrapper.findViewById(R.id.pet_imageview);
+                        SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
                         String colorName = event.usingPet.getColorText();

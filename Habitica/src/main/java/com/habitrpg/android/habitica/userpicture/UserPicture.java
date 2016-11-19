@@ -1,29 +1,8 @@
 package com.habitrpg.android.habitica.userpicture;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.ImageView;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class UserPicture {
 
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+   /* final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
     private static final int WIDTH = 140;
     private static final int HEIGHT = 147;
     private static final int COMPACT_WIDTH = 114;
@@ -156,7 +135,7 @@ public class UserPicture {
 
     private void clearRunning() {
         for (SpriteTarget target : this.targets) {
-            Picasso.with(this.context).cancelRequest(target);
+           // Picasso.with(this.context).cancelRequest(target);
         }
         this.targets.clear();
         this.numOfTasks.set(0);
@@ -223,7 +202,7 @@ public class UserPicture {
         Integer layerNumber = 0;
         this.numOfTasks.set(layerNames.size());
         this.layers.clear();
-        Picasso picasso = Picasso.with(this.context);
+      //  Picasso picasso = Picasso.with(this.context);
         for (String layer : layerNames) {
             this.layers.add(null);
             SpriteTarget target = new SpriteTarget(layerNumber, layer);
@@ -302,7 +281,7 @@ public class UserPicture {
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
         }
-    }
+    }*/
 
 }
 

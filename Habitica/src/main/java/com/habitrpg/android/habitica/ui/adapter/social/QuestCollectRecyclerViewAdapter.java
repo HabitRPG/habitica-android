@@ -1,15 +1,15 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestProgress;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.squareup.picasso.Picasso;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
 
     class QuestCollectViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image)
-        ImageView image;
+        SimpleDraweeView image;
 
         @BindView(R.id.name)
         TextView name;
@@ -74,9 +74,7 @@ public class QuestCollectRecyclerViewAdapter extends RecyclerView.Adapter<QuestC
         }
 
         public void bind(String key) {
-            Picasso.with(view.getContext())
-                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + key + ".png")
-                    .into(image);
+            image.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + "quest_" + quest.getKey() + "_" + key + ".png"));
             if (quest.getCollect().get(key) != null) {
                 name.setText(quest.getCollect().get(key).text);
                 count.setText(progress.collect.get(key) + " / " + quest.getCollect().get(key).count);
