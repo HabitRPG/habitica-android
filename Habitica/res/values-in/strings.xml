@@ -160,7 +160,7 @@
   <string name="complete_tutorial">Aku mengerti!</string>
   <string name="dismiss_tutorial">Peringatkan aku lagi</string>
   <string name="intro_1_title">Selamat datang di Habitica</string>
-  <string name="intro_1_description">Bergabunglah dengan lebih dari 1.100.000 orang bersenang-senang dalam menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
+  <string name="intro_1_description">Bergabunglah dengan lebih dari %s orang bersenang-senang dalam menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
   <string name="intro_2_title">Kemajuan dalam Permainan = Kemajuan dalam Hidup</string>
   <string name="intro_2_description">Buka fitur dalam game dengan mencentang tugas harianmu. Dapatkan baju, peliharaan, dan banyak lagi untuk hadiahmu menyelesaikan tujuan!</string>
   <string name="intro_3_title">Bersosialisasi sambil Mengalahkan Monster</string>
