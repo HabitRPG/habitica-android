@@ -23,7 +23,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -256,6 +258,9 @@ public interface ApiService {
 
     @DELETE("user/push-devices/{regId}")
     Observable<Void> deletePushDevice(@Path("regId") String regId);
+
+    @GET("challenges/user")
+    Observable<ArrayList<Challenge>> getUserChallenges();
 
     //DEBUG: These calls only work on a local development server
 

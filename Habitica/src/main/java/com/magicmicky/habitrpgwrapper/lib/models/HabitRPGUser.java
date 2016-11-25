@@ -31,6 +31,8 @@ public class HabitRPGUser extends BaseModel {
     List<Task> todos;
     List<Task> rewards;
     List<Task> habits;
+    List<Challenge> challengeList;
+
     List<Tag> tags;
     @Column
     @PrimaryKey
@@ -105,6 +107,24 @@ public class HabitRPGUser extends BaseModel {
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
+
+    private List<String> challenges;
+
+
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "challengeList")
+    public List<Challenge> getChallengeList() {
+        if (challengeList == null) {
+            challengeList = new Select()
+                    .from(Challenge.class)
+                    .where(Condition.column("user_id").eq(this.id))
+                    .queryList();
+        }
+        return challengeList;
+    }
+
+    public void setChallengeList(List<Challenge> challenges) {
+        this.challengeList = challenges;
+    }
 
     public Preferences getPreferences() {
         return preferences;
@@ -307,6 +327,15 @@ public class HabitRPGUser extends BaseModel {
         this.pushDevices = pushDevices;
     }
 
+    public List<String> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(List<String> challenges) {
+        this.challenges = challenges;
+    }
+
+
     @Override
     public void save() {
         // We need to set the user_id to all other objects
@@ -344,6 +373,18 @@ public class HabitRPGUser extends BaseModel {
                 t.user_id = id;
             }
         }
+
+        List<Challenge> challenges = new ArrayList<>();
+
+        for (String s : getChallenges()) {
+            Challenge challenge = new Challenge();
+            challenge.id = s;
+            challenge.user_id = id;
+
+            challenges.add(challenge);
+        }
+
+        setChallengeList(challenges);
 
         super.save();
     }

@@ -43,6 +43,8 @@ import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.ChallengeListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -184,4 +186,8 @@ public interface AppComponent {
     void inject(AvatarStatsWidgetProvider avatarStatsWidgetProvider);
 
     void inject(SoundManager soundManager);
+
+    void inject(ChallengesOverviewFragment challengesOverviewFragment);
+
+    void inject(ChallengeListFragment challengeListFragment);
 }
