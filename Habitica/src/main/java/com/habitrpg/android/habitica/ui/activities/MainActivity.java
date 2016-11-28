@@ -74,6 +74,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
@@ -940,7 +941,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(final BuyGemItemCommand event) {
         if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<Void> observable;
+            Observable<HabitResponse<Void>> observable;
             if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
                 if (event.item.purchaseType.equals("gear")) {
                     observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);

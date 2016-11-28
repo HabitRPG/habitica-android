@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -205,7 +206,7 @@ public class SkillsFragment extends BaseMainFragment {
 
     private void useSkill(Skill skill, String taskId) {
         displayProgressDialog();
-        Observable<SkillResponse> observable;
+        Observable<HabitResponse<SkillResponse>> observable;
         if (taskId != null) {
             observable = apiHelper.apiService.useSkill(skill.key, skill.target, taskId);
         } else {
