@@ -6,6 +6,9 @@ import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.playseeds.android.sdk.Seeds;
 
 import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.ActivityCheckout;
@@ -86,6 +89,8 @@ public class GemsPurchaseFragment extends BaseFragment {
         gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
         gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
+        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity)this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
+
         final ActivityCheckout checkout = listener.getActivityCheckout();
 
         if (checkout != null) {
@@ -99,6 +104,9 @@ public class GemsPurchaseFragment extends BaseFragment {
                             @Override
                             public void onSuccess(@NonNull Object o) {
                                 EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
+                                if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
+                                    ((GemPurchaseActivity)getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_sharing), "store");
+                                }
                             }
 
                             @Override

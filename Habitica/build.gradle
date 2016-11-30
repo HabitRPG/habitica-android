@@ -20,24 +20,16 @@ buildscript {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url 'https://maven.fabric.io/public' }
 
     // Material View Pager
-    maven {
-        url "http://dl.bintray.com/florent37/maven"
-    }
+    maven { url "http://dl.bintray.com/florent37/maven" }
 
     // Markdown
-    maven {
-        url "https://s3.amazonaws.com/repo.commonsware.com"
-    }
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
 
-    maven {
-        url "https://jitpack.io"
-    }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -142,11 +134,16 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.4.0'
 
     compile 'com.google.android.gms:play-services-auth:9.4.0'
+
+    compile(project(':seeds-sdk')) {
+        exclude group: 'com.google.android.gms'
+        exclude group: 'com.android.support', module: 'multidex'
+    }
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"

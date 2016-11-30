@@ -28,7 +28,21 @@
         android:layout_height="wrap_content"
         android:text="@string/gems"
         android:textColor="@color/best_10"
-        android:gravity="center" />
+        android:gravity="center"
+        android:layout_marginBottom="14dp" />
+
+    <ImageButton
+            android:id="@+id/seedsImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:src="@drawable/seeds_badge_store"
+            android:paddingTop="14dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            />
 
     <Button
         android:layout_width="match_parent"
@@ -39,6 +53,5 @@
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="14dp"
-        android:layout_marginTop="13dp"
         tools:text="$ 4.99"/>
 </LinearLayout>
