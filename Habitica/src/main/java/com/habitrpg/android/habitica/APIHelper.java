@@ -17,6 +17,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
@@ -104,6 +105,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 
@@ -117,6 +119,9 @@ public class APIHelper implements Action1<Throwable> {
             observable -> ((Observable) observable)
                     .map(new Func1<HabitResponse, Object>() {
                         @Override public Object call(HabitResponse habitResponse) {
+                            if (habitResponse.notifications != null) {
+                                showNotificationDialog(habitResponse.notifications);
+                            }
                             return habitResponse.getData();
                         }
                     })
@@ -326,29 +331,38 @@ public class APIHelper implements Action1<Throwable> {
         if (withTasks) {
             Observable<HabitResponse<TaskList>> tasksObservable = apiService.getTasks();
 
-            userObservable = Observable.zip(userObservable, tasksObservable, (habitRPGUser, tasks) -> {
-//                habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-//                habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-//                habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-//                habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-//                for (Task task : tasks.tasks.values()) {
-//                    switch (task.getType()) {
-//                        case "habit":
-//                            habitRPGUser.getHabits().add(task);
-//                            break;
-//                        case "daily":
-//                            habitRPGUser.getDailys().add(task);
-//                            break;
-//                        case "todo":
-//                            habitRPGUser.getTodos().add(task);
-//                            break;
-//                        case "reward":
-//                            habitRPGUser.getRewards().add(task);
-//                            break;
-//                    }
-//                }
-                return habitRPGUser;
-            });
+//            userObservable = Observable.zip(userObservable, tasksObservable,
+//                    new Func2<HabitResponse<HabitRPGUser>, HabitResponse<TaskList>, HabitRPGUser>() {
+//                        @Override
+//                        public HabitRPGUser call(HabitResponse<HabitRPGUser> habitRPGUserHabitResponse, HabitResponse<TaskList> taskListHabitResponse) {
+//                            HabitRPGUser habitRPGUser = habitRPGUserHabitResponse.getData();
+//                            TaskList tasks = taskListHabitResponse.getData();
+//
+//                            habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
+//                            habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
+//                            habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
+//                            habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
+//                            for (Task task : tasks.tasks.values()) {
+//                                switch (task.getType()) {
+//                                    case "habit":
+//                                        habitRPGUser.getHabits().add(task);
+//                                        break;
+//                                    case "daily":
+//                                        habitRPGUser.getDailys().add(task);
+//                                        break;
+//                                    case "todo":
+//                                        habitRPGUser.getTodos().add(task);
+//                                        break;
+//                                    case "reward":
+//                                        habitRPGUser.getRewards().add(task);
+//                                        break;
+//                                }
+//                            }
+//
+//                            habitRPGUserHabitResponse.data = habitRPGUser;
+//                            return habitRPGUserHabitResponse;
+//                        }
+//                    });
         }
         return userObservable;
     }
@@ -402,9 +416,17 @@ public class APIHelper implements Action1<Throwable> {
         });
     }
 
-//    private void showNotificationDialog(final List notifications) {
-//        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-//            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
+    private void showNotificationDialog(final List<Notification> notifications) {
+        if (notifications.size() == 0) {
+            return;
+        }
+
+        HabiticaApplication.currentActivity.runOnUiThread(() -> {
+            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
+                Log.v("Testhere", String.valueOf(notifications));
+                for (Notification notification: notifications) {
+                    Log.v("TestNotif", notification.getAdditionalProperties().toString());
+                }
 //                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
 //                        .setTitle(resourceTitleString)
 //                        .setMessage(resourceMessageString)
@@ -415,11 +437,11 @@ public class APIHelper implements Action1<Throwable> {
 //                if (!resourceTitleString.isEmpty()) {
 //                    builder.setIcon(R.drawable.ic_warning_black);
 //                }
-//
+
 //                displayedAlert = builder.show();
-//            }
-//        });
-//    }
+            }
+        });
+    }
 
     /*
      This function is used with Observer.compose to reuse transformers across the application.

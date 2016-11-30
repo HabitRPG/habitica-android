@@ -1,5 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.models.responses;
 
+import com.magicmicky.habitrpgwrapper.lib.models.Notification;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ public class HabitResponse<T> {
 
     private Boolean success;
     public T data;
-    public List notifications;
+    public List<Notification> notifications;
 
     /**
      *
