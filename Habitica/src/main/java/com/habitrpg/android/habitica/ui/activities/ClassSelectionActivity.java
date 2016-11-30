@@ -160,19 +160,42 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     }
 
     private void displayConfirmationDialogForClass(String className, String classIdentifier) {
+
         if (!this.isInitialSelection && !this.classWasUnset) {
-            return;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.change_class_confirmation))
+                    .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
+                        //selectClass(classIdentifier);
+                        displayClassChanged(className);
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.class_confirmation, className))
-                .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.class_confirmation, className))
+                    .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
+                        selectClass(classIdentifier);
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    private void displayClassChanged(String newClassName) {
+        AlertDialog.Builder changeConfirmedBuilder = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.class_changed, newClassName))
+                .setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
-                })
-                .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
-                    selectClass(classIdentifier);
                 });
-        AlertDialog alert = builder.create();
-        alert.show();
+        AlertDialog changeDoneAlert = changeConfirmedBuilder.create();
+        changeDoneAlert.show();
     }
 
     private void optOutOfClasses() {
