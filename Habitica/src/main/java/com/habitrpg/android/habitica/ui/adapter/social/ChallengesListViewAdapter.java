@@ -8,8 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         return challenges.size();
     }
 
-    public class ChallengeViewHolder extends RecyclerView.ViewHolder {
+    public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.challenge_name)
         TextView challengeName;
 
@@ -64,13 +67,19 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         @BindView(R.id.gemPrizeTextView)
         TextView gemPrizeTextView;
 
+        private Challenge challenge;
+
         public ChallengeViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Challenge challenge) {
+            this.challenge = challenge;
+
             challengeName.setText(challenge.name);
 
             leaderName.setText(getContext().getString(R.string.by) + " " + getLeaderName(challenge.leader));
@@ -90,6 +99,13 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                 return user.getProfile().getName();
             } catch (Exception e) {
                 return "";
+            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (challenge != null) {
+                EventBus.getDefault().post(new ShowChallengeTasksCommand(challenge.id));
             }
         }
     }

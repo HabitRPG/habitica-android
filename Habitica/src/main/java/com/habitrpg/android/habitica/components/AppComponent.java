@@ -43,8 +43,10 @@ import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChallengeListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChallengesOverviewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTaskRecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -190,4 +192,8 @@ public interface AppComponent {
     void inject(ChallengesOverviewFragment challengesOverviewFragment);
 
     void inject(ChallengeListFragment challengeListFragment);
+
+    void inject(ChallengeTasksFragment challengeTasksFragment);
+
+    void inject(ChallengeTaskRecyclerViewFragment challengeTaskRecyclerViewFragment);
 }

@@ -52,8 +52,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         this.userID = userID;
         this.filteredContent = new ArrayList<>();
 
-        this.loadContent(true);
-
+        if(loadFromDatabase()) {
+            this.loadContent(true);
+        }
+        
         this.layoutResource = layoutResource;
     }
 
@@ -162,7 +164,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     private void filter() {
-        if (this.tagsHelper.howMany() == 0) {
+        if (this.tagsHelper == null || this.tagsHelper.howMany() == 0) {
             filteredContent = content;
         } else {
             filteredContent = new ObservableArrayList<>();
@@ -210,4 +212,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         filter();
     }
 
+    public boolean loadFromDatabase(){
+        return true;
+    }
 }

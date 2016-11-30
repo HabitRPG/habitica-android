@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.fragments.social;
+package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

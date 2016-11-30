@@ -1,17 +1,19 @@
-package com.habitrpg.android.habitica.ui.fragments.social;
+package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
@@ -25,7 +27,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-
         viewPager.setCurrentItem(1);
 
         setViewPagerAdapter();
@@ -83,5 +84,13 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
         }
+    }
+
+    @Subscribe
+    public void onEvent(ShowChallengeTasksCommand cmd){
+        ChallengeTasksFragment fragment = new ChallengeTasksFragment();
+        fragment.setChallengeId(cmd.challengeId);
+
+        activity.displayFragment(fragment);
     }
 }

@@ -1,5 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import android.databinding.ObservableList;
+
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -261,6 +263,9 @@ public interface ApiService {
 
     @GET("challenges/user")
     Observable<ArrayList<Challenge>> getUserChallenges();
+
+    @GET("tasks/challenge/{challengeId}")
+    Observable<TaskList> getChallengeTasks(@Path("challengeId") String challengeId);
 
     //DEBUG: These calls only work on a local development server
 

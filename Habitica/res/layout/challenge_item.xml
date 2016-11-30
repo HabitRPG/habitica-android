@@ -4,6 +4,7 @@
     style="@style/CardView.Default"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
     android:layout_margin="5dp">
 
     <LinearLayout
