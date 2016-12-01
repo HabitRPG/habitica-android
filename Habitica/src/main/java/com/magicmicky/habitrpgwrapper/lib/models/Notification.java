@@ -4,6 +4,10 @@ package com.magicmicky.habitrpgwrapper.lib.models;
  * Created by krh12 on 11/28/2016.
  */
 
+import com.magicmicky.habitrpgwrapper.lib.models.notifications.NotificationData;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +15,7 @@ public class Notification {
 
     private String type;
     private String createdAt;
-//    private T data;
+    public NotificationData data;
     private String id;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 

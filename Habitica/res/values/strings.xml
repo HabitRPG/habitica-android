@@ -436,7 +436,10 @@ To start, which parts of your life do you want to improve?</string>
     <string name="open_market">Open Market</string>
     <string name="cds_description" formatted="false">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
 
-
     <string name="AudioTheme_title">Audio Theme</string>
     <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
+
+    <!-- Login Incentives -->
+    <string name="see_you_tomorrow">See you tomorrow!</string>
+
 </resources>

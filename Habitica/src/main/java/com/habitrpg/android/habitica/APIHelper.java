@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -70,9 +71,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -331,38 +340,38 @@ public class APIHelper implements Action1<Throwable> {
         if (withTasks) {
             Observable<HabitResponse<TaskList>> tasksObservable = apiService.getTasks();
 
-//            userObservable = Observable.zip(userObservable, tasksObservable,
-//                    new Func2<HabitResponse<HabitRPGUser>, HabitResponse<TaskList>, HabitRPGUser>() {
-//                        @Override
-//                        public HabitRPGUser call(HabitResponse<HabitRPGUser> habitRPGUserHabitResponse, HabitResponse<TaskList> taskListHabitResponse) {
-//                            HabitRPGUser habitRPGUser = habitRPGUserHabitResponse.getData();
-//                            TaskList tasks = taskListHabitResponse.getData();
-//
-//                            habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-//                            habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-//                            habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-//                            habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-//                            for (Task task : tasks.tasks.values()) {
-//                                switch (task.getType()) {
-//                                    case "habit":
-//                                        habitRPGUser.getHabits().add(task);
-//                                        break;
-//                                    case "daily":
-//                                        habitRPGUser.getDailys().add(task);
-//                                        break;
-//                                    case "todo":
-//                                        habitRPGUser.getTodos().add(task);
-//                                        break;
-//                                    case "reward":
-//                                        habitRPGUser.getRewards().add(task);
-//                                        break;
-//                                }
-//                            }
-//
-//                            habitRPGUserHabitResponse.data = habitRPGUser;
-//                            return habitRPGUserHabitResponse;
-//                        }
-//                    });
+            userObservable = Observable.zip(userObservable, tasksObservable,
+                    new Func2<HabitResponse<HabitRPGUser>, HabitResponse<TaskList>, HabitResponse<HabitRPGUser>>() {
+                        @Override
+                        public HabitResponse<HabitRPGUser> call(HabitResponse<HabitRPGUser> habitRPGUserHabitResponse, HabitResponse<TaskList> taskListHabitResponse) {
+                            HabitRPGUser habitRPGUser = habitRPGUserHabitResponse.getData();
+                            TaskList tasks = taskListHabitResponse.getData();
+
+                            habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
+                            habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
+                            habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
+                            habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
+                            for (Task task : tasks.tasks.values()) {
+                                switch (task.getType()) {
+                                    case "habit":
+                                        habitRPGUser.getHabits().add(task);
+                                        break;
+                                    case "daily":
+                                        habitRPGUser.getDailys().add(task);
+                                        break;
+                                    case "todo":
+                                        habitRPGUser.getTodos().add(task);
+                                        break;
+                                    case "reward":
+                                        habitRPGUser.getRewards().add(task);
+                                        break;
+                                }
+                            }
+
+                            habitRPGUserHabitResponse.data = habitRPGUser;
+                            return habitRPGUserHabitResponse;
+                        }
+                    });
         }
         return userObservable;
     }
@@ -423,22 +432,50 @@ public class APIHelper implements Action1<Throwable> {
 
         HabiticaApplication.currentActivity.runOnUiThread(() -> {
             if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                Log.v("Testhere", String.valueOf(notifications));
                 for (Notification notification: notifications) {
-                    Log.v("TestNotif", notification.getAdditionalProperties().toString());
-                }
-//                AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-//                        .setTitle(resourceTitleString)
-//                        .setMessage(resourceMessageString)
-//                        .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-//                            displayedAlert = null;
-//                        });
-//
-//                if (!resourceTitleString.isEmpty()) {
-//                    builder.setIcon(R.drawable.ic_warning_black);
-//                }
 
-//                displayedAlert = builder.show();
+                    if (!notification.getType().equals("LOGIN_INCENTIVE")) {
+                        continue;
+                    }
+
+                    String title = notification.data.message;
+                    String youEarnedMessage = "";
+
+                    LayoutInflater factory = LayoutInflater.from(HabiticaApplication.currentActivity);
+                    final View view = factory.inflate(R.layout.dialog_login_incentive, null);
+
+                    ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+                    String imageKey = "inventory_present_11";
+                    if (notification.data.rewardKey != null) {
+                        imageKey = notification.data.rewardKey.get(0);
+                        youEarnedMessage = "You earned a " + imageKey + " as a reward for your devotion to improving your life.";
+                    }
+                    DataBindingUtils.loadImage(imageView, imageKey);
+
+                    String message = "Your next prize unlocks at " + notification.data.nextRewardAt + " Check-Ins";
+                    TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
+                    nextUnlockTextView.setText(message);
+
+                    TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
+                    youEarnedTexView.setText(youEarnedMessage);
+
+                    Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+                            .setTitle(title)
+                            .setView(view)
+                            .setMessage("");
+
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.hide();
+                        }
+                    });
+                }
             }
         });
     }
