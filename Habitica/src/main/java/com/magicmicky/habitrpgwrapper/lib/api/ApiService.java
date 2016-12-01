@@ -59,7 +59,7 @@ public interface ApiService {
     Observable<HabitResponse<HabitRPGUser>> updateUser(@Body Map<String, Object> updateDictionary);
 
     @PUT("user/")
-    Observable<HabitRPGUser> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
+    Observable<HabitResponse<HabitRPGUser>> registrationLanguage(@Header("Accept-Language") String registrationLanguage);
 
     @GET("user/inventory/buy")
     Observable<HabitResponse<List<ItemData>>> getInventoryBuyableGear();
@@ -239,7 +239,7 @@ public interface ApiService {
     Observable<HabitResponse<PurchaseValidationResult>> validatePurchase(@Body PurchaseValidationRequest request);
 
     @POST("user/custom-day-start")
-    Observable<HabitRPGUser> changeCustomDayStart(@Body Map<String, Object> updateObject);
+    Observable<HabitResponse<HabitRPGUser>> changeCustomDayStart(@Body Map<String, Object> updateObject);
 
     //Members URL
     @GET("members/{mid}")
