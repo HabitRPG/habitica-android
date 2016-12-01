@@ -21,6 +21,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
+import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
@@ -448,7 +449,19 @@ public class APIHelper implements Action1<Throwable> {
                     String imageKey = "inventory_present_11";
                     if (notification.data.rewardKey != null) {
                         imageKey = notification.data.rewardKey.get(0);
-                        youEarnedMessage = "You earned a " + imageKey + " as a reward for your devotion to improving your life.";
+
+                        if (notification.data.reward != null && notification.data.reward.size() > 0) {
+                            String earnedString = "";
+                            int count = 0;
+                            for (Reward reward : notification.data.reward) {
+                                earnedString += reward.key;
+                                count += 1;
+                                if (notification.data.reward.size() > 1 && count != notification.data.reward.size()) {
+                                    earnedString += ", ";
+                                }
+                            }
+                            youEarnedMessage = "You earned a " + earnedString + " as a reward for your devotion to improving your life.";
+                        }
                     }
                     DataBindingUtils.loadImage(imageView, imageKey);
 
@@ -475,7 +488,6 @@ public class APIHelper implements Action1<Throwable> {
                             apiService.readNotificaiton(notification.getId())
                                     .compose(configureApiCallObserver())
                                     .subscribe(next -> {
-
                                     }, throwable -> {
                                     });
 

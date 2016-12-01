@@ -13,5 +13,6 @@ public class NotificationData {
     public Integer nextRewardAt;
     public String rewardText;
     public List<String> rewardKey;
+    public List<Reward> reward;
 
 }
