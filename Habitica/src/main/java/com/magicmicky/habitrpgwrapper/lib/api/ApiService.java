@@ -263,4 +263,7 @@ public interface ApiService {
     @POST("debug/add-ten-gems")
     Observable<HabitResponse<Void>> debugAddTenGems();
 
+    // Notifications
+    @POST("notifications/{notificationId}/read")
+    Observable<HabitResponse<Void>> readNotificaiton(@Path("notificationId") String notificationId);
 }

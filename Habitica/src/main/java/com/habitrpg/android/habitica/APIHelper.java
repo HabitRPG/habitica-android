@@ -472,6 +472,13 @@ public class APIHelper implements Action1<Throwable> {
                     confirmButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            apiService.readNotificaiton(notification.getId())
+                                    .compose(configureApiCallObserver())
+                                    .subscribe(next -> {
+
+                                    }, throwable -> {
+                                    });
+
                             dialog.hide();
                         }
                     });
