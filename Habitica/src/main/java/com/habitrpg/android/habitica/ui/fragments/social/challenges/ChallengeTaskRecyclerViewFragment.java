@@ -159,8 +159,6 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
     // region Challenge specific RecyclerViewAdapters
 
     private class ChallengeHabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
-
-
         public ChallengeHabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
             super(taskType, tagsHelper, layoutResource, newContext, userID, sortCallback);
         }
@@ -172,7 +170,9 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
         @Override
         public HabitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new HabitViewHolder(getContentView(parent));
+            HabitViewHolder habitViewHolder = new HabitViewHolder(getContentView(parent));
+            habitViewHolder.setDisabled(true);
+            return habitViewHolder;
         }
     }
 
@@ -194,7 +194,9 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
         @Override
         public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new DailyViewHolder(getContentView(parent), dailyResetOffset);
+            DailyViewHolder dailyViewHolder = new DailyViewHolder(getContentView(parent), dailyResetOffset);
+            dailyViewHolder.setDisabled(true);
+            return dailyViewHolder;
         }
     }
 
@@ -212,7 +214,9 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
         @Override
         public TodoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new TodoViewHolder(getContentView(parent));
+            TodoViewHolder todoViewHolder = new TodoViewHolder(getContentView(parent));
+            todoViewHolder.setDisabled(true);
+            return todoViewHolder;
         }
     }
 
@@ -229,7 +233,9 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
         @Override
         public RewardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new RewardViewHolder(getContentView(parent));
+            RewardViewHolder rewardViewHolder = new RewardViewHolder(getContentView(parent));
+            rewardViewHolder.setDisabled(true);
+            return rewardViewHolder;
         }
     }
 

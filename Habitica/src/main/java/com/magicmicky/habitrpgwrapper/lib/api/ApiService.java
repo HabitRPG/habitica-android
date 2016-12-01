@@ -267,6 +267,9 @@ public interface ApiService {
     @GET("tasks/challenge/{challengeId}")
     Observable<TaskList> getChallengeTasks(@Path("challengeId") String challengeId);
 
+    @GET("challenges/{challengeId}")
+    Observable<Challenge> getChallenge(@Path("challengeId") String challengeId);
+
     //DEBUG: These calls only work on a local development server
 
     @POST("debug/add-ten-gems")

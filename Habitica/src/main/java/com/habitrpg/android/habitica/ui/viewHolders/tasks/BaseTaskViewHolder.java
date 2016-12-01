@@ -37,6 +37,8 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
     @BindColor(R.color.task_gray)
     int taskGray;
 
+    boolean disabled;
+
     public BaseTaskViewHolder(View itemView) {
         super(itemView);
 
@@ -92,7 +94,7 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View v) {
-        if (v != itemView) {
+        if (v != itemView || isDisabled()) {
             return;
         }
 
@@ -104,5 +106,15 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     public boolean canContainMarkdown() {
         return true;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+
+        itemView.setEnabled(!disabled);
     }
 }

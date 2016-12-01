@@ -90,5 +90,11 @@ public class RewardViewHolder extends BaseTaskViewHolder {
         }
     }
 
+    @Override
+    public void setDisabled(boolean disabled) {
+        super.setDisabled(disabled);
+
+        this.rewardButton.setEnabled(!disabled);
+    }
 
 }

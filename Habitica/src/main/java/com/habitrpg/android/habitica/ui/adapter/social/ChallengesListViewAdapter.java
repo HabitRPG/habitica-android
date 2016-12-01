@@ -51,9 +51,12 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         return challenges.size();
     }
 
-    public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.challenge_name)
         TextView challengeName;
+
+        @BindView(R.id.challenge_description)
+        TextView challengeDescription;
 
         @BindView(R.id.leader_label)
         TextView leaderName;
@@ -81,6 +84,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             this.challenge = challenge;
 
             challengeName.setText(challenge.name);
+            challengeDescription.setText(challenge.description);
 
             leaderName.setText(getContext().getString(R.string.by) + " " + getLeaderName(challenge.leader));
 

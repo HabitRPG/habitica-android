@@ -2,9 +2,9 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     style="@style/CardView.Default"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
     android:layout_margin="5dp">
 
     <LinearLayout
@@ -19,6 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/challenge_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="3"/>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -31,13 +37,13 @@
                 android:layout_weight="0.5">
 
 
-                    <TextView
-                        android:id="@+id/leader_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:ellipsize="middle"
-                        android:lines="1" />
+                <TextView
+                    android:id="@+id/leader_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ellipsize="middle"
+                    android:lines="1" />
 
             </LinearLayout>
 
@@ -47,58 +53,60 @@
                 android:layout_weight="0.5"
                 android:gravity="right">
 
-                <ImageView android:src="@drawable/ic_people_black_24dp"
+                <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp" />
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_people_black_24dp" />
 
                 <TextView
                     android:id="@+id/memberCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:ellipsize="middle"
                     android:lines="1"
-                    android:text="0"
-                    android:layout_gravity="center"
                     android:paddingLeft="5dp"
-                    android:paddingStart="5dp" />
+                    android:paddingStart="5dp"
+                    android:text="0" />
 
 
             </LinearLayout>
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:gravity="end"
-        android:weightSum="1.0">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:baselineAligned="false"
             android:gravity="end"
-            android:id="@+id/gem_prize_layout">
+            android:weightSum="1.0">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_header_gem" />
-
-            <TextView
-                android:id="@+id/gemPrizeTextView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/gem_prize_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="middle"
-                android:lines="1"
-                android:text="0"
-                android:layout_gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingStart="5dp" />
+                android:layout_weight="0.5"
+                android:gravity="end">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_header_gem" />
+
+                <TextView
+                    android:id="@+id/gemPrizeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="middle"
+                    android:lines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
+                    android:text="0" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

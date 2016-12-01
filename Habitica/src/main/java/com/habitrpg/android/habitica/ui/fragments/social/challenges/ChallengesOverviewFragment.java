@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -88,9 +91,13 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(ShowChallengeTasksCommand cmd){
-        ChallengeTasksFragment fragment = new ChallengeTasksFragment();
-        fragment.setChallengeId(cmd.challengeId);
 
-        activity.displayFragment(fragment);
+        Bundle bundle = new Bundle();
+        bundle.putString(ChallengeDetailActivity.CHALLENGE_ID, cmd.challengeId);
+
+        Intent intent = new Intent(activity, ChallengeDetailActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 }

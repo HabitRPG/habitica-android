@@ -437,4 +437,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="AudioTheme_title">Audio Theme</string>
     <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
     <string name="by">by</string>
+    <string name="challenge_details">Challenge Details</string>
 </resources>

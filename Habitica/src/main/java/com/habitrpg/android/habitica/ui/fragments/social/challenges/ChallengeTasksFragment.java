@@ -86,13 +86,13 @@ public class ChallengeTasksFragment extends BaseMainFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.habits);
+                        return getContext().getString(R.string.habits);
                     case 1:
-                        return activity.getString(R.string.dailies);
+                        return getContext().getString(R.string.dailies);
                     case 2:
-                        return activity.getString(R.string.todos);
+                        return getContext().getString(R.string.todos);
                     case 3:
-                        return activity.getString(R.string.rewards);
+                        return getContext().getString(R.string.rewards);
                 }
                 return "";
             }
