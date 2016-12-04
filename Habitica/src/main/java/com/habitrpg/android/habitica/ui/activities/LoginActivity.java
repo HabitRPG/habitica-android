@@ -127,9 +127,6 @@ public class LoginActivity extends BaseActivity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent test = new Intent(this, ClassSelectionActivity.class);
-        test.putExtra("isInitialSelection", false);
-        startActivity(test);
 
         //Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);

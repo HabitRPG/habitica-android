@@ -168,7 +168,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
                         dialog.dismiss();
                     })
                     .setPositiveButton(getString(R.string.choose_class), (dialog, which) -> {
-                        //selectClass(classIdentifier);
+                        selectClass(classIdentifier);
                         displayClassChanged(className);
                     });
             AlertDialog alert = builder.create();
@@ -191,7 +191,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void displayClassChanged(String newClassName) {
         AlertDialog.Builder changeConfirmedBuilder = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.class_changed, newClassName))
-                .setPositiveButton("OK", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
                 });
         AlertDialog changeDoneAlert = changeConfirmedBuilder.create();
