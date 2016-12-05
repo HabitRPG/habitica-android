@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
@@ -47,25 +48,25 @@ public class BaseAPITests {
     }
 
     public void generateUser() {
-        TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
         username = UUID.randomUUID().toString();
         apiHelper.registerUser(username, username+"@example.com", password, password)
         .subscribe(testSubscriber);
         testSubscriber.assertCompleted();
-        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
+        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
         hostConfig.setUser(response.getId());
         hostConfig.setApi(response.getApiToken() != null ? response.getApiToken() : response.getToken());
     }
 
     public HabitRPGUser getUser() {
-        TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<HabitRPGUser>> userSubscriber = new TestSubscriber<>();
 
         apiHelper.apiService.getUser().subscribe(userSubscriber);
         userSubscriber.assertNoErrors();
         userSubscriber.assertCompleted();
-        List<HabitRPGUser> users = userSubscriber.getOnNextEvents();
+        HabitRPGUser user = userSubscriber.getOnNextEvents().get(0).getData();
 
-        return users.get(0);
+        return user;
     }
 
     @After
