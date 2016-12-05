@@ -24,6 +24,7 @@ import rx.functions.Action1;
 
 public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
 
+    String  currentClass;
     Boolean isInitialSelection;
     Boolean classWasUnset = false;
     Boolean shouldFinish = false;
@@ -54,6 +55,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         isInitialSelection = bundle.getBoolean("isInitialSelection");
+        currentClass = bundle.getString("currentClass");
 
         Preferences preferences = new Preferences();
         preferences.setHair(new Hair());
@@ -164,6 +166,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         if (!this.isInitialSelection && !this.classWasUnset) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.change_class_confirmation))
+                    .setMessage(getString(R.string.change_class_equipment_warning, currentClass))
                     .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {
                         dialog.dismiss();
                     })
@@ -191,7 +194,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void displayClassChanged(String newClassName) {
         AlertDialog.Builder changeConfirmedBuilder = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.class_changed, newClassName))
-                .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                .setMessage(getString(R.string.class_changed_description))
+                .setPositiveButton(getString(R.string.complete_tutorial), (dialog, which) -> {
                     dialog.dismiss();
                 });
         AlertDialog changeDoneAlert = changeConfirmedBuilder.create();
