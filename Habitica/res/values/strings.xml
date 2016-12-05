@@ -33,7 +33,6 @@
 
     <string name="pref_push_notifications_checkbox">User Push Notifications</string>
     <string name="push_notifications">Push Notifications</string>
-    <string name="push_notifications_sum">Set your push notifications settings</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
     <string name="preference_push_received_a_private_message">Received a Private Message</string>
     <string name="preference_push_gifted_gems">Gifted Gems</string>
@@ -63,7 +62,6 @@
     <string name="logout">Logout</string>
     <string name="logout_description">Log out of your account</string>
     <string name="account_details">Account Details</string>
-    <string name="account_details_sum">Check your account details</string>
     <string name="LoginActivityName">Welcome</string>
 
     <string name="string_revive">Revive</string>

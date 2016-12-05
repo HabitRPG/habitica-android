@@ -9,7 +9,7 @@
         <PreferenceScreen
             android:key="accountDetails"
             android:title="@string/account_details"
-            android:summary="@string/account_details_sum"
+            android:summary="Check your account details"
             android:order="1">
 
             <PreferenceCategory android:title="Account Details">
@@ -123,7 +123,7 @@
         <PreferenceScreen
             android:key="pushNotifications"
             android:title="@string/push_notifications"
-            android:summary="@string/push_notifications_sum"
+            android:summary="Set your push notifications settings"
             android:order="1">
 
             <PreferenceCategory android:title="Push Notifications">
