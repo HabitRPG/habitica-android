@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.components.DaggerAppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -53,6 +54,8 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     Lazy<APIHelper> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
     private static AppComponent component;
     /**
      * For better performance billing class should be used as singleton
@@ -122,10 +125,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         setupDagger();
+        crashlyticsProxy.init(this);
         setupLeakCanary();
         setupFlowManager();
         setupFacebookSdk();
-        setupCrashlytics();
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
 
@@ -197,12 +200,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         }
     }
 
-    private void setupCrashlytics() {
-     /*   Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);*/
-    }
 
     private void registerActivityLifecycleCallbacks() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
