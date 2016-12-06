@@ -86,7 +86,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeName.setText(challenge.name);
             challengeDescription.setText(challenge.description);
 
-            leaderName.setText(getContext().getString(R.string.by) + " " + getLeaderName(challenge.leader));
+            leaderName.setText(String.format(getContext().getString(R.string.byLeader), getLeaderName(challenge.leader)));
 
             memberCountTextView.setText(challenge.memberCount + "");
 

@@ -34,9 +34,13 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
-        challengeListFragment = new ChallengeListFragment();
-        challengeListFragment.setUser(this.user);
-        challengeListFragment.setViewUserChallengesOnly(true);
+        userChallengesFragment = new ChallengeListFragment();
+        userChallengesFragment.setUser(this.user);
+        userChallengesFragment.setViewUserChallengesOnly(true);
+
+        availableChallengesFragment = new ChallengeListFragment();
+        availableChallengesFragment.setUser(this.user);
+        availableChallengesFragment.setViewUserChallengesOnly(false);
 
         return v;
     }
@@ -46,7 +50,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         component.inject(this);
     }
 
-    private ChallengeListFragment challengeListFragment;
+    private ChallengeListFragment userChallengesFragment;
+    private ChallengeListFragment availableChallengesFragment;
 
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
@@ -59,9 +64,9 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0:
-                        return challengeListFragment;
+                        return userChallengesFragment;
                     case 1:
-                        return fragment;
+                        return availableChallengesFragment;
                 }
 
                 return fragment;

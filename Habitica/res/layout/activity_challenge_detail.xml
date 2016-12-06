@@ -65,6 +65,7 @@
                             android:id="@+id/challenge_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textStyle="bold"
                             android:textColor="@color/textColorDark"/>
 
                         <TextView
@@ -90,7 +91,6 @@
                                     android:id="@+id/leader_label"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
                                     android:ellipsize="middle"
                                     android:lines="1"
                                     android:textColor="@color/textColorDark" />
@@ -106,7 +106,7 @@
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_people_black_24dp" />
+                                    android:src="@drawable/ic_people_white_24dp" />
 
                                 <TextView
                                     android:id="@+id/memberCountTextView"

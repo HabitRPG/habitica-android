@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.ui.activities.IActivityWithFragment;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -62,11 +61,11 @@ public abstract class BaseMainFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
+        try {
             this.activity = (MainActivity) getActivity();
-        } catch(Exception ex){
+        } catch (ClassCastException ex) {
 
-            }
+        }
     }
 
 
@@ -94,7 +93,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
-        if(activity != null) {
+        if (activity != null) {
             activity.setActiveFragment(this);
         }
 

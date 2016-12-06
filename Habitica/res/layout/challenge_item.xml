@@ -17,6 +17,7 @@
         <TextView
             android:id="@+id/challenge_name"
             android:layout_width="match_parent"
+            android:textStyle="bold"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -41,7 +42,7 @@
                     android:id="@+id/leader_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+
                     android:ellipsize="middle"
                     android:lines="1" />
 
