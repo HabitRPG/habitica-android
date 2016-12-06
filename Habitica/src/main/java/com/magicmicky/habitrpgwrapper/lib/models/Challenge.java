@@ -28,6 +28,9 @@ public class Challenge extends BaseModel {
 
     public HabitRPGUser leader;
 
+    @Column
+    public String leaderName;
+
     public Group group;
 
     public int prize;

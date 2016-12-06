@@ -342,12 +342,18 @@ public class HabitRPGUser extends BaseModel {
         preferences.user_id = id;
         stats.id = id;
         profile.user_Id = id;
-        if (inbox != null) { inbox.user_Id = id; }
+        if (inbox != null) {
+            inbox.user_Id = id;
+        }
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-        if (contributor != null) { contributor.user_id = id; }
-        if (invitations != null) { invitations.user_id = id; }
+        if (contributor != null) {
+            contributor.user_id = id;
+        }
+        if (invitations != null) {
+            invitations.user_id = id;
+        }
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
@@ -374,14 +380,26 @@ public class HabitRPGUser extends BaseModel {
             }
         }
 
-        List<Challenge> challenges = new ArrayList<>();
+        List<Challenge> challenges = getChallengeList();
 
         for (String s : getChallenges()) {
-            Challenge challenge = new Challenge();
-            challenge.id = s;
-            challenge.user_id = id;
+            boolean challengeExistInDatabase = false;
 
-            challenges.add(challenge);
+            for (Challenge challenge : challenges) {
+                if (challenge.id.equals(s)) {
+                    challengeExistInDatabase = true;
+
+                    break;
+                }
+            }
+
+            if (!challengeExistInDatabase) {
+                Challenge challenge = new Challenge();
+                challenge.id = s;
+                challenge.user_id = id;
+
+                challenges.add(challenge);
+            }
         }
 
         setChallengeList(challenges);
@@ -483,31 +501,31 @@ public class HabitRPGUser extends BaseModel {
 
         boolean hasVisualBuffs = false;
 
-        if(stats != null && stats.getBuffs() != null){
+        if (stats != null && stats.getBuffs() != null) {
             Buffs buffs = stats.getBuffs();
 
-            if(buffs.getSnowball()){
+            if (buffs.getSnowball()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "snowman");
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getSeafoam()){
+            if (buffs.getSeafoam()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "seafoam_star");
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getShinySeed()){
-                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "avatar_floral_"+stats.get_class());
+            if (buffs.getShinySeed()) {
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "avatar_floral_" + stats.get_class());
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getSpookySparkles()){
+            if (buffs.getSpookySparkles()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "ghost");
                 hasVisualBuffs = true;
             }
         }
 
-        if(!hasVisualBuffs) {
+        if (!hasVisualBuffs) {
             if (!TextUtils.isEmpty(prefs.getChair())) {
                 layerMap.put(AvatarView.LayerType.CHAIR, prefs.getChair());
             }
@@ -563,7 +581,7 @@ public class HabitRPGUser extends BaseModel {
                     layerMap.put(AvatarView.LayerType.HAIR_FLOWER, "hair_flower_" + hair.getFlower());
                 }
             }
-        } else  {
+        } else {
             Hair hair = prefs.getHair();
 
             // Show flower all the time!

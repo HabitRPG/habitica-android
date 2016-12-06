@@ -86,7 +86,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeName.setText(challenge.name);
             challengeDescription.setText(challenge.description);
 
-            leaderName.setText(String.format(getContext().getString(R.string.byLeader), getLeaderName(challenge.leader)));
+            leaderName.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName));
 
             memberCountTextView.setText(challenge.memberCount + "");
 
@@ -95,14 +95,6 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             } else {
                 gem_prize_layout.setVisibility(View.VISIBLE);
                 gemPrizeTextView.setText(challenge.prize + "");
-            }
-        }
-
-        private String getLeaderName(HabitRPGUser user) {
-            try {
-                return user.getProfile().getName();
-            } catch (Exception e) {
-                return "";
             }
         }
 
