@@ -5,7 +5,7 @@
     style="@style/RowWrapper"
     android:id="@+id/gear_container">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"
         android:id="@+id/gear_image"

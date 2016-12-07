@@ -1,14 +1,29 @@
 package com.habitrpg.android.habitica;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.multidex.MultiDexApplication;
+import android.util.Log;
+
 import com.amplitude.api.Amplitude;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.components.DaggerAppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -22,33 +37,15 @@ import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.PurchaseVerifier;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.multidex.MultiDexApplication;
-import android.util.Log;
-
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import dagger.Lazy;
-import io.fabric.sdk.android.Fabric;
 
-public class HabiticaApplication extends MultiDexApplication {
+//contains all HabiticaApplicationLogic except dagger componentInitialisation
+public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
@@ -56,22 +53,24 @@ public class HabiticaApplication extends MultiDexApplication {
     Lazy<APIHelper> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
-    private AppComponent component;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
+    private static AppComponent component;
     /**
      * For better performance billing class should be used as singleton
      */
     @NonNull
     private Billing billing;
     /**
-     * Application wide {@link org.solovyev.android.checkout.Checkout} instance (can be used
+     * Application wide {@link Checkout} instance (can be used
      * anywhere in the app).
      * This instance contains all available products in the app.
      */
     @NonNull
     private Checkout checkout;
 
-    public static HabiticaApplication getInstance(Context context) {
-        return (HabiticaApplication) context.getApplicationContext();
+    public static HabiticaBaseApplication getInstance(Context context) {
+        return (HabiticaBaseApplication) context.getApplicationContext();
     }
 
     public static boolean exists(@NonNull Context context) {
@@ -125,15 +124,19 @@ public class HabiticaApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         setupDagger();
+        crashlyticsProxy.init(this);
         setupLeakCanary();
         setupFlowManager();
         setupFacebookSdk();
-        setupCrashlytics();
         createBillingAndCheckout();
         registerActivityLifecycleCallbacks();
 
         if (!BuildConfig.DEBUG) {
-            Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+            try {
+                Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+            } catch (Resources.NotFoundException e) {
+                //pass
+            }
         }
 
         Fresco.initialize(this);
@@ -167,11 +170,11 @@ public class HabiticaApplication extends MultiDexApplication {
     }
 
     private void setupDagger() {
-        component = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .build();
+        component = initDagger();
         component.inject(this);
     }
+
+    protected abstract AppComponent initDagger();
 
     private void setupLeakCanary() {
         // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
@@ -200,18 +203,12 @@ public class HabiticaApplication extends MultiDexApplication {
         }
     }
 
-    private void setupCrashlytics() {
-        Crashlytics crashlytics = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        Fabric.with(this, crashlytics);
-    }
 
     private void registerActivityLifecycleCallbacks() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                HabiticaApplication.currentActivity = activity;
+                HabiticaBaseApplication.currentActivity = activity;
             }
 
             @Override
@@ -221,7 +218,7 @@ public class HabiticaApplication extends MultiDexApplication {
 
             @Override
             public void onActivityResumed(Activity activity) {
-                HabiticaApplication.currentActivity = activity;
+                HabiticaBaseApplication.currentActivity = activity;
             }
 
             @Override
@@ -314,7 +311,7 @@ public class HabiticaApplication extends MultiDexApplication {
     @Override
     public File getDatabasePath(String name) {
         File dbFile = new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
-        Crashlytics.setString("Database File", dbFile.getAbsolutePath());
+        //Crashlytics.setString("Database File", dbFile.getAbsolutePath());
         return dbFile;
     }
 
@@ -334,7 +331,7 @@ public class HabiticaApplication extends MultiDexApplication {
 
             @Override
             public PurchaseVerifier getPurchaseVerifier() {
-                return new HabiticaPurchaseVerifier(HabiticaApplication.this, lazyApiHelper.get());
+                return new HabiticaPurchaseVerifier(HabiticaBaseApplication.this, lazyApiHelper.get());
             }
         });
 
@@ -349,7 +346,7 @@ public class HabiticaApplication extends MultiDexApplication {
 
     // endregion
 
-    public AppComponent getComponent() {
+    public static AppComponent getComponent() {
         return component;
     }
 }

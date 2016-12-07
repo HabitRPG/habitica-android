@@ -1,15 +1,13 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.Spannable;
-import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +16,7 @@ import android.widget.TextView;
 
 public class ItemDetailDialog extends AlertDialog {
 
-    private final ImageView itemImageView;
+    private final SimpleDraweeView itemImageView;
     private final TextView contentTextView;
     private final TextView priceTextView;
     private final ImageView currencyImageView;
@@ -31,7 +29,7 @@ public class ItemDetailDialog extends AlertDialog {
         contentViewLayout.setOrientation(LinearLayout.VERTICAL);
 
         // Gear Image
-        itemImageView = new ImageView(context);
+        itemImageView = new SimpleDraweeView(context);
         LinearLayout.LayoutParams gearImageLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 

@@ -258,7 +258,7 @@
                         style="@style/CardTitle"
                         />
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"

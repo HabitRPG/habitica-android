@@ -1,43 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDoneException;
-import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -81,6 +44,7 @@ import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
@@ -139,6 +103,41 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDoneException;
+import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -179,6 +178,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     protected HostConfig hostConfig;
     @Inject
     protected SharedPreferences sharedPreferences;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
+
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
@@ -303,7 +305,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             try {
                 taskAlarmManager.scheduleAllSavedAlarms();
             } catch (Exception e) {
-                Crashlytics.logException(e);
+                crashlyticsProxy.logException(e);
             }
         }
 
@@ -1097,7 +1099,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                    ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
+                    SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
                     String potionName = event.usingHatchingPotion.getText();
@@ -1142,7 +1144,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                        ImageView mountImageView = (ImageView) mountWrapper.findViewById(R.id.pet_imageview);
+                        SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
                         String colorName = event.usingPet.getColorText();

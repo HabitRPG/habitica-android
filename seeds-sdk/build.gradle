@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        minSdkVersion 12
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner 'com.playseeds.android.sdk.test.InstrumentationTestRunner'
+        testHandleProfiling true
+        testFunctionalTest true
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.glassfish:javax.json:1.0.4'
+    compile 'com.google.android.gms:play-services:9.2.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
+    compile 'org.solovyev.android:checkout:0.7.5@aar'
+
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.0"
+    testCompile "org.robolectric:shadows-multidex:3.0"
+}
+
+publish {
+    userOrg = 'seedsinc'
+    groupId = 'com.playseeds'
+    artifactId = 'android-sdk'
+    version = '0.4.1'
+    description = 'Android SDK for Seeds mobile analytics'
+    website = 'https://github.com/therealseeds/seeds-sdk-android'
+}
+

@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:background="@drawable/selection_highlight"
         style="@style/CardContent">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
             android:layout_width="@dimen/pet_image_width"
             android:layout_height="@dimen/pet_image_height"
