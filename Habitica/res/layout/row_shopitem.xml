@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:bind="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               style="@style/RowWrapper"
               android:clickable="true"
-            android:background="@android:color/white">
-    <ImageView
+              android:background="@android:color/white">
+    <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
             android:layout_width="@dimen/gear_image_size"
             android:layout_height="@dimen/gear_image_size"

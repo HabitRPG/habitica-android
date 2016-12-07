@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
         TextView gearNotesTextView;
 
         @BindView(R.id.gear_image)
-        ImageView imageView;
+        SimpleDraweeView imageView;
 
         @BindView(R.id.equippedIndicator)
         View equippedIndicator;
@@ -96,10 +96,7 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
             }
 
             String imageUrl = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/shop_" + gear.key + ".png";
-
-            Picasso.with(imageView.getContext())
-                    .load(imageUrl)
-                    .into(imageView);
+            imageView.setImageURI(Uri.parse(imageUrl));
         }
 
         @Override

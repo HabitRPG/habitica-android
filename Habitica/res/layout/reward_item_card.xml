@@ -5,7 +5,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:clickable="false">
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/rewardImageView"
                         android:layout_width="60dp"
                         android:padding="5dp"

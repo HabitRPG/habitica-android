@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
-import com.squareup.picasso.Picasso;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ public class MaintenanceActivity extends BaseActivity {
     @BindView(R.id.titleTextView)
     TextView titleTextView;
     @BindView(R.id.imageView)
-    ImageView imageView;
+    SimpleDraweeView imageView;
     @BindView(R.id.descriptionTextView)
     EmojiTextView descriptionTextView;
     @BindView(R.id.playStoreButton)
@@ -50,7 +49,8 @@ public class MaintenanceActivity extends BaseActivity {
         Bundle data = getIntent().getExtras();
 
         this.titleTextView.setText(data.getString("title"));
-        Picasso.with(this).load(data.getString("imageUrl")).into(this.imageView);
+
+        imageView.setImageURI(Uri.parse(data.getString("imageUrl")));
         this.descriptionTextView.setText(MarkdownParser.parseMarkdown(data.getString("description")));
         this.descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
 

@@ -1,5 +1,10 @@
 package com.habitrpg.android.habitica.helpers;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -11,21 +16,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import com.crashlytics.android.Crashlytics;
-import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.inject.Inject;
+
 public class RemindersManager {
 
     private DateFormat dateFormater;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
 
     public RemindersManager(String taskType) {
+        HabiticaBaseApplication.getComponent().inject(this);
         if (taskType.equals("todo")) {
             dateFormater = DateFormat.getDateTimeInstance();
         } else {
@@ -45,7 +51,7 @@ public class RemindersManager {
             return item;
         } catch (ParseException e) {
             e.printStackTrace();
-            Crashlytics.logException(e);
+            crashlyticsProxy.logException(e);
             return null;
         }
     }
