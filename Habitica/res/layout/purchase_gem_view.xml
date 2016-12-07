@@ -4,7 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gem_view_background"
-    android:gravity="center">
+    android:gravity="center"
+              android:padding="14dp">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="65dp"
@@ -31,27 +32,21 @@
         android:gravity="center"
         android:layout_marginBottom="14dp" />
 
-    <ImageButton
-            android:id="@+id/seedsImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:src="@drawable/seeds_badge_store"
-            android:paddingTop="14dp"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:scaleType="fitCenter"
-            android:visibility="gone"
-            />
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/purchase_button"
         android:background="@drawable/purchase_button_background"
         android:textColor="@color/white"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginBottom="14dp"
         tools:text="$ 4.99"/>
+
+    <ImageButton
+            android:id="@+id/seedsImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:src="@drawable/seeds_badge_store"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            />
 </LinearLayout>
