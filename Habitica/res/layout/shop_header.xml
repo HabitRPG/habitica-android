@@ -5,7 +5,7 @@
               android:layout_height="wrap_content"
         android:layout_margin="@dimen/section_leftright_padding">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
             android:layout_width="@dimen/shop_width"
             android:layout_height="@dimen/shop_height"

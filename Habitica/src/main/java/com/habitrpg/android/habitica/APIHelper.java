@@ -1,16 +1,14 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
-
-import com.amplitude.api.Amplitude;
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -67,6 +65,9 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.support.v7.app.AlertDialog;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -79,6 +80,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.net.ssl.SSLException;
 
 import okhttp3.Interceptor;
@@ -100,6 +102,8 @@ import rx.schedulers.Schedulers;
 
 
 public class APIHelper implements Action1<Throwable> {
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
 
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
@@ -119,8 +123,9 @@ public class APIHelper implements Action1<Throwable> {
     public APIHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
         this.gsonConverter = gsonConverter;
         this.hostConfig = hostConfig;
-        Crashlytics.getInstance().core.setUserIdentifier(this.hostConfig.getUser());
-        Crashlytics.getInstance().core.setUserName(this.hostConfig.getUser());
+        HabiticaBaseApplication.getComponent().inject(this);
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
+        crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
 
         Interceptor remove_data_interceptor = chain -> {
@@ -144,7 +149,7 @@ public class APIHelper implements Action1<Throwable> {
             } else {
                 body = ResponseBody.create(contentType, stringJson);
             }
-            Crashlytics.setString("last_api_call", response.request().url().toString());
+            crashlyticsProxy.setString("last_api_call",response.request().url().toString());
             return response.newBuilder().body(body).build();
         };
 
@@ -312,7 +317,7 @@ public class APIHelper implements Action1<Throwable> {
                 showConnectionProblemDialog(R.string.internal_error_api);
             }
         } else {
-            Crashlytics.logException(throwable);
+            crashlyticsProxy.logException(throwable);
         }
     }
 
@@ -417,8 +422,8 @@ public class APIHelper implements Action1<Throwable> {
     public void updateAuthenticationCredentials(String userID, String apiToken) {
         this.hostConfig.setUser(userID);
         this.hostConfig.setApi(apiToken);
-        Crashlytics.getInstance().core.setUserIdentifier(this.hostConfig.getUser());
-        Crashlytics.getInstance().core.setUserName(this.hostConfig.getUser());
+        crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
+        crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
     }
 
@@ -426,7 +431,7 @@ public class APIHelper implements Action1<Throwable> {
         public String message;
     }
 
-    public Observable<ContentResult>getContent() {
+    public Observable<ContentResult> getContent() {
         return apiService.getContent(languageCode);
     }
 }

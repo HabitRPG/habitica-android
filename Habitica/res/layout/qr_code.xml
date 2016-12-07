@@ -20,7 +20,7 @@
         android:layout_height="300dp"
         android:id="@+id/qrCodeWrapper">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/QRImageView"

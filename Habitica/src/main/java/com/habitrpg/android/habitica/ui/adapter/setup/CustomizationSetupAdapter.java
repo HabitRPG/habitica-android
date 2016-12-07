@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.setup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -15,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -142,7 +142,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
         RelativeLayout linearLayout;
 
         @BindView(R.id.imageView)
-        ImageView imageView;
+        SimpleDraweeView imageView;
 
         @BindView(R.id.purchaseOverlay)
         View purchaseOverlay;

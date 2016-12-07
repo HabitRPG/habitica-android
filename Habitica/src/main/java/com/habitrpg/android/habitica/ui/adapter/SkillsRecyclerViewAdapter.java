@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
     class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.skill_image)
-        ImageView skillImageView;
+        SimpleDraweeView skillImageView;
 
         @BindView(R.id.skill_text)
         TextView skillNameTextView;

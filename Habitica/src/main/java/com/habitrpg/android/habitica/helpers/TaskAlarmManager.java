@@ -1,10 +1,11 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.crashlytics.android.Crashlytics;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -18,15 +19,15 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -42,8 +43,11 @@ public class TaskAlarmManager {
     private static TaskAlarmManager instance = null;
     private Context context;
     private AlarmManager am;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
 
     private TaskAlarmManager(Context context) {
+        HabiticaBaseApplication.getComponent().inject(this);
         this.context = context;
         EventBus.getDefault().register(this);
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -118,7 +122,7 @@ public class TaskAlarmManager {
                 .queryList()))
                 .doOnNext(this::setAlarmsForTask)
                 .subscribeOn(Schedulers.io())
-                .subscribe(task -> {}, Crashlytics::logException);
+                .subscribe(task -> {},crashlyticsProxy::logException);
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -221,6 +225,10 @@ public class TaskAlarmManager {
 
     private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (pendingIntent == null) {
+            return;
+        }
 
         if (SDK_INT < Build.VERSION_CODES.KITKAT)
             alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);

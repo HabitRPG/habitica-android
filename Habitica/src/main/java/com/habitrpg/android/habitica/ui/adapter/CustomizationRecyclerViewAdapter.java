@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
@@ -19,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -147,7 +147,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         RelativeLayout linearLayout;
 
         @BindView(R.id.imageView)
-        ImageView imageView;
+        SimpleDraweeView imageView;
 
         @BindView(R.id.purchaseOverlay)
         View purchaseOverlay;
@@ -189,7 +189,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
                 LinearLayout dialogContent = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null);
 
-                ImageView imageView = (ImageView) dialogContent.findViewById(R.id.imageView);
+                SimpleDraweeView imageView = (SimpleDraweeView) dialogContent.findViewById(R.id.imageView);
                 DataBindingUtils.loadImage(imageView, customization.getImageName(userSize, hairColor));
 
                 TextView priceLabel = (TextView) dialogContent.findViewById(R.id.priceLabel);

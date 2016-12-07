@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             style="@style/RowWrapper"
             android:clickable="true">
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"
                 bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'
