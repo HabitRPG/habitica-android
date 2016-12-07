@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -133,7 +134,11 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         registerActivityLifecycleCallbacks();
 
         if (!BuildConfig.DEBUG) {
-            Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+            try {
+                Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+            } catch (Resources.NotFoundException e) {
+                //pass
+            }
         }
 
         Fresco.initialize(this);
