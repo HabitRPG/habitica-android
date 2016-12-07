@@ -27,15 +27,17 @@ import rx.schedulers.Schedulers;
 public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
     private int listItemResId;
+    private int listItemTextResId;
     private String taskType;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
 
-    public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId) {
+    public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId, int listItemTextResId) {
         this.context = context;
         this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
         this.listItemResId = listItemResId;
+        this.listItemTextResId = listItemTextResId;
         this.reloadData = false;
         this.taskType = taskType;
 
@@ -96,7 +98,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
             SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
             EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);
 
-            remoteView.setTextViewText(R.id.dailies_text, builder);
+            remoteView.setTextViewText(listItemTextResId, builder);
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
             Intent fillInIntent = new Intent();
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.getId());

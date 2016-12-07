@@ -23,7 +23,7 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/dailies_text"
+            android:id="@+id/todo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/task_top_bottom_compact_padding"
