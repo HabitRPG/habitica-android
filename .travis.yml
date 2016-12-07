@@ -38,6 +38,10 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 script:
     - cp habitica.properties.travis habitica.properties
     - cp habitica.resources.example habitica.resources
