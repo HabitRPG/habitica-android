@@ -226,6 +226,10 @@ public class TaskAlarmManager {
     private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        if (pendingIntent == null) {
+            return;
+        }
+
         if (SDK_INT < Build.VERSION_CODES.KITKAT)
             alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
         else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M)
