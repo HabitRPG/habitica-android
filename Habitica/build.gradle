@@ -202,7 +202,6 @@ android {
     dexOptions {
         preDexLibraries false
         javaMaxHeapSize "4g" // Use gig increments depending on needs
-        incremental true
     }
 
     lintOptions {
