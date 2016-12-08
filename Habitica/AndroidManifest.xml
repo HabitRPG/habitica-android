@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="136"
-    android:versionName="0.0.34.5"
+    android:versionCode="137"
+    android:versionName="0.0.35"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -33,7 +33,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

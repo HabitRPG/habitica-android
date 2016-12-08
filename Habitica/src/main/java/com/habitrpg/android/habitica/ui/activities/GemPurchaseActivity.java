@@ -46,6 +46,7 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
         Seeds.sharedInstance()
                 .simpleInit(this, this, "https://dash.playseeds.com", getString(R.string.seeds_app_key))
                 .setLoggingEnabled(true);
+        Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_gems));
         Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_sharing));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

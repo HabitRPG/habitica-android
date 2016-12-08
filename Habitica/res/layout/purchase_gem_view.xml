@@ -47,6 +47,7 @@
             android:background="@color/transparent"
             android:src="@drawable/seeds_badge_store"
             android:scaleType="fitCenter"
+            android:layout_marginTop="4dp"
             android:visibility="gone"
             />
 </LinearLayout>
