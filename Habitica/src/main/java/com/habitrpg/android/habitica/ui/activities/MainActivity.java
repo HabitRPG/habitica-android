@@ -56,6 +56,7 @@ import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
@@ -321,6 +322,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     protected void onPause() {
         updateWidget(AvatarStatsWidgetProvider.class);
+        updateWidget(TodoListWidgetProvider.class);
         updateWidget(DailiesWidgetProvider.class);
         updateWidget(HabitButtonWidgetProvider.class);
         super.onPause();

@@ -12,7 +12,7 @@ public class RemindersManagerTest {
 
     @Test
     public void itCreatesRemindersItemFromDateString() {
-        RemindersManager remindersManager = new RemindersManager("habits");
+ //       RemindersManager remindersManager = new RemindersManager("habits");
 
 //        RemindersItem remindersItem = remindersManager.createReminderFromDateString("dd MMMM yyyy HH:mm:ss")
 

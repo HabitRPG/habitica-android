@@ -3,13 +3,19 @@ package com.habitrpg.android.habitica.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import net.pherth.android.emoji_library.EmojiHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,26 +24,34 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactory {
+public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
+    private int listItemResId;
+    private int listItemTextResId;
+    private String taskType;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
 
-    public DailiesListProvider(Context context, Intent intent) {
+    public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId, int listItemTextResId) {
         this.context = context;
         this.widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
+        this.listItemResId = listItemResId;
+        this.listItemTextResId = listItemTextResId;
         this.reloadData = false;
+        this.taskType = taskType;
+
         this.loadData();
     }
 
     private void loadData() {
         Observable.defer(() -> Observable.from(new Select()
                 .from(Task.class)
-                .where(Condition.column("type").eq(Task.TYPE_DAILY))
+                .where(Condition.column("type").eq(taskType))
                 .and(Condition.column("completed").eq(false))
+                .orderBy(OrderBy.columns("position", "dateCreated").descending())
                 .queryList()))
-                .filter(task -> task.isDisplayedActive(0))
+                .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(0))
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -75,22 +89,27 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
     @Override
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
-                context.getPackageName(), R.layout.widget_dailies_list_row);
+                context.getPackageName(), listItemResId);
         if (taskList.size() > position) {
             Task task = taskList.get(position);
-            remoteView.setTextViewText(R.id.dailies_text, task.text);
+
+            CharSequence parsedText = MarkdownParser.parseMarkdown(task.text);
+
+            SpannableStringBuilder builder = new SpannableStringBuilder(parsedText);
+            EmojiHandler.addEmojis(this.context, builder, 16, DynamicDrawableSpan.ALIGN_BASELINE, 16, 0, -1, false);
+
+            remoteView.setTextViewText(listItemTextResId, builder);
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.getLightTaskColor());
             Intent fillInIntent = new Intent();
-            fillInIntent.putExtra(DailiesWidgetProvider.TASK_ID_ITEM, task.getId());
-            remoteView.setOnClickFillInIntent(R.id.dailies_list_row, fillInIntent);
+            fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.getId());
+            remoteView.setOnClickFillInIntent(R.id.widget_list_row, fillInIntent);
         }
         return remoteView;
     }
 
     @Override
     public RemoteViews getLoadingView() {
-        return new RemoteViews(
-                context.getPackageName(), R.layout.widget_dailies_list_row);
+        return new RemoteViews(context.getPackageName(), listItemResId);
     }
 
     @Override
@@ -111,5 +130,4 @@ public class DailiesListProvider implements RemoteViewsService.RemoteViewsFactor
     public boolean hasStableIds() {
         return true;
     }
-
 }

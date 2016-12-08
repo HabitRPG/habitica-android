@@ -31,12 +31,16 @@ public class CrashlyticsProxyImpl implements CrashlyticsProxy {
 
     @Override
     public void setUserIdentifier(String identifier) {
-        Crashlytics.getInstance().core.setUserIdentifier(identifier);
+        if (Crashlytics.getInstance().core != null && identifier != null) {
+            Crashlytics.getInstance().core.setUserIdentifier(identifier);
+        }
     }
 
     @Override
     public void setUserName(String name) {
-        Crashlytics.getInstance().core.setUserName(name);
+        if (Crashlytics.getInstance().core != null && name != null) {
+            Crashlytics.getInstance().core.setUserName(name);
+        }
     }
 
     @Override
