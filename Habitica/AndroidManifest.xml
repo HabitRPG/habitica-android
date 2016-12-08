@@ -166,7 +166,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
             <intent-filter>
@@ -204,7 +203,15 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/dailies_task_widget_info" />
+                android:resource="@xml/task_list_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.TodoListWidgetProvider"
+            android:label="@string/widget_todo_list">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/task_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.HabitButtonWidgetProvider"
             android:label="@string/widget_habit_button">
@@ -217,6 +224,9 @@
 
         <service
             android:name=".widget.DailiesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".widget.HabitButtonWidgetService"/>
     </application>

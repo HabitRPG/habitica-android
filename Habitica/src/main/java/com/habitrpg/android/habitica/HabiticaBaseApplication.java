@@ -1,26 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import com.amplitude.api.Amplitude;
-import com.facebook.FacebookSdk;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.components.DaggerAppComponent;
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.activities.IntroActivity;
-import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.squareup.leakcanary.LeakCanary;
-
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Products;
-import org.solovyev.android.checkout.PurchaseVerifier;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +17,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+
+import com.amplitude.api.Amplitude;
+import com.facebook.FacebookSdk;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.activities.IntroActivity;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.squareup.leakcanary.LeakCanary;
+
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Products;
+import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
 import java.lang.reflect.Field;
