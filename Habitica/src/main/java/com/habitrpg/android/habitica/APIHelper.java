@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
@@ -130,7 +131,8 @@ public class APIHelper implements Action1<Throwable> {
                     .map(new Func1<HabitResponse, Object>() {
                         @Override public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
-                                showNotificationDialog(habitResponse.notifications);
+                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(APIHelper.this);
+                                popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
                             }
                             return habitResponse.getData();
                         }
@@ -422,79 +424,6 @@ public class APIHelper implements Action1<Throwable> {
                 }
 
                 displayedAlert = builder.show();
-            }
-        });
-    }
-
-    private void showNotificationDialog(final List<Notification> notifications) {
-        if (notifications.size() == 0) {
-            return;
-        }
-
-        HabiticaApplication.currentActivity.runOnUiThread(() -> {
-            if (!(HabiticaApplication.currentActivity).isFinishing() && displayedAlert == null) {
-                for (Notification notification: notifications) {
-
-                    if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-                        continue;
-                    }
-
-                    String title = notification.data.message;
-                    String youEarnedMessage = "";
-
-                    LayoutInflater factory = LayoutInflater.from(HabiticaApplication.currentActivity);
-                    final View view = factory.inflate(R.layout.dialog_login_incentive, null);
-
-                    ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-                    String imageKey = "inventory_present_11";
-                    if (notification.data.rewardKey != null) {
-                        imageKey = notification.data.rewardKey.get(0);
-
-                        if (notification.data.reward != null && notification.data.reward.size() > 0) {
-                            String earnedString = "";
-                            int count = 0;
-                            for (Reward reward : notification.data.reward) {
-                                earnedString += reward.key;
-                                count += 1;
-                                if (notification.data.reward.size() > 1 && count != notification.data.reward.size()) {
-                                    earnedString += ", ";
-                                }
-                            }
-                            youEarnedMessage = "You earned a " + earnedString + " as a reward for your devotion to improving your life.";
-                        }
-                    }
-                    DataBindingUtils.loadImage(imageView, imageKey);
-
-                    String message = "Your next prize unlocks at " + notification.data.nextRewardAt + " Check-Ins";
-                    TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
-                    nextUnlockTextView.setText(message);
-
-                    TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
-                    youEarnedTexView.setText(youEarnedMessage);
-
-                    Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
-                            .setTitle(title)
-                            .setView(view)
-                            .setMessage("");
-
-                    final AlertDialog dialog = builder.create();
-                    dialog.show();
-
-                    confirmButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            apiService.readNotificaiton(notification.getId())
-                                    .compose(configureApiCallObserver())
-                                    .subscribe(next -> {
-                                    }, throwable -> {
-                                    });
-
-                            dialog.hide();
-                        }
-                    });
-                }
             }
         });
     }
