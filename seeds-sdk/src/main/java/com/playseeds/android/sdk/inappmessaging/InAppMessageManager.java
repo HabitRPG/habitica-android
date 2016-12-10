@@ -49,7 +49,6 @@ import com.playseeds.android.sdk.Seeds;
 public class InAppMessageManager {
 	private String mAppKey;
 	private boolean adDoNotTrack;
-	private boolean mIncludeLocation;
 	private static Context mContext;
 	private static IInAppBillingService mBillingService;
 	private HashMap<String, Thread> mRequestThreads;
@@ -434,18 +433,10 @@ public class InAppMessageManager {
 
 		Location location = null;
 
-		if (this.mIncludeLocation) {
-			location = Util.getLocation(mContext);
-		}
-
-		if (location != null) {
-			Log.d("location is longitude: " + location.getLongitude() + ", latitude: " + location.getLatitude());
-			request.setLatitude(location.getLatitude());
-			request.setLongitude(location.getLongitude());
-		} else {
-			request.setLatitude(0.0);
-			request.setLongitude(0.0);
-		}
+		// TODO Atte Keinänen 12/8/16
+		// Reduce the count of needed permissions by removing location tracking
+		request.setLatitude(0.0);
+		request.setLongitude(0.0);
 
 		if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			requestedHorizontalAd = true;

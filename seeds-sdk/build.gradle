@@ -50,9 +50,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
-
-    compile 'org.solovyev.android:checkout:0.7.5@aar'
-
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
@@ -65,7 +62,7 @@ publish {
     userOrg = 'seedsinc'
     groupId = 'com.playseeds'
     artifactId = 'android-sdk'
-    version = '0.4.1'
+    version = '0.4.2'
     description = 'Android SDK for Seeds mobile analytics'
     website = 'https://github.com/therealseeds/seeds-sdk-android'
 }
