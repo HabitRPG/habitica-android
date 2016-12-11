@@ -23,7 +23,7 @@ import java.util.Map;
  */
 
 public class PopupNotificationsManager {
-    private Map<String, String> seenNotifications;
+    private Map<String, Boolean> seenNotifications;
     private APIHelper apiHelper;
     private static PopupNotificationsManager instance;
 
@@ -39,9 +39,9 @@ public class PopupNotificationsManager {
         return instance;
     }
 
-    private void displayNotification(Notification notification) {
+    public Boolean displayNotification(Notification notification) {
         if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-            return;
+            return false;
         }
 
         String title = notification.data.message;
@@ -102,18 +102,31 @@ public class PopupNotificationsManager {
                 dialog.hide();
             }
         });
+
+        return true;
     }
 
-    public void showNotificationDialog(final List<Notification> notifications) {
+    public Boolean showNotificationDialog(final List<Notification> notifications) {
         if (notifications.size() == 0) {
-            return;
+            return false;
         }
 
         HabiticaApplication.currentActivity.runOnUiThread(() -> {
             if ((HabiticaApplication.currentActivity).isFinishing()) return;
+
+            if (this.seenNotifications == null) {
+                this.seenNotifications = new HashMap<>();
+            }
+
             for (Notification notification: notifications) {
+                if (this.seenNotifications.get(notification.getId()) != null) {
+                    continue;
+                }
                 this.displayNotification(notification);
+                this.seenNotifications.put(notification.getId(), true);
             }
         });
+
+        return true;
     }
 }
