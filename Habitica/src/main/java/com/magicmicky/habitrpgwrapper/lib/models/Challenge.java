@@ -31,8 +31,12 @@ public class Challenge extends BaseModel {
     @Column
     public String leaderName;
 
+    @Column
+    public String leaderId;
+
     public Group group;
 
+    @Column
     public int prize;
 
     @Column
