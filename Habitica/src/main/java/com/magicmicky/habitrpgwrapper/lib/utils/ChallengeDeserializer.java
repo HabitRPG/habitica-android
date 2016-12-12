@@ -12,27 +12,38 @@ import java.lang.reflect.Type;
 public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
     @Override
     public Challenge deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+
         JsonObject jsonObject = json.getAsJsonObject();
 
         Challenge challenge = new Challenge();
+
         challenge.id = jsonObject.get("id").getAsString();
         challenge.name = jsonObject.get("name").getAsString();
         challenge.shortName = jsonObject.get("shortName").getAsString();
         challenge.description = jsonObject.get("description").getAsString();
-        challenge.official = jsonObject.get("official").getAsBoolean();
         challenge.memberCount = jsonObject.get("memberCount").getAsInt();
 
-        JsonObject leaderObj = jsonObject.get("leader").getAsJsonObject();
+        JsonElement prizeElement = jsonObject.get("prize");
+        if (!prizeElement.isJsonNull()) {
+            challenge.prize = prizeElement.getAsInt();
+        }
 
-        if (leaderObj != null) {
-            JsonObject profile = leaderObj.get("profile").getAsJsonObject();
+        challenge.official = jsonObject.get("official").getAsBoolean();
 
-            if(profile != null){
-                challenge.leaderName = profile.get("name").getAsString();
+        JsonElement leaderElement = jsonObject.get("leader");
+
+        if (leaderElement != null && !leaderElement.isJsonNull()) {
+            JsonObject leaderObj = leaderElement.getAsJsonObject();
+
+            if (leaderObj != null) {
+                JsonObject profile = leaderObj.get("profile").getAsJsonObject();
+
+                if (profile != null) {
+                    challenge.leaderName = profile.get("name").getAsString();
+                }
             }
         }
 
-        return challenge
-                ;
+        return challenge;
     }
 }
