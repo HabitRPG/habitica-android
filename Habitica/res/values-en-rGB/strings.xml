@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Set Custom Day Start Time</string>
   <string name="pref_push_notifications_checkbox">User Push Notifications</string>
   <string name="push_notifications">Push Notifications</string>
+  <string name="push_notifications_sum">Set your push notifications settings</string>
   <string name="preference_push_you_won_challenge">You won a Challenge!</string>
   <string name="preference_push_received_a_private_message">Received a Private Message</string>
   <string name="preference_push_gifted_gems">Gifted Gems</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Confirm password</string>
   <string name="logout">Log out</string>
   <string name="logout_description">Log out of your account</string>
+  <string name="account_details_sum">Check your account details</string>
   <string name="account_details">Account Details</string>
   <string name="LoginActivityName">Welcome</string>
   <string name="string_revive">Revive</string>
@@ -390,6 +392,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
   <string name="widget_habit_button">Habitica Do Habit</string>
   <string name="widget_dailies">Habitica Dailies</string>
+  <string name="widget_todo_list">Habitica Todo List</string>
   <string name="widget_add_task">Habitica Add Task</string>
   <string name="google_services_missing">Google Play services could not be found.</string>
   <string name="gem.purchase.toolbartitle">Purchase</string>
@@ -405,4 +408,6 @@ To start, which parts of your life do you want to improve?</string>
   <string name="feeding_market_info">Need different food? Buy more from the market!</string>
   <string name="open_market">Open Market</string>
   <string name="cds_description" formatted="false">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
+  <string name="AudioTheme_title">Audio Theme</string>
+  <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
 </resources>

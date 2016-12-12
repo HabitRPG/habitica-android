@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Ustaw czas własnego początku dnia</string>
   <string name="pref_push_notifications_checkbox">Powiadomienia użytkownika</string>
   <string name="push_notifications">Powiadomienia</string>
+  <string name="push_notifications_sum">Ustaw swoje ustawienia powiadomień push</string>
   <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
   <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
   <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Potwierdź hasło</string>
   <string name="logout">Wyloguj</string>
   <string name="logout_description">Wyloguj się</string>
+  <string name="account_details_sum">Sprawdź szczegóły swojego konta</string>
   <string name="account_details">Szczegóły konta</string>
   <string name="LoginActivityName">Witaj</string>
   <string name="string_revive">Odrodzenie</string>
@@ -405,4 +407,6 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
   <string name="open_market">Otwórz Targ</string>
   <string name="cds_description" formatted="false">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
+  <string name="AudioTheme_title">Temat dźwiękowy</string>
+  <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
 </resources>

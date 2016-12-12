@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="tutorial_habits">Voltooi positieve gewoontes om goud en ervaringspunten te verdienen! Negatieve gewoontes schaden je avatar als je ze aan klikt, dus vermijd ze in het echte leven!</string>
-  <string name="tutorial_dailies">Versla je herhalende dagelijkse taken om goud en ervaringspunten te verdienen. Pas op! Dagelijkse taken zullen je avatar bezeren als je ze niet op tijd af hebt.</string>
-  <string name="tutorial_todos">Maak je to-do\'s af in het echte leven en streep ze dan hier af voor GOUD en ERVARINGSPUNTEN zodat je beloningen kunt verdienen en nieuwe mogelijkheden kunt ontgrendelen!</string>
-  <string name="tutorial_rewards">Dit zijn je beloningen! Verdien goud door gewoontes, dagelijkse taken en to-do\'s af te maken in de echte wereld. Gebruik het daarna voor in-game beloningen of zelf gekozen beloningen in de echte wereld!</string>
-  <string name="tutorial_equipment">Als je uitrusting koopt verschijnt het hier. Jouw strijduitrusting beïnvloed je statistieken en je kostuum (als het aan staat) beïnvloed wat je avatar aan heeft.</string>
-  <string name="tutorial_items">Verdien voorwerpen door taken af te maken en niveaus omhoog te gaan. Tik op een voorwerp om het te gebruiken!</string>
-  <string name="tutorial_pets">Terwijl je taken uit de echte wereld af streept, heb je een  kans om eieren en drankjes te vinden. Combineer ze om je huisdier te laten uitkomen.</string>
-  <string name="tutorial_skills">Vaardigheiden zijn speciale talenten die krachtige effecten hebben! Tik op een vaardigheid om ze te gebruiken. Het kost je Mana (de blauwe balk), dat je kan verdienen door elke dag in te checken en je taken in de echte wereld af te maken. Kijk in de FAQ in het menu voor meer informatie!</string>
-  <string name="tutorial_party">Dit is waar jij en je vrienden elkaar aansprakelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
+  <string name="tutorial_dailies">Versla je herhalende dagelijkse taken om goud en ervaringspunten te verdienen. Pas op! Dagelijkse taken zullen je avatar bezeren als je ze niet op tijd voltooit.</string>
+  <string name="tutorial_todos">Voltooi je to-do\'s in het echte leven en streep ze dan hier af voor GOUD en ERVARINGSPUNTEN zodat je beloningen kunt verdienen en nieuwe mogelijkheden kunt ontgrendelen!</string>
+  <string name="tutorial_rewards">Dit zijn je beloningen! Verdien goud door gewoontes, dagelijkse taken en to-do\'s te voltooien in de echte wereld. Gebruik het daarna voor in-game beloningen of zelf gekozen beloningen in de echte wereld!</string>
+  <string name="tutorial_equipment">Als je uitrustingsstukken koopt verschijnen die hier. Jouw gevechtsuitrusting beïnvloedt je statistieken en je kostuum (als het aan staat) beïnvloedt wat je avatar aan heeft.</string>
+  <string name="tutorial_items">Verdien voorwerpen door taken te voltooien en niveaus omhoog te gaan. Tik op een voorwerp om het te gebruiken!</string>
+  <string name="tutorial_pets">Terwijl je taken uit de echte wereld voltooit, heb je een kans om eieren en drankjes te vinden. Combineer ze om je huisdier te laten uitkomen.</string>
+  <string name="tutorial_skills">Vaardigheiden zijn speciale talenten die krachtige effecten hebben! Tik op een vaardigheid om ze te gebruiken. Het kost je Mana (de blauwe balk), dat je kan verdienen door elke dag in te checken en je taken in de echte wereld te voltooien. Kijk in de FAQ in het menu voor meer informatie!</string>
+  <string name="tutorial_party">Dit is waar jij en je vrienden elkaar verantwoordelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
   <string name="tutorial_tavern">Welkom in de Herberg, een openbare chatroom voor alle leeftijden! Hier kan je praten over productiviteit en vragen stellen. Veel plezier!</string>
-  <string name="tutorial_classes">Kies hier of je Krijger, Magiër, Heler of Dief wilt worden! Elke klasse heeft unieke uitrusting en vaardigheden. Klik op de (?) om meer te weten te komen!</string>
+  <string name="tutorial_classes">Kies hier of je Krijger, Magiër, Heler of Dief wilt worden! Elke klasse heeft unieke uitrustingen en vaardigheden. Tik op de (?) om meer te weten te komen!</string>
 </resources>

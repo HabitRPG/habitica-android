@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="tutorial_habits">Complete Hábitos Positivos para ganhar ouro e experiência! Hábitos Negativos vão machucar seu avatar se você marcá-los, então evite-os na vida real!</string>
-  <string name="tutorial_dailies">Derrote suas tarefas diárias recorrentes para ganhar ouro e experiência. Perigo! Tarefas diárias vão machucar seu avatar se você não completá-las a tempo.</string>
+  <string name="tutorial_dailies">Derrote suas Ações Diárias recorrentes para ganhar ouro e experiência. Perigo! Ações diárias vão machucar seu avatar se você não completá-las a tempo.</string>
   <string name="tutorial_todos">Complete suas tarefas na vida real, então marque-as como feitas por OURO e EXPERIÊNCIA. Assim você pode obter recompensas e desbloquear novos recursos.</string>
   <string name="tutorial_rewards">Estas são suas recompensas! Obtenha ouro ao completar Hábitos, Tarefas Diárias e Tarefas. Então gaste nas Recompensas do jogo, ou cria recompensas reais!</string>
-  <string name="tutorial_equipment">Quando você compra equipamentos, eles aparecem aqui. Seu Equipamento de Batalha afeta seus status e suas Vestimentas (se habilitadas) afetam o que o seu avatar veste.</string>
+  <string name="tutorial_equipment">Quando você compra equipamentos, eles aparecem aqui. Seu Equipamento de Batalha afeta seus status e suas Fantasias (se habilitadas) afetam o que o seu avatar veste.</string>
   <string name="tutorial_items">Obtenha itens ao completar tarefas e subir de nível. Selecione um item para usá-lo!</string>
-  <string name="tutorial_pets">Ao completar tarefas do mundo real, você tem uma chance aleatória de encontrar ovos e poções. Combine-os para obter animais de estimação.</string>
+  <string name="tutorial_pets">Ao completar tarefas do mundo real, você tem uma chance aleatória de encontrar ovos e poções. Combine-os para obter mascotes.</string>
   <string name="tutorial_skills">Habilidades são especiais e têm efeitos poderosos! Selecione uma Habilidade para usá-la. Isso vai consumir Mana (a barra azul), que você consegue usando o Habitica todos os dias e completando suas tarefas da vida real. Confira as Perguntas Frequentes no menu para mais informações.</string>
-  <string name="tutorial_party">É aqui que você e seus amigos podem ficar responsáveis por seus objetivos e lutar contra monstros usando suas tarefas!</string>
+  <string name="tutorial_party">É aqui que você e seus amigos podem se ajudar em seus objetivos e lutar contra monstros usando suas tarefas!</string>
   <string name="tutorial_tavern">Seja bem vindo à Taberna, uma sala de bate-papo pública e para todas as idades! Aqui você pode conversar sobre produtividade e fazer perguntas. Divirta-se.</string>
-  <string name="tutorial_classes">Escolha se será um Guerreiro, Mago, Curandeiro ou Ladino. Cada classe tem Equipamentos e Habilidades únicos. Selecione (?) para saber mais! </string>
+  <string name="tutorial_classes">Escolha se será um Guerreiro, Mago, Curandeiro ou Andarilho. Cada classe tem Equipamentos e Habilidades únicos. Selecione (?) para saber mais! </string>
 </resources>
