@@ -11,75 +11,61 @@ buildscript {
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.5'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url 'https://maven.fabric.io/public' }
 
     // Material View Pager
-    maven {
-        url "http://dl.bintray.com/florent37/maven"
-    }
+    maven { url "http://dl.bintray.com/florent37/maven" }
 
     // Markdown
-    maven {
-        url "https://s3.amazonaws.com/repo.commonsware.com"
-    }
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
 
-    maven {
-        url "https://jitpack.io"
-    }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //Networking
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //REST API handling
-    compile ('com.squareup.retrofit2:retrofit:2.1.0') {
+    compile('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude module: 'okhttp'
     }
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     //Crash Logging
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+    releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
         transitive = true;
     }
 
     // View Elements Binding :)
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     //Dependency Injection
-    compile 'com.google.dagger:dagger:2.5'
-    apt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.google.dagger:dagger:2.7'
+    apt 'com.google.dagger:dagger-compiler:2.7'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     compile('com.mikepenz:materialdrawer:5.3.6@aar') {
         transitive = true
     }
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:gridlayout-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:preference-v14:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:preference-v14:25.0.1'
     compile 'com.android.support:multidex:1.0.1'
-
-    // Image Loading/Caching
-    compile 'com.squareup.picasso:picasso:2.5.2'
 
     //QR Code
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
@@ -110,7 +96,7 @@ dependencies {
     compile 'org.solovyev.android:checkout:0.7.5@aar'
 
     //Facebook
-    compile('com.facebook.android:facebook-android-sdk:4.11.0') {
+    compile('com.facebook.android:facebook-android-sdk:4.17.0') {
         transitive = true
     }
 
@@ -124,35 +110,40 @@ dependencies {
     compile 'com.amplitude:android-sdk:2.9.2'
 
     // Fresco Image Management Library
-    compile('com.facebook.fresco:fresco:0.11.0') {
+    compile('com.facebook.fresco:fresco:0.14.0') {
         exclude module: 'bolts-android'
     }
-    compile('com.facebook.fresco:animated-gif:0.11.0') {
+    compile('com.facebook.fresco:animated-gif:0.14.0') {
         exclude module: 'bolts-android'
     }
     //Tests
     testCompile "junit:junit:4.10"
     testCompile "org.assertj:assertj-core:1.7.0"
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile "org.robolectric:robolectric:3.1"
     testCompile 'org.robolectric:shadows-multidex:3.1'
     testCompile "org.robolectric:shadows-support-v4:3.1"
     testCompile "org.mockito:mockito-core:1.10.19"
 
     //Leak Detection
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     //Push Notifications
     compile 'com.google.firebase:firebase-core:9.4.0'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
 
     compile 'com.google.android.gms:play-services-auth:9.4.0'
+
+    compile(project(':seeds-sdk')) {
+        exclude group: 'com.google.android.gms'
+        exclude group: 'com.android.support', module: 'multidex'
+    }
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"
@@ -179,7 +170,6 @@ android {
             signingConfig signingConfigs.release
             debuggable false
             multiDexEnabled true
-
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
         }
@@ -200,19 +190,18 @@ android {
             java.srcDir file('src/test/java/')
             res.srcDirs = ['res']
         }
-        release.setRoot('build-types/release')
         instrumentTest.setRoot('tests')
+        release { java.srcDirs = ['src/release/java'] }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    
+
     dexOptions {
         preDexLibraries false
         javaMaxHeapSize "4g" // Use gig increments depending on needs
-        incremental true
     }
 
     lintOptions {
@@ -287,5 +276,4 @@ tasks.whenTaskAdded { task ->
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.google.gms.google-services'
