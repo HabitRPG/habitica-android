@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -50,7 +52,7 @@ public class PopupNotificationsManager {
         LayoutInflater factory = LayoutInflater.from(HabiticaApplication.currentActivity);
         final View view = factory.inflate(R.layout.dialog_login_incentive, null);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
         String imageKey = "inventory_present_11";
         if (notification.data.rewardKey != null) {
             imageKey = notification.data.rewardKey.get(0);
