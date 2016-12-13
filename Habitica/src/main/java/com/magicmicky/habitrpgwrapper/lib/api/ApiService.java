@@ -261,6 +261,8 @@ public interface ApiService {
     @DELETE("user/push-devices/{regId}")
     Observable<Void> deletePushDevice(@Path("regId") String regId);
 
+    /* challenges api */
+
     @GET("challenges/user")
     Observable<ArrayList<Challenge>> getUserChallenges();
 
@@ -269,6 +271,12 @@ public interface ApiService {
 
     @GET("challenges/{challengeId}")
     Observable<Challenge> getChallenge(@Path("challengeId") String challengeId);
+
+    @POST("challenges/{challengeId}/join")
+    Observable<Challenge> joinChallenge(@Path("challengeId") String challengeId);
+
+    @POST("challenges/{challengeId}/leave")
+    Observable<Void> leaveChallenge(@Path("challengeId") String challengeId);
 
     //DEBUG: These calls only work on a local development server
 

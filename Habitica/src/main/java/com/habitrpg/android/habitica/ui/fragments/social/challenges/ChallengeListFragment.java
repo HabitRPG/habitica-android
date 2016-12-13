@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,6 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_challengeslist, container, false);
         unbinder = ButterKnife.bind(this, v);
-        swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
@@ -84,27 +84,14 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
             query = query.and(Condition.column("user_id").is(user.getId()));
         }
 
-        query.async().queryList(new TransactionListener<List<Challenge>>() {
-            @Override
-            public void onResultReceived(List<Challenge> result) {
-                if (result.size() != 0) {
-                    setAdapterEntries(result);
-                }
+        List<Challenge> challenges = query.queryList();
 
-                // load online challenges & save to database
-                onRefresh();
-            }
+        if (challenges.size() != 0) {
+            setAdapterEntries(challenges);
+        }
 
-            @Override
-            public boolean onReady(BaseTransaction<List<Challenge>> transaction) {
-                return false;
-            }
-
-            @Override
-            public boolean hasResult(BaseTransaction<List<Challenge>> transaction, List<Challenge> result) {
-                return result.size() != 0;
-            }
-        });
+        // load online challenges & save to database
+        onRefresh();
     }
 
     private void fetchOnlineChallenges() {
@@ -146,19 +133,26 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }, throwable -> {
+                        Log.e("ChallengeListFragment", "", throwable);
+
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     });
         }
     }
 
 
     private void setAdapterEntries(List<Challenge> challenges) {
-
         challengeAdapter.setChallenges(challenges);
-
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+
+    public void addItem(Challenge challenge) {
+        challengeAdapter.addChallange(challenge);
     }
 }

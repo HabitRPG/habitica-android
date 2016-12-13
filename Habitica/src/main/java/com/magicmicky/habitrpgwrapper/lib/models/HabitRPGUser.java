@@ -126,6 +126,10 @@ public class HabitRPGUser extends BaseModel {
         this.challengeList = challenges;
     }
 
+    public void resetChallengeList(){
+        challengeList = null;
+    }
+
     public Preferences getPreferences() {
         return preferences;
     }

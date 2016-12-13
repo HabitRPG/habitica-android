@@ -11,10 +11,15 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.JoinChallengeCommand;
+import com.habitrpg.android.habitica.events.commands.LeaveChallengeCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.raizlabs.android.dbflow.sql.language.Delete;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Update;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -30,7 +35,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
-        viewPager.setCurrentItem(1);
 
         setViewPagerAdapter();
 
@@ -81,9 +85,9 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "My Challenges";
+                        return getString(R.string.my_challenges);
                     case 1:
-                        return "Public";
+                        return getString(R.string.public_challenges);
                 }
                 return "";
             }
@@ -105,4 +109,35 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
+
+    @Subscribe
+    public void onEvent(JoinChallengeCommand cmd){
+        this.apiHelper.apiService.joinChallenge(cmd.challengeId)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(challenge -> {
+                    challenge.user_id = this.user.getId();
+
+                    userChallengesFragment.addItem(challenge);
+                }, throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(LeaveChallengeCommand cmd){
+        this.apiHelper.apiService.leaveChallenge(cmd.challengeId)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+
+                    Challenge challenge = new Select().from(Challenge.class).byIds(cmd.challengeId).querySingle();
+                    challenge.user_id = null;
+                    challenge.save();
+
+                    this.user.resetChallengeList();
+
+                    userChallengesFragment.onRefresh();
+                    availableChallengesFragment.onRefresh();
+                }, throwable -> {
+                });
+    }
+
 }

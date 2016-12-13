@@ -40,6 +40,7 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
 
                 if (profile != null) {
                     challenge.leaderName = profile.get("name").getAsString();
+                    challenge.leaderId = leaderObj.get("id").getAsString();
                 }
             }
         }

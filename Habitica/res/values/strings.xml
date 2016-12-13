@@ -438,4 +438,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
     <string name="byLeader">by %s</string>
     <string name="challenge_details">Challenge Details</string>
+    <string name="challenge_leave_title">Are you sure?</string>
+    <string name="challenge_leave_text">Are you sure you want to leave the Challenge "%s"?</string>
+    <string name="my_challenges">My Challenges</string>
+    <string name="public_challenges">Public</string>
 </resources>

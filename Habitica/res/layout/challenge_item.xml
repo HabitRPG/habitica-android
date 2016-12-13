@@ -2,10 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     style="@style/CardView.Default"
-    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:clickable="true">
 
     <LinearLayout
         style="@style/CardContent.Compact"
@@ -17,46 +17,86 @@
         <TextView
             android:id="@+id/challenge_name"
             android:layout_width="match_parent"
-            android:textStyle="bold"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/challenge_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="3"/>
+            android:maxLines="3" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:baselineAligned="false"
             android:weightSum="1.0">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+
+                android:layout_height="30dp"
                 android:layout_weight="0.5">
 
-
-                <TextView
-                    android:id="@+id/leader_label"
+                <LinearLayout
+                    android:id="@+id/user_background_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:background="@drawable/layout_rounded_bg"
+                    android:backgroundTint="@color/days_gray">
 
-                    android:ellipsize="middle"
-                    android:lines="1" />
-
+                    <TextView
+                        android:id="@+id/user_label"
+                        style="@style/ChatMessageUserTextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:ellipsize="middle"
+                        android:text="design_data"
+                        android:lines="1" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="0.5"
-                android:gravity="right">
+                android:gravity="right|fill_vertical">
+
+                <LinearLayout
+                    android:id="@+id/gem_prize_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:gravity="end">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_header_gem" />
+
+                    <TextView
+                        android:id="@+id/gemPrizeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="middle"
+                        android:lines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingStart="5dp"
+                        android:text="0" />
+
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_people_black_24dp" />
 
                 <TextView
@@ -77,37 +117,36 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:gravity="end"
-            android:weightSum="1.0">
+            android:baselineAligned="false">
 
             <LinearLayout
-                android:id="@+id/gem_prize_layout"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:gravity="end">
+                android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_header_gem" />
-
-                <TextView
-                    android:id="@+id/gemPrizeTextView"
+                <Button
+                    android:id="@+id/challenge_button_leave"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:ellipsize="middle"
-                    android:lines="1"
-                    android:paddingLeft="5dp"
-                    android:paddingStart="5dp"
-                    android:text="0" />
-
-
+                    android:layout_height="match_parent"
+                    android:gravity="start|fill_vertical"
+                    android:text="@string/leave"
+                    android:textColor="@color/md_red_400" />
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end|fill_vertical">
 
+                <Button
+                    android:id="@+id/challenge_button_join"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/join" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
