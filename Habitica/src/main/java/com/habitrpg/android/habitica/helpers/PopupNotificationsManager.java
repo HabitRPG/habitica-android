@@ -29,6 +29,8 @@ public class PopupNotificationsManager {
     private APIHelper apiHelper;
     private static PopupNotificationsManager instance;
 
+    // @TODO: A queue for displaying alert dialogues
+
     private PopupNotificationsManager(APIHelper apiHelper) {
         this.apiHelper = apiHelper;
         this.seenNotifications = new HashMap<>();
@@ -42,10 +44,6 @@ public class PopupNotificationsManager {
     }
 
     public Boolean displayNotification(Notification notification) {
-        if (!notification.getType().equals("LOGIN_INCENTIVE")) {
-            return false;
-        }
-
         String title = notification.data.message;
         String youEarnedMessage = "";
 
@@ -124,6 +122,11 @@ public class PopupNotificationsManager {
                 if (this.seenNotifications.get(notification.getId()) != null) {
                     continue;
                 }
+
+                if (!notification.getType().equals("LOGIN_INCENTIVE")) {
+                    continue;
+                }
+
                 this.displayNotification(notification);
                 this.seenNotifications.put(notification.getId(), true);
             }

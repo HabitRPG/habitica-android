@@ -82,6 +82,10 @@ public class PopupNotificationsManagerTest {
     @Test
     // @TODO: Eventually, we should have a list of implemented notifications and only use those
     public void itShouldNotDisplayNotificationsThatAreNotLoginIncentives() {
+        Activity activity;
+        activity = Robolectric.buildActivity(Activity.class).create().get();
+        HabiticaApplication.currentActivity = activity;
+
         List<Notification> notifications = new ArrayList<>();
 
         Notification notification = new Notification();
@@ -89,12 +93,13 @@ public class PopupNotificationsManagerTest {
 
         notifications.add(notification);
 
-        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiHelper);
-        popupNotificationsManager.showNotificationDialog(notifications);
+        final PopupNotificationsManager testClass = Mockito.mock(PopupNotificationsManager.class);
+        Mockito.when(testClass.displayNotification(notification)).thenReturn(true);
+        Mockito.when(testClass.showNotificationDialog(notifications)).thenCallRealMethod();
 
-        AlertDialog alert =
-                ShadowAlertDialog.getLatestAlertDialog();
-        assertNull(alert);
+        testClass.showNotificationDialog(notifications);
+
+        verify(testClass, times(0)).displayNotification(notification);
     }
 
     @Test
