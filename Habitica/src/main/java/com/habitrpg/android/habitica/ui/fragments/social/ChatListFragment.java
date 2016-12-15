@@ -127,7 +127,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), userId, groupId, isTavern);
+        chatAdapter = new ChatRecyclerViewAdapter(new ArrayList<>(), user, groupId, isTavern);
 
         mRecyclerView.setAdapter(chatAdapter);
 

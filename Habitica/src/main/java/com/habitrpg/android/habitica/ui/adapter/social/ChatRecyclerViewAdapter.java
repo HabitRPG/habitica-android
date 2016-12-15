@@ -27,10 +27,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +39,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -53,16 +54,18 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     private static final int TYPE_MESSAGE = 2;
 
     private List<ChatMessage> messages;
-    private String uuid;
+    private HabitRPGUser user;
+	private String uuid;
     private String groupId;
     private boolean isTavern;
     private boolean isInboxChat = false;
     private String replyToUserUUID;
     private HabitRPGUser sendingUser;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String uuid, String groupId, boolean isTavern) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, HabitRPGUser user, String groupId, boolean isTavern) {
         this.messages = messages;
-        this.uuid = uuid;
+	    this.user = user;
+	    if(user!=null) this.uuid = user.getId();
         this.groupId = groupId;
         this.isTavern = isTavern;
     }
@@ -355,9 +358,11 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     }
 
                     ChatMessage chatMsg = currentMsg;
-                    if (!chatMsg.uuid.equals(uuid)) {
+
+                    if (!chatMsg.uuid.equals(uuid) )
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
-                    }
+                    if (user.getContributor().getAdmin())
+		                popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
 
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
@@ -435,8 +440,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-                    EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
-
+	                new AlertDialog.Builder(context)
+			                .setTitle(R.string.confirm_delete_tag_title)
+			                .setMessage(R.string.confirm_delete_tag_message)
+			                .setIcon(android.R.drawable.ic_dialog_alert)
+			                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+				                Toast.makeText(context, R.string.edit_tag_btn_done, Toast.LENGTH_SHORT).show();
+				                EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
+			                })
+			                .setNegativeButton(android.R.string.no, null).show();
                     break;
                 }
                 case R.id.menu_chat_flag: {
