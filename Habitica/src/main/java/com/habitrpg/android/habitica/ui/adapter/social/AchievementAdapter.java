@@ -107,12 +107,14 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         public void bind(Achievement item) {
+            String iconUrl = AvatarView.IMAGE_URI_ROOT  + (!item.earned ? "achievement-unearned" : item.icon ) + "2x.png";
+
               draweeView.setController(Fresco.newDraweeControllerBuilder()
-                    .setUri(AvatarView.IMAGE_URI_ROOT  + item.icon.toLowerCase() + ".png")
+                    .setUri(iconUrl)
                     .setControllerListener(new BaseControllerListener<ImageInfo>() {
                         @Override
                         public void onFailure(String id, Throwable throwable) {
-                            Log.e("Achievemnt", "Couldn't load "+item.icon.toLowerCase());
+                            Log.e("Achievemnt", "Couldn't load "+iconUrl);
                         }
                     })
                     .build());
