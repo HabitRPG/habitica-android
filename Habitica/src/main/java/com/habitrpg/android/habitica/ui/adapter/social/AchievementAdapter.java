@@ -114,7 +114,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .setControllerListener(new BaseControllerListener<ImageInfo>() {
                         @Override
                         public void onFailure(String id, Throwable throwable) {
-                            Log.e("Achievemnt", "Couldn't load "+iconUrl);
                         }
                     })
                     .build());
