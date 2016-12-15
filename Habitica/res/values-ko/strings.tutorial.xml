@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">좋은 습관을 달성하고 골드와 경험치를 얻으세요! 나쁜 습관은 당신의 아바타를 다치게하니, 일상생활을 열심히 하세요!</string>
+  <string name="tutorial_habits">좋은 습관을 달성하고 골드와 경험치를 얻으세요! 나쁜 습관은 당신의 아바타를 다치게 하니, 일상생활을 열심히 하세요!</string>
   <string name="tutorial_dailies">골드와 경험치를 위해 일일과제를 달성하세요. 주의할 점! 일일과제는 제때 끝내지 못하면 당신의 아바타를 다치게 만들어요.</string>
   <string name="tutorial_todos">일상생활을 할일을 달성함으로써 골드와 경험치를 얻으세요. 경험치와 골드로 새로운 보상과 기능을 여세요!</string>
   <string name="tutorial_rewards">이것들은 당신의 보상들이에요! 습관, 일일과제, 해야할 일들을 일상생활에서 달성하면 골드를 모을 수 있어요. 이 골드를 게임의 보상들이나 스스로 설정한 보상을 구입하는데 사용하세요!</string>
@@ -10,5 +10,5 @@
   <string name="tutorial_skills">스킬은 강력한 효과를 가진 능력입니다! 사용하고자 하는 스킬은 터치하면 됩니다. 스킬은 마나 (파란색 바)를 사용하는데, 마나는 매일 출석하고 일상생활의 과제들을 달성하면 채워집니다. 궁금한 점은 FAQ를 참고하세요!</string>
   <string name="tutorial_party">여기서 당신과 당신의 친구들은 서로의 목표를 체크해주고 과제를 달성하면서 함께 몬스터를 무찌를꺼에요!</string>
   <string name="tutorial_tavern">여관에 오신거를 환영합니다! 여기는 누구나 채팅할수있는 채팅방입니다. 묻고싶은게있으면 여기서 물어보세요. 좋은 시간 보내시길 바랍니다!</string>
-  <string name="tutorial_classes">전사, 마법사, 치료사나 도적중에서 지겁을 정하세요! 각 지겁마다 독득한 장비와 능력들이있읍나다. 더 알고싶으면 (?)을 누르세요.</string>
+  <string name="tutorial_classes">전사, 마법사, 치료사나 도적중에서 지겁을 정하세요! 각 직업마다 독특한 장비와 능력들이 있습니다. 더 알고싶으면 (?)을 누르세요.</string>
 </resources>

@@ -9,7 +9,7 @@
         <PreferenceScreen
             android:key="accountDetails"
             android:title="@string/account_details"
-            android:summary="Check your account details"
+            android:summary="@string/account_details_sum"
             android:order="1">
 
             <PreferenceCategory android:title="Account Details">
@@ -62,10 +62,29 @@
             android:key="choose_class"
             android:order="2"/>
 
+        <ListPreference android:title="@string/pref_first_day_of_the_week_title"
+            android:key="@string/pref_first_day_of_the_week_key"
+            android:entries="@array/weekdays"
+            android:entryValues="@array/weekdayValues"
+            android:summary="@string/pref_first_day_of_the_week_summary"
+            android:order="5"/>
+        <ListPreference android:title="@string/Language_title"
+            android:key="language"
+            android:entries="@array/Language"
+            android:entryValues="@array/LanguageValues"
+            android:summary="@string/Language_summary"
+            android:order="4"/>
+        <ListPreference android:title="@string/AudioTheme_title"
+            android:key="audioTheme"
+            android:entries="@array/AudioThemes"
+            android:entryValues="@array/AudioValues"
+            android:summary="@string/AudioTheme_summary"
+            android:order="3"/>
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"
             android:order="99"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -84,6 +103,16 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            android:title="@string/pref_cds_header">
+
+        <com.habitrpg.android.habitica.prefs.TimePreference
+                android:key="cds_time"
+                android:defaultValue="00:00"
+                android:title="@string/pref_cds_picker" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/push_notifications">
 
         <CheckBoxPreference
@@ -94,7 +123,7 @@
         <PreferenceScreen
             android:key="pushNotifications"
             android:title="@string/push_notifications"
-            android:summary="Set your push notifications settings"
+            android:summary="@string/push_notifications_sum"
             android:order="1">
 
             <PreferenceCategory android:title="Push Notifications">

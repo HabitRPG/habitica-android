@@ -14,7 +14,7 @@
         android:gravity="center_horizontal"
         android:layout_margin="24dp" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"

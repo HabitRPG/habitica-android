@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -13,12 +11,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -51,16 +45,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 
-import org.w3c.dom.Text;
-
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -84,6 +72,12 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.avatarView)
     AvatarView avatarView;
+
+    @BindView(R.id.copy_userid)
+    Button copyUserIdButton;
+
+    @BindView(R.id.userid)
+    TextView userIdText;
 
     @BindView(R.id.profile_attributes_card)
     CardView attributesCardView;
@@ -119,11 +113,11 @@ public class FullProfileActivity extends BaseActivity {
     @BindView(R.id.fullprofile_scrollview)
     ScrollView fullprofile_scrollview;
 
-    @BindView(R.id.profile_pet_count)
-    TextView petCount;
+    @BindView(R.id.profile_pets_found_count)
+    TextView petsFoundCount;
 
-    @BindView(R.id.profile_mount_count)
-    TextView mountCount;
+    @BindView(R.id.profile_mounts_tamed_count)
+    TextView mountsTamedCount;
 
     @BindView(R.id.profile_achievements_card)
     CardView achievementCard;
@@ -244,14 +238,28 @@ public class FullProfileActivity extends BaseActivity {
         if (blurbText != null && !blurbText.isEmpty()) {
             blurbTextView.setText(MarkdownParser.parseMarkdown(blurbText));
         }
+        userIdText.setText(userId);
+        copyUserIdButton.setVisibility(View.VISIBLE);
+        copyUserIdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
+                            .getSystemService(view.getContext().CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData
+                            .newPlainText(
+                                    userId, userId);
+                    clipboard.setPrimaryClip(clip);
+            }
+        });
+
 
         avatarView.setUser(user);
         avatarWithBars.updateData(user);
 
         addLevelAttributes(stats, user);
 
-        petCount.setText(String.valueOf(countEntries(user.getItems().getPets())));
-        mountCount.setText(String.valueOf(countEntries(user.getItems().getMounts())));
+        petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
+        mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
         apiHelper.apiService.GetMemberAchievements(this.userId)
@@ -297,22 +305,6 @@ public class FullProfileActivity extends BaseActivity {
         targetList.addAll(achievementList);
     }
 
-    private int countEntries(HashMap<String, ?> hashMap) {
-        if(hashMap == null)
-            return 0;
-
-        int _count = 0;
-
-        for (Map.Entry<String, ?> e : hashMap.entrySet()) {
-            if (e.getValue() == null)
-                continue;
-
-            _count += 1;
-        }
-
-        return _count;
-    }
-
     // region Utils
 
     private void stopAndHideProgress(ProgressBar bar) {
@@ -320,8 +312,16 @@ public class FullProfileActivity extends BaseActivity {
         bar.setVisibility(View.GONE);
     }
 
-    private String getCeiledValue(float val) {
-        return ((int) Math.ceil(val)) + "";
+    private String getFloorValueString(float val, boolean roundDown) {
+        return roundDown
+                ? ((int) Math.floor(val)) + ""
+                : (val == 0.0 ? "0" : val + "");
+    }
+
+    private float getFloorValue(float val, boolean roundDown) {
+        return roundDown
+                ? ((int) Math.floor(val))
+                : val;
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
@@ -365,9 +365,9 @@ public class FullProfileActivity extends BaseActivity {
     private float attributePerSum = 0;
 
     private void addLevelAttributes(Stats stats, HabitRPGUser user) {
-        float byLevelStat = stats.getLvl() / 2.0f;
+        float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
 
-        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, false);
+        addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
 
         loadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
             gotGear(obj, user);
@@ -443,7 +443,7 @@ public class FullProfileActivity extends BaseActivity {
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, false);
+        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, true, false);
 
         if (!user.getPreferences().isDisableClasses()) {
             float strClassBonus = 0;
@@ -470,7 +470,7 @@ public class FullProfileActivity extends BaseActivity {
                     break;
             }
 
-            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false);
+            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
         }
     }
 
@@ -486,29 +486,29 @@ public class FullProfileActivity extends BaseActivity {
     private void addNormalAddBuffAttributes(Stats stats) {
         Buffs buffs = stats.getBuffs();
 
-        addAttributeRow(getString(R.string.profile_allocated), stats.getStr(), stats.get_int(), stats.getCon(), stats.getPer(), false);
-        addAttributeRow(getString(R.string.profile_boosts), buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), false);
+        addAttributeRow(getString(R.string.profile_allocated), stats.getStr(), stats.get_int(), stats.getCon(), stats.getPer(), true, false);
+        addAttributeRow(getString(R.string.profile_boosts), buffs.getStr(), buffs.get_int(), buffs.getCon(), buffs.getPer(), true, false);
 
         // Summary row
-        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, true);
+        addAttributeRow("", attributeStrSum, attributeIntSum, attributeConSum, attributePerSum, false, true);
     }
 
-    private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean isSummary) {
+    private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean roundDown, boolean isSummary) {
         TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, null);
         TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
         keyTextView.setText(label);
 
         TextView strTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_str);
-        strTextView.setText(getCeiledValue(strVal));
+        strTextView.setText(getFloorValueString(strVal, roundDown));
 
         TextView intTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_int);
-        intTextView.setText(getCeiledValue(intVal));
+        intTextView.setText(getFloorValueString(intVal, roundDown));
 
         TextView conTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_con);
-        conTextView.setText(getCeiledValue(conVal));
+        conTextView.setText(getFloorValueString(conVal, roundDown));
 
         TextView perTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_per);
-        perTextView.setText(getCeiledValue(perVal));
+        perTextView.setText(getFloorValueString(perVal, roundDown));
 
 
         if (isSummary) {
@@ -517,13 +517,13 @@ public class FullProfileActivity extends BaseActivity {
             conTextView.setTypeface(null, Typeface.BOLD);
             perTextView.setTypeface(null, Typeface.BOLD);
         } else {
-            attributeStrSum += strVal;
-            attributeIntSum += intVal;
-            attributeConSum += conVal;
-            attributePerSum += perVal;
+            attributeStrSum += getFloorValue(strVal, roundDown);
+            attributeIntSum += getFloorValue(intVal, roundDown);
+            attributeConSum += getFloorValue(conVal, roundDown);
+            attributePerSum += getFloorValue(perVal, roundDown);
 
             attributeRows.add(tableRow);
-            tableRow.setVisibility(View.GONE);
+            tableRow.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);
         }
 
         attributesTableLayout.addView(tableRow);
@@ -538,7 +538,9 @@ public class FullProfileActivity extends BaseActivity {
     private void toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden;
 
-        attributesCollapseIcon.setImageDrawable(getResources().getDrawable(attributeDetailsHidden ? R.drawable.ic_keyboard_arrow_right_black_24dp : R.drawable.ic_keyboard_arrow_down_black_24dp));
+        attributesCollapseIcon.setImageDrawable(getResources().getDrawable(attributeDetailsHidden
+                ? R.drawable.ic_keyboard_arrow_right_black_24dp
+                : R.drawable.ic_keyboard_arrow_down_black_24dp));
 
         for (TableRow row : attributeRows) {
             row.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);

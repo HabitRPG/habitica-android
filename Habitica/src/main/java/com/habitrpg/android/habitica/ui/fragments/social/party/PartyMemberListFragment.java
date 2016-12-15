@@ -67,7 +67,7 @@ public class PartyMemberListFragment extends BaseFragment {
 
     public void setMemberList(List<HabitRPGUser> members) {
         this.members = members;
-        viewAdapter.setMemberList(members);
+        viewAdapter.setMemberList(members,  false);
     }
 
 }

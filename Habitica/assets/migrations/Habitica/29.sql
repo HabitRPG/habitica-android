@@ -1,0 +1,1 @@
+ALTER TABLE Preferences ADD COLUMN 'sound' varchar(50);

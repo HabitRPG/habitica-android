@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Обновить</string>
   <string name="XP_default">Опыт</string>
   <string name="HP_default">Здоровье</string>
@@ -13,12 +12,19 @@
   <string name="SP_userID_summary">Ваш ID</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Ваш API Token</string>
+  <string name="Language_title">Язык</string>
+  <string name="Language_summary">Изменить язык Habitica</string>
+  <string name="SP_user_qr_code">Ваш QR код</string>
   <string name="PS_contact_title">Свяжитесь со мной</string>
   <string name="unknown_error">Произошла ошибка...</string>
   <string name="pref_account_header">Аккаунт</string>
+  <string name="pref_first_day_of_the_week_title">Первый день недели</string>
+  <string name="pref_first_day_of_the_week_summary">Первый день недели во всех календарях</string>
   <string name="pref_reminder_header">Ежедневное напоминание</string>
   <string name="pref_reminder_checkbox">Активируйте напоминание</string>
   <string name="pref_reminder_picker">Установите время напоминания</string>
+  <string name="pref_cds_header">Персональное начало суток</string>
+  <string name="pref_cds_picker">Установить персональное начало суток</string>
   <string name="pref_push_notifications_checkbox">Push-уведомления пользователя</string>
   <string name="push_notifications">Push-уведомления</string>
   <string name="preference_push_you_won_challenge">Вы прошли испытание!</string>
@@ -26,7 +32,7 @@
   <string name="preference_push_gifted_gems">Подаренные самоцветы</string>
   <string name="preference_push_gifted_subscription">Подаренная подписка</string>
   <string name="preference_push_invited_to_party">Приглашены в команду</string>
-  <string name="preference_push_invited_to_guild">Приглашены в Гильдию</string>
+  <string name="preference_push_invited_to_guild">Приглашены в гильдию</string>
   <string name="preference_push_your_quest_has_begun">Ваш Квест начался</string>
   <string name="preference_push_invited_to_quest">Приглашены в Квест</string>
   <!--Adding tasks-->
@@ -68,6 +74,7 @@
   <string name="login_validation_error_title">Ошибка проверки</string>
   <string name="login_validation_error_fieldsmissing">Вы должны заполнить все поля.</string>
   <string name="save_changes">Сохранить</string>
+  <string name="copy">Копировать</string>
   <string name="notes">Заметки</string>
   <string name="text">Текст</string>
   <string name="difficulty">Сложность</string>
@@ -109,9 +116,10 @@
   <string name="profile_image">Аватар</string>
   <string name="mana_price_button" formatted="false">%d М</string>
   <string name="used_skill" formatted="false">Вы использовали %1$s за %2$d маны.</string>
+  <string name="used_skill_without_mana" formatted="false">Вы использовали %1$s.</string>
   <string name="new_checklist_item">новый пункт списка</string>
   <string name="add_checklist_item">Добавить</string>
-  <string name="reminder_title">Проверьте свои ежедневные задания!</string>
+  <string name="reminder_title">Не забудьте отметить ежедневные задания!</string>
   <string name="skill_progress_title">Использовать навык</string>
   <string name="coming_soon">Скоро</string>
   <string name="chat_flag_confirmation">Вы уверены, что хотите пожаловаться на это сообщение?</string>
@@ -172,7 +180,7 @@
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
   <string name="intro_1_title">Добро пожаловать в Habitica</string>
-  <string name="intro_1_description">Присоединитесь к 1.100.000 участников, которые развлекаются и добиваются успехов. Создайте аватар и отслеживайте ваши задачи.</string>
+  <string name="intro_1_description" formatted="false">Присоединитесь к более %s участникам, которые развлекаются и добиваются успехов. Создайте аватар и отслеживайте ваши задачи.</string>
   <string name="intro_2_title">Прогресс в игре = Прогресс в жизни</string>
   <string name="intro_2_description">Разблокируйте функции в игре, выполняя реальные задачи. Зарабатывайте оружие, питомцев и многое другое в качестве награды!</string>
   <string name="intro_3_title">Общайтесь и сражайтесь с монстрами</string>
@@ -233,6 +241,7 @@
   <string name="privacy">Приватность</string>
   <string name="write_message">Написать сообщение</string>
   <string name="post">Отправить</string>
+  <string name="guild_search_hint">Поиск для гильдий</string>
   <string name="todo_due" formatted="false">Выполнить к: %s</string>
   <string name="daily_streak" formatted="false">выполнено подряд: %d</string>
   <string name="todo_has_duedate">У задания есть срок выполнения</string>
@@ -315,7 +324,7 @@
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
   <string name="change_class">Изменить ваш класс</string>
-  <string name="change_class_description">Поменяй свой класс, и получите назад ваши очки атрибутов за 3 кристалла.</string>
+  <string name="change_class_description">Поменяйте класс, и получите назад ваши очки характеристик за 3 кристалла. Распределить очки характеристик можно на сайте.</string>
   <string name="enable_class">Включить систему классов</string>
   <string name="changing_class_progress">Изменение класса</string>
   <string name="by_email">По электронной почте</string>
@@ -329,7 +338,7 @@
   <string name="email">Электронная почта</string>
   <string name="invite_users">Пригласить в команду</string>
   <string name="share_using">Поделиться с помощью</string>
-  <string name="share_levelup" formatted="false">Я получил %s уровень в Habitica улучшая свой привычки в реальной жизни!</string>
+  <string name="share_levelup" formatted="false">Я получил %s уровень в Habitica, улучшая привычки в реальной жизни!</string>
   <string name="share_hatched" formatted="false">У меня только что вылупился питомец %1$s %2$s в Habitica, потому что я выполнял задачи в реальной жизни!</string>
   <string name="share_raised" formatted="false">Я только что получил скакуна %1$s %2$s в Habitica, выполняя задачи в реальной жизни!</string>
   <string name="open_in_store">Откройте в Play маркет</string>
@@ -350,7 +359,52 @@
   <string name="hourglass">Песочные часы</string>
   <string name="hourglasses">песочные часы</string>
   <string name="gold_singular">золото</string>
+  <string name="gold_plural">золото</string>
   <string name="chat_message_copied">Сообщение скопировано в буфер обмена</string>
   <string name="copy_chat_message">Скопировать в буфер обмена</string>
+  <string name="edit_tag_title">Редактировать метку</string>
+  <string name="edit_tag_btn_edit">Редактировать</string>
+  <string name="edit_tag_btn_done">Готово</string>
+  <string name="edit_tag_btn_delete">Удалить</string>
+  <string name="confirm_delete_tag_title">Вы уверены?</string>
+  <string name="confirm_delete_tag_message">Вы уверены, что хотите удалить?</string>
+  <string name="filter_drawer_edit_tags">Редактировать метки</string>
+  <string name="filter_drawer_filter_tags">Фильтровать по меткам</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Участник может приласить вас с помощью этого QR кода</string>
+  <string name="qr_save_message">QR код сохранен </string>
+  <string name="qr_dialogue_title">Ваш QR код</string>
+  <string name="download">Скачать</string>
+  <string name="send_new_message">Отправить новое сообщение</string>
+  <string name="choose_recipient_title">Выберите получателя</string>
+  <string name="action_continue">Продолжить</string>
+  <string name="scan_qr_code">Сканировать QR код</string>
+  <string name="enter_recipient_uuid">Ввести пользовательский ID участника</string>
+  <string name="invited_to_party">Вас пригласили в команду!</string>
+  <string name="stats_widget_label">Характеристики Habitica</string>
+  <string name="add_task">Добавить задачу</string>
+  <string name="add_habit">Добавить привычку</string>
+  <string name="add_daily">Добавить ежедневное задание</string>
+  <string name="add_todo">Добавить задачу</string>
+  <string name="add_reward">Добавить награду</string>
+  <string name="all_dailies_completed">Вы справились со всеми ежедневными заданиями. Так держать!</string>
+  <string name="widget_habit_button">Привычки Habitica</string>
+  <string name="widget_dailies">Ежедневные задания Habitica</string>
+  <string name="widget_add_task">Добавить задачу Habitica</string>
+  <string name="google_services_missing">Сервис Google play не найден.</string>
+  <string name="gem.purchase.toolbartitle">Купить</string>
+  <string name="gem.purchase.title">Покупка самоцветов поддерживает разработчиков и помогает развивать Habitica</string>
+  <string name="gem.purchase.subtitle">Самоцветы позволяют получить интересные дополнительные возможности, включая:</string>
+  <string name="gem.purchase.listitem1">Крутые костюмы для аватара</string>
+  <string name="gem.purchase.listitem2">Отличные фоны</string>
+  <string name="gem.purchase.listitem3">Задания с яйцами питомцев в качестве награды</string>
+  <string name="gem.purchase.listitem4">Способность изменить свой класс, если уровень менее 100</string>
+  <string name="support_habitica">Поддержать Habitica</string>
+  <string name="skill_transformation_use">использовать</string>
+  <string name="hatching_market_info">Не выпадает то, что нужно? Посмотри на рынке!</string>
+  <string name="feeding_market_info">Нужна определенная еда? Купи сколько угодно на рынке!</string>
+  <string name="open_market">Зайти на рынок</string>
+  <string name="cds_description" formatted="false">Ваши ежедневные задания будут обновлены после %1$s. Выполните их до этого времени!</string>
+  <string name="AudioTheme_title">Аудио-тема</string>
+  <string name="AudioTheme_summary">Выбрать аудио-тему Habitica</string>
 </resources>

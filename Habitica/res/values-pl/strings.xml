@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Odśwież</string>
   <string name="XP_default">Doświadczenie</string>
   <string name="HP_default">Zdrowie</string>
@@ -8,24 +7,31 @@
   <string name="ERR_pb_barcode">Preferencje nie mogą być wczytane z kodu kreskowego</string>
   <!--Prefs-->
   <string name="PS_settings_title">Ustawienia</string>
-  <string name="SP_address_hint">Serwer na zamówienie</string>
-  <string name="SP_userID_title">ID użytkownika</string>
-  <string name="SP_userID_summary">Twoje ID</string>
-  <string name="SP_APIToken_title">API Token</string>
+  <string name="SP_address_hint">Domyślny serwer</string>
+  <string name="SP_userID_title">Identyfikator użytkownika</string>
+  <string name="SP_userID_summary">Twój identyfikator</string>
+  <string name="SP_APIToken_title">Token API</string>
   <string name="SP_APIToken_summary">Twój Token API</string>
+  <string name="Language_title">Język</string>
+  <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
   <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
+  <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
+  <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
   <string name="pref_reminder_header">Przypominienie</string>
-  <string name="pref_reminder_checkbox">Aktywuj Przypomnienie</string>
-  <string name="pref_reminder_picker">Ustaw Czas Przypomnienia</string>
-  <string name="pref_push_notifications_checkbox">Notyfikacje użytkownika</string>
-  <string name="push_notifications">Notyfikacje</string>
+  <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
+  <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
+  <string name="pref_cds_header">Własny początek dnia</string>
+  <string name="pref_cds_picker">Ustaw czas własnego początku dnia</string>
+  <string name="pref_push_notifications_checkbox">Powiadomienia użytkownika</string>
+  <string name="push_notifications">Powiadomienia</string>
+  <string name="push_notifications_sum">Ustaw swoje ustawienia powiadomień push</string>
   <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
   <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
   <string name="preference_push_gifted_gems">Otrzymałeś diamenty</string>
-  <string name="preference_push_gifted_subscription">Otrzymałeś Subskrypcję</string>
+  <string name="preference_push_gifted_subscription">Otrzymałeś subskrypcję</string>
   <string name="preference_push_invited_to_party">Otrzymano zaproszenie do drużyny</string>
   <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do gildii</string>
   <string name="preference_push_your_quest_has_begun">Twoja misja się rozpoczęła</string>
@@ -48,6 +54,7 @@
   <string name="confirmpassword">Potwierdź hasło</string>
   <string name="logout">Wyloguj</string>
   <string name="logout_description">Wyloguj się</string>
+  <string name="account_details_sum">Sprawdź szczegóły swojego konta</string>
   <string name="account_details">Szczegóły konta</string>
   <string name="LoginActivityName">Witaj</string>
   <string name="string_revive">Odrodzenie</string>
@@ -69,6 +76,7 @@
   <string name="login_validation_error_title">Błąd walidacji</string>
   <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
   <string name="save_changes">Zapisz</string>
+  <string name="copy">Kopiuj</string>
   <string name="notes">Notatki</string>
   <string name="text">Tekst</string>
   <string name="difficulty">Trudność</string>
@@ -110,6 +118,7 @@
   <string name="profile_image">Obrazek profilowy</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
   <string name="used_skill" formatted="false">Użyłeś %1$s za %2$d pkt. many.</string>
+  <string name="used_skill_without_mana" formatted="false">Użyto %1$s.</string>
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="reminder_title">Pamiętaj o odhaczaniu Codziennych!</string>
@@ -173,7 +182,7 @@
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
-  <string name="intro_1_description">Dołącz do ponad 1 100 000 osób wykonujących obowiązki poprzez zabawę. Stwórz awatara i pilnuj swoich zadań z prawdziwego życia.</string>
+  <string name="intro_1_description" formatted="false">Dołącz do ponad %s ludzi bawiących się podczas wypełniania swoich zadań. Stwórz awatar i śledź swoje zadania w życiu codziennym.</string>
   <string name="intro_2_title">Awans w grze = Awans w życiu</string>
   <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
   <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
@@ -355,8 +364,49 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="gold_plural">złoto</string>
   <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
   <string name="copy_chat_message">Kopiuj do schowka</string>
+  <string name="edit_tag_title">Edytuj tag</string>
+  <string name="edit_tag_btn_edit">Edytuj</string>
+  <string name="edit_tag_btn_done">Zrobione</string>
+  <string name="edit_tag_btn_delete">Usuń</string>
+  <string name="confirm_delete_tag_title">Jesteś pewien?</string>
+  <string name="confirm_delete_tag_message">Czy na pewno chcesz usunąć?</string>
+  <string name="filter_drawer_edit_tags">Edytuj tagi</string>
+  <string name="filter_drawer_filter_tags">Filtruj po tagach</string>
   <!--QR Strings-->
   <string name="qr_section_title">Czy ktoś zaprosił Cię przy pomocy tego kodu QR?</string>
   <string name="qr_save_message">Kod QR zapisany w</string>
   <string name="qr_dialogue_title">Twój kod QR</string>
+  <string name="download">Pobierz</string>
+  <string name="send_new_message">Wyślij nową wiadomość</string>
+  <string name="choose_recipient_title">Wybierz odbiorcę wiadomości</string>
+  <string name="action_continue">Kontynuuj</string>
+  <string name="scan_qr_code">Przeskanuj kod QR</string>
+  <string name="enter_recipient_uuid">Wpisz ID odbiorcy</string>
+  <string name="invited_to_party">Zostałeś zaproszony do drużyny!</string>
+  <string name="stats_widget_label">Statystyki Habitiki</string>
+  <string name="add_task">Dodaj Zadanie</string>
+  <string name="add_habit">Dodaj Nawyk</string>
+  <string name="add_daily">Dodaj Codzienne</string>
+  <string name="add_todo">Dodaj Do-Zrobienia</string>
+  <string name="add_reward">Dodaj Nagrodę</string>
+  <string name="all_dailies_completed">Wykonałeś wszystkie codzienne. Brawo!</string>
+  <string name="widget_habit_button">Nawyk Habitiki</string>
+  <string name="widget_dailies">Codzienne Habitiki</string>
+  <string name="widget_add_task">Dodaj zadanie do Habitiki</string>
+  <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
+  <string name="gem.purchase.toolbartitle">Zamów</string>
+  <string name="gem.purchase.title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
+  <string name="gem.purchase.subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta, na przykład:</string>
+  <string name="gem.purchase.listitem1">Świetne kostiumy dla awatara</string>
+  <string name="gem.purchase.listitem2">Genialne tła</string>
+  <string name="gem.purchase.listitem3">Zadania, w których nagrodą są jaja</string>
+  <string name="gem.purchase.listitem4">Możliwość zmiany klasy przed osiągnięciem 100. poziomu</string>
+  <string name="support_habitica">Wesprzyj Habitikę</string>
+  <string name="skill_transformation_use">użyj</string>
+  <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
+  <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
+  <string name="open_market">Otwórz Targ</string>
+  <string name="cds_description" formatted="false">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
+  <string name="AudioTheme_title">Temat dźwiękowy</string>
+  <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
 </resources>

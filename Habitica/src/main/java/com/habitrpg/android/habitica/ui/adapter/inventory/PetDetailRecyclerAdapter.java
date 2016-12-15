@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
@@ -17,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -76,7 +76,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
         CardView cardView;
 
         @BindView(R.id.imageView)
-        ImageView imageView;
+        SimpleDraweeView imageView;
 
         @BindView(R.id.titleTextView)
         TextView titleView;
@@ -123,7 +123,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
         public void bind(Pet item) {
             this.animal = item;
             this.titleView.setText(item.getColorText());
-            this.trainedProgressbar.setVisibility(View.VISIBLE);
+            this.trainedProgressbar.setVisibility(animal.getAnimalGroup().equals("specialPets") ? View.GONE : View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (this.getOwnedStatus() > 0) {
                 if (this.isMountOwned()) {
@@ -150,7 +150,7 @@ public class PetDetailRecyclerAdapter extends RecyclerView.Adapter<PetDetailRecy
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            if (!this.isMountOwned()) {
+            if (!animal.getAnimalGroup().equals("specialPets") && !this.isMountOwned()) {
                 menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.feed)));
             }
             menu.setSelectionRunnable(index -> {

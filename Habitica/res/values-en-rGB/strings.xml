@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Refresh</string>
   <string name="XP_default">Experience</string>
   <string name="HP_default">Health</string>
@@ -13,12 +12,30 @@
   <string name="SP_userID_summary">Your User ID</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Your API Token</string>
+  <string name="Language_title">Language</string>
+  <string name="Language_summary">Change Habitica\'s language</string>
+  <string name="SP_user_qr_code">Your QR Code</string>
   <string name="PS_contact_title">Contact me</string>
   <string name="unknown_error">An error happened…</string>
   <string name="pref_account_header">Account</string>
+  <string name="pref_first_day_of_the_week_title">First Day of the Week</string>
+  <string name="pref_first_day_of_the_week_summary">First day of the week in all calendars</string>
   <string name="pref_reminder_header">Daily Reminder</string>
   <string name="pref_reminder_checkbox">Activate Reminder</string>
   <string name="pref_reminder_picker">Set Reminder Time</string>
+  <string name="pref_cds_header">Custom Day Start</string>
+  <string name="pref_cds_picker">Set Custom Day Start Time</string>
+  <string name="pref_push_notifications_checkbox">User Push Notifications</string>
+  <string name="push_notifications">Push Notifications</string>
+  <string name="push_notifications_sum">Set your push notifications settings</string>
+  <string name="preference_push_you_won_challenge">You won a Challenge!</string>
+  <string name="preference_push_received_a_private_message">Received a Private Message</string>
+  <string name="preference_push_gifted_gems">Gifted Gems</string>
+  <string name="preference_push_gifted_subscription">Gifted Subscription</string>
+  <string name="preference_push_invited_to_party">Invited to Party</string>
+  <string name="preference_push_invited_to_guild">Invited to Guild</string>
+  <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
+  <string name="preference_push_invited_to_quest">Invited to Quest</string>
   <!--Adding tasks-->
   <string name="task_value">Value</string>
   <string name="new_todo">New to-do</string>
@@ -37,6 +54,7 @@
   <string name="confirmpassword">Confirm password</string>
   <string name="logout">Log out</string>
   <string name="logout_description">Log out of your account</string>
+  <string name="account_details_sum">Check your account details</string>
   <string name="account_details">Account Details</string>
   <string name="LoginActivityName">Welcome</string>
   <string name="string_revive">Revive</string>
@@ -58,6 +76,7 @@
   <string name="login_validation_error_title">Validation Error</string>
   <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
   <string name="save_changes">Save</string>
+  <string name="copy">Copy</string>
   <string name="notes">Notes</string>
   <string name="text">Text</string>
   <string name="difficulty">Difficulty</string>
@@ -99,6 +118,7 @@
   <string name="profile_image">Profile Image</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">You used %1$s for %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">You used %1$s.</string>
   <string name="new_checklist_item">new checklist item</string>
   <string name="add_checklist_item">Add</string>
   <string name="reminder_title">Remember to check off your Dailies!</string>
@@ -162,7 +182,7 @@
   <string name="complete_tutorial">Got it!</string>
   <string name="dismiss_tutorial">Remind me again</string>
   <string name="intro_1_title">Welcome to Habitica</string>
-  <string name="intro_1_description">Join over 1,100,000 people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
+  <string name="intro_1_description" formatted="false">Join over %s people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
   <string name="intro_2_title">Game Progress = Life Progress</string>
   <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armour, pets, and more to reward you for meeting your goals!</string>
   <string name="intro_3_title">Get Social and Fight Monsters</string>
@@ -223,6 +243,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Write Message</string>
   <string name="post">Post</string>
+  <string name="guild_search_hint">Search for guilds</string>
   <string name="todo_due" formatted="false">Due: %s</string>
   <string name="daily_streak" formatted="false">current streak: %d</string>
   <string name="todo_has_duedate">Task has Due Date</string>
@@ -325,5 +346,68 @@ To start, which parts of your life do you want to improve?</string>
   <string name="open_in_store">Open in Play Store</string>
   <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
   <string name="leaderMessage" formatted="false">Message from %1$s</string>
+  <string name="confirm">Confirm</string>
+  <string name="market">Market</string>
+  <string name="timeTravelers">Time Travelers</string>
+  <string name="seasonalShop">Seasonal Shop</string>
+  <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
+  <string name="party_invite">Unlock by inviting friends</string>
+  <string name="no_gold">Not enough Gold</string>
+  <string name="no_potion">You don\'t need to buy a health potion</string>
+  <string name="successful_purchase" formatted="false">%1$s successfully purchased</string>
+  <string name="purchase_confirmation_title">Confirm purchase</string>
+  <string name="confirm_purchase_text" formatted="false">Purchase %1$s for %2$s %3$s</string>
+  <string name="gem">gem</string>
+  <string name="hourglass">hourglass</string>
+  <string name="hourglasses">hourglasses</string>
+  <string name="gold_singular">gold</string>
+  <string name="gold_plural">gold</string>
+  <string name="chat_message_copied">Message copied to Clipboard</string>
+  <string name="copy_chat_message">Copy to clipboard</string>
+  <string name="edit_tag_title">Edit Tag</string>
+  <string name="edit_tag_btn_edit">Edit</string>
+  <string name="edit_tag_btn_done">Done</string>
+  <string name="edit_tag_btn_delete">Delete</string>
+  <string name="confirm_delete_tag_title">Are you sure?</string>
+  <string name="confirm_delete_tag_message">Do you really want to delete?</string>
+  <string name="filter_drawer_edit_tags">Edit Tags</string>
+  <string name="filter_drawer_filter_tags">Filter by Tags</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Have someone invite you with this QR Code?</string>
+  <string name="qr_save_message">QR Code saved at</string>
+  <string name="qr_dialogue_title">Your QR Code</string>
+  <string name="download">Download</string>
+  <string name="send_new_message">Send new message</string>
+  <string name="choose_recipient_title">Choose Message Recipient</string>
+  <string name="action_continue">Continue</string>
+  <string name="scan_qr_code">Scan QR Code</string>
+  <string name="enter_recipient_uuid">Enter Recipient\'s User ID</string>
+  <string name="invited_to_party">You were invited to join a party!</string>
+  <string name="stats_widget_label">Habitica Stats</string>
+  <string name="add_task">Add Task</string>
+  <string name="add_habit">Add Habit</string>
+  <string name="add_daily">Add Daily</string>
+  <string name="add_todo">Add To-Do</string>
+  <string name="add_reward">Add Reward</string>
+  <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
+  <string name="widget_habit_button">Habitica Do Habit</string>
+  <string name="widget_dailies">Habitica Dailies</string>
+  <string name="widget_todo_list">Habitica Todo List</string>
+  <string name="widget_add_task">Habitica Add Task</string>
+  <string name="google_services_missing">Google Play services could not be found.</string>
+  <string name="gem.purchase.toolbartitle">Purchase</string>
+  <string name="gem.purchase.title">Buying gems supports the developers and helps keep Habitica running</string>
+  <string name="gem.purchase.subtitle">Gems allow you to buy fun extras for your account, including:</string>
+  <string name="gem.purchase.listitem1">Cool costumes for your avatar</string>
+  <string name="gem.purchase.listitem2">Awesome backgrounds</string>
+  <string name="gem.purchase.listitem3">Quests that reward you with pet eggs</string>
+  <string name="gem.purchase.listitem4">The ability to change your class before level 100</string>
+  <string name="support_habitica">Support Habitica</string>
+  <string name="skill_transformation_use">use</string>
+  <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>
+  <string name="feeding_market_info">Need different food? Buy more from the market!</string>
+  <string name="open_market">Open Market</string>
+  <string name="cds_description" formatted="false">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
+  <string name="AudioTheme_title">Audio Theme</string>
+  <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
 </resources>

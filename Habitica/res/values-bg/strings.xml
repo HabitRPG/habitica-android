@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Хабитика</string>
   <string name="action_refresh">Опресняване</string>
   <string name="XP_default">Опит</string>
   <string name="HP_default">Здраве</string>
@@ -13,19 +12,26 @@
   <string name="SP_userID_summary">Вашият потребителски идентификатор</string>
   <string name="SP_APIToken_title">Жетон за ППИ</string>
   <string name="SP_APIToken_summary">Вашият жетон за ППИ</string>
+  <string name="Language_title">Език</string>
+  <string name="Language_summary">Промяна на езика на Хабитика</string>
   <string name="SP_user_qr_code">Вашият QR-код</string>
   <string name="PS_contact_title">Свържете се с мен</string>
   <string name="unknown_error">Възникна грешка…</string>
   <string name="pref_account_header">Профил</string>
+  <string name="pref_first_day_of_the_week_title">Начален ден на седмицата</string>
+  <string name="pref_first_day_of_the_week_summary">Първият ден от седмицата във всички календари</string>
   <string name="pref_reminder_header">Ежедневно напомняне</string>
   <string name="pref_reminder_checkbox">Включване на напомнянето</string>
   <string name="pref_reminder_picker">Задаване на времето за напомняне</string>
+  <string name="pref_cds_header">Персонализирано начало на деня</string>
+  <string name="pref_cds_picker">Задаване на персонализирано начало на деня</string>
   <string name="pref_push_notifications_checkbox">Потребителски известия</string>
   <string name="push_notifications">Известия</string>
+  <string name="push_notifications_sum">Настройте известията си</string>
   <string name="preference_push_you_won_challenge">Спечелихте предизвикателство</string>
   <string name="preference_push_received_a_private_message">Получихте лично съобщение</string>
   <string name="preference_push_gifted_gems">Подарени диаманти</string>
-  <string name="preference_push_gifted_subscription">Подарен абонамен</string>
+  <string name="preference_push_gifted_subscription">Подарен абонамент</string>
   <string name="preference_push_invited_to_party">Получихте покана за група</string>
   <string name="preference_push_invited_to_guild">Получихте покана за гилдия</string>
   <string name="preference_push_your_quest_has_begun">Мисията Ви започна</string>
@@ -48,6 +54,7 @@
   <string name="confirmpassword">Потвърдете паролата</string>
   <string name="logout">Изход</string>
   <string name="logout_description">Излизане от Вашия профил</string>
+  <string name="account_details_sum">Вижте подробностите за профила си</string>
   <string name="account_details">Подробности за профила</string>
   <string name="LoginActivityName">Добре дошли</string>
   <string name="string_revive">Съживяване</string>
@@ -58,7 +65,7 @@
   <string name="about.habitica_open_source">Хабитика е софтуер с отворен код, който е наличен в Github</string>
   <string name="about.rate_our_app">Оценете приложението</string>
   <string name="about.give_us_feedback">Изпратете ни отзивите си!</string>
-  <string name="about.bugreport">Докладване на грешка</string>
+  <string name="about.bugreport">Докладване на проблем</string>
   <string name="about.source_code">Изходен код</string>
   <!--Network Errors-->
   <string name="network_error_title">Грешка при свързване</string>
@@ -69,6 +76,7 @@
   <string name="login_validation_error_title">Грешка при проверяването</string>
   <string name="login_validation_error_fieldsmissing">Трябва да попълните всички полета.</string>
   <string name="save_changes">Запазване</string>
+  <string name="copy">Копиране</string>
   <string name="notes">Бележки</string>
   <string name="text">Текст</string>
   <string name="difficulty">Трудност</string>
@@ -83,7 +91,7 @@
   <string name="checklist">Подзадачи</string>
   <string name="reminders">Напомняния</string>
   <string name="actions">Действия</string>
-  <string name="attributes">Атрибути</string>
+  <string name="attributes">Показатели</string>
   <string name="physical">Физическа</string>
   <string name="mental">Умствена</string>
   <string name="social">Обществена</string>
@@ -108,8 +116,9 @@
   <string name="faint_button">Възстановете здравето си и опитайте отново</string>
   <string name="filter">Филтър</string>
   <string name="profile_image">Профилно изображение</string>
-  <string name="mana_price_button" formatted="false">%d ТМ</string>
+  <string name="mana_price_button" formatted="false">%d МТ</string>
   <string name="used_skill" formatted="false">Използвахте %1$s за %2$d точки мана.</string>
+  <string name="used_skill_without_mana" formatted="false">Вие използвахте %1$s.</string>
   <string name="new_checklist_item">нова подзадача</string>
   <string name="add_checklist_item">Добавяне</string>
   <string name="reminder_title">Не забравяйте да изпълнявате ежедневните си задачи!</string>
@@ -173,7 +182,7 @@
   <string name="complete_tutorial">Разбрано!</string>
   <string name="dismiss_tutorial">Напомнете ми отново</string>
   <string name="intro_1_title">Добре дошли в Хабитика</string>
-  <string name="intro_1_description">Над 1 100 000 хора се забавляват, докато вършат нещата си. Присъединете се към тях! Създайте си герой и следете задачите от истинския си живот.</string>
+  <string name="intro_1_description" formatted="false">Присъединете се към останалите %s човека, които се забавляват, докато изпълняват ежедневните си задължения. Създайте си герой и следете истинските си задачи.</string>
   <string name="intro_2_title">Напредък в играта = напредък в живота</string>
   <string name="intro_2_description">Отключвайте функционалностите на играта като изпълнявате задачите в истинския си живот. Печелете екипировка, любимци и още, като награда за постигането на целите си!</string>
   <string name="intro_3_title">Общност и битки с чудовища</string>
@@ -271,7 +280,7 @@
   <string name="armoireEquipment" formatted="false">Намерихте рядък предмет в гардероба: %s! Страхотно!</string>
   <string name="armoireFood" formatted="false">Тършувате из гардероба и намирате %1$s %2$s. Какво ли прави това там?</string>
   <string name="armoireExp">Сборвате се с гардероба и получавате опит. Така му се пада!</string>
-  <string name="armoireNotesFull" formatted="false">Отворете гардероба, за да получите случайно избрана специална екипировка, опит или храна! Оставащи предмети: %d</string>
+  <string name="armoireNotesFull" formatted="false">Отворете гардероба, за да получите специална екипировка, опит или храна! Оставащи предмети: %d</string>
   <string name="armoireLastItem">Намерихте последния рядък предмет за екипиране в омагьосания гардероб.</string>
   <string name="armoireNotesEmpty">В гардероба ще се появяват нови предмети през първата седмица на всеки месец. До тогава продължавайте да щракате за опит и храна!</string>
   <string name="sell" formatted="false">Продаване (%s злато)</string>
@@ -317,7 +326,7 @@
   <string name="dialog_go_back">Назад</string>
   <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
   <string name="change_class">Промяна на класа</string>
-  <string name="change_class_description">Променете класа си и възстановете атрибутните си точки за 3 диаманта. Можете да разпределите атрибутните си точки през уеб сайта</string>
+  <string name="change_class_description">Променете класа си и възстановете показателните си точки за 3 диаманта. Можете да разпределите показателните си точки през уеб сайта</string>
   <string name="enable_class">Включване на класовата система</string>
   <string name="changing_class_progress">Промяна на класа</string>
   <string name="by_email">По е-поща</string>
@@ -342,9 +351,9 @@
   <string name="timeTravelers">Пътешественици във времето</string>
   <string name="seasonalShop">Сезонен магазин</string>
   <string name="empty_inbox">Нямате входящи съобщения. Можете да изпратите ново съобщение на потребител от екрана с неговите публични съобщения в чата!</string>
-  <string name="party_invite">Отключете, като поканите приятели</string>
+  <string name="party_invite">Отключете като поканите приятели</string>
   <string name="no_gold">Нямате достатъчно злато</string>
-  <string name="no_potion">Няма нужда да купувате лечебна отвара</string>
+  <string name="no_potion">Няма нужда да купувате лековита отвара</string>
   <string name="successful_purchase" formatted="false">Закупено успешно: %1$s</string>
   <string name="purchase_confirmation_title">Потвърждаване на покупката</string>
   <string name="confirm_purchase_text" formatted="false">Купуване на %1$s за %2$s %3$s</string>
@@ -355,8 +364,50 @@
   <string name="gold_plural">злато</string>
   <string name="chat_message_copied">Съобщението е копирано</string>
   <string name="copy_chat_message">Копиране</string>
+  <string name="edit_tag_title">Редактиране на етикет</string>
+  <string name="edit_tag_btn_edit">Редактиране</string>
+  <string name="edit_tag_btn_done">Готово</string>
+  <string name="edit_tag_btn_delete">Изтриване</string>
+  <string name="confirm_delete_tag_title">Сигурен/на ли сте?</string>
+  <string name="confirm_delete_tag_message">Наистина ли искате да изтриете това?</string>
+  <string name="filter_drawer_edit_tags">Редактиране на етикети</string>
+  <string name="filter_drawer_filter_tags">Филтриране по етикет</string>
   <!--QR Strings-->
   <string name="qr_section_title">С този QR-код можете да бъдете поканен(а) от някого</string>
   <string name="qr_save_message">QR-кодът е запазен в</string>
   <string name="qr_dialogue_title">Вашият QR-код</string>
+  <string name="download">Сваляне</string>
+  <string name="send_new_message">Изпр. на ново съобщение</string>
+  <string name="choose_recipient_title">Изберете получател</string>
+  <string name="action_continue">Продължаване</string>
+  <string name="scan_qr_code">Сканиране на QR-код</string>
+  <string name="enter_recipient_uuid">Въведете потр. ид. на получателя</string>
+  <string name="invited_to_party">Получихте покана за присъединяване към група!</string>
+  <string name="stats_widget_label">Статистика на Хабитика</string>
+  <string name="add_task">Добавяне на задача</string>
+  <string name="add_habit">Добавяне на навик</string>
+  <string name="add_daily">Добавяне на ежедневна</string>
+  <string name="add_todo">Добавяне на задача</string>
+  <string name="add_reward">Добавяне на награда</string>
+  <string name="all_dailies_completed">Изпълнихте всичките си ежедневни задачи. Добра работа!</string>
+  <string name="widget_habit_button">Извършване на навик в Хабитика</string>
+  <string name="widget_dailies">Ежедневни задачи в Хабитика</string>
+  <string name="widget_todo_list">Задачи за изпълнение в Хабитика</string>
+  <string name="widget_add_task">Добавяне на задача в Хабитика</string>
+  <string name="google_services_missing">Услугите за „Google play“ не могат да бъдат намерени.</string>
+  <string name="gem.purchase.toolbartitle">Купуване</string>
+  <string name="gem.purchase.title">Купуването на диаманти подкрепя разработчиците и помага на Хабитика да продължи да съществува</string>
+  <string name="gem.purchase.subtitle">Диамантите Ви позволяват да закупувате забавни екстри за профила си, като:</string>
+  <string name="gem.purchase.listitem1">Страхотни костюми за героя Ви</string>
+  <string name="gem.purchase.listitem2">Невероятни фонови изображения</string>
+  <string name="gem.purchase.listitem3">Мисии, които Ви награждават с яйца за любимци</string>
+  <string name="gem.purchase.listitem4">Възможността да промените класа си преди ниво 100</string>
+  <string name="support_habitica">Подкрепете Хабитика</string>
+  <string name="skill_transformation_use">използване</string>
+  <string name="hatching_market_info">Не Ви се падат предметите, които искате? Прегледайте пазара!</string>
+  <string name="feeding_market_info">Нуждаете се от друга храна? Купете още от пазара!</string>
+  <string name="open_market">Отваряне на пазара</string>
+  <string name="cds_description" formatted="false">Ежедневните Ви задачи ще се подновят при първия път, когато използвате Хабитика след %1$s. Уверете се, че сте изпълнили ежедневните си задачи преди това време!</string>
+  <string name="AudioTheme_title">Звукова тема</string>
+  <string name="AudioTheme_summary">Промяна на звуковата тема на Хабитика</string>
 </resources>

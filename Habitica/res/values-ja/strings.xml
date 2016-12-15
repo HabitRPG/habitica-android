@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">更新</string>
   <string name="XP_default">経験値</string>
   <string name="HP_default">体力</string>
@@ -13,15 +12,22 @@
   <string name="SP_userID_summary">あなたのユーザーID</string>
   <string name="SP_APIToken_title">API トークン</string>
   <string name="SP_APIToken_summary">あなたの API トークン</string>
+  <string name="Language_title">言語</string>
+  <string name="Language_summary">Habitica の言語を変更する</string>
   <string name="SP_user_qr_code">QR コード</string>
   <string name="PS_contact_title">開発者に連絡する</string>
   <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
+  <string name="pref_first_day_of_the_week_title">週の最初の曜日</string>
+  <string name="pref_first_day_of_the_week_summary">すべてのカレンダーでの週の最初の曜日</string>
   <string name="pref_reminder_header">毎日の通知</string>
   <string name="pref_reminder_checkbox">通知を有効にする</string>
   <string name="pref_reminder_picker">通知時間を設定</string>
+  <string name="pref_cds_header">日付更新の設定</string>
+  <string name="pref_cds_picker">日付更新の時間を設定する</string>
   <string name="pref_push_notifications_checkbox">ユーザーへのプッシュ通知</string>
   <string name="push_notifications">プッシュ通知</string>
+  <string name="push_notifications_sum">プッシュ通知を設定してください。</string>
   <string name="preference_push_you_won_challenge">チャレンジで勝ちました!</string>
   <string name="preference_push_received_a_private_message">プライベートメッセージを受信しました</string>
   <string name="preference_push_gifted_gems">ジェムが贈られました</string>
@@ -48,6 +54,7 @@
   <string name="confirmpassword">パスワード ( 確認 )</string>
   <string name="logout">ログアウト</string>
   <string name="logout_description">ログアウトする</string>
+  <string name="account_details_sum">アカウントの詳細を確認</string>
   <string name="account_details">アカウントの詳細</string>
   <string name="LoginActivityName">ようこそ</string>
   <string name="string_revive">復活</string>
@@ -69,6 +76,7 @@
   <string name="login_validation_error_title">確認エラー</string>
   <string name="login_validation_error_fieldsmissing">入力欄のすべてに入力してください。</string>
   <string name="save_changes">保存</string>
+  <string name="copy">コピー</string>
   <string name="notes">メモ</string>
   <string name="text">テキスト</string>
   <string name="difficulty">難易度</string>
@@ -103,17 +111,18 @@
   <string name="levelup_health">完全に傷がいえた!</string>
   <string name="levelup_button">イエーイ!</string>
   <string name="faint_subtitle">がっかりしないで!</string>
-  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失った。だけど、がんばればすべてを取り返るぞ! 　あなたなら、きっとできる。幸あらんことを。</string>
+  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失った。だけど、がんばればすべてを取り返せるぞ！ 　あなたなら、きっとできる。幸あらんことを。</string>
   <string name="faint_header">体力がなくなった!</string>
   <string name="faint_button">体力を全回復してやり直す</string>
   <string name="filter">フィルター</string>
   <string name="profile_image">プロフィール画像</string>
   <string name="mana_price_button" formatted="false">%d マナ</string>
-  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sをかけた。</string>
+  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sを唱えた。</string>
+  <string name="used_skill_without_mana" formatted="false">%1$s を唱えた。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
   <string name="reminder_title">日課をチェックした?</string>
-  <string name="skill_progress_title">使っている特殊能力</string>
+  <string name="skill_progress_title">使用中のスキル</string>
   <string name="coming_soon">近日中</string>
   <string name="chat_flag_confirmation">このメッセージを違反として報告します。いいですか?</string>
   <string name="flag_confirm">メッセージに印をつける</string>
@@ -173,7 +182,7 @@
   <string name="complete_tutorial">わかった!</string>
   <string name="dismiss_tutorial">もう一度通知</string>
   <string name="intro_1_title">Habitica へようこそ</string>
-  <string name="intro_1_description">1,100,000人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
+  <string name="intro_1_description" formatted="false">%s人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
   <string name="intro_2_title">ゲームの進行 = 人生の進行</string>
   <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろい、ペット、そして「ごほうび」を手に入れながら、自分自身の目標に接近しよう!</string>
   <string name="intro_3_title">友達とつながってモンスターと戦おう</string>
@@ -298,7 +307,7 @@
   <string name="sectionquestMounts">クエストの乗騎</string>
   <string name="sectionspecialMounts">レアな乗騎</string>
   <string name="world_quest">世界のクエスト</string>
-  <string name="inn_description">宿で休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
+  <string name="inn_description">ロッジで休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
   <string name="empty_items" formatted="false">%s を持ってないよ</string>
   <string name="user_level" formatted="false">レベル %s</string>
   <string name="user_level_with_class" formatted="false">レベル %1$s - %2$s</string>
@@ -307,12 +316,12 @@
   <string name="mage">魔道士</string>
   <string name="healer">治療師</string>
   <string name="warrior_description">戦士はタスクを完了したときに、「会心の一撃」が出やすく、その効果も高い。「会心の一撃」が出ると、ゴールド、経験値、アイテムドロップの確率にボーナスがつく。また、戦士はボスに大きなダメージを与えられるぞ。予測できない一攫千金の報酬でやる気が出る、もしくはボス クエストで活躍したいなら、戦士でプレーしよう!</string>
-  <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、特殊能力を使つためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
+  <string name="mage_description">魔道士は、すぐに身に着ける学習能力をもっているよ。経験値の取得とレベルアップが他のクラスより速い。また、魔道士は、スキルを使うためのマナを集めるのがうまい。Habitica の戦術的な面を楽しみたい、レベルアップや拡張機能のアンロックにすごくやる気が出るなら、魔道士でプレーしよう!</string>
   <string name="rogue_description">盗賊は富を集めることを愛するのです。ほかのどのクラスよりもゴールドを稼ぎ、アイテムを見つける確率が高い。盗賊の特徴、忍びの術をもってすれば、日課をやらなかったとしても、性格的に傷つかない。戦利品や勲章――Habitica では、ごほうびと実績に強く心動かされるなら、盗賊でプレーしよう!</string>
   <string name="healer_description">治療師は痛みに耐え、他人を守るのです。やらなかった日課や悪い習慣にも治療師は動揺せず、失敗から体力を回復させる能力がある。パーティーの他のメンバーを助けることに喜びを感じる、困難な仕事による死をも恐れぬ理想があるのなら、治療師でプレーしよう!</string>
   <string name="select_class">クラスを選ぶ</string>
   <string name="opt_out_class">選ばない</string>
-  <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。特殊能力のない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
+  <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
   <string name="class_confirmation" formatted="false">%s になります。いいですか?</string>
   <string name="choose_class">クラスを選ぶ</string>
   <string name="dialog_go_back">戻る</string>
@@ -356,8 +365,49 @@
   <string name="gold_plural">ゴールド</string>
   <string name="chat_message_copied">クリップボードにコピーされたメッセージ</string>
   <string name="copy_chat_message">クリップボードにコピー</string>
+  <string name="edit_tag_title">タグを編集</string>
+  <string name="edit_tag_btn_edit">編集</string>
+  <string name="edit_tag_btn_done">完了</string>
+  <string name="edit_tag_btn_delete">削除</string>
+  <string name="confirm_delete_tag_title">よろしいですか?</string>
+  <string name="confirm_delete_tag_message">削除します。いいですか?</string>
+  <string name="filter_drawer_edit_tags">タグを編集</string>
+  <string name="filter_drawer_filter_tags">タグでしぼる</string>
   <!--QR Strings-->
   <string name="qr_section_title">この QR コードで招待を受けます。</string>
   <string name="qr_save_message">QR コードの保存先</string>
   <string name="qr_dialogue_title">QR コード</string>
+  <string name="download">ダウンロード</string>
+  <string name="send_new_message">メッセージを送信</string>
+  <string name="choose_recipient_title">メッセージの送信先を選択</string>
+  <string name="action_continue">続行</string>
+  <string name="scan_qr_code">QR コードを読み取る</string>
+  <string name="enter_recipient_uuid">送信先の ユーザー ID を入力</string>
+  <string name="invited_to_party">パーティーに招待されました!</string>
+  <string name="stats_widget_label">Habitica での統計</string>
+  <string name="add_task">タスクを追加</string>
+  <string name="add_habit">習慣を追加</string>
+  <string name="add_daily">日課を追加</string>
+  <string name="add_todo">To-Do を追加</string>
+  <string name="add_reward">ごほうびを追加</string>
+  <string name="all_dailies_completed">日課をすべて完了した。お見事!</string>
+  <string name="widget_habit_button">Habitica の習慣</string>
+  <string name="widget_dailies">Habitica の日課</string>
+  <string name="widget_add_task">Habitica のタスク追加</string>
+  <string name="google_services_missing">Google Play サービスが見つかりません。</string>
+  <string name="gem.purchase.toolbartitle">購入</string>
+  <string name="gem.purchase.title">ジェムの購入で、開発者を支援し、Habitica の運営に協力します。</string>
+  <string name="gem.purchase.subtitle">ジェムで、楽しいおまけを買うことができます : </string>
+  <string name="gem.purchase.listitem1">アバター用のクールなファッション</string>
+  <string name="gem.purchase.listitem2">すんごい背景</string>
+  <string name="gem.purchase.listitem3">ペットのたまごを獲得できるクエスト</string>
+  <string name="gem.purchase.listitem4">レベル 100 以前でのクラス変更</string>
+  <string name="support_habitica">Habitica の支援</string>
+  <string name="skill_transformation_use">唱える</string>
+  <string name="hatching_market_info">ほしい落とし物が見つからない?　市場をチェックしてみよう!</string>
+  <string name="feeding_market_info">違うえさがほしい?　市場で買いましょう!</string>
+  <string name="open_market">市場を開く</string>
+  <string name="cds_description" formatted="false">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう!</string>
+  <string name="AudioTheme_title">サウンド テーマ</string>
+  <string name="AudioTheme_summary">Habitica のサウンド テーマを変更する</string>
 </resources>

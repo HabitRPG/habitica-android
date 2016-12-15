@@ -53,12 +53,11 @@ public class ContentCache {
 
     public void GetItemDataList(final List<String> keysToSearch, GotContentEntryCallback<List<ItemData>> gotEntries) {
 
-        Condition.In keyCondition = Condition.column("key").in("potion");
+        Condition.In keyCondition = Condition.column("key").in("");
 
         for (String item : keysToSearch) {
             keyCondition = keyCondition.and(item);
         }
-
 
         Where<ItemData> query = new Select().from(ItemData.class).where(keyCondition);
 

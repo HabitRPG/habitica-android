@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
@@ -404,7 +405,7 @@ public class Task extends BaseModel {
      *
      * @param duedate the date to set
      */
-    public void setDueDate(Date duedate) {
+    public void setDueDate(@Nullable Date duedate) {
         this.duedate = duedate;
     }
 

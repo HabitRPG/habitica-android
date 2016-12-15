@@ -37,7 +37,7 @@
         android:layout_marginBottom="@dimen/bar_padding"
         android:orientation="horizontal"
         android:id="@+id/value_bar_layout">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/ic_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

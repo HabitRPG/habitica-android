@@ -1,8 +1,16 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.amplitude.api.Amplitude;
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.activities.BaseActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
@@ -12,18 +20,10 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -33,7 +33,6 @@ public abstract class BaseFragment extends DialogFragment {
     public String tutorialStepIdentifier;
     public String tutorialText;
     public Unbinder unbinder;
-    private boolean registerEventBus = false;
     private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
         @Override
         public void onResultReceived(TutorialStep step) {
@@ -67,15 +66,9 @@ public abstract class BaseFragment extends DialogFragment {
             String displayedClassName = this.getDisplayedClassName();
 
             if (displayedClassName != null) {
-                JSONObject eventProperties = new JSONObject();
-                try {
-                    eventProperties.put("eventAction", "navigate");
-                    eventProperties.put("eventCategory", "navigation");
-                    eventProperties.put("hitType", "pageview");
-                    eventProperties.put("page", displayedClassName);
-                } catch (JSONException exception) {
-                }
-                Amplitude.getInstance().logEvent("navigate", eventProperties);
+                Map<String, Object> additionalData = new HashMap<>();
+                additionalData.put("page", displayedClassName);
+                AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
             }
         }
     }
@@ -93,7 +86,6 @@ public abstract class BaseFragment extends DialogFragment {
         // Receive Events
         try {
             EventBus.getDefault().register(this);
-            registerEventBus = true;
         } catch (EventBusException ignored) {
 
         }
@@ -115,7 +107,7 @@ public abstract class BaseFragment extends DialogFragment {
 
     @Override
     public void onDestroyView() {
-        if (registerEventBus) {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         if (unbinder != null) {

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">האביטיקה</string>
   <string name="action_refresh">ריענון</string>
   <string name="XP_default">ניסיון</string>
   <string name="HP_default">בריאות</string>
@@ -27,7 +26,6 @@
   <string name="preference_push_gifted_gems">אבני חן ניתנו במתנה</string>
   <string name="preference_push_gifted_subscription">מנוי ניתן במתנה</string>
   <string name="preference_push_invited_to_party">הוזמנו לחבורה</string>
-  <string name="preference_push_invited_to_guild">הוזמנו לגילדה</string>
   <string name="preference_push_your_quest_has_begun">ההרפתקה שלכם החלה</string>
   <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
   <!--Adding tasks-->
@@ -173,7 +171,6 @@
   <string name="complete_tutorial">הבנתי!</string>
   <string name="dismiss_tutorial">הזכר לי שוב</string>
   <string name="intro_1_title">ברוכים הבאים להאביטיקה</string>
-  <string name="intro_1_description">הצטרפו ללמעלה מ 1,100,000 אנשים שנהנים בזמן שהם גורמים לדברים לקרות. צרו דמות ועיקבו אחר משימותיכם מהעולם האמיתי.</string>
   <string name="intro_2_title">התקדמות במשחק = התקדמות בחיים</string>
   <string name="intro_2_description">אפשרו יכולות של המשחק על ידי סימון שהשלמתם משימות בעולם האמיתי. הרוויחו שיריון, חיות מחמד, ועוד - כדי לתגמל את עצמכם על עמידה ביעדים!</string>
   <string name="intro_3_title">היו חברותיים והילחמו במפלצות</string>
@@ -355,8 +352,20 @@
   <string name="gold_plural">זהב</string>
   <string name="chat_message_copied">הודעה הועתקה ללוח</string>
   <string name="copy_chat_message">העתקה ללוח</string>
+  <string name="edit_tag_title">עריכת תג</string>
+  <string name="edit_tag_btn_edit">עריכה</string>
+  <string name="edit_tag_btn_delete">מחיקה</string>
+  <string name="confirm_delete_tag_title">האם אתם בטוחים?</string>
+  <string name="confirm_delete_tag_message">האם אתם באמת רוצים למחוק?</string>
+  <string name="filter_drawer_edit_tags">עריכת תגים</string>
+  <string name="filter_drawer_filter_tags">סינון לפי תגיות</string>
   <!--QR Strings-->
   <string name="qr_section_title">תנו למישהו להזמין אתכם עם קוד ה QR הזה</string>
   <string name="qr_save_message">קוד QR נשמר ב</string>
   <string name="qr_dialogue_title">קוד ה QR שלכם</string>
+  <string name="download">הורדה</string>
+  <string name="send_new_message">שליחת הודעה חדשה</string>
+  <string name="choose_recipient_title">בחרו נמען להודעה</string>
+  <string name="action_continue">המשך</string>
+  <string name="scan_qr_code">סריקת קוד QR</string>
 </resources>

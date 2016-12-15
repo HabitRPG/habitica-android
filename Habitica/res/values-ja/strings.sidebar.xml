@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="sidebar.tasks">タスク</string>
-  <string name="sidebar.skills">特殊能力</string>
+  <string name="sidebar.skills">スキル</string>
   <string name="sidebar.section.social">コミュニティー</string>
   <string name="sidebar.inbox">受信箱</string>
   <string name="sidebar.tavern">キャンプ場</string>

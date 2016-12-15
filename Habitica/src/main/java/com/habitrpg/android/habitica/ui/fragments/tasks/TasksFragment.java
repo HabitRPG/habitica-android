@@ -5,23 +5,16 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
 import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -38,7 +31,6 @@ import com.habitrpg.android.habitica.ui.menu.EditTagsSectionDrawer;
 import com.habitrpg.android.habitica.ui.menu.EditTextDrawer;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
@@ -47,6 +39,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -89,13 +82,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
-    private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
-    private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
 
     private boolean displayingTaskForm;
     private boolean editingTags;
     private List<Tag> tags;
-    private List<Tag> tagsCopy;
     private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
     private Debounce filterChangedHandler = new Debounce(1500, 1000) {
         @Override
@@ -114,16 +104,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (user != null) {
-            tags = user.getTags();
-            fillTagFilterDrawer(tags);
-        }
     }
 
     @Override
@@ -159,6 +139,16 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         loadTaskLists();
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (user != null) {
+            tags = user.getTags();
+            fillTagFilterDrawer(tags);
+        }
     }
 
     @Override
@@ -415,54 +405,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     @Subscribe
-    public void onEvent(TaskCheckedCommand event) {
-        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.Task.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(ChecklistCheckedCommand event) {
-        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskUpdateCallback(), throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(activity, event.habit.getId()), throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(AddNewTaskCommand event) {
         openNewTaskActivity(event.ClassType.toLowerCase());
     }
 
     @Subscribe
     public void onEvent(final TaskSaveEvent event) {
-        Task task = event.task;
-        if (event.created) {
-            this.apiHelper.apiService.createItem(task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskCreationCallback(), throwable -> {
-                    });
-            floatingMenu.close(true);
-        } else {
-            this.apiHelper.apiService.updateTask(task.getId(), task)
-                    .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(new TaskUpdateCallback(), throwable -> {
-                    });
-        }
-    }
-
-    @Subscribe
-    public void onEvent(ToggledInnStateEvent event) {
-        user.getPreferences().setSleep(event.Inn);
+        floatingMenu.close(true);
     }
 
     @Subscribe
@@ -475,6 +424,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             fillTagFilterDrawer(tags);
         }
     }
+
     //endregion Events
 
     public void fillTagFilterDrawer(List<Tag> tagList) {
@@ -484,25 +434,33 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             if(this.editingTags) {
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_edit_tags)));
                 items.add(new EditTextDrawer());
-                for (Tag t : tagList) {
-                    items.add(new EditTagsDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                    );
+                if (tagList != null) {
+                    for (Tag t : tagList) {
+                        items.add(new EditTagsDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                        );
+                    }
                 }
-                this.activity.fillFilterDrawer(items);
+                if (isAdded()) {
+                    this.activity.fillFilterDrawer(items);
+                }
             }else {
                 items.add(new EditTagsSectionDrawer().withEditing(this.editingTags).withName(getString(R.string.filter_drawer_filter_tags)));
                 items.add(new EditTextDrawer());
-                for (Tag t : tagList) {
-                    items.add(new SwitchDrawerItem()
-                            .withName(t.getName())
-                            .withTag(t)
-                            .withChecked(this.tagsHelper.isTagChecked(t.getId()))
-                            .withOnCheckedChangeListener(this)
-                    );
+                if (tagList != null) {
+                    for (Tag t : tagList) {
+                        items.add(new SwitchDrawerItem()
+                                .withName(t.getName())
+                                .withTag(t)
+                                .withChecked(this.tagsHelper.isTagChecked(t.getId()))
+                                .withOnCheckedChangeListener(this)
+                        );
+                    }
                 }
-                this.activity.fillFilterDrawer(items);
+                if (isAdded()) {
+                    this.activity.fillFilterDrawer(items);
+                }
             }
         }
     }
@@ -574,11 +532,31 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case (TASK_CREATED_RESULT):
+                this.displayingTaskForm = false;
+                onTaskCreatedResult(resultCode, data);
+                break;
             case (TASK_UPDATED_RESULT):
                 this.displayingTaskForm = false;
                 break;
+        }
+    }
+
+    private void onTaskCreatedResult(int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            String taskType = data.getStringExtra(TaskFormActivity.TASK_TYPE_KEY);
+            switchToTaskTab(taskType);
+        }
+    }
+
+    private void switchToTaskTab(String taskType) {
+        HashMap<Integer, TaskRecyclerViewFragment> dict = new HashMap<>(ViewFragmentsDictionary);
+        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : dict.entrySet()) {
+            if (tabEntry.getValue().getClassName().equals(taskType)) {
+                viewPager.setCurrentItem(tabEntry.getKey());
+            }
         }
     }
 

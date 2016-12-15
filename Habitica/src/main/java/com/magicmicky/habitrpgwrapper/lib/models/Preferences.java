@@ -33,7 +33,7 @@ public class Preferences extends BaseModel {
     @Column
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
     @Column
-    private String allocationMode, shirt, skin, size, background, chair, language;
+    private String allocationMode, shirt, skin, size, background, chair, language, sound;
     @Column
     private int dayStart, timezoneOffset;
 
@@ -152,6 +152,14 @@ public class Preferences extends BaseModel {
         this.size = size;
     }
 
+    public String getSound() {
+        return sound;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
     public int getTimezoneOffset() {
         return timezoneOffset;
     }
@@ -177,7 +185,7 @@ public class Preferences extends BaseModel {
     }
 
     public String getChair() {
-        if (chair != null && !chair.equals("none")) {
+        if (chair != null && !chair.equals("none") && chair.length() > 5 && !chair.substring(0, 6).equals("chair_")) {
             return "chair_" + chair;
         }
         return null;
@@ -213,6 +221,9 @@ public class Preferences extends BaseModel {
 
     @Override
     public void save() {
+        if (user_id == null) {
+            return;
+        }
         hair.userId = user_id;
 
         if (suppressModals != null)

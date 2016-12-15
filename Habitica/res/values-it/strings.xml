@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Aggiorna</string>
   <string name="XP_default">Esperienza</string>
   <string name="HP_default">Salute</string>
@@ -13,17 +12,28 @@
   <string name="SP_userID_summary">Il tuo ID utente</string>
   <string name="SP_APIToken_title">API Token</string>
   <string name="SP_APIToken_summary">Il tuo API Token</string>
+  <string name="Language_title">Lingua</string>
+  <string name="Language_summary">Cambia la lingua di Habitica</string>
+  <string name="SP_user_qr_code">Il tuo codice QR</string>
   <string name="PS_contact_title">Contattami</string>
   <string name="unknown_error">Si è verificato un errore...</string>
   <string name="pref_account_header">Account</string>
+  <string name="pref_first_day_of_the_week_title">Primo giorno della settimana</string>
+  <string name="pref_first_day_of_the_week_summary">Primo giorno della settimana in tutti i calendari</string>
   <string name="pref_reminder_header">Notifica giornaliera</string>
   <string name="pref_reminder_checkbox">Attiva notifica</string>
   <string name="pref_reminder_picker">Imposta ora notifica</string>
+  <string name="pref_cds_header">Inizio giorno personalizzato</string>
+  <string name="pref_cds_picker">Imposta ora di inizio giorno</string>
+  <string name="pref_push_notifications_checkbox">Notifiche push utente</string>
   <string name="push_notifications">Notifiche Push</string>
+  <string name="push_notifications_sum">Gestisci le impostazioni delle notifiche push</string>
   <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
-  <string name="preference_push_received_a_private_message">Ricevuto un messaggio</string>
+  <string name="preference_push_received_a_private_message">Nuovo messaggio privato ricevuto</string>
+  <string name="preference_push_gifted_gems">Gemme regalate</string>
+  <string name="preference_push_gifted_subscription">Abbonamento regalato</string>
   <string name="preference_push_invited_to_party">Invito in una squadra</string>
-  <string name="preference_push_invited_to_guild">Invito in una Gilda</string>
+  <string name="preference_push_invited_to_guild">Invito Gilda</string>
   <string name="preference_push_your_quest_has_begun">La tua Missione è cominciata</string>
   <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
   <!--Adding tasks-->
@@ -44,6 +54,7 @@
   <string name="confirmpassword">Conferma password</string>
   <string name="logout">Esci</string>
   <string name="logout_description">Esci dal tuo account</string>
+  <string name="account_details_sum">Controlla i dettagli del tuo account</string>
   <string name="account_details">Dettagli account</string>
   <string name="LoginActivityName">Benvenuto</string>
   <string name="string_revive">Rianima</string>
@@ -65,6 +76,7 @@
   <string name="login_validation_error_title">Errore di validazione</string>
   <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
   <string name="save_changes">Salva</string>
+  <string name="copy">Copia</string>
   <string name="notes">Note</string>
   <string name="text">Testo</string>
   <string name="difficulty">Difficoltà</string>
@@ -94,7 +106,7 @@
   <string name="friday">Venerdì</string>
   <string name="saturday">Sabato</string>
   <string name="sunday">Domenica</string>
-  <string name="levelup_header">Sei salito di livello!</string>
+  <string name="levelup_header">Nuovo livello!</string>
   <string name="levelup_detail">Raggiungendo obiettivi nella vita reale, sei salito al Livello %1$d!</string>
   <string name="levelup_health">Sei stato completamente curato!</string>
   <string name="levelup_button">Urrà!</string>
@@ -106,6 +118,7 @@
   <string name="profile_image">Immagine profilo</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Hai usato %1$s per %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Hai usato %1$s.</string>
   <string name="new_checklist_item">Nuovo elemento checklist</string>
   <string name="add_checklist_item">Aggiungi</string>
   <string name="reminder_title">Ricorda di completare le tue Daily!</string>
@@ -169,7 +182,7 @@
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
-  <string name="intro_1_description">Unisciti ad oltre 1.100.000 persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
+  <string name="intro_1_description" formatted="false">Unisciti ad oltre %s persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
   <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
   <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
@@ -221,7 +234,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="leader">Leader</string>
   <string name="gems">Gemme</string>
   <string name="copy_as_todo">Copia come ToDo</string>
-  <string name="send_pm">Invia messaggio</string>
+  <string name="send_pm">Invia messaggio privato</string>
   <string name="flag">Segnala</string>
   <string name="delete">Elimina</string>
   <string name="name">Nome</string>
@@ -230,6 +243,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Scrivi messaggio</string>
   <string name="post">Invia</string>
+  <string name="guild_search_hint">Cerca gilde</string>
   <string name="todo_due" formatted="false">Scade: %s</string>
   <string name="daily_streak" formatted="false">serie: %d</string>
   <string name="todo_has_duedate">L\' attività ha una scadenza</string>
@@ -263,7 +277,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="quests">Missioni</string>
   <string name="pets">Animali</string>
   <string name="mounts">Cavalcature</string>
-  <string name="armoireEquipment" formatted="false">Hai trovato dell\'Equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
+  <string name="armoireEquipment" formatted="false">Hai trovato dell\'equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
   <string name="armoireFood" formatted="false">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
   <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
   <string name="armoireNotesFull" formatted="false">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
@@ -348,7 +362,52 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="hourglass">clessidra</string>
   <string name="hourglasses">clessidre</string>
   <string name="gold_singular">oro</string>
+  <string name="gold_plural">oro</string>
   <string name="chat_message_copied">Messaggio copiato negli Appunti</string>
   <string name="copy_chat_message">Copia negli appunti</string>
+  <string name="edit_tag_title">Modifica etichetta</string>
+  <string name="edit_tag_btn_edit">Modifica</string>
+  <string name="edit_tag_btn_done">Fatto</string>
+  <string name="edit_tag_btn_delete">Elimina</string>
+  <string name="confirm_delete_tag_title">Sei sicuro?</string>
+  <string name="confirm_delete_tag_message">Vuoi davvero eliminare?</string>
+  <string name="filter_drawer_edit_tags">Modifica etichette</string>
+  <string name="filter_drawer_filter_tags">Filtra per etichette</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Fatti invitare da qualcuno con questo codice QR</string>
+  <string name="qr_save_message">Codice QR salvato a</string>
+  <string name="qr_dialogue_title">Il tuo codice QR</string>
+  <string name="download">Scarica</string>
+  <string name="send_new_message">Invia nuovo messaggio</string>
+  <string name="choose_recipient_title">Scegli destinatario messaggio</string>
+  <string name="action_continue">Continua</string>
+  <string name="scan_qr_code">Rileva codice QR</string>
+  <string name="enter_recipient_uuid">Inserisci ID Utente destinatario</string>
+  <string name="invited_to_party">Hai ricevuto un invito per unirti a una squadra!</string>
+  <string name="stats_widget_label">Statistiche Habitica</string>
+  <string name="add_task">Aggiungi Attività</string>
+  <string name="add_habit">Aggiungi Abitudine</string>
+  <string name="add_daily">Aggiungi Daily</string>
+  <string name="add_todo">Aggiungi To-Do</string>
+  <string name="add_reward">Aggiungi Ricompensa</string>
+  <string name="all_dailies_completed">Hai completato tutte le tue Daily. Ottimo lavoro!</string>
+  <string name="widget_habit_button">Habitica esegui abitudine</string>
+  <string name="widget_dailies">Habitica Daily</string>
+  <string name="widget_todo_list">Lista To-Do Habitica</string>
+  <string name="widget_add_task">Habitica aggiungi attività</string>
+  <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
+  <string name="gem.purchase.toolbartitle">Compra</string>
+  <string name="gem.purchase.title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
+  <string name="gem.purchase.subtitle">Le Gemme ti permettono di ottenere simpatici extra per il tuo account, tra cui:</string>
+  <string name="gem.purchase.listitem1">Costumi per il tuo avatar</string>
+  <string name="gem.purchase.listitem2">Magnifici sfondi</string>
+  <string name="gem.purchase.listitem3">Missioni che ti premiano con uova di animali</string>
+  <string name="gem.purchase.listitem4">La possibilità di cambiare classe prima del livello 100</string>
+  <string name="support_habitica">Supporta Habitica</string>
+  <string name="skill_transformation_use">usa</string>
+  <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
+  <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
+  <string name="cds_description" formatted="false">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
+  <string name="AudioTheme_title">Tema sonoro</string>
+  <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
 </resources>

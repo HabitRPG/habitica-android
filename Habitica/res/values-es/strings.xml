@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Actualizar</string>
   <string name="XP_default">Experiencia</string>
   <string name="HP_default">Salud</string>
@@ -13,12 +12,29 @@
   <string name="SP_userID_summary">Tu ID de usuario</string>
   <string name="SP_APIToken_title">Token de API</string>
   <string name="SP_APIToken_summary">Tu token de API</string>
+  <string name="Language_title">Idioma</string>
+  <string name="Language_summary">Cambiar el idioma de Habitica</string>
+  <string name="SP_user_qr_code">Tu código QR</string>
   <string name="PS_contact_title">Contactar</string>
   <string name="unknown_error">Se produjo un error...</string>
   <string name="pref_account_header">Cuenta</string>
+  <string name="pref_first_day_of_the_week_title">Primer día de la semana</string>
+  <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
   <string name="pref_reminder_header">Recordatorio diario</string>
   <string name="pref_reminder_checkbox">Activar recordatorio</string>
   <string name="pref_reminder_picker">Establecer hora de recordatorio</string>
+  <string name="pref_cds_header">Personalizar comienzo del día</string>
+  <string name="pref_cds_picker">Establecer hora del comienzo del día personalizado</string>
+  <string name="pref_push_notifications_checkbox">Notificaciones push del usuario</string>
+  <string name="push_notifications">Notificaciones push</string>
+  <string name="preference_push_you_won_challenge">¡Has ganado un desafío!</string>
+  <string name="preference_push_received_a_private_message">Has recibido un mensaje privado</string>
+  <string name="preference_push_gifted_gems">Gemas regaladas</string>
+  <string name="preference_push_gifted_subscription">Suscripción regalada</string>
+  <string name="preference_push_invited_to_party">Invitado a un grupo</string>
+  <string name="preference_push_invited_to_guild">Invitado a un Gremio</string>
+  <string name="preference_push_your_quest_has_begun">La misión ha comenzado</string>
+  <string name="preference_push_invited_to_quest">Invitado a una misión</string>
   <!--Adding tasks-->
   <string name="task_value">Valor</string>
   <string name="new_todo">Nueva tarea</string>
@@ -58,6 +74,7 @@
   <string name="login_validation_error_title">Error de validación</string>
   <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
   <string name="save_changes">Guardar</string>
+  <string name="copy">Copiar</string>
   <string name="notes">Notas</string>
   <string name="text">Texto</string>
   <string name="difficulty">Dificultad</string>
@@ -99,6 +116,7 @@
   <string name="profile_image">Imagen de perfil</string>
   <string name="mana_price_button" formatted="false">%d PM</string>
   <string name="used_skill" formatted="false">Has usado %1$s por %2$d de maná.</string>
+  <string name="used_skill_without_mana" formatted="false">Has usado %1$s.</string>
   <string name="new_checklist_item">nuevo elemento de lista</string>
   <string name="add_checklist_item">Añadir</string>
   <string name="reminder_title">¡Acuérdate de completar tus tareas diarias!</string>
@@ -162,7 +180,7 @@
   <string name="complete_tutorial">¡Ya está!</string>
   <string name="dismiss_tutorial">Vuelve a recordármelo</string>
   <string name="intro_1_title">Te damos la bienvenida a Habitica</string>
-  <string name="intro_1_description">Únete a más de 1 100 000 personas que ya están siendo eficientes y pasándolo bien al mismo tiempo. Crea tu personaje y registra tus tareas en el mundo real.</string>
+  <string name="intro_1_description" formatted="false">Únete a mas de %s de personas que se divierten mientras van realizando sus quehaceres. Crea un personaje y registra tus tareas del mundo real.</string>
   <string name="intro_2_title">Progreso en el juego = Progreso en la vida</string>
   <string name="intro_2_description">Desbloquea funciones del juego completando tareas en el mundo real. Obtén recompensas, como armaduras, mascotas y otras cosas, por cumplir tus objetivos.</string>
   <string name="intro_3_title">Socializa y combate monstruos</string>
@@ -223,6 +241,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="privacy">Privacidad</string>
   <string name="write_message">Escribir mensaje</string>
   <string name="post">Publicar</string>
+  <string name="guild_search_hint">Buscar gremios</string>
   <string name="todo_due" formatted="false">Para: %s</string>
   <string name="daily_streak" formatted="false">racha actual: %d</string>
   <string name="todo_has_duedate">La tarea tiene fecha límite</string>
@@ -256,12 +275,12 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="quests">Misiones</string>
   <string name="pets">Mascotas</string>
   <string name="mounts">Monturas</string>
-  <string name="armoireEquipment" formatted="false">¡Genial! Has encontrado una prenda insólita en el ropero: %s.</string>
-  <string name="armoireFood" formatted="false">Rebuscando en el ropero, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
-  <string name="armoireExp">Te peleas con el ropero y ganas experiencia. ¡Ahí lo llevas!</string>
-  <string name="armoireNotesFull" formatted="false">Abre el ropero para recibir prendas especiales, experiencia o comida al azar. Prendas que te faltan por conseguir: %d.</string>
-  <string name="armoireLastItem">Has encontrado la última prenda insólita del ropero encantado.</string>
-  <string name="armoireNotesEmpty">El ropero dispone de nuevas prendas la primera semana de cada mes. Hasta entonces, sigue haciendo clic en él para ganar experiencia y comida.</string>
+  <string name="armoireEquipment" formatted="false">¡Genial! Has encontrado una prenda insólita en el Armario: %s.</string>
+  <string name="armoireFood" formatted="false">Rebuscando en el Armario, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
+  <string name="armoireExp">Te peleas con el Armario y ganas experiencia. ¡Ahí lo llevas!</string>
+  <string name="armoireNotesFull" formatted="false">Abre el Armario para recibir prendas especiales, experiencia o comida al azar. Prendas que te faltan por conseguir: %d.</string>
+  <string name="armoireLastItem">Has encontrado la última prenda insólita del Armario encantado.</string>
+  <string name="armoireNotesEmpty">El Armario dispone de nuevas prendas la primera semana de cada mes. Hasta entonces, sigue haciendo clic en él para ganar experiencia y comida.</string>
   <string name="sell" formatted="false">Vender (%s de oro)</string>
   <string name="hatch_with_potion">Mezclar con poción</string>
   <string name="feed_to_pet">Alimentar a mascota</string>
@@ -330,5 +349,62 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="timeTravelers">Viajeros del tiempo</string>
   <string name="seasonalShop">Tienda estacional</string>
   <string name="empty_inbox">No tienes ningún mensaje en la bandeja de entrada. Puedes enviar un mensaje a un usuario desde los mensajes de chat públicos que hayan enviado.</string>
+  <string name="party_invite">Desbloquéala invitando a tus amigos</string>
+  <string name="no_gold">No tienes suficiente oro</string>
+  <string name="no_potion">No necesitas comprar una poción de salud</string>
+  <string name="successful_purchase" formatted="false">Has comprado %1$s</string>
+  <string name="purchase_confirmation_title">Confirmar la compra</string>
+  <string name="confirm_purchase_text" formatted="false">Comprar %1$s para %2$s %3$s</string>
+  <string name="gem">gema</string>
+  <string name="hourglass">reloj de arena</string>
+  <string name="hourglasses">relojes de arena</string>
+  <string name="gold_singular">oro</string>
+  <string name="gold_plural">oro</string>
+  <string name="chat_message_copied">Mensaje copiado al portapapeles</string>
+  <string name="copy_chat_message">Copiar al portapapeles</string>
+  <string name="edit_tag_title">Editar etiqueta</string>
+  <string name="edit_tag_btn_edit">Editar</string>
+  <string name="edit_tag_btn_done">Listo</string>
+  <string name="edit_tag_btn_delete">Eliminar</string>
+  <string name="confirm_delete_tag_title">¿Seguro?</string>
+  <string name="confirm_delete_tag_message">¿Seguro que quieres realizar la eliminación?</string>
+  <string name="filter_drawer_edit_tags">Editar etiquetas</string>
+  <string name="filter_drawer_filter_tags">Filtrar por etiquetas</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Pídele a alguien que te invite con este código QR</string>
+  <string name="qr_save_message">Código QR guardado en</string>
+  <string name="qr_dialogue_title">Tu código QR</string>
+  <string name="download">Descargar</string>
+  <string name="send_new_message">Enviar un nuevo mensaje</string>
+  <string name="choose_recipient_title">Elige el destinatario del mensaje</string>
+  <string name="action_continue">Continuar</string>
+  <string name="scan_qr_code">Leer código QR</string>
+  <string name="enter_recipient_uuid">Introduce el ID de usuario del destinatario</string>
+  <string name="invited_to_party">¡Te han invitado a un grupo!</string>
+  <string name="stats_widget_label">Estadísticas de Habitica</string>
+  <string name="add_task">Añadir tarea</string>
+  <string name="add_habit">Añadir hábito</string>
+  <string name="add_daily">Añadir tarea diaria</string>
+  <string name="add_todo">Añadir quehacer</string>
+  <string name="add_reward">Añadir recompensa</string>
+  <string name="all_dailies_completed">Ha completado todas las tareas diarias. ¡Buen trabajo!</string>
+  <string name="widget_habit_button">Hábitos Habitica</string>
+  <string name="widget_dailies">Tareas diarias Habitica</string>
+  <string name="widget_add_task">Añade tareas Habitica</string>
+  <string name="google_services_missing">Los servidores de Google Play no pueden ser encontrados.</string>
+  <string name="gem.purchase.toolbartitle">Comprar</string>
+  <string name="gem.purchase.title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
+  <string name="gem.purchase.subtitle">Las gemas te permiten comprar diversion extra a tu cuenta, incluyendo:</string>
+  <string name="gem.purchase.listitem1">Asombrosos disfrases para tu personaje</string>
+  <string name="gem.purchase.listitem2">Increibles fondos</string>
+  <string name="gem.purchase.listitem3">Misiones que te recompensan con huevos de mascotas</string>
+  <string name="gem.purchase.listitem4">La habilidad de cambiar tu clase antes del nivel 100</string>
+  <string name="support_habitica">Ayuda Habitica</string>
+  <string name="skill_transformation_use">Usar</string>
+  <string name="hatching_market_info">¿No tienes la poción correcta? Revisa el Mercado</string>
+  <string name="feeding_market_info">¿Necesitas un alimento diferente? ¡Compra más desde el Mercado!</string>
+  <string name="open_market">Abrir Mercado</string>
+  <string name="cds_description" formatted="false">Tus Tareas Diarias serán reiniciadas la próxima vez que uses Habitica por primera vez despues de %1$s. ¡Asegurate de completar todas tus Tareas Diarias antes de tiempo!</string>
+  <string name="AudioTheme_title">Tema de audio</string>
+  <string name="AudioTheme_summary">Cambiar el tema de audio de Habitica</string>
 </resources>

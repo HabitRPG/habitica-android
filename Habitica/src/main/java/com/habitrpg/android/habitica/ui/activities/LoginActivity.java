@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 
 import android.accounts.AccountManager;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -44,6 +46,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -59,6 +62,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -163,15 +168,9 @@ public class LoginActivity extends BaseActivity
 
         this.isRegistering = true;
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "navigate");
-            eventProperties.put("eventCategory", "navigation");
-            eventProperties.put("hitType", "pageview");
-            eventProperties.put("page", this.getClass().getSimpleName());
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("navigate", eventProperties);
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("page", this.getClass().getSimpleName());
+        AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
     }
 
     @Override
@@ -404,17 +403,10 @@ public class LoginActivity extends BaseActivity
             e.printStackTrace();
         }
         
-        if (this.isRegistering || userAuthResponse.getNewUser()) {
+        if (userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
-            JSONObject eventProperties = new JSONObject();
-            try {
-                eventProperties.put("eventAction", "login");
-                eventProperties.put("eventCategory", "behaviour");
-                eventProperties.put("hitType", "event");
-            } catch (JSONException exception) {
-            }
-            Amplitude.getInstance().logEvent("login", eventProperties);
+            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT);
             this.startMainActivity();
         }
     }
@@ -424,7 +416,16 @@ public class LoginActivity extends BaseActivity
         String[] accountTypes = new String[]{"com.google"};
         Intent intent = AccountPicker.newChooseAccountIntent(null, null,
                 accountTypes, false, null, null, null, null);
-        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+        try {
+            startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+        } catch (ActivityNotFoundException e) {
+            Dialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.authentication_error_title)
+                    .setMessage(R.string.google_services_missing)
+                    .setNegativeButton(R.string.close, (dialogInterface, i) -> dialogInterface.dismiss())
+                    .create();
+            dialog.show();
+        }
     }
 
     private void handleGoogleLoginResult() {
@@ -433,18 +434,15 @@ public class LoginActivity extends BaseActivity
         Observable.defer(() -> {
             try {
                 return Observable.just(GoogleAuthUtil.getToken(LoginActivity.this, googleEmail, scopes));
-            } catch (IOException e) {
-                throw Exceptions.propagate(e);
-            } catch (GoogleAuthException e) {
+            } catch (IOException | GoogleAuthException e) {
                 throw Exceptions.propagate(e);
             }
-
         })
                 .flatMap(token -> apiHelper.connectSocial("google", googleEmail, token))
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
-                    if (GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
+                    if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
                         handleGoogleAuthException((GoogleAuthException)throwable.getCause());
                     }
                 });

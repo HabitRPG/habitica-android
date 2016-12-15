@@ -29,8 +29,81 @@
         <item>@string/sunday</item>
     </string-array>
 
+    <string-array name="weekdayValues">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>1</item>
+    </string-array>
+
     <string-array name="avatar_sizes">
         <item>@string/avatar_size_slim</item>
         <item>@string/avatar_size_broad</item>
+    </string-array>
+
+    <string-array name="Language">
+        <item>English</item>
+        <item>Български</item>
+        <item>Deutsch</item>
+        <item>British English</item>
+        <item>Español</item>
+        <item>Français</item>
+        <item>עברית</item>
+        <item>Magyar</item>
+        <item>Bahasa Indonesia</item>
+        <item>Italiano</item>
+        <item>日本語</item>
+        <item>Nederlands</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>Português Brasileiro</item>
+        <item>Русский</item>
+        <item>中文（简体）</item>
+        <item>中文（正體）</item>
+    </string-array>
+
+    <string-array name="LanguageValues">
+        <item>en</item>
+        <item>bg</item>
+        <item>de</item>
+        <item>en_GB</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>iw</item>
+        <item>hr</item>
+        <item>in</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>pt_BR</item>
+        <item>ru</item>
+        <item>zh</item>
+        <item>zh_TW</item>
+    </string-array>
+
+
+    <string-array name="AudioThemes">
+        <item>Off</item>
+        <item>Daniel the Bard</item>
+        <item>Watts\' Theme</item>
+        <item>Gokul Theme</item>
+        <item>LuneFox\'s Theme</item>
+        <item>Rosstavo\'s Theme</item>
+        <item>Dewin\'s Theme</item>
+    </string-array>
+
+    <string-array name="AudioValues">
+        <item>off</item>
+        <item>danielTheBard</item>
+        <item>wattsTheme</item>
+        <item>gokulTheme</item>
+        <item>luneFoxTheme</item>
+        <item>rosstavoTheme</item>
+        <item>dewinTheme</item>
     </string-array>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Muat Ulang</string>
   <string name="XP_default">Pengalaman </string>
   <string name="HP_default">Kesehatan</string>
@@ -13,12 +12,29 @@
   <string name="SP_userID_summary">ID Pengguna Anda</string>
   <string name="SP_APIToken_title">Token API</string>
   <string name="SP_APIToken_summary">Token API Anda</string>
+  <string name="Language_title">Bahasa</string>
+  <string name="Language_summary">Ganti bahasa dalam Habitica</string>
+  <string name="SP_user_qr_code">QR Kodemu</string>
   <string name="PS_contact_title">Kontak saya</string>
   <string name="unknown_error">Terjadi kesalahan...</string>
   <string name="pref_account_header">Akun</string>
+  <string name="pref_first_day_of_the_week_title">Hari Pertama dalam Minggu</string>
+  <string name="pref_first_day_of_the_week_summary">Hari pertama dalam minggu di semua kalender</string>
   <string name="pref_reminder_header">Peringatan Harian</string>
   <string name="pref_reminder_checkbox">Aktifkan Peringatan</string>
   <string name="pref_reminder_picker">Atur Waktu Peringatan</string>
+  <string name="pref_cds_header">Awal Hari</string>
+  <string name="pref_cds_picker">Atur Awal Hari</string>
+  <string name="pref_push_notifications_checkbox">Notifikasi Tampil Pengguna</string>
+  <string name="push_notifications">Notifikasi Tampil</string>
+  <string name="preference_push_you_won_challenge">Kamu memenangkan sebuah Tantangan!</string>
+  <string name="preference_push_received_a_private_message">Menerima sebuah Pesan Pribadi</string>
+  <string name="preference_push_gifted_gems">Permata terhadiahkan</string>
+  <string name="preference_push_gifted_subscription">Langganan terhadiahkan</string>
+  <string name="preference_push_invited_to_party">Terundang ke Kelompok</string>
+  <string name="preference_push_invited_to_guild">Telah diundang ke dalam Guild</string>
+  <string name="preference_push_your_quest_has_begun">Tugasmu telah Dimulai</string>
+  <string name="preference_push_invited_to_quest">Terundang ke Tugas</string>
   <!--Adding tasks-->
   <string name="task_value">Nilai</string>
   <string name="new_todo">Tugas baru</string>
@@ -58,6 +74,7 @@
   <string name="login_validation_error_title">Validasi Gagal</string>
   <string name="login_validation_error_fieldsmissing">Anda harus mengisi semua kolom.</string>
   <string name="save_changes">Simpan</string>
+  <string name="copy">Salin</string>
   <string name="notes">Catatan</string>
   <string name="text">Teks</string>
   <string name="difficulty">Tingkat Kesulitan</string>
@@ -70,6 +87,7 @@
   <string name="positive_habit_form">Positif (+)</string>
   <string name="negative_habit_form">Negatif (-)</string>
   <string name="checklist">Ceklis</string>
+  <string name="reminders">Pengingat</string>
   <string name="actions">Aksi</string>
   <string name="attributes">Atribut</string>
   <string name="physical">Fisik</string>
@@ -93,10 +111,12 @@
   <string name="faint_subtitle">Jangan bersedih!</string>
   <string name="faint_penalty_body">Kamu kehilangan Level, Emasmu, dan sepotong Perlengkapan, tetapi kamu dapat mendapatkannya kembali dengan kerja keras! Semoga berhasil--kamu pasti bisa.</string>
   <string name="faint_header">Kamu kehabisan Nyawa!</string>
+  <string name="faint_button">Isi ulang Kesehatan &amp; Ulang Lagi</string>
   <string name="filter">Filter</string>
   <string name="profile_image">Gambar Profil</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Kamu menggunakan %1$s dengan %2$d mana.</string>
+  <string name="used_skill_without_mana" formatted="false">Kamu menggunakan %1$s</string>
   <string name="new_checklist_item">ceklis item baru</string>
   <string name="add_checklist_item">Tambahkan</string>
   <string name="reminder_title">Ingatlah untuk mencentang Keseharianmu!</string>
@@ -160,7 +180,7 @@
   <string name="complete_tutorial">Aku mengerti!</string>
   <string name="dismiss_tutorial">Peringatkan aku lagi</string>
   <string name="intro_1_title">Selamat datang di Habitica</string>
-  <string name="intro_1_description">Bergabunglah dengan lebih dari 1.100.000 orang bersenang-senang dalam menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
+  <string name="intro_1_description" formatted="false">Bergabunglah dengan lebih dari %s orang yang bersenang-senang sambil menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
   <string name="intro_2_title">Kemajuan dalam Permainan = Kemajuan dalam Hidup</string>
   <string name="intro_2_description">Buka fitur dalam game dengan mencentang tugas harianmu. Dapatkan baju, peliharaan, dan banyak lagi untuk hadiahmu menyelesaikan tujuan!</string>
   <string name="intro_3_title">Bersosialisasi sambil Mengalahkan Monster</string>
@@ -221,6 +241,7 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="privacy">Privasi</string>
   <string name="write_message">Tulis Pesan</string>
   <string name="post">Kirim</string>
+  <string name="guild_search_hint">Mencari Perserikatan</string>
   <string name="todo_due" formatted="false">Tenggat: %s</string>
   <string name="daily_streak" formatted="false">%d kali berturut-turut</string>
   <string name="todo_has_duedate">Tugas memiliki Tenggat Waktu</string>
@@ -303,6 +324,7 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="dialog_go_back">Kembali</string>
   <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin mematikan fitur?</string>
   <string name="change_class">Ganti profesi</string>
+  <string name="change_class_description">Ubah kelasmu dan terima kembali nilai atribut sebanyak 3 permata. Kamu bisa menempatkan nilai atribut melalui laman web</string>
   <string name="enable_class">Aktifkan Sistem Profesi</string>
   <string name="changing_class_progress">Ganti Profesi</string>
   <string name="by_email">Melalui Email</string>
@@ -319,5 +341,68 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="share_levelup" formatted="false">Saya naik level %s di Habitica dengan meningkatkan kebiasaan kehidupan-nyata saya!</string>
   <string name="share_hatched" formatted="false">Saya menetaskan peliharaan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya! </string>
   <string name="share_raised" formatted="false">Saya baru mendapatkan tunggangan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
+  <string name="open_in_store">Buka di Play Store</string>
+  <string name="change_class_confirmation">Apa kamu yakin untuk mengubah kelas? Ini akan membutuhkan 3 permata.</string>
+  <string name="leaderMessage" formatted="false">Pesan dari %1$s</string>
+  <string name="confirm">Pastikan</string>
+  <string name="market">Pasar</string>
+  <string name="timeTravelers">Penjelajah Waktu</string>
+  <string name="seasonalShop">Toko Musiman</string>
+  <string name="empty_inbox">Kamu tidak memiliki pesan dalam Kotak Masuk. Kamu bisa mengirim pesan baru ke pengguna lain melalui pesan publik!</string>
+  <string name="party_invite">Buka dengan mengundang teman</string>
+  <string name="no_gold">Koin Emas tidak cukup</string>
+  <string name="no_potion">Kamu tidak perlu membeli ramuan kesehatan</string>
+  <string name="successful_purchase" formatted="false">%1$s telah sukses terbeli</string>
+  <string name="purchase_confirmation_title">Pastikan belian</string>
+  <string name="confirm_purchase_text" formatted="false">Membeli %1$s untuk %2$s %3$s</string>
+  <string name="gem">Permata</string>
+  <string name="hourglass">Jam Pasir</string>
+  <string name="hourglasses">Jam-jam Pasir</string>
+  <string name="gold_singular">Koin Emas</string>
+  <string name="gold_plural">Koin Emas</string>
+  <string name="chat_message_copied">Pesan telah tersalin di Papan pencatat</string>
+  <string name="copy_chat_message">Salin di Papan pencatat</string>
+  <string name="edit_tag_title">Rubah Label</string>
+  <string name="edit_tag_btn_edit">Rubah</string>
+  <string name="edit_tag_btn_done">Selesai</string>
+  <string name="edit_tag_btn_delete">Hapus</string>
+  <string name="confirm_delete_tag_title">Kamu yakin?</string>
+  <string name="confirm_delete_tag_message">Apa kamu yakin ingin menghapus?</string>
+  <string name="filter_drawer_edit_tags">Rubah Label</string>
+  <string name="filter_drawer_filter_tags">Saring berdasarkan Label</string>
   <!--QR Strings-->
+  <string name="qr_section_title">Pinta seseorang untuk mengundangmu melalui Kode QR</string>
+  <string name="qr_save_message">Kode QR tersimpan pada</string>
+  <string name="qr_dialogue_title">Kode QR-mu</string>
+  <string name="download">Unduh</string>
+  <string name="send_new_message">Kirim pesan baru</string>
+  <string name="choose_recipient_title">Pilih Penerima Pesan</string>
+  <string name="action_continue">Lanjutkan</string>
+  <string name="scan_qr_code">Pindai Kode QR</string>
+  <string name="enter_recipient_uuid">Masukan User ID Penerima</string>
+  <string name="invited_to_party">Kamu telah diundang untuk bergabung dalam sebuah party!</string>
+  <string name="stats_widget_label">Status Habitica</string>
+  <string name="add_task">Tambah Tugas</string>
+  <string name="add_habit">Tambah Kebiasaan</string>
+  <string name="add_daily">Tambah Kegiatan Harian</string>
+  <string name="add_todo">Tambah Untuk Dilakukan</string>
+  <string name="add_reward">Tambah Hadiah</string>
+  <string name="all_dailies_completed">Anda telah menyelesaikan semua keseharianmu. Selamat!</string>
+  <string name="widget_habit_button">Habitica Melakukan Kebiasaan</string>
+  <string name="widget_dailies">Keseharian Habitica</string>
+  <string name="widget_add_task">Habitica Menambahkan Tugas</string>
+  <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
+  <string name="gem.purchase.toolbartitle">Bayar</string>
+  <string name="gem.purchase.title">Membeli gem dapat mendukung pengembang dan menjaga Habitica tetap berjalan</string>
+  <string name="gem.purchase.subtitle">Permata membuatmu dapat membeli tambahan yang menyenangkan untuk akunmu, termasuk:</string>
+  <string name="gem.purchase.listitem1">Kostum keren untuk avatarmu</string>
+  <string name="gem.purchase.listitem2">Latar belakang yang keren</string>
+  <string name="gem.purchase.listitem3">Misi yang memberikanmu hadiah telur</string>
+  <string name="gem.purchase.listitem4">Kemampuan untuk mengganti profesi sebelum level 100</string>
+  <string name="support_habitica">Dukung Habitica</string>
+  <string name="skill_transformation_use">gunakan</string>
+  <string name="hatching_market_info">Tidak mendapatkan item yang diinginkan? Beli di Market!</string>
+  <string name="feeding_market_info">Butuh makanan yang berbeda? Beli lebih dari pasar!</string>
+  <string name="open_market">Buka Pasar</string>
+  <string name="cds_description" formatted="false">Keseharianmu akan reset pada saat kamu membuka Habitica di atas %1$s. Pastikan kamu telah menyelesaikan Keseharianmu sebelum jam tersebut!</string>
 </resources>

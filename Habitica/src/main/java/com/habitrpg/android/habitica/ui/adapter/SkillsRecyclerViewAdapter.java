@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
     class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.skill_image)
-        ImageView skillImageView;
+        SimpleDraweeView skillImageView;
 
         @BindView(R.id.skill_text)
         TextView skillNameTextView;
@@ -89,7 +89,15 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             this.skill = skill;
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
-            priceButton.setText(String.format(context.getResources().getString(R.string.mana_price_button), skill.mana));
+
+            if(skill.isSpecialItem){
+                priceButton.setText(R.string.skill_transformation_use);
+
+                priceButton.setCompoundDrawables(null, null,null,null);
+            } else  {
+                priceButton.setText(skill.mana+"");
+                priceButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_magic, 0,0,0);
+            }
             DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key);
 
             if (skill.mana > mana) {

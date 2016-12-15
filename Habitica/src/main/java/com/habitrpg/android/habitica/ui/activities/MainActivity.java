@@ -1,29 +1,33 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.amplitude.api.Amplitude;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
+import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
@@ -32,24 +36,32 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
+import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
+import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.SuppressedModals;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
@@ -90,19 +102,15 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.solovyev.android.checkout.ActivityCheckout;
-import org.solovyev.android.checkout.Checkout;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -112,6 +120,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -127,9 +136,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -138,6 +145,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -153,20 +161,26 @@ import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayTy
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored,
-        GemsPurchaseFragment.Listener, TutorialView.OnTutorialReaction {
+        TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
-    private static final int MIN_LEVEL_FOR_SKILLS = 11;
-    // Checkout needs to be in the Activity..
-    public ActivityCheckout checkout = null;
+    public static final int GEM_PURCHASE_REQUEST = 111;
+    public static final int MIN_LEVEL_FOR_SKILLS = 11;
     @Inject
     public APIHelper apiHelper;
+
+    @Inject
+    public SoundManager soundManager;
     @Inject
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
     @Inject
     protected HostConfig hostConfig;
+    @Inject
+    protected SharedPreferences sharedPreferences;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
+
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
@@ -224,12 +238,23 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language","en"));
+        Locale.setDefault(languageHelper.getLocale());
+        Configuration configuration = new Configuration();
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+            configuration.locale = languageHelper.getLocale();
+        } else {
+            configuration.setLocale(languageHelper.getLocale());
+        }
+        getResources().updateConfiguration(configuration,
+                getResources().getDisplayMetrics());
+
+
+
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
         }
-
-        //Check if reminder alarm is set
-        scheduleReminder(this);
 
         pushNotificationManager = PushNotificationManager.getInstance(this);
 
@@ -252,7 +277,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .append(this.drawer);
         }
 
-        setupCheckout();
         EventBus.getDefault().register(this);
     }
 
@@ -276,6 +300,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
         }
 
+        if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
+            TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
+            try {
+                taskAlarmManager.scheduleAllSavedAlarms();
+            } catch (Exception e) {
+                crashlyticsProxy.logException(e);
+            }
+        }
+
         //after the activity has been stopped and is thereafter resumed,
         //a state can arise in which the active fragment no longer has a
         //reference to the tabLayout (and all its adapters are null).
@@ -286,15 +319,23 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
-    private void setupCheckout() {
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
-        checkout.start();
+    @Override
+    protected void onPause() {
+        updateWidget(AvatarStatsWidgetProvider.class);
+        updateWidget(TodoListWidgetProvider.class);
+        updateWidget(DailiesWidgetProvider.class);
+        updateWidget(HabitButtonWidgetProvider.class);
+        super.onPause();
     }
 
-    @Override
-    public ActivityCheckout getActivityCheckout() {
-        return checkout;
+    private void updateWidget(Class widgetClass) {
+        Intent intent = new Intent(this,widgetClass);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), widgetClass));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        sendBroadcast(intent);
     }
+
 
     private void saveLoginInformation() {
         HabiticaApplication.User = user;
@@ -342,6 +383,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if(preferences!= null) {
                 apiHelper.languageCode = preferences.getLanguage();
             }
+
+            soundManager.setSoundTheme(preferences.getSound());
 
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
@@ -769,21 +812,28 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
+        SpecialItems specialItems = user.getItems().getSpecial();
+        Boolean hasSpecialItems = false;
+        if (specialItems != null) {
+            hasSpecialItems = specialItems.hasSpecialItems();
+        }
+
         IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if ((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                || (user.getFlags() != null && !user.getFlags().getClassSelected())) {
+        if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
+                || (user.getFlags() != null && !user.getFlags().getClassSelected())) &&
+                !hasSpecialItems) {
             if (item != null) {
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }
         } else {
             IDrawerItem newItem = item;
-            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS) {
+            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withEnabled(false)
                         .withBadge(this.getString(R.string.unlock_lvl_11))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            } else if (user.getStats().getLvl() >= MIN_LEVEL_FOR_SKILLS) {
+            } else {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
                         .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
@@ -835,19 +885,19 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
+        } else if (requestCode == GEM_PURCHASE_REQUEST) {
+            this.apiHelper.retrieveUser(true)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                    });
         }
         super.onActivityResult(requestCode, resultCode, data);
-        checkout.onActivityResult(requestCode, resultCode, data);
     }
 
     // region Events
 
     @Override
     public void onDestroy() {
-        if (checkout != null) {
-            checkout.stop();
-        }
-
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -956,6 +1006,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             } else {
                                 snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
                             }
+                            soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
                         } else if (!event.Reward.getId().equals("potion")) {
                             EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                         }
@@ -985,6 +1036,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     }, throwable -> {
                     });
         } else {
+            soundManager.loadAndPlayAudio(SoundManager.SoundReward);
             // user created Rewards
             apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
                     .compose(apiHelper.configureApiCallObserver())
@@ -1047,7 +1099,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                    ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
+                    SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
                     String potionName = event.usingHatchingPotion.getText();
@@ -1092,7 +1144,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                        ImageView mountImageView = (ImageView) mountWrapper.findViewById(R.id.pet_imageview);
+                        SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
                         String colorName = event.usingPet.getColorText();
@@ -1159,7 +1211,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private void showSnackBarForDataReceived(final TaskDirectionData data) {
         if (data.get_tmp() != null) {
             if (data.get_tmp().getDrop() != null) {
-                new Handler().postDelayed(() -> showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP), 3000L);
+                new Handler().postDelayed(() -> {
+                    showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
+                    soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
+                }, 3000L);
             }
         }
     }
@@ -1238,12 +1293,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     })
                     .create();
 
-
+            soundManager.loadAndPlayAudio(SoundManager.SoundDeath);
             this.faintDialog.show();
         }
     }
 
     private void displayLevelUpDialog(int level) {
+        soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
+
         SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
         if (suppressedModals != null) {
             if (suppressedModals.getLevelUp()) {
@@ -1305,35 +1362,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return floatingMenuWrapper;
     }
 
-    private void scheduleReminder(Context context) {
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (prefs.getBoolean("use_reminder", false)) {
-
-            String timeval = prefs.getString("reminder_time", "19:00");
-
-            String[] pieces = timeval.split(":");
-            int hour = Integer.parseInt(pieces[0]);
-            int minute = Integer.parseInt(pieces[1]);
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-            cal.set(Calendar.MINUTE, minute);
-            long trigger_time = cal.getTimeInMillis();
-
-            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-
-            if (PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE) == null) {
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, trigger_time, AlarmManager.INTERVAL_DAY, pendingIntent);
-            }
-        }
-    }
-
     @Subscribe
     public void displayClassSelectionActivity(SelectClassEvent event) {
         Bundle bundle = new Bundle();
@@ -1359,17 +1387,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.overlayFrameLayout.addView(view);
         this.activeTutorialView = view;
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "tutorial");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
-            eventProperties.put("eventValue", step.getIdentifier());
-            eventProperties.put("complete", false);
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("tutorial", eventProperties);
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", false);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
     @Override
@@ -1384,17 +1406,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.overlayFrameLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
-        JSONObject eventProperties = new JSONObject();
-        try {
-            eventProperties.put("eventAction", "tutorial");
-            eventProperties.put("eventCategory", "behaviour");
-            eventProperties.put("hitType", "event");
-            eventProperties.put("eventLabel", step.getIdentifier() + "-android");
-            eventProperties.put("eventValue", step.getIdentifier());
-            eventProperties.put("complete", true);
-        } catch (JSONException exception) {
-        }
-        Amplitude.getInstance().logEvent("tutorial", eventProperties);
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", true);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
     @Override
@@ -1434,6 +1450,57 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)));
+    }
+
+    @Subscribe
+    public void onEvent(TaskCheckedCommand event) {
+        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
+                });
+
+        switch(event.Task.type){
+            case Task.TYPE_DAILY: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
+            } break;
+            case Task.TYPE_TODO: {
+                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
+            } break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(ChecklistCheckedCommand event) {
+        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskUpdateCallback(), throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(HabitScoreEvent event) {
+        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new TaskScoringCallback(this, event.habit.getId()), throwable -> {
+                });
+
+        soundManager.loadAndPlayAudio(event.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
+    }
+
+    @Subscribe
+    public void onEvent(final TaskSaveEvent event) {
+        Task task = event.task;
+        if (event.created) {
+            this.apiHelper.apiService.createItem(task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskCreationCallback(), throwable -> {
+                    });
+        } else {
+            this.apiHelper.apiService.updateTask(task.getId(), task)
+                    .compose(apiHelper.configureApiCallObserver())
+                    .subscribe(new TaskUpdateCallback(), throwable -> {
+                    });
+        }
     }
 
     private void checkMaintenance() {

@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fullprofile_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -139,6 +140,7 @@
                     android:id="@+id/profile_blurb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+		    android:textIsSelectable="true"
                     android:text="Blurb" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -149,6 +151,43 @@
                     android:minHeight="200dp"
                     fresco:actualImageScaleType="fitCenter" />
 
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/CardView.Default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                style="@style/CardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_id"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/userid"/>
+                    <Button
+                        android:text="@string/copy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:onClick=""
+                        android:id="@+id/copy_userid" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -255,7 +294,7 @@
                                 android:text="@string/attributes"
                                 android:textStyle="bold" />
 
-                            <ImageView
+                            <com.facebook.drawee.view.SimpleDraweeView
                                 android:id="@+id/attributes_collapse_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -328,10 +367,10 @@
                             android:text="@string/profile_pets_found" />
 
                         <TextView
-                            android:id="@+id/profile_pet_count"
+                            android:id="@+id/profile_pets_found_count"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="#" />
+                            tools:text="#" />
                     </TableRow>
 
                     <TableRow android:layout_height="wrap_content">
@@ -342,10 +381,10 @@
                             android:text="@string/profile_mounts_tamed" />
 
                         <TextView
-                            android:id="@+id/profile_mount_count"
+                            android:id="@+id/profile_mounts_tamed_count"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="#" />
+                            tools:text="#" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

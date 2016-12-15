@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Osvježi</string>
   <string name="XP_default">Iskustvo</string>
   <string name="HP_default">Život</string>
@@ -160,7 +159,6 @@
   <string name="complete_tutorial">Razumijem!</string>
   <string name="dismiss_tutorial">Podsjeti me ponovno</string>
   <string name="intro_1_title">Dobrodošli u Habiticu</string>
-  <string name="intro_1_description">Pridruži se preka 1,100,000 ljudi koji se zabavljaju dok rješavaju stvari. Stvori avatara i prati svoje zadatke u stvarnom životu.</string>
   <string name="intro_2_title">Napredak u Igri = Napredak u Životu </string>
   <string name="intro_2_description">Otključaj nove mogućnosti u igri označavanjem napravljenih zadataka u stvarnom životu. Zaradi oklope, ljubimce i više nagrada za ispunjavanje ciljeva!</string>
   <string name="intro_3_title">Postani društven i bori se protiv Čudovišta</string>

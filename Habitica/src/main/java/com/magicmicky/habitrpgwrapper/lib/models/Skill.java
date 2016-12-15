@@ -7,7 +7,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 
-@Table(databaseName = HabitDatabase.NAME, allFields = true)
+@Table(databaseName = HabitDatabase.NAME)
 public class Skill extends BaseModel {
 
     @Column
@@ -20,5 +20,5 @@ public class Skill extends BaseModel {
     @Column
     public Integer mana, lvl;
 
-
+    public boolean isSpecialItem;
 }

@@ -27,22 +27,23 @@ public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
             allTags = new ArrayList<>();
         }
 
-        for (JsonElement tagElement : json.getAsJsonArray()) {
-            String tagId = tagElement.getAsString();
-            TaskTag taskTag = new TaskTag();
-            for (Tag tag : allTags) {
-                if (tag.getId().equals(tagId)) {
-                    taskTag.setTag(tag);
+        if (json.isJsonArray()) {
+            for (JsonElement tagElement : json.getAsJsonArray()) {
+                String tagId = tagElement.getAsString();
+                TaskTag taskTag = new TaskTag();
+                for (Tag tag : allTags) {
+                    if (tag.getId().equals(tagId)) {
+                        taskTag.setTag(tag);
 
-                    if (!alreadyContainsTag(taskTags, tagId)) {
-                        taskTags.add(taskTag);
+                        if (!alreadyContainsTag(taskTags, tagId)) {
+                            taskTags.add(taskTag);
+                        }
+
+                        break;
                     }
-
-                    break;
                 }
             }
         }
-
 
         return taskTags;
     }

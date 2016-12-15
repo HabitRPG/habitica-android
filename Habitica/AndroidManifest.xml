@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="117"
-    android:versionName="0.0.33.2"
+    android:versionCode="138"
+    android:versionName="0.0.35"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -24,7 +24,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+            tools:replace="android:name">
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
@@ -32,7 +33,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -62,6 +62,11 @@
         </activity>
         <activity
             android:name=".ui.activities.SkillTasksActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activities.SkillMemberActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
@@ -124,14 +129,17 @@
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <activity android:name=".ui.activities.MaintenanceActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activities.GemPurchaseActivity"
+                  android:screenOrientation="portrait" />
         <receiver  android:process=":remote" android:name=".NotificationPublisher" />
 
-        <receiver android:process=":remote" android:name=".receivers.TaskReceiver"></receiver>
+        <receiver
+                android:process=":remote"
+                android:name=".receivers.TaskReceiver"/>
 
         <receiver android:name=".receivers.LocalNotificationActionReceiver">
             <intent-filter>
@@ -143,11 +151,20 @@
         </receiver>
         <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.intent.action._BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
-
+        <activity android:name=".ui.activities.AddTaskWidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activities.HabitButtonWidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
             <intent-filter>
@@ -170,6 +187,47 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <receiver android:name=".widget.AvatarStatsWidgetProvider"
+            android:label="@string/stats_widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/avatar_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.DailiesWidgetProvider"
+            android:label="@string/widget_dailies">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/task_list_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.TodoListWidgetProvider"
+            android:label="@string/widget_todo_list">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/task_list_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.HabitButtonWidgetProvider"
+            android:label="@string/widget_habit_button">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/habit_button_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.DailiesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.TodosWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service android:name=".widget.HabitButtonWidgetService"/>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

@@ -16,6 +16,15 @@ public class Buffs extends BasicStats {
     @Column
     private Boolean streaks;
 
+    @Column
+    private Boolean seafoam;
+
+    @Column
+    private Boolean spookySparkles;
+
+    @Column
+    private Boolean shinySeed;
+
     public Buffs() {
         this(false, false);
     }
@@ -33,6 +42,30 @@ public class Buffs extends BasicStats {
         this.snowball = snowball;
     }
 
+    public Boolean getSeafoam() {
+        return seafoam != null ? seafoam : Boolean.FALSE;
+    }
+
+    public void setSeafoam(Boolean seafoam) {
+        this.seafoam = seafoam;
+    }
+
+    public Boolean getSpookySparkles() {
+        return spookySparkles != null ? spookySparkles : Boolean.FALSE;
+    }
+
+    public void setSpookySparkles(Boolean spookySparkles) {
+        this.spookySparkles = spookySparkles;
+    }
+
+    public Boolean getShinySeed() {
+        return shinySeed != null ? shinySeed : Boolean.FALSE;
+    }
+
+    public void setShinySeed(Boolean shinySeed) {
+        this.shinySeed = shinySeed;
+    }
+
     public Boolean getStreaks() {
         return streaks != null ? streaks : Boolean.FALSE;
     }
@@ -48,5 +81,8 @@ public class Buffs extends BasicStats {
         super.merge(stats);
         this.snowball = stats.snowball != null ? stats.snowball : this.snowball;
         this.streaks = stats.streaks != null ? stats.streaks : this.streaks;
+        this.seafoam = stats.seafoam != null ? stats.seafoam : this.seafoam;
+        this.shinySeed = stats.shinySeed != null ? stats.shinySeed : this.shinySeed;
+        this.spookySparkles = stats.spookySparkles != null ? stats.spookySparkles : this.spookySparkles;
     }
 }

@@ -13,6 +13,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 /**
  * Created by keithholliday on 5/29/16.
@@ -36,7 +37,9 @@ public class TaskReceiver extends BroadcastReceiver {
             taskTitle = extras.getString(TaskAlarmManager.TASK_NAME_INTENT_KEY);
             taskId = extras.getString(TaskAlarmManager.TASK_ID_INTENT_KEY);
             //This will set up the next reminders for dailies
-            taskAlarmManager.addAlarmForTaskId(taskId);
+            if (taskId != null) {
+                taskAlarmManager.addAlarmForTaskId(taskId);
+            }
             createNotification();
         }
     }

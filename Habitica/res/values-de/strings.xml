@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">Aktualisieren</string>
   <string name="XP_default">Erfahrung</string>
   <string name="HP_default">Gesundheit</string>
@@ -13,15 +12,22 @@
   <string name="SP_userID_summary">Deine Benutzer-ID</string>
   <string name="SP_APIToken_title">API-Token</string>
   <string name="SP_APIToken_summary">Dein API-Token</string>
+  <string name="Language_title">Sprache</string>
+  <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
   <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
+  <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
+  <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
   <string name="pref_reminder_header">Tägliche Erinnerung</string>
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
   <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
+  <string name="pref_cds_header">Persönlicher Tagesstart</string>
+  <string name="pref_cds_picker">Persönlichen Tagesstart einstellen</string>
   <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
   <string name="push_notifications">Push-Benachrichtigungen</string>
+  <string name="push_notifications_sum">Stelle deine Push-Benachrichtigungen ein</string>
   <string name="preference_push_you_won_challenge">Du hast einen Wettbewerb gewonnen!</string>
   <string name="preference_push_received_a_private_message">Private Nachricht erhalten</string>
   <string name="preference_push_gifted_gems">Geschenkte Edelsteine</string>
@@ -48,6 +54,7 @@
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
   <string name="logout_description">Logge Dich aus</string>
+  <string name="account_details_sum">Prüfe deine Kontodetails</string>
   <string name="account_details">Kontodetails</string>
   <string name="LoginActivityName">Willkommen</string>
   <string name="string_revive">Wiederbeleben</string>
@@ -63,16 +70,17 @@
   <!--Network Errors-->
   <string name="network_error_title">Verbindungsfehler</string>
   <string name="network_error_no_network_body">Keine Internetverbindung.</string>
-  <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuch es später noch mal.</string>
+  <string name="internal_error_api">Es scheint ein Problem mit dem Server zu geben. Versuche es später noch mal.</string>
   <string name="authentication_error_title">Authentifikationsfehler</string>
   <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort</string>
   <string name="login_validation_error_title">Validierungsfehler</string>
   <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
   <string name="save_changes">Speichern</string>
+  <string name="copy">Kopieren</string>
   <string name="notes">Notizen</string>
   <string name="text">Text</string>
   <string name="difficulty">Schwierigkeit</string>
-  <string name="tags">Bezeichnung</string>
+  <string name="tags">Tags</string>
   <string name="trivial">Trivial</string>
   <string name="easy">Einfach</string>
   <string name="medium">Mittel</string>
@@ -88,7 +96,7 @@
   <string name="mental">Mental</string>
   <string name="social">Sozial</string>
   <string name="other">Anderes</string>
-  <string name="frequency">Wiederholen</string>
+  <string name="frequency">Häufigkeit</string>
   <string name="frequency_weekly">An bestimmten Tagen der Woche</string>
   <string name="frequency_daily">Alle X Tage</string>
   <string name="monday">Montag</string>
@@ -110,6 +118,7 @@
   <string name="profile_image">Profilbild</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">Du hast %1$s für %2$d Mana benutzt.</string>
+  <string name="used_skill_without_mana" formatted="false">Du hast %1$s benutzt.</string>
   <string name="new_checklist_item">Neue Unteraufgabe</string>
   <string name="add_checklist_item">Hinzufügen</string>
   <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
@@ -173,7 +182,7 @@
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
   <string name="intro_1_title">Willkommen in Habitica</string>
-  <string name="intro_1_description">Mach mit bei über 1.100.000 Menschen, die Spaß haben während Sie Sachen erledigen. Erstelle Deinen Avatar und erfülle Aufgaben aus Deinem echten Leben.</string>
+  <string name="intro_1_description" formatted="false">Tritt einer Gemeinschaft von über %s Menschen bei und erledige Dinge mit Spaß. Erstelle einen Avatar und verwalte spielerisch Deine Aufgaben des Alltags.</string>
   <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
   <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei, indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
   <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
@@ -281,7 +290,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="invite_party">Gruppe einladen</string>
   <string name="dialog_feeding" formatted="false">Füttere %1$s %2$s mit:</string>
   <string name="use_animal">Nutzen</string>
-  <string name="feed">Verfüttern</string>
+  <string name="feed">Füttern</string>
   <string name="hatch_with" formatted="false">Haustier mit %s ausbrüten</string>
   <string name="hatched_pet_title" formatted="false">Du hast ein %1$s %2$s ausgebrütet!</string>
   <string name="close">Schließen</string>
@@ -355,8 +364,49 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="gold_plural">Gold</string>
   <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
   <string name="copy_chat_message">In Zwischenablage kopieren</string>
+  <string name="edit_tag_title">Tag bearbeiten</string>
+  <string name="edit_tag_btn_edit">Bearbeiten</string>
+  <string name="edit_tag_btn_done">Fertig</string>
+  <string name="edit_tag_btn_delete">Löschen</string>
+  <string name="confirm_delete_tag_title">Bist Du sicher?</string>
+  <string name="confirm_delete_tag_message">Wirklich löschen?</string>
+  <string name="filter_drawer_edit_tags">Tags bearbeiten</string>
+  <string name="filter_drawer_filter_tags">Nach Tags filtern</string>
   <!--QR Strings-->
   <string name="qr_section_title">Lass Dich durch diesen QR Code von jemandem einladen</string>
   <string name="qr_save_message">QR code gespeichert: </string>
   <string name="qr_dialogue_title">Dein QR Code</string>
+  <string name="download">Download</string>
+  <string name="send_new_message">Neue Nachricht schicken</string>
+  <string name="choose_recipient_title">Nachrichtenempfänger auswählen</string>
+  <string name="action_continue">Weiter</string>
+  <string name="scan_qr_code">QR Code scannen</string>
+  <string name="enter_recipient_uuid">ID des Empfängers eingeben</string>
+  <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
+  <string name="stats_widget_label">Habitica: Avatar</string>
+  <string name="add_task">Neue Aufgabe</string>
+  <string name="add_habit">Neue Gewohnheit</string>
+  <string name="add_daily">Neue Tägliche Aufgabe</string>
+  <string name="add_todo">Neue To-Do</string>
+  <string name="add_reward">Neue Belohnung</string>
+  <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
+  <string name="widget_habit_button">Habitica: Gewohnheit</string>
+  <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
+  <string name="widget_add_task">Habitica: Neue Aufgabe</string>
+  <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
+  <string name="gem.purchase.toolbartitle">Kaufen</string>
+  <string name="gem.purchase.title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
+  <string name="gem.purchase.subtitle">Edelsteine erlaubes es Dir spaßige Extras für Deinen Account zu erwerben, inklusive:</string>
+  <string name="gem.purchase.listitem1">Coole Kostüme für Deinen Avatar</string>
+  <string name="gem.purchase.listitem2">Fantastische Hintergründe</string>
+  <string name="gem.purchase.listitem3">Quest, welche Dich mit Haustiereiern belohnt</string>
+  <string name="gem.purchase.listitem4">Die Fähigkeit Deine Klasse vor dem Erreichen von Level 100 zu ändern</string>
+  <string name="support_habitica">Unterstütze Habitica</string>
+  <string name="skill_transformation_use">benutzen</string>
+  <string name="hatching_market_info">Kriegst Du nicht die richtige Beute? Besuche den Marktplatz!</string>
+  <string name="feeding_market_info">Brauchst Du anderes Futter? Kaufe mehr auf dem Marktplatz!</string>
+  <string name="open_market">Marktplatz öffnen</string>
+  <string name="cds_description" formatted="false">Deine Täglichen Aufgaben werden zurückgesetzt, wenn Du Dich nach %1$s einloggst. Stelle sicher, dass Du vorher alle Deine Täglichen Aufgaben erledigt hast!</string>
+  <string name="AudioTheme_title">Hintergrundmusik</string>
+  <string name="AudioTheme_summary">Ändere Habiticas Hintergrundmusik</string>
 </resources>

@@ -15,8 +15,8 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/achievement_drawee"
 
-            android:layout_width="30dp"
-            android:layout_height="33dp"
+            android:layout_width="36dp"
+            android:layout_height="39dp"
             android:layout_marginRight="3dp" />
 
         <TextView

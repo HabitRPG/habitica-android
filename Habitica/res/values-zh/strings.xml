@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="app_name">Habitica</string>
   <string name="action_refresh">刷新</string>
   <string name="XP_default">经验值</string>
   <string name="HP_default">生命值</string>
@@ -13,13 +12,19 @@
   <string name="SP_userID_summary">你的用户ID</string>
   <string name="SP_APIToken_title">API令牌</string>
   <string name="SP_APIToken_summary">你的API令牌</string>
+  <string name="Language_title">语言</string>
+  <string name="Language_summary">更改 Habitica的语言</string>
   <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
   <string name="unknown_error">发生了一个错误……</string>
   <string name="pref_account_header">账号</string>
+  <string name="pref_first_day_of_the_week_title">每周的第一天</string>
+  <string name="pref_first_day_of_the_week_summary">在所有的日程表中，每周的第一天</string>
   <string name="pref_reminder_header">每日任务提醒</string>
   <string name="pref_reminder_checkbox">激活提醒</string>
   <string name="pref_reminder_picker">设置提醒时间</string>
+  <string name="pref_cds_header">自定义每日起始时间</string>
+  <string name="pref_cds_picker">设置每天的起始时间（用于任务结算）</string>
   <string name="pref_push_notifications_checkbox">用户推送通知</string>
   <string name="push_notifications">推送通知</string>
   <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
@@ -27,7 +32,7 @@
   <string name="preference_push_gifted_gems">赠送的钻石</string>
   <string name="preference_push_gifted_subscription">赠送的订阅</string>
   <string name="preference_push_invited_to_party">被邀请加入队伍</string>
-  <string name="preference_push_invited_to_guild">被邀请加入公会</string>
+  <string name="preference_push_invited_to_guild">已邀请至工会</string>
   <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
@@ -69,6 +74,7 @@
   <string name="login_validation_error_title">认可错误</string>
   <string name="login_validation_error_fieldsmissing">请填写所有内容。</string>
   <string name="save_changes">保存</string>
+  <string name="copy">复制</string>
   <string name="notes">注释</string>
   <string name="text">文字</string>
   <string name="difficulty">难度</string>
@@ -99,17 +105,18 @@
   <string name="saturday">星期六</string>
   <string name="sunday">星期日</string>
   <string name="levelup_header">你升级了！</string>
-  <string name="levelup_detail">通过完成您现实生活中的目标，您已升至 %1$d 级！</string>
+  <string name="levelup_detail">通过完成您现实生活中的目标，你已升至 %1$d 级！</string>
   <string name="levelup_health">你被完全治愈了！</string>
   <string name="levelup_button">吼啊~！</string>
   <string name="faint_subtitle">别失望！</string>
-  <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你还可以把他们都拿回来的！加油！你做的很棒！</string>
-  <string name="faint_header">你没有生命值了！</string>
+  <string name="faint_penalty_body">你降了一级，丢失了所有的金币和一件装备。不过继续努力，你就可以把他们都拿回来！加油，你会更棒的！</string>
+  <string name="faint_header">你失去了所有的生命值</string>
   <string name="faint_button">补满生命值 &amp; 再次尝试</string>
   <string name="filter">过滤器</string>
   <string name="profile_image">头像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="used_skill_without_mana" formatted="false">你使用了 %1$s.</string>
   <string name="new_checklist_item">新增清单内容</string>
   <string name="add_checklist_item">添加</string>
   <string name="reminder_title">记得完成你的每日任务！</string>
@@ -173,7 +180,7 @@
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
   <string name="intro_1_title">欢迎来到Habitica</string>
-  <string name="intro_1_description">超过1,100,000加入我们，在完成现实事情的同时玩的愉快。 创建一个角色记录你的真实人生。</string>
+  <string name="intro_1_description" formatted="false">和 %s 玩家一起，用游戏战胜拖延症！你可以创建一个账户，用它来跟踪你生活中的点滴琐事。</string>
   <string name="intro_2_title">生活即游戏！</string>
   <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧！</string>
   <string name="intro_3_title">与小伙伴一起，并肩击退怪兽</string>
@@ -185,7 +192,7 @@
   <string name="setup_welcome_description">欢迎来到Habitica，在游戏中打怪升级的同时改善自己的真实生活。完成现实生活中的目标，解锁大量装备、宠物、任务卷轴，更多特色等你探索。</string>
   <string name="setup_welcome_title">欢迎你</string>
   <string name="avatar_setup_description">首先，你需要创建一个角色来代表你自己。你在现实生活中的行动会影响到你的角色的生命值、经验值以及金钱。</string>
-  <string name="task_setup_description">打鸡血！现在开始设定你的任务，开始赚取经验和金币吧。
+  <string name="task_setup_description">太棒了！现在开始设定你的任务，开始赚取经验和金币吧。
 
 首先，你想改善生活中的哪一部分呢？</string>
   <string name="setup_group_work">工作</string>
@@ -355,8 +362,49 @@
   <string name="gold_plural">金币</string>
   <string name="chat_message_copied">复制到剪帖板的信息</string>
   <string name="copy_chat_message">复制到剪贴板</string>
+  <string name="edit_tag_title">编辑按钮</string>
+  <string name="edit_tag_btn_edit">编辑</string>
+  <string name="edit_tag_btn_done">完成</string>
+  <string name="edit_tag_btn_delete">删除</string>
+  <string name="confirm_delete_tag_title">你确定吗？</string>
+  <string name="confirm_delete_tag_message">你确定要删除吗？</string>
+  <string name="filter_drawer_edit_tags">编辑按钮</string>
+  <string name="filter_drawer_filter_tags">过滤按钮</string>
   <!--QR Strings-->
   <string name="qr_section_title">让别人通过此二维码邀请你</string>
   <string name="qr_save_message">将二维码保存至</string>
   <string name="qr_dialogue_title">你的二维码</string>
+  <string name="download">下载</string>
+  <string name="send_new_message">发送新消息</string>
+  <string name="choose_recipient_title">选择消息接收者</string>
+  <string name="action_continue">继续</string>
+  <string name="scan_qr_code">扫描二维码</string>
+  <string name="enter_recipient_uuid">输入接受者的用户ID</string>
+  <string name="invited_to_party">你被邀请加入一个队伍！</string>
+  <string name="stats_widget_label">Habitica状态</string>
+  <string name="add_task">添加任务</string>
+  <string name="add_habit">添加习惯</string>
+  <string name="add_daily">添加每日任务</string>
+  <string name="add_todo">添加待办事项</string>
+  <string name="add_reward">添加奖励</string>
+  <string name="all_dailies_completed">你完成了所有没有任务。干得漂亮！</string>
+  <string name="widget_habit_button">Habitica完成习惯</string>
+  <string name="widget_dailies">Habitica每日任务</string>
+  <string name="widget_add_task">Habitica增加任务</string>
+  <string name="google_services_missing">没有找到Google play服务。</string>
+  <string name="gem.purchase.toolbartitle">购买</string>
+  <string name="gem.purchase.title">购买宝石来支持开发者们和帮助保证Habitica的日常运营</string>
+  <string name="gem.purchase.subtitle">你可以通过宝石给你的账户购买更多有趣的额外物品，包括：</string>
+  <string name="gem.purchase.listitem1">角色形象的炫酷装扮</string>
+  <string name="gem.purchase.listitem2">超棒的背景</string>
+  <string name="gem.purchase.listitem3">任务会奖励你宠物蛋</string>
+  <string name="gem.purchase.listitem4">100级前改变你职业的能力</string>
+  <string name="support_habitica">支持Habitica</string>
+  <string name="skill_transformation_use">使用</string>
+  <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
+  <string name="feeding_market_info">需要不同的食物？在市场可以买到更多！</string>
+  <string name="open_market">打开市场</string>
+  <string name="cds_description" formatted="false">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
+  <string name="AudioTheme_title">声音主题</string>
+  <string name="AudioTheme_summary">更高 Habitica 的声音主题</string>
 </resources>

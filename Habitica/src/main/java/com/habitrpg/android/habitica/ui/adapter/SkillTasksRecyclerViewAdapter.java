@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
@@ -28,11 +29,11 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
 
     private static final int TYPE_CELL = 1;
     String taskType;
-    SkillTasksActivity activity;
+    TaskClickActivity activity;
     private ObservableArrayList<Task> observableContent;
     private RecyclerView.Adapter<ViewHolder> parentAdapter;
 
-    public SkillTasksRecyclerViewAdapter(String taskType, SkillTasksActivity activity) {
+    public SkillTasksRecyclerViewAdapter(String taskType, TaskClickActivity activity) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.activity = activity;
@@ -129,7 +130,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
             resources = itemView.getResources();
         }
 
-        public void bindHolder(Task habitItem, int position) {
+        void bindHolder(Task habitItem, int position) {
             task = habitItem;
             if (habitItem.notes == null || habitItem.notes.length() == 0) {
                 notesTextView.setHeight(0);
