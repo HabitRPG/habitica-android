@@ -108,4 +108,8 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         super.onSaveInstanceState(outState);
     }
+
+    public String customTitle(){
+        return null;
+    }
 }

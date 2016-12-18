@@ -159,7 +159,7 @@
     <string name="members">Members</string>
     <string name="habits">Habits</string>
     <string name="dailies">Dailies</string>
-    <string name="todos">Todos</string>
+    <string name="todos">To-Dos</string>
     <string name="rewards">Rewards</string>
     <string name="taskform.delete.title">Are you sure?</string>
     <string name="taskform.delete.message">Do you really want to delete?</string>
@@ -442,4 +442,10 @@ To start, which parts of your life do you want to improve?</string>
     <string name="challenge_leave_text">Are you sure you want to leave the Challenge "%s"?</string>
     <string name="my_challenges">My Challenges</string>
     <string name="public_challenges">Public</string>
+    <string name="challenges">Challenges</string>
+    <string name="daily">Daily</string>
+    <string name="habit">Habit</string>
+    <string name="reward">Reward</string>
+    <string name="todo">To-Do</string>
+    <string name="official_habitica_challenge">Official Habitica Challenge</string>
 </resources>

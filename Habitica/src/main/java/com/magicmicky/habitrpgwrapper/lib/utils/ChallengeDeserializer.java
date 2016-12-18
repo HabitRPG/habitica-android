@@ -1,13 +1,19 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
+import android.text.TextUtils;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import java.util.HashMap;
 
 import java.lang.reflect.Type;
+import java.util.StringJoiner;
 
 public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
     @Override
@@ -45,6 +51,41 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
             }
         }
 
+        JsonElement groupElement = jsonObject.get("group");
+
+        if (groupElement != null && !groupElement.isJsonNull()) {
+            JsonObject groupObj = groupElement.getAsJsonObject();
+
+            if (groupObj != null) {
+                challenge.groupName = groupObj.get("name").getAsString();
+                challenge.groupId = groupObj.get("_id").getAsString();
+            }
+        }
+
+        JsonElement tasksOrderElement = jsonObject.get("tasksOrder");
+
+        if(tasksOrderElement != null && !tasksOrderElement.isJsonNull()){
+            JsonObject tasksOrderObj = tasksOrderElement.getAsJsonObject();
+
+            challenge.todoList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_TODOS);
+            challenge.dailyList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_DAILYS);
+            challenge.habitList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_HABITS);
+            challenge.rewardList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_REWARDS);
+        }
+
         return challenge;
+    }
+
+    private String getTaskArrayAsString(JsonDeserializationContext context, JsonObject tasksOrderObj, String taskType){
+
+        if (tasksOrderObj.has(taskType)) {
+            JsonElement jsonElement = tasksOrderObj.get(taskType);
+
+            String[] taskArray = context.deserialize(jsonElement, String[].class);
+
+            return TextUtils.join(",", taskArray);
+        }
+
+        return "";
     }
 }

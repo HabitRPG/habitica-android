@@ -17,9 +17,7 @@ import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Update;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -140,4 +138,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                 });
     }
 
+    @Override
+    public String customTitle() {
+        return getString(R.string.challenges);
+    }
 }

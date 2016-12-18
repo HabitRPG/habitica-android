@@ -867,6 +867,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void setActiveFragment(BaseMainFragment fragment) {
         this.activeFragment = fragment;
+
+        if(fragment.customTitle() != null){
+            getSupportActionBar().setTitle(fragment.customTitle());
+            // BUG: setTitle not changed the title, just switched the length of "username"
+            //setTitle(fragment.customTitle());
+        } else {
+            setTitle(user.getProfile().getName());
+        }
+
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 
