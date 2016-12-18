@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -11,11 +12,16 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,6 +42,9 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     @BindColor(R.color.task_gray)
     int taskGray;
+
+	@BindView(R.id.tags_glyph)
+	ImageView tagsGlyph;
 
     public BaseTaskViewHolder(View itemView) {
         super(itemView);
@@ -87,7 +96,20 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
         if (this.rightBorderView != null) {
             this.rightBorderView.setBackgroundResource(this.task.getLightTaskColor());
         }
+	    if (task.getTags() != null && !task.tags.isEmpty())
+		    this.tagsGlyph.setVisibility(View.VISIBLE);
     }
+
+	@OnClick(R.id.tags_glyph)
+	void displayTagsToast(){
+		String tagString = "";
+		for(TaskTag t:
+		    task.getTags())
+		{
+			tagString = tagString + t.getTag().getName() + ", ";
+		}
+		Toast.makeText(context, tagString, Toast.LENGTH_LONG).show();
+	}
 
     @Override
     public void onClick(View v) {

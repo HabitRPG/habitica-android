@@ -50,6 +50,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_vertical_margin">
+            <ImageView
+                android:id="@+id/tags_glyph"
+                android:layout_width="@dimen/checkbox_size"
+                android:layout_height="@dimen/checkbox_size"
+                android:src="@drawable/glyph_tags"
+                android:layout_gravity="center_vertical"
+                android:scaleY="-1"
+                android:visibility="gone"/>
+        </LinearLayout>
         <LinearLayout android:orientation="vertical"
                       android:id="@+id/checklistIndicatorWrapper"
                       android:layout_width="@dimen/checklist_wrapper_width"
