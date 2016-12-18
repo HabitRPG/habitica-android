@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 
@@ -108,7 +109,7 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 		{
 			tagString = tagString + t.getTag().getName() + ", ";
 		}
-		Toast.makeText(context, tagString, Toast.LENGTH_LONG).show();
+//		Toast.makeText(context, tagString, Toast.LENGTH_LONG).show();
 	}
 
     @Override
@@ -116,7 +117,6 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
         if (v != itemView) {
             return;
         }
-
         TaskTappedEvent event = new TaskTappedEvent();
         event.Task = task;
 
