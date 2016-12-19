@@ -10,6 +10,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Hair;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

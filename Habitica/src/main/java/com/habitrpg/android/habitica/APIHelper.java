@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -17,6 +19,11 @@ import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Notification;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
+import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
+import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -66,7 +73,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.media.Image;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -98,6 +115,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 
@@ -108,7 +127,17 @@ public class APIHelper implements Action1<Throwable> {
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     final Observable.Transformer apiCallTransformer =
-            observable -> ((Observable) observable).subscribeOn(Schedulers.io())
+            observable -> ((Observable) observable)
+                    .map(new Func1<HabitResponse, Object>() {
+                        @Override public Object call(HabitResponse habitResponse) {
+                            if (habitResponse.notifications != null) {
+                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(APIHelper.this);
+                                popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
+                            }
+                            return habitResponse.getData();
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(this);
     private final GsonConverterFactory gsonConverter;
@@ -128,31 +157,6 @@ public class APIHelper implements Action1<Throwable> {
         crashlyticsProxy.setUserName(this.hostConfig.getUser());
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
 
-        Interceptor remove_data_interceptor = chain -> {
-            Response response = chain.proceed(chain.request());
-            String stringJson = response.body().string();
-            JSONObject jsonObject = null;
-            String dataString = null;
-            try {
-                jsonObject = new JSONObject(stringJson);
-                if (jsonObject.has("data")) {
-                    dataString = jsonObject.getString("data");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            MediaType contentType = response.body().contentType();
-            ResponseBody body = null;
-
-            if (dataString != null) {
-                body = ResponseBody.create(contentType, dataString);
-            } else {
-                body = ResponseBody.create(contentType, stringJson);
-            }
-            crashlyticsProxy.setString("last_api_call",response.request().url().toString());
-            return response.newBuilder().body(body).build();
-        };
-
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -161,7 +165,6 @@ public class APIHelper implements Action1<Throwable> {
         String userAgent = System.getProperty("http.agent");
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(remove_data_interceptor)
                 .addInterceptor(logging)
                 .addNetworkInterceptor(chain -> {
                     Request original = chain.request();
@@ -183,12 +186,14 @@ public class APIHelper implements Action1<Throwable> {
                 .build();
 
         Server server = new Server(this.hostConfig.getAddress());
+
         retrofitAdapter = new Retrofit.Builder()
                 .client(client)
                 .baseUrl(server.toString())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(gsonConverter)
                 .build();
+
         this.apiService = retrofitAdapter.create(ApiService.class);
     }
 
@@ -261,7 +266,7 @@ public class APIHelper implements Action1<Throwable> {
         return GsonConverterFactory.create(gson);
     }
 
-    public Observable<UserAuthResponse> registerUser(String username, String email, String password, String confirmPassword) {
+    public Observable<HabitResponse<UserAuthResponse>> registerUser(String username, String email, String password, String confirmPassword) {
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);
@@ -270,14 +275,14 @@ public class APIHelper implements Action1<Throwable> {
         return this.apiService.registerUser(auth);
     }
 
-    public Observable<UserAuthResponse> connectUser(String username, String password) {
+    public Observable<HabitResponse<UserAuthResponse>> connectUser(String username, String password) {
         UserAuth auth = new UserAuth();
         auth.setUsername(username);
         auth.setPassword(password);
         return this.apiService.connectLocal(auth);
     }
 
-    public Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken) {
+    public Observable<HabitResponse<UserAuthResponse>> connectSocial(String network, String userId, String accessToken) {
         UserAuthSocial auth = new UserAuthSocial();
         auth.setNetwork(network);
         UserAuthSocialTokens authResponse = new UserAuthSocialTokens();
@@ -333,34 +338,43 @@ public class APIHelper implements Action1<Throwable> {
         }
     }
 
-    public Observable<HabitRPGUser> retrieveUser(boolean withTasks) {
-        Observable<HabitRPGUser> userObservable = apiService.getUser();
+    public Observable<HabitResponse<HabitRPGUser>> retrieveUser(boolean withTasks) {
+        Observable<HabitResponse<HabitRPGUser>> userObservable = apiService.getUser();
         if (withTasks) {
-            Observable<TaskList> tasksObservable = apiService.getTasks();
+            Observable<HabitResponse<TaskList>> tasksObservable = apiService.getTasks();
 
-            userObservable = Observable.zip(userObservable, tasksObservable, (habitRPGUser, tasks) -> {
-                habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-                habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-                habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-                habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-                for (Task task : tasks.tasks.values()) {
-                    switch (task.getType()) {
-                        case "habit":
-                            habitRPGUser.getHabits().add(task);
-                            break;
-                        case "daily":
-                            habitRPGUser.getDailys().add(task);
-                            break;
-                        case "todo":
-                            habitRPGUser.getTodos().add(task);
-                            break;
-                        case "reward":
-                            habitRPGUser.getRewards().add(task);
-                            break;
-                    }
-                }
-                return habitRPGUser;
-            });
+            userObservable = Observable.zip(userObservable, tasksObservable,
+                    new Func2<HabitResponse<HabitRPGUser>, HabitResponse<TaskList>, HabitResponse<HabitRPGUser>>() {
+                        @Override
+                        public HabitResponse<HabitRPGUser> call(HabitResponse<HabitRPGUser> habitRPGUserHabitResponse, HabitResponse<TaskList> taskListHabitResponse) {
+                            HabitRPGUser habitRPGUser = habitRPGUserHabitResponse.getData();
+                            TaskList tasks = taskListHabitResponse.getData();
+
+                            habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
+                            habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
+                            habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
+                            habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
+                            for (Task task : tasks.tasks.values()) {
+                                switch (task.getType()) {
+                                    case "habit":
+                                        habitRPGUser.getHabits().add(task);
+                                        break;
+                                    case "daily":
+                                        habitRPGUser.getDailys().add(task);
+                                        break;
+                                    case "todo":
+                                        habitRPGUser.getTodos().add(task);
+                                        break;
+                                    case "reward":
+                                        habitRPGUser.getRewards().add(task);
+                                        break;
+                                }
+                            }
+
+                            habitRPGUserHabitResponse.data = habitRPGUser;
+                            return habitRPGUserHabitResponse;
+                        }
+                    });
         }
         return userObservable;
     }
@@ -414,9 +428,14 @@ public class APIHelper implements Action1<Throwable> {
         });
     }
 
+    /*
+     This function is used with Observer.compose to reuse transformers across the application.
+     See here for more info: http://blog.danlew.net/2015/03/02/dont-break-the-chain/
+     */
+
     @SuppressWarnings("unchecked")
-    public <T> Observable.Transformer<T, T> configureApiCallObserver() {
-        return (Observable.Transformer<T, T>) apiCallTransformer;
+    public <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver() {
+        return (Observable.Transformer<HabitResponse<T>, T>) apiCallTransformer;
     }
 
     public void updateAuthenticationCredentials(String userID, String apiToken) {
@@ -431,7 +450,7 @@ public class APIHelper implements Action1<Throwable> {
         public String message;
     }
 
-    public Observable<ContentResult> getContent() {
+    public Observable<HabitResponse<ContentResult>>getContent() {
         return apiService.getContent(languageCode);
     }
 }
