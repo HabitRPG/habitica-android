@@ -123,6 +123,41 @@
 -keep class com.google.android.gms.ads.** { *; }
 #end amplitude
 
+#playservices
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+    }
+    -keep class com.google.android.gms.** { *; }
+    -dontwarn com.google.android.gms.**
+#end playservices
+
+#checkout
+-keep class com.android.vending.billing.**
+
+-assumenosideeffects class org.solovyev.android.checkout.Billing {
+    public static void debug(...);
+    public static void warning(...);
+    public static void error(...);
+}
+
+-assumenosideeffects class org.solovyev.android.checkout.Check {
+    static *;
+}
+#end chekout
+
 #add warnings here, warnings in proguard is normal
 -dontwarn javax.annotation.**
 -dontwarn com.squareup.picasso.**
