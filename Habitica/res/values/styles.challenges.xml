@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="font_family_light">sans-serif-light</string>
+    <string name="font_family_medium">sans-serif-medium</string>
+    <string name="font_family_regular">sans-serif</string>
+    <string name="font_family_condensed">sans-serif-condensed</string>
+    <string name="font_family_black">sans-serif-black</string>
+    <string name="font_family_thin">sans-serif-thin</string>
+
+    <style name="ChallengeName">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_condensed
+        </item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="ChallengeByGroup">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_regular
+        </item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:height">20dp</item>
+        <item name="android:textColor">#8a000000</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ChallengeTaskDetails">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_regular
+        </item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:height">20dp</item>
+        <item name="android:textColor">#8a000000</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="OfficialChallenge">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium
+        </item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#8a000000</item>
+    </style>
+
+    <style name="ParticipatingChallenge">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium
+        </item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:height">20dp</item>
+        <item name="android:textColor">#1ca372</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>

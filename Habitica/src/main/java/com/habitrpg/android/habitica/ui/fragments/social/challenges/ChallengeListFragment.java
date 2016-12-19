@@ -42,7 +42,7 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-        challengeAdapter = new ChallengesListViewAdapter();
+        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly);
 
     }
 

@@ -104,4 +104,5 @@
 
     <color name="gem_view_background">#10bda8ff</color>
 
+    <color name="gem_icon_color">#24cc8f</color>
 </resources>

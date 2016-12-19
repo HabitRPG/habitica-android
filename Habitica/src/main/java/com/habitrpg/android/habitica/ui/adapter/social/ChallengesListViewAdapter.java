@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +38,12 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
 
     private List<Challenge> challenges = new ArrayList<>();
+    private boolean viewUserChallengesOnly;
+
+    public ChallengesListViewAdapter(boolean viewUserChallengesOnly) {
+
+        this.viewUserChallengesOnly = viewUserChallengesOnly;
+    }
 
     public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
@@ -47,7 +55,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.challenge_item, parent, false);
 
-        return new ChallengeViewHolder(view);
+        return new ChallengeViewHolder(view, viewUserChallengesOnly);
     }
 
     @Override
@@ -66,7 +74,6 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
     }
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Nullable
         @BindView(R.id.challenge_name)
         TextView challengeName;
 
@@ -79,21 +86,33 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         @BindView(R.id.officialHabiticaChallengeLayout)
         LinearLayout officialChallengeLayout;
 
+        @BindView(R.id.challenge_is_participating)
+        TextView challengeParticipatingTextView;
+
         @Nullable
         @BindView(R.id.memberCountTextView)
         TextView memberCountTextView;
+
+        @BindView(R.id.arrowImage)
+        LinearLayout arrowImage;
 
         @BindView(R.id.gemPrizeTextView)
         TextView gemPrizeTextView;
 
         private Challenge challenge;
+        private boolean viewUserChallengesOnly;
 
-        public ChallengeViewHolder(View itemView) {
+        public ChallengeViewHolder(View itemView, boolean viewUserChallengesOnly) {
             super(itemView);
+            this.viewUserChallengesOnly = viewUserChallengesOnly;
 
             ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
+
+            if(!viewUserChallengesOnly){
+                challengeName.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_200));
+            }
         }
 
         public void bind(Challenge challenge) {
@@ -103,24 +122,30 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
             challengeDescription.setText(challenge.groupName);
 
-            List<String> taskSummary = new ArrayList<>();
-            HashMap<String, String[]> tasksOrder = challenge.getTasksOrder();
-            for (Map.Entry<String, String[]> stringEntry : tasksOrder.entrySet()) {
-                if(stringEntry.getValue().length != 0)
-                {
-                    taskSummary.add(stringEntry.getValue().length + " " + getLabelByTypeAndCount(stringEntry.getKey(), stringEntry.getValue().length));
-                }
-            }
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
+            boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
 
-            challengeTaskSummary.setText(TextUtils.join(" | ", taskSummary));
+            if (viewUserChallengesOnly) {
+                List<String> taskSummary = new ArrayList<>();
 
-            //DataBindingUtils.setRoundedBackgroundInt(leaderLayout, android.R.color.darker_gray);
-            //DataBindingUtils.setForegroundTintColor(leaderLabel, android.R.color.white);
-            //leaderLabel.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName));
+                HashMap<String, String[]> tasksOrder = challenge.getTasksOrder();
+                for (Map.Entry<String, String[]> stringEntry : tasksOrder.entrySet()) {
+                    if (stringEntry.getValue().length != 0) {
+                        taskSummary.add(stringEntry.getValue().length + " " + getLabelByTypeAndCount(stringEntry.getKey(), stringEntry.getValue().length));
+                    }
+                }
 
-            //memberCountTextView.setText(challenge.memberCount + "");
+                challengeTaskSummary.setText(TextUtils.join(" | ", taskSummary));
+                challengeParticipatingTextView.setVisibility(View.GONE);
+                arrowImage.setVisibility(View.VISIBLE);
+            } else {
+                challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
+
+                challengeTaskSummary.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName) + " | " +
+                        challenge.memberCount + " " + getContext().getString(R.string.quest_participants));
+                arrowImage.setVisibility(View.GONE);
+            }
 
             if (challenge.prize == 0) {
                 //gem_prize_layout.setVisibility(View.GONE);
@@ -130,19 +155,19 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             }
 
             /*if (leaveButton != null && joinButton != null) {
-                boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
+
 
                 leaveButton.setVisibility(userIdExists ? View.VISIBLE : View.INVISIBLE);
                 joinButton.setVisibility(userIdExists ? View.INVISIBLE : View.VISIBLE);
             }*/
         }
 
-        private String getLabelByTypeAndCount(String type, int count){
-            if(type == Challenge.TASK_ORDER_DAILYS){
-                 return getContext().getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if(type == Challenge.TASK_ORDER_HABITS){
+        private String getLabelByTypeAndCount(String type, int count) {
+            if (type == Challenge.TASK_ORDER_DAILYS) {
+                return getContext().getString(count == 1 ? R.string.daily : R.string.dailies);
+            } else if (type == Challenge.TASK_ORDER_HABITS) {
                 return getContext().getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if(type == Challenge.TASK_ORDER_REWARDS){
+            } else if (type == Challenge.TASK_ORDER_REWARDS) {
                 return getContext().getString(count == 1 ? R.string.reward : R.string.rewards);
             } else {
                 return getContext().getString(count == 1 ? R.string.todo : R.string.todos);
@@ -165,7 +190,8 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                         }).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
                     dialog.dismiss();
                 }).show();
-            } else*/if (challenge != null) {
+            } else*/
+            if (challenge != null) {
                 // Card tapped
                 EventBus.getDefault().post(new ShowChallengeTasksCommand(challenge.id));
             }

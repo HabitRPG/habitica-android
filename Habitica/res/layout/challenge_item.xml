@@ -46,6 +46,7 @@
                 android:lines="1"
                 android:text="0"
                 android:textSize="12dp"
+                android:textColor="@color/gem_icon_color"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -64,35 +65,47 @@
 
         <TextView
             android:id="@+id/challenge_name"
+            style="@style/ChallengeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:textColor="@color/md_black_1000"
-            android:textSize="16sp"
             tools:text="Example Challenge Name" />
 
         <TextView
             android:id="@+id/challenge_description"
+            style="@style/ChallengeByGroup"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:textSize="14sp"
+            android:layout_marginTop="1dp"
             tools:text="Guild: XYZ" />
 
         <TextView
+            android:id="@+id/challenge_is_participating"
+            style="@style/ParticipatingChallenge"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/participating" />
+
+        <TextView
             android:id="@+id/challenge_task_summary"
+            style="@style/ChallengeTaskDetails"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:textSize="12sp"
+            android:layout_marginTop="1dp"
             tools:text="1 Habit | 4 Dailies | 1 To-Do" />
 
         <LinearLayout
             android:id="@+id/officialHabiticaChallengeLayout"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/layout_rounded_bg_official_challenge"
             android:gravity="center">
 
             <TextView
+                android:id="@+id/textView2"
+                style="@style/OfficialChallenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
@@ -101,11 +114,16 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/arrowImage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1">
 
-        android:layout_weight="1"
-        android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+    </LinearLayout>
 </LinearLayout>
