@@ -405,4 +405,6 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="feeding_market_info">¿Necesitas un alimento diferente? ¡Compra más desde el Mercado!</string>
   <string name="open_market">Abrir Mercado</string>
   <string name="cds_description" formatted="false">Tus Tareas Diarias serán reiniciadas la próxima vez que uses Habitica por primera vez despues de %1$s. ¡Asegurate de completar todas tus Tareas Diarias antes de tiempo!</string>
+  <string name="AudioTheme_title">Tema de audio</string>
+  <string name="AudioTheme_summary">Cambiar el tema de audio de Habitica</string>
 </resources>

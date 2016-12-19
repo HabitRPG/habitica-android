@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,11 @@ public class GemPurchaseOptionsView extends FrameLayout {
 
     @BindView(R.id.purchase_button)
     Button purchaseButton;
+
+    @BindView(R.id.seedsImageButton)
+    public
+    ImageButton seedsImageButton;
+
     private String sku;
 
     public GemPurchaseOptionsView(Context context, AttributeSet attrs) {
@@ -44,6 +51,10 @@ public class GemPurchaseOptionsView extends FrameLayout {
         Drawable iconRes = a.getDrawable(R.styleable.GemPurchaseOptionsView_gemDrawable);
         if (iconRes != null) {
             gemImageView.setImageDrawable(iconRes);
+        }
+
+        if (a.getBoolean(R.styleable.GemPurchaseOptionsView_showSeedsPromo, false)) {
+            seedsImageButton.setVisibility(View.VISIBLE);
         }
     }
 

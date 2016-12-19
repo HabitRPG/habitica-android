@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
@@ -38,7 +36,6 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();

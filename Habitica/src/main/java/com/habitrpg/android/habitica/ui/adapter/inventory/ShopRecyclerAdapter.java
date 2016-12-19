@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
@@ -12,7 +13,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -107,7 +106,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.imageView)
-        ImageView imageView;
+        SimpleDraweeView imageView;
         @BindView(R.id.titleView)
         TextView titleView;
         @BindView(R.id.descriptionView)
@@ -216,7 +215,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static class ShopHeaderViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageView)
-        public ImageView imageView;
+        public SimpleDraweeView imageView;
 
         @BindView(R.id.descriptionView)
         public TextView descriptionView;

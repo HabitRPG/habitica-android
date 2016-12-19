@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.helpers;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.squareup.picasso.Picasso;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 
@@ -10,6 +10,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -19,28 +20,22 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DataBindingUtils {
 
     @BindingAdapter("bind:imageName")
-    public static void loadImage(ImageView view, String imageName) {
+    public static void loadImage(SimpleDraweeView view, String imageName) {
         if (view.getVisibility() == View.VISIBLE) {
-            Picasso.with(view.getContext())
-                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png")
-                    .into(view);
+            view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
 
     @BindingAdapter("bind:questImageName")
-    public static void loadQuestImage(ImageView view, String imageName) {
+    public static void loadQuestImage(SimpleDraweeView view, String imageName) {
         if (view.getVisibility() == View.VISIBLE) {
-            Picasso.with(view.getContext())
-                    .load("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png")
-                    .resizeDimen(R.dimen.quest_image_width, R.dimen.quest_image_height)
-                    .into(view);
+            view.setImageURI(Uri.parse("https://habitica-assets.s3.amazonaws.com/mobileApp/images/" + imageName + ".png"));
         }
     }
 

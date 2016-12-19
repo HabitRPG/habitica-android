@@ -180,6 +180,7 @@
   <string name="complete_tutorial">Percebi!</string>
   <string name="dismiss_tutorial">Lembrar-me novamente</string>
   <string name="intro_1_title">Bem-vindo ao Habitica</string>
+  <string name="intro_1_description" formatted="false">Junta-te a mais de %s pessoas divertindo-se enquanto fazem as suas coisas. Cria um avatar e vigia as tuas tarefas da vida real.</string>
   <string name="intro_2_title">Progresso do Jogo = Progresso da Vida Real</string>
   <string name="intro_2_description">Desbloqueie funcionalidades no jogo, ao cumprires as tuas tarefas da vida real. Ganhe armaduras, animais, e muito mais para o recompensar por cumprir os seus objetivos!</string>
   <string name="intro_3_title">Socialize e Lute Contra Monstros</string>
@@ -311,8 +312,13 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="rogue">Bandido</string>
   <string name="mage">Mago</string>
   <string name="healer">Curandeiro</string>
+  <string name="warrior_description">Guerreiros causam melhores \"golpes críticos\" e com mais frequência, que dão bónus aleatórios de Ouro, Experiência e posibilidade de encontrar objectos ao cumprir uma tarefa. Eles também causam muito dano aos inimigos. Joga como Guerreiro te sentes motivado com recompensas jackpot imprevisíveis, ou se gostas de eliminar inimigos em Missões.</string>
+  <string name="mage_description">Magos aprendem rapidamente, ganhando Experiência e Níveis mais rápido que as outras classes. Eles também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos táticos do Habitica, ou se possuires grande motivação em subir níveis e desbloquear funcionalidades avançadas!</string>
+  <string name="rogue_description">Ladinos amam acumular fortunas, ganhando mais Ouro que qualquer um, e são peritos em achar objectos aleatórios. A sua Furtividade icónica permite-lhe evitar as consequências de Tarefas Diárias falhadas. Joga como Ladino se sentes forte motivação por Recompensas e Conquistas, e se procurares itens e medalhas!</string>
+  <string name="healer_description">Curandeiros são impenetráveis contra o mal, e extendem essa protecção aos outros. Tarefas Diárias falhadas e maus Hábitos não incomodam muito, e eles têm formas de recuperar Vida quando falham. Joga como Curandeiro se gostares de ajudar os teus colegas de Equipe, ou se a ideia de enganar a Morte através de trabalho duro inspira-te!</string>
   <string name="select_class">Selecionar Classe</string>
   <string name="opt_out_class">Optar</string>
+  <string name="opt_out_description">Não queres saber das classes? Preferes escolher mais tarde? Abstém-te - serás um guerreiro sem habilidades especiais. Podes ler mais sobre o sistema de classes na wiki e activar as classes quando quiseres em Utilizador -&gt; Atributos.</string>
   <string name="class_confirmation" formatted="false">Tem a certeza que deseja ser um %s?</string>
   <string name="choose_class">Escolher Classe</string>
   <string name="dialog_go_back">Recuar</string>
@@ -333,6 +339,7 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="invite_users">Convidar para a Equipa</string>
   <string name="share_using">Partilhe, utilizando</string>
   <string name="share_levelup" formatted="false">Eu cheguei até ao níve l%s em Habitica melhorando meus hábitos na vida real!</string>
+  <string name="share_hatched" formatted="false">Eu acabei de ganhar uma mascote %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
   <string name="share_raised" formatted="false">Eu acabei de ganhar uma montada %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
   <string name="open_in_store">Abrir na Play Store</string>
   <string name="change_class_confirmation">Tem a certeza que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
@@ -378,6 +385,7 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="add_task">Adicionar uma Tarefa</string>
   <string name="add_habit">Adicionar um Hábito </string>
   <string name="add_daily">Adicionar uma Tarefa Diária </string>
+  <string name="add_todo">Adicionar Tarefa</string>
   <string name="add_reward">Adicionar uma Recompensa</string>
   <string name="all_dailies_completed">Você completou todas suas tarefas diárias. Parabéns!</string>
   <string name="widget_habit_button">Habitica Fazer Hábito</string>
@@ -387,5 +395,16 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="gem.purchase.toolbartitle">Comprar</string>
   <string name="gem.purchase.title">Ao comprar gemas apoia os programadores e ajuda a manter o Habitica em funcionamento</string>
   <string name="gem.purchase.subtitle">As gemas permitem-lhe com extras engraçados para a sua conta, incluíndo:</string>
+  <string name="gem.purchase.listitem1">Disfarces divertidos para o teu avatar</string>
+  <string name="gem.purchase.listitem2">Fundos de Ecrã fantásticos</string>
   <string name="gem.purchase.listitem3">Missões que recompensam com ovos de animal</string>
+  <string name="gem.purchase.listitem4">A habilidade de alterar a tua classe antes do nível 100</string>
+  <string name="support_habitica">Suportar o Habitica</string>
+  <string name="skill_transformation_use">Usar</string>
+  <string name="hatching_market_info">Não encontras os objectos certos? Dá uma olhada no Mercado!</string>
+  <string name="feeding_market_info">Precisas de outra comida? Compra mais no mercado!</string>
+  <string name="open_market">Mercado Aberto</string>
+  <string name="cds_description" formatted="false">As tuas Tarefas Diárias irão re-iniciar na próxima vez que visitares o Habitica após as%1$s. Não te esqueças de cumprir as tuas tarefas a tempo!</string>
+  <string name="AudioTheme_title">Tema de Audio</string>
+  <string name="AudioTheme_summary">Alterar o Tema de Audio do Habitica</string>
 </resources>

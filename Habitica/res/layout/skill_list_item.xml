@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/skill_image"
             android:layout_width="40dp"
             android:layout_height="40dp"

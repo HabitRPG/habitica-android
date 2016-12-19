@@ -23,6 +23,8 @@
   <string name="pref_reminder_header">每日任务提醒</string>
   <string name="pref_reminder_checkbox">激活提醒</string>
   <string name="pref_reminder_picker">设置提醒时间</string>
+  <string name="pref_cds_header">自定义每日起始时间</string>
+  <string name="pref_cds_picker">设置每天的起始时间（用于任务结算）</string>
   <string name="pref_push_notifications_checkbox">用户推送通知</string>
   <string name="push_notifications">推送通知</string>
   <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
@@ -72,6 +74,7 @@
   <string name="login_validation_error_title">认可错误</string>
   <string name="login_validation_error_fieldsmissing">请填写所有内容。</string>
   <string name="save_changes">保存</string>
+  <string name="copy">复制</string>
   <string name="notes">注释</string>
   <string name="text">文字</string>
   <string name="difficulty">难度</string>
@@ -177,6 +180,7 @@
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
   <string name="intro_1_title">欢迎来到Habitica</string>
+  <string name="intro_1_description" formatted="false">和 %s 玩家一起，用游戏战胜拖延症！你可以创建一个账户，用它来跟踪你生活中的点滴琐事。</string>
   <string name="intro_2_title">生活即游戏！</string>
   <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧！</string>
   <string name="intro_3_title">与小伙伴一起，并肩击退怪兽</string>
@@ -400,4 +404,7 @@
   <string name="hatching_market_info">没有得到想要的掉落物品？来市场瞧瞧！</string>
   <string name="feeding_market_info">需要不同的食物？在市场可以买到更多！</string>
   <string name="open_market">打开市场</string>
+  <string name="cds_description" formatted="false">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
+  <string name="AudioTheme_title">声音主题</string>
+  <string name="AudioTheme_summary">更高 Habitica 的声音主题</string>
 </resources>

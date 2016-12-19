@@ -23,10 +23,13 @@
   <string name="pref_reminder_header">Notifica giornaliera</string>
   <string name="pref_reminder_checkbox">Attiva notifica</string>
   <string name="pref_reminder_picker">Imposta ora notifica</string>
+  <string name="pref_cds_header">Inizio giorno personalizzato</string>
+  <string name="pref_cds_picker">Imposta ora di inizio giorno</string>
   <string name="pref_push_notifications_checkbox">Notifiche push utente</string>
   <string name="push_notifications">Notifiche Push</string>
+  <string name="push_notifications_sum">Gestisci le impostazioni delle notifiche push</string>
   <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
-  <string name="preference_push_received_a_private_message">Ricevuto un messaggio</string>
+  <string name="preference_push_received_a_private_message">Nuovo messaggio privato ricevuto</string>
   <string name="preference_push_gifted_gems">Gemme regalate</string>
   <string name="preference_push_gifted_subscription">Abbonamento regalato</string>
   <string name="preference_push_invited_to_party">Invito in una squadra</string>
@@ -51,6 +54,7 @@
   <string name="confirmpassword">Conferma password</string>
   <string name="logout">Esci</string>
   <string name="logout_description">Esci dal tuo account</string>
+  <string name="account_details_sum">Controlla i dettagli del tuo account</string>
   <string name="account_details">Dettagli account</string>
   <string name="LoginActivityName">Benvenuto</string>
   <string name="string_revive">Rianima</string>
@@ -72,6 +76,7 @@
   <string name="login_validation_error_title">Errore di validazione</string>
   <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
   <string name="save_changes">Salva</string>
+  <string name="copy">Copia</string>
   <string name="notes">Note</string>
   <string name="text">Testo</string>
   <string name="difficulty">Difficoltà</string>
@@ -177,6 +182,7 @@
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
+  <string name="intro_1_description" formatted="false">Unisciti ad oltre %s persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
   <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
   <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
@@ -271,7 +277,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="quests">Missioni</string>
   <string name="pets">Animali</string>
   <string name="mounts">Cavalcature</string>
-  <string name="armoireEquipment" formatted="false">Hai trovato dell\'Equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
+  <string name="armoireEquipment" formatted="false">Hai trovato dell\'equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
   <string name="armoireFood" formatted="false">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
   <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
   <string name="armoireNotesFull" formatted="false">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
@@ -387,6 +393,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="all_dailies_completed">Hai completato tutte le tue Daily. Ottimo lavoro!</string>
   <string name="widget_habit_button">Habitica esegui abitudine</string>
   <string name="widget_dailies">Habitica Daily</string>
+  <string name="widget_todo_list">Lista To-Do Habitica</string>
   <string name="widget_add_task">Habitica aggiungi attività</string>
   <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
   <string name="gem.purchase.toolbartitle">Compra</string>
@@ -400,4 +407,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="skill_transformation_use">usa</string>
   <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
   <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
+  <string name="cds_description" formatted="false">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
+  <string name="AudioTheme_title">Tema sonoro</string>
+  <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
 </resources>

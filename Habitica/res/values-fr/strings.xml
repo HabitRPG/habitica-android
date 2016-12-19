@@ -395,14 +395,16 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="gem.purchase.toolbartitle">Acheter</string>
   <string name="gem.purchase.title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
   <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme:</string>
-  <string name="gem.purchase.listitem1">Des costumes cool pour votre avatar</string>
+  <string name="gem.purchase.listitem1">Des costumes chouettes pour votre avatar</string>
   <string name="gem.purchase.listitem2">De magnifiques arrière-plans</string>
-  <string name="gem.purchase.listitem3">Des quêtes qui vous récompenses avec des oeufs de familiers</string>
+  <string name="gem.purchase.listitem3">Des quêtes qui vous récompensent avec des oeufs de familiers</string>
   <string name="gem.purchase.listitem4">La possibilité de changer de classe avant le niveau 100</string>
   <string name="support_habitica">Soutenir Habitica</string>
   <string name="skill_transformation_use">Utiliser</string>
   <string name="hatching_market_info">Vous ne recevez pas le bon butin ? Allez voir au marché !</string>
   <string name="feeding_market_info">Besoin de plus de nourriture ? Achetez-en au marché !</string>
   <string name="open_market">Ouvrir le Marché</string>
-  <string name="cds_description" formatted="false">Vos quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les valider avant cette heure !</string>
+  <string name="cds_description" formatted="false">Vos quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
+  <string name="AudioTheme_title">Thème audio</string>
+  <string name="AudioTheme_summary">Changer le thème audio d\'Habitica</string>
 </resources>

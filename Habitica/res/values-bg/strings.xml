@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Задаване на персонализирано начало на деня</string>
   <string name="pref_push_notifications_checkbox">Потребителски известия</string>
   <string name="push_notifications">Известия</string>
+  <string name="push_notifications_sum">Настройте известията си</string>
   <string name="preference_push_you_won_challenge">Спечелихте предизвикателство</string>
   <string name="preference_push_received_a_private_message">Получихте лично съобщение</string>
   <string name="preference_push_gifted_gems">Подарени диаманти</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Потвърдете паролата</string>
   <string name="logout">Изход</string>
   <string name="logout_description">Излизане от Вашия профил</string>
+  <string name="account_details_sum">Вижте подробностите за профила си</string>
   <string name="account_details">Подробности за профила</string>
   <string name="LoginActivityName">Добре дошли</string>
   <string name="string_revive">Съживяване</string>
@@ -390,6 +392,7 @@
   <string name="all_dailies_completed">Изпълнихте всичките си ежедневни задачи. Добра работа!</string>
   <string name="widget_habit_button">Извършване на навик в Хабитика</string>
   <string name="widget_dailies">Ежедневни задачи в Хабитика</string>
+  <string name="widget_todo_list">Задачи за изпълнение в Хабитика</string>
   <string name="widget_add_task">Добавяне на задача в Хабитика</string>
   <string name="google_services_missing">Услугите за „Google play“ не могат да бъдат намерени.</string>
   <string name="gem.purchase.toolbartitle">Купуване</string>
@@ -405,4 +408,6 @@
   <string name="feeding_market_info">Нуждаете се от друга храна? Купете още от пазара!</string>
   <string name="open_market">Отваряне на пазара</string>
   <string name="cds_description" formatted="false">Ежедневните Ви задачи ще се подновят при първия път, когато използвате Хабитика след %1$s. Уверете се, че сте изпълнили ежедневните си задачи преди това време!</string>
+  <string name="AudioTheme_title">Звукова тема</string>
+  <string name="AudioTheme_summary">Промяна на звуковата тема на Хабитика</string>
 </resources>
