@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
@@ -28,8 +27,6 @@ import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -226,8 +223,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 this.startActivity(intent);
                 getActivity().finishAffinity();
             }
-	        EventBus.getDefault().post(new RefreshUserCommand());
-
         } else if (key.equals("audioTheme")) {
             String newAudioTheme = sharedPreferences.getString(key, "off");
 
