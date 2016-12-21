@@ -181,15 +181,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             } else if (view == joinButton) {
                 EventBus.getDefault().post(new JoinChallengeCommand(challenge.id));
             } else if (view == leaveButton) {
-                Context context = view.getContext();
-                new AlertDialog.Builder(context)
-                        .setTitle(context.getString(R.string.challenge_leave_title))
-                        .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
-                        .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> {
-                            EventBus.getDefault().post(new LeaveChallengeCommand(challenge.id));
-                        }).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
-                    dialog.dismiss();
-                }).show();
+
             } else*/
             if (challenge != null) {
                 // Card tapped
