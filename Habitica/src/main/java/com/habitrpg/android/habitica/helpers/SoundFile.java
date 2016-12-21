@@ -52,7 +52,7 @@ public class SoundFile {
 
         try {
             mp.setDataSource(path);
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
             mp.prepare();
 
             playerPrepared = true;
