@@ -86,14 +86,13 @@ public class ChallengeDetailActivity extends BaseActivity {
         @BindView(R.id.challenge_description)
         TextView challengeDescription;
 
-
-        @BindView(R.id.memberCountTextView)
+        @BindView(R.id.challenge_member_count)
         TextView memberCountTextView;
 
         @BindView(R.id.gem_prize_layout)
         LinearLayout gem_prize_layout;
 
-        @BindView(R.id.gemPrizeTextView)
+        @BindView(R.id.gem_amount)
         TextView gemPrizeTextView;
 
         private Challenge challenge;
@@ -124,5 +123,16 @@ public class ChallengeDetailActivity extends BaseActivity {
         public void onClick(View view) {
 
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

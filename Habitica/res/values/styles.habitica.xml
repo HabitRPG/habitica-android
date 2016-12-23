@@ -49,4 +49,11 @@
         <!--<item name="android:letterSpacing" tools:targetApi="lollipop">0.05</item>-->
     </style>
 
+    <style name="Headline">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_condensed
+        </item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

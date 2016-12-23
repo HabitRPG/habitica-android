@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
@@ -111,15 +112,14 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     @Subscribe
     public void onEvent(ShowChallengeTasksCommand cmd){
 
-        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
+        View dialogLayout = HabiticaApplication.currentActivity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
         Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
 
         ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                .setView(dialogLayout)
-                ;
+        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+                .setView(dialogLayout);
 
         challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge);
     }
@@ -201,10 +201,11 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             Bundle bundle = new Bundle();
             bundle.putString(ChallengeDetailActivity.CHALLENGE_ID, challenge.id);
 
-            Intent intent = new Intent(activity, ChallengeDetailActivity.class);
+            Intent intent = new Intent(HabiticaApplication.currentActivity, ChallengeDetailActivity.class);
             intent.putExtras(bundle);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
+            this.dialog.dismiss();
         }
 
         @OnClick(R.id.challenge_join_btn)
@@ -216,7 +217,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                         challenge.async().save();
 
                         userChallengesFragment.addItem(challenge);
-                        dialog.hide();
+                        this.dialog.dismiss();
                     }, throwable -> {
                     });
         }
@@ -245,6 +246,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             }).show();
         }
     }
+
+
 
     @Override
     public String customTitle() {

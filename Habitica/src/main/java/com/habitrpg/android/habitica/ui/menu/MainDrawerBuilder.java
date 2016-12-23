@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
+import com.habitrpg.android.habitica.ui.activities.ChallengeOverviewActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
@@ -133,7 +134,7 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_CHALLENGES: {
-                            fragment = new ChallengesOverviewFragment();
+                            newActivityClass = ChallengeOverviewActivity.class;
                             break;
                         }
                         case SIDEBAR_SHOPS: {

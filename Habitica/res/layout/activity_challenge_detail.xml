@@ -48,32 +48,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginRight="23dp"
+                        android:layout_marginEnd="23dp"
+                        android:layout_marginTop="?attr/actionBarSize"
                         android:adjustViewBounds="true"
                         android:fitsSystemWindows="true"
                         android:focusable="true"
-                        android:layout_marginTop="?attr/actionBarSize"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="15dp"
                         android:focusableInTouchMode="true"
-                        app:layout_collapseMode="parallax"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layout_collapseMode="parallax">
 
                         <TextView
                             android:id="@+id/challenge_name"
+                            style="@style/Headline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColorDark"/>
+                            android:maxLines="2"
+                            android:textColor="@color/textColorDark" />
 
                         <TextView
                             android:id="@+id/challenge_description"
+                            style="@style/Body2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/textColorDark"
-                            android:lines="3"/>
+                            android:maxLines="3"
+                            android:textColor="@color/textColorDark" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -81,84 +83,59 @@
                             android:baselineAligned="false"
                             android:weightSum="1.0">
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
 
-
-                                <TextView
-                                    android:id="@+id/leader_label"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="middle"
-                                    android:lines="1"
-                                    android:textColor="@color/textColorDark" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:gravity="right">
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@drawable/ic_people_white_24dp" />
-
-                                <TextView
-                                    android:id="@+id/memberCountTextView"
-                                    android:textColor="@color/textColorDark"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:ellipsize="middle"
-                                    android:lines="1"
-                                    android:paddingLeft="5dp"
-                                    android:paddingStart="5dp"
-                                    android:text="0" />
-
-
-                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="fill_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:gravity="end"
-                            android:weightSum="1.0">
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:id="@+id/gem_prize_layout"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:gravity="end">
+                                android:gravity="center"
+                                android:id="@+id/gem_prize_layout">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="36dp"
                                     android:src="@drawable/ic_header_gem" />
 
                                 <TextView
-                                    android:id="@+id/gemPrizeTextView"
-                                    android:textColor="@color/textColorDark"
+                                    android:id="@+id/gem_amount"
+                                    style="@style/Body1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:ellipsize="middle"
-                                    android:lines="1"
-                                    android:paddingLeft="5dp"
-                                    android:paddingStart="5dp"
-                                    android:text="0" />
-
-
+                                    tools:text="15"
+                                    android:textColor="@color/textColorDark" />
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="17dp"
+                                android:layout_marginStart="17dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/participants_light" />
+
+                                <TextView
+                                    android:id="@+id/challenge_member_count"
+                                    style="@style/Body1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:text="15"
+                                    android:textColor="@color/textColorDark" />
+                            </LinearLayout>
                         </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -168,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="?attr/actionBarSize"
                         android:theme="@style/Toolbar"
+
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/Theme.AppCompat.Light" />
                 </android.support.design.widget.CollapsingToolbarLayout>
