@@ -10,4 +10,8 @@
         <attr name="priceText" format="string" />
         <attr name="gemDrawable" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeightMultiplier" format="float" />
+    </declare-styleable>
 </resources>
