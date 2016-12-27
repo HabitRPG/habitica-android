@@ -1,11 +1,12 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.content.ClipboardManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -30,8 +30,12 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
+import com.magicmicky.habitrpgwrapper.lib.models.AchievementGroup;
+import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
@@ -41,12 +45,10 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -116,6 +118,15 @@ public class FullProfileActivity extends BaseActivity {
 
     @BindView(R.id.profile_mounts_tamed_count)
     TextView mountsTamedCount;
+
+    @BindView(R.id.profile_achievements_card)
+    CardView achievementCard;
+
+    @BindView(R.id.avatar_achievements_progress)
+    ProgressBar achievementProgress;
+
+    @BindView(R.id.recyclerView)
+    RecyclerView achievementGroupList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,9 +260,50 @@ public class FullProfileActivity extends BaseActivity {
 
         petsFoundCount.setText(String.valueOf(user.getPetsFoundCount()));
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
+
+        // Load the members achievements now
+        apiHelper.apiService.GetMemberAchievements(this.userId)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(this::fillAchievements,
+                        throwable -> {
+                        });
     }
 
+    private void fillAchievements(AchievementResult achievements) {
+        List<Object> items = new ArrayList<>();
 
+        fillAchievements(achievements.basic, items);
+        fillAchievements(achievements.seasonal, items);
+        fillAchievements(achievements.special, items);
+
+        AchievementAdapter adapter = new AchievementAdapter();
+        adapter.setItemList(items);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == 0) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
+            }
+        });
+        achievementGroupList.setLayoutManager(layoutManager);
+        achievementGroupList.setAdapter(adapter);
+
+        stopAndHideProgress(achievementProgress);
+    }
+
+    private void fillAchievements(AchievementGroup achievementGroup, List<Object> targetList){
+        // Order by ID first
+        ArrayList<Achievement> achievementList = new ArrayList<>(achievementGroup.achievements.values());
+        Collections.sort(achievementList, (achievement, t1) -> Double.compare(achievement.index, t1.index));
+
+        targetList.add(achievementGroup.label);
+        targetList.addAll(achievementList);
+    }
 
     // region Utils
 
@@ -533,4 +585,5 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     // endregion
+
 }

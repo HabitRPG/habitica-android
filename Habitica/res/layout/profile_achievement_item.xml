@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/achievement_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/achievement_drawee"
+
+            android:layout_width="36dp"
+            android:layout_height="39dp"
+            android:layout_marginRight="3dp" />
+
+        <TextView
+            android:id="@+id/achievement_count_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:text="2"
+            android:background="@drawable/layout_rounded_bg_brand"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="10dp"
+            android:textColor="#ffffff" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/achievement_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:gravity="center" />
+
+</LinearLayout>
