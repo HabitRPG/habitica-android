@@ -360,10 +360,13 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                     ChatMessage chatMsg = currentMsg;
 
                     if (!chatMsg.uuid.equals(uuid) )
+						{
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
+						}
                     if (user.getContributor().getAdmin())
+						{
 		                popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
-
+						}
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
 
