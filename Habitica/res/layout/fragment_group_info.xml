@@ -129,6 +129,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         bind:parsemarkdown="@{group.description}" />
+					<LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{group.leaderName.length() == 0 ? View.GONE : View.VISIBLE}">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/leaderName(group.leaderName)}" />
+                        <net.pherth.android.emoji_library.EmojiTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                bind:parsemarkdown="@{group.leaderName}"/>
+                    </LinearLayout>
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
