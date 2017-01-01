@@ -1,14 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.admin.SystemUpdatePolicy;
 import android.content.Context;
 import android.content.Intent;
-
-import android.os.Build;
-import android.test.mock.MockContext;
-import android.util.Log;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
@@ -22,21 +16,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 /**
  * Created by keithholliday on 7/16/16.
  */

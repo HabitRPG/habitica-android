@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 
 import org.junit.After;
@@ -21,9 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import rx.observers.TestSubscriber;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
 @RunWith(RobolectricGradleTestRunner.class)
