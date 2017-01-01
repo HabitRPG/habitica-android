@@ -9,7 +9,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -22,7 +21,7 @@ import java.util.List;
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class SocialAPITests extends BaseAPITests {
 
     List<String> messagesIDs;

@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 @Config(constants = BuildConfig.class)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class HabitRPGUserTest {
 
     private HabitRPGUser user;
