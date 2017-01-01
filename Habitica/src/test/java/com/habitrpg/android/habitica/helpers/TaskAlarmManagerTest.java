@@ -49,12 +49,6 @@ public class TaskAlarmManagerTest {
     }
 
     @Test
-    public void dummyTest() {
-        //temporary dummy test until the actual tests can be fixed.
-        assertTrue(true);
-    }
-/*
-    @Test
     public void testItSchedulesAlarmsForTodosWithMultipleReminders() {
         Task task = new Task();
         task.setType(Task.TYPE_TODO);
@@ -364,5 +358,5 @@ public class TaskAlarmManagerTest {
         if (expectedDay == 0) { expectedDay = 7;};
 
         Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
-    }*/
+    }
 }
