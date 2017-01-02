@@ -43,7 +43,6 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
         super.onCreate(savedInstance);
 
         challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly);
-
     }
 
     public void setViewUserChallengesOnly(boolean only) {

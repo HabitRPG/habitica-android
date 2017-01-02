@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 
 import javax.inject.Inject;
@@ -31,6 +32,7 @@ public class ChallengeOverviewActivity extends BaseActivity {
     @Inject
     public APIHelper apiHelper;
 
+    private ChallengesOverviewFragment overviewFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -45,19 +47,19 @@ public class ChallengeOverviewActivity extends BaseActivity {
 
         getSupportActionBar().setTitle(R.string.challenges);
 
-        ChallengesOverviewFragment fragment = new ChallengesOverviewFragment();
-        fragment.setTabLayout(detail_tabs);
-        fragment.setUser(HabiticaApplication.User);
+        overviewFragment = new ChallengesOverviewFragment();
+        overviewFragment.setTabLayout(detail_tabs);
+        overviewFragment.setUser(HabiticaApplication.User);
 
         AvatarWithBarsViewModel avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         avatarInHeader.updateData(HabiticaApplication.User);
 
         if (getSupportFragmentManager().getFragments() == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, overviewFragment).commitAllowingStateLoss();
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-            transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+            transaction.replace(R.id.fragment_container, overviewFragment).addToBackStack(null).commitAllowingStateLoss();
         }
     }
 
@@ -74,6 +76,8 @@ public class ChallengeOverviewActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if(!overviewFragment.onHandleBackPressed()){
+            finish();
+        }
     }
 }

@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Stack;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,6 +43,10 @@ import butterknife.OnClick;
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
+    public FragmentStatePagerAdapter statePagerAdapter;
+    private Stack<Integer> pageHistory;
+    private boolean saveToHistory;
+    int currentPage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +67,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         availableChallengesFragment.setUser(this.user);
         availableChallengesFragment.setViewUserChallengesOnly(false);
 
+        pageHistory = new Stack<Integer>();
+
         return v;
     }
 
@@ -71,7 +83,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
 
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+        statePagerAdapter = new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
             public Fragment getItem(int position) {
@@ -102,7 +114,27 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                 }
                 return "";
             }
+        };
+        viewPager.setAdapter(statePagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int newPageId) {
+                if (saveToHistory)
+                    pageHistory.push(Integer.valueOf(currentPage));
+
+                currentPage = newPageId;
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
         });
+        saveToHistory = true;
 
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
@@ -110,7 +142,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     }
 
     @Subscribe
-    public void onEvent(ShowChallengeTasksCommand cmd){
+    public void onEvent(ShowChallengeTasksCommand cmd) {
 
         View dialogLayout = HabiticaApplication.currentActivity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
@@ -122,6 +154,18 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                 .setView(dialogLayout);
 
         challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge);
+    }
+
+    public boolean onHandleBackPressed() {
+        if (!pageHistory.empty()) {
+            saveToHistory = false;
+            viewPager.setCurrentItem(pageHistory.pop().intValue());
+            saveToHistory = true;
+
+            return true;
+        }
+
+        return false;
     }
 
     public class ChallegeDetailDialogHolder {
@@ -166,19 +210,16 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             ButterKnife.bind(this, view);
         }
 
-        public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, Challenge challenge){
+        public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, Challenge challenge) {
             this.dialog = dialog;
             this.apiHelper = apiHelper;
             this.user = user;
             this.challenge = challenge;
 
-            if(challenge.user_id == null || challenge.user_id.isEmpty())
-            {
+            if (challenge.user_id == null || challenge.user_id.isEmpty()) {
                 notJoinedHeader.setVisibility(View.VISIBLE);
                 joinButton.setVisibility(View.VISIBLE);
-            }
-            else
-            {
+            } else {
                 joinedHeader.setVisibility(View.VISIBLE);
                 leaveButton.setVisibility(View.VISIBLE);
             }
@@ -187,8 +228,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             challengeDescription.setText(challenge.description);
             challengeLeader.setText(challenge.leaderName);
 
-            gem_amount.setText(challenge.prize+"");
-            member_count.setText(challenge.memberCount+"");
+            gem_amount.setText(challenge.prize + "");
+            member_count.setText(challenge.memberCount + "");
         }
 
         @OnClick(R.id.challenge_leader)
@@ -246,7 +287,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             }).show();
         }
     }
-
 
 
     @Override
