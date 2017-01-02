@@ -48,7 +48,7 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
         fragment.user = user;
         fragment.classType = classType;
 
-        if(tasks.size() != 0){
+        if(tasks.size() != 0 && fragment.recyclerAdapter != null){
             fragment.recyclerAdapter.setTasks(tasks);
         }
 

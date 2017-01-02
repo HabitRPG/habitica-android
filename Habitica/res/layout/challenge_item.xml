@@ -63,16 +63,16 @@
         android:orientation="vertical">
 
 
-        <TextView
+        <net.pherth.android.emoji_library.EmojiTextView
             android:id="@+id/challenge_name"
             style="@style/ChallengeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            tools:text="Example Challenge Name" />
+            tools:text="Example Challenge Name"/>
 
         <TextView
-            android:id="@+id/challenge_description"
+            android:id="@+id/challenge_group_name"
             style="@style/ChallengeByGroup"
             android:layout_width="match_parent"
             android:layout_height="20dp"

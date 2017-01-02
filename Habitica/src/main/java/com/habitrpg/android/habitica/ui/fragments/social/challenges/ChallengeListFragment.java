@@ -14,10 +14,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.BaseModelQueriable;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
@@ -152,6 +149,10 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
     }
 
     public void addItem(Challenge challenge) {
-        challengeAdapter.addChallange(challenge);
+        challengeAdapter.addChallenge(challenge);
+    }
+
+    public void updateItem(Challenge challenge) {
+        challengeAdapter.replaceChallenge(challenge);
     }
 }

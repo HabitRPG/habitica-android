@@ -26,10 +26,14 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import net.pherth.android.emoji_library.EmojiParser;
+import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -183,10 +187,10 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         Button leaveButton;
 
         @BindView(R.id.challenge_name)
-        TextView challengeName;
+        EmojiTextView challengeName;
 
         @BindView(R.id.challenge_description)
-        TextView challengeDescription;
+        EmojiTextView challengeDescription;
 
         @BindView(R.id.challenge_leader)
         TextView challengeLeader;
@@ -216,20 +220,26 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             this.user = user;
             this.challenge = challenge;
 
-            if (challenge.user_id == null || challenge.user_id.isEmpty()) {
-                notJoinedHeader.setVisibility(View.VISIBLE);
-                joinButton.setVisibility(View.VISIBLE);
-            } else {
-                joinedHeader.setVisibility(View.VISIBLE);
-                leaveButton.setVisibility(View.VISIBLE);
-            }
+            changeViewsByChallenge(challenge);
+        }
 
-            challengeName.setText(challenge.name);
-            challengeDescription.setText(challenge.description);
+        public void changeViewsByChallenge(Challenge challenge){
+            setJoined(challenge.user_id != null && !challenge.user_id.isEmpty());
+
+            challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            challengeDescription.setText( MarkdownParser.parseMarkdown(challenge.description));
             challengeLeader.setText(challenge.leaderName);
 
             gem_amount.setText(challenge.prize + "");
             member_count.setText(challenge.memberCount + "");
+        }
+
+        public void setJoined(boolean joined){
+            joinedHeader.setVisibility(joined ?  View.VISIBLE : View.GONE);
+            leaveButton.setVisibility(joined ?  View.VISIBLE : View.GONE);
+
+            notJoinedHeader.setVisibility(joined ?  View.GONE : View.VISIBLE);
+            joinButton.setVisibility(joined ?  View.GONE : View.VISIBLE);
         }
 
         @OnClick(R.id.challenge_leader)
@@ -258,7 +268,9 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                         challenge.async().save();
 
                         userChallengesFragment.addItem(challenge);
-                        this.dialog.dismiss();
+                        availableChallengesFragment.updateItem(challenge);
+
+                        changeViewsByChallenge(challenge);
                     }, throwable -> {
                     });
         }

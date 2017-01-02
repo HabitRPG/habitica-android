@@ -14,7 +14,11 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+
+import net.pherth.android.emoji_library.EmojiParser;
+import net.pherth.android.emoji_library.EmojiTextView;
 
 import javax.inject.Inject;
 
@@ -81,10 +85,10 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.challenge_name)
-        TextView challengeName;
+        EmojiTextView challengeName;
 
         @BindView(R.id.challenge_description)
-        TextView challengeDescription;
+        EmojiTextView challengeDescription;
 
         @BindView(R.id.challenge_member_count)
         TextView memberCountTextView;
@@ -106,8 +110,8 @@ public class ChallengeDetailActivity extends BaseActivity {
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 
-            challengeName.setText(challenge.name);
-            challengeDescription.setText(challenge.description);
+            challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
 
             memberCountTextView.setText(challenge.memberCount + "");
 

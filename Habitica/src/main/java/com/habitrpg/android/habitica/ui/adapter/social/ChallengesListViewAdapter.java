@@ -21,6 +21,9 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
+import net.pherth.android.emoji_library.EmojiParser;
+import net.pherth.android.emoji_library.EmojiTextView;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -68,16 +71,35 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         return challenges.size();
     }
 
-    public void addChallange(Challenge challenge) {
+    public void addChallenge(Challenge challenge) {
         challenges.add(challenge);
         notifyDataSetChanged();
     }
 
+    public void replaceChallenge(Challenge challenge) {
+        int index = challenges.indexOf(challenge);
+
+        if(index == -1){
+            for (int i = 0; i < challenges.size(); i++) {
+                if(challenges.get(i).id.equals(challenge.id)){
+                    index = i;
+
+                    break;
+                }
+            }
+        }
+
+        if(index != -1) {
+            challenges.set(index, challenge);
+            notifyItemChanged(index);
+        }
+    }
+
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.challenge_name)
-        TextView challengeName;
+        EmojiTextView challengeName;
 
-        @BindView(R.id.challenge_description)
+        @BindView(R.id.challenge_group_name)
         TextView challengeDescription;
 
         @BindView(R.id.challenge_task_summary)
@@ -118,10 +140,8 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 
-            challengeName.setText(challenge.name);
-
+            challengeName.setText(EmojiParser.parseEmojis(challenge.name.trim()));
             challengeDescription.setText(challenge.groupName);
-
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
             boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
@@ -153,13 +173,6 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                 //gem_prize_layout.setVisibility(View.VISIBLE);
                 gemPrizeTextView.setText(challenge.prize + "");
             }
-
-            /*if (leaveButton != null && joinButton != null) {
-
-
-                leaveButton.setVisibility(userIdExists ? View.VISIBLE : View.INVISIBLE);
-                joinButton.setVisibility(userIdExists ? View.INVISIBLE : View.VISIBLE);
-            }*/
         }
 
         private String getLabelByTypeAndCount(String type, int count) {
