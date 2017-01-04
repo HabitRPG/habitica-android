@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChallengeListFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.challenges_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -141,11 +141,6 @@ public class ChallengeListFragment extends BaseMainFragment implements View.OnCl
 
     private void setAdapterEntries(List<Challenge> challenges) {
         challengeAdapter.setChallenges(challenges);
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     public void addItem(Challenge challenge) {

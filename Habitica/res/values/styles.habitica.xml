@@ -38,6 +38,14 @@
         <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
     </style>
 
+    <style name="Body1_Button" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_medium
+        </item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+    </style>
+
     <style name="Title2">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_condensed

@@ -49,10 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="26dp"
-                        android:layout_marginStart="26dp"
-                        android:layout_marginRight="23dp"
-                        android:layout_marginEnd="23dp"
+
                         android:layout_marginTop="?attr/actionBarSize"
                         android:adjustViewBounds="true"
                         android:fitsSystemWindows="true"
@@ -61,81 +58,114 @@
                         android:orientation="vertical"
                         app:layout_collapseMode="parallax">
 
-                        <net.pherth.android.emoji_library.EmojiTextView
-                            android:id="@+id/challenge_name"
-                            style="@style/Headline"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="2"
-                            android:textColor="@color/textColorDark" />
+                            android:layout_marginEnd="23dp"
+                            android:layout_marginLeft="26dp"
+                            android:layout_marginRight="23dp"
+                            android:layout_marginStart="26dp"
+                            android:orientation="vertical">
 
-                        <net.pherth.android.emoji_library.EmojiTextView
-                            android:id="@+id/challenge_description"
-                            style="@style/Body2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLines="3"
-                            android:textColor="@color/textColorDark" />
+                            <net.pherth.android.emoji_library.EmojiTextView
+                                android:id="@+id/challenge_name"
+                                style="@style/Headline"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="2"
+                                android:textColor="@color/textColorDark" />
+
+                            <net.pherth.android.emoji_library.EmojiTextView
+                                android:id="@+id/challenge_description"
+                                style="@style/Body2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="4"
+                                android:textColor="@color/textColorDark" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:baselineAligned="false"
-                            android:weightSum="1.0">
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:layout_gravity="right"
+
+                            android:layout_marginEnd="23dp"
+                            android:layout_marginRight="23dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:id="@+id/gem_prize_layout">
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="36dp"
-                                    android:src="@drawable/ic_header_gem" />
-
-                                <TextView
-                                    android:id="@+id/gem_amount"
-                                    style="@style/Body1"
+                                <Button
+                                    android:id="@+id/btn_show_more"
+                                    style="@style/Body1_Button"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="15"
-                                    android:textColor="@color/textColorDark" />
+                                    android:gravity="left|center"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
+                                    android:text="Show more"
+                                    android:textAllCaps="false"
+                                    android:textColor="#d0c1ff" />
+
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="17dp"
-                                android:layout_marginStart="17dp"
-                                android:gravity="center">
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="36dp"
-                                    android:src="@drawable/participants_light" />
-
-                                <TextView
-                                    android:id="@+id/challenge_member_count"
-                                    style="@style/Body1"
+                                <LinearLayout
+                                    android:id="@+id/gem_prize_layout"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="15"
-                                    android:textColor="@color/textColorDark" />
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="36dp"
+                                        android:src="@drawable/ic_header_gem" />
+
+                                    <TextView
+                                        android:id="@+id/gem_amount"
+                                        style="@style/Body1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/textColorDark"
+                                        tools:text="15" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="17dp"
+                                    android:layout_marginStart="17dp"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="36dp"
+                                        android:src="@drawable/participants_light" />
+
+                                    <TextView
+                                        android:id="@+id/challenge_member_count"
+                                        style="@style/Body1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/textColorDark"
+                                        tools:text="15" />
+                                </LinearLayout>
                             </LinearLayout>
+
                         </LinearLayout>
-
 
                     </LinearLayout>
 

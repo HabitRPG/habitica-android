@@ -1,24 +1,18 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.JoinChallengeCommand;
-import com.habitrpg.android.habitica.events.commands.LeaveChallengeCommand;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeTasksCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -79,9 +73,9 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
     public void replaceChallenge(Challenge challenge) {
         int index = challenges.indexOf(challenge);
 
-        if(index == -1){
+        if (index == -1) {
             for (int i = 0; i < challenges.size(); i++) {
-                if(challenges.get(i).id.equals(challenge.id)){
+                if (challenges.get(i).id.equals(challenge.id)) {
                     index = i;
 
                     break;
@@ -89,7 +83,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             }
         }
 
-        if(index != -1) {
+        if (index != -1) {
             challenges.set(index, challenge);
             notifyItemChanged(index);
         }
@@ -132,7 +126,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
             itemView.setOnClickListener(this);
 
-            if(!viewUserChallengesOnly){
+            if (!viewUserChallengesOnly) {
                 challengeName.setTextColor(ContextCompat.getColor(getContext(), R.color.brand_200));
             }
         }
@@ -189,16 +183,12 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
         @Override
         public void onClick(View view) {
-            /*if (view == leaderLayout) {
-                EventBus.getDefault().post(new OpenFullProfileCommand(challenge.leaderId));
-            } else if (view == joinButton) {
-                EventBus.getDefault().post(new JoinChallengeCommand(challenge.id));
-            } else if (view == leaveButton) {
-
-            } else*/
             if (challenge != null) {
-                // Card tapped
-                EventBus.getDefault().post(new ShowChallengeTasksCommand(challenge.id));
+                if (viewUserChallengesOnly) {
+                    EventBus.getDefault().post(new ShowChallengeDetailActivityCommand(challenge.id));
+                } else {
+                    EventBus.getDefault().post(new ShowChallengeDetailDialogCommand(challenge.id));
+                }
             }
         }
     }

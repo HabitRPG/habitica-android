@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.events.commands;
 
-public class ShowChallengeTasksCommand {
+public class ShowChallengeDetailActivityCommand {
     public String challengeId;
 
-    public ShowChallengeTasksCommand(String challengeId){
+    public ShowChallengeDetailActivityCommand(String challengeId){
         this.challengeId = challengeId;
     }
 }
