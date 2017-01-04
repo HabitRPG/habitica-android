@@ -372,6 +372,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="open_in_store">Open in play store</string>
     <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
     <string name="leaderMessage" formatted="false">Message from %1$s</string>
+    <string name="leaderName" formatted="false">Leader: %1$s</string>
     <string name="confirm">Confirm</string>
     <string name="market">Market</string>
     <string name="timeTravelers">Time Travelers</string>
