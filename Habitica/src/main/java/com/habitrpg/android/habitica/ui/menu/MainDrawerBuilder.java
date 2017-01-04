@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.menu;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
-import com.habitrpg.android.habitica.ui.activities.ChallengeOverviewActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity;
@@ -29,6 +28,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 
 import static com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST;
@@ -66,7 +66,7 @@ public class MainDrawerBuilder {
     }
 
 
-    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, Toolbar toolbar, final AccountHeader accountHeader) {
+    public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, SharedPreferences sharedPreferences, Toolbar toolbar, final AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(activity);
 
@@ -134,7 +134,8 @@ public class MainDrawerBuilder {
                             break;
                         }
                         case SIDEBAR_CHALLENGES: {
-                            newActivityClass = ChallengeOverviewActivity.class;
+                            fragment = new ChallengesOverviewFragment();
+
                             break;
                         }
                         case SIDEBAR_SHOPS: {
@@ -178,6 +179,8 @@ public class MainDrawerBuilder {
                             break;
                         }
                     }
+
+                    sharedPreferences.edit().putInt("lastActivePosition", position).apply();
 
                     if (fragment != null) {
                         fragment.fragmentSidebarPosition = position;

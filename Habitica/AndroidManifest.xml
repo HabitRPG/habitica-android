@@ -127,16 +127,6 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.ChallengeOverviewActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            tools:ignore="UnusedAttribute">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.MainActivity" />
-        </activity>
-        <activity
             android:name=".ui.activities.ChallengeDetailActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
@@ -144,7 +134,7 @@
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.ChallengeOverviewActivity" />
+                android:value=".ui.activities.MainActivity" />
         </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=

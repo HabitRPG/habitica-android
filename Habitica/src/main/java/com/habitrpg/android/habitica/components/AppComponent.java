@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.activities.ChallengeOverviewActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -200,6 +199,4 @@ public interface AppComponent {
     void inject(ChallengeTaskRecyclerViewFragment challengeTaskRecyclerViewFragment);
 
     void inject(ChallengeDetailActivity challengeDetailActivity);
-
-    void inject(ChallengeOverviewActivity challengeOverviewActivity);
 }
