@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:viewportWidth="1500"
+        android:viewportHeight="1200"
+        android:width="1500dp"
+        android:height="1200dp"
+        android:scaleX="-1">
+    <path
+        android:pathData="M500 1200l682 -682q8 -8 8 -18 0 -10 -8 -18L718 18q-8 -8 -18 -8 -10 0 -18 8L0 700 1 1175q0 10 7.5 17.5 7.5 7.5 17.5 7.5l474 0zm300 0l682 -682q8 -8 8 -18 0 -10 -8 -18L1018 18q-8 -8 -18 -8 -10 0 -18 8l-56 56 424 426 -700 700 150 0zM319.5 1024.5q-29.5 29.5 -71 29.5 -41.5 0 -71 -29.5Q148 995 148 953q0 -42 29.5 -71.5 29.5 -29.5 71 -29.5 41.5 0 71 29.5 29.5 29.5 29.5 71.5 0 42 -29.5 71.5z"
+        android:strokeWidth="2"
+        android:fillColor="#53000000"
+        android:strokeLineJoin="round"
+        android:strokeColor="#000000"
+        android:strokeLineCap="butt"/>
+</vector>
