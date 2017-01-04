@@ -47,61 +47,6 @@ public class ChallengeTasksFragment extends BaseMainFragment {
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
 
-        loadTaskLists();
-        return v;
-    }
-
-    public void loadTaskLists() {
-        android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
-
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
-
-            @Override
-            public Fragment getItem(int position) {
-                ChallengeTaskRecyclerViewFragment fragment;
-
-                switch (position) {
-                    case 0:
-                        fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, observableHabitList);
-                        break;
-                    case 1:
-                        fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, observableDailyList);
-                        break;
-                    case 3:
-                        fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, observableRewardList);
-                        break;
-                    default:
-                        fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, observableTodoList);
-                }
-
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return 4;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return getContext().getString(R.string.habits);
-                    case 1:
-                        return getContext().getString(R.string.dailies);
-                    case 2:
-                        return getContext().getString(R.string.todos);
-                    case 3:
-                        return getContext().getString(R.string.rewards);
-                }
-                return "";
-            }
-        });
-
-        if (tabLayout != null) {
-            tabLayout.setupWithViewPager(viewPager);
-        }
-
         apiHelper.apiService.getChallengeTasks(challengeId)
                 .compose(this.apiHelper.configureApiCallObserver())
                 .subscribe(taskList -> {
@@ -134,7 +79,94 @@ public class ChallengeTasksFragment extends BaseMainFragment {
                     observableDailyList.addAll(dailies);
                     observableHabitList.addAll(habits);
                     observableRewardList.addAll(rewards);
+
+                    loadTaskLists();
                 }, throwable -> {
                 });
+
+        return v;
+    }
+
+    public void loadTaskLists() {
+        android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
+
+        int tabCount = 0;
+        int habitPosition = -1;
+        int dailyPosition = -1;
+        int todoPosition = -1;
+        int rewardPosition = -1;
+
+        if (observableHabitList.size() > 0) {
+            habitPosition = tabCount++;
+        }
+
+        if (observableDailyList.size() > 0) {
+            dailyPosition = tabCount++;
+        }
+
+        if (observableTodoList.size() > 0) {
+            todoPosition = tabCount++;
+        }
+
+        if (observableRewardList.size() > 0) {
+            rewardPosition = tabCount++;
+        }
+
+        final int finalTabCount = tabCount;
+        final int finalHabitPosition = habitPosition;
+        final int finalDailyPosition = dailyPosition;
+        final int finalTodoPosition = todoPosition;
+        final int finalRewardPosition = rewardPosition;
+
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+
+            @Override
+            public Fragment getItem(int position) {
+                ChallengeTaskRecyclerViewFragment fragment;
+
+                if (position == finalHabitPosition) {
+                    fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, observableHabitList);
+                } else if (position == finalDailyPosition) {
+                    fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, observableDailyList);
+                } else if (position == finalTodoPosition) {
+                    fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, observableTodoList);
+                } else if (position == finalRewardPosition) {
+                    fragment = ChallengeTaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, observableRewardList);
+                } else {
+                    fragment = null;
+                }
+
+                return fragment;
+            }
+
+            @Override
+            public int getCount() {
+                return finalTabCount;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                if (position == finalHabitPosition) {
+                    return getContext().getString(R.string.habits);
+                } else if (position == finalDailyPosition) {
+                    return getContext().getString(R.string.dailies);
+                } else if (position == finalTodoPosition) {
+                    return getContext().getString(R.string.todos);
+                } else if (position == finalRewardPosition) {
+                    return getContext().getString(R.string.rewards);
+                }
+
+                return "";
+            }
+        });
+
+        if (tabLayout != null) {
+
+            if (finalTabCount != 1) {
+                tabLayout.setupWithViewPager(viewPager);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
+        }
     }
 }

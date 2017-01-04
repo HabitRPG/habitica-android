@@ -37,6 +37,8 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
     @Inject
     APIHelper apiHelper;
 
+    ObservableList<Task> tasksOnInitialize;
+
     LinearLayoutManager layoutManager = null;
     private String classType;
     private HabitRPGUser user;
@@ -47,6 +49,7 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
+        fragment.tasksOnInitialize = tasks;
 
         if(tasks.size() != 0 && fragment.recyclerAdapter != null){
             fragment.recyclerAdapter.setTasks(tasks);
@@ -101,12 +104,16 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
                 case Task.TYPE_TODO:
                     layoutOfType = R.layout.todo_item_card;
                     this.recyclerAdapter = new ChallengeTodosRecyclerViewAdapter(Task.TYPE_TODO, null, layoutOfType, getContext(), userID, null);
-                    return;
+                    break;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
                     this.recyclerAdapter = new ChallengeRewardsRecyclerViewAdapter(Task.TYPE_REWARD, null, layoutOfType, getContext(), user);
                     break;
             }
+        }
+
+        if(tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0){
+            recyclerAdapter.setTasks(tasksOnInitialize);
         }
     }
 
