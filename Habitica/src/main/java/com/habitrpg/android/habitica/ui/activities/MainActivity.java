@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.facebook.drawee.generic.RootDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -131,6 +132,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -1114,12 +1116,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                 ShareEvent event1 = new ShareEvent();
                                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet";
-                                Bitmap animalBitmap = ((BitmapDrawable) petImageView.getDrawable()).getBitmap();
                                 Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
                                 Canvas canvas = new Canvas(sharedImage);
                                 canvas.drawColor(getResources().getColor(R.color.brand_300));
-                                canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
-                                        new Rect(30, 0, animalBitmap.getWidth() + 30, animalBitmap.getHeight()), new Paint());
+                                petImageView.getDrawable().draw(canvas);
                                 event1.shareImage = sharedImage;
                                 EventBus.getDefault().post(event1);
                                 hatchingDialog.dismiss();
@@ -1159,12 +1159,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                     ShareEvent event1 = new ShareEvent();
                                     event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
-                                    Bitmap animalBitmap = ((BitmapDrawable) mountImageView.getDrawable()).getBitmap();
                                     Bitmap sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888);
                                     Canvas canvas = new Canvas(sharedImage);
                                     canvas.drawColor(getResources().getColor(R.color.brand_300));
-                                    canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
-                                            new Rect(9, 0, animalBitmap.getWidth() + 9, animalBitmap.getHeight()), new Paint());
+                                    mountImageView.getDrawable().draw(canvas);
                                     event1.shareImage = sharedImage;
                                     EventBus.getDefault().post(event1);
                                     hatchingDialog.dismiss();
@@ -1335,8 +1333,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     dialog.dismiss();
                 })
                 .create();
-
-        alert.show();
+        if (!this.isFinishing()) {
+            alert.show();
+        }
     }
 
     private void checkClassSelection() {
@@ -1443,7 +1442,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         sharingIntent.setType("*/*");
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage);
         File f = BitmapUtils.saveToShareableFile(getFilesDir() + "/shared_images", "share.png", event.shareImage);
-        Uri fileUri = FileProvider.getUriForFile(this, "com.habitrpg.android.habitica.fileprovider", f);
+        Uri fileUri = FileProvider.getUriForFile(this, getString(R.string.content_provider), f);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
         List<ResolveInfo> resInfoList = this.getPackageManager().queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resInfoList) {
