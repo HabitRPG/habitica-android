@@ -161,7 +161,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
-            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         }
 
         if (savedInstanceState != null) {

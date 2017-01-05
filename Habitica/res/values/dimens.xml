@@ -84,4 +84,6 @@
 	<dimen name="habit_circle_background_size">40dp</dimen>
 	<dimen name="bar_size_slim">13dp</dimen>
 	<dimen name="widget_rounding">5dp</dimen>
+	<dimen name="task_icon_space">12dp</dimen>
+	<dimen name="task_icon_size">18dp</dimen>
 </resources>

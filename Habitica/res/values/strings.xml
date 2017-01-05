@@ -442,5 +442,8 @@ To start, which parts of your life do you want to improve?</string>
 
     <!-- Login Incentives -->
     <string name="see_you_tomorrow">See you tomorrow!</string>
+    <string name="belongs_to_challenge">Belongs to Challenge</string>
+    <string name="has_reminder">Has Reminder</string>
+    <string name="has_tag">Has Tag</string>
 
 </resources>
