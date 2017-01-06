@@ -19,6 +19,17 @@
         <!-- <item name="android:letterSpacing" tools:targetApi="lollipop">0.03</item>-->
     </style>
 
+    <style name="Body3">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_condensed
+        </item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">
+            #8a000000
+        </item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+    </style>
+
     <style name="Body2">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_regular

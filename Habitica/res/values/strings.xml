@@ -449,4 +449,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="todo">To-Do</string>
     <string name="official_habitica_challenge">Official Habitica Challenge</string>
     <string name="participating">Participating</string>
+    <string name="challenge">Challenge</string>
+    <string name="go_to_challenge">Go to Challenge</string>
 </resources>

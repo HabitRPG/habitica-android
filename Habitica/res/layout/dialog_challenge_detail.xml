@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:height="20dp"
-            android:text="Challenge"
+            android:text="@string/challenge"
             android:textAllCaps="true" />
 
 
@@ -48,7 +48,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:text="GO TO CHALLENGE"
+            android:text="@string/go_to_challenge"
             android:textColor="#6133b4"
             android:textSize="16sp" />
 
@@ -96,7 +96,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical">
 
@@ -105,12 +104,20 @@
                     style="@style/Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Some Leader"
+                    tools:text="Leader name"
                     android:textColor="#6133b4" />
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/task_group_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -146,7 +147,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                 HashMap<String, String[]> tasksOrder = challenge.getTasksOrder();
                 for (Map.Entry<String, String[]> stringEntry : tasksOrder.entrySet()) {
                     if (stringEntry.getValue().length != 0) {
-                        taskSummary.add(stringEntry.getValue().length + " " + getLabelByTypeAndCount(stringEntry.getKey(), stringEntry.getValue().length));
+                        taskSummary.add(stringEntry.getValue().length + " " + getLabelByTypeAndCount(getContext(), stringEntry.getKey(), stringEntry.getValue().length));
                     }
                 }
 
@@ -169,15 +170,15 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             }
         }
 
-        private String getLabelByTypeAndCount(String type, int count) {
+        public static String getLabelByTypeAndCount(Context context, String type, int count) {
             if (type == Challenge.TASK_ORDER_DAILYS) {
-                return getContext().getString(count == 1 ? R.string.daily : R.string.dailies);
+                return context.getString(count == 1 ? R.string.daily : R.string.dailies);
             } else if (type == Challenge.TASK_ORDER_HABITS) {
-                return getContext().getString(count == 1 ? R.string.habit : R.string.habits);
+                return context.getString(count == 1 ? R.string.habit : R.string.habits);
             } else if (type == Challenge.TASK_ORDER_REWARDS) {
-                return getContext().getString(count == 1 ? R.string.reward : R.string.rewards);
+                return context.getString(count == 1 ? R.string.reward : R.string.rewards);
             } else {
-                return getContext().getString(count == 1 ? R.string.todo : R.string.todos);
+                return context.getString(count == 1 ? R.string.todo : R.string.todos);
             }
         }
 

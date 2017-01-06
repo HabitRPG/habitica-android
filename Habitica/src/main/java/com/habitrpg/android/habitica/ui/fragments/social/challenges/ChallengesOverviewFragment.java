@@ -22,7 +22,10 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Stack;
+
+import rx.Observable;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
@@ -43,12 +46,20 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
+        Observable<ArrayList<Challenge>> getUserChallengesObservable = this.apiHelper.apiService.getUserChallenges()
+                .compose(apiHelper.configureApiCallObserver());
+
+
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
+        userChallengesFragment.setRefreshingCallback(getUserChallengesObservable::repeat);
+        userChallengesFragment.setObservable(getUserChallengesObservable);
         userChallengesFragment.setViewUserChallengesOnly(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);
+        availableChallengesFragment.setRefreshingCallback(getUserChallengesObservable::repeat);
+        availableChallengesFragment.setObservable(getUserChallengesObservable);
         availableChallengesFragment.setViewUserChallengesOnly(false);
 
         pageHistory = new Stack<Integer>();

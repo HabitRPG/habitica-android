@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 
 public class ViewHelper {
 
@@ -33,6 +34,10 @@ public class ViewHelper {
         ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{tint});
 
         b.setBackgroundTintList(csl);
+    }
+
+    public static void SetBackgroundTint(ImageView v, int tint) {
+        v.setColorFilter(tint, PorterDuff.Mode.SRC);
     }
 
     public static void SetBackgroundTint(View v, int tint) {
