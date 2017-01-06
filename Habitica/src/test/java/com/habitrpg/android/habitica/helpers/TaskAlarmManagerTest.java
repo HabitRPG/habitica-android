@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
@@ -20,12 +16,14 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.Assert.assertTrue;
 /**
  * Created by keithholliday on 7/16/16.
  */
@@ -308,7 +306,7 @@ public class TaskAlarmManagerTest {
         Assert.assertNotNull(alarmId);
         Assert.assertEquals(true, alarmUp);
 
-        int expectedDay = (currentDayOfTheWeek + everyXDay) % 8;
+        int expectedDay = (currentDayOfTheWeek + everyXDay) % 7;
         if (expectedDay == 0) { expectedDay = 7;};
 
         Assert.assertEquals(expectedDay, newReminderTime.get(Calendar.DAY_OF_WEEK));
