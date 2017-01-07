@@ -4,6 +4,7 @@ package com.habitrpg.android.habitica.api;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import junit.framework.Assert;
@@ -28,7 +29,7 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoadUserFromServer() {
-        TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<HabitRPGUser>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.getUser().subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -37,7 +38,7 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoadCompleteUserFromServer() {
-        TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<HabitRPGUser>> testSubscriber = new TestSubscriber<>();
         apiHelper.retrieveUser(true).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -48,13 +49,13 @@ public class UserAPITests extends BaseAPITests {
     public void shouldRegisterNewUser() {
         hostConfig.setUser("");
         hostConfig.setApi("");
-        TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
         username = UUID.randomUUID().toString();
         apiHelper.registerUser(username, username+"@example.com", password, password)
                 .subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
+        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
 
         assertNotSame(hostConfig.getUser(), response.getId());
         assertNotSame(hostConfig.getApi(), response.getApiToken() != null ? response.getApiToken() : response.getToken());
@@ -62,11 +63,11 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoginExistingUser() {
-        TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
         apiHelper.connectUser(username, password).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
+        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
         assertEquals(hostConfig.getUser(), response.getId());
         assertEquals(hostConfig.getApi(), response.getApiToken() != null ? response.getApiToken() : response.getToken());
     }

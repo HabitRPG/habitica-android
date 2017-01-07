@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 
 import junit.framework.Assert;
 import org.junit.Test;
@@ -21,7 +22,7 @@ public class TagAPITests extends BaseAPITests {
 
     @Test
     public void shouldCreateTag() {
-        TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Tag>> testSubscriber = new TestSubscriber<>();
         Tag tag = new Tag();
         tag.setName("foo");
         apiHelper.apiService.createTag(tag).subscribe(testSubscriber);
@@ -33,7 +34,7 @@ public class TagAPITests extends BaseAPITests {
 
     @Test
     public void shouldUpdateTag() {
-        TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Tag>> testSubscriber = new TestSubscriber<>();
 
         Tag t = new Tag();
         String newname = "BAR";
@@ -45,13 +46,13 @@ public class TagAPITests extends BaseAPITests {
         apiHelper.apiService.updateTag(testId,t).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getName());
+        Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getData().getName());
 
     }
 
     @Test
     public void shouldDeleteTag() {
-        TestSubscriber<Void> testSub = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Void>> testSub = new TestSubscriber<>();
 
         String testId = getUser().getTags().get(0).getId();
         apiHelper.apiService.deleteTag(testId).subscribe(testSub);

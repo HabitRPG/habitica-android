@@ -72,8 +72,7 @@ public class ContentCache {
 
     private <T> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
         apiHelper.getContent()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(apiHelper.configureApiCallObserver())
                 .subscribe(contentResult -> {
                     switch (typeOfSearch) {
                         case "quest": {
@@ -116,6 +115,7 @@ public class ContentCache {
     private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
         List<ItemData> resultList = new ArrayList<>();
         apiHelper.getContent()
+                .compose(apiHelper.configureApiCallObserver())
                 .flatMap(contentResult -> {
                     List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);
@@ -123,8 +123,6 @@ public class ContentCache {
                     return Observable.from(itemList);
                 })
                 .filter(item -> searchKeys.contains(item.key))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resultList::add, throwable -> {
                 }, () -> gotEntry.GotObject(resultList));
     }

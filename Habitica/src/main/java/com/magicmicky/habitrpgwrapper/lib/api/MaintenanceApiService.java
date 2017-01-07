@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 
 import retrofit2.http.GET;
@@ -8,9 +9,9 @@ import rx.Observable;
 public interface MaintenanceApiService {
 
     @GET("maintenance-android.json")
-    Observable<MaintenanceResponse> getMaintenanceStatus();
+    Observable<HabitResponse<MaintenanceResponse>> getMaintenanceStatus();
 
     @GET("deprecation-android.json")
-    Observable<MaintenanceResponse> getDepricationStatus();
+    Observable<HabitResponse<MaintenanceResponse>> getDepricationStatus();
 
 }

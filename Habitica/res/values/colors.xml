@@ -93,6 +93,8 @@
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_stroke">#32000000</color>
 
+    <color name="habit_inactive_gray">#F9F9F9</color>
+
     <!-- Preferences -->
     <color name="preference_fallback_accent_color">@color/colorAccent</color>
     <!-- buttons -->
@@ -103,5 +105,6 @@
     <color name="widget_background">#c8432874</color>
 
     <color name="gem_view_background">#10bda8ff</color>
-
+    <color name="task_border_gray">#1a000000</color>
+    <color name="task_secondary_text">#B2B2B2</color>
 </resources>
