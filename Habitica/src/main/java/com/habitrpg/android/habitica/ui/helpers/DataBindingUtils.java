@@ -81,6 +81,7 @@ public class DataBindingUtils {
 
     @BindingAdapter("android:layout_weight")
     public static void setLayoutWeight(View view, float weight) {
+        view.clearAnimation();
         ValueBarBinding value_bar = DataBindingUtil.findBinding(view);
         if (weight == 0.0f || weight == 1.0f || value_bar.getPartyMembers()) {
             LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
