@@ -166,6 +166,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                                         challenge.async().save();
 
                                         HabiticaApplication.User.resetChallengeList();
+                                        finish();
+
                                     }, throwable -> {
                                     });
                         })

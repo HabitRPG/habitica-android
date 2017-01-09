@@ -451,4 +451,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="participating">Participating</string>
     <string name="challenge">Challenge</string>
     <string name="go_to_challenge">Go to Challenge</string>
+    <string name="not_taking_any_challenges">You aren\'t taking on any challenges at the moment</string>
+    <string name="join_a_challenge">Join a Challenge to add its tasks to yours. Complete the tasks to win and you can get an achievement or even gems!</string>
+    <string name="check_the_public_challenge_tab">Check the public Challenge tab to find ones you’d like to join.</string>
 </resources>

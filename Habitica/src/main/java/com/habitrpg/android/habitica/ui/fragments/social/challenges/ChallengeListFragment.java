@@ -26,12 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.functions.Action0;
-import rx.functions.Action1;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.challenges_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.challenges_refresh_empty)
+    SwipeRefreshLayout swipeRefreshEmptyLayout;
 
     @BindView(R.id.challenges_list)
     RecyclerView recyclerView;
@@ -51,11 +53,11 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         this.viewUserChallengesOnly = only;
     }
 
-    public void setRefreshingCallback(Action0 refreshCallback){
+    public void setRefreshingCallback(Action0 refreshCallback) {
         this.refreshCallback = refreshCallback;
     }
 
-    public void setObservable(Observable<ArrayList<Challenge>> listObservable){
+    public void setObservable(Observable<ArrayList<Challenge>> listObservable) {
         listObservable
                 .subscribe(challenges -> {
 
@@ -79,20 +81,19 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                     }
 
                     if (viewUserChallengesOnly) {
-                        setAdapterEntries(userChallenges);
+                        setChallengeEntries(userChallenges);
                     } else {
-                        setAdapterEntries(challenges);
+                        setChallengeEntries(challenges);
                     }
 
-                    if (swipeRefreshLayout != null) {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
+                    setRefreshingIfVisible(swipeRefreshLayout, false);
+                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
+
                 }, throwable -> {
                     Log.e("ChallengeListFragment", "", throwable);
 
-                    if (swipeRefreshLayout != null) {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
+                    setRefreshingIfVisible(swipeRefreshLayout, false);
+                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
                 });
     }
 
@@ -117,9 +118,16 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
+        setRefreshingIfVisible(swipeRefreshEmptyLayout, true);
+        setRefreshingIfVisible(swipeRefreshLayout, true);
 
         fetchOnlineChallenges();
+    }
+
+    private void setRefreshingIfVisible(SwipeRefreshLayout refreshLayout, boolean state) {
+        if (refreshLayout != null && refreshLayout.getVisibility() == View.VISIBLE) {
+            refreshLayout.setRefreshing(state);
+        }
     }
 
     private void fetchLocalChallenges() {
@@ -133,19 +141,27 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         List<Challenge> challenges = query.queryList();
 
         if (challenges.size() != 0) {
-            setAdapterEntries(challenges);
+            setChallengeEntries(challenges);
         }
 
         // load online challenges & save to database
         onRefresh();
     }
 
-    private void fetchOnlineChallenges() {
-        refreshCallback.call();
+    private void setChallengeEntries(List<Challenge> challenges) {
+        if (viewUserChallengesOnly && challenges.size() == 0) {
+            swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setVisibility(View.GONE);
+        } else {
+            swipeRefreshEmptyLayout.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+        }
+
+        challengeAdapter.setChallenges(challenges);
     }
 
-    private void setAdapterEntries(List<Challenge> challenges) {
-        challengeAdapter.setChallenges(challenges);
+    private void fetchOnlineChallenges() {
+        refreshCallback.call();
     }
 
     public void addItem(Challenge challenge) {

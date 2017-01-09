@@ -75,4 +75,12 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+
+    <style name="Headline_Regular">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_regular
+        </item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>
