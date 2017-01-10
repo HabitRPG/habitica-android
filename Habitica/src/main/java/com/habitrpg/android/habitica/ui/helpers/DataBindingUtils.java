@@ -81,12 +81,13 @@ public class DataBindingUtils {
 
     @BindingAdapter("android:layout_weight")
     public static void setLayoutWeight(View view, float weight) {
+        view.clearAnimation();
         ValueBarBinding value_bar = DataBindingUtil.findBinding(view);
+        LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
         if (weight == 0.0f || weight == 1.0f || value_bar.getPartyMembers()) {
-            LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
             layout.weight = weight;
             view.setLayoutParams(layout);
-        } else {
+        } else if (layout.weight != weight) {
             LayoutWeightAnimation anim = new LayoutWeightAnimation(view, weight);
             anim.setDuration(1250);
             view.startAnimation(anim);
