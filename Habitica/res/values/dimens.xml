@@ -55,7 +55,6 @@
 	<dimen name="checkbox_size">30dp</dimen>
 	<dimen name="checkbox_compact_size">25dp</dimen>
 
-	<dimen name="login_field_width">350dp</dimen>
 	<dimen name="task_top_bottom_padding">20dp</dimen>
 	<dimen name="task_top_bottom_compact_padding">16dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
@@ -84,6 +83,13 @@
 	<dimen name="habit_circle_background_size">40dp</dimen>
 	<dimen name="bar_size_slim">13dp</dimen>
 	<dimen name="widget_rounding">5dp</dimen>
+
+	<dimen name="spacing_small">4dp</dimen>
+	<dimen name="spacing_large">16dp</dimen>
+	<dimen name="spacing_medium">8dp</dimen>
+	<dimen name="spacing_xlarge">32dp</dimen>
+
 	<dimen name="task_icon_space">12dp</dimen>
 	<dimen name="task_icon_size">18dp</dimen>
+
 </resources>
