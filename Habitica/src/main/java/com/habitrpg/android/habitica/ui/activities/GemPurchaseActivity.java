@@ -6,6 +6,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.playseeds.android.sdk.Seeds;
 import com.playseeds.android.sdk.inappmessaging.InAppMessageListener;
 
@@ -14,12 +16,29 @@ import org.solovyev.android.checkout.Checkout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFragment.Listener, InAppMessageListener {
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+
+public class GemPurchaseActivity extends BaseActivity implements InAppMessageListener {
 
     private ActivityCheckout checkout;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    List<CheckoutFragment> fragments = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -58,9 +77,9 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
             getSupportActionBar().setTitle(R.string.gem_purchase_toolbartitle);
         }
 
-        GemsPurchaseFragment firstFragment = new GemsPurchaseFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, firstFragment).commit();
+        viewPager.setCurrentItem(0);
+
+        setViewPagerAdapter();
     }
 
     @Override
@@ -81,11 +100,10 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
     }
 
     private void setupCheckout() {
-        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getCheckout());
+        checkout = Checkout.forActivity(this, HabiticaApplication.getInstance(this).getBilling());
         checkout.start();
     }
 
-    @Override
     public ActivityCheckout getActivityCheckout() {
         return checkout;
     }
@@ -134,5 +152,56 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
         } catch (Exception e) {
             System.out.println("Exception: " + e);
         }
+    }
+
+    public void setViewPagerAdapter() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
+
+            @Override
+            public Fragment getItem(int position) {
+                CheckoutFragment fragment;
+                if (position == 0) {
+                    fragment = new GemsPurchaseFragment();
+                } else {
+                    fragment = new SubscriptionFragment();
+                }
+                if (fragments.size() > position) {
+                    fragments.set(position, fragment);
+                } else {
+                    fragments.add(fragment);
+                }
+                fragment.setListener(GemPurchaseActivity.this);
+                fragment.setupCheckout();
+                return (Fragment)fragment;
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.gems);
+                    case 1:
+                        return getString(R.string.subscriptions);
+                }
+                return "";
+            }
+        });
+
+        if (tabLayout != null && viewPager != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
+    }
+
+    public interface CheckoutFragment {
+
+        void setupCheckout();
+        void setListener(GemPurchaseActivity listener);
     }
 }

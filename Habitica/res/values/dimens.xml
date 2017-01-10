@@ -91,5 +91,5 @@
 
 	<dimen name="task_icon_space">12dp</dimen>
 	<dimen name="task_icon_size">18dp</dimen>
-
+	<dimen name="task_info_bar_bottom_space">-8dp</dimen>
 </resources>

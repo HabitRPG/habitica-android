@@ -93,7 +93,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
 
     // IAP Handling / Verification
-    compile 'org.solovyev.android:checkout:0.7.5@aar'
+    compile 'org.solovyev.android:checkout:0.9.1@aar'
 
     //Facebook
     compile('com.facebook.android:facebook-android-sdk:4.17.0') {
@@ -130,10 +130,10 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     //Push Notifications
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
 
-    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
 
     compile(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'

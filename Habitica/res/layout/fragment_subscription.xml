@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarSize="3dp"
+    android:scrollbarThumbVertical="@color/md_grey_500"
+    android:scrollbars="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="20dp"
+            android:text="@string/subscribe.title"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/best_10"
+            android:drawableTop="@drawable/ic_header_heart"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+                    android:id="@+id/subscription1month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="month" />
+            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+                    android:id="@+id/subscription3month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="3 months" />
+            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+                    android:id="@+id/subscription6month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="6 months" />
+            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+                    android:id="@+id/subscription12month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:recurringText="12 months" />
+        </LinearLayout>
+
+        <Button
+                android:text="@string/subscribe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/subscribeButton"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_purple_square"
+                android:enabled="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subscribe.subtitle"
+            android:gravity="center"
+            android:textStyle="normal|bold"
+            android:textColor="@color/brand_100"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:text="@string/subscribe.listitem1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+                android:text="@string/subscribe.listitem1.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItemDescription" />
+
+        <TextView
+            android:text="@string/subscribe.listitem2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+                android:text="@string/subscribe.listitem2.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItemDescription" />
+
+        <TextView
+            android:text="@string/subscribe.listitem3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+                android:text="@string/subscribe.listitem3.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItemDescription" />
+
+        <TextView
+            android:text="@string/subscribe.listitem4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GemPurchaseListItem"
+            />
+        <TextView
+                android:text="@string/subscribe.listitem4.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItemDescription" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

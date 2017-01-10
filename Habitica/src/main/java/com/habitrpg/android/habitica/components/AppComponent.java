@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
+import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
@@ -220,6 +221,7 @@ public interface AppComponent {
 
     void inject(TodosRecyclerViewAdapter todosRecyclerViewAdapter);
 
+    void inject(SubscriptionFragment subscriptionFragment);
     void inject(ChallengeTasksRecyclerViewFragment.ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
 
     void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);

@@ -200,4 +200,11 @@
         <item name="android:paddingTop">@dimen/section_top_padding</item>
         <item name="android:paddingBottom">@dimen/section_top_padding</item>
     </style>
+
+    <style name="GemPurchaseListItemDescription">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/subscription_description_text</item>
+    </style>
 </resources>

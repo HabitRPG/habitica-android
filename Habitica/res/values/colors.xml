@@ -109,4 +109,5 @@
     <color name="task_secondary_text">#B2B2B2</color>
     <color name="header_class_name">#CCBEED</color>
     <color name="gem_icon_color">#24cc8f</color>
+    <color name="subscription_description_text">#b1000000</color>
 </resources>

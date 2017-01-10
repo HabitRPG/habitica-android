@@ -33,8 +33,8 @@ import com.squareup.leakcanary.LeakCanary;
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Products;
 import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
@@ -336,12 +336,16 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         });
 
 
-        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, PurchaseTypes.allTypes));
+        checkout = Checkout.forApplication(billing);
     }
 
     @NonNull
     public Checkout getCheckout() {
         return checkout;
+    }
+
+    public Billing getBilling() {
+        return billing;
     }
 
     // endregion

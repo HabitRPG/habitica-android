@@ -14,5 +14,7 @@
 
     <declare-styleable name="MaxHeightScrollView">
         <attr name="maxHeightMultiplier" format="float" />
+    <declare-styleable name="SubscriptionOptionView">
+        <attr name="recurringText" format="string" />
     </declare-styleable>
 </resources>

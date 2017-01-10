@@ -448,6 +448,19 @@ To start, which parts of your life do you want to improve?</string>
     <string name="belongs_to_challenge">Belongs to Challenge</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
+    <string name="subscribe.title">Subscribing supports the developers  and helps keep Habitica running</string>
+    <string name="subscribe.subtitle">Become a subscriber and you’ll get  these useful benefits:</string>
+    <string name="subscribe.listitem1">Buy gems with gold</string>
+    <string name="subscribe.listitem2">Exclusive monthly items</string>
+    <string name="subscribe.listitem3">Retain additional history entries</string>
+    <string name="subscribe.listitem4">Daily drop-caps doubled</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="subscription_duration" formatted="false">Recurring every %s</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscribe.listitem1.description">Alexander the Merchant will sell you Gems at a cost of 20 gold per gem. His monthly shipments are initially capped at 25 Gems per month, but this cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
+    <string name="subscribe.listitem2.description">Makes completed To-Dos and task history available for longer.</string>
+    <string name="subscribe.listitem3.description">Complete your stable faster!</string>
+    <string name="subscribe.listitem4.description">Each month you will receive a unique cosmetic item for your avatar! Plus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
 
     <string name="byLeader" formatted="false">by %s</string>
     <string name="challenge_details">Challenge Details</string>
