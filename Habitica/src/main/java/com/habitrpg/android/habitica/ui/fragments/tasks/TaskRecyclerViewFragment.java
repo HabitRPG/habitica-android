@@ -224,6 +224,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     String getClassName() {
-        return classType;
+        return this.classType;
     }
 }

@@ -133,12 +133,21 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         todo_fab.setOnClickListener(v1 -> openNewTaskActivity("todo"));
         FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
         reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
+        floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
         this.activity.unlockDrawer(GravityCompat.END);
 
         loadTaskLists();
 
         return v;
+    }
+
+    private boolean onFloatingMenuLongClicked(View view) {
+        int currentType = viewPager.getCurrentItem();
+        TaskRecyclerViewFragment currentFragment = ViewFragmentsDictionary.get(currentType);
+        String className = currentFragment.getClassName();
+        openNewTaskActivity(className);
+        return true;
     }
 
     @Override
