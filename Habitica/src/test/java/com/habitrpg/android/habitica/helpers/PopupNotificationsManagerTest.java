@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
@@ -49,7 +49,7 @@ import static org.mockito.Mockito.when;
  */
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class PopupNotificationsManagerTest {
 
     public APIHelper apiHelper;

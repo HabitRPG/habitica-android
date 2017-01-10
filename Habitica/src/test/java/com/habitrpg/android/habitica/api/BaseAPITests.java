@@ -7,21 +7,11 @@ import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.annotation.Config;
-
-import android.os.Build;
 
 import java.security.InvalidParameterException;
-import java.util.List;
 import java.util.UUID;
 
 import rx.observers.TestSubscriber;

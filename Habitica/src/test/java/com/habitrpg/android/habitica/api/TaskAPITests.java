@@ -9,7 +9,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import android.os.Build;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class TaskAPITests extends BaseAPITests {
 
     private Task habit1;

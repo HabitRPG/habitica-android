@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.BuildConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Type;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 @Config(constants = BuildConfig.class)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class DateDeserializerTest {
     DateDeserializer deserializer;
     JsonDeserializationContext deserializationContext;
