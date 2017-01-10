@@ -308,8 +308,6 @@
   <string name="world_quest">Световна мисия</string>
   <string name="inn_description">Починете в странноприемницата, за да не Ви наранят неизпълнените ежедневни задачи! (Забележка: това не Ви защитава от получаването на щети от главатари.)</string>
   <string name="empty_items" formatted="false">Нямате %s</string>
-  <string name="user_level" formatted="false">Ниво %s</string>
-  <string name="user_level_with_class" formatted="false">Ниво %1$s — %2$s</string>
   <string name="warrior">Воин</string>
   <string name="rogue">Мошеник</string>
   <string name="mage">Магьосник</string>
@@ -322,8 +320,6 @@
   <string name="opt_out_class">Отказване</string>
   <string name="opt_out_description">Не Ви се занимава с класове? Искате да изберете по-късно? Откажете се от тях — ще бъдете воин без специални умения. Можете да прочетете относно класовата система по-късно в уикито, както и да включите класовете когато пожелаете.</string>
   <string name="class_confirmation" formatted="false">Наистина ли искате да бъдете %s?</string>
-  <string name="class_changed">Вие вече сте %s!</string>
-  <string name="class_changed_description">Вече имате ново бойно снаряжение по подразбиране, което можете да намерите в „Екипировка“!</string>
   <string name="choose_class">Избиране на класа</string>
   <string name="dialog_go_back">Назад</string>
   <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
@@ -347,7 +343,6 @@
   <string name="share_raised" formatted="false">Току-що се сдобих с превоз — %1$s %2$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
   <string name="open_in_store">Отваряне в магазина</string>
   <string name="change_class_confirmation">Наистина ли искате да промените класа си? Това ще Ви струва 3 диаманта.</string>
-  <string name="change_class_equipment_warning">Внимание: Повече няма да можете да купувате екипировка за класа „%s“.</string>
   <string name="leaderMessage" formatted="false">Съобщение от %1$s</string>
   <string name="leaderName" formatted="false">Водач: %1$s</string>
   <string name="confirm">Потвърждаване</string>
@@ -419,23 +414,4 @@
   <string name="belongs_to_challenge">Принадлежи на предизвикателство</string>
   <string name="has_reminder">Има напомняне</string>
   <string name="has_tag">Има етикет</string>
-  <string name="byLeader" formatted="false">от %s</string>
-  <string name="challenge_details">Подр. за предизвикателството</string>
-  <string name="challenge_leave_title">Сигурен/на ли сте?</string>
-  <string name="challenge_leave_text">Наистина ли искате да напуснете предизвикателството „%s“?</string>
-  <string name="my_challenges">Моите предизвикателства</string>
-  <string name="public_challenges">Обществени</string>
-  <string name="challenges">Предизвикателства</string>
-  <string name="daily">Ежедневно</string>
-  <string name="habit">Навик</string>
-  <string name="reward">Награда</string>
-  <string name="todo">Задача</string>
-  <string name="official">Официално</string>
-  <string name="participating">Участващи</string>
-  <string name="challenge">Предизвикателство</string>
-  <string name="go_to_challenge">Към предизвикателството</string>
-  <string name="not_part_of_a_challenge">В момента не участвате в предизвикателство!</string>
-  <string name="join_a_challenge">Включете се в предизвикателство, така ще добавите списък от подбрани задачи към списъка си. След това се състезавайте с останалите хабитиканци, за да печелите постижения и дори диаманти!</string>
-  <string name="check_the_public_challenge_tab">Докоснете раздела „Обществени“, там ще откриете предизвикателствата, създадени от потребителите и ще можете да изберете най-подходящото за себе си!</string>
-  <string name="add_reminder">Добавяне на напомняне</string>
 </resources>

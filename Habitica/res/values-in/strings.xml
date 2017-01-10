@@ -285,8 +285,8 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="world_quest">Misi Dunia</string>
   <string name="inn_description">Beristirahat di dalam Penginapan untuk mencegah Keseharian yang belum selesai menyakitimu semalaman! (Catatan: tidak dapat mencegahmu mendapatkan serangan Bos Monster.)</string>
   <string name="empty_items" formatted="false">Kamu tidak memiliki %s</string>
-  <string name="user_level" formatted="false">LVL %s</string>
-  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+  <string name="user_level" formatted="false">LVL %d</string>
+  <string name="user_level_with_class" formatted="false">LVL %1$d - %2$s</string>
   <string name="warrior">Prajurit</string>
   <string name="rogue">Perampok</string>
   <string name="mage">Penyihir</string>

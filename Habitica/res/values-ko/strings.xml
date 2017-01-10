@@ -139,6 +139,7 @@
   <string name="members">멤버</string>
   <string name="habits">습관</string>
   <string name="dailies">일일과제</string>
+  <string name="todos">해야 할 일</string>
   <string name="rewards">보상</string>
   <string name="taskform.delete.title">확실합니까?</string>
   <string name="taskform.delete.message">삭제하시겠습니까?</string>

@@ -308,8 +308,6 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="world_quest">Wereldqueeste</string>
   <string name="inn_description">Rust uit in de Herberg om ervoor te zorgen dat je ongedane Dagelijkse Taken je niet kunnen schaden in de nacht! (Let wel: je ontvangt nog wel schade van een Baas.)</string>
   <string name="empty_items" formatted="false">Je hebt geen %s</string>
-  <string name="user_level" formatted="false">NIV %s</string>
-  <string name="user_level_with_class" formatted="false">NIV %1$s - %2$s</string>
   <string name="warrior">Krijger</string>
   <string name="rogue">Dief</string>
   <string name="mage">Magiër</string>
@@ -322,8 +320,6 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="opt_out_class">Afmelden</string>
   <string name="opt_out_description">Vind je het klassesysteem te ingewikkeld voor nu? Wil je later pas kiezen? Trek je terug - je zal een krijger zijn zonder speciale talenten. Je kan later nog over het klassesysteem lezen op de wiki en op eender welk moment klassen inschakelen.</string>
   <string name="class_confirmation" formatted="false">Weet je zeker dat je een %s wilt zijn?</string>
-  <string name="class_changed">Je bent nu een %s!</string>
-  <string name="class_changed_description">Je hebt nieuw standaard gevechtsuitrusting dat je kan veranderen onder Uitrusting!</string>
   <string name="choose_class">Kies een Klasse</string>
   <string name="dialog_go_back">Ga terug</string>
   <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
@@ -347,7 +343,6 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="share_raised" formatted="false">Ik heb net een %1$s %2$s rijdier gekregen in Habitica door mijn echte taken uit te voeren!</string>
   <string name="open_in_store">Open in de play store</string>
   <string name="change_class_confirmation">Weet je zeker dat je van klasse wilt veranderen? Dit kost 3 edelstenen.</string>
-  <string name="change_class_equipment_warning">Waarschuwing: Je zult niet langer in staat zijn om uitrusting te kopen van de %s klasse.</string>
   <string name="leaderMessage" formatted="false">Bericht van %1$s</string>
   <string name="leaderName" formatted="false">Leider: %1$s</string>
   <string name="confirm">Bevestig</string>
@@ -419,26 +414,4 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="belongs_to_challenge">Hoort bij een Uitdaging</string>
   <string name="has_reminder">Heeft herinnering</string>
   <string name="has_tag">Heeft label</string>
-  <string name="byLeader" formatted="false">met %s</string>
-  <string name="challenge_details">Details van de uitdaging</string>
-  <string name="challenge_leave_title">Verlaat Uitdaging</string>
-  <string name="challenge_leave_text">Weet je zeker dat je de uitdaging %s wil verlaten?</string>
-  <string name="my_challenges">Mijn uitdagingen</string>
-  <string name="public_challenges">Publiek</string>
-  <string name="challenges">Uitdagingen</string>
-  <string name="daily">Dadelijks</string>
-  <string name="habit">Gewoonte</string>
-  <string name="reward">Beloning</string>
-  <string name="todo">To-do</string>
-  <string name="official">Officieel</string>
-  <string name="participating">Deelnemende</string>
-  <string name="challenge">Uitdaging</string>
-  <string name="go_to_challenge">Ga naar de uitdaging</string>
-  <string name="not_part_of_a_challenge">Je doet op dit moment niet mee aan een uitdaging!</string>
-  <string name="join_a_challenge">Doe mee aan een uitdaging om een zorgvuldig samengestelde set van taken aan je lijst toe te voegen en het op te nemen tegen andere Habiticanen om prestaties en zelfs edelstenen te winnen!</string>
-  <string name="check_the_public_challenge_tab">Tik op de \"Publiek\" tab om Uitdagingen, gemaakt door gebruikers, te vinden die het best bij jou passen!</string>
-  <string name="add_reminder">Voeg een herinnering toe</string>
-  <string name="warning">Waarschuwing</string>
-  <string name="open_settings">Open Instellingen</string>
-  <string name="dont_keep_activities_warning">Het lijkt erop dat je Ontwikkelaar optie \"Hou geen activiteiten bij\" aan hebt staan. Momenteel zorgt deze optie voor problemen met de Habitica app, dus raden we je aan dit uit te zetten.</string>
 </resources>

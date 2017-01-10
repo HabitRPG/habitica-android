@@ -277,7 +277,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="quests">Quests</string>
   <string name="pets">Haustiere</string>
   <string name="mounts">Reittiere</string>
-  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Großartig!</string>
+  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Juhu!</string>
   <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
   <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
   <string name="armoireNotesFull" formatted="false">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
@@ -308,8 +308,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="world_quest">Weltenquest</string>
   <string name="inn_description">Ruhe Dich im Gasthaus aus damit Deine täglichen Aufgaben Dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
   <string name="empty_items" formatted="false">Du hast kein/e %s</string>
-  <string name="user_level" formatted="false">Lvl %s</string>
-  <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
   <string name="warrior">Krieger</string>
   <string name="rogue">Schurke</string>
   <string name="mage">Magier</string>
@@ -322,8 +320,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="opt_out_class">Später entscheiden</string>
   <string name="opt_out_description">Du willst keine Klasse oder möchtest Dich später entscheiden? Entscheide Dich später und werde zunächst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und Deine Klasse jederzeit aktivieren.</string>
   <string name="class_confirmation" formatted="false">Bist Du sicher, dass Du %s werden willst?</string>
-  <string name="class_changed">Du bist jetzt ein/eine %s!</string>
-  <string name="class_changed_description">Du hast neue Basis-Kampfausrüstung, die Du im Ausrüstungsreiter wechseln kannst!</string>
   <string name="choose_class">Klasse wählen</string>
   <string name="dialog_go_back">Zurück</string>
   <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
@@ -347,7 +343,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
-  <string name="change_class_equipment_warning">Warnung: Du wirst nicht mehr Ausrüstung für die %s Klasse kaufen können.</string>
   <string name="leaderMessage" formatted="false">Nachricht von %1$s</string>
   <string name="leaderName" formatted="false">Führender: %1$s</string>
   <string name="confirm">Bestätigen</string>
@@ -419,26 +414,4 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="belongs_to_challenge">Gehört zum Wettbewerb</string>
   <string name="has_reminder">Hat eine Benachrichtigung</string>
   <string name="has_tag">Hat einen Tag</string>
-  <string name="byLeader" formatted="false">von %s</string>
-  <string name="challenge_details">Wettbewerb Details</string>
-  <string name="challenge_leave_title">Wettbewerb verlassen</string>
-  <string name="challenge_leave_text">Bist Du Dir sicher, dass du den Wettbewerb \"%s\" verlassen willst?</string>
-  <string name="my_challenges">Meine Wettbewerbe</string>
-  <string name="public_challenges">Öffentlich</string>
-  <string name="challenges">Wettbewerbe</string>
-  <string name="daily">Tägliche Aufgabe</string>
-  <string name="habit">Gewohnheit</string>
-  <string name="reward">Belohnung</string>
-  <string name="todo">To-Do</string>
-  <string name="official">Offiziell</string>
-  <string name="participating">Beigetreten</string>
-  <string name="challenge">Wettbewerb</string>
-  <string name="go_to_challenge">Gehe zu Wettbewerb</string>
-  <string name="not_part_of_a_challenge">Du nimmst im Moment an keinen Wettbewerben teil!</string>
-  <string name="join_a_challenge">Trete einem Wettbewerb bei, um ein ausgewähltes Set von Aufgaben zu deiner Liste hinzuzufügen. Trete dann gegen andere Habitica-Mitglieder an, um Erfolge und sogar Edelsteine zu gewinnen!</string>
-  <string name="check_the_public_challenge_tab">Drücke auf den \"Öffentlich\"-Tab, um die von Mitgliedern erstellten Wettbewerbe zu finden, die am besten zu Dir passen!</string>
-  <string name="add_reminder">Erinnerung hinzufügen</string>
-  <string name="warning">Warnung</string>
-  <string name="open_settings">Einstellungen öffnen</string>
-  <string name="dont_keep_activities_warning">Es sieht so aus, als wäre die Entwickleroption \"Aktivitäten nicht behalten\" aktiviert. Momentan können dadurch Probleme in der Habitica App entstehen, deshalb empfehlen wir, die Option zu deaktivieren.</string>
 </resources>
