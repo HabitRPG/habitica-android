@@ -1344,6 +1344,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 !user.getFlags().getClassSelected()) {
             SelectClassEvent event = new SelectClassEvent();
             event.isInitialSelection = true;
+            event.currentClass = user.getStats().get_class().toString();
             displayClassSelectionActivity(event);
         }
     }
@@ -1374,6 +1375,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         bundle.putInt("hairMustache", user.getPreferences().getHair().getMustache());
         bundle.putInt("hairBeard", user.getPreferences().getHair().getBeard());
         bundle.putBoolean("isInitialSelection", event.isInitialSelection);
+        bundle.putString("currentClass", event.currentClass);
 
         Intent intent = new Intent(this, ClassSelectionActivity.class);
         intent.putExtras(bundle);
