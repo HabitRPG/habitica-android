@@ -405,4 +405,6 @@
   <string name="feeding_market_info">Нужна определенная еда? Купи сколько угодно на рынке!</string>
   <string name="open_market">Зайти на рынок</string>
   <string name="cds_description" formatted="false">Ваши ежедневные задания будут обновлены после %1$s. Выполните их до этого времени!</string>
+  <string name="AudioTheme_title">Аудио-тема</string>
+  <string name="AudioTheme_summary">Выбрать аудио-тему Habitica</string>
 </resources>

@@ -16,7 +16,7 @@
         android:paddingBottom="8dp"
         android:clickable="true"
         android:background="@drawable/selection_highlight">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/avatar_width"
             android:layout_height="@dimen/avatar_height"
             bind:imageName='@{imageNamed == null ? "head_0" : imageNamed}'

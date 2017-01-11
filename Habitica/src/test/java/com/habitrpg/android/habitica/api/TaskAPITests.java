@@ -3,12 +3,13 @@ package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import android.os.Build;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class TaskAPITests extends BaseAPITests {
 
     private Task habit1;
@@ -34,9 +35,9 @@ public class TaskAPITests extends BaseAPITests {
     @Override
     public void setUp() {
         super.setUp();
-        TestSubscriber<TaskList> oldTaskSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<TaskList>> oldTaskSubscriber = new TestSubscriber<>();
         apiHelper.apiService.getTasks().subscribe(oldTaskSubscriber);
-        TaskList tasks = oldTaskSubscriber.getOnNextEvents().get(0);
+        TaskList tasks = oldTaskSubscriber.getOnNextEvents().get(0).getData();
         for (Task task : tasks.tasks.values()) {
             apiHelper.apiService.deleteTask(task.getId()).subscribe(new TestSubscriber<>());
         }
@@ -54,7 +55,7 @@ public class TaskAPITests extends BaseAPITests {
         randomTasks.add(createRandomTask("7", "reward"));
         reward1 = randomTasks.get(6);
         randomTasks.add(createRandomTask("8", "reward"));
-        TestSubscriber<List<Task>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<List<Task>>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.createTasks(randomTasks).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -73,43 +74,43 @@ public class TaskAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoadAllTasksFromServer() {
-        TestSubscriber<TaskList> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<TaskList>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.getTasks().subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        TaskList taskList = testSubscriber.getOnNextEvents().get(0);
+        TaskList taskList = testSubscriber.getOnNextEvents().get(0).getData();
         assertEquals(8, taskList.tasks.size());
     }
 
     @Test
     public void shouldBeAbleToScoreTaskUp() {
-        TestSubscriber<TaskDirectionData> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<TaskDirectionData>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.postTaskDirection(habit1.getId(), "up").subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        TaskDirectionData data = testSubscriber.getOnNextEvents().get(0);
+        TaskDirectionData data = testSubscriber.getOnNextEvents().get(0).getData();
         assertTrue(data.getDelta() > 0);
     }
 
     @Test
     public void shouldBeAbleToScoreTaskDown() {
-        TestSubscriber<TaskDirectionData> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<TaskDirectionData>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.postTaskDirection(habit1.getId(), "down").subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        TaskDirectionData data = testSubscriber.getOnNextEvents().get(0);
+        TaskDirectionData data = testSubscriber.getOnNextEvents().get(0).getData();
         assertTrue(data.getDelta() < 0);
     }
 
     @Test
     public void shouldBeAbleToDeleteATask() {
-        TestSubscriber<Void> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Void>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.deleteTask(habit1.getId()).subscribe(testSubscriber);
         testSubscriber.assertCompleted();
         testSubscriber.assertNoErrors();
-        TestSubscriber<TaskList> newTaskListSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<TaskList>> newTaskListSubscriber = new TestSubscriber<>();
         apiHelper.apiService.getTasks().subscribe(newTaskListSubscriber);
-        TaskList taskList = newTaskListSubscriber.getOnNextEvents().get(0);
+        TaskList taskList = newTaskListSubscriber.getOnNextEvents().get(0).getData();
         assertEquals(7, taskList.tasks.size());
     }
 

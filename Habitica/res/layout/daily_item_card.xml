@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/white"
               android:orientation="vertical"
               android:foreground="?selectableItemBackground">
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,6 +18,12 @@
                 android:id="@+id/checkBoxHolder"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="match_parent">
+            <View
+                    android:layout_gravity="end"
+                    android:background="@color/task_border_gray"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="1dp"/>
             <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="@dimen/checkbox_size"
@@ -25,7 +35,7 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/task_text_padding"
                 android:paddingStart="@dimen/task_text_padding"
                 android:paddingRight="@dimen/task_text_padding"
@@ -45,10 +55,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3" />
-            <TextView
-                    android:id="@+id/streakTextView"
+
+            <LinearLayout
+                    android:id="@+id/taskIconWrapper"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/task_icon_space">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/specialTaskText"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/task_icon_calendar"
+                        android:visibility="invisible"
+                        android:textColor="@color/task_secondary_text"/>
+                <TextView
+                        android:id="@+id/streakTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/task_icon_size"
+                        android:layout_marginStart="@dimen/task_icon_space"
+                        android:drawableStart="@drawable/task_icon_streak"
+                        tools:text="10"
+                        android:textColor="@color/task_secondary_text" />
+                <ImageView
+                        android:layout_width="@dimen/task_icon_size"
+                        android:layout_height="@dimen/task_icon_size"
+                        app:srcCompat="@drawable/task_icon_challenge"
+                        android:id="@+id/iconviewChallenge"
+                        android:layout_marginStart="@dimen/task_icon_space"
+                        android:contentDescription="@string/belongs_to_challenge"/>
+
+                <ImageView
+                        android:layout_width="@dimen/task_icon_size"
+                        android:layout_height="@dimen/task_icon_size"
+                        app:srcCompat="@drawable/task_icon_reminder"
+                        android:id="@+id/iconviewReminder"
+                        android:layout_marginStart="@dimen/task_icon_space"
+                        android:contentDescription="@string/has_reminder"/>
+
+                <ImageView
+                        android:layout_width="@dimen/task_icon_size"
+                        android:layout_height="@dimen/task_icon_size"
+                        app:srcCompat="@drawable/task_icon_tag"
+                        android:id="@+id/iconviewTag"
+                        android:layout_marginStart="@dimen/task_icon_space"
+                        android:contentDescription="@string/has_tag"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout android:orientation="vertical"
                       android:id="@+id/checklistIndicatorWrapper"
@@ -79,6 +133,12 @@
                 android:layout_height="match_parent"
                 android:gravity="center" />
     </LinearLayout>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/task_border_gray"
+                android:layout_gravity="bottom"/>
+    </FrameLayout>
     <View
             android:id="@+id/checklistSeparator"
             android:layout_width="match_parent"

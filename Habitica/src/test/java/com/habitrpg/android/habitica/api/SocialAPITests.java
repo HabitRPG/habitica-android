@@ -4,12 +4,11 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -21,11 +20,8 @@ import java.util.List;
 
 import rx.observers.TestSubscriber;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class SocialAPITests extends BaseAPITests {
 
     List<String> messagesIDs;
@@ -41,11 +37,11 @@ public class SocialAPITests extends BaseAPITests {
     public void postMessage(String groupID, String messageSuffix) {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", "Foo Bar"+messageSuffix);
-        TestSubscriber<PostChatMessageResult> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<PostChatMessageResult>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0);
+        PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0).getData();
         messagesIDs.add(result.message.id);
     }
 
@@ -54,7 +50,7 @@ public class SocialAPITests extends BaseAPITests {
         groupID = "habitrpg";
         postMessage(groupID, "1");
 
-        TestSubscriber<Group> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Group>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.getGroup(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -67,7 +63,7 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "1");
         postMessage(groupID, "2");
 
-        TestSubscriber<List<ChatMessage>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<List<ChatMessage>>> testSubscriber = new TestSubscriber<>();
         apiHelper.apiService.listGroupChat(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -76,7 +72,7 @@ public class SocialAPITests extends BaseAPITests {
 
     @After
     public void tearDown() {
-        TestSubscriber<Void> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<HabitResponse<Void>> testSubscriber = new TestSubscriber<>();
         for (String messageID : this.messagesIDs) {
             apiHelper.apiService.deleteMessage("habitrpg", messageID)
                     .subscribe(testSubscriber);

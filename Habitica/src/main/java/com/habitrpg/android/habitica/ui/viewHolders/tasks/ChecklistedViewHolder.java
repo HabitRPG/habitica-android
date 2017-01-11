@@ -36,8 +36,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     CheckBox checkbox;
     @BindView(R.id.checklistView)
     LinearLayout checklistView;
-    @BindView(R.id.checklistSeparator)
-    View checklistSeparator;
     @BindView(R.id.checklistBottomSpace)
     View checklistBottomSpace;
     @BindView(R.id.checklistIndicatorWrapper)
@@ -101,12 +99,10 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                     expandCheckboxTouchArea(checkboxHolder, checkbox);
                     this.checklistView.addView(itemView);
                 }
-                this.checklistSeparator.setVisibility(View.VISIBLE);
                 this.checklistView.setVisibility(View.VISIBLE);
                 this.checklistBottomSpace.setVisibility(View.VISIBLE);
             } else {
                 this.checklistView.removeAllViewsInLayout();
-                this.checklistSeparator.setVisibility(View.GONE);
                 this.checklistView.setVisibility(View.GONE);
                 this.checklistBottomSpace.setVisibility(View.GONE);
             }

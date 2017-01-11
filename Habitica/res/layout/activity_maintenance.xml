@@ -14,7 +14,7 @@
                 android:gravity="center"
                 android:layout_marginTop="8dp"
                 style="@style/CardTitle"/>
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"

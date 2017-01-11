@@ -24,9 +24,10 @@
   <string name="pref_reminder_checkbox">Erinnerung aktivieren</string>
   <string name="pref_reminder_picker">Erinnerungszeit einstellen</string>
   <string name="pref_cds_header">Persönlicher Tagesstart</string>
-  <string name="pref_cds_picker">Persönlicher Tagesstart einstellen</string>
+  <string name="pref_cds_picker">Persönlichen Tagesstart einstellen</string>
   <string name="pref_push_notifications_checkbox">Push-Benachrichtigungen des Benutzers</string>
   <string name="push_notifications">Push-Benachrichtigungen</string>
+  <string name="push_notifications_sum">Stelle deine Push-Benachrichtigungen ein</string>
   <string name="preference_push_you_won_challenge">Du hast einen Wettbewerb gewonnen!</string>
   <string name="preference_push_received_a_private_message">Private Nachricht erhalten</string>
   <string name="preference_push_gifted_gems">Geschenkte Edelsteine</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Passwort bestätigen</string>
   <string name="logout">Ausloggen</string>
   <string name="logout_description">Logge Dich aus</string>
+  <string name="account_details_sum">Prüfe deine Kontodetails</string>
   <string name="account_details">Kontodetails</string>
   <string name="LoginActivityName">Willkommen</string>
   <string name="string_revive">Wiederbeleben</string>
@@ -180,6 +182,7 @@
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
   <string name="intro_1_title">Willkommen in Habitica</string>
+  <string name="intro_1_description" formatted="false">Tritt einer Gemeinschaft von über %s Menschen bei und erledige Dinge mit Spaß. Erstelle einen Avatar und verwalte spielerisch Deine Aufgaben des Alltags.</string>
   <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
   <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei, indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
   <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
@@ -403,4 +406,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="hatching_market_info">Kriegst Du nicht die richtige Beute? Besuche den Marktplatz!</string>
   <string name="feeding_market_info">Brauchst Du anderes Futter? Kaufe mehr auf dem Marktplatz!</string>
   <string name="open_market">Marktplatz öffnen</string>
+  <string name="cds_description" formatted="false">Deine Täglichen Aufgaben werden zurückgesetzt, wenn Du Dich nach %1$s einloggst. Stelle sicher, dass Du vorher alle Deine Täglichen Aufgaben erledigt hast!</string>
+  <string name="AudioTheme_title">Hintergrundmusik</string>
+  <string name="AudioTheme_summary">Ändere Habiticas Hintergrundmusik</string>
 </resources>

@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">日付更新の時間を設定する</string>
   <string name="pref_push_notifications_checkbox">ユーザーへのプッシュ通知</string>
   <string name="push_notifications">プッシュ通知</string>
+  <string name="push_notifications_sum">プッシュ通知を設定してください。</string>
   <string name="preference_push_you_won_challenge">チャレンジで勝ちました!</string>
   <string name="preference_push_received_a_private_message">プライベートメッセージを受信しました</string>
   <string name="preference_push_gifted_gems">ジェムが贈られました</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">パスワード ( 確認 )</string>
   <string name="logout">ログアウト</string>
   <string name="logout_description">ログアウトする</string>
+  <string name="account_details_sum">アカウントの詳細を確認</string>
   <string name="account_details">アカウントの詳細</string>
   <string name="LoginActivityName">ようこそ</string>
   <string name="string_revive">復活</string>
@@ -109,7 +111,7 @@
   <string name="levelup_health">完全に傷がいえた!</string>
   <string name="levelup_button">イエーイ!</string>
   <string name="faint_subtitle">がっかりしないで!</string>
-  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失った。だけど、がんばればすべてを取り返るぞ! 　あなたなら、きっとできる。幸あらんことを。</string>
+  <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失った。だけど、がんばればすべてを取り返せるぞ！ 　あなたなら、きっとできる。幸あらんことを。</string>
   <string name="faint_header">体力がなくなった!</string>
   <string name="faint_button">体力を全回復してやり直す</string>
   <string name="filter">フィルター</string>
@@ -180,6 +182,7 @@
   <string name="complete_tutorial">わかった!</string>
   <string name="dismiss_tutorial">もう一度通知</string>
   <string name="intro_1_title">Habitica へようこそ</string>
+  <string name="intro_1_description" formatted="false">%s人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
   <string name="intro_2_title">ゲームの進行 = 人生の進行</string>
   <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろい、ペット、そして「ごほうび」を手に入れながら、自分自身の目標に接近しよう!</string>
   <string name="intro_3_title">友達とつながってモンスターと戦おう</string>
@@ -304,7 +307,7 @@
   <string name="sectionquestMounts">クエストの乗騎</string>
   <string name="sectionspecialMounts">レアな乗騎</string>
   <string name="world_quest">世界のクエスト</string>
-  <string name="inn_description">宿で休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
+  <string name="inn_description">ロッジで休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
   <string name="empty_items" formatted="false">%s を持ってないよ</string>
   <string name="user_level" formatted="false">レベル %s</string>
   <string name="user_level_with_class" formatted="false">レベル %1$s - %2$s</string>
@@ -404,4 +407,7 @@
   <string name="hatching_market_info">ほしい落とし物が見つからない?　市場をチェックしてみよう!</string>
   <string name="feeding_market_info">違うえさがほしい?　市場で買いましょう!</string>
   <string name="open_market">市場を開く</string>
+  <string name="cds_description" formatted="false">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう!</string>
+  <string name="AudioTheme_title">サウンド テーマ</string>
+  <string name="AudioTheme_summary">Habitica のサウンド テーマを変更する</string>
 </resources>

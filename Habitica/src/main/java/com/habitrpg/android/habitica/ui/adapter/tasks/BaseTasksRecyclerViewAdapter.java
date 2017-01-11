@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.crashlytics.android.Crashlytics;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -28,12 +30,16 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
         extends RecyclerView.Adapter<VH> {
+    @Inject
+    protected CrashlyticsProxy crashlyticsProxy;
 
     private final String userID;
     int layoutResource;
@@ -51,6 +57,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         this.tagsHelper = tagsHelper;
         this.userID = userID;
         this.filteredContent = new ArrayList<>();
+        injectThis(HabiticaBaseApplication.getComponent());
 
         if(loadFromDatabase()) {
             this.loadContent(true);
@@ -58,6 +65,8 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         
         this.layoutResource = layoutResource;
     }
+
+    protected abstract void injectThis(AppComponent component);
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
@@ -202,7 +211,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(tasks::add, Crashlytics::logException, () -> setTasks(tasks));
+                    .subscribe(tasks::add, crashlyticsProxy::logException, () -> setTasks(tasks));
         }
     }
 

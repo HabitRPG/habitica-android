@@ -11,6 +11,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindColor;
@@ -21,6 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
     public Task task;
     protected Context context;
@@ -36,6 +39,26 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     @BindColor(R.color.task_gray)
     int taskGray;
+
+    @Nullable
+    @BindView(R.id.specialTaskText)
+    TextView specialTaskTextView;
+
+    @Nullable
+    @BindView(R.id.iconviewChallenge)
+    ImageView iconViewChallenge;
+
+    @Nullable
+    @BindView(R.id.iconviewReminder)
+    ImageView iconViewReminder;
+
+    @Nullable
+    @BindView(R.id.iconviewTag)
+    ImageView iconViewTag;
+
+    @Nullable
+    @BindView(R.id.taskIconWrapper)
+    LinearLayout taskIconWrapper;
 
     boolean disabled;
 
@@ -90,6 +113,59 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
         if (this.rightBorderView != null) {
             this.rightBorderView.setBackgroundResource(this.task.getLightTaskColor());
         }
+        if (this.iconViewReminder != null) {
+            this.iconViewReminder.setVisibility(this.task.getReminders().size() > 0 ? View.VISIBLE : View.GONE);
+        }
+        if (this.iconViewTag != null) {
+            this.iconViewTag.setVisibility(this.task.getTags().size() > 0 ? View.VISIBLE : View.GONE);
+        }
+
+        if (this.iconViewChallenge != null) {
+            this.iconViewChallenge.setVisibility(View.GONE);
+        }
+
+        this.configureSpecialTaskTextView(task);
+
+        if (this.taskIconWrapper != null) {
+            this.taskIconWrapper.setVisibility(getTaskIconWrapperIsVisible() ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void configureSpecialTaskTextView(Task task) {
+        if (this.specialTaskTextView != null) {
+            this.specialTaskTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    protected Boolean getTaskIconWrapperIsVisible() {
+        Boolean isVisible = false;
+
+        if (this.iconViewReminder != null) {
+            if (this.iconViewReminder.getVisibility() == View.VISIBLE) {
+                isVisible = true;
+            }
+        }
+        if (this.iconViewTag != null) {
+            if (this.iconViewTag.getVisibility() == View.VISIBLE) {
+                isVisible = true;
+            }
+        }
+        if (this.iconViewChallenge != null) {
+            if (this.iconViewChallenge.getVisibility() == View.VISIBLE) {
+                isVisible = true;
+            }
+        }
+        if (this.iconViewReminder != null) {
+            if (this.iconViewReminder.getVisibility() == View.VISIBLE) {
+                isVisible = true;
+            }
+        }
+        if (this.specialTaskTextView != null) {
+            if (this.specialTaskTextView.getVisibility() == View.VISIBLE) {
+                isVisible = true;
+            }
+        }
+        return isVisible;
     }
 
     @Override

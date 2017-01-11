@@ -1,57 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDoneException;
-import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.amplitude.api.Amplitude;
-import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.generic.RootDrawable;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.helpers.SoundFile;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.NotificationPublisher;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
@@ -72,7 +26,6 @@ import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
@@ -92,11 +45,11 @@ import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.TutorialView;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
@@ -104,6 +57,7 @@ import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
+import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
@@ -121,6 +75,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
@@ -149,8 +104,42 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.solovyev.android.checkout.ActivityCheckout;
-import org.solovyev.android.checkout.Checkout;
+
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDoneException;
+import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -170,7 +159,6 @@ import butterknife.BindView;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
@@ -193,6 +181,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     protected HostConfig hostConfig;
     @Inject
     protected SharedPreferences sharedPreferences;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
+
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
@@ -317,7 +308,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             try {
                 taskAlarmManager.scheduleAllSavedAlarms();
             } catch (Exception e) {
-                Crashlytics.logException(e);
+                crashlyticsProxy.logException(e);
             }
         }
 
@@ -334,6 +325,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     protected void onPause() {
         updateWidget(AvatarStatsWidgetProvider.class);
+        updateWidget(TodoListWidgetProvider.class);
         updateWidget(DailiesWidgetProvider.class);
         updateWidget(HabitButtonWidgetProvider.class);
         super.onPause();
@@ -960,7 +952,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(final BuyGemItemCommand event) {
         if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<Void> observable;
+            Observable<HabitResponse<Void>> observable;
             if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
                 if (event.item.purchaseType.equals("gear")) {
                     observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
@@ -1119,7 +1111,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                    ImageView petImageView = (ImageView) petWrapper.findViewById(R.id.pet_imageview);
+                    SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
                     String potionName = event.usingHatchingPotion.getText();
@@ -1133,12 +1125,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                 ShareEvent event1 = new ShareEvent();
                                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet";
-                                Bitmap animalBitmap = ((BitmapDrawable) petImageView.getDrawable()).getBitmap();
                                 Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
                                 Canvas canvas = new Canvas(sharedImage);
                                 canvas.drawColor(getResources().getColor(R.color.brand_300));
-                                canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
-                                        new Rect(30, 0, animalBitmap.getWidth() + 30, animalBitmap.getHeight()), new Paint());
+                                petImageView.getDrawable().draw(canvas);
                                 event1.shareImage = sharedImage;
                                 EventBus.getDefault().post(event1);
                                 hatchingDialog.dismiss();
@@ -1164,7 +1154,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
-                        ImageView mountImageView = (ImageView) mountWrapper.findViewById(R.id.pet_imageview);
+                        SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
                         String colorName = event.usingPet.getColorText();
@@ -1178,12 +1168,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                     ShareEvent event1 = new ShareEvent();
                                     event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
-                                    Bitmap animalBitmap = ((BitmapDrawable) mountImageView.getDrawable()).getBitmap();
                                     Bitmap sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888);
                                     Canvas canvas = new Canvas(sharedImage);
                                     canvas.drawColor(getResources().getColor(R.color.brand_300));
-                                    canvas.drawBitmap(animalBitmap, new Rect(0, 0, animalBitmap.getWidth(), animalBitmap.getHeight()),
-                                            new Rect(9, 0, animalBitmap.getWidth() + 9, animalBitmap.getHeight()), new Paint());
+                                    mountImageView.getDrawable().draw(canvas);
                                     event1.shareImage = sharedImage;
                                     EventBus.getDefault().post(event1);
                                     hatchingDialog.dismiss();
@@ -1354,8 +1342,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     dialog.dismiss();
                 })
                 .create();
-
-        alert.show();
+        if (!this.isFinishing()) {
+            alert.show();
+        }
     }
 
     private void checkClassSelection() {
@@ -1364,6 +1353,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 !user.getFlags().getClassSelected()) {
             SelectClassEvent event = new SelectClassEvent();
             event.isInitialSelection = true;
+            event.currentClass = user.getStats().get_class().toString();
             displayClassSelectionActivity(event);
         }
     }
@@ -1394,6 +1384,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         bundle.putInt("hairMustache", user.getPreferences().getHair().getMustache());
         bundle.putInt("hairBeard", user.getPreferences().getHair().getBeard());
         bundle.putBoolean("isInitialSelection", event.isInitialSelection);
+        bundle.putString("currentClass", event.currentClass);
 
         Intent intent = new Intent(this, ClassSelectionActivity.class);
         intent.putExtras(bundle);
@@ -1462,7 +1453,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         sharingIntent.setType("*/*");
         sharingIntent.putExtra(Intent.EXTRA_TEXT, event.sharedMessage);
         File f = BitmapUtils.saveToShareableFile(getFilesDir() + "/shared_images", "share.png", event.shareImage);
-        Uri fileUri = FileProvider.getUriForFile(this, "com.habitrpg.android.habitica.fileprovider", f);
+        Uri fileUri = FileProvider.getUriForFile(this, getString(R.string.content_provider), f);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
         List<ResolveInfo> resInfoList = this.getPackageManager().queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resInfoList) {

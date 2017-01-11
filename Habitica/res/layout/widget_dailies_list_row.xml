@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dailies_list_row"
+    android:id="@+id/widget_list_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
-    <FrameLayout
-        android:id="@+id/checkbox_background"
-        android:layout_width="@dimen/button_compact_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
-        <ImageView
-            android:layout_width="@dimen/checkbox_compact_size"
-            android:layout_height="@dimen/checkbox_compact_size"
-            android:src="@drawable/daily_unchecked"
-            android:layout_gravity="center" />
-    </FrameLayout>
-<TextView
-    android:paddingLeft="@dimen/task_text_padding"
-    android:paddingStart="@dimen/task_text_padding"
-    android:paddingRight="@dimen/task_text_padding"
-    android:paddingEnd="@dimen/task_text_padding"
-    android:paddingBottom="@dimen/task_top_bottom_compact_padding"
-    android:paddingTop="@dimen/task_top_bottom_compact_padding"
-    android:id="@+id/dailies_text"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textColor="@color/primary_text_light" />
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:id="@+id/checkbox_background"
+            android:layout_width="@dimen/button_compact_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/checkbox_compact_size"
+                android:layout_height="@dimen/checkbox_compact_size"
+                android:layout_gravity="center"
+                android:src="@drawable/daily_unchecked" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/dailies_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/task_top_bottom_compact_padding"
+            android:paddingEnd="@dimen/task_text_padding"
+            android:paddingLeft="@dimen/task_text_padding"
+            android:paddingRight="@dimen/task_text_padding"
+            android:paddingStart="@dimen/task_text_padding"
+            android:paddingTop="@dimen/task_top_bottom_compact_padding"
+            android:textColor="@color/primary_text_light" />
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

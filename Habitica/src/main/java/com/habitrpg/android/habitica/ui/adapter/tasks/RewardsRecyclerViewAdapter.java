@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -40,6 +42,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     public void loadEquipmentRewards() {
         if (apiHelper != null) {
             apiHelper.apiService.getInventoryBuyableGear()
+                    .compose(apiHelper.configureApiCallObserver())
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
@@ -82,13 +85,17 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                             });
                         });
                     })
-                    .compose(apiHelper.configureApiCallObserver())
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);
                         notifyDataSetChanged();
                     }, throwable -> {
                     });
         }
+    }
+
+    @Override
+    protected void injectThis(AppComponent component) {
+        HabiticaBaseApplication.getComponent().inject(this);
     }
 
     @Override

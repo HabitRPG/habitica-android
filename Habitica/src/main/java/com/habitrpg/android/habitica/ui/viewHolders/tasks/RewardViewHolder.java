@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -9,15 +10,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -28,7 +22,7 @@ public class RewardViewHolder extends BaseTaskViewHolder {
 
     private final DecimalFormat priceFormat;
     @BindView(R.id.rewardImageView)
-    ImageView rewardImageView;
+    SimpleDraweeView rewardImageView;
 
     @BindView(R.id.btnReward)
     Button rewardButton;

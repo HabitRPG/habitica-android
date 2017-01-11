@@ -3,9 +3,9 @@ jdk: oraclejdk8
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - nvm install 4.1.1
-  - nvm use 4.1.1
-  - npm i -g npm@3
+  - nvm install 6.9.3
+  - nvm use 6.9.3
+  - npm i -g npm@4
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
   - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
   - sudo apt-get update
@@ -24,10 +24,10 @@ android:
     - tools
 
     # The BuildTools version used by your project
-    - build-tools-24.0.2
+    - build-tools-24.0.3
 
     # The SDK version used to compile your project
-    - android-24
+    - android-25
 
     # Additional components
     - extra-google-google_play_services
@@ -38,9 +38,13 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 script:
     - cp habitica.properties.travis habitica.properties
     - cp habitica.resources.example habitica.resources
     - cp Habitica/google-services.json.example Habitica/google-services.json
-    - ./gradlew assembleDebug
-    - ./gradlew testDebugUnitTest --info
+    - ./gradlew assembleDebug -PdisablePreDex
+    - ./gradlew testDebugUnitTest -PdisablePreDex --stacktrace --info

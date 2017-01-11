@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
-import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
@@ -83,13 +82,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
-    private ArrayList<String> tagNames; // Added this so other activities/fragments can get the String names, not IDs
-    private ArrayList<String> tagIds; // Added this so other activities/fragments can get the IDs
 
     private boolean displayingTaskForm;
     private boolean editingTags;
     private List<Tag> tags;
-    private List<Tag> tagsCopy;
     private HashMap<String, Boolean> tagFilterMap = new HashMap<>();
     private Debounce filterChangedHandler = new Debounce(1500, 1000) {
         @Override
@@ -108,16 +104,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (user != null) {
-            tags = user.getTags();
-            fillTagFilterDrawer(tags);
-        }
     }
 
     @Override
@@ -147,12 +133,31 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         todo_fab.setOnClickListener(v1 -> openNewTaskActivity("todo"));
         FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
         reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
+        floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
         this.activity.unlockDrawer(GravityCompat.END);
 
         loadTaskLists();
 
         return v;
+    }
+
+    private boolean onFloatingMenuLongClicked(View view) {
+        int currentType = viewPager.getCurrentItem();
+        TaskRecyclerViewFragment currentFragment = ViewFragmentsDictionary.get(currentType);
+        String className = currentFragment.getClassName();
+        openNewTaskActivity(className);
+        return true;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (user != null) {
+            tags = user.getTags();
+            fillTagFilterDrawer(tags);
+        }
     }
 
     @Override

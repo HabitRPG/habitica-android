@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="136"
-    android:versionName="0.0.34.5"
+    android:versionCode="139"
+    android:versionName="0.0.35"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -25,7 +26,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+            tools:replace="android:name">
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
@@ -33,7 +35,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -140,7 +141,6 @@
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <activity android:name=".ui.activities.MaintenanceActivity"
                   android:screenOrientation="portrait"
@@ -177,7 +177,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService">
             <intent-filter>
@@ -215,7 +214,15 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/dailies_task_widget_info" />
+                android:resource="@xml/task_list_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.TodoListWidgetProvider"
+            android:label="@string/widget_todo_list">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/task_list_widget_info" />
         </receiver>
         <receiver android:name=".widget.HabitButtonWidgetProvider"
             android:label="@string/widget_habit_button">
@@ -228,6 +235,9 @@
 
         <service
             android:name=".widget.DailiesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".widget.HabitButtonWidgetService"/>
     </application>

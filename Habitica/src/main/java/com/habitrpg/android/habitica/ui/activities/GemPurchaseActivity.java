@@ -4,7 +4,10 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
+import com.playseeds.android.sdk.Seeds;
+import com.playseeds.android.sdk.inappmessaging.InAppMessageListener;
 
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.Checkout;
@@ -14,7 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFragment.Listener {
+public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFragment.Listener, InAppMessageListener {
 
     private ActivityCheckout checkout;
 
@@ -39,6 +42,12 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
         super.onCreate(savedInstanceState);
 
         setupCheckout();
+
+        Seeds.sharedInstance()
+                .simpleInit(this, this, "https://dash.playseeds.com", getString(R.string.seeds_app_key))
+                .setLoggingEnabled(true);
+        Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_gems));
+        Seeds.sharedInstance().requestInAppMessage(getString(R.string.seeds_interstitial_sharing));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,5 +88,51 @@ public class GemPurchaseActivity extends BaseActivity implements GemsPurchaseFra
     @Override
     public ActivityCheckout getActivityCheckout() {
         return checkout;
+    }
+
+    @Override
+    public void inAppMessageClicked(String messageId) {
+        GemsPurchaseFragment fragment = (GemsPurchaseFragment) getSupportFragmentManager().getFragments().get(0);
+        fragment.purchaseGems(PurchaseTypes.Purchase84Gems);
+    }
+
+    @Override
+    public void inAppMessageDismissed(String messageId) {
+
+    }
+
+    @Override
+    public void inAppMessageLoadSucceeded(String messageId) {
+
+    }
+
+    @Override
+    public void inAppMessageShown(String messageId, boolean succeeded) {
+
+    }
+
+    @Override
+    public void noInAppMessageFound(String messageId) {
+
+    }
+
+    @Override
+    public void inAppMessageClickedWithDynamicPrice(String messageId, Double price) {
+
+    }
+
+    public void showSeedsPromo(final String messageId, final String context) {
+        try {
+            runOnUiThread(() -> {
+                if (Seeds.sharedInstance().isInAppMessageLoaded(messageId)) {
+                    Seeds.sharedInstance().showInAppMessage(messageId, context);
+                } else {
+                    // Skip the interstitial showing this time and try to reload the interstitial
+                    Seeds.sharedInstance().requestInAppMessage(messageId);
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
     }
 }
