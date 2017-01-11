@@ -165,9 +165,14 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
     // region Challenge specific RecyclerViewAdapters
 
-    private class ChallengeHabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
+    public class ChallengeHabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
         public ChallengeHabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
             super(taskType, tagsHelper, layoutResource, newContext, userID, sortCallback);
+        }
+
+        @Override
+        protected void injectThis(AppComponent component) {
+            component.inject(this);
         }
 
         @Override
@@ -195,6 +200,11 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
         }
 
         @Override
+        protected void injectThis(AppComponent component) {
+            component.inject(this);
+        }
+
+        @Override
         public boolean loadFromDatabase() {
             return false;
         }
@@ -215,6 +225,11 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
         }
 
         @Override
+        protected void injectThis(AppComponent component) {
+            component.inject(this);
+        }
+
+        @Override
         public boolean loadFromDatabase() {
             return false;
         }
@@ -231,6 +246,11 @@ public class ChallengeTaskRecyclerViewFragment extends BaseFragment {
 
         public ChallengeRewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user) {
             super(taskType, tagsHelper, layoutResource, newContext, user.getId());
+        }
+
+        @Override
+        protected void injectThis(AppComponent component) {
+            component.inject(this);
         }
 
         @Override

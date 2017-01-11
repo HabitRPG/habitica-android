@@ -1,133 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:foreground="?selectableItemBackground"
-            android:baselineAligned="false">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:foreground="?selectableItemBackground"
+        android:orientation="horizontal">
+
         <FrameLayout
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                android:id="@+id/btnPlusWrapper">
+            android:id="@+id/btnPlusWrapper"
+            android:layout_width="54dp"
+            android:layout_height="match_parent">
+
             <View
-                    android:layout_gravity="end"
-                    android:background="@color/task_border_gray"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="1dp"/>
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginBottom="1dp"
+                android:background="@color/task_border_gray" />
+
             <ImageView
-                    android:id="@+id/btnPlusIconView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/habit_plus"
-                    android:scaleType="center"
-                    android:layout_gravity="center" />
+                android:id="@+id/btnPlusIconView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:src="@drawable/habit_plus" />
+
             <Button
-                    android:id="@+id/btnPlus"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selection_highlight"
-                    style="@style/HabitButton" />
+                android:id="@+id/btnPlus"
+                style="@style/HabitButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selection_highlight" />
         </FrameLayout>
+
         <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/task_text_padding"
-                android:paddingStart="@dimen/task_text_padding"
-                android:paddingRight="@dimen/task_text_padding"
-                android:paddingEnd="@dimen/task_text_padding"
-                android:paddingBottom="@dimen/task_top_bottom_padding"
-                android:paddingTop="@dimen/task_top_bottom_padding">
-            <net.pherth.android.emoji_library.EmojiTextView
-                    android:id="@+id/checkedTextView"
-                    style="@style/CardTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/task_top_bottom_padding"
+            android:paddingEnd="@dimen/task_text_padding"
+            android:paddingLeft="@dimen/task_text_padding"
+            android:paddingRight="@dimen/task_text_padding"
+            android:paddingStart="@dimen/task_text_padding"
+            android:paddingTop="@dimen/task_top_bottom_padding">
 
             <net.pherth.android.emoji_library.EmojiTextView
-                    android:id="@+id/notesTextView"
-                    style="@style/CardText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3" />
+                android:id="@+id/checkedTextView"
+                style="@style/Subheader3"
+                android:textColor="#000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Habit Title" />
+
+            <net.pherth.android.emoji_library.EmojiTextView
+                android:id="@+id/notesTextView"
+                style="@style/Caption3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                tools:text="Notes"/>
 
             <LinearLayout
-                    android:id="@+id/taskIconWrapper"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/task_icon_space">
+                android:id="@+id/taskIconWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/task_icon_space"
+                android:orientation="horizontal">
 
                 <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/specialTaskText"
-                        android:layout_weight="1"
-                        android:textColor="@color/task_secondary_text" />
+                    android:id="@+id/specialTaskText"
+                    style="@style/Caption3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/task_secondary_text"
+                    tools:text="special" />
 
                 <ImageView
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        app:srcCompat="@drawable/task_icon_challenge"
-                        android:id="@+id/iconviewChallenge"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:contentDescription="@string/belongs_to_challenge"/>
+                    android:id="@+id/iconviewChallenge"
+                    android:layout_width="@dimen/task_icon_size"
+                    android:layout_height="@dimen/task_icon_size"
+                    android:layout_marginStart="@dimen/task_icon_space"
+                    android:contentDescription="@string/belongs_to_challenge"
+                    app:srcCompat="@drawable/task_icon_challenge" />
 
                 <ImageView
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        app:srcCompat="@drawable/task_icon_reminder"
-                        android:id="@+id/iconviewReminder"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:contentDescription="@string/has_reminder"/>
+                    android:id="@+id/iconviewReminder"
+                    android:layout_width="@dimen/task_icon_size"
+                    android:layout_height="@dimen/task_icon_size"
+                    android:layout_marginStart="@dimen/task_icon_space"
+                    android:contentDescription="@string/has_reminder"
+                    app:srcCompat="@drawable/task_icon_reminder" />
 
                 <ImageView
-                        android:layout_width="@dimen/task_icon_size"
-                        android:layout_height="@dimen/task_icon_size"
-                        app:srcCompat="@drawable/task_icon_tag"
-                        android:id="@+id/iconviewTag"
-                        android:layout_marginStart="@dimen/task_icon_space"
-                        android:contentDescription="@string/has_tag"/>
+                    android:id="@+id/iconviewTag"
+                    android:layout_width="@dimen/task_icon_size"
+                    android:layout_height="@dimen/task_icon_size"
+                    android:layout_marginStart="@dimen/task_icon_space"
+                    android:contentDescription="@string/has_tag"
+                    app:srcCompat="@drawable/task_icon_tag" />
             </LinearLayout>
 
         </LinearLayout>
 
         <FrameLayout
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                android:id="@+id/btnMinusWrapper">
+            android:id="@+id/btnMinusWrapper"
+            android:layout_width="54dp"
+            android:layout_height="match_parent">
+
             <View
-                    android:layout_gravity="start"
-                    android:layout_width="1dp"
-                    android:background="@color/task_border_gray"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="1dp"/>
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginBottom="1dp"
+                android:background="@color/task_border_gray" />
+
             <ImageView
-                    android:id="@+id/btnMinusIconView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/habit_minus"
-                    android:scaleType="center"
-                    android:layout_gravity="center" />
+                android:id="@+id/btnMinusIconView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:src="@drawable/habit_minus" />
+
             <Button
-                    android:id="@+id/btnMinus"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/selection_highlight"
-                    style="@style/HabitButton"/>
+                android:id="@+id/btnMinus"
+                style="@style/HabitButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selection_highlight" />
         </FrameLayout>
     </LinearLayout>
 
     <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/task_border_gray"
-            android:layout_gravity="bottom"/>
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/task_border_gray" />
 </FrameLayout>
