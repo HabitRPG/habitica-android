@@ -22,7 +22,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
     public Task task;
@@ -63,12 +63,19 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
     boolean disabled;
 
     public BaseTaskViewHolder(View itemView) {
+        this(itemView, true);
+    }
+
+    public BaseTaskViewHolder(View itemView, boolean useButterKnife) {
         super(itemView);
 
         itemView.setOnClickListener(this);
         itemView.setClickable(true);
 
-        ButterKnife.bind(this, itemView);
+        if(useButterKnife)
+        {
+            ButterKnife.bind(this, itemView);
+        }
 
         //Re enable when we find a way to only react when a link is tapped.
         //this.notesTextView.setMovementMethod(LinkMovementMethod.getInstance());

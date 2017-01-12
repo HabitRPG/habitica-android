@@ -15,7 +15,7 @@
 
         <FrameLayout
             android:id="@+id/btnPlusWrapper"
-            android:layout_width="54dp"
+            android:layout_width="@dimen/button_width"
             android:layout_height="match_parent">
 
             <View
@@ -114,7 +114,7 @@
 
         <FrameLayout
             android:id="@+id/btnMinusWrapper"
-            android:layout_width="54dp"
+            android:layout_width="@dimen/button_width"
             android:layout_height="match_parent">
 
             <View

@@ -50,7 +50,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:text="@string/not_taking_any_challenges"
+                    android:text="@string/not_part_of_a_challenge"
                     android:textAlignment="center"
                     android:textColor="#8a000000" />
 

@@ -460,11 +460,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="habit">Habit</string>
     <string name="reward">Reward</string>
     <string name="todo">To-Do</string>
-    <string name="official_habitica_challenge">Official Habitica Challenge</string>
+    <string name="official">Official</string>
     <string name="participating">Participating</string>
     <string name="challenge">Challenge</string>
     <string name="go_to_challenge">Go to Challenge</string>
-    <string name="not_taking_any_challenges">You aren\'t taking on any challenges at the moment</string>
-    <string name="join_a_challenge">Join a Challenge to add its tasks to yours. Complete the tasks to win and you can get an achievement or even gems!</string>
-    <string name="check_the_public_challenge_tab">Check the public Challenge tab to find ones you’d like to join.</string>
+    <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
+    <string name="join_a_challenge">Join a Challenge to add a curated set of tasks to your list, then compete against other Habiticans to win achievements and even gems!</string>
+    <string name="check_the_public_challenge_tab">Tap the “Public” tab to find the user-created Challenges that are the best fit for you!</string>
 </resources>

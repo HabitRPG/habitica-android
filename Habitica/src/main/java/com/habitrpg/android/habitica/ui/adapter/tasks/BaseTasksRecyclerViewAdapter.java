@@ -45,8 +45,8 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     int layoutResource;
     String taskType;
     Context context;
-    List<Task> content;
-    List<Task> filteredContent;
+    protected List<Task> content;
+    protected List<Task> filteredContent;
     private TagsHelper tagsHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
@@ -92,6 +92,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     public View getContentView(ViewGroup parent) {
+        return getContentView(parent, layoutResource);
+    }
+
+    public View getContentView(ViewGroup parent, int layoutResource) {
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 

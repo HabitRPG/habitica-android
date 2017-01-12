@@ -90,6 +90,12 @@
         <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
     </style>
 
+    <style name="Body2_Wide" parent="Body2">
+
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.07</item>
+
+    </style>
+
     <style name="Body3">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_condensed

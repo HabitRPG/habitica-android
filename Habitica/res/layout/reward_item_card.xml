@@ -51,18 +51,22 @@
 
         <Button
             android:id="@+id/btnReward"
-            android:layout_width="80dp"
-            android:layout_height="45dp"
+            android:layout_width="64dp"
+            android:layout_height="28dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:gravity="left|center_vertical"
+            android:drawablePadding="5dp"
             android:background="@drawable/rounded_purple_square"
             android:drawableLeft="@drawable/ic_header_gold"
             android:drawableStart="@drawable/ic_header_gold"
-            android:paddingLeft="6dp"
-            android:paddingStart="6dp"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            tools:text="15"
+            android:textSize="15sp">
+            </Button>
     </LinearLayout>
 
     <View

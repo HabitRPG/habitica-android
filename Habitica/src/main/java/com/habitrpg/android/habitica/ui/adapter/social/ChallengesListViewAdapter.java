@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
+import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -22,9 +21,7 @@ import net.pherth.android.emoji_library.EmojiTextView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,14 +94,20 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         @BindView(R.id.challenge_group_name)
         TextView challengeDescription;
 
-        @BindView(R.id.challenge_task_summary)
-        TextView challengeTaskSummary;
+        @BindView(R.id.leaderParticipantLayout)
+        LinearLayout leaderParticipantLayout;
+
+        @BindView(R.id.leaderName)
+        TextView leaderName;
+
+        @BindView(R.id.participantCount)
+        TextView participantCount;
 
         @BindView(R.id.officialHabiticaChallengeLayout)
         LinearLayout officialChallengeLayout;
 
         @BindView(R.id.challenge_is_participating)
-        TextView challengeParticipatingTextView;
+        View challengeParticipatingTextView;
 
         @Nullable
         @BindView(R.id.memberCountTextView)
@@ -142,23 +145,15 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
 
             if (viewUserChallengesOnly) {
-                List<String> taskSummary = new ArrayList<>();
-
-                HashMap<String, String[]> tasksOrder = challenge.getTasksOrder();
-                for (Map.Entry<String, String[]> stringEntry : tasksOrder.entrySet()) {
-                    if (stringEntry.getValue().length != 0) {
-                        taskSummary.add(stringEntry.getValue().length + " " + getLabelByTypeAndCount(getContext(), stringEntry.getKey(), stringEntry.getValue().length));
-                    }
-                }
-
-                challengeTaskSummary.setText(TextUtils.join(" | ", taskSummary));
+                leaderParticipantLayout.setVisibility(View.GONE);
                 challengeParticipatingTextView.setVisibility(View.GONE);
                 arrowImage.setVisibility(View.VISIBLE);
             } else {
                 challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
 
-                challengeTaskSummary.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName) + " | " +
-                        challenge.memberCount + " " + getContext().getString(R.string.quest_participants));
+                leaderName.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName) + " | ");
+                participantCount.setText(challenge.memberCount+"");
+                leaderParticipantLayout.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.GONE);
             }
 
