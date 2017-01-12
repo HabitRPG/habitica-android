@@ -28,6 +28,15 @@ public class SubscriptionOptionView extends FrameLayout {
     @BindView(R.id.subscriptionSelectedView)
     View subscriptionSelectedView;
 
+    @BindView(R.id.subscriptionSelectedFrameView)
+    View subscriptionSelectedFrameView;
+
+    @BindView(R.id.gemCapTextView)
+    TextView gemCapTextView;
+
+    @BindView(R.id.hourglassTextView)
+    TextView hourGlassTextView;
+
     private String sku;
 
     public SubscriptionOptionView(Context context, AttributeSet attrs) {
@@ -43,6 +52,15 @@ public class SubscriptionOptionView extends FrameLayout {
                 0, 0);
 
         descriptionTextView.setText(context.getString(R.string.subscription_duration, a.getText(R.styleable.SubscriptionOptionView_recurringText)));
+
+        gemCapTextView.setText(a.getText(R.styleable.SubscriptionOptionView_gemCapText));
+        Integer hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0);
+        if (hourGlassCount != 0) {
+            hourGlassTextView.setText(context.getString(R.string.subscription_hourglasses, hourGlassCount));
+            hourGlassTextView.setVisibility(View.VISIBLE);
+        } else {
+            hourGlassTextView.setVisibility(View.GONE);
+        }
 
     }
 
@@ -63,10 +81,26 @@ public class SubscriptionOptionView extends FrameLayout {
     }
 
     public void setIsPurchased(boolean purchased) {
+        int horizontalPadding = (int) getResources().getDimension(R.dimen.pill_horizontal_padding);
+        int verticalPadding = (int) getResources().getDimension(R.dimen.pill_vertical_padding);
         if (purchased) {
             subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_selected);
+            subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_100);
+            gemCapTextView.setBackgroundResource(R.drawable.pill_bg_green);
+            gemCapTextView.setTextColor(getContext().getResources().getColor(R.color.white));
+            gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+            hourGlassTextView.setBackgroundResource(R.drawable.pill_bg_green);
+            hourGlassTextView.setTextColor(getContext().getResources().getColor(R.color.white));
+            hourGlassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
         } else {
             subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected);
+            subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_700);
+            gemCapTextView.setBackgroundResource(R.drawable.pill_bg);
+            gemCapTextView.setTextColor(getContext().getResources().getColor(R.color.text_light));
+            gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+            hourGlassTextView.setBackgroundResource(R.drawable.pill_bg);
+            hourGlassTextView.setTextColor(getContext().getResources().getColor(R.color.text_light));
+            hourGlassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
         }
     }
 }

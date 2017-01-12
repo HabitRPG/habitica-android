@@ -135,6 +135,8 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-auth:10.0.1'
 
+    compile 'org.apmem.tools:layouts:1.10@aar'
+
     compile(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'

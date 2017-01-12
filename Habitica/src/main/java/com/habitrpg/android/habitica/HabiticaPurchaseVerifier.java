@@ -56,40 +56,44 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 validationRequest.transaction.receipt = purchase.data;
                 validationRequest.transaction.signature = purchase.signature;
 
-                apiHelper.apiService.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
-                    purchasedOrderList.add(purchase.orderId);
+                if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                    apiHelper.apiService.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
+                        purchasedOrderList.add(purchase.orderId);
 
-                    verifiedPurchases.add(purchase);
+                        verifiedPurchases.add(purchase);
 
-                    requestListener.onSuccess(verifiedPurchases);
+                        requestListener.onSuccess(verifiedPurchases);
 
-                    //TODO: find way to get $ price automatically.
-                    if (purchase.sku.equals(PurchaseTypes.Purchase4Gems)) {
-                        Seeds.sharedInstance().recordIAPEvent(purchase.sku, 0.99);
-                    } else if (purchase.sku.equals(PurchaseTypes.Purchase21Gems)) {
-                        Seeds.sharedInstance().recordIAPEvent(purchase.sku, 4.99);
-                    } else if (purchase.sku.equals(PurchaseTypes.Purchase42Gems)) {
-                        Seeds.sharedInstance().recordIAPEvent(purchase.sku, 9.99);
-                    } else if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
-                        Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
-                    }
-                }, throwable -> {
-                    if (throwable.getClass().equals(HttpException.class)) {
-                        HttpException error = (HttpException)throwable;
-                        APIHelper.ErrorResponse res = apiHelper.getErrorResponse((HttpException) throwable);
-                        if (error.code() == 401) {
-                            if (res.message.equals("RECEIPT_ALREADY_USED")) {
-                                purchasedOrderList.add(purchase.orderId);
+                        //TODO: find way to get $ price automatically.
+                        if (purchase.sku.equals(PurchaseTypes.Purchase4Gems)) {
+                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 0.99);
+                        } else if (purchase.sku.equals(PurchaseTypes.Purchase21Gems)) {
+                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 4.99);
+                        } else if (purchase.sku.equals(PurchaseTypes.Purchase42Gems)) {
+                            Seeds.sharedInstance().recordIAPEvent(purchase.sku, 9.99);
+                        } else if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
+                            Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
+                        }
+                    }, throwable -> {
+                        if (throwable.getClass().equals(HttpException.class)) {
+                            HttpException error = (HttpException) throwable;
+                            APIHelper.ErrorResponse res = apiHelper.getErrorResponse((HttpException) throwable);
+                            if (error.code() == 401) {
+                                if (res.message.equals("RECEIPT_ALREADY_USED")) {
+                                    purchasedOrderList.add(purchase.orderId);
 
-                                verifiedPurchases.add(purchase);
+                                    verifiedPurchases.add(purchase);
 
-                                requestListener.onSuccess(verifiedPurchases);
-                                return;
+                                    requestListener.onSuccess(verifiedPurchases);
+                                    return;
+                                }
                             }
                         }
-                    }
-                    requestListener.onError(purchases.indexOf(purchase), new Exception());
-                });
+                        requestListener.onError(purchases.indexOf(purchase), new Exception());
+                    });
+                } else if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
+
+                }
             }
         }
 

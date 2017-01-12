@@ -448,8 +448,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="belongs_to_challenge">Belongs to Challenge</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
-    <string name="subscribe.title">Subscribing supports the developers  and helps keep Habitica running</string>
-    <string name="subscribe.subtitle">Become a subscriber and you’ll get  these useful benefits:</string>
+    <string name="subscribe.title">Subscribing supports the developers and helps keep Habitica running</string>
+    <string name="subscribe_prompt">Become a subscriber and you’ll get these useful benefits:</string>
     <string name="subscribe.listitem1">Buy gems with gold</string>
     <string name="subscribe.listitem2">Exclusive monthly items</string>
     <string name="subscribe.listitem3">Retain additional history entries</string>
@@ -461,6 +461,29 @@ To start, which parts of your life do you want to improve?</string>
     <string name="subscribe.listitem2.description">Makes completed To-Dos and task history available for longer.</string>
     <string name="subscribe.listitem3.description">Complete your stable faster!</string>
     <string name="subscribe.listitem4.description">Each month you will receive a unique cosmetic item for your avatar! Plus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
+    <string name="subscribe1month.gemcap">Gem cap starts at 25</string>
+    <string name="subscribe3month.gemcap">Gem cap raised to 30</string>
+    <string name="subscribe6month.gemcap">Gem cap raised to 35</string>
+    <string name="subscribe12month.gemcap">Gem cap raised to 45</string>
+    <string name="subscription_hourglasses" formatted="false">+%d Mystic Hourglass</string>
+    <string name="payment_method">Payment method</string>
+    <string name="subscription">Subscription</string>
+    <string name="active">Active</string>
+    <string name="cancel_subscription">Cancel Subscription</string>
+    <string name="cancel_subscription.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>
+    <string name="visit_habitica_website">Visit Habitica Website</string>
+    <string name="current_bonuses">Current Bonuses</string>
+    <string name="months_subscribed">Months subscribed</string>
+    <string name="current_hourclasses">Current Mystic Hourglasses</string>
+    <string name="monthly_gem_cap">Monthly gem cap</string>
+    <string name="inactive">Inactive</string>
+    <string name="one_month">1 Month</string>
+    <string name="months" formatted="false">%d Months</string>
+    <string name="month">month</string>
+    <string name="three_months">3 months</string>
+    <string name="six_months">6 months</string>
+    <string name="twelve_months">12 months</string>
+    <string name="subscribe_prompt_thanks">For Subscribing you are receiving these useful benefits:</string>
 
     <string name="byLeader" formatted="false">by %s</string>
     <string name="challenge_details">Challenge Details</string>
