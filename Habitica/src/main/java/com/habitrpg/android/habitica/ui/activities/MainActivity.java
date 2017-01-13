@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
@@ -1470,6 +1471,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
+                    event.Task.completed = !event.Task.completed;
+                    event.Task.save();
+                    EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
                 });
 
         switch(event.Task.type){
