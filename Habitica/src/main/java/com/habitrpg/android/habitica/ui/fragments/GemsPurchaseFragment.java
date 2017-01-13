@@ -85,55 +85,8 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     public void setupCheckout() {
         final ActivityCheckout checkout = listener.getActivityCheckout();
         if (checkout != null) {
-            checkout.destroyPurchaseFlow();
-
             inventory = checkout.makeInventory();
 
-            checkout.createPurchaseFlow(new RequestListener<Purchase>() {
-                @Override
-                public void onSuccess(@NonNull Purchase purchase) {
-                    if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
-                            @Override
-                            public void onSuccess(@NonNull Object o) {
-                                EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
-                                if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
-                                    ((GemPurchaseActivity)getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_sharing), "store");
-                                }
-                            }
-
-                            @Override
-                            public void onError(int i, @NonNull Exception e) {
-                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onError(int i, @NonNull Exception e) {
-                    crashlyticsProxy.fabricLogE("Purchase", "Error", e);
-                }
-            });
-
-
-            checkout.whenReady(new Checkout.Listener() {
-                @Override
-                public void onReady(@NonNull final BillingRequests billingRequests) {
-                    GemsPurchaseFragment.this.billingRequests = billingRequests;
-
-                    // if the user leaves the fragment before the checkout callback is done
-                    if (btnPurchaseGems != null) {
-                        btnPurchaseGems.setEnabled(true);
-
-                    }
-                    checkIfPendingPurchases();
-                }
-
-                @Override
-                public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
-                }
-            });
             inventory.load(Inventory.Request.create()
                             .loadAllPurchases().loadSkus(ProductTypes.IN_APP, PurchaseTypes.allGemTypes),
                     products -> {
@@ -172,34 +125,6 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         matchingView.setSku(sku);
     }
 
-    private void checkIfPendingPurchases() {
-        billingRequests.getAllPurchases(ProductTypes.IN_APP, new RequestListener<Purchases>() {
-            @Override
-            public void onSuccess(@NonNull Purchases purchases) {
-                for (Purchase purchase : purchases.list) {
-                    if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
-                            @Override
-                            public void onSuccess(@NonNull Object o) {
-                                EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
-                            }
-
-                            @Override
-                            public void onError(int i, @NonNull Exception e) {
-                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onError(int i, @NonNull Exception e) {
-                crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e);
-            }
-        });
-    }
-
     public void purchaseGems(String sku) {
         // check if the user already bought and if it hasn't validated yet
         billingRequests.isPurchased(ProductTypes.IN_APP, sku, new RequestListener<Boolean>() {
@@ -209,8 +134,6 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                     // no current product exist
                     final ActivityCheckout checkout = listener.getActivityCheckout();
                     billingRequests.purchase(ProductTypes.IN_APP, sku, null, checkout.getPurchaseFlow());
-                } else {
-                    checkIfPendingPurchases();
                 }
             }
 

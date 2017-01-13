@@ -24,6 +24,6 @@ public class SubscriptionPlan {
 
     public boolean isActive() {
         Date today = new Date();
-        return this.dateCreated.before(today) && (this.dateTerminated == null || this.dateTerminated.after(today));
+        return (this.dateCreated != null && this.dateCreated.before(today)) && (this.dateTerminated == null || this.dateTerminated.after(today));
     }
 }

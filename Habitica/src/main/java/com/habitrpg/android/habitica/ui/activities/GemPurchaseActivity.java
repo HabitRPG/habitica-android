@@ -4,18 +4,27 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.playseeds.android.sdk.Seeds;
 import com.playseeds.android.sdk.inappmessaging.InAppMessageListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.Purchase;
+import org.solovyev.android.checkout.Purchases;
+import org.solovyev.android.checkout.RequestListener;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -26,9 +35,14 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class GemPurchaseActivity extends BaseActivity implements InAppMessageListener {
+
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
 
     private ActivityCheckout checkout;
 
@@ -39,6 +53,7 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
     ViewPager viewPager;
 
     List<CheckoutFragment> fragments = new ArrayList<>();
+    private BillingRequests billingRequests;
 
     @Override
     protected int getLayoutResId() {
@@ -80,6 +95,49 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
         viewPager.setCurrentItem(0);
 
         setViewPagerAdapter();
+
+        checkout.destroyPurchaseFlow();
+
+        checkout.createPurchaseFlow(new RequestListener<Purchase>() {
+            @Override
+            public void onSuccess(@NonNull Purchase purchase) {
+                if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                    billingRequests.consume(purchase.token, new RequestListener<Object>() {
+                        @Override
+                        public void onSuccess(@NonNull Object o) {
+                            //EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
+                            if (purchase.sku.equals(PurchaseTypes.Purchase84Gems)) {
+                                GemPurchaseActivity.this.showSeedsPromo(getString(R.string.seeds_interstitial_sharing), "store");
+                            }
+                        }
+
+                        @Override
+                        public void onError(int i, @NonNull Exception e) {
+                            crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(int i, @NonNull Exception e) {
+                crashlyticsProxy.fabricLogE("Purchase", "Error", e);
+            }
+        });
+
+
+        checkout.whenReady(new Checkout.Listener() {
+            @Override
+            public void onReady(@NonNull final BillingRequests billingRequests) {
+                GemPurchaseActivity.this.billingRequests = billingRequests;
+
+                checkIfPendingPurchases();
+            }
+
+            @Override
+            public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
+            }
+        });
     }
 
     @Override
@@ -204,4 +262,33 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
         void setupCheckout();
         void setListener(GemPurchaseActivity listener);
     }
+
+    private void checkIfPendingPurchases() {
+        billingRequests.getAllPurchases(ProductTypes.IN_APP, new RequestListener<Purchases>() {
+            @Override
+            public void onSuccess(@NonNull Purchases purchases) {
+                for (Purchase purchase : purchases.list) {
+                    if (PurchaseTypes.allGemTypes.contains(purchase.sku)) {
+                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
+                            @Override
+                            public void onSuccess(@NonNull Object o) {
+                                //EventBus.getDefault().post(new BoughtGemsEvent(GEMS_TO_ADD));
+                            }
+
+                            @Override
+                            public void onError(int i, @NonNull Exception e) {
+                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int i, @NonNull Exception e) {
+                crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e);
+            }
+        });
+    }
+
 }

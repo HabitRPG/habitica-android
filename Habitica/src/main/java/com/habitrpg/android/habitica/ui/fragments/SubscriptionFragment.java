@@ -35,10 +35,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SubscriptionFragment extends BaseFragment implements GemPurchaseActivity.CheckoutFragment {
 
@@ -73,7 +75,8 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     TextView subscribeBenefitsTitle;
 
     @Nullable
-    String selectedSubscriptionSku;
+    Sku selectedSubscriptionSku;
+    List<Sku> skus;
 
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
@@ -119,58 +122,20 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         if (checkout != null) {
             inventory = checkout.makeInventory();
 
-            checkout.destroyPurchaseFlow();
+            inventory.load(Inventory.Request.create()
+                            .loadAllPurchases().loadSkus(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes),
+                    products -> {
+                        Inventory.Product subscriptions = products.get(ProductTypes.SUBSCRIPTION);
 
-            checkout.createPurchaseFlow(new RequestListener<Purchase>() {
-                @Override
-                public void onSuccess(@NonNull Purchase purchase) {
-                    if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
-                            @Override
-                            public void onSuccess(@NonNull Object o) {
-                            }
+                        skus = subscriptions.getSkus();
 
-                            @Override
-                            public void onError(int i, @NonNull Exception e) {
-                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onError(int i, @NonNull Exception e) {
-                    crashlyticsProxy.fabricLogE("Purchase", "Error", e);
-                }
-            });
-
-
-            checkout.whenReady(new Checkout.Listener() {
-                @Override
-                public void onReady(@NonNull final BillingRequests billingRequests) {
-                    SubscriptionFragment.this.billingRequests = billingRequests;
-
-                    checkIfPendingPurchases();
-                }
-
-                @Override
-                public void onReady(@NonNull BillingRequests billingRequests, @NonNull String s, boolean b) {
-                    inventory.load(Inventory.Request.create()
-                                    .loadAllPurchases().loadSkus(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes),
-                            products -> {
-                                Inventory.Product subscriptions = products.get(ProductTypes.SUBSCRIPTION);
-
-                                java.util.List<Sku> skus = subscriptions.getSkus();
-
-                                for (Sku sku : skus) {
-                                    updateButtonLabel(sku, sku.price, subscriptions);
-                                }
-                                selectSubscription(PurchaseTypes.Subscription1Month);
-                                hasLoadedSubscriptionOptions = true;
-                                updateSubscriptionInfo();
-                            });
-                }
-            });
+                        for (Sku sku : skus) {
+                            updateButtonLabel(sku, sku.price, subscriptions);
+                        }
+                        selectSubscription(PurchaseTypes.Subscription1Month);
+                        hasLoadedSubscriptionOptions = true;
+                        updateSubscriptionInfo();
+                    });
         }
     }
 
@@ -184,6 +149,15 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     }
 
     private void selectSubscription(String sku) {
+        for (Sku thisSku : skus) {
+            if (thisSku.id.code.equals(sku)) {
+                selectSubscription(thisSku);
+                return;
+            }
+        }
+    }
+
+    private void selectSubscription(Sku sku) {
         if (this.selectedSubscriptionSku != null) {
             SubscriptionOptionView oldButton = buttonForSku(this.selectedSubscriptionSku);
             if (oldButton != null) {
@@ -223,31 +197,24 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.listener = listener;
     }
 
-    private void checkIfPendingPurchases() {
-        billingRequests.getAllPurchases(ProductTypes.SUBSCRIPTION, new RequestListener<Purchases>() {
-            @Override
-            public void onSuccess(@NonNull Purchases purchases) {
-                for (Purchase purchase : purchases.list) {
-                    if (PurchaseTypes.allSubscriptionTypes.contains(purchase.sku)) {
-                        billingRequests.consume(purchase.token, new RequestListener<Object>() {
-                            @Override
-                            public void onSuccess(@NonNull Object o) {
-                            }
-
-                            @Override
-                            public void onError(int i, @NonNull Exception e) {
-                                crashlyticsProxy.fabricLogE("Purchase", "Consume", e);
-                            }
-                        });
+    private void purchaseSubscription() {
+        if (selectedSubscriptionSku != null) {
+            billingRequests.isPurchased(ProductTypes.SUBSCRIPTION, this.selectedSubscriptionSku.id.code, new RequestListener<Boolean>() {
+                @Override
+                public void onSuccess(@NonNull Boolean aBoolean) {
+                    if (!aBoolean) {
+                        // no current product exist
+                        final ActivityCheckout checkout = listener.getActivityCheckout();
+                        billingRequests.purchase(ProductTypes.SUBSCRIPTION, selectedSubscriptionSku.id.code, null, checkout.getPurchaseFlow());
                     }
                 }
-            }
 
-            @Override
-            public void onError(int i, @NonNull Exception e) {
-                crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e);
-            }
-        });
+                @Override
+                public void onError(int i, @NonNull Exception e) {
+                    crashlyticsProxy.fabricLogE("Purchase", "Error", e);
+                }
+            });
+        }
     }
 
     public void setUser(HabitRPGUser newUser) {
@@ -277,5 +244,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
             }
             this.loadingIndicator.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.subscribeButton)
+    public void subscribeUser() {
+        purchaseSubscription();
     }
 }
