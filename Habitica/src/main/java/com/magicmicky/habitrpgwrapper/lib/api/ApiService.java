@@ -1,6 +1,8 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
+import android.databinding.ObservableList;
+
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -25,7 +27,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -261,6 +265,23 @@ public interface ApiService {
 
     @DELETE("user/push-devices/{regId}")
     Observable<HabitResponse<Void>> deletePushDevice(@Path("regId") String regId);
+
+    /* challenges api */
+
+    @GET("challenges/user")
+    Observable<HabitResponse<ArrayList<Challenge>>> getUserChallenges();
+
+    @GET("tasks/challenge/{challengeId}")
+    Observable<HabitResponse<TaskList>> getChallengeTasks(@Path("challengeId") String challengeId);
+
+    @GET("challenges/{challengeId}")
+    Observable<HabitResponse<Challenge>> getChallenge(@Path("challengeId") String challengeId);
+
+    @POST("challenges/{challengeId}/join")
+    Observable<HabitResponse<Challenge>> joinChallenge(@Path("challengeId") String challengeId);
+
+    @POST("challenges/{challengeId}/leave")
+    Observable<HabitResponse<Void>> leaveChallenge(@Path("challengeId") String challengeId);
 
     //DEBUG: These calls only work on a local development server
 

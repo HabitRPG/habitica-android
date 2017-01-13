@@ -31,6 +31,8 @@ public class HabitRPGUser extends BaseModel {
     List<Task> todos;
     List<Task> rewards;
     List<Task> habits;
+    List<Challenge> challengeList;
+
     List<Tag> tags;
     @Column
     @PrimaryKey
@@ -105,6 +107,28 @@ public class HabitRPGUser extends BaseModel {
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
+
+    private List<String> challenges;
+
+
+    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "challengeList")
+    public List<Challenge> getChallengeList() {
+        if (challengeList == null) {
+            challengeList = new Select()
+                    .from(Challenge.class)
+                    .where(Condition.column("user_id").eq(this.id))
+                    .queryList();
+        }
+        return challengeList;
+    }
+
+    public void setChallengeList(List<Challenge> challenges) {
+        this.challengeList = challenges;
+    }
+
+    public void resetChallengeList(){
+        challengeList = null;
+    }
 
     public Preferences getPreferences() {
         return preferences;
@@ -307,18 +331,33 @@ public class HabitRPGUser extends BaseModel {
         this.pushDevices = pushDevices;
     }
 
+    public List<String> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(List<String> challenges) {
+        this.challenges = challenges;
+    }
+
+
     @Override
     public void save() {
         // We need to set the user_id to all other objects
         preferences.user_id = id;
         stats.id = id;
         profile.user_Id = id;
-        if (inbox != null) { inbox.user_Id = id; }
+        if (inbox != null) {
+            inbox.user_Id = id;
+        }
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-        if (contributor != null) { contributor.user_id = id; }
-        if (invitations != null) { invitations.user_id = id; }
+        if (contributor != null) {
+            contributor.user_id = id;
+        }
+        if (invitations != null) {
+            invitations.user_id = id;
+        }
 
 
         ArrayList<Task> allTasks = new ArrayList<Task>();
@@ -344,6 +383,30 @@ public class HabitRPGUser extends BaseModel {
                 t.user_id = id;
             }
         }
+
+        List<Challenge> challenges = getChallengeList();
+
+        for (String s : getChallenges()) {
+            boolean challengeExistInDatabase = false;
+
+            for (Challenge challenge : challenges) {
+                if (challenge.id.equals(s)) {
+                    challengeExistInDatabase = true;
+
+                    break;
+                }
+            }
+
+            if (!challengeExistInDatabase) {
+                Challenge challenge = new Challenge();
+                challenge.id = s;
+                challenge.user_id = id;
+
+                challenges.add(challenge);
+            }
+        }
+
+        setChallengeList(challenges);
 
         super.save();
     }
@@ -442,31 +505,31 @@ public class HabitRPGUser extends BaseModel {
 
         boolean hasVisualBuffs = false;
 
-        if(stats != null && stats.getBuffs() != null){
+        if (stats != null && stats.getBuffs() != null) {
             Buffs buffs = stats.getBuffs();
 
-            if(buffs.getSnowball()){
+            if (buffs.getSnowball()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "snowman");
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getSeafoam()){
+            if (buffs.getSeafoam()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "seafoam_star");
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getShinySeed()){
-                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "avatar_floral_"+stats.get_class());
+            if (buffs.getShinySeed()) {
+                layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "avatar_floral_" + stats.get_class());
                 hasVisualBuffs = true;
             }
 
-            if(buffs.getSpookySparkles()){
+            if (buffs.getSpookySparkles()) {
                 layerMap.put(AvatarView.LayerType.VISUAL_BUFF, "ghost");
                 hasVisualBuffs = true;
             }
         }
 
-        if(!hasVisualBuffs) {
+        if (!hasVisualBuffs) {
             if (!TextUtils.isEmpty(prefs.getChair())) {
                 layerMap.put(AvatarView.LayerType.CHAIR, prefs.getChair());
             }
@@ -522,7 +585,7 @@ public class HabitRPGUser extends BaseModel {
                     layerMap.put(AvatarView.LayerType.HAIR_FLOWER, "hair_flower_" + hair.getFlower());
                 }
             }
-        } else  {
+        } else {
             Hair hair = prefs.getHair();
 
             // Show flower all the time!

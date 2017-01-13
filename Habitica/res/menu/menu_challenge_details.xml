@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.habitrpg.android.habitica.TaskActivity">
+
+    <item
+        android:id="@+id/action_leave"
+        android:icon="@drawable/leave_light"
+        android:title="@string/leave"
+        app:showAsAction="always"
+        android:actionViewClass="android.widget.ImageButton"/>
+
+</menu>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/gem_circle_background"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_header_gem" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="38dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="-6dp"
+            android:background="@drawable/gem_value_circle_background"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/gemPrizeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="middle"
+                android:lines="1"
+                android:text="0"
+                android:textColor="@color/gem_icon_color"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+
+        <net.pherth.android.emoji_library.EmojiTextView
+            android:id="@+id/challenge_name"
+            style="@style/ChallengeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            tools:text="Example Challenge Name" />
+
+        <TextView
+            android:id="@+id/challenge_group_name"
+            style="@style/ChallengeByGroup"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="1dp"
+            tools:text="Guild: XYZ" />
+
+        <LinearLayout
+            android:id="@+id/leaderParticipantLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/leaderName"
+                style="@style/ChallengeTaskDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                tools:text="by Leader" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/dialogue_participants" />
+
+            <TextView
+                android:id="@+id/participantCount"
+                style="@style/ChallengeTaskDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                tools:text="12334" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/officialHabiticaChallengeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/layout_rounded_bg_official_challenge"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/OfficialChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/official" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/challenge_is_participating"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/layout_rounded_bg_official_challenge"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/ParticipatingChallenge"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:text="@string/participating" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/arrowImage"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+    </LinearLayout>
+</LinearLayout>

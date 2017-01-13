@@ -45,8 +45,8 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     int layoutResource;
     String taskType;
     Context context;
-    List<Task> content;
-    List<Task> filteredContent;
+    protected List<Task> content;
+    protected List<Task> filteredContent;
     private TagsHelper tagsHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
@@ -59,8 +59,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         this.filteredContent = new ArrayList<>();
         injectThis(HabiticaBaseApplication.getComponent());
 
-        this.loadContent(true);
-
+        if(loadFromDatabase()) {
+            this.loadContent(true);
+        }
+        
         this.layoutResource = layoutResource;
     }
 
@@ -90,6 +92,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     public View getContentView(ViewGroup parent) {
+        return getContentView(parent, layoutResource);
+    }
+
+    public View getContentView(ViewGroup parent, int layoutResource) {
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
@@ -171,7 +177,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     private void filter() {
-        if (this.tagsHelper.howMany() == 0) {
+        if (this.tagsHelper == null || this.tagsHelper.howMany() == 0) {
             filteredContent = content;
         } else {
             filteredContent = new ObservableArrayList<>();
@@ -219,4 +225,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         filter();
     }
 
+    public boolean loadFromDatabase(){
+        return true;
+    }
 }

@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
@@ -45,6 +46,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.magicmicky.habitrpgwrapper.lib.utils.BooleanAsIntAdapter;
+import com.magicmicky.habitrpgwrapper.lib.utils.ChallengeDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChatMessageDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ChecklistItemSerializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.ContentDeserializer;
@@ -261,6 +263,7 @@ public class APIHelper implements Action1<Throwable> {
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
+                .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

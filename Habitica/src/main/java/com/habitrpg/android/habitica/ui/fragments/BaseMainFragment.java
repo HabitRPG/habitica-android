@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import javax.inject.Inject;
 
@@ -60,8 +60,14 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.activity = (MainActivity) getActivity();
+
+        try {
+            this.activity = (MainActivity) getActivity();
+        } catch (ClassCastException ex) {
+
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +93,9 @@ public abstract class BaseMainFragment extends BaseFragment {
 
         setHasOptionsMenu(true);
 
-        activity.setActiveFragment(this);
+        if (activity != null) {
+            activity.setActiveFragment(this);
+        }
 
         return null;
     }
@@ -99,5 +107,9 @@ public abstract class BaseMainFragment extends BaseFragment {
         }
 
         super.onSaveInstanceState(outState);
+    }
+
+    public String customTitle(){
+        return null;
     }
 }

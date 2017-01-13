@@ -22,7 +22,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
     public Task task;
     protected Context context;
@@ -59,13 +60,22 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
     @BindView(R.id.taskIconWrapper)
     LinearLayout taskIconWrapper;
 
+    boolean disabled;
+
     public BaseTaskViewHolder(View itemView) {
+        this(itemView, true);
+    }
+
+    public BaseTaskViewHolder(View itemView, boolean useButterKnife) {
         super(itemView);
 
         itemView.setOnClickListener(this);
         itemView.setClickable(true);
 
-        ButterKnife.bind(this, itemView);
+        if(useButterKnife)
+        {
+            ButterKnife.bind(this, itemView);
+        }
 
         //Re enable when we find a way to only react when a link is tapped.
         //this.notesTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -166,7 +176,7 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View v) {
-        if (v != itemView) {
+        if (v != itemView || isDisabled()) {
             return;
         }
 
@@ -178,5 +188,15 @@ public class BaseTaskViewHolder extends RecyclerView.ViewHolder implements View.
 
     public boolean canContainMarkdown() {
         return true;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+
+        itemView.setEnabled(!disabled);
     }
 }

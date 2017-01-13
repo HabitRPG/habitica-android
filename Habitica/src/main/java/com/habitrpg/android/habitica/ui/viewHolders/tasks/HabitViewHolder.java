@@ -71,4 +71,12 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         event.habit = task;
         EventBus.getDefault().post(event);
     }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        super.setDisabled(disabled);
+
+        this.btnPlus.setEnabled(!disabled);
+        this.btnMinus.setEnabled(!disabled);
+    }
 }

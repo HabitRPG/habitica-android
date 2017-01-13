@@ -161,7 +161,7 @@
     <string name="members">Members</string>
     <string name="habits">Habits</string>
     <string name="dailies">Dailies</string>
-    <string name="todos">Todos</string>
+    <string name="todos">To-Dos</string>
     <string name="rewards">Rewards</string>
     <string name="taskform.delete.title">Are you sure?</string>
     <string name="taskform.delete.message">Do you really want to delete?</string>
@@ -449,4 +449,22 @@ To start, which parts of your life do you want to improve?</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
 
+    <string name="byLeader">by %s</string>
+    <string name="challenge_details">Challenge Details</string>
+    <string name="challenge_leave_title">Are you sure?</string>
+    <string name="challenge_leave_text">Are you sure you want to leave the Challenge "%s"?</string>
+    <string name="my_challenges">My Challenges</string>
+    <string name="public_challenges">Public</string>
+    <string name="challenges">Challenges</string>
+    <string name="daily">Daily</string>
+    <string name="habit">Habit</string>
+    <string name="reward">Reward</string>
+    <string name="todo">To-Do</string>
+    <string name="official">Official</string>
+    <string name="participating">Participating</string>
+    <string name="challenge">Challenge</string>
+    <string name="go_to_challenge">Go to Challenge</string>
+    <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
+    <string name="join_a_challenge">Join a Challenge to add a curated set of tasks to your list, then compete against other Habiticans to win achievements and even gems!</string>
+    <string name="check_the_public_challenge_tab">Tap the “Public” tab to find the user-created Challenges that are the best fit for you!</string>
 </resources>

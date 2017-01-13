@@ -43,7 +43,7 @@
     <!-- Widget -->
     <dimen name="widget_bar_horizontal_margin">20dp</dimen>
 
-	<dimen name="button_width">65dp</dimen>
+	<dimen name="button_width">54dp</dimen>
 	<dimen name="button_compact_width">50dp</dimen>
 
 	<dimen name="hairline_height">0.5dp</dimen>

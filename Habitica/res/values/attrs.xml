@@ -11,4 +11,8 @@
         <attr name="gemDrawable" format="integer" />
         <attr name="showSeedsPromo" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="maxHeightMultiplier" format="float" />
+    </declare-styleable>
 </resources>

@@ -267,7 +267,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
         accountHeader = MainDrawerBuilder.CreateDefaultAccountHeader(this).build();
-        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, toolbar, accountHeader)
+        drawer = MainDrawerBuilder.CreateDefaultBuilderSettings(this, sharedPreferences, toolbar, accountHeader)
                 .build();
         drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);
@@ -318,7 +318,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         //Recreate the fragment as a result.
         if (activeFragment != null && activeFragment.tabLayout == null) {
             activeFragment = null;
-            drawer.setSelectionAtPosition(1);
+            drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
         }
     }
 
@@ -859,6 +859,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void setActiveFragment(BaseMainFragment fragment) {
         this.activeFragment = fragment;
+
+        if(fragment.customTitle() != null){
+            getSupportActionBar().setTitle(fragment.customTitle());
+            // BUG: setTitle not changed the title, just switched the length of "username"
+            //setTitle(fragment.customTitle());
+        } else {
+            setTitle(user.getProfile().getName());
+        }
+
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 
