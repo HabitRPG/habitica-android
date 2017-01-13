@@ -124,7 +124,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.gold_tv, String.valueOf(gp));
             remoteViews.setTextViewText(R.id.silver_tv, String.valueOf(sp));
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
-            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl().toString()));
+            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
             ;
