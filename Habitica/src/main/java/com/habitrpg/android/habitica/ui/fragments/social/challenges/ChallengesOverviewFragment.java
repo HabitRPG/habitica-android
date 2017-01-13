@@ -62,7 +62,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         availableChallengesFragment.setObservable(getUserChallengesObservable);
         availableChallengesFragment.setViewUserChallengesOnly(false);
 
-        pageHistory = new Stack<Integer>();
+        pageHistory = new Stack<>();
 
         return v;
     }
@@ -116,7 +116,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
             @Override
             public void onPageSelected(int newPageId) {
                 if (saveToHistory)
-                    pageHistory.push(Integer.valueOf(currentPage));
+                    pageHistory.push(currentPage);
 
                 currentPage = newPageId;
             }
@@ -163,7 +163,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     public boolean onHandleBackPressed() {
         if (!pageHistory.empty()) {
             saveToHistory = false;
-            viewPager.setCurrentItem(pageHistory.pop().intValue());
+            viewPager.setCurrentItem(pageHistory.pop());
             saveToHistory = true;
 
             return true;

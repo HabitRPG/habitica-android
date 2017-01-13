@@ -42,17 +42,25 @@ public class HabitViewHolder extends BaseTaskViewHolder {
         if (this.task.up) {
             this.btnPlusWrapper.setBackgroundResource(this.task.getLightTaskColor());
             this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
+            this.btnPlus.setVisibility(View.VISIBLE);
+            this.btnPlus.setClickable(true);
         } else {
             this.btnPlusWrapper.setBackgroundResource(R.color.habit_inactive_gray);
             this.btnPlusIconView.setImageResource(R.drawable.habit_plus_disabled);
+            this.btnPlus.setVisibility(View.GONE);
+            this.btnPlus.setClickable(false);
         }
 
         if (this.task.down) {
             this.btnMinusWrapper.setBackgroundResource(this.task.getLightTaskColor());
             this.btnMinusIconView.setImageResource(R.drawable.habit_minus);
+            this.btnMinus.setVisibility(View.VISIBLE);
+            this.btnMinus.setClickable(true);
         } else {
             this.btnMinusWrapper.setBackgroundResource(R.color.habit_inactive_gray);
             this.btnMinusIconView.setImageResource(R.drawable.habit_minus_disabled);
+            this.btnMinus.setVisibility(View.GONE);
+            this.btnMinus.setClickable(false);
         }
     }
 

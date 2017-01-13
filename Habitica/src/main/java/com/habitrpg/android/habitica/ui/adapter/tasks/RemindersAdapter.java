@@ -29,11 +29,13 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
         implements ItemTouchHelperAdapter {
 
     private final List<RemindersItem> reminders = new ArrayList<>();
+    private final String taskType;
     private RemindersManager remindersManager;
 
     public RemindersAdapter(List<RemindersItem> remindersInc, String taskType) {
-        reminders.addAll(remindersInc);
-        remindersManager = new RemindersManager(taskType);
+        this.reminders.addAll(remindersInc);
+        this.remindersManager = new RemindersManager(taskType);
+        this.taskType = taskType;
     }
 
     @Override
@@ -98,14 +100,6 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
 
             reminderItemTextView.setOnClickListener(v -> {
                 RemindersItem reminder = reminders.get(getAdapterPosition());
-
-                String taskType;
-
-                if (reminder.getTask() == null) {
-                    taskType = reminder.getType();
-                } else {
-                    taskType = reminder.getTask().getType();
-                }
 
                 remindersManager.createReminderTimeDialog(null, taskType, v.getContext(), reminder);
             });

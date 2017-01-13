@@ -27,17 +27,24 @@ public class DailyViewHolder extends ChecklistedViewHolder {
         } else {
             this.checklistIndicatorWrapper.setBackgroundColor(this.taskGray);
         }
-        if (task.streak != null && task.streak > 0) {
-            this.streakTextView.setText(String.valueOf(task.streak));
-            this.streakTextView.setVisibility(View.VISIBLE);
-        } else {
-            this.streakTextView.setVisibility(View.GONE);
-        }
     }
 
     @Override
     public Boolean shouldDisplayAsActive() {
         return this.task.isDisplayedActive(this.dailyResetOffset);
+    }
+
+    @Override
+    protected void configureSpecialTaskTextView(Task task) {
+        super.configureSpecialTaskTextView(task);
+        if (this.streakTextView != null) {
+            if (task.streak != null && task.streak > 0) {
+                this.streakTextView.setText(String.valueOf(task.streak));
+                this.streakTextView.setVisibility(View.VISIBLE);
+            } else {
+                this.streakTextView.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

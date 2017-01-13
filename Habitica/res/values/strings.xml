@@ -449,7 +449,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
 
-    <string name="byLeader">by %s</string>
+    <string name="byLeader" formatted="false">by %s</string>
     <string name="challenge_details">Challenge Details</string>
     <string name="challenge_leave_title">Are you sure?</string>
     <string name="challenge_leave_text">Are you sure you want to leave the Challenge "%s"?</string>
@@ -467,4 +467,5 @@ To start, which parts of your life do you want to improve?</string>
     <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
     <string name="join_a_challenge">Join a Challenge to add a curated set of tasks to your list, then compete against other Habiticans to win achievements and even gems!</string>
     <string name="check_the_public_challenge_tab">Tap the “Public” tab to find the user-created Challenges that are the best fit for you!</string>
+    <string name="add_reminder">Add Reminder</string>
 </resources>

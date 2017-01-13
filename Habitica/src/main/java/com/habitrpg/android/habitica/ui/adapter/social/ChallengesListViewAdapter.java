@@ -151,8 +151,8 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             } else {
                 challengeParticipatingTextView.setVisibility(userIdExists ? View.VISIBLE : View.GONE);
 
-                leaderName.setText(String.format(getContext().getString(R.string.byLeader), challenge.leaderName) + " | ");
-                participantCount.setText(challenge.memberCount+"");
+                leaderName.setText(getContext().getString(R.string.byLeader, challenge.leaderName));
+                participantCount.setText(String.valueOf(challenge.memberCount));
                 leaderParticipantLayout.setVisibility(View.VISIBLE);
                 arrowImage.setVisibility(View.GONE);
             }
@@ -161,7 +161,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                 //gem_prize_layout.setVisibility(View.GONE);
             } else {
                 //gem_prize_layout.setVisibility(View.VISIBLE);
-                gemPrizeTextView.setText(challenge.prize + "");
+                gemPrizeTextView.setText(String.valueOf(challenge.prize));
             }
         }
 

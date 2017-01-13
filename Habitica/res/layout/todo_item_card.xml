@@ -81,6 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/task_icon_calendar"
+                        android:drawableLeft="@drawable/task_icon_calendar"
                         android:textColor="@color/task_secondary_text"
                         android:visibility="invisible"
                         tools:visibility="visible"
@@ -91,6 +92,7 @@
                         android:layout_width="@dimen/task_icon_size"
                         android:layout_height="@dimen/task_icon_size"
                         android:layout_marginStart="@dimen/task_icon_space"
+                        android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/belongs_to_challenge"
                         app:srcCompat="@drawable/task_icon_challenge" />
 
@@ -99,6 +101,7 @@
                         android:layout_width="@dimen/task_icon_size"
                         android:layout_height="@dimen/task_icon_size"
                         android:layout_marginStart="@dimen/task_icon_space"
+                        android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_reminder"
                         app:srcCompat="@drawable/task_icon_reminder" />
 
@@ -107,6 +110,7 @@
                         android:layout_width="@dimen/task_icon_size"
                         android:layout_height="@dimen/task_icon_size"
                         android:layout_marginStart="@dimen/task_icon_space"
+                        android:layout_marginLeft="@dimen/task_icon_space"
                         android:contentDescription="@string/has_tag"
                         app:srcCompat="@drawable/task_icon_tag" />
                 </LinearLayout>
@@ -144,12 +148,6 @@
                     style="@style/Body3"
                     tools:text="13" />
             </LinearLayout>
-
-            <View
-                android:id="@+id/rightBorderView"
-                android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:gravity="center" />
         </LinearLayout>
 
         <View

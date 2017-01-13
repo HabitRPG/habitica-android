@@ -106,6 +106,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
+        if (!viewUserChallengesOnly) {
+            this.recyclerView.setBackgroundResource(R.color.white);
+        }
 
         fetchLocalChallenges();
         return v;

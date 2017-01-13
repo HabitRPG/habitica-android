@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="12dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
@@ -45,9 +45,9 @@
                 android:layout_gravity="center"
                 android:ellipsize="middle"
                 android:lines="1"
-                android:text="0"
+                tools:text="0"
                 android:textColor="@color/gem_icon_color"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -58,8 +58,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="6"
         android:orientation="vertical">
 
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            tools:text="Example Challenge Name" />
+            tools:text="Example Challenge Name that is very long" />
 
         <TextView
             android:id="@+id/challenge_group_name"
@@ -93,7 +93,13 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="1dp"
                 tools:text="by Leader" />
-
+            <View
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="1dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/text_light" />
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="20dp"
@@ -121,7 +127,8 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/layout_rounded_bg_official_challenge"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginRight="10dp">
 
                 <TextView
                     android:id="@+id/textView2"
@@ -138,7 +145,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="10dp"
                 android:background="@drawable/layout_rounded_bg_official_challenge"
                 android:gravity="center">
 
@@ -153,8 +159,6 @@
 
 
             </LinearLayout>
-
-
         </LinearLayout>
     </LinearLayout>
 
