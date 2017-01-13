@@ -23,8 +23,11 @@
   <string name="pref_reminder_header">Kasdienis Priminimas</string>
   <string name="pref_reminder_checkbox">Įjungti Priminimą</string>
   <string name="pref_reminder_picker">Nustatyti Priminimo Laiką</string>
+  <string name="pref_cds_header">Tinkinta dienos pradžia</string>
+  <string name="pref_cds_picker">Nustatyti tinkintą dienos pradžios laiką</string>
   <string name="pref_push_notifications_checkbox">Aktyvūs Vartotojo Pranešimai</string>
   <string name="push_notifications">Aktyvūs Pranšimai</string>
+  <string name="push_notifications_sum">Iškylančių pranešimų nustatymai</string>
   <string name="preference_push_you_won_challenge">Laimėjai Iššūkį!</string>
   <string name="preference_push_received_a_private_message">Gavai Privačią Žinutę</string>
   <string name="preference_push_gifted_gems">Padovanoti Brangakmeniai</string>
@@ -51,6 +54,7 @@
   <string name="confirmpassword">Patvirtinti slaptažodį</string>
   <string name="logout">Atsijungti</string>
   <string name="logout_description">Atsijungti nuo paskyros</string>
+  <string name="account_details_sum">Patikrinkite Jūsų paskyros detales</string>
   <string name="account_details">Paskyros Duomenys</string>
   <string name="LoginActivityName">Sveiki</string>
   <string name="string_revive">Prisikelti</string>
@@ -72,6 +76,7 @@
   <string name="login_validation_error_title">Patvirtinimo Klaida</string>
   <string name="login_validation_error_fieldsmissing">Turi užpildyti visus laukelius.</string>
   <string name="save_changes">Išsaugoti</string>
+  <string name="copy">Kopijuoti</string>
   <string name="notes">Užrašai</string>
   <string name="text">Tekstas</string>
   <string name="difficulty">Sunkumas</string>
@@ -134,7 +139,6 @@
   <string name="members">Nariai</string>
   <string name="habits">Įpročiai</string>
   <string name="dailies">Kasdienės</string>
-  <string name="todos">Vienkartinės</string>
   <string name="rewards">Atlygiai</string>
   <string name="taskform.delete.title">Ar esi įsitikinęs(us)?</string>
   <string name="taskform.delete.message">Ar tikrai nori ištrinti?</string>
@@ -177,6 +181,7 @@
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
   <string name="intro_1_title">Sveiki užsukę į Habitica</string>
+  <string name="intro_1_description" formatted="false">Prisijunkite prie virš %s žmonių smagiai atliekančių kasdienes užduotis. Susikurkite avatarą ir sekite savo realaus gyvenimo užduotis.</string>
   <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
   <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
   <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
@@ -302,8 +307,6 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="world_quest">Pasaulinė Misija</string>
   <string name="inn_description">Pailsėk Smuklėje, kad tavo nepabaigtos Kasdienės Užduotys nepadarytų tau žalos nakties metu! (Pastaba: pabaisos vistiek padarys tau žalos.)</string>
   <string name="empty_items" formatted="false">Nebeturi %s</string>
-  <string name="user_level" formatted="false">Lygis %s</string>
-  <string name="user_level_with_class" formatted="false">Lygis %1$s - %2$s</string>
   <string name="warrior">Karys</string>
   <string name="rogue">Sukčius</string>
   <string name="mage">Magas</string>
@@ -386,6 +389,7 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="all_dailies_completed">Atlikai visas savo dienos užduotis. Puiku!</string>
   <string name="widget_habit_button">Habitica Pažymėti Įprotį</string>
   <string name="widget_dailies">Habitica Kasdienės Užduotys</string>
+  <string name="widget_todo_list">Habitica užduočių sąrašas</string>
   <string name="widget_add_task">Habitica Prodėti Užduotį</string>
   <string name="google_services_missing">Nepavyko rasti Google play paslaugos.</string>
   <string name="gem.purchase.toolbartitle">Pirkti</string>
@@ -397,4 +401,12 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="gem.purchase.listitem4">Galimybė pakeisti savo klasę nepasiekus 100 lygio</string>
   <string name="support_habitica">Paremti Habitica</string>
   <string name="skill_transformation_use">naudoti</string>
+  <string name="hatching_market_info">Negaunate reikiamų lašiukų? Patikrinkite turguje!</string>
+  <string name="feeding_market_info">Reikia kitokio maisto? Nusipirkite daugiau iš turgaus!</string>
+  <string name="open_market">Atviras turgus</string>
+  <string name="cds_description" formatted="false">Jūsų kasdienės užduotys iš naujo nusistatys po %1$s. Įsitikinkite, kad atlikote savo kasdienes užduotis iki šio laiko.</string>
+  <string name="AudioTheme_title">Garsinė tema</string>
+  <string name="AudioTheme_summary">Pakeiskite Habitica garsinę temą</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Pasimatysime rytoj!</string>
 </resources>

@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Définir l\'heure personnalisée de début de journée</string>
   <string name="pref_push_notifications_checkbox">Notifications Push de l\'utilisateur</string>
   <string name="push_notifications">Notifications Push</string>
+  <string name="push_notifications_sum">Paramétrez vos notifications push</string>
   <string name="preference_push_you_won_challenge">Vous avez gagné un défi !</string>
   <string name="preference_push_received_a_private_message">Message privé reçu</string>
   <string name="preference_push_gifted_gems">Gemmes offertes</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Confirmez votre mot de passe</string>
   <string name="logout">Déconnexion</string>
   <string name="logout_description">Déconnexion de votre compte</string>
+  <string name="account_details_sum">Vérifiez les détails de votre compte</string>
   <string name="account_details">Détails du compte</string>
   <string name="LoginActivityName">Bienvenue</string>
   <string name="string_revive">Résurrection</string>
@@ -137,7 +139,6 @@
   <string name="members">Membres</string>
   <string name="habits">Habitudes</string>
   <string name="dailies">Tâches Quotidiennes</string>
-  <string name="todos">À faire</string>
   <string name="rewards">Récompenses</string>
   <string name="taskform.delete.title">Êtes-vous sûr·e ?</string>
   <string name="taskform.delete.message">Voulez-vous vraiment supprimer ceci ?</string>
@@ -306,8 +307,8 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="world_quest">Quête mondiale</string>
   <string name="inn_description">Reposez-vous à l\'auberge pour éviter les dégâts causés par les quotidiennes que vous n\'avez pas réalisées ! (Note : cela ne vous immunise pas contre les dégâts causés par les boss.)</string>
   <string name="empty_items" formatted="false">Vous n\'avez pas de %s</string>
-  <string name="user_level" formatted="false">Niveau %s</string>
-  <string name="user_level_with_class" formatted="false">Niveau %1$s - %2$s</string>
+  <string name="user_level" formatted="false">NIV %s</string>
+  <string name="user_level_with_class" formatted="false">NIV %1$s - %2$s</string>
   <string name="warrior">Guerrier</string>
   <string name="rogue">Voleur</string>
   <string name="mage">Mage</string>
@@ -320,6 +321,8 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="opt_out_class">Désactiver</string>
   <string name="opt_out_description">Les classes vous ennuient ? Vous voulez choisir plus tard ? Désactivez-les - vous serez un combattant sans capacités spéciales. Vous pouvez vous renseigner plus tard sur le système de classe sur le wiki et activer les classes à tout moment.</string>
   <string name="class_confirmation" formatted="false">Êtes vous sûr de vouloir devenir un %s?</string>
+  <string name="class_changed">Vous êtes maintenant un %s !</string>
+  <string name="class_changed_description">Vous avez une nouvelle tenue de combat par défaut que vous pouvez changer dans l\'équipement !</string>
   <string name="choose_class">Choisissez une classe</string>
   <string name="dialog_go_back">Revenir</string>
   <string name="opt_out_confirmation">Êtes-vous sûr-e de vouloir désactiver votre compte?</string>
@@ -343,7 +346,9 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="share_raised" formatted="false">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
+  <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>
   <string name="leaderMessage" formatted="false">Message de %1$s</string>
+  <string name="leaderName" formatted="false">Leader : %1$s</string>
   <string name="confirm">Confirmer</string>
   <string name="market">Marché</string>
   <string name="timeTravelers">Voyageurs temporels</string>
@@ -390,11 +395,12 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="all_dailies_completed">Vous avez accompli toutes vos tâches quotidiennes. Bravo !</string>
   <string name="widget_habit_button">Réaliser une tâche Habitica</string>
   <string name="widget_dailies">Quotidiennes Habitica</string>
+  <string name="widget_todo_list">Liste des tâches À faire Habitica</string>
   <string name="widget_add_task">Ajouter une tâche Habitica</string>
   <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
   <string name="gem.purchase.toolbartitle">Acheter</string>
   <string name="gem.purchase.title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
-  <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme:</string>
+  <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme :</string>
   <string name="gem.purchase.listitem1">Des costumes chouettes pour votre avatar</string>
   <string name="gem.purchase.listitem2">De magnifiques arrière-plans</string>
   <string name="gem.purchase.listitem3">Des quêtes qui vous récompensent avec des oeufs de familiers</string>
@@ -404,7 +410,12 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="hatching_market_info">Vous ne recevez pas le bon butin ? Allez voir au marché !</string>
   <string name="feeding_market_info">Besoin de plus de nourriture ? Achetez-en au marché !</string>
   <string name="open_market">Ouvrir le Marché</string>
-  <string name="cds_description" formatted="false">Vos quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
+  <string name="cds_description" formatted="false">Vos Quotidiennes se réinitialiseront la première fois que vous utiliserez Habitica après %1$s. Faites attention à les accomplir avant cette heure !</string>
   <string name="AudioTheme_title">Thème audio</string>
   <string name="AudioTheme_summary">Changer le thème audio d\'Habitica</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">A demain !</string>
+  <string name="belongs_to_challenge">Appartient au défi</string>
+  <string name="has_reminder">A un rappel</string>
+  <string name="has_tag">A une étiquette</string>
 </resources>

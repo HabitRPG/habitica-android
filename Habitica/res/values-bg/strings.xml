@@ -139,7 +139,6 @@
   <string name="members">Членове</string>
   <string name="habits">Навици</string>
   <string name="dailies">Ежедн.</string>
-  <string name="todos">Задачи</string>
   <string name="rewards">Награди</string>
   <string name="taskform.delete.title">Сигурен/на ли сте?</string>
   <string name="taskform.delete.message">Наистина ли искате да изтриете това?</string>
@@ -306,22 +305,24 @@
   <string name="sectionquestMounts">Превози от мисии</string>
   <string name="sectionspecialMounts">Редки превози</string>
   <string name="world_quest">Световна мисия</string>
-  <string name="inn_description">Починете в странноприемницата, за да не могат да Ви наранят неизпълнените Ви ежедневни задачи! (Забележка: това не Ви защитава от получаването на щети от главатари.)</string>
+  <string name="inn_description">Починете в странноприемницата, за да не Ви наранят неизпълнените ежедневни задачи! (Забележка: това не Ви защитава от получаването на щети от главатари.)</string>
   <string name="empty_items" formatted="false">Нямате %s</string>
   <string name="user_level" formatted="false">Ниво %s</string>
-  <string name="user_level_with_class" formatted="false">Ниво %1$s - %2$s</string>
+  <string name="user_level_with_class" formatted="false">Ниво %1$s — %2$s</string>
   <string name="warrior">Воин</string>
   <string name="rogue">Мошеник</string>
   <string name="mage">Магьосник</string>
   <string name="healer">Лечител</string>
   <string name="warrior_description">Воините нанасят повече и по-силни „критични удари“, които на случаен принцип дават злато, опит и шанс за падане на предмет при изпълнение на задача. Те също така нанасят сериозни щети на чудовищата-главатари. Играйте като воин, ако Ви мотивират изненадващите награди, или ако искате да раздавате правосъдие в мисиите с главатари.</string>
   <string name="mage_description">Магьосниците се учат лесно, тъй като придобиват опит и нива по-бързо от останалите класове. Те имат много мана за специалните си умения. Играйте като магьосник, ако обичате тактическите страни на навиците, или ако се мотивирате от вдигане на нива и отключване на специални функционалности!</string>
-  <string name="rogue_description">Мошениците обичат да трупат богатства, печелят повече злато повече от останалите и са майстори в намирането на случайни предмети. Отличителното им умение „Невидимост“ им позволява да избегнат последствията от пропуснати ежедневни задачи. Играйте като мошеник, ако Ви мотивират наградите и постиженията, и обичате плячката и значките!</string>
-  <string name="healer_description">Лечителите трудно могат да бъдат наранени, и разпростират защитата си върху останалите. Пропуснатите ежедневни задачи и лошите навици не ги смущават толкова много; те винаги могат да възстановят здравето си след провал. Играйте като лечител, ако обичате да помагате на останалите в групата си, или ако искате да изиграете смъртта чрез усърдна работа!</string>
+  <string name="rogue_description">Мошениците обичат да трупат богатства, печелят злато повече от останалите и са майстори в намирането на случайни предмети. Отличителното им умение „Невидимост“ позволява да избегнат последствията от пропуснати ежедневни задачи. Играйте като мошеник, ако Ви мотивират наградите и постиженията, и обичате плячката и значките!</string>
+  <string name="healer_description">Лечителите трудно могат да бъдат наранени и разпростират защитата си върху останалите. Пропуснатите ежедневни задачи и лошите навици не ги смущават толкова много; те винаги могат да възстановят здравето си след провал. Играйте като лечител, ако обичате да помагате на останалите в групата си или ако искате да изиграете смъртта чрез усърдна работа!</string>
   <string name="select_class">Изберете клас</string>
   <string name="opt_out_class">Отказване</string>
   <string name="opt_out_description">Не Ви се занимава с класове? Искате да изберете по-късно? Откажете се от тях — ще бъдете воин без специални умения. Можете да прочетете относно класовата система по-късно в уикито, както и да включите класовете когато пожелаете.</string>
   <string name="class_confirmation" formatted="false">Наистина ли искате да бъдете %s?</string>
+  <string name="class_changed">Вие вече сте %s!</string>
+  <string name="class_changed_description">Вече имате ново бойно снаряжение по подразбиране, което можете да намерите в „Екипировка“!</string>
   <string name="choose_class">Избиране на класа</string>
   <string name="dialog_go_back">Назад</string>
   <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
@@ -342,10 +343,12 @@
   <string name="share_using">Споделяне чрез</string>
   <string name="share_levelup" formatted="false">Достигнах ниво %s в Хабитика, като подобрих навиците си в истинския живот!</string>
   <string name="share_hatched" formatted="false">Току-що излюпих любимец — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
-  <string name="share_raised" formatted="false">Току-що се сдобих с превоз — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
+  <string name="share_raised" formatted="false">Току-що се сдобих с превоз — %1$s %2$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
   <string name="open_in_store">Отваряне в магазина</string>
   <string name="change_class_confirmation">Наистина ли искате да промените класа си? Това ще Ви струва 3 диаманта.</string>
+  <string name="change_class_equipment_warning">Внимание: Повече няма да можете да купувате екипировка за класа „%s“.</string>
   <string name="leaderMessage" formatted="false">Съобщение от %1$s</string>
+  <string name="leaderName" formatted="false">Водач: %1$s</string>
   <string name="confirm">Потвърждаване</string>
   <string name="market">Пазар</string>
   <string name="timeTravelers">Пътешественици във времето</string>
@@ -397,7 +400,7 @@
   <string name="google_services_missing">Услугите за „Google play“ не могат да бъдат намерени.</string>
   <string name="gem.purchase.toolbartitle">Купуване</string>
   <string name="gem.purchase.title">Купуването на диаманти подкрепя разработчиците и помага на Хабитика да продължи да съществува</string>
-  <string name="gem.purchase.subtitle">Диамантите Ви позволяват да закупувате забавни екстри за профила си, като:</string>
+  <string name="gem.purchase.subtitle">Диамантите Ви позволяват да закупувате забавни екстри за профила си като:</string>
   <string name="gem.purchase.listitem1">Страхотни костюми за героя Ви</string>
   <string name="gem.purchase.listitem2">Невероятни фонови изображения</string>
   <string name="gem.purchase.listitem3">Мисии, които Ви награждават с яйца за любимци</string>
@@ -410,4 +413,9 @@
   <string name="cds_description" formatted="false">Ежедневните Ви задачи ще се подновят при първия път, когато използвате Хабитика след %1$s. Уверете се, че сте изпълнили ежедневните си задачи преди това време!</string>
   <string name="AudioTheme_title">Звукова тема</string>
   <string name="AudioTheme_summary">Промяна на звуковата тема на Хабитика</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">До утре!</string>
+  <string name="belongs_to_challenge">Принадлежи на предизвикателство</string>
+  <string name="has_reminder">Има напомняне</string>
+  <string name="has_tag">Има етикет</string>
 </resources>

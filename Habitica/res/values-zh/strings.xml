@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">设置每天的起始时间（用于任务结算）</string>
   <string name="pref_push_notifications_checkbox">用户推送通知</string>
   <string name="push_notifications">推送通知</string>
+  <string name="push_notifications_sum">设置用户推送通知</string>
   <string name="preference_push_you_won_challenge">你赢得了一项挑战！</string>
   <string name="preference_push_received_a_private_message">收到一条私信</string>
   <string name="preference_push_gifted_gems">赠送的钻石</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">确认密码</string>
   <string name="logout">注销</string>
   <string name="logout_description">從你的帳號登出</string>
+  <string name="account_details_sum">账号信息</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
   <string name="string_revive">重生</string>
@@ -137,7 +139,6 @@
   <string name="members">成员</string>
   <string name="habits">习惯</string>
   <string name="dailies">每日任务</string>
-  <string name="todos">待办事项</string>
   <string name="rewards">奖励</string>
   <string name="taskform.delete.title">你确定吗？</string>
   <string name="taskform.delete.message">你确定要删除吗？</string>
@@ -306,8 +307,6 @@
   <string name="world_quest">世界任务</string>
   <string name="inn_description">在客栈休息让你未完成的每日任务不会伤害你！(注意：它不能阻止来自任务怪物的伤害。)</string>
   <string name="empty_items" formatted="false">你没有拥有任何的%s</string>
-  <string name="user_level" formatted="false">等级 %s</string>
-  <string name="user_level_with_class" formatted="false">等级 %1$s - %2$s</string>
   <string name="warrior">戰士</string>
   <string name="rogue">盜賊</string>
   <string name="mage">法師</string>
@@ -344,6 +343,7 @@
   <string name="open_in_store">在应用商店开放</string>
   <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
   <string name="leaderMessage" formatted="false">从%1$s来的消息</string>
+  <string name="leaderName" formatted="false">%1$s的会长</string>
   <string name="confirm">确认</string>
   <string name="market">市场</string>
   <string name="timeTravelers">时光旅行</string>
@@ -390,6 +390,7 @@
   <string name="all_dailies_completed">你完成了所有没有任务。干得漂亮！</string>
   <string name="widget_habit_button">Habitica完成习惯</string>
   <string name="widget_dailies">Habitica每日任务</string>
+  <string name="widget_todo_list">Habitica 待办事项</string>
   <string name="widget_add_task">Habitica增加任务</string>
   <string name="google_services_missing">没有找到Google play服务。</string>
   <string name="gem.purchase.toolbartitle">购买</string>
@@ -407,4 +408,9 @@
   <string name="cds_description" formatted="false">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
   <string name="AudioTheme_title">声音主题</string>
   <string name="AudioTheme_summary">更高 Habitica 的声音主题</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">明天再见！</string>
+  <string name="belongs_to_challenge">来自挑战</string>
+  <string name="has_reminder">有任务提示</string>
+  <string name="has_tag">有标签</string>
 </resources>

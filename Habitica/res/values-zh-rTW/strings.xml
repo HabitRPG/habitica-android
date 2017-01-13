@@ -12,18 +12,26 @@
   <string name="SP_userID_summary">你的用戶ID</string>
   <string name="SP_APIToken_title">API密碼</string>
   <string name="SP_APIToken_summary">你的API密碼</string>
+  <string name="Language_title">語言</string>
+  <string name="Language_summary">更改Habitica的語言</string>
   <string name="SP_user_qr_code">你的 QR 碼</string>
   <string name="PS_contact_title">聯絡我</string>
   <string name="unknown_error">發生了一個錯誤……</string>
   <string name="pref_account_header">帳號</string>
+  <string name="pref_first_day_of_the_week_title">每周的第一天</string>
+  <string name="pref_first_day_of_the_week_summary">所有日曆中第一周的第一天</string>
   <string name="pref_reminder_header">每日任務提醒</string>
   <string name="pref_reminder_checkbox">啟用提醒</string>
   <string name="pref_reminder_picker">設置提醒時間</string>
+  <string name="pref_cds_header">自定開始時間</string>
+  <string name="pref_cds_picker">設置自定開始時間</string>
   <string name="pref_push_notifications_checkbox">開啟推送通知</string>
   <string name="push_notifications">推送通知</string>
+  <string name="push_notifications_sum">設定你的推送通知設置</string>
   <string name="preference_push_you_won_challenge">你贏得了一個挑戰！</string>
   <string name="preference_push_received_a_private_message">你收到一則私人訊息</string>
   <string name="preference_push_invited_to_party">你受邀加入隊伍</string>
+  <string name="preference_push_invited_to_guild">你受邀請到公會</string>
   <string name="preference_push_your_quest_has_begun">你的任務開始了</string>
   <string name="preference_push_invited_to_quest">你受邀參加任務</string>
   <!--Adding tasks-->
@@ -44,6 +52,7 @@
   <string name="confirmpassword">確認密碼</string>
   <string name="logout">登出</string>
   <string name="logout_description">從你的帳號登出</string>
+  <string name="account_details_sum">檢查你的帳號信息</string>
   <string name="account_details">帳號信息</string>
   <string name="LoginActivityName">歡迎</string>
   <string name="string_revive">重生</string>
@@ -65,6 +74,7 @@
   <string name="login_validation_error_title">認可錯誤</string>
   <string name="login_validation_error_fieldsmissing">請填寫所有內容。</string>
   <string name="save_changes">保存</string>
+  <string name="copy">複製</string>
   <string name="notes">注釋</string>
   <string name="text">文字</string>
   <string name="difficulty">難度</string>
@@ -106,6 +116,7 @@
   <string name="profile_image">頭像</string>
   <string name="mana_price_button" formatted="false">%d MP</string>
   <string name="used_skill" formatted="false">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="used_skill_without_mana" formatted="false">你使用了 %1$s。</string>
   <string name="new_checklist_item">新增清單內容</string>
   <string name="add_checklist_item">添加</string>
   <string name="reminder_title">記得完成你的每日任務！</string>
@@ -126,7 +137,6 @@
   <string name="members">成員</string>
   <string name="habits">習慣</string>
   <string name="dailies">每日任務</string>
-  <string name="todos">待辦事項</string>
   <string name="rewards">獎勵</string>
   <string name="taskform.delete.title">你確定嗎？</string>
   <string name="taskform.delete.message">你確定要刪除嗎？</string>
@@ -229,6 +239,7 @@
   <string name="privacy">隱私</string>
   <string name="write_message">寫消息</string>
   <string name="post">公告</string>
+  <string name="guild_search_hint">搜尋公會</string>
   <string name="todo_due" formatted="false">到期：%s</string>
   <string name="daily_streak" formatted="false">目前連擊數：%d</string>
   <string name="todo_has_duedate">任務有截止日</string>
@@ -293,8 +304,6 @@
   <string name="world_quest">世界任務</string>
   <string name="inn_description">在客棧休息讓你未完成的每日任務不會傷害你！ (注意：它不能阻止來自任務怪物的傷害。)</string>
   <string name="empty_items" formatted="false">你沒有擁有任何的%s</string>
-  <string name="user_level" formatted="false">等級 %s</string>
-  <string name="user_level_with_class" formatted="false">等級 %1$s - %2$s</string>
   <string name="warrior">戰士</string>
   <string name="rogue">盜賊</string>
   <string name="mage">法師</string>
@@ -336,7 +345,57 @@
   <string name="timeTravelers">時光旅人</string>
   <string name="seasonalShop">季節限定商店</string>
   <string name="empty_inbox">你的收件匣裡面沒有任何信息。你可以利用聊天去傳送訊息給大家</string>
+  <string name="party_invite">解鎖 邀請朋友</string>
   <string name="no_gold">金幣不足</string>
   <string name="no_potion">你不需要購買治療藥水</string>
+  <string name="successful_purchase" formatted="false">成功購入 %1$s</string>
+  <string name="purchase_confirmation_title">確認購買</string>
+  <string name="confirm_purchase_text" formatted="false">購買 %1$s 用了 %2$s %3$s</string>
+  <string name="gem">寶石</string>
+  <string name="gold_singular">金幣</string>
+  <string name="gold_plural">金幣</string>
+  <string name="chat_message_copied">已複製到剪貼板的訊息</string>
+  <string name="copy_chat_message">複製到剪貼簿</string>
+  <string name="edit_tag_title">編輯標籤</string>
+  <string name="edit_tag_btn_edit">編輯</string>
+  <string name="edit_tag_btn_done">完成</string>
+  <string name="edit_tag_btn_delete">刪除</string>
+  <string name="confirm_delete_tag_title">你確定嗎？</string>
+  <string name="confirm_delete_tag_message">你確定要刪除嗎？</string>
+  <string name="filter_drawer_edit_tags">編輯標籤</string>
+  <string name="filter_drawer_filter_tags">過濾標籤</string>
   <!--QR Strings-->
+  <string name="qr_save_message">QR碼保存在</string>
+  <string name="qr_dialogue_title">你的QR碼</string>
+  <string name="download">下載</string>
+  <string name="send_new_message">發送一個新訊息</string>
+  <string name="choose_recipient_title">選擇訊息收件人</string>
+  <string name="action_continue">繼續</string>
+  <string name="scan_qr_code">掃描 QR碼</string>
+  <string name="enter_recipient_uuid">請輸入接受人的ID</string>
+  <string name="invited_to_party">你被邀請參加隊伍！</string>
+  <string name="stats_widget_label">開始 Habitica</string>
+  <string name="add_task">添加任務</string>
+  <string name="add_habit">添加習慣</string>
+  <string name="add_daily">添加每日任務</string>
+  <string name="add_todo">添加待辦事項</string>
+  <string name="add_reward">添加獎勵</string>
+  <string name="all_dailies_completed">你完成了所有每日任務。做得好！</string>
+  <string name="widget_habit_button">Habitica 做習慣</string>
+  <string name="widget_dailies">Habitica 每日任務</string>
+  <string name="widget_todo_list">Habitica 待辦事項列表</string>
+  <string name="widget_add_task">Habitica 添加獎勵</string>
+  <string name="google_services_missing">找不到 Google play 服務。</string>
+  <string name="gem.purchase.toolbartitle">支付</string>
+  <string name="gem.purchase.title">購買寶石會幫助開發者維持Habitica</string>
+  <string name="gem.purchase.listitem1">為你的角色穿上酷衣裝</string>
+  <string name="gem.purchase.listitem2">超讚的背景</string>
+  <string name="support_habitica">贊助Habitica</string>
+  <string name="skill_transformation_use">使用</string>
+  <string name="hatching_market_info">沒有得到想要的掉落物嗎？立刻查看市集！</string>
+  <string name="feeding_market_info">需要不一樣的食物嗎？到市集中購買更多食物！</string>
+  <string name="open_market">打開市集</string>
+  <string name="AudioTheme_title">聲音主題</string>
+  <string name="AudioTheme_summary">更改Habitica的聲音主題</string>
+  <!--Login Incentives-->
 </resources>

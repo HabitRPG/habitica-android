@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Establecer hora del comienzo del día personalizado</string>
   <string name="pref_push_notifications_checkbox">Notificaciones push del usuario</string>
   <string name="push_notifications">Notificaciones push</string>
+  <string name="push_notifications_sum">Establecer tu configuración de notificaciones push</string>
   <string name="preference_push_you_won_challenge">¡Has ganado un desafío!</string>
   <string name="preference_push_received_a_private_message">Has recibido un mensaje privado</string>
   <string name="preference_push_gifted_gems">Gemas regaladas</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Confirma la contraseña</string>
   <string name="logout">Cerrar sesión</string>
   <string name="logout_description">Cierra la sesión de tu cuenta</string>
+  <string name="account_details_sum">Revisa los detalles de tu cuenta.</string>
   <string name="account_details">Detalles de la cuenta</string>
   <string name="LoginActivityName">Te damos la bienvenida</string>
   <string name="string_revive">Revivir</string>
@@ -137,7 +139,6 @@
   <string name="members">Miembros</string>
   <string name="habits">Hábitos</string>
   <string name="dailies">Tareas diarias</string>
-  <string name="todos">Tareas</string>
   <string name="rewards">Recompensas</string>
   <string name="taskform.delete.title">¿Seguro?</string>
   <string name="taskform.delete.message">¿Seguro que quieres borrarlo?</string>
@@ -306,8 +307,6 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="world_quest">Misión mundial</string>
   <string name="inn_description">Descansa en la posada para que tus tareas diarias sin completar no te hagan daño por la noche. (Nota: No evita que el jefe te dañe).</string>
   <string name="empty_items" formatted="false">No tienes %s</string>
-  <string name="user_level" formatted="false">Nivel %s</string>
-  <string name="user_level_with_class" formatted="false">Nivel %1$s - %2$s</string>
   <string name="warrior">Guerrero</string>
   <string name="rogue">Pícaro</string>
   <string name="mage">Mago</string>
@@ -344,6 +343,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="open_in_store">Abrir en Play Store</string>
   <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
   <string name="leaderMessage" formatted="false">Mensaje de %1$s</string>
+  <string name="leaderName" formatted="false">Líder: %1$s</string>
   <string name="confirm">Confirmar</string>
   <string name="market">Mercado</string>
   <string name="timeTravelers">Viajeros del tiempo</string>
@@ -390,6 +390,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="all_dailies_completed">Ha completado todas las tareas diarias. ¡Buen trabajo!</string>
   <string name="widget_habit_button">Hábitos Habitica</string>
   <string name="widget_dailies">Tareas diarias Habitica</string>
+  <string name="widget_todo_list">Lista de Tareas de Habítica.</string>
   <string name="widget_add_task">Añade tareas Habitica</string>
   <string name="google_services_missing">Los servidores de Google Play no pueden ser encontrados.</string>
   <string name="gem.purchase.toolbartitle">Comprar</string>
@@ -407,4 +408,9 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="cds_description" formatted="false">Tus Tareas Diarias serán reiniciadas la próxima vez que uses Habitica por primera vez despues de %1$s. ¡Asegurate de completar todas tus Tareas Diarias antes de tiempo!</string>
   <string name="AudioTheme_title">Tema de audio</string>
   <string name="AudioTheme_summary">Cambiar el tema de audio de Habitica</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">¡Hasta mañana!</string>
+  <string name="belongs_to_challenge">Pertenece a un Desafío</string>
+  <string name="has_reminder">Tiene Recordatorio</string>
+  <string name="has_tag">Tiene Etiqueta</string>
 </resources>

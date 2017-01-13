@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Установить персональное начало суток</string>
   <string name="pref_push_notifications_checkbox">Push-уведомления пользователя</string>
   <string name="push_notifications">Push-уведомления</string>
+  <string name="push_notifications_sum">Настройте push-уведомления</string>
   <string name="preference_push_you_won_challenge">Вы прошли испытание!</string>
   <string name="preference_push_received_a_private_message">Получено Личное Сообщение</string>
   <string name="preference_push_gifted_gems">Подаренные самоцветы</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Подтвердите пароль</string>
   <string name="logout">Выйти</string>
   <string name="logout_description">Выйти из вашего аккаунта</string>
+  <string name="account_details_sum">Проверьте детали вашего аккаунта</string>
   <string name="account_details">Детали аккаунта</string>
   <string name="LoginActivityName">Добро пожаловать</string>
   <string name="string_revive">Воскресить</string>
@@ -137,7 +139,6 @@
   <string name="members">Участники</string>
   <string name="habits">Привычки</string>
   <string name="dailies">Ежедневные задания</string>
-  <string name="todos">Задачи</string>
   <string name="rewards">Награды</string>
   <string name="taskform.delete.title">Вы уверены?</string>
   <string name="taskform.delete.message">Вы уверены, что хотите удалить?</string>
@@ -344,13 +345,14 @@
   <string name="open_in_store">Откройте в Play маркет</string>
   <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 кристалла.</string>
   <string name="leaderMessage" formatted="false">Сообщение от %1$s</string>
+  <string name="leaderName" formatted="false">Предводитель: %1$s</string>
   <string name="confirm">Подтвердить</string>
   <string name="market">Магазин</string>
   <string name="timeTravelers">Путешественники во времени</string>
   <string name="seasonalShop">Сезонная Лавка</string>
   <string name="empty_inbox">У вас нет входящих сообщений. Вы можете отправить пользователю новое сообщение через публичный чат!</string>
   <string name="party_invite">Разблокировать, пригласив друзей</string>
-  <string name="no_gold">Не достаточно Золота</string>
+  <string name="no_gold">Недостаточно Золота</string>
   <string name="no_potion">Вам не нужно покупать зелье здоровья</string>
   <string name="successful_purchase" formatted="false">%1$s успешно куплен</string>
   <string name="purchase_confirmation_title">Подтвердите покупку</string>
@@ -390,6 +392,7 @@
   <string name="all_dailies_completed">Вы справились со всеми ежедневными заданиями. Так держать!</string>
   <string name="widget_habit_button">Привычки Habitica</string>
   <string name="widget_dailies">Ежедневные задания Habitica</string>
+  <string name="widget_todo_list">Список дел Habitica</string>
   <string name="widget_add_task">Добавить задачу Habitica</string>
   <string name="google_services_missing">Сервис Google play не найден.</string>
   <string name="gem.purchase.toolbartitle">Купить</string>
@@ -407,4 +410,9 @@
   <string name="cds_description" formatted="false">Ваши ежедневные задания будут обновлены после %1$s. Выполните их до этого времени!</string>
   <string name="AudioTheme_title">Аудио-тема</string>
   <string name="AudioTheme_summary">Выбрать аудио-тему Habitica</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">До завтра!</string>
+  <string name="belongs_to_challenge">Принадлежит Испытанию</string>
+  <string name="has_reminder">Есть напоминание</string>
+  <string name="has_tag">Отмечено тегом</string>
 </resources>

@@ -137,7 +137,6 @@
   <string name="members">Membros</string>
   <string name="habits">Hábitos</string>
   <string name="dailies">Tarefas Diárias</string>
-  <string name="todos">Tarefas</string>
   <string name="rewards">Recompensas</string>
   <string name="taskform.delete.title">Tem a certeza?</string>
   <string name="taskform.delete.message">Quer mesmo eliminar?</string>
@@ -306,8 +305,6 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="world_quest">Missão Mundial</string>
   <string name="inn_description">Descanse na Taverna para evitar que as Tarefas Diárias o magoem de um dia para o outro! (Nota: não evita que receba um dano do Chefe.) </string>
   <string name="empty_items" formatted="false">Não tem quaisquer %s</string>
-  <string name="user_level" formatted="false">Nível %s</string>
-  <string name="user_level_with_class" formatted="false">Nível %1$s - %2$s</string>
   <string name="warrior">Guerreiro</string>
   <string name="rogue">Bandido</string>
   <string name="mage">Mago</string>
@@ -407,4 +404,5 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="cds_description" formatted="false">As tuas Tarefas Diárias irão re-iniciar na próxima vez que visitares o Habitica após as%1$s. Não te esqueças de cumprir as tuas tarefas a tempo!</string>
   <string name="AudioTheme_title">Tema de Audio</string>
   <string name="AudioTheme_summary">Alterar o Tema de Audio do Habitica</string>
+  <!--Login Incentives-->
 </resources>

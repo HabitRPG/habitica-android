@@ -139,7 +139,6 @@
   <string name="members">Members</string>
   <string name="habits">Habits</string>
   <string name="dailies">Dailies</string>
-  <string name="todos">To-dos</string>
   <string name="rewards">Rewards</string>
   <string name="taskform.delete.title">Are you sure?</string>
   <string name="taskform.delete.message">Do you really want to delete?</string>
@@ -322,6 +321,8 @@ To start, which parts of your life do you want to improve?</string>
   <string name="opt_out_class">Opt Out</string>
   <string name="opt_out_description">Can\'t be bothered with classes? Want to choose later? Opt out - you\'ll be a warrior with no special abilities. You can read about the class system later on the wiki and enable classes at any time.</string>
   <string name="class_confirmation" formatted="false">Are you sure you want to be a %s?</string>
+  <string name="class_changed">You are now a %s!</string>
+  <string name="class_changed_description">You have new default Battle Gear that you can change under Equipment!</string>
   <string name="choose_class">Choose Class</string>
   <string name="dialog_go_back">Go Back</string>
   <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
@@ -345,7 +346,9 @@ To start, which parts of your life do you want to improve?</string>
   <string name="share_raised" formatted="false">I just gained a %1$s %2$s mount in Habitica by completing my real-life tasks!</string>
   <string name="open_in_store">Open in Play Store</string>
   <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
+  <string name="change_class_equipment_warning">Warning: You will no longer be able to buy equipment from the %s class.</string>
   <string name="leaderMessage" formatted="false">Message from %1$s</string>
+  <string name="leaderName" formatted="false">Leader: %1$s</string>
   <string name="confirm">Confirm</string>
   <string name="market">Market</string>
   <string name="timeTravelers">Time Travelers</string>
@@ -410,4 +413,9 @@ To start, which parts of your life do you want to improve?</string>
   <string name="cds_description" formatted="false">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
   <string name="AudioTheme_title">Audio Theme</string>
   <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">See you tomorrow!</string>
+  <string name="belongs_to_challenge">Belongs to Challenge</string>
+  <string name="has_reminder">Has Reminder</string>
+  <string name="has_tag">Has Tag</string>
 </resources>

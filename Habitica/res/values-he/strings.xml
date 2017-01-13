@@ -128,7 +128,6 @@
   <string name="members">חברים</string>
   <string name="habits">הרגלים</string>
   <string name="dailies">מטלות יומיות</string>
-  <string name="todos">מטרות</string>
   <string name="rewards">פרסים</string>
   <string name="taskform.delete.title">האם אתם בטוחים?</string>
   <string name="taskform.delete.message">האם אתם באמת רוצים למחוק?</string>
@@ -296,8 +295,6 @@
   <string name="world_quest">הרפתקאה עולמית</string>
   <string name="inn_description">נוחו באכסנייה כדי למנוע ממטלות יומיות לא מושלמות לפגוע בכם במהלך הלילה! (שימו לב: לא מונע מכם להפגע מאוייבים.)</string>
   <string name="empty_items" formatted="false">אין לכם כל %s</string>
-  <string name="user_level" formatted="false">דרגה %s</string>
-  <string name="user_level_with_class" formatted="false">דרגה %1$s - %2$s</string>
   <string name="warrior">לוחם</string>
   <string name="rogue">נוכל</string>
   <string name="mage">מכשף</string>
@@ -368,4 +365,5 @@
   <string name="choose_recipient_title">בחרו נמען להודעה</string>
   <string name="action_continue">המשך</string>
   <string name="scan_qr_code">סריקת קוד QR</string>
+  <!--Login Incentives-->
 </resources>

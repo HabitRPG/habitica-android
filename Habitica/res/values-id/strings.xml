@@ -137,7 +137,6 @@
   <string name="members">Anggota</string>
   <string name="habits">Kebiasaan</string>
   <string name="dailies">Keseharian</string>
-  <string name="todos">Tugas</string>
   <string name="rewards">Hadiah</string>
   <string name="taskform.delete.title">Apakah kamu yakin?</string>
   <string name="taskform.delete.message">Apakah kamu benar-benar ingin menghapus?</string>
@@ -306,8 +305,6 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="world_quest">Misi Dunia</string>
   <string name="inn_description">Beristirahat di dalam Penginapan untuk mencegah Keseharian yang belum selesai menyakitimu semalaman! (Catatan: tidak dapat mencegahmu mendapatkan serangan Bos Monster.)</string>
   <string name="empty_items" formatted="false">Kamu tidak memiliki %s</string>
-  <string name="user_level" formatted="false">LVL %s</string>
-  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
   <string name="warrior">Prajurit</string>
   <string name="rogue">Perampok</string>
   <string name="mage">Penyihir</string>
@@ -405,4 +402,5 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="feeding_market_info">Butuh makanan yang berbeda? Beli lebih dari pasar!</string>
   <string name="open_market">Buka Pasar</string>
   <string name="cds_description" formatted="false">Keseharianmu akan reset pada saat kamu membuka Habitica di atas %1$s. Pastikan kamu telah menyelesaikan Keseharianmu sebelum jam tersebut!</string>
+  <!--Login Incentives-->
 </resources>

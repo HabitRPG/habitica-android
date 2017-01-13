@@ -116,7 +116,6 @@
   <string name="members">Članovi</string>
   <string name="habits">Navike</string>
   <string name="dailies">Dailies</string>
-  <string name="todos">Todos</string>
   <string name="rewards">Nagrade </string>
   <string name="taskform.delete.title">Jeste li sigurni?</string>
   <string name="taskform.delete.message">Želite li stvarno izbrisati?</string>
@@ -283,8 +282,6 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="world_quest">Svjetski Pothvat</string>
   <string name="inn_description">Odmori se u Krčmi da spriječiš prekonoćnu ozljedu od neizvršenih Dailies-a! (Napomena: ne sprječava od primanja ozljeda od Šefova.)</string>
   <string name="empty_items" formatted="false">Nemaš %s</string>
-  <string name="user_level" formatted="false">LVL %s</string>
-  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
   <string name="warrior">Ratnik</string>
   <string name="rogue">Odmetnik</string>
   <string name="mage">Čarobnjak</string>
@@ -321,4 +318,5 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="open_in_store">Otvori u Trgovini Play</string>
   <string name="change_class_confirmation">Jeste li sigurni da želite promijeniti svoju Klasu? Ovo će te koštati 3 dragulja.</string>
   <!--QR Strings-->
+  <!--Login Incentives-->
 </resources>

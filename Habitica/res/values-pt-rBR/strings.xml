@@ -139,7 +139,6 @@
   <string name="members">Membros</string>
   <string name="habits">Hábitos</string>
   <string name="dailies">Diárias</string>
-  <string name="todos">A fazer</string>
   <string name="rewards">Recompensas</string>
   <string name="taskform.delete.title">Você tem certeza?</string>
   <string name="taskform.delete.message">Você realmente quer deletar?</string>
@@ -308,8 +307,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="world_quest">Missão Globais</string>
   <string name="inn_description">Descanse na Pousada para prevenir suas metas incompletas de lhe causarem dano de um dia para o outro! (Nota: Não lhe previne de receber dano dos montros)</string>
   <string name="empty_items" formatted="false">Você não tem nenhum %s</string>
-  <string name="user_level" formatted="false">Nível %s</string>
-  <string name="user_level_with_class" formatted="false">Nível %1$s - %2$s</string>
   <string name="warrior">Guerreiro</string>
   <string name="rogue">Andarilho</string>
   <string name="mage">Mago</string>
@@ -411,4 +408,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="cds_description" formatted="false">As suas tarefas diárias serão reiniciadas ao utilizar Habitica depois de %1$s. Certifique-se de que completou as suas tarefas diárias antes deste horário!</string>
   <string name="AudioTheme_title">Tema de áudio</string>
   <string name="AudioTheme_summary">Mudar o tema de áudio do Habitica</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Vejo você amanhã!</string>
 </resources>

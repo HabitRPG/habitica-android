@@ -31,8 +31,8 @@
   <string name="preference_push_you_won_challenge">Hai vinto una Sfida!</string>
   <string name="preference_push_received_a_private_message">Nuovo messaggio privato ricevuto</string>
   <string name="preference_push_gifted_gems">Gemme regalate</string>
-  <string name="preference_push_gifted_subscription">Abbonamento regalato</string>
-  <string name="preference_push_invited_to_party">Invito in una squadra</string>
+  <string name="preference_push_gifted_subscription">Abbonamento Regalato</string>
+  <string name="preference_push_invited_to_party">Invito in una Squadra</string>
   <string name="preference_push_invited_to_guild">Invito Gilda</string>
   <string name="preference_push_your_quest_has_begun">La tua Missione è cominciata</string>
   <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
@@ -139,7 +139,6 @@
   <string name="members">Membri</string>
   <string name="habits">Habit</string>
   <string name="dailies">Daily</string>
-  <string name="todos">To-do</string>
   <string name="rewards">Ricompense</string>
   <string name="taskform.delete.title">Sei sicuro?</string>
   <string name="taskform.delete.message">Vuoi davvero eliminare?</string>
@@ -207,7 +206,7 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="setup_task_work_1">Controlla le e-mail</string>
   <string name="setup_task_work_2">La cosa più importante da fare oggi</string>
   <string name="setup_task_work_3">Progetto di lavoro</string>
-  <string name="setup_task_exercise_1">10 min cardio</string>
+  <string name="setup_task_exercise_1">10 min di cardio</string>
   <string name="setup_task_exercise_2">Stretching</string>
   <string name="setup_task_exercise_3">Imposta una tabella per l\'allenamento</string>
   <string name="setup_task_healthWellness_1">Mangia cibo salutare</string>
@@ -308,8 +307,6 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="world_quest">World Quest</string>
   <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
   <string name="empty_items" formatted="false">Non hai alcun %s</string>
-  <string name="user_level" formatted="false">LIV. %s</string>
-  <string name="user_level_with_class" formatted="false">LIV. %1$s - %2$s</string>
   <string name="warrior">Guerriero</string>
   <string name="rogue">Assassino</string>
   <string name="mage">Mago</string>
@@ -323,6 +320,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="opt_out_class">Rinuncia</string>
   <string name="opt_out_description">Non ti vuoi preoccupare dellle classi? Vuoi scegliere dopo? Puoi essere un guerriero senza abilità speciali. Puoi leggere a proposito del sistema di classi più tardi nella Wiki ed abilitare le classi quando vuoi.</string>
   <string name="class_confirmation" formatted="false">Vuoi davvero essere un %s?</string>
+  <string name="class_changed">Ora sei un %s!</string>
   <string name="choose_class">Scegli classe</string>
   <string name="dialog_go_back">Ritorna</string>
   <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
@@ -346,7 +344,9 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="share_raised" formatted="false">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
+  <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
   <string name="leaderMessage" formatted="false">Messaggio da %1$s</string>
+  <string name="leaderName" formatted="false">Leader: %1$s</string>
   <string name="confirm">Conferma</string>
   <string name="market">Mercato</string>
   <string name="timeTravelers">Viaggiatori del Tempo</string>
@@ -407,7 +407,13 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="skill_transformation_use">usa</string>
   <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
   <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
+  <string name="open_market">Entra nel Mercato</string>
   <string name="cds_description" formatted="false">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
   <string name="AudioTheme_title">Tema sonoro</string>
   <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Ci vediamo domani!</string>
+  <string name="belongs_to_challenge">Appartiene alla Sfida</string>
+  <string name="has_reminder">Ha promemoria</string>
+  <string name="has_tag">Ha etichetta</string>
 </resources>

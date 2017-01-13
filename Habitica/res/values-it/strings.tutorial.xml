@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Completa le tue Habit (abitudini) positive per guadagnare oro ed esperienza! Le Habit negative danneggeranno il tuo avatar se le tocchi, quindi cerca di evitarle nella vita reale!</string>
-  <string name="tutorial_dailies">Sconfiggi i tuoi impegni giornalieri (Daily) per guadagnare oro ed esperienza. Pericolo! Le Daily danneggeranno il tuo avatar se non le completerai in tempo.</string>
+  <string name="tutorial_habits">Completa le tue Habit (abitudini) positive per guadagnare oro ed esperienza! Le abitudini negative danneggeranno il tuo avatar se le tocchi, quindi cerca di evitarle nella vita reale!</string>
+  <string name="tutorial_dailies">Sconfiggi i tuoi impegni giornalieri (Daily) per guadagnare oro ed esperienza. Attenzione! Le Daily danneggeranno il tuo avatar se non le completerai in tempo.</string>
   <string name="tutorial_todos">Completa i tuoi To-Do nella vita reale, poi spuntali per ottenere ORO ed ESPERIENZA in modo da poter comprare delle Ricompense e sbloccare nuove funzionalità di gioco!</string>
   <string name="tutorial_rewards">Queste sono le tue Ricompense! Guadagna oro completando le tue Daily, Habit e To-Do. Poi spendilo in Ricompense nel gioco o nella vita reale!</string>
   <string name="tutorial_equipment">Quando compri dell\'equipaggiamento, apparirà qui. Il tuo equipaggiamento di battaglia influisce sulle tue statistiche, e il tuo Costume (se attivato) cambia ciò che indossa il tuo avatar.</string>
   <string name="tutorial_items">Guadagnati degli oggetti completando attività e salendo di livello. Tocca un oggetto per usarlo!</string>
   <string name="tutorial_pets">Man mano che porti a termine attività nella vita reale, ora potrai trovare casualmente uova e pozioni. Combinali per far nascere degli animali!</string>
   <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà del Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
-  <string name="tutorial_party">Qui è dove tu e i tuoi amici potete spingervi ad impegnarvi  e combattere i mostri con le vostre attività!</string>
+  <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
   <string name="tutorial_tavern">Benvenuto nella Taverna, una chat pubblica per tutte le età! Qui puoi chiacchierare e fare delle domande. Divertiti!</string>
   <string name="tutorial_classes">Scegli di diventare un Guerriero, un Mago, un Guaritore o un Assassino! Ogni classe ha equipaggiamento ed abilità uniche. Tocca (?) per saperne di più!</string>
 </resources>

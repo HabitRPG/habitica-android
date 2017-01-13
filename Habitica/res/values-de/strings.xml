@@ -123,7 +123,7 @@
   <string name="add_checklist_item">Hinzufügen</string>
   <string name="reminder_title">Denke daran Deine täglichen Aufgaben abzuhaken!</string>
   <string name="skill_progress_title">Fertigkeiten benutzen</string>
-  <string name="coming_soon">demnächst</string>
+  <string name="coming_soon">demnächst verfügbar</string>
   <string name="chat_flag_confirmation">Möchtest Du diesen Beitrag wirklich melden?</string>
   <string name="flag_confirm">Verletzung der Community-Richtlinien melden</string>
   <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
@@ -139,7 +139,6 @@
   <string name="members">Mitglieder</string>
   <string name="habits">Gewohnheiten</string>
   <string name="dailies">Tägliche Aufgaben</string>
-  <string name="todos">To-Dos</string>
   <string name="rewards">Belohnungen</string>
   <string name="taskform.delete.title">Bist Du sicher?</string>
   <string name="taskform.delete.message">Wirklich löschen?</string>
@@ -220,7 +219,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="setup_task_teams_2">Team auf dem Laufenden halten</string>
   <string name="setup_task_teams_3">Team-Projekt abschließen</string>
   <string name="setup_task_chores_1">10 Minuten aufräumen</string>
-  <string name="setup_task_chores_2">Geschirr spülen</string>
+  <string name="setup_task_chores_2">Geschirr abwaschen</string>
   <string name="setup_task_chores_3">Schrank aufräumen</string>
   <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
   <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
@@ -277,7 +276,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="quests">Quests</string>
   <string name="pets">Haustiere</string>
   <string name="mounts">Reittiere</string>
-  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Juhu!</string>
+  <string name="armoireEquipment" formatted="false">Du hast einen seltenen Ausrüstungsgegenstand im Schrank gefunden: %s! Großartig!</string>
   <string name="armoireFood" formatted="false">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
   <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
   <string name="armoireNotesFull" formatted="false">Öffne den Schrank um zufällig spezielle Gegenstände, Erfahrung oder Nahrung zu erhalten! Verbleibende Ausrüstungsgegenstände: %d</string>
@@ -308,8 +307,6 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="world_quest">Weltenquest</string>
   <string name="inn_description">Ruhe Dich im Gasthaus aus damit Deine täglichen Aufgaben Dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
   <string name="empty_items" formatted="false">Du hast kein/e %s</string>
-  <string name="user_level" formatted="false">Lvl %s</string>
-  <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
   <string name="warrior">Krieger</string>
   <string name="rogue">Schurke</string>
   <string name="mage">Magier</string>
@@ -322,6 +319,8 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="opt_out_class">Später entscheiden</string>
   <string name="opt_out_description">Du willst keine Klasse oder möchtest Dich später entscheiden? Entscheide Dich später und werde zunächst ein Krieger ohne Spezialfähigkeiten. Du kannst später im Wiki etwas über das Klassensystem lesen und Deine Klasse jederzeit aktivieren.</string>
   <string name="class_confirmation" formatted="false">Bist Du sicher, dass Du %s werden willst?</string>
+  <string name="class_changed">Du bist jetzt ein/eine %s!</string>
+  <string name="class_changed_description">Du hast neue Basis-Kampfausrüstung, die Du im Ausrüstungsreiter wechseln kannst!</string>
   <string name="choose_class">Klasse wählen</string>
   <string name="dialog_go_back">Zurück</string>
   <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
@@ -345,7 +344,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="share_raised" formatted="false">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Reittier in Habitica erhalten!</string>
   <string name="open_in_store">Im Play Store öffnen</string>
   <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
+  <string name="change_class_equipment_warning">Warnung: Du wirst nicht mehr Ausrüstung für die %s Klasse kaufen können.</string>
   <string name="leaderMessage" formatted="false">Nachricht von %1$s</string>
+  <string name="leaderName" formatted="false">Führender: %1$s</string>
   <string name="confirm">Bestätigen</string>
   <string name="market">Marktplatz</string>
   <string name="timeTravelers">Mysteriöse Zeitreisende</string>
@@ -384,14 +385,15 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="enter_recipient_uuid">ID des Empfängers eingeben</string>
   <string name="invited_to_party">Du wurdest in eine Gruppe eingeladen!</string>
   <string name="stats_widget_label">Habitica: Avatar</string>
-  <string name="add_task">Neue Aufgabe</string>
-  <string name="add_habit">Neue Gewohnheit</string>
-  <string name="add_daily">Neue Tägliche Aufgabe</string>
-  <string name="add_todo">Neue To-Do</string>
-  <string name="add_reward">Neue Belohnung</string>
+  <string name="add_task">Neue Aufgabe hinzufügen</string>
+  <string name="add_habit">Neue Gewohnheit hinzufügen</string>
+  <string name="add_daily">Neue Tägliche Aufgabe hinzufügen</string>
+  <string name="add_todo">Neue To-Do hinzufügen</string>
+  <string name="add_reward">Neue Belohnung hinzufügen</string>
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
   <string name="widget_habit_button">Habitica: Gewohnheit</string>
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
+  <string name="widget_todo_list">Habitica-To-Do-Liste</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
   <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
   <string name="gem.purchase.toolbartitle">Kaufen</string>
@@ -409,4 +411,9 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="cds_description" formatted="false">Deine Täglichen Aufgaben werden zurückgesetzt, wenn Du Dich nach %1$s einloggst. Stelle sicher, dass Du vorher alle Deine Täglichen Aufgaben erledigt hast!</string>
   <string name="AudioTheme_title">Hintergrundmusik</string>
   <string name="AudioTheme_summary">Ändere Habiticas Hintergrundmusik</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Bis morgen!</string>
+  <string name="belongs_to_challenge">Gehört zum Wettbewerb</string>
+  <string name="has_reminder">Hat eine Benachrichtigung</string>
+  <string name="has_tag">Hat einen Tag</string>
 </resources>
