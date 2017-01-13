@@ -94,8 +94,8 @@
                 android:layout_marginTop="1dp"
                 tools:text="by Leader" />
             <View
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_width="1dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
@@ -103,8 +103,6 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:src="@drawable/dialogue_participants" />
 
             <TextView

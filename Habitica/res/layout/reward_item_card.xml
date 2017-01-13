@@ -68,8 +68,7 @@
             android:paddingEnd="12dp"
             android:textColor="@color/white"
             tools:text="150"
-            android:textSize="15sp">
-            </Button>
+            android:textSize="15sp" />
     </LinearLayout>
 
     <View
