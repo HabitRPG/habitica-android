@@ -103,7 +103,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         avatarView.setUser(user);
 
         if (stats.get_class() != null) {
-            userClass += stats.getCleanedClassName();
+            userClass = stats.getCleanedClassName(context);
         }
 
         mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
