@@ -49,7 +49,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         Observable<ArrayList<Challenge>> getUserChallengesObservable = this.apiHelper.apiService.getUserChallenges()
                 .compose(apiHelper.configureApiCallObserver());
 
-
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
         userChallengesFragment.setRefreshingCallback(getUserChallengesObservable::repeat);

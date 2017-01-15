@@ -42,13 +42,6 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private boolean viewUserChallengesOnly;
     private Action0 refreshCallback;
 
-    @Override
-    public void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-
-        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly);
-    }
-
     public void setViewUserChallengesOnly(boolean only) {
         this.viewUserChallengesOnly = only;
     }
@@ -103,6 +96,11 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_challengeslist, container, false);
         unbinder = ButterKnife.bind(this, v);
+
+        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshEmptyLayout.setOnRefreshListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
