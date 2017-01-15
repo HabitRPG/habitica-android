@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 
@@ -67,6 +69,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         gemsText.setClickable(true);
         gemsText.setOnClickListener(this);
+
+        avatarView.setClickable(true);
+        avatarView.setOnClickListener(this);
     }
 
     public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
@@ -186,9 +191,17 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        // Gems Clicked
+        if(view == gemsText) {
+            // Gems Clicked
 
-        EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+            EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
+        }
+        else {
+            // Avatar overview
+            OpenMenuItemCommand event = new OpenMenuItemCommand();
+            event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;
+            EventBus.getDefault().post(event);
+        }
     }
 
     public void hideGems() {
