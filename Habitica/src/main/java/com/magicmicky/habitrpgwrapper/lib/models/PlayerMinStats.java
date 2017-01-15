@@ -1,7 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.google.gson.annotations.SerializedName;
 
