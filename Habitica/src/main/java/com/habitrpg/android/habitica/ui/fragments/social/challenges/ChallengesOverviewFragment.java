@@ -141,9 +141,11 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
 
         ChallegeDetailDialogHolder.showDialog(HabiticaApplication.currentActivity, apiHelper, user, challenge, challenge1 ->  {
+            // challenge joined
             userChallengesFragment.addItem(challenge1);
             availableChallengesFragment.updateItem(challenge1);
         }, challenge1 -> {
+            // challenge left
             userChallengesFragment.onRefresh();
             availableChallengesFragment.onRefresh();
         });

@@ -134,7 +134,8 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     private void fetchLocalChallenges() {
-        swipeRefreshLayout.setRefreshing(true);
+        setRefreshingIfVisible(swipeRefreshLayout, true);
+
         Where<Challenge> query = new Select().from(Challenge.class).where(Condition.column("name").isNotNull());
 
         if (viewUserChallengesOnly) {
@@ -146,6 +147,8 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         if (challenges.size() != 0) {
             setChallengeEntries(challenges);
         }
+
+        setRefreshingIfVisible(swipeRefreshLayout, false);
 
         // load online challenges & save to database
         onRefresh();
