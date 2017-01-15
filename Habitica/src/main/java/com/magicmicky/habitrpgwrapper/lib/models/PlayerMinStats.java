@@ -78,7 +78,7 @@ public abstract class PlayerMinStats extends BasicStats {
         this._class = _class;
     }
 
-    public String getCleanedClassName(Context context) {
+    public String getTranslatedClassName(Context context) {
         switch(_class){
 	        case healer:
 		        return context.getString(R.string.healer);

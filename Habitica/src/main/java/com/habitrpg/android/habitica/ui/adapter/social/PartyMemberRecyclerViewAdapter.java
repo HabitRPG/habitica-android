@@ -102,7 +102,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 
-            classLabel.setText(user.getStats().getCleanedClassName(context));
+            classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
             switch (user.getStats()._class) {
