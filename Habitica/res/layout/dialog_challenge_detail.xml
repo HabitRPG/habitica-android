@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    app:maxHeightMultiplier="0.8">
+    app:maxHeightMultiplier="0.7">
 
     <LinearLayout
         android:id="@+id/challenge_not_joined_header"
