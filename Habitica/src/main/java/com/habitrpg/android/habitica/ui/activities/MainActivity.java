@@ -788,7 +788,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void updateHeader() {
         updateUserAvatars();
-        setTitle(user.getProfile().getName());
+        setUserTitle();
 
         android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
 
@@ -866,12 +866,16 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             // BUG: setTitle not changed the title, just switched the length of "username"
             //setTitle(fragment.customTitle());
         } else {
-            if (user.getProfile() != null) {
-                setTitle(user.getProfile().getName());
-            }
+            setUserTitle();
         }
 
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
+    }
+
+    private void setUserTitle(){
+        if(user != null && user.getProfile() != null){
+            setTitle(user.getProfile().getName());
+        }
     }
 
     public void onBackPressed() {
