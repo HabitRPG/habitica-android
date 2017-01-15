@@ -171,7 +171,7 @@ public class ChallegeDetailDialogHolder {
             plusImg.setVisibility(View.VISIBLE);
             minusImg.setVisibility(View.VISIBLE);
 
-            habitTitle.setText(task.text);
+            habitTitle.setText(EmojiParser.parseEmojis(task.text));
 
             tasks_layout.addView(habitEntry);
         }
@@ -193,7 +193,7 @@ public class ChallegeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, null);
             TextView title = (TextView) entry.findViewById(R.id.daily_title);
-            title.setText(task.text);
+            title.setText(EmojiParser.parseEmojis(task.text));
 
             if(task.checklist != null && !task.checklist.isEmpty()){
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
@@ -224,7 +224,7 @@ public class ChallegeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, null);
             TextView title = (TextView) entry.findViewById(R.id.todo_title);
-            title.setText(task.text);
+            title.setText(EmojiParser.parseEmojis(task.text));
 
             tasks_layout.addView(entry);
 
@@ -255,7 +255,7 @@ public class ChallegeDetailDialogHolder {
 
             View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, null);
             TextView title = (TextView) entry.findViewById(R.id.reward_title);
-            title.setText(task.text);
+            title.setText(EmojiParser.parseEmojis(task.text));
 
             tasks_layout.addView(entry);
         }
