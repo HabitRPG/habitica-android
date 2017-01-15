@@ -104,7 +104,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
                         .subscribe(task2 -> {
                             this.titleTextView.setText(this.task.parsedText);
                             this.notesTextView.setText(this.task.parsedNotes);
-                        });
+                        }, Throwable::printStackTrace);
             }
         } else {
             this.titleTextView.setText(this.task.getText());

@@ -221,9 +221,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                             if (apiHelper != null){
                                 apiHelper.apiService.postTaskNewPosition(task.getId(), String.valueOf(to))
                                         .compose(apiHelper.configureApiCallObserver())
-                                        .subscribe(aVoid -> {
-                                    new HabitRPGUserCallback(activity);
-                                });
+                                        .subscribe(aVoid -> {}, e -> {});
                             }
                         };
 
