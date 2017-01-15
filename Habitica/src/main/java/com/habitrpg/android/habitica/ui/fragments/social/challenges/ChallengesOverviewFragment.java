@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import rx.Observable;
+import rx.subjects.AsyncSubject;
+import rx.subjects.PublishSubject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
@@ -34,6 +36,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     private Stack<Integer> pageHistory;
     private boolean saveToHistory;
     int currentPage;
+    private PublishSubject<ArrayList<Challenge>> getUserChallengesObservable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,24 +49,35 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
 
         setViewPagerAdapter();
 
-        Observable<ArrayList<Challenge>> getUserChallengesObservable = this.apiHelper.apiService.getUserChallenges()
-                .compose(apiHelper.configureApiCallObserver());
+        getUserChallengesObservable = PublishSubject.create();
+
+        subscribeGetChallenges();
 
         userChallengesFragment = new ChallengeListFragment();
         userChallengesFragment.setUser(this.user);
-        userChallengesFragment.setRefreshingCallback(getUserChallengesObservable::repeat);
+        userChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
         userChallengesFragment.setObservable(getUserChallengesObservable);
         userChallengesFragment.setViewUserChallengesOnly(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);
-        availableChallengesFragment.setRefreshingCallback(getUserChallengesObservable::repeat);
+        availableChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
         availableChallengesFragment.setObservable(getUserChallengesObservable);
         availableChallengesFragment.setViewUserChallengesOnly(false);
 
         pageHistory = new Stack<>();
 
         return v;
+    }
+
+    private void subscribeGetChallenges(){
+        this.apiHelper.apiService.getUserChallenges()
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(challenges -> {
+                    getUserChallengesObservable.onNext(challenges);
+                }, e -> {
+                    getUserChallengesObservable.onError(e);
+                });
     }
 
     @Override
