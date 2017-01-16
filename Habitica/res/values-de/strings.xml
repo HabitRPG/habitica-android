@@ -139,6 +139,7 @@
   <string name="members">Mitglieder</string>
   <string name="habits">Gewohnheiten</string>
   <string name="dailies">Tägliche Aufgaben</string>
+  <string name="todos">To-Dos</string>
   <string name="rewards">Belohnungen</string>
   <string name="taskform.delete.title">Bist Du sicher?</string>
   <string name="taskform.delete.message">Wirklich löschen?</string>
@@ -416,4 +417,22 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="belongs_to_challenge">Gehört zum Wettbewerb</string>
   <string name="has_reminder">Hat eine Benachrichtigung</string>
   <string name="has_tag">Hat einen Tag</string>
+  <string name="byLeader" formatted="false">von %s</string>
+  <string name="challenge_details">Wettbewerb Details</string>
+  <string name="challenge_leave_title">Bist Du Dir sicher?</string>
+  <string name="challenge_leave_text">Bist Du Dir sicher, dass du den Wettbewerb \"%s\" verlassen willst?</string>
+  <string name="my_challenges">Meine Wettbewerbe</string>
+  <string name="public_challenges">Öffentlich</string>
+  <string name="challenges">Wettbewerbe</string>
+  <string name="daily">Tägliche Aufgabe</string>
+  <string name="habit">Gewohnheit</string>
+  <string name="reward">Belohnung</string>
+  <string name="todo">To-Do</string>
+  <string name="official">Offiziell</string>
+  <string name="challenge">Wettbewerb</string>
+  <string name="go_to_challenge">Gehe zu Wettbewerb</string>
+  <string name="not_part_of_a_challenge">Du nimmst im Moment an keinen Wettbewerben teil!</string>
+  <string name="join_a_challenge">Trete einem Wettbewerb bei, um ein ausgewähltes Set von Aufgaben zu deiner Liste hinzuzufügen. Trete dann gegen andere Habitica-Mitglieder an, um Erfolge und sogar Edelsteine zu gewinnen!</string>
+  <string name="check_the_public_challenge_tab">Drücke auf den \"Öffentlich\"-Tab, um die von Mitgliedern erstellten Wettbewerbe zu finden, die am besten zu Dir passen!</string>
+  <string name="add_reminder">Erinnerung hinzufügen</string>
 </resources>

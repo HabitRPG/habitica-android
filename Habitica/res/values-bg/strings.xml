@@ -139,6 +139,7 @@
   <string name="members">Членове</string>
   <string name="habits">Навици</string>
   <string name="dailies">Ежедн.</string>
+  <string name="todos">Задачи</string>
   <string name="rewards">Награди</string>
   <string name="taskform.delete.title">Сигурен/на ли сте?</string>
   <string name="taskform.delete.message">Наистина ли искате да изтриете това?</string>
@@ -418,4 +419,23 @@
   <string name="belongs_to_challenge">Принадлежи на предизвикателство</string>
   <string name="has_reminder">Има напомняне</string>
   <string name="has_tag">Има етикет</string>
+  <string name="byLeader" formatted="false">от %s</string>
+  <string name="challenge_details">Подр. за предизвикателството</string>
+  <string name="challenge_leave_title">Сигурен/на ли сте?</string>
+  <string name="challenge_leave_text">Наистина ли искате да напуснете предизвикателството „%s“?</string>
+  <string name="my_challenges">Моите предизвикателства</string>
+  <string name="public_challenges">Обществени</string>
+  <string name="challenges">Предизвикателства</string>
+  <string name="daily">Ежедневно</string>
+  <string name="habit">Навик</string>
+  <string name="reward">Награда</string>
+  <string name="todo">Задача</string>
+  <string name="official">Официално</string>
+  <string name="participating">Участващи</string>
+  <string name="challenge">Предизвикателство</string>
+  <string name="go_to_challenge">Към предизвикателството</string>
+  <string name="not_part_of_a_challenge">В момента не участвате в предизвикателство!</string>
+  <string name="join_a_challenge">Включете се в предизвикателство, така ще добавите списък от подбрани задачи към списъка си. След това се състезавайте с останалите хабитиканци, за да печелите постижения и дори диаманти!</string>
+  <string name="check_the_public_challenge_tab">Докоснете раздела „Обществени“, там ще откриете предизвикателствата, създадени от потребителите и ще можете да изберете най-подходящото за себе си!</string>
+  <string name="add_reminder">Добавяне на напомняне</string>
 </resources>
