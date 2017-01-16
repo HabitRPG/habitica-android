@@ -17,7 +17,7 @@
             android:id="@+id/avatarView"
             android:layout_width="140dp"
             android:layout_height="147dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="12dp"
             app:showBackground="true"
             app:showMount="true"
             app:showPet="true" />
