@@ -41,7 +41,11 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.up) {
             this.btnPlusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
+            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+                this.btnPlusIconView.setImageResource(R.drawable.habit_plus_yellow);
+            } else {
+                this.btnPlusIconView.setImageResource(R.drawable.habit_plus);
+            }
             this.btnPlus.setVisibility(View.VISIBLE);
             this.btnPlus.setClickable(true);
         } else {
@@ -53,7 +57,11 @@ public class HabitViewHolder extends BaseTaskViewHolder {
 
         if (this.task.down) {
             this.btnMinusWrapper.setBackgroundResource(this.task.getLightTaskColor());
-            this.btnMinusIconView.setImageResource(R.drawable.habit_minus);
+            if (this.task.getLightTaskColor() == R.color.neutral_100) {
+                this.btnMinusIconView.setImageResource(R.drawable.habit_minus_yellow);
+            } else {
+                this.btnMinusIconView.setImageResource(R.drawable.habit_minus);
+            }
             this.btnMinus.setVisibility(View.VISIBLE);
             this.btnMinus.setClickable(true);
         } else {
