@@ -11,9 +11,9 @@
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
-    <color name="worst_100">#a13f44</color>
-    <color name="worst_50">#a1334d</color>
-    <color name="worst_10">#a10013</color>
+    <color name="worst_100">#DE3F3F</color>
+    <color name="worst_50">#C92B2B</color>
+    <color name="worst_10">#B01515</color>
 
     <color name="worse_100">#FF6165</color>
     <color name="worse_50">#F74E52</color>
@@ -27,13 +27,13 @@
     <color name="neutral_50">#FFB445</color>
     <color name="neutral_10">#FFA624</color>
 
-    <color name="good_100">#69D59A</color>
-    <color name="good_50">#50C987</color>
-    <color name="good_10">#36B971</color>
+    <color name="good_100">#24CC8F</color>
+    <color name="good_50">#20B780</color>
+    <color name="good_10">#1CA372</color>
 
-    <color name="better_100">#5AE4B2</color>
-    <color name="better_50">#3FDAA2</color>
-    <color name="better_10">#23CC8F</color>
+    <color name="better_100">#3BCAD7</color>
+    <color name="better_50">#34B5C1</color>
+    <color name="better_10">#26A0AB</color>
 
     <color name="best_100">#50B5E9</color>
     <color name="best_50">#46A7D9</color>
