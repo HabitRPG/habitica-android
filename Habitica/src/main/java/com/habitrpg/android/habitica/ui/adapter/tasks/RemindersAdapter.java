@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
 
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by keithholliday on 5/31/16.
  */
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ItemViewHolder>
-        implements ItemTouchHelperAdapter {
+        implements ItemTouchHelperAdapter, RemindersManager.ReminderTimeSelectedCallback {
 
     private final List<RemindersItem> reminders = new ArrayList<>();
     private final String taskType;
@@ -82,7 +83,21 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder implements
+    @Override
+    public void onReminderTimeSelected(@Nullable RemindersItem remindersItem) {
+        if (remindersItem == null) {
+            return;
+        }
+        for (int pos = 0; pos < reminders.size(); pos++) {
+            if (remindersItem.getId().equals(reminders.get(pos).getId())) {
+                reminders.set(pos, remindersItem);
+                notifyItemChanged(pos);
+                break;
+            }
+        }
+    }
+
+    class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
         @BindView(R.id.item_edittext)
@@ -93,7 +108,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
 
         int hour, minute;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             deleteButton.setOnClickListener(this);
@@ -101,7 +116,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
             reminderItemTextView.setOnClickListener(v -> {
                 RemindersItem reminder = reminders.get(getAdapterPosition());
 
-                remindersManager.createReminderTimeDialog(null, taskType, v.getContext(), reminder);
+                remindersManager.createReminderTimeDialog(RemindersAdapter.this, taskType, v.getContext(), reminder);
             });
         }
 

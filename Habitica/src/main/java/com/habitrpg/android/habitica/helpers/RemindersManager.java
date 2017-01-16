@@ -33,9 +33,9 @@ public class RemindersManager {
     public RemindersManager(String taskType) {
         HabiticaBaseApplication.getComponent().inject(this);
         if (taskType.equals("todo")) {
-            dateFormater = DateFormat.getDateTimeInstance();
+            dateFormater = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         } else {
-            dateFormater = DateFormat.getTimeInstance();
+            dateFormater = DateFormat.getTimeInstance(DateFormat.SHORT);
         }
     }
 
