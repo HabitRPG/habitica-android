@@ -50,7 +50,7 @@ public class TaskReceiver extends BroadcastReceiver {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_gryphon)
+                .setSmallIcon(R.drawable.ic_gryphon_white)
                 .setContentTitle(taskTitle)
                 .setContentText(taskTitle)
                 .setSound(soundUri)

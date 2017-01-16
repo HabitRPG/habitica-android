@@ -65,7 +65,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(context.getString(R.string.reminder_title));
-        builder.setSmallIcon(R.drawable.ic_gryphon);
+        builder.setSmallIcon(R.drawable.ic_gryphon_white);
         Intent notificationIntent = new Intent(context, MainActivity.class);
 
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

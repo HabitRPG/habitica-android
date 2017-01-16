@@ -32,7 +32,7 @@ public abstract class HabiticaLocalNotification {
 
         this.notificationBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_gryphon)
+                        .setSmallIcon(R.drawable.ic_gryphon_white)
                         .setContentTitle(title)
                         .setContentText(message)
                         .setAutoCancel(true)
