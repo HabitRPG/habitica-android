@@ -121,6 +121,12 @@
         <item name="android:letterSpacing" tools:targetApi="lollipop">0.03</item>
     </style>
 
+    <style name="Caption2.Regular">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_regular
+        </item>
+    </style>
+
     <style name="Caption3">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_regular
