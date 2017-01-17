@@ -56,7 +56,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
                     List<Challenge> userChallenges = this.user.getChallengeList();
 
-                    HashSet<String> userChallengesHash = new HashSet<String>();
+                    HashSet<String> userChallengesHash = new HashSet<>();
 
                     for (Challenge userChallenge : userChallenges) {
                         userChallengesHash.add(userChallenge.id);

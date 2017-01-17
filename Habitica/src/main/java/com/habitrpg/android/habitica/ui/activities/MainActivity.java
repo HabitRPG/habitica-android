@@ -321,6 +321,24 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             activeFragment = null;
             drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
         }
+
+        if (isAlwaysFinishActivitiesOptionEnabled()) {
+            if (!sharedPreferences.getBoolean("showedFinishActivitiesWarning", false)) {
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(getString(R.string.warning))
+                        .setMessage(R.string.dont_keep_activities_warning)
+                        .setNeutralButton(R.string.close, (warningDialog, which) -> {
+                            warningDialog.dismiss();
+                        })
+                        .setPositiveButton(R.string.open_settings, (hatchingDialog, which) -> {
+                            showDeveloperOptionsScreen();
+                            hatchingDialog.dismiss();
+                        })
+                        .create();
+                dialog.show();
+                sharedPreferences.edit().putBoolean("showedFinishActivitiesWarning", true).apply();
+            }
+        }
     }
 
     @Override

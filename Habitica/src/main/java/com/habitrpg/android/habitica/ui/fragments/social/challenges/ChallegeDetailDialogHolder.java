@@ -310,23 +310,21 @@ public class ChallegeDetailDialogHolder {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.challenge_leave_title))
                 .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
-                .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> {
-                    this.apiHelper.apiService.leaveChallenge(challenge.id)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(aVoid -> {
-                                challenge.user_id = null;
-                                challenge.async().save();
+                .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> this.apiHelper.apiService.leaveChallenge(challenge.id)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(aVoid -> {
+                            challenge.user_id = null;
+                            challenge.async().save();
 
-                                this.user.resetChallengeList();
+                            this.user.resetChallengeList();
 
-                                if (challengeLeftAction != null) {
-                                    challengeLeftAction.call(challenge);
-                                }
+                            if (challengeLeftAction != null) {
+                                challengeLeftAction.call(challenge);
+                            }
 
-                                this.dialog.dismiss();
-                            }, throwable -> {
-                            });
-                }).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
+                            this.dialog.dismiss();
+                        }, throwable -> {
+                        })).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
             dialog.dismiss();
         }).show();
     }
