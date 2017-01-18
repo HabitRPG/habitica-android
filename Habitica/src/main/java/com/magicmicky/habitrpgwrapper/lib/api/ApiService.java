@@ -100,6 +100,9 @@ public interface ApiService {
     @GET("tasks/user")
     Observable<HabitResponse<TaskList>> getTasks();
 
+    @GET("tasks/user")
+    Observable<HabitResponse<ArrayList<Task>>> getUserTasks();
+
     @POST("user/unlock")
     Observable<HabitResponse<UnlockResponse>> unlockPath(@Query("path") String path);
 

@@ -18,6 +18,7 @@ public class HabitRPGUserCallback implements Action1<HabitRPGUser> {
 
     @Override
     public void call(HabitRPGUser habitRPGUser) {
+        // Negue: once everything is refactored to DbFlowTaskLocalRepository, this will be removed
         habitRPGUser.async().save();
         callBack.onUserReceived(habitRPGUser);
     }
