@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.SubscriptionDetailsView;
@@ -13,6 +14,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
@@ -80,7 +82,6 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
-    private Inventory inventory;
 
     private HabitRPGUser user;
     private boolean hasLoadedSubscriptionOptions;
@@ -92,10 +93,20 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        apiHelper.apiService.getUser().compose(apiHelper.configureApiCallObserver())
-                .subscribe(this::setUser, throwable -> {});
+        fetchUser(null);
 
         return inflater.inflate(R.layout.fragment_subscription, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+         super.onDestroyView();
+    }
+
+    @Subscribe
+    public void fetchUser(@Nullable UserSubscribedEvent event) {
+        apiHelper.apiService.getUser().compose(apiHelper.configureApiCallObserver())
+                .subscribe(this::setUser, throwable -> {});
     }
 
     @Override
@@ -120,7 +131,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     public void setupCheckout() {
         final ActivityCheckout checkout = listener.getActivityCheckout();
         if (checkout != null) {
-            inventory = checkout.makeInventory();
+            Inventory inventory = checkout.makeInventory();
 
             inventory.load(Inventory.Request.create()
                             .loadAllPurchases().loadSkus(ProductTypes.SUBSCRIPTION, PurchaseTypes.allSubscriptionTypes),
@@ -236,11 +247,13 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                 this.subscriptionDetailsView.setVisibility(View.VISIBLE);
                 this.subscriptionDetailsView.setPlan(plan);
                 this.subscribeBenefitsTitle.setText(R.string.subscribe_prompt_thanks);
+                this.subscriptionOptions.setVisibility(View.GONE);
             } else {
                 if (!hasLoadedSubscriptionOptions) {
                     return;
                 }
                 this.subscriptionOptions.setVisibility(View.VISIBLE);
+                this.subscriptionDetailsView.setVisibility(View.GONE);
             }
             this.loadingIndicator.setVisibility(View.GONE);
         }
