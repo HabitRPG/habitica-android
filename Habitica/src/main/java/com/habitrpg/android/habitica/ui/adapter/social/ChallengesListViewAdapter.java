@@ -157,12 +157,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
                 arrowImage.setVisibility(View.GONE);
             }
 
-            if (challenge.prize == 0) {
-                //gem_prize_layout.setVisibility(View.GONE);
-            } else {
-                //gem_prize_layout.setVisibility(View.VISIBLE);
-                gemPrizeTextView.setText(String.valueOf(challenge.prize));
-            }
+            gemPrizeTextView.setText(String.valueOf(challenge.prize));
         }
 
         public static String getLabelByTypeAndCount(Context context, String type, int count) {

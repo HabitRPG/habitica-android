@@ -91,7 +91,7 @@
     <color name="task_gray">#b7b7b7</color>
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_checked_fill">#c8ffffff</color>
-    <color name="checkbox_stroke">#32000000</color>
+    <color name="checkbox_checklist_fill">#23000000</color>
 
     <color name="habit_inactive_gray">#F9F9F9</color>
 

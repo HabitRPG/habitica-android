@@ -16,7 +16,7 @@
             android:layout_height="@dimen/checkbox_size"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:button="@drawable/daily_checkbox"
+            android:button="@drawable/checklist_checkbox"
             android:layout_gravity="center_horizontal" />
         </RelativeLayout>
         <net.pherth.android.emoji_library.EmojiTextView
