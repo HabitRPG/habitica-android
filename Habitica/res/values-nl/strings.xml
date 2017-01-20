@@ -421,7 +421,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="has_tag">Heeft label</string>
   <string name="byLeader" formatted="false">met %s</string>
   <string name="challenge_details">Details van de uitdaging</string>
-  <string name="challenge_leave_title">Weet je het zeker?</string>
+  <string name="challenge_leave_title">Verlaat Uitdaging</string>
   <string name="challenge_leave_text">Weet je zeker dat je de uitdaging %s wil verlaten?</string>
   <string name="my_challenges">Mijn uitdagingen</string>
   <string name="public_challenges">Publiek</string>
@@ -435,5 +435,10 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="challenge">Uitdaging</string>
   <string name="go_to_challenge">Ga naar de uitdaging</string>
   <string name="not_part_of_a_challenge">Je doet op dit moment niet mee aan een uitdaging!</string>
+  <string name="join_a_challenge">Doe mee aan een uitdaging om een zorgvuldig samengestelde set van taken aan je lijst toe te voegen en het op te nemen tegen andere Habiticanen om prestaties en zelfs edelstenen te winnen!</string>
+  <string name="check_the_public_challenge_tab">Tik op de \"Publiek\" tab om Uitdagingen, gemaakt door gebruikers, te vinden die het best bij jou passen!</string>
   <string name="add_reminder">Voeg een herinnering toe</string>
+  <string name="warning">Waarschuwing</string>
+  <string name="open_settings">Open Instellingen</string>
+  <string name="dont_keep_activities_warning">Het lijkt erop dat je Ontwikkelaar optie \"Hou geen activiteiten bij\" aan hebt staan. Momenteel zorgt deze optie voor problemen met de Habitica app, dus raden we je aan dit uit te zetten.</string>
 </resources>

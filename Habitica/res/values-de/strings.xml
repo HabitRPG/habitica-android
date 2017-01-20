@@ -308,6 +308,8 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="world_quest">Weltenquest</string>
   <string name="inn_description">Ruhe Dich im Gasthaus aus damit Deine täglichen Aufgaben Dich über Nacht nicht verletzen! (Beachte: verhindert nicht den Schaden durch einen Boss.)</string>
   <string name="empty_items" formatted="false">Du hast kein/e %s</string>
+  <string name="user_level" formatted="false">Lvl %s</string>
+  <string name="user_level_with_class" formatted="false">Lvl %1$s - %2$s</string>
   <string name="warrior">Krieger</string>
   <string name="rogue">Schurke</string>
   <string name="mage">Magier</string>
@@ -419,7 +421,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="has_tag">Hat einen Tag</string>
   <string name="byLeader" formatted="false">von %s</string>
   <string name="challenge_details">Wettbewerb Details</string>
-  <string name="challenge_leave_title">Bist Du Dir sicher?</string>
+  <string name="challenge_leave_title">Wettbewerb verlassen</string>
   <string name="challenge_leave_text">Bist Du Dir sicher, dass du den Wettbewerb \"%s\" verlassen willst?</string>
   <string name="my_challenges">Meine Wettbewerbe</string>
   <string name="public_challenges">Öffentlich</string>
@@ -429,10 +431,14 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="reward">Belohnung</string>
   <string name="todo">To-Do</string>
   <string name="official">Offiziell</string>
+  <string name="participating">Beigetreten</string>
   <string name="challenge">Wettbewerb</string>
   <string name="go_to_challenge">Gehe zu Wettbewerb</string>
   <string name="not_part_of_a_challenge">Du nimmst im Moment an keinen Wettbewerben teil!</string>
   <string name="join_a_challenge">Trete einem Wettbewerb bei, um ein ausgewähltes Set von Aufgaben zu deiner Liste hinzuzufügen. Trete dann gegen andere Habitica-Mitglieder an, um Erfolge und sogar Edelsteine zu gewinnen!</string>
   <string name="check_the_public_challenge_tab">Drücke auf den \"Öffentlich\"-Tab, um die von Mitgliedern erstellten Wettbewerbe zu finden, die am besten zu Dir passen!</string>
   <string name="add_reminder">Erinnerung hinzufügen</string>
+  <string name="warning">Warnung</string>
+  <string name="open_settings">Einstellungen öffnen</string>
+  <string name="dont_keep_activities_warning">Es sieht so aus, als wäre die Entwickleroption \"Aktivitäten nicht behalten\" aktiviert. Momentan können dadurch Probleme in der Habitica App entstehen, deshalb empfehlen wir, die Option zu deaktivieren.</string>
 </resources>
