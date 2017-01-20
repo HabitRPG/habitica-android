@@ -95,6 +95,7 @@
         <item>LuneFox\'s Theme</item>
         <item>Rosstavo\'s Theme</item>
         <item>Dewin\'s Theme</item>
+        <item>Airu\'s Theme</item>
     </string-array>
 
     <string-array name="AudioValues">
@@ -105,5 +106,6 @@
         <item>luneFoxTheme</item>
         <item>rosstavoTheme</item>
         <item>dewinTheme</item>
+        <item>airuTheme</item>
     </string-array>
 </resources>
