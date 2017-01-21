@@ -58,4 +58,9 @@ public class FAQOverviewFragment extends BaseMainFragment {
 
         adapter.setArticles(articles);
     }
+
+	@Override
+	public String customTitle() {
+		return getString(R.string.FAQ);
+	}
 }

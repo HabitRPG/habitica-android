@@ -879,11 +879,16 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void setActiveFragment(BaseMainFragment fragment) {
         this.activeFragment = fragment;
 
+
+
         if(fragment.customTitle() != null){
             getSupportActionBar().setTitle(fragment.customTitle());
             // BUG: setTitle not changed the title, just switched the length of "username"
             //setTitle(fragment.customTitle());
+	        Log.e(getClass().getSimpleName(), fragment.customTitle());
         } else {
+
+	        Log.e(getClass().getSimpleName(), "User is set");
             setUserTitle();
         }
 
@@ -892,7 +897,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void setUserTitle(){
         if(user != null && user.getProfile() != null){
-            setTitle(user.getProfile().getName());
+            getSupportActionBar().setTitle(user.getProfile().getName());
         }
     }
 
