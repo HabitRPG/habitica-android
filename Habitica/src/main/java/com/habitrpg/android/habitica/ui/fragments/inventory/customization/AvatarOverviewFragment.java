@@ -152,4 +152,8 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
+
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_avatar);	}
 }

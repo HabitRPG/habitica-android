@@ -165,4 +165,8 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
     public boolean hasResult(BaseTransaction<List<ItemData>> transaction, List<ItemData> result) {
         return true;
     }
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_equipment);	}
+
 }

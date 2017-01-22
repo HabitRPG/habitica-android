@@ -658,4 +658,8 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 .create();
         confirmDeleteAlert.show();
     }
+
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_tasks);	}
 }

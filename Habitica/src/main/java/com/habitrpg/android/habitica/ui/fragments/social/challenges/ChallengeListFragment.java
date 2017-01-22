@@ -175,4 +175,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     public void updateItem(Challenge challenge) {
         challengeAdapter.replaceChallenge(challenge);
     }
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_challenges);	}
 }

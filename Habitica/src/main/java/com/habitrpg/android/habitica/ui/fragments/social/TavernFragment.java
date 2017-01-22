@@ -135,7 +135,5 @@ public class TavernFragment extends BaseMainFragment {
     }
 
 	@Override
-	public String customTitle() {
-		return getString(R.string.inbox);
-	}
+	public String customTitle() {	return getString(R.string.sidebar_tavern);	}
 }

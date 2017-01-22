@@ -112,4 +112,8 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
             this.activity.displayFragment(guildFragment);
         }
     }
+
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_guilds);	}
 }
