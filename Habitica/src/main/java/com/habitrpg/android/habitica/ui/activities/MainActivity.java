@@ -881,10 +881,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 	    if(fragment!= null && fragment.customTitle() != null){
 		    getSupportActionBar().setTitle(fragment.customTitle());
 	    }
-	    else{
-		    if(user != null && user.getProfile() != null){
-			    getSupportActionBar().setTitle(user.getProfile().getName());
-		    }
+	    else if(user != null && user.getProfile() != null){
+		    getSupportActionBar().setTitle(user.getProfile().getName());
 	    }
     }
 
