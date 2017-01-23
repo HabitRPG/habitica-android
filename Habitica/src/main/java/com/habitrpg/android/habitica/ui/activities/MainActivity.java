@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
+import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -195,6 +196,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
     FrameLayout overlayFrameLayout;
+
+    @Inject
+    HabitScoreUseCase habitScoreUseCase;
+
     private Drawer drawer;
     private Drawer filterDrawer;
     private AccountHeader accountHeader;
@@ -1500,12 +1505,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
-        apiHelper.apiService.postTaskDirection(event.habit.getId(), (event.Up ? TaskDirection.up : TaskDirection.down).toString())
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new TaskScoringCallback(this, event.habit.getId()), throwable -> {
-                });
+        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
+                .subscribe(res -> {
+                    onTaskDataReceived(res, event.habit);
+                }, error -> {
 
-        soundManager.loadAndPlayAudio(event.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
+
+                });
     }
 
     @Subscribe

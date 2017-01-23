@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.modules;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HostConfig;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 
 import android.content.Context;
@@ -35,6 +36,13 @@ public class ApiModule {
     public APIHelper providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig) {
         return new APIHelper(gsonConverter, hostConfig);
     }
+
+    @Provides
+    @Singleton
+    public ApiService providesApiService(APIHelper apiHelper) {
+        return apiHelper.apiService;
+    }
+
 
     @Provides
     @Singleton

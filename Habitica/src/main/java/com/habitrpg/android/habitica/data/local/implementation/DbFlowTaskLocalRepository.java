@@ -34,6 +34,11 @@ public class DbFlowTaskLocalRepository implements TaskLocalRepository {
         */
     }
 
+    @Override
+    public void saveTask(Task task) {
+        task.async().save();
+    }
+
     private List<Task> sortTasks(List<Task> taskList, List<String> taskOrder) {
         List<Task> taskResult = new ArrayList<>();
         int position = 0;

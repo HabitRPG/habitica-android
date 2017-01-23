@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
@@ -12,4 +13,6 @@ public interface TaskRepository extends BaseRepository  {
     Observable<ArrayList<Task>> getTasks(String taskType);
 
     Observable<HabitResponse<ArrayList<Task>>> refreshTasks(TasksOrder tasksOrder);
+
+    Observable<TaskDirectionData> scoreHabit(Task task, boolean up);
 }

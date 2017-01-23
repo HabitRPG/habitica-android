@@ -126,7 +126,7 @@ public class HabitRPGUser extends BaseModel {
         this.challengeList = challenges;
     }
 
-    public void resetChallengeList(){
+    public void resetChallengeList() {
         challengeList = null;
     }
 
@@ -386,23 +386,25 @@ public class HabitRPGUser extends BaseModel {
 
         List<Challenge> challenges = getChallengeList();
 
-        for (String s : getChallenges()) {
-            boolean challengeExistInDatabase = false;
+        if (this.challenges != null) {
+            for (String s : this.challenges) {
+                boolean challengeExistInDatabase = false;
 
-            for (Challenge challenge : challenges) {
-                if (challenge.id.equals(s)) {
-                    challengeExistInDatabase = true;
+                for (Challenge challenge : challenges) {
+                    if (challenge.id.equals(s)) {
+                        challengeExistInDatabase = true;
 
-                    break;
+                        break;
+                    }
                 }
-            }
 
-            if (!challengeExistInDatabase) {
-                Challenge challenge = new Challenge();
-                challenge.id = s;
-                challenge.user_id = id;
+                if (!challengeExistInDatabase) {
+                    Challenge challenge = new Challenge();
+                    challenge.id = s;
+                    challenge.user_id = id;
 
-                challenges.add(challenge);
+                    challenges.add(challenge);
+                }
             }
         }
 
