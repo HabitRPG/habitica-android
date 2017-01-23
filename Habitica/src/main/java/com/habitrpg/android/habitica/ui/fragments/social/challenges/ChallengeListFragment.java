@@ -56,7 +56,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
                     List<Challenge> userChallenges = this.user.getChallengeList();
 
-                    HashSet<String> userChallengesHash = new HashSet<String>();
+                    HashSet<String> userChallengesHash = new HashSet<>();
 
                     for (Challenge userChallenge : userChallenges) {
                         userChallengesHash.add(userChallenge.id);
@@ -175,4 +175,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     public void updateItem(Challenge challenge) {
         challengeAdapter.replaceChallenge(challenge);
     }
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_challenges);	}
 }

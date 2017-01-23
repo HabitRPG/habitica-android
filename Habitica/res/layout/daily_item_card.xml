@@ -61,7 +61,7 @@
 
                 <net.pherth.android.emoji_library.EmojiTextView
                     android:id="@+id/notesTextView"
-                    style="@style/Caption2"
+                    style="@style/Caption2.Regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3"

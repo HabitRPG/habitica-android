@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.facebook.drawee.generic.RootDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -120,9 +119,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -134,7 +130,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -325,6 +320,24 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (activeFragment != null && activeFragment.tabLayout == null) {
             activeFragment = null;
             drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
+        }
+
+        if (isAlwaysFinishActivitiesOptionEnabled()) {
+            if (!sharedPreferences.getBoolean("showedFinishActivitiesWarning", false)) {
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(getString(R.string.warning))
+                        .setMessage(R.string.dont_keep_activities_warning)
+                        .setNeutralButton(R.string.close, (warningDialog, which) -> {
+                            warningDialog.dismiss();
+                        })
+                        .setPositiveButton(R.string.open_settings, (hatchingDialog, which) -> {
+                            showDeveloperOptionsScreen();
+                            hatchingDialog.dismiss();
+                        })
+                        .create();
+                dialog.show();
+                sharedPreferences.edit().putBoolean("showedFinishActivitiesWarning", true).apply();
+            }
         }
     }
 
@@ -793,7 +806,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void updateHeader() {
         updateUserAvatars();
-        setUserTitle();
+        setTranslatedFragmentTitle(activeFragment);
 
         android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
 
@@ -865,22 +878,17 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public void setActiveFragment(BaseMainFragment fragment) {
         this.activeFragment = fragment;
-
-        if(fragment.customTitle() != null){
-            getSupportActionBar().setTitle(fragment.customTitle());
-            // BUG: setTitle not changed the title, just switched the length of "username"
-            //setTitle(fragment.customTitle());
-        } else {
-            setUserTitle();
-        }
-
+        setTranslatedFragmentTitle(fragment);
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 
-    private void setUserTitle(){
-        if(user != null && user.getProfile() != null){
-            setTitle(user.getProfile().getName());
-        }
+    private void setTranslatedFragmentTitle(BaseMainFragment fragment){
+	    if(fragment!= null && fragment.customTitle() != null){
+		    getSupportActionBar().setTitle(fragment.customTitle());
+	    }
+	    else if(user != null && user.getProfile() != null){
+		    getSupportActionBar().setTitle(user.getProfile().getName());
+	    }
     }
 
     public void onBackPressed() {

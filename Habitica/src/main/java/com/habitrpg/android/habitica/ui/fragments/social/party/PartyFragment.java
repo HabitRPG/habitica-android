@@ -356,4 +356,9 @@ public class PartyFragment extends BaseMainFragment {
             tabLayout.setupWithViewPager(viewPager);
         }
     }
+
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_party);	}
+
 }

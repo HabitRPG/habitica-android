@@ -139,6 +139,7 @@
   <string name="members">Membres</string>
   <string name="habits">Habitudes</string>
   <string name="dailies">Tâches Quotidiennes</string>
+  <string name="todos">À faire</string>
   <string name="rewards">Récompenses</string>
   <string name="taskform.delete.title">Êtes-vous sûr·e ?</string>
   <string name="taskform.delete.message">Voulez-vous vraiment supprimer ceci ?</string>
@@ -418,4 +419,26 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="belongs_to_challenge">Appartient au défi</string>
   <string name="has_reminder">A un rappel</string>
   <string name="has_tag">A une étiquette</string>
+  <string name="byLeader" formatted="false">par %s</string>
+  <string name="challenge_details">Détails du défi</string>
+  <string name="challenge_leave_title">Quitter le défi</string>
+  <string name="challenge_leave_text">Êtes-vous sûr·e de vouloir quitter le défi \"%s\" ?</string>
+  <string name="my_challenges">Mes défis</string>
+  <string name="public_challenges">Publique</string>
+  <string name="challenges">Défis</string>
+  <string name="daily">Quotidienne</string>
+  <string name="habit">Habitude</string>
+  <string name="reward">Récompense</string>
+  <string name="todo">A faire</string>
+  <string name="official">Officiel</string>
+  <string name="participating">Participe</string>
+  <string name="challenge">Défi</string>
+  <string name="go_to_challenge">Aller au défi</string>
+  <string name="not_part_of_a_challenge">Vous ne faites partie d\'aucun défi pour l\'instant !</string>
+  <string name="join_a_challenge">Rejoignez un défi pour ajouter un ensemble de tâches à votre liste, puis rivalisez avec d\'autres personnes pour gagner des succès et même des gemmes !</string>
+  <string name="check_the_public_challenge_tab">Utilisez l\'onglet \"publique\" pour trouver les défi créés par les utilisateurs et qui vous correspondent le mieux !</string>
+  <string name="add_reminder">Ajouter un rappel</string>
+  <string name="warning">Attention</string>
+  <string name="open_settings">Ouvrir les préférences</string>
+  <string name="dont_keep_activities_warning">Il semblerait que vous ayez l\'option développeur \"Ne pas conserver les activités\" activées. Actuellement, cette option provoque des problèmes avec l\'application Habitica, nous vous suggérons de la désactiver.</string>
 </resources>

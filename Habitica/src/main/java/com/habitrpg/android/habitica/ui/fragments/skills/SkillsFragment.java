@@ -235,4 +235,8 @@ public class SkillsFragment extends BaseMainFragment {
         return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_skills);	}
+
 }

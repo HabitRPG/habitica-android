@@ -139,6 +139,7 @@
   <string name="members">Участники</string>
   <string name="habits">Привычки</string>
   <string name="dailies">Ежедневные задания</string>
+  <string name="todos">Задания</string>
   <string name="rewards">Награды</string>
   <string name="taskform.delete.title">Вы уверены?</string>
   <string name="taskform.delete.message">Вы уверены, что хотите удалить?</string>
@@ -321,6 +322,8 @@
   <string name="opt_out_class">Отказаться</string>
   <string name="opt_out_description">Не хотите утруждать себя классами? Тогда откажитесь — и останетесь воином и ваши очки будут обрабатываться автоматически. Активировать классы можно будет позже в меню настроек.</string>
   <string name="class_confirmation" formatted="false">Вы уверены, что хотите быть %s?</string>
+  <string name="class_changed">Теперь вы %s!</string>
+  <string name="class_changed_description">У вас есть новая Боевая Экипировка по умолчанию, которую вы можете сменить в секции Снаряжение!</string>
   <string name="choose_class">Выбрать класс</string>
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
@@ -344,6 +347,7 @@
   <string name="share_raised" formatted="false">Я только что получил скакуна %1$s %2$s в Habitica, выполняя задачи в реальной жизни!</string>
   <string name="open_in_store">Откройте в Play маркет</string>
   <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 кристалла.</string>
+  <string name="change_class_equipment_warning">Осторожно: Вы больше не сможете покупать снаряжение класса %s.</string>
   <string name="leaderMessage" formatted="false">Сообщение от %1$s</string>
   <string name="leaderName" formatted="false">Предводитель: %1$s</string>
   <string name="confirm">Подтвердить</string>
@@ -415,4 +419,26 @@
   <string name="belongs_to_challenge">Принадлежит Испытанию</string>
   <string name="has_reminder">Есть напоминание</string>
   <string name="has_tag">Отмечено тегом</string>
+  <string name="byLeader" formatted="false">сделано %s</string>
+  <string name="challenge_details">Детали Испытания</string>
+  <string name="challenge_leave_title">Покинуть Испытание</string>
+  <string name="challenge_leave_text">Вы уверены, что хотите покинуть Испытание \"%s\"?</string>
+  <string name="my_challenges">Мои испытания</string>
+  <string name="public_challenges">Общее</string>
+  <string name="challenges">Испытания</string>
+  <string name="daily">Дневной</string>
+  <string name="habit">Привычка</string>
+  <string name="reward">Награда</string>
+  <string name="todo">Задача</string>
+  <string name="official">Официальный</string>
+  <string name="participating">Участие</string>
+  <string name="challenge">Испытание</string>
+  <string name="go_to_challenge">Перейти к Испытанию</string>
+  <string name="not_part_of_a_challenge">На данный момент вы не участвуете ни в каких Испытаниях!</string>
+  <string name="join_a_challenge">Присоединитесь к Испытанию, чтобы добавить набор заданий под курированием в ваш список, и соревнуйтесь с другими Хабитиканцами чтобы попробовать выиграть достижения и даже самоцветы!</string>
+  <string name="check_the_public_challenge_tab">Прикоснитесь к закладке \"Общее\", чтобы найти Соревнования, созданные пользователями, которые больше всего вам подходят.</string>
+  <string name="add_reminder">Добавить напоминание</string>
+  <string name="warning">Предупреждение</string>
+  <string name="open_settings">Открыть настройки</string>
+  <string name="dont_keep_activities_warning">Похоже, что у Вас активен параметр разработчика \"Не сохранять операции\". Обычно из-за него возникают проблемы с приложением Habitica, поэтому мы советуем Вам его отключить.</string>
 </resources>

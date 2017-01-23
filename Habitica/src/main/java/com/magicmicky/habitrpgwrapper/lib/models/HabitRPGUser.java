@@ -386,8 +386,9 @@ public class HabitRPGUser extends BaseModel {
 
         List<Challenge> challenges = getChallengeList();
 
-        if (this.challenges != null) {
-            for (String s : this.challenges) {
+        if (getChallenges() != null) {
+            for (String s : getChallenges()) {
+
                 boolean challengeExistInDatabase = false;
 
                 for (Challenge challenge : challenges) {

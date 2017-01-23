@@ -112,6 +112,7 @@ public class PopupNotificationsManager {
         }
 
         HabiticaApplication.currentActivity.runOnUiThread(() -> {
+            if (HabiticaApplication.currentActivity == null) return;
             if ((HabiticaApplication.currentActivity).isFinishing()) return;
 
             if (this.seenNotifications == null) {

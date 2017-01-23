@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_pets_and_mounts">Evcil &amp; Binek Hayvanlar</string>
+    <string name="profile_pets_found">Bulunan Evcil Hayvanlar</string>
+    <string name="profile_mounts_tamed">Evcilleştirilen Binek Hayvanları</string>
+    <string name="profile_loading_data">üye verisi yükleniyor.</string>
+    <string name="profile_send_message_to">%s kişisine mesaj gönder</string>
+    <string name="profile_message_sent_to">%s kişisine mesaj gönderildi</string>
+    <string name="profile_level">Seviye:</string>
+    <string name="profile_class_bonus">Sınıf-Bonusu:</string>
+    <string name="profile_allocated">Tahsis Edilmiş:</string>
+    <string name="profile_boosts">Yükselmeler:</string>
+    <string name="profile_private_message">Özel Mesaj</string>
+    <string name="profile_achievements">Başarılar</string>
+    <string name="profile_achievement_ok">Tamam</string>
+
+</resources>

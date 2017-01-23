@@ -451,7 +451,7 @@ To start, which parts of your life do you want to improve?</string>
 
     <string name="byLeader" formatted="false">by %s</string>
     <string name="challenge_details">Challenge Details</string>
-    <string name="challenge_leave_title">Are you sure?</string>
+    <string name="challenge_leave_title">Leave Challenge</string>
     <string name="challenge_leave_text">Are you sure you want to leave the Challenge "%s"?</string>
     <string name="my_challenges">My Challenges</string>
     <string name="public_challenges">Public</string>
@@ -468,4 +468,9 @@ To start, which parts of your life do you want to improve?</string>
     <string name="join_a_challenge">Join a Challenge to add a curated set of tasks to your list, then compete against other Habiticans to win achievements and even gems!</string>
     <string name="check_the_public_challenge_tab">Tap the “Public” tab to find the user-created Challenges that are the best fit for you!</string>
     <string name="add_reminder">Add Reminder</string>
+    <string name="warning">Warning</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="dont_keep_activities_warning">It seems like you have the Developer option \"Don\'t keep Activities\" active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
+    <string name="inbox">Inbox</string>
+    <string name="FAQ">Frequently Asked Questions</string>
 </resources>

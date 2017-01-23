@@ -83,7 +83,7 @@
   <string name="tags">Etichette</string>
   <string name="trivial">Triviale</string>
   <string name="easy">Facile</string>
-  <string name="medium">Medio</string>
+  <string name="medium">Media</string>
   <string name="hard">Difficile</string>
   <string name="start_date">Data di partenza</string>
   <string name="positive_habit_form">Positiva ( + )</string>
@@ -139,6 +139,7 @@
   <string name="members">Membri</string>
   <string name="habits">Habit</string>
   <string name="dailies">Daily</string>
+  <string name="todos">To-do</string>
   <string name="rewards">Ricompense</string>
   <string name="taskform.delete.title">Sei sicuro?</string>
   <string name="taskform.delete.message">Vuoi davvero eliminare?</string>
@@ -307,6 +308,8 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="world_quest">World Quest</string>
   <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
   <string name="empty_items" formatted="false">Non hai alcun %s</string>
+  <string name="user_level" formatted="false">LVL %s</string>
+  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
   <string name="warrior">Guerriero</string>
   <string name="rogue">Assassino</string>
   <string name="mage">Mago</string>
@@ -416,4 +419,26 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="belongs_to_challenge">Appartiene alla Sfida</string>
   <string name="has_reminder">Ha promemoria</string>
   <string name="has_tag">Ha etichetta</string>
+  <string name="byLeader" formatted="false">di %s</string>
+  <string name="challenge_details">Dettagli sfida</string>
+  <string name="challenge_leave_title">Abbandona sfida</string>
+  <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
+  <string name="my_challenges">Le mie sfide</string>
+  <string name="public_challenges">Pubbliche</string>
+  <string name="challenges">Sfide</string>
+  <string name="daily">Daily</string>
+  <string name="habit">Abitudine</string>
+  <string name="reward">Ricompensa</string>
+  <string name="todo">To-Do</string>
+  <string name="official">Ufficiale</string>
+  <string name="participating">Sto partecipando</string>
+  <string name="challenge">Sfida</string>
+  <string name="go_to_challenge">Vai alla Sfida</string>
+  <string name="not_part_of_a_challenge">Al momento non stai partecipando a nessuna sfida!</string>
+  <string name="join_a_challenge">Partecipa ad una sfida per aggiungere delle attività specifiche alla tua lista, poi competi contro altri utenti di Habitica per vincere Medaglie o addirittura delle Gemme!</string>
+  <string name="check_the_public_challenge_tab">Vai nella sezione “Pubbliche” per trovare le sfide create dagli utenti più adatte a te!</string>
+  <string name="add_reminder">Aggiungi promemoria</string>
+  <string name="warning">Attenzione</string>
+  <string name="open_settings">Apri impostazioni</string>
+  <string name="dont_keep_activities_warning">Pare che tu abbia l\'opzione sviluppatore \"Non conservare attività\" abilitata. Al momento questa opzione causa dei problemi all\'app di Habitica, quindi consigliamo di disabilitarla.</string>
 </resources>

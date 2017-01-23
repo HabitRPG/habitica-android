@@ -61,6 +61,7 @@
         <item>Português</item>
         <item>Português Brasileiro</item>
         <item>Русский</item>
+        <item>Türk</item>
         <item>中文（简体）</item>
         <item>中文（正體）</item>
     </string-array>
@@ -82,6 +83,7 @@
         <item>pt</item>
         <item>pt_BR</item>
         <item>ru</item>
+        <item>tr</item>
         <item>zh</item>
         <item>zh_TW</item>
     </string-array>
@@ -95,6 +97,7 @@
         <item>LuneFox\'s Theme</item>
         <item>Rosstavo\'s Theme</item>
         <item>Dewin\'s Theme</item>
+        <item>Airu\'s Theme</item>
     </string-array>
 
     <string-array name="AudioValues">
@@ -105,5 +108,6 @@
         <item>luneFoxTheme</item>
         <item>rosstavoTheme</item>
         <item>dewinTheme</item>
+        <item>airuTheme</item>
     </string-array>
 </resources>

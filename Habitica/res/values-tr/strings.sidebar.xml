@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sidebar.tasks">İşler</string>
+  <string name="sidebar.skills">Yetenekler</string>
+  <string name="sidebar.section.social">Sosyal</string>
+  <string name="sidebar.inbox">Mesaj Kutusu</string>
+  <string name="sidebar.tavern">Taverna</string>
+  <string name="sidebar.party">Takım</string>
+  <string name="sidebar.purchaseGems">Elmas Satın Al</string>
+  <string name="sidebar.guilds">Loncalar</string>
+  <string name="sidebar.challenges">Mücadeleler</string>
+  <string name="sidebar.section.inventory">Envanter</string>
+  <string name="sidebar.avatar">Avatar</string>
+  <string name="sidebar.equipment">Ekipman</string>
+  <string name="sidebar.stable">Ahır</string>
+  <string name="sidebar.news">Haberler</string>
+  <string name="sidebar.settings">Ayarlar</string>
+  <string name="sidebar.about">Hakkında</string>
+  <string name="sidebar_shops">Dükkanlar</string>
+</resources>

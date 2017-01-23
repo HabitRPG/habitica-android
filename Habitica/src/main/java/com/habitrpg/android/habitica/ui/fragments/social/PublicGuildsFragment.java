@@ -109,4 +109,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         viewAdapter.getFilter().filter(s);
         return true;
     }
+
+	@Override
+	public String customTitle() {	return getString(R.string.public_guilds);	}
 }

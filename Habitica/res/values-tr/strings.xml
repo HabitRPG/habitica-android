@@ -1,0 +1,440 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="action_refresh">Yenile</string>
+  <string name="XP_default">Tecrübe</string>
+  <string name="HP_default">Sağlık</string>
+  <string name="MP_default">Mana</string>
+  <string name="ERR_pb_barcode">Ayarlar barkoddan yüklenmedi</string>
+  <!--Prefs-->
+  <string name="PS_settings_title">Ayarlar</string>
+  <string name="SP_address_hint">Sizin özel sunucunuz</string>
+  <string name="SP_userID_title">Kullanıcı Kimliği</string>
+  <string name="SP_userID_summary">Sizin Kullanıcı Kimliğiniz</string>
+  <string name="SP_APIToken_title">API Anahtarı</string>
+  <string name="SP_APIToken_summary">Sizin API Anahtarınız</string>
+  <string name="Language_title">Dil</string>
+  <string name="Language_summary">Habitica dilini değiştirin</string>
+  <string name="SP_user_qr_code">Sizin QR Kodunuz</string>
+  <string name="PS_contact_title">Benimle iletişime geçin</string>
+  <string name="unknown_error">Bir hata oluştu...</string>
+  <string name="pref_account_header">Hesap</string>
+  <string name="pref_first_day_of_the_week_title">Haftanın İlk Günü</string>
+  <string name="pref_first_day_of_the_week_summary">Tüm takvimlerde haftanın ilk günü</string>
+  <string name="pref_reminder_header">Günlük Hatırlatıcı</string>
+  <string name="pref_reminder_checkbox">Hatırlatıcıyı Aktive Edin</string>
+  <string name="pref_reminder_picker">Hatırlatıcı Zamanı Ayarla</string>
+  <string name="pref_cds_header">Özel Gün Başlangıcı</string>
+  <string name="pref_cds_picker">Özel Gün Başlangıç Zamanını Ayarla</string>
+  <string name="pref_push_notifications_checkbox">Kullanıcı Bildirimleri</string>
+  <string name="push_notifications">Bildirimler</string>
+  <string name="push_notifications_sum">Bilgilendirme ayarlarınızı ayarlayın</string>
+  <string name="preference_push_you_won_challenge">Bir Mücadele kazandın!</string>
+  <string name="preference_push_received_a_private_message">Özel Mesaj Aldın</string>
+  <string name="preference_push_gifted_gems">Hediye Edilen Elmaslar</string>
+  <string name="preference_push_gifted_subscription">Hediye Edilen Abonelik</string>
+  <string name="preference_push_invited_to_party">Takıma davet edildin</string>
+  <string name="preference_push_invited_to_guild">Loncaya davet edildin</string>
+  <string name="preference_push_your_quest_has_begun">Görevin Başladı</string>
+  <string name="preference_push_invited_to_quest">Göreve Davet Edildin</string>
+  <!--Adding tasks-->
+  <string name="task_value">Değer</string>
+  <string name="new_todo">Yeni yapılacak iş</string>
+  <string name="new_reward">Yeni ödül</string>
+  <string name="new_daily">Yeni günlük iş</string>
+  <string name="new_habit">Yeni alışkanlık</string>
+  <string name="action_edit">Düzenle</string>
+  <string name="action_delete">Sil</string>
+  <string name="action_cancel">İptal et</string>
+  <string name="login_btn">Giriş yap</string>
+  <string name="register_btn">Kayıt ol</string>
+  <string name="username">Kullanıcı adı</string>
+  <string name="email_username">E-posta veya Kullanıcı adı</string>
+  <string name="password">Şifre</string>
+  <string name="emailAddress">E-posta adresi</string>
+  <string name="confirmpassword">Şifreni onayla</string>
+  <string name="logout">Çıkış yap</string>
+  <string name="logout_description">Hesabından çıkış yap</string>
+  <string name="account_details_sum">Hesap detaylarını kontrol et</string>
+  <string name="account_details">Hesap Detayları</string>
+  <string name="LoginActivityName">Hoş Geldin</string>
+  <string name="string_revive">Dirilt</string>
+  <string name="please_connect">Lütfen uygulamaya bir ekran aracı kullanmadan önce bağlanın</string>
+  <string name="about.title">Hakkında</string>
+  <string name="about.libraries">Kütüphaneler</string>
+  <string name="about.versionhistory">Sürüm geçmişi</string>
+  <string name="about.habitica_open_source">Habitica yazılımı Github üzerinde açık kaynak olarak mevcuttur.</string>
+  <string name="about.rate_our_app">Uygulamamızı Değerlendir</string>
+  <string name="about.give_us_feedback">Bize Geribildirim gönder!</string>
+  <string name="about.bugreport">Hata Bildir</string>
+  <string name="about.source_code">Kaynak Kodu</string>
+  <!--Network Errors-->
+  <string name="network_error_title">Bağlantı Hatası</string>
+  <string name="network_error_no_network_body">İnternete bağlı değilsin.</string>
+  <string name="internal_error_api">Sunucu ile ilgili bir hata var gibi görünüyor. Daha sonra tekrar dene.</string>
+  <string name="authentication_error_title">Kimlik doğrulama hatası</string>
+  <string name="authentication_error_body">Kullanıcı adı ve/veya Şifre hatalı.</string>
+  <string name="login_validation_error_title">Doğrulama Hatası</string>
+  <string name="login_validation_error_fieldsmissing">Tüm alanları doldurmanız gerekiyor.</string>
+  <string name="save_changes">Kaydet</string>
+  <string name="copy">Kopyala</string>
+  <string name="notes">Notlar</string>
+  <string name="text">Metin</string>
+  <string name="difficulty">Zorluk</string>
+  <string name="tags">Etiketler</string>
+  <string name="trivial">Önemsiz</string>
+  <string name="easy">Kolay</string>
+  <string name="medium">Orta</string>
+  <string name="hard">Zor</string>
+  <string name="start_date">Başlangıç Tarihi</string>
+  <string name="positive_habit_form">Olumlu (+)</string>
+  <string name="negative_habit_form">Olumsuz ( - )</string>
+  <string name="checklist">Yapılacak İşler Listesi</string>
+  <string name="reminders">Hatırlatıcılar</string>
+  <string name="actions">Hareketler</string>
+  <string name="attributes">Özellikler</string>
+  <string name="physical">Fiziksel</string>
+  <string name="mental">Zihinsel</string>
+  <string name="social">Sosyal</string>
+  <string name="other">Diğer</string>
+  <string name="frequency">Sıklık</string>
+  <string name="frequency_weekly">Haftanın Belirli Günlerinde</string>
+  <string name="frequency_daily">X günde bir</string>
+  <string name="monday">Pazartesi</string>
+  <string name="tuesday">Salı</string>
+  <string name="wednesday">Çarşamba</string>
+  <string name="thursday">Perşembe</string>
+  <string name="friday">Cuma</string>
+  <string name="saturday">Cumartesi</string>
+  <string name="sunday">Pazar</string>
+  <string name="levelup_header">Bir seviye yükseldin!</string>
+  <string name="levelup_detail">Gerçek hayattaki hedeflerini gerçekleştirerek %1$d. Seviyesine yükseldin!</string>
+  <string name="levelup_health">Tamamen sağlığına kavuştun!</string>
+  <string name="levelup_button">Yaşasın!</string>
+  <string name="faint_subtitle">Umudunu kaybetme!</string>
+  <string name="faint_penalty_body">Bir Seviye, Altınlarını ve biraz Ekipman kaybettin, ama çok çalışarak hepsini yeniden kazanabilirsin! İyi şanslar--bu işi becereceksin!</string>
+  <string name="faint_header">Sağlığın tükendi!</string>
+  <string name="faint_button">Sağlığını Doldur &amp; Tekrar Dene</string>
+  <string name="filter">Filtre</string>
+  <string name="profile_image">Profil Resmi</string>
+  <string name="mana_price_button" formatted="false">%d MP</string>
+  <string name="used_skill" formatted="false">%2$d mana karşılığında %1$s kullandın.</string>
+  <string name="used_skill_without_mana" formatted="false">%1$s kullandın.</string>
+  <string name="new_checklist_item">yeni yapılacak iş</string>
+  <string name="add_checklist_item">Ekle</string>
+  <string name="reminder_title">Günlük İşlerini kontrol etmeyi unutma!</string>
+  <string name="skill_progress_title">Yetenek Kullanma</string>
+  <string name="coming_soon">Yakında</string>
+  <string name="chat_flag_confirmation">Bu mesajı kural ihlali olarak bildirmek istediğine emin misin?</string>
+  <string name="flag_confirm">Mesajı İşaretle</string>
+  <string name="unlock_lvl_11">Seviye 11\'de aç</string>
+  <string name="no_party_message">Bir takıma üye değilsin. Bir takıma katılmak için lütfen internet sitesini ziyaret et. </string>
+  <string name="forgot_pw_btn">Şifremi Unuttum</string>
+  <string name="forgot_pw_tv">Şifreni mi unuttun? Lütfen mobil internet sitemizi kullan.</string>
+  <string name="tavern.inn.checkOut">Günlük İşlerini tekrar aktive et</string>
+  <string name="tavern.inn.rest">Günlük İşleri durdur</string>
+  <string name="reward.dialog.buy">Satın al</string>
+  <string name="reward.dialog.dismiss">Yoksay</string>
+  <string name="party">Takım</string>
+  <string name="chat">Sohbet</string>
+  <string name="members">Üyeler</string>
+  <string name="habits">Alışkanlıklar</string>
+  <string name="dailies">Günlük İşler</string>
+  <string name="todos">Yapılacak İşler</string>
+  <string name="rewards">Ödüller</string>
+  <string name="taskform.delete.title">Emin misin?</string>
+  <string name="taskform.delete.message">Gerçekten silmek istiyor musun?</string>
+  <string name="yes">Evet</string>
+  <string name="no">Hayır</string>
+  <string name="quest">Görev</string>
+  <string name="avatar_body">Vücut</string>
+  <string name="avatar_hair">Saç</string>
+  <string name="avatar_shirt">Gömlek</string>
+  <string name="avatar_skin">Ten</string>
+  <string name="avatar_ears">Hayvan Kulakları</string>
+  <string name="avatar_base">Üs</string>
+  <string name="avatar_color">Renk</string>
+  <string name="avatar_beard">Sakal</string>
+  <string name="avatar_mustache">Bıyık</string>
+  <string name="avatar_flower">Çiçek</string>
+  <string name="avatar_bangs">Kahkül</string>
+  <string name="avatar_nothing">Hiçbir şey ayarlanmadı</string>
+  <string name="avatar_size">Boyut</string>
+  <string name="avatar_size_slim">İnce</string>
+  <string name="avatar_size_broad">Geniş</string>
+  <string name="avatar_background">Arka plan </string>
+  <string name="purchase_customization">Özelleştirme Satın Al</string>
+  <string name="purchase_set_button" formatted="false">%d elmas ile setin kilidini aç</string>
+  <string name="purchase_button">Satın al</string>
+  <string name="purchase_set_title" formatted="false">%s seti satın al</string>
+  <string name="due_date">Son Tarih</string>
+  <string name="quest.accept">Kabul et</string>
+  <string name="quest.reject">Reddet</string>
+  <string name="quest.begin">Göreve Başla</string>
+  <string name="quest.cancel">Daveti İptal Et</string>
+  <string name="quest.abort">Görevi iptal et</string>
+  <string name="quest.leave">Görevden Ayrıl</string>
+  <string name="quest.pending">Gönderiliyor</string>
+  <string name="quest.accepted">Kabul edildi</string>
+  <string name="quest.rejected">Reddedildi</string>
+  <string name="quest.participants">Katılımcılar</string>
+  <string name="version_info" formatted="false">Versiyon %s (%d)</string>
+  <string name="sidebar_help">Yardım &amp; SSS</string>
+  <string name="complete_tutorial">Anladım!</string>
+  <string name="dismiss_tutorial">Daha sonra hatırlat</string>
+  <string name="intro_1_title">Habitica\'ya Hoş Geldin</string>
+  <string name="intro_1_description" formatted="false">%s\'dan fazla insanın bir şeyleri tamamlarken eğlenmesine katıl. Bir avatar oluştur ve gerçek hayatta ki görevlerini takip et.</string>
+  <string name="intro_2_title">Oyun Gelişimi = Yaşam Gelişimi</string>
+  <string name="intro_2_description">Gerçek hayatınızdaki görevleri tamamlayarak oyun içindeki özelliklerin kilidini açın. Zırh, evcil hayvan ve daha fazlasını hedeflerinizle tanıştığınızda ödül olarak kazanın.</string>
+  <string name="intro_3_title">Sosyalleş ve Canavarlarla Savaş</string>
+  <string name="intro_3_description">Hedeflerinizi arkadaşlarınızdan yardım alarak devam ettirin. Hayatta ve savaşlarda birbirinizi birlikte geliştirerek destek olun.</string>
+  <string name="intro_finish_button">Başla</string>
+  <string name="previous_button">Önceki</string>
+  <string name="next_button">Sonraki</string>
+  <string name="skip_button">Atla</string>
+  <string name="setup_welcome_description">Habitica\'ya hoşgeldin, oyunda ilerledikçe gerçek hayatını da geliştireceksin! Gerçek hayat hedeflerine ulaştıkça, ekipman, evcil hayvan, görevler ve dahasını da ortaya çıkaracaksın.</string>
+  <string name="setup_welcome_title">Hoş Geldin</string>
+  <string name="avatar_setup_description">Öncelikle, oyunda sizi temsil edecek bir avatar\'a ihtiyacınız var.  Gerçek hayatta yaptıklarınız avatar\'ınızın sağlığını, deneyim seviyesini ve altınlarını etkiliyecektir.</string>
+  <string name="task_setup_description">Müthiş! Şimdi görevlerinizi ayarlayarak deneyim ve altın kazanmaya başlayabilirsiniz.
+
+Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
+  <string name="setup_group_work">İş</string>
+  <string name="setup_group_exercise">Egzersiz</string>
+  <string name="setup_group_heathWellness">Sağlık + Kaliteli Yaşam</string>
+  <string name="setup_group_school">Okul</string>
+  <string name="setup_group_teams">Takımlar</string>
+  <string name="setup_group_chores">Günlük İşler</string>
+  <string name="setup_group_creativity">Yaratıcılık</string>
+  <string name="setup_task_work_1">E-postaları işle</string>
+  <string name="setup_task_work_2">En önemli iş</string>
+  <string name="setup_task_work_3">İş Projesi</string>
+  <string name="setup_task_exercise_1">10 dakikalık kardiyo</string>
+  <string name="setup_task_exercise_2">Esneme</string>
+  <string name="setup_task_exercise_3">Egzersiz programı oluştur</string>
+  <string name="setup_task_healthWellness_1">Sağlıklı beslen / sağlıksız besin</string>
+  <string name="setup_task_healthWellness_2">Diş ipi kullan</string>
+  <string name="setup_task_healthWellness_3">Sağlama planı</string>
+  <string name="setup_task_school_1">Ders çalış / Ertele</string>
+  <string name="setup_task_school_2">Ödev yap</string>
+  <string name="setup_task_school_3">Sınıf için görevlendirmeyi tamamla</string>
+  <string name="setup_task_teams_1">Takıma kayıt ol</string>
+  <string name="setup_task_teams_2">Takımın durumunu güncelle</string>
+  <string name="setup_task_teams_3">Takım projesini tamamla</string>
+  <string name="setup_task_chores_1">10 dakikalık temizlik</string>
+  <string name="setup_task_chores_2">Bulaşıkları yıka</string>
+  <string name="setup_task_chores_3">Dolabı düzenle</string>
+  <string name="setup_task_creativity_1">Bir zanaat uzmanlığına çalış</string>
+  <string name="setup_task_creativity_2">Yaratıcı bir proje üzerinde çalış</string>
+  <string name="setup_task_creativity_3">Yaratıcı projeyi bitir</string>
+  <string name="gem.purchase.support">Habitica\'yı canlı tutmamız için yardımcı olmak ister misiniz? Yapımcıları elmas alarak destekleyebilirsiniz!\n\nElmaslarla hesabınız için eğlenceli ekstralar alabilirsiniz, örneğin: \n\n - Avatar\'ınız için havalı kostümler\n - Muhteşem arkaplanlar\n - Evcil hayvan yumurtaları kazanacağınız eğlenceli görevler\n - 100. seviyeden evvel sınıfınızı değiştirebileceğiniz beceriler\n\nHabitica\'yı en iyisi yapmamız için yardımcı olduğunuz için teşekkürler. Desteğiniz bize çok şey ifade ediyor!</string>
+  <string name="my_guilds">Loncalarım</string>
+  <string name="public_guilds">Açık Loncalar</string>
+  <string name="guild">Lonca</string>
+  <string name="leave">Ayrıl</string>
+  <string name="join">Katıl</string>
+  <string name="leader">Lider</string>
+  <string name="gems">Elmaslar</string>
+  <string name="copy_as_todo">Yapılacak İşlere kopyala</string>
+  <string name="send_pm">ÖM Gönder</string>
+  <string name="flag">Bildir</string>
+  <string name="delete">Sil</string>
+  <string name="name">Ad</string>
+  <string name="description">Tanım</string>
+  <string name="add_tag">Etiket Ekle</string>
+  <string name="privacy">Gizlilik</string>
+  <string name="write_message">Mesaj Yaz</string>
+  <string name="post">Gönder</string>
+  <string name="guild_search_hint">Loncalarda ara</string>
+  <string name="todo_due" formatted="false">Şu zamana: %s</string>
+  <string name="daily_streak" formatted="false">mevcut seri: %d</string>
+  <string name="todo_has_duedate">Görevin Bitirme Tarihi var</string>
+  <string name="battle_gear">Savaş Ekipmanı</string>
+  <string name="costume">Kostüm</string>
+  <string name="outfit_head">Kafa</string>
+  <string name="outfit_headAccessory">Kafa Aksesuarı</string>
+  <string name="outfit_eyewear">Göz Aksesuarı</string>
+  <string name="outfit_armor">Zırh</string>
+  <string name="outfit_back">Sırt</string>
+  <string name="outfit_body">Vücut</string>
+  <string name="outfit_shield">Kalkan</string>
+  <string name="outfit_weapon">Silah</string>
+  <string name="wear_costume">Kostümü Giy</string>
+  <string name="equipped">Donatılmış</string>
+  <string name="quest_cancel_message">Bu görevi iptal etmek istediğinize emin misiniz?  Tüm davet kabulleri kaybolacak. Görev sahibi görev parşömeni sahipliğini sürdürecektir.</string>
+  <string name="quest.invitation">Görev Daveti</string>
+  <string name="quest_begin_message">Göreve başlamak istediğinize emin misiniz? Bir görev aktif ederseniz, ilave takım üyesi göreve katılamayacaktır.</string>
+  <string name="quest.invitation.text">Göreve katılmak için davet edildin!</string>
+  <string name="ago_1day">1 gün önce</string>
+  <string name="ago_days" formatted="false">%d gün önce</string>
+  <string name="ago_1Minute">1 dakika önce</string>
+  <string name="ago_minutes" formatted="false">%d dakika önce</string>
+  <string name="ago_hours" formatted="false">%d saat önce</string>
+  <string name="ago_1hour">1 saat önce</string>
+  <string name="today">Bugün</string>
+  <string name="sidebar_items">Eşyalar</string>
+  <string name="eggs">Yumurtalar</string>
+  <string name="hatching_potions">Kuluçka İksirleri</string>
+  <string name="food">Yiyecek</string>
+  <string name="quests">Görevler</string>
+  <string name="pets">Evcil Hayvanlar</string>
+  <string name="mounts">Binekler</string>
+  <string name="armoireEquipment" formatted="false">Gardırop içerisinde nadir bir Ekipman parçası buldun: : %s! Harika!</string>
+  <string name="armoireFood" formatted="false">Gardırobun altını üstünü getirdin ve %1$s %2$s buldun. Onun burada ne işi var?</string>
+  <string name="armoireExp">Gardırop ile güreştin ve Tecrübe kazandın. Al sana!</string>
+  <string name="armoireNotesFull" formatted="false">Gardırobu rastgele özel Ekipman, Tecrübe ve yiyecek elde etmek için açın! Kalan ekipman parçaları: %d</string>
+  <string name="armoireLastItem">Büyülü Gardırop içerisinde nadir Ekipman\'ın son parçasını da buldunuz.</string>
+  <string name="armoireNotesEmpty">Gardırop içerisinde her ayın ilk haftasında yeni bir Ekipman yer alacaktır. O zamana kadar Tecrübe ve Yiyecek için tıklamaya devam edin.</string>
+  <string name="sell" formatted="false">Sat (%s Altın)</string>
+  <string name="hatch_with_potion">İksir ile üretin</string>
+  <string name="feed_to_pet">Evcil hayvana besle</string>
+  <string name="hatch_egg">Yumurta ile üretin</string>
+  <string name="invite_party">Takımı davet et</string>
+  <string name="dialog_feeding" formatted="false">%1$s %2$s besle:</string>
+  <string name="use_animal">Kullan</string>
+  <string name="feed">Besle</string>
+  <string name="hatch_with" formatted="false">Evcil hayvanı %s ile üretin</string>
+  <string name="hatched_pet_title" formatted="false">%1$s %2$s ürettiniz!</string>
+  <string name="close">Kapat</string>
+  <string name="share">Paylaş</string>
+  <string name="notification_pet_fed" formatted="false">%1$s %2$s beslediniz!</string>
+  <string name="notification_purchase" formatted="false">%s satın alındı</string>
+  <string name="sectionpets">Temel Evcil Hayvanlar</string>
+  <string name="sectionpremiumPets">Büyü İksiri Evcil Hayvanları</string>
+  <string name="sectionquestPets">Görev Evcil Hayvanları</string>
+  <string name="sectionspecialPets">Nadir Evcil Hayvanlar</string>
+  <string name="sectionmounts">Temel Binekler</string>
+  <string name="sectionpremiumMounts">Büyü İksiri Binekleri</string>
+  <string name="sectionquestMounts">Görev Binekleri</string>
+  <string name="sectionspecialMounts">Nadir Binekler</string>
+  <string name="world_quest">Dünya Görevi</string>
+  <string name="inn_description">Gece boyunca tamamlayamadığınız Günlük Görevlerin sizi incitmesinden korunmak için Han\'da dinlenin. (Not: Canavar hasarı almaktan korumaz.)</string>
+  <string name="empty_items" formatted="false">Hiç %s sahibi değilsin</string>
+  <string name="user_level" formatted="false">SVY %s</string>
+  <string name="user_level_with_class" formatted="false">SVY %1$s - %2$s</string>
+  <string name="warrior">Savaşçı</string>
+  <string name="rogue">Düzenbaz</string>
+  <string name="mage">Büyücü</string>
+  <string name="healer">Şifacı</string>
+  <string name="warrior_description">Savaşçılar rastgele bonus Altın, Tecrübe ve Görev tamamlarken eşya düşürme şansı veren daha fazla ve iyi \"kritik vuruşlar\" yapar. Ayrıca final canavarlara yüksek hasar verirler. Eğer şans oyunu gibi tahmin edilemez ödüller bulmaktan veya final canavar seferlerinde acıtacak hasarlar vermekten motive oluyorsanız bir savaşçı olarak oynayabilirsiniz.</string>
+  <string name="mage_description">Büyücüler çabuk öğrenir, Tecrübe ve Seviyeleri diğer tüm sınıflardan hızlı kazanır. Ayrıca özel becerilerini kullanarak çok fazla Mana elde edebilirler. Alışkanlıkları taktiksel oyun açılarıyla oynamaktan keyif alıyorsanız, veya seviye atlamaktan ve gelişmiş özelliklerin kilidini açmaktan motive oluyorsanız bir büyücü olarak oynayabilirsiniz.</string>
+  <string name="rogue_description">Düzenbazlar servet biriktirmeyi, herkesten daha fazla Altın kazanmayı severler ve rastgele eşyalar bulmada uzmandırlar. Sembolik Gizlilik yetenekleri unutulan günlük görevlerin sonuçlarından sıyrılmasını sağlar. Eğer Ödüller ve Başarımlardan, ganimet ve rozetler için uğraşmaktan motivasyon buluyorsanız bir düzenbaz olarak oynayabilirsiniz.</string>
+  <string name="healer_description">Şifacılar hasarlara karşı  su getirmez bir şekilde karşı dururlar ve diğerlerine de bu korumayı sürdürürler. Unutulan Günlük Görevler ve Kötü Alışkanlıklar onları çok fazla ürkütmez ve başarısızlıklardan dolayı oluşan sağlıkları iyileştirirler. Takımdaki diğerlerine refakat etmekten veya zor görevlerden dolayı Ölümü atlatma fikri sizi heyecanlandırıyorsa bir şifacı olarak oynayabilirsiniz.</string>
+  <string name="select_class">Sınıf Seç</string>
+  <string name="opt_out_class">Çekil</string>
+  <string name="opt_out_description">Sınıflarla rahatsız edilmek istemiyor musun? Daha sonra seçmek ister misin? Çekilirsen - özel becerileri olmayan bir savaşçı olacaksın. Wiki\'de sınıf sistemin hakkında daha sonra bilgi edinebilir ve istediğin zaman sınıfları aktif edebilirsin.</string>
+  <string name="class_confirmation" formatted="false">Bir %s olmak istediğine emin misin?</string>
+  <string name="class_changed">Yeni sınıfınız: %s!</string>
+  <string name="class_changed_description">Ekipmanlar menüsü altında değiştirebileceğiniz yeni varsayılan Savaş Ekipmanınız var!</string>
+  <string name="choose_class">Sınıf Seç</string>
+  <string name="dialog_go_back">Geri dön</string>
+  <string name="opt_out_confirmation">Çekilmek istediğinizden emin misiniz?</string>
+  <string name="change_class">Sınıfınızı değiştirin</string>
+  <string name="change_class_description">3 elmas karşılığında sınıfını değiştir ve özellik puanlarını geri al. Özellik puanlarını website üzerinden atayabilirsiniz</string>
+  <string name="enable_class">Sınıf Sistemini Aktif Et</string>
+  <string name="changing_class_progress">Sınıf Değiştirme</string>
+  <string name="by_email">Eposta ile</string>
+  <string name="invite_existing_users">Mevcut Kullanıcıları Davet Et</string>
+  <string name="send">Gönder</string>
+  <string name="invite">Arkadaşlarını Davet Et</string>
+  <string name="invite_id_description">Habitica kullanan arkadaşlarınız var ise, Kullanıcı ID\'leri ile davet edebilirsiniz.</string>
+  <string name="invite_email_description">Epostanız ile bir arkadaşınız Habitica\'ya katılırsa, otomatik olarak takımınıza davet edilecektir.</string>
+  <string name="add_invites">Davetleri Ekle</string>
+  <string name="user_id">Kullanıcı ID</string>
+  <string name="email">Eposta</string>
+  <string name="invite_users">Takıma davet et</string>
+  <string name="share_using">Kullanımı paylaş</string>
+  <string name="share_levelup" formatted="false">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %s seviye elde ettim.</string>
+  <string name="share_hatched" formatted="false">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s %2$s evcil hayvan ürettim.</string>
+  <string name="share_raised" formatted="false">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s %2$s binek kazandım.</string>
+  <string name="open_in_store">Play Store\'da Aç</string>
+  <string name="change_class_confirmation">Sınıfınızı değiştirmek istediğinize emin misiniz? Bu işlem 3 elmasa mal olacaktır.</string>
+  <string name="change_class_equipment_warning">Uyarı: %s sınıfından ekipman alamayacaksınız.</string>
+  <string name="leaderMessage" formatted="false">%1$s \'dan Mesaj Geldi</string>
+  <string name="leaderName" formatted="false">Lider: %1$s</string>
+  <string name="confirm">Onayla</string>
+  <string name="market">Pazar</string>
+  <string name="timeTravelers">Zaman Yolcuları</string>
+  <string name="seasonalShop">Mevsimsel Dükkan</string>
+  <string name="empty_inbox">Gelen kutunuzda mesajınız bulunmuyor. Bir kullanıcıya açık sohbet mesaj alanından bir mesaj gönderebilirsiniz.</string>
+  <string name="party_invite">Arkadaşlarını davet ederek kilidi aç</string>
+  <string name="no_gold">Yeterli Altın yok</string>
+  <string name="no_potion">Sağlık iksiri satın almanıza gerek yoktur</string>
+  <string name="successful_purchase" formatted="false">%1$s başarıyla satın alındı</string>
+  <string name="purchase_confirmation_title">Satın almayı onayla</string>
+  <string name="confirm_purchase_text" formatted="false">%2$s %3$s karşılığında %1$s satın al</string>
+  <string name="gem">elmas</string>
+  <string name="hourglass">kumsaati</string>
+  <string name="hourglasses">kumsaatleri</string>
+  <string name="gold_singular">altın</string>
+  <string name="gold_plural">altın</string>
+  <string name="chat_message_copied">Mesaj Panoya kopyalandı</string>
+  <string name="copy_chat_message">Panoya kopyala</string>
+  <string name="edit_tag_title">Etiketi Düzenle</string>
+  <string name="edit_tag_btn_edit">Düzenle</string>
+  <string name="edit_tag_btn_done">Tamam</string>
+  <string name="edit_tag_btn_delete">Sil</string>
+  <string name="confirm_delete_tag_title">Emin misin?</string>
+  <string name="confirm_delete_tag_message">Silmek istediğine emin misin?</string>
+  <string name="filter_drawer_edit_tags">Etiketleri Düzenle</string>
+  <string name="filter_drawer_filter_tags">Etikete göre filtrele</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">Bir kişi sizi bu QR kod ile davet etmiştir</string>
+  <string name="qr_save_message">QR kod kaydedildi</string>
+  <string name="qr_dialogue_title">QR Kodun</string>
+  <string name="download">İndir</string>
+  <string name="send_new_message">Yeni mesaj gönder</string>
+  <string name="choose_recipient_title">Mesaj Alıcısını Seç</string>
+  <string name="action_continue">Devam Et</string>
+  <string name="scan_qr_code">QR Kodunu Tara</string>
+  <string name="enter_recipient_uuid">Alıcının Kullanıcı ID\'sini gir</string>
+  <string name="invited_to_party">Bir takıma katılmak için davet edildin!</string>
+  <string name="stats_widget_label">Habitica İstatistikleri</string>
+  <string name="add_task">İş Ekle</string>
+  <string name="add_habit">Alışkanlık Ekle</string>
+  <string name="add_daily">Günlük İş Ekle</string>
+  <string name="add_todo">Yapılacak İş Ekle</string>
+  <string name="add_reward">Ödül Ekle</string>
+  <string name="all_dailies_completed">Tüm günlük işlerini tamamladın. Tebrikler!</string>
+  <string name="widget_habit_button">Habitica Alışkanlığı Yap</string>
+  <string name="widget_dailies">Habitica Günlük İşler</string>
+  <string name="widget_todo_list">Habitica Yapılacak İşler Listesi</string>
+  <string name="widget_add_task">Habitica İş Ekle</string>
+  <string name="google_services_missing">Google play services bulunamadı.</string>
+  <string name="gem.purchase.toolbartitle">Satın al</string>
+  <string name="gem.purchase.title">Elmas satın almak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
+  <string name="gem.purchase.subtitle">Elmaslar hesabınız için eğlenceli ekstralar satın almanızı sağlar, dahil olmak üzere:</string>
+  <string name="gem.purchase.listitem1">Avatarın için güzel kostümler</string>
+  <string name="gem.purchase.listitem2">Muhteşem arka planlar</string>
+  <string name="gem.purchase.listitem3">Sizi evcil hayvan yumurtası ile ödüllendiren görevler</string>
+  <string name="gem.purchase.listitem4">100. seviyeden önce sınıf değiştirme imkânı</string>
+  <string name="support_habitica">Habitica\'ya Destek Ol</string>
+  <string name="skill_transformation_use">kullan</string>
+  <string name="hatching_market_info">İş tamamlarken doğru eşyalar düşmedi mi? Pazara bir göz at!</string>
+  <string name="feeding_market_info">Farklı yiyecek mi lazım? Pazardan satın al!</string>
+  <string name="open_market">Pazar\'ı Aç</string>
+  <string name="cds_description" formatted="false">Günlük görevleriniz Habitica\'yı %1$s\'den sonra ilk defa kullanacağınızda sıfırlanacaktır. Bu saatten önce günlük görevlerinizi yaptığınızdan emin olun!</string>
+  <string name="AudioTheme_title">Ses Teması</string>
+  <string name="AudioTheme_summary">Habitica Ses Temasını Değiştir</string>
+  <!--Login Incentives-->
+  <string name="see_you_tomorrow">Yarın görüşürüz!</string>
+  <string name="belongs_to_challenge">Bir Mücadeleye ait</string>
+  <string name="has_reminder">Hatırlatıcı Mevcut</string>
+  <string name="has_tag">Etiket Mevcut</string>
+  <string name="byLeader" formatted="false">%s \'a/e göre</string>
+  <string name="challenge_details">Mücadelele Detayları</string>
+  <string name="challenge_leave_title">Mücadeleden Ayrıl</string>
+  <string name="challenge_leave_text">\"%s\" Mücadelesinden çıkmak istediğinden emin misin?</string>
+  <string name="my_challenges">Benim Mücadelelerim</string>
+  <string name="public_challenges">Herkese Açık</string>
+  <string name="challenges">Mücadeleler</string>
+  <string name="daily">Günlük İş</string>
+  <string name="habit">Alışkanlık</string>
+  <string name="reward">Ödül</string>
+  <string name="todo">Yapılacak İş</string>
+  <string name="official">Resmi</string>
+  <string name="participating">Katılan</string>
+  <string name="challenge">Mücadele</string>
+  <string name="go_to_challenge">Mücadeleye Git</string>
+  <string name="not_part_of_a_challenge">Henüz herhangi bir Mücadele katılımcısı değilsin!</string>
+  <string name="add_reminder">Hatırlatıcı Ekle</string>
+  <string name="open_settings">Ayarları Aç</string>
+</resources>
