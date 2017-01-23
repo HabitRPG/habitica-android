@@ -133,4 +133,7 @@ public class TavernFragment extends BaseMainFragment {
             tabLayout.setupWithViewPager(viewPager);
         }
     }
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_tavern);	}
 }

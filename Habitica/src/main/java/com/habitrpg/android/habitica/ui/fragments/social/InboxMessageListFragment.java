@@ -134,4 +134,6 @@ public class InboxMessageListFragment extends BaseMainFragment
 
             UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
         }
+
+
 }

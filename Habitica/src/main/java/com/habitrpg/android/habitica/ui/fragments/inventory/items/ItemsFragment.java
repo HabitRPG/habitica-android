@@ -133,4 +133,8 @@ public class ItemsFragment extends BaseMainFragment {
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
     }
+
+
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_items);	}
 }

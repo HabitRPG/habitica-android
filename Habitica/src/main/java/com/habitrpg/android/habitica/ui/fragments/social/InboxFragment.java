@@ -205,4 +205,9 @@ public class InboxFragment extends BaseMainFragment
             }
         }
     }
+
+	@Override
+	public String customTitle() {
+		return getString(R.string.sidebar_inbox);
+	}
 }
