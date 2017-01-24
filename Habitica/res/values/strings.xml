@@ -473,4 +473,6 @@ To start, which parts of your life do you want to improve?</string>
     <string name="dont_keep_activities_warning">It seems like you have the Developer option \"Don\'t keep Activities\" active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
     <string name="inbox">Inbox</string>
     <string name="FAQ">Frequently Asked Questions</string>
+    <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
+    <string name="nextPrizeUnlocks">Your next prize unlocks at %1$d Check-Ins</string>
 </resources>
