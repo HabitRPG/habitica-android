@@ -34,6 +34,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -257,11 +258,11 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void call(List<ChatMessage> chatMessages) {
-        currentChatMessages = chatMessages;
+        currentChatMessages = reduceSystemMessages(chatMessages);
 
         //Load unparsed messages first
         if (chatAdapter != null) {
-            chatAdapter.setMessages(chatMessages);
+            chatAdapter.setMessages(currentChatMessages);
         }
 
         if (swipeRefreshLayout != null) {
@@ -269,7 +270,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         //Parse chatMessages in AsyncTask
-        ParseMessages parseMessages = new ParseMessages(chatMessages);
+        ParseMessages parseMessages = new ParseMessages(currentChatMessages);
         parseMessages.execute();
         gotNewMessages = true;
 
@@ -295,13 +296,66 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
         protected void onPostExecute(Void result) {
             if (chatAdapter != null) {
-                chatAdapter.setMessages(chatMessages);
+                chatAdapter.setMessages((chatMessages));
             }
 
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
+
+
     }
 
+	private List<ChatMessage> reduceSystemMessages(List<ChatMessage> chatMessages)
+	{
+		List<ChatMessage> input = chatMessages;
+		List<ChatMessage> output = new ArrayList<>();
+
+		for(ChatMessage msg : input )
+		{
+			if (msg.user == null || msg.user.equals("")) {
+				msg.user = "system";
+			}
+		}
+
+		int duplicateCounter = 1;
+
+		for(int i = 0; i < chatMessages.size(); i++)
+		{
+			ChatMessage currentMsg  = chatMessages.get(i);
+			ChatMessage nextMsg;
+
+			//last message
+			if(i == chatMessages.size() - 1 && duplicateCounter != 1) {
+				currentMsg.text += getString(R.string.multipleCast, duplicateCounter);
+				output.add(currentMsg);
+				continue;
+			}
+			else if(i == chatMessages.size() - 1) {
+				output.add(currentMsg);
+				continue;
+			}
+			else
+			{
+				nextMsg = chatMessages.get(i + 1);
+
+				if(nextMsg.user.equals(currentMsg.user) && nextMsg.text.equals(currentMsg.text))
+				{
+					duplicateCounter++;
+					continue;
+				}
+				else if(duplicateCounter != 1)
+				{
+					currentMsg.text = currentMsg.text.substring(0, currentMsg.text.length()).concat(" `" + getString(R.string.multipleCast, duplicateCounter) + "`");
+					output.add(currentMsg);
+					duplicateCounter = 1;
+					continue;
+				}
+				output.add(currentMsg);
+			}
+		}
+
+		return output;
+	}
 }
