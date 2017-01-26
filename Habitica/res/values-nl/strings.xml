@@ -139,7 +139,6 @@
   <string name="members">Leden</string>
   <string name="habits">Gewoontes</string>
   <string name="dailies">Dagelijkse taken</string>
-  <string name="todos">To-do\'s</string>
   <string name="rewards">Beloningen</string>
   <string name="taskform.delete.title">Weet je het zeker?</string>
   <string name="taskform.delete.message">Wil je het echt verwijderen?</string>
@@ -320,6 +319,8 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="opt_out_class">Afmelden</string>
   <string name="opt_out_description">Vind je het klassesysteem te ingewikkeld voor nu? Wil je later pas kiezen? Trek je terug - je zal een krijger zijn zonder speciale talenten. Je kan later nog over het klassesysteem lezen op de wiki en op eender welk moment klassen inschakelen.</string>
   <string name="class_confirmation" formatted="false">Weet je zeker dat je een %s wilt zijn?</string>
+  <string name="class_changed">Je bent nu een %s!</string>
+  <string name="class_changed_description">Je hebt nieuw standaard gevechtsuitrusting dat je kan veranderen onder Uitrusting!</string>
   <string name="choose_class">Kies een Klasse</string>
   <string name="dialog_go_back">Ga terug</string>
   <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
@@ -343,6 +344,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="share_raised" formatted="false">Ik heb net een %1$s %2$s rijdier gekregen in Habitica door mijn echte taken uit te voeren!</string>
   <string name="open_in_store">Open in de play store</string>
   <string name="change_class_confirmation">Weet je zeker dat je van klasse wilt veranderen? Dit kost 3 edelstenen.</string>
+  <string name="change_class_equipment_warning">Waarschuwing: Je zult niet langer in staat zijn om uitrusting te kopen van de %s klasse.</string>
   <string name="leaderMessage" formatted="false">Bericht van %1$s</string>
   <string name="leaderName" formatted="false">Leider: %1$s</string>
   <string name="confirm">Bevestig</string>

@@ -319,6 +319,8 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="opt_out_class">Cancelar</string>
   <string name="opt_out_description">Não quer se preocupar com classes? Quer escolher depois? Cancelar - você será um guerreiro sem habilidades especiais. Você pode ler sobre o sistema de classes mais tarde na wiki e habilitá-las a qualquer momento.</string>
   <string name="class_confirmation" formatted="false">Você tem certeza que quer ser um %s?</string>
+  <string name="class_changed">Você é um %s agora!</string>
+  <string name="class_changed_description">Você tem a nova Engrenagem de Batalha padrão, que você pode alterar em equipamentos!</string>
   <string name="choose_class">Escolha a sua classe</string>
   <string name="dialog_go_back">Voltar</string>
   <string name="opt_out_confirmation">Você tem certeza que quer cancelar?</string>
@@ -343,7 +345,9 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="share_raised" formatted="false">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
   <string name="open_in_store">Abra na Play Store</string>
   <string name="change_class_confirmation">Você tem certeza que quer mudar sua classe? Isso irá custar 3 gemas.</string>
+  <string name="change_class_equipment_warning">Aviso: Você não poderá mais comprar equipamentos da classe %s.</string>
   <string name="leaderMessage" formatted="false">Mensagem de %1$s</string>
+  <string name="leaderName" formatted="false">Líder: %1$s</string>
   <string name="confirm">Confirmar</string>
   <string name="market">Mercado</string>
   <string name="timeTravelers">Viajantes no tempo</string>
@@ -410,4 +414,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="AudioTheme_summary">Mudar o tema de áudio do Habitica</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">Vejo você amanhã!</string>
+  <string name="belongs_to_challenge">Pertence ao Desafio</string>
+  <string name="has_reminder">Tem Lembrete</string>
+  <string name="has_tag">Tem Etiqueta</string>
 </resources>

@@ -320,6 +320,7 @@
   <string name="opt_out_class">選ばない</string>
   <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
   <string name="class_confirmation" formatted="false">%s になります。いいですか?</string>
+  <string name="class_changed">あなたは%s に転職した！</string>
   <string name="choose_class">クラスを選ぶ</string>
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいい?</string>

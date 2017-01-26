@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_pets_and_mounts">Peliharan &amp; Tunggangan</string>
+    <string name="profile_pets_found">Peliharaan Temuan</string>
+    <string name="profile_mounts_tamed">Tunggangan yang terjinakkan</string>
+    <string name="profile_loading_data">memuat data anggota.</string>
+    <string name="profile_send_message_to">Mengirim pesan ke %s</string>
+    <string name="profile_message_sent_to">Pesan terkirim ke %s</string>
+    <string name="profile_level">Tingkat:</string>
+    <string name="profile_class_bonus">Bonus-Kelas:</string>
+    <string name="profile_allocated">Teralokasi:</string>
+    <string name="profile_boosts">Tambahan:</string>
+    <string name="profile_private_message">Pesan Pribadi</string>
+    <string name="profile_achievements">Pencapaian</string>
+    <string name="profile_achievement_ok">Oke</string>
+
+</resources>

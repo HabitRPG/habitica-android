@@ -139,7 +139,6 @@
   <string name="members">Członkowie</string>
   <string name="habits">Nawyki</string>
   <string name="dailies">Codzienne</string>
-  <string name="todos">DoZrobienia</string>
   <string name="rewards">Nagrody</string>
   <string name="taskform.delete.title">Jesteś pewien?</string>
   <string name="taskform.delete.message">Czy na pewno chcesz usunąć?</string>
@@ -320,6 +319,8 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="opt_out_class">Wycofaj się</string>
   <string name="opt_out_description">Nie zależy ci na klasach? Chcesz wybrać później? Wycofaj się - będziesz wojownikiem bez specjalnych umiejętności. Możesz przeczytać o systemie klas później na wiki i włączyć klasy w każdej chwili.</string>
   <string name="class_confirmation" formatted="false">Jesteś pewien, że chcesz być %s?</string>
+  <string name="class_changed">Jesteś teraz %s!</string>
+  <string name="class_changed_description">Masz nowe domyślne wyposażenie bojowe, które możesz zmienić pod Wyposażeniem!</string>
   <string name="choose_class">Wybierz klasę postaci</string>
   <string name="dialog_go_back">Wróć</string>
   <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
@@ -343,6 +344,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="share_raised" formatted="false">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
+  <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s</string>
   <string name="leaderMessage" formatted="false">Wiadomość od %1$s</string>
   <string name="leaderName" formatted="false">Lider: %1$s</string>
   <string name="confirm">Potwierdź</string>
@@ -411,4 +413,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">Do zobaczenia jutro </string>
+  <string name="belongs_to_challenge">Należy do wyzwania</string>
+  <string name="has_reminder">Ma powiadomienie</string>
+  <string name="has_tag">Ma tag</string>
 </resources>

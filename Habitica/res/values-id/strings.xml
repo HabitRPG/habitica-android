@@ -27,6 +27,7 @@
   <string name="pref_cds_picker">Atur Awal Hari</string>
   <string name="pref_push_notifications_checkbox">Notifikasi Tampil Pengguna</string>
   <string name="push_notifications">Notifikasi Tampil</string>
+  <string name="push_notifications_sum">Pengaturan notifikasi</string>
   <string name="preference_push_you_won_challenge">Kamu memenangkan sebuah Tantangan!</string>
   <string name="preference_push_received_a_private_message">Menerima sebuah Pesan Pribadi</string>
   <string name="preference_push_gifted_gems">Permata terhadiahkan</string>
@@ -53,6 +54,7 @@
   <string name="confirmpassword">Konfirmasi kata sandi</string>
   <string name="logout">Keluar</string>
   <string name="logout_description">Keluar dari akun anda</string>
+  <string name="account_details_sum">Cek detail akun anda</string>
   <string name="account_details">Detail Akun</string>
   <string name="LoginActivityName">Selamat Datang</string>
   <string name="string_revive">Pulihkan</string>
@@ -136,7 +138,7 @@
   <string name="chat">Obrolan</string>
   <string name="members">Anggota</string>
   <string name="habits">Kebiasaan</string>
-  <string name="dailies">Keseharian</string>
+  <string name="dailies">Harian</string>
   <string name="rewards">Hadiah</string>
   <string name="taskform.delete.title">Apakah kamu yakin?</string>
   <string name="taskform.delete.message">Apakah kamu benar-benar ingin menghapus?</string>
@@ -317,6 +319,8 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="opt_out_class">Matikan Fitur</string>
   <string name="opt_out_description">Tidak ingin diganggu dengan profesi? Ingin memilih nanti saja? Matikan fitur - kamu akan menjadi seorang Prajurit tanpa kemampuan spesial. Kamu dapat membaca mengenai sistem profesi nanti di wiki dan mengaktifkan fitur profesi kapan saja.</string>
   <string name="class_confirmation" formatted="false">Apakah kamu yakin ingin menjadi seorang %s?</string>
+  <string name="class_changed">Kamu sekarang seorang %s! </string>
+  <string name="class_changed_description">Kamu memiliki Baju Perang baru yang dapat diganti pada menu Perlengkapan! </string>
   <string name="choose_class">Pilih Kelas</string>
   <string name="dialog_go_back">Kembali</string>
   <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin mematikan fitur?</string>
@@ -340,7 +344,9 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="share_raised" formatted="false">Saya baru mendapatkan tunggangan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
   <string name="open_in_store">Buka di Play Store</string>
   <string name="change_class_confirmation">Apa kamu yakin untuk mengubah kelas? Ini akan membutuhkan 3 permata.</string>
+  <string name="change_class_equipment_warning">Peringatan: Kamu tidak akan dapat membeli perlengkapan untuk profesi %s. </string>
   <string name="leaderMessage" formatted="false">Pesan dari %1$s</string>
+  <string name="leaderName" formatted="false">Ketua: %1$s</string>
   <string name="confirm">Pastikan</string>
   <string name="market">Pasar</string>
   <string name="timeTravelers">Penjelajah Waktu</string>
@@ -387,6 +393,7 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="all_dailies_completed">Anda telah menyelesaikan semua keseharianmu. Selamat!</string>
   <string name="widget_habit_button">Habitica Melakukan Kebiasaan</string>
   <string name="widget_dailies">Keseharian Habitica</string>
+  <string name="widget_todo_list">Daftar Tugas Habitica</string>
   <string name="widget_add_task">Habitica Menambahkan Tugas</string>
   <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
   <string name="gem.purchase.toolbartitle">Bayar</string>
@@ -402,5 +409,11 @@ Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="feeding_market_info">Butuh makanan yang berbeda? Beli lebih dari pasar!</string>
   <string name="open_market">Buka Pasar</string>
   <string name="cds_description" formatted="false">Keseharianmu akan reset pada saat kamu membuka Habitica di atas %1$s. Pastikan kamu telah menyelesaikan Keseharianmu sebelum jam tersebut!</string>
+  <string name="AudioTheme_title">Tema Nada</string>
+  <string name="AudioTheme_summary">Ganti Tema Nada Habitica</string>
   <!--Login Incentives-->
+  <string name="see_you_tomorrow">Sampai jumpa besok! </string>
+  <string name="belongs_to_challenge">Milik Tantangan</string>
+  <string name="has_reminder">Memiliki Pengingat</string>
+  <string name="has_tag">Memiliki Label</string>
 </resources>

@@ -83,7 +83,7 @@
   <string name="tags">Etichette</string>
   <string name="trivial">Triviale</string>
   <string name="easy">Facile</string>
-  <string name="medium">Medio</string>
+  <string name="medium">Media</string>
   <string name="hard">Difficile</string>
   <string name="start_date">Data di partenza</string>
   <string name="positive_habit_form">Positiva ( + )</string>
@@ -139,7 +139,6 @@
   <string name="members">Membri</string>
   <string name="habits">Habit</string>
   <string name="dailies">Daily</string>
-  <string name="todos">To-do</string>
   <string name="rewards">Ricompense</string>
   <string name="taskform.delete.title">Sei sicuro?</string>
   <string name="taskform.delete.message">Vuoi davvero eliminare?</string>
@@ -321,6 +320,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="opt_out_class">Rinuncia</string>
   <string name="opt_out_description">Non ti vuoi preoccupare dellle classi? Vuoi scegliere dopo? Puoi essere un guerriero senza abilità speciali. Puoi leggere a proposito del sistema di classi più tardi nella Wiki ed abilitare le classi quando vuoi.</string>
   <string name="class_confirmation" formatted="false">Vuoi davvero essere un %s?</string>
+  <string name="class_changed">Ora sei un %s!</string>
   <string name="choose_class">Scegli classe</string>
   <string name="dialog_go_back">Ritorna</string>
   <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
@@ -344,6 +344,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="share_raised" formatted="false">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
+  <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
   <string name="leaderMessage" formatted="false">Messaggio da %1$s</string>
   <string name="leaderName" formatted="false">Leader: %1$s</string>
   <string name="confirm">Conferma</string>

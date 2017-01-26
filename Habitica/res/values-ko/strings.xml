@@ -139,7 +139,6 @@
   <string name="members">멤버</string>
   <string name="habits">습관</string>
   <string name="dailies">일일과제</string>
-  <string name="todos">해야 할 일</string>
   <string name="rewards">보상</string>
   <string name="taskform.delete.title">확실합니까?</string>
   <string name="taskform.delete.message">삭제하시겠습니까?</string>
@@ -327,6 +326,8 @@
   <string name="opt_out_class">선택 유예</string>
   <string name="opt_out_description">직업을 신경쓰고 싶지 않으신가요? 나중에 고르고 싶으시다고요? 선택유예 하세요 - 당신은 아무런 능력이 없는 전사가 되어있을 꺼에요. wiki를 방문하면 직업시스템에 대해서 자세히 알 수 있고, 이후에 언제라도 직업을 선택할 수 있습니다.</string>
   <string name="class_confirmation" formatted="false">%s 가 되고싶은 것이 확실한가요?</string>
+  <string name="class_changed">%s가 되었습니다!</string>
+  <string name="class_changed_description">장비 메뉴에서 교체할 수 있는 새로운 기본 전투 장비를 얻었습니다!</string>
   <string name="choose_class">직업 선택</string>
   <string name="dialog_go_back">뒤로 가기</string>
   <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
@@ -350,6 +351,7 @@
   <string name="share_raised" formatted="false">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
   <string name="open_in_store">플레이스토어로 열기</string>
   <string name="change_class_confirmation">보석 3개를 사용하여 직업을 바꾸시겠습니까? </string>
+  <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
   <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
   <string name="leaderName" formatted="false">리더: %1$s</string>
   <string name="confirm">확인</string>
@@ -418,6 +420,7 @@
   <string name="AudioTheme_summary">Habitica 오디오 바꾸기</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">내일 봐요!</string>
+  <string name="belongs_to_challenge">도전과제에 속함</string>
   <string name="has_reminder">알림 있음</string>
   <string name="has_tag">태그 있음</string>
 </resources>

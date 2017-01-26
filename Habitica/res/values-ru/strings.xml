@@ -139,7 +139,6 @@
   <string name="members">Участники</string>
   <string name="habits">Привычки</string>
   <string name="dailies">Ежедневные задания</string>
-  <string name="todos">Задачи</string>
   <string name="rewards">Награды</string>
   <string name="taskform.delete.title">Вы уверены?</string>
   <string name="taskform.delete.message">Вы уверены, что хотите удалить?</string>
@@ -320,6 +319,8 @@
   <string name="opt_out_class">Отказаться</string>
   <string name="opt_out_description">Не хотите утруждать себя классами? Тогда откажитесь — и останетесь воином и ваши очки будут обрабатываться автоматически. Активировать классы можно будет позже в меню настроек.</string>
   <string name="class_confirmation" formatted="false">Вы уверены, что хотите быть %s?</string>
+  <string name="class_changed">Теперь вы %s!</string>
+  <string name="class_changed_description">У вас есть новая Боевая Экипировка по умолчанию, которую вы можете сменить в секции Снаряжение!</string>
   <string name="choose_class">Выбрать класс</string>
   <string name="dialog_go_back">Вернуться назад</string>
   <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
@@ -343,6 +344,7 @@
   <string name="share_raised" formatted="false">Я только что получил скакуна %1$s %2$s в Habitica, выполняя задачи в реальной жизни!</string>
   <string name="open_in_store">Откройте в Play маркет</string>
   <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 кристалла.</string>
+  <string name="change_class_equipment_warning">Осторожно: Вы больше не сможете покупать снаряжение класса %s.</string>
   <string name="leaderMessage" formatted="false">Сообщение от %1$s</string>
   <string name="leaderName" formatted="false">Предводитель: %1$s</string>
   <string name="confirm">Подтвердить</string>

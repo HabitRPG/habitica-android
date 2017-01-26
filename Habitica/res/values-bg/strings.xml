@@ -139,7 +139,6 @@
   <string name="members">Членове</string>
   <string name="habits">Навици</string>
   <string name="dailies">Ежедн.</string>
-  <string name="todos">Задачи</string>
   <string name="rewards">Награди</string>
   <string name="taskform.delete.title">Сигурен/на ли сте?</string>
   <string name="taskform.delete.message">Наистина ли искате да изтриете това?</string>
@@ -320,6 +319,8 @@
   <string name="opt_out_class">Отказване</string>
   <string name="opt_out_description">Не Ви се занимава с класове? Искате да изберете по-късно? Откажете се от тях — ще бъдете воин без специални умения. Можете да прочетете относно класовата система по-късно в уикито, както и да включите класовете когато пожелаете.</string>
   <string name="class_confirmation" formatted="false">Наистина ли искате да бъдете %s?</string>
+  <string name="class_changed">Вие вече сте %s!</string>
+  <string name="class_changed_description">Вече имате ново бойно снаряжение по подразбиране, което можете да намерите в „Екипировка“!</string>
   <string name="choose_class">Избиране на класа</string>
   <string name="dialog_go_back">Назад</string>
   <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
@@ -343,6 +344,7 @@
   <string name="share_raised" formatted="false">Току-що се сдобих с превоз — %1$s %2$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
   <string name="open_in_store">Отваряне в магазина</string>
   <string name="change_class_confirmation">Наистина ли искате да промените класа си? Това ще Ви струва 3 диаманта.</string>
+  <string name="change_class_equipment_warning">Внимание: Повече няма да можете да купувате екипировка за класа „%s“.</string>
   <string name="leaderMessage" formatted="false">Съобщение от %1$s</string>
   <string name="leaderName" formatted="false">Водач: %1$s</string>
   <string name="confirm">Потвърждаване</string>

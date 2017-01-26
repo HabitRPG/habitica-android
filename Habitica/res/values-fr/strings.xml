@@ -139,7 +139,6 @@
   <string name="members">Membres</string>
   <string name="habits">Habitudes</string>
   <string name="dailies">Tâches Quotidiennes</string>
-  <string name="todos">À faire</string>
   <string name="rewards">Récompenses</string>
   <string name="taskform.delete.title">Êtes-vous sûr·e ?</string>
   <string name="taskform.delete.message">Voulez-vous vraiment supprimer ceci ?</string>
@@ -320,6 +319,8 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="opt_out_class">Désactiver</string>
   <string name="opt_out_description">Les classes vous ennuient ? Vous voulez choisir plus tard ? Désactivez-les - vous serez un combattant sans capacités spéciales. Vous pouvez vous renseigner plus tard sur le système de classe sur le wiki et activer les classes à tout moment.</string>
   <string name="class_confirmation" formatted="false">Êtes vous sûr de vouloir devenir un %s?</string>
+  <string name="class_changed">Vous êtes maintenant un %s !</string>
+  <string name="class_changed_description">Vous avez une nouvelle tenue de combat par défaut que vous pouvez changer dans l\'équipement !</string>
   <string name="choose_class">Choisissez une classe</string>
   <string name="dialog_go_back">Revenir</string>
   <string name="opt_out_confirmation">Êtes-vous sûr-e de vouloir désactiver votre compte?</string>
@@ -343,6 +344,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="share_raised" formatted="false">Je viens de gagner un-e %1$s %2$s monture en réalisant mes tâches quotidiennes!</string>
   <string name="open_in_store">Ouvrir dans le Play Store</string>
   <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
+  <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>
   <string name="leaderMessage" formatted="false">Message de %1$s</string>
   <string name="leaderName" formatted="false">Leader : %1$s</string>
   <string name="confirm">Confirmer</string>
@@ -396,7 +398,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
   <string name="gem.purchase.toolbartitle">Acheter</string>
   <string name="gem.purchase.title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
-  <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme:</string>
+  <string name="gem.purchase.subtitle">Les gemmes permettent d\'acheter des extras amusants pour votre compte, comme :</string>
   <string name="gem.purchase.listitem1">Des costumes chouettes pour votre avatar</string>
   <string name="gem.purchase.listitem2">De magnifiques arrière-plans</string>
   <string name="gem.purchase.listitem3">Des quêtes qui vous récompensent avec des oeufs de familiers</string>
