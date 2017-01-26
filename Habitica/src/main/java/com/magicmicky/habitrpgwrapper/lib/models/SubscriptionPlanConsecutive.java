@@ -1,10 +1,24 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
-public class SubscriptionPlanConsecutive {
+import com.habitrpg.android.habitica.HabitDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
+@Table(databaseName = HabitDatabase.NAME)
+public class SubscriptionPlanConsecutive extends BaseModel {
+
+    @Column
+    @PrimaryKey
+    public String customerId;
+    @Column
     private int trinkets;
+    @Column
     private int gemCapExtra;
+    @Column
     private int offset;
+    @Column
     private int count;
 
     public int getTrinkets() {

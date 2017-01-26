@@ -132,10 +132,11 @@
                 android:text="@string/cancel_subscription"
                 style="@style/subscriptionBoxText.Title.Red" />
         <TextView
+                android:id="@+id/cancelSubscriptionDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/subscriptionBoxText.Subtitle"
-                android:text="@string/cancel_subscription.description"
+                android:text="@string/cancel_subscription_notgoogle.description"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
         <Button

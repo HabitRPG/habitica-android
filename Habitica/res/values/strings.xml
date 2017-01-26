@@ -470,7 +470,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="subscription">Subscription</string>
     <string name="active">Active</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>
+    <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the "My Apps" section of the Google Play Store.</string>
+    <string name="cancel_subscription_notgoogle.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
@@ -484,6 +485,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="six_months">6 months</string>
     <string name="twelve_months">12 months</string>
     <string name="subscribe_prompt_thanks">For Subscribing you are receiving these useful benefits:</string>
+    <string name="subscription_status">Subscription Status</string>
 
     <string name="byLeader" formatted="false">by %s</string>
     <string name="challenge_details">Challenge Details</string>

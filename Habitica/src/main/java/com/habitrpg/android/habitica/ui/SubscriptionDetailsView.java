@@ -7,11 +7,13 @@ import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
 import org.w3c.dom.Text;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,16 +43,32 @@ public class SubscriptionDetailsView extends LinearLayout {
     @BindView(R.id.currentHourglassesTextView)
     TextView currentHourglassesTextView;
 
-    public SubscriptionDetailsView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    @BindView(R.id.cancelSubscriptionDescription)
+    TextView cancelSubscripnDescription;
 
-        inflate(context, R.layout.subscription_details, this);
+    @BindView(R.id.visitWebsiteButton)
+    Button visitWebsiteButton;
+
+    private SubscriptionPlan plan;
+
+    public SubscriptionDetailsView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        setupView();
+    }
+
+    public SubscriptionDetailsView(Context context) {
+        super(context);
+        setupView();
+    }
+
+    private void setupView() {
+        inflate(getContext(), R.layout.subscription_details, this);
 
         ButterKnife.bind(this);
-
     }
 
     public void setPlan(SubscriptionPlan plan) {
+        this.plan = plan;
 
         if (plan.isActive()) {
             subscriptionStatusActive.setVisibility(View.VISIBLE);
@@ -85,11 +103,26 @@ public class SubscriptionDetailsView extends LinearLayout {
         }
         gemCapTextView.setText(String.valueOf(plan.consecutive.getGemCapExtra()+25));
         currentHourglassesTextView.setText(String.valueOf(plan.consecutive.getTrinkets()));
+
+        if (plan.paymentMethod.equals("Google")) {
+            cancelSubscripnDescription.setText(R.string.cancel_subscription_google_description);
+            visitWebsiteButton.setText(R.string.open_in_store);
+        } else {
+            cancelSubscripnDescription.setText(R.string.cancel_subscription_notgoogle_description);
+            visitWebsiteButton.setText(R.string.visit_habitica_website);
+        }
     }
 
     @OnClick(R.id.visitWebsiteButton)
     public void openSubscriptionWebsite() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL+"/"));
-        getContext().startActivity(browserIntent);
+        Intent intent;
+        if (plan.paymentMethod.equals("Google")) {
+            intent = new Intent("android.intent.action.VIEW");
+            intent.setComponent(new ComponentName("com.android.vending","com.android.vending.MyDownloadsActivity"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL+"/"));
+        }
+        getContext().startActivity(intent);
     }
 }

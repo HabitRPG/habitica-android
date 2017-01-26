@@ -104,6 +104,10 @@ public class HabitRPGUser extends BaseModel {
 
     private List<PushDevice> pushDevices;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "purchased_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
@@ -352,9 +356,8 @@ public class HabitRPGUser extends BaseModel {
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-        if (contributor != null) {
-            contributor.user_id = id;
-        }
+        if (purchased != null) { purchased.user_id = id; }
+        if (contributor != null) { contributor.user_id = id; }
         if (invitations != null) {
             invitations.user_id = id;
         }
