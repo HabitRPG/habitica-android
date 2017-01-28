@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica;
 
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Transaction;
@@ -29,16 +30,16 @@ import retrofit2.adapter.rxjava.HttpException;
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
-    private final APIHelper apiHelper;
+    private final IApiClient apiClient;
     private Set<String> purchasedOrderList = new HashSet<>();
     private SharedPreferences preferences;
 
-    public HabiticaPurchaseVerifier(Context context, APIHelper apiHelper) {
+    public HabiticaPurchaseVerifier(Context context, IApiClient apiClient) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
 
-        this.apiHelper = apiHelper;
+        this.apiClient = apiClient;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 validationRequest.transaction.receipt = purchase.data;
                 validationRequest.transaction.signature = purchase.signature;
 
-                apiHelper.apiService.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
+                apiClient.validatePurchase(validationRequest).subscribe(purchaseValidationResult -> {
                     purchasedOrderList.add(purchase.orderId);
 
                     verifiedPurchases.add(purchase);
@@ -76,7 +77,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 }, throwable -> {
                     if (throwable.getClass().equals(HttpException.class)) {
                         HttpException error = (HttpException)throwable;
-                        APIHelper.ErrorResponse res = apiHelper.getErrorResponse((HttpException) throwable);
+                        ApiClient.ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                         if (error.code() == 401) {
                             if (res.message.equals("RECEIPT_ALREADY_USED")) {
                                 purchasedOrderList.add(purchase.orderId);

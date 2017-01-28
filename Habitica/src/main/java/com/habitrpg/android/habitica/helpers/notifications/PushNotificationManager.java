@@ -3,13 +3,11 @@ package com.habitrpg.android.habitica.helpers.notifications;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
 
@@ -37,7 +35,7 @@ public class PushNotificationManager {
 
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
@@ -96,14 +94,14 @@ public class PushNotificationManager {
         Map<String, String> pushDeviceData = new HashMap<String, String>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiHelper.apiService.addPushDevice(pushDeviceData)
-            .compose(apiHelper.configureApiCallObserver())
+        apiClient.addPushDevice(pushDeviceData)
+
             .subscribe(aVoid -> {}, throwable -> {});
     }
 
     public void removePushDeviceUsingStoredToken () {
-        apiHelper.apiService.deletePushDevice(this.refreshedToken)
-            .compose(apiHelper.configureApiCallObserver())
+        apiClient.deletePushDevice(this.refreshedToken)
+
             .subscribe(aVoid -> {}, throwable -> {});
     }
 

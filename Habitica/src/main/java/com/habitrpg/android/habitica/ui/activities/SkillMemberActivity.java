@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
@@ -27,7 +27,7 @@ public class SkillMemberActivity extends BaseActivity {
     RecyclerView recyclerView;
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
 
     @Override
     protected int getLayoutResId() {
@@ -48,21 +48,18 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     private void loadMemberList() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewAdapter = new PartyMemberRecyclerViewAdapter();
         viewAdapter.context = this;
         recyclerView.setAdapter(viewAdapter);
 
-        apiHelper.apiService.getGroup("party")
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getGroup("party")
                 .subscribe(group -> {
                             if (group == null) {
                                 return;
                             }
 
-                            apiHelper.apiService.getGroupMembers(group.id, true)
-                                    .compose(apiHelper.configureApiCallObserver())
+                            apiClient.getGroupMembers(group.id, true)
                                     .subscribe(members -> {
                                                 viewAdapter.setMemberList(members, true);
                                             },
@@ -74,7 +71,7 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(SelectMemberCommand evt){
+    public void onEvent(SelectMemberCommand evt) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("member_id", evt.MemberId);
         setResult(Activity.RESULT_OK, resultIntent);

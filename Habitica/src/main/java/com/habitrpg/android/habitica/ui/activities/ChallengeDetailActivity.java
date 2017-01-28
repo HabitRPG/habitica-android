@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -50,7 +50,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     Toolbar toolbar;
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
 
     private ChallengeViewHolder challengeViewHolder;
 
@@ -84,8 +84,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         ObservableList<Task> fullList = new ObservableArrayList<>();
 
 
-        apiHelper.apiService.getChallengeTasks(challengeId)
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getChallengeTasks(challengeId)
                 .subscribe(taskList -> {
                     ArrayList<Task> resultList = new ArrayList<>();
 
@@ -227,7 +226,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         @OnClick(R.id.btn_show_more)
         public void onShowMore() {
 
-            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiHelper,
+            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
                     HabiticaApplication.User, challenge,
                     challenge1 -> {
 
@@ -244,8 +243,8 @@ public class ChallengeDetailActivity extends BaseActivity {
                         .setTitle(this.getString(R.string.challenge_leave_title))
                         .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
                         .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
-                            this.apiHelper.apiService.leaveChallenge(challenge.id)
-                                    .compose(apiHelper.configureApiCallObserver())
+                            this.apiClient.leaveChallenge(challenge.id)
+
                                     .subscribe(aVoid -> {
                                         challenge.user_id = null;
                                         challenge.async().save();

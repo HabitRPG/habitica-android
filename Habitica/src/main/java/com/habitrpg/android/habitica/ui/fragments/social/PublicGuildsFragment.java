@@ -50,7 +50,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             viewAdapter = new PublicGuildsRecyclerViewAdapter();
             viewAdapter.setMemberGuildIDs(this.memberGuildIDs);
-            viewAdapter.apiHelper = this.apiHelper;
+            viewAdapter.apiClient = this.apiClient;
             recyclerView.setAdapter(viewAdapter);
             if (this.guilds != null) {
                 this.viewAdapter.setPublicGuildList(this.guilds);
@@ -71,9 +71,9 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     }
 
     private void fetchGuilds() {
-        if (this.apiHelper != null) {
-            this.apiHelper.apiService.listGroups("publicGuilds")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiClient != null) {
+            this.apiClient.listGroups("publicGuilds")
+
                     .subscribe(groups -> {
                         PublicGuildsFragment.this.guilds = groups;
                         if (PublicGuildsFragment.this.viewAdapter != null) {

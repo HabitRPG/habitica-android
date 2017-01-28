@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
@@ -59,6 +59,7 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
@@ -167,7 +168,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public static final int GEM_PURCHASE_REQUEST = 111;
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
 
     @Inject
     public SoundManager soundManager;
@@ -295,9 +296,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         //resync, if last sync was more than 10 minutes ago
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
-            if (this.apiHelper != null && this.apiHelper.hasAuthenticationKeys()) {
-                this.apiHelper.retrieveUser(true)
-                        .compose(apiHelper.configureApiCallObserver())
+            if (this.apiClient != null && this.apiClient.hasAuthenticationKeys()) {
+                this.apiClient.retrieveUser(true)
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
                 this.checkMaintenance();
@@ -403,7 +403,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             Preferences preferences = user.getPreferences();
 
             if(preferences!= null) {
-                apiHelper.languageCode = preferences.getLanguage();
+                apiClient.setLanguageCode(preferences.getLanguage());
             }
 
             soundManager.setSoundTheme(preferences.getSound());
@@ -414,7 +414,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if (offset != user.getPreferences().getTimezoneOffset()) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
-                apiHelper.apiService.updateUser(updateData).compose(apiHelper.configureApiCallObserver())
+                apiClient.updateUser(updateData)
                         .subscribe(new MergeUserCallback(this, user), throwable -> {
                         });
             }
@@ -911,15 +911,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == SELECT_CLASS_RESULT) {
-            if (this.apiHelper != null) {
-                this.apiHelper.retrieveUser(true)
-                        .compose(apiHelper.configureApiCallObserver())
+            if (this.apiClient != null) {
+                this.apiClient.retrieveUser(true)
+                        
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
         } else if (requestCode == GEM_PURCHASE_REQUEST) {
-            this.apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.retrieveUser(true)
+                    
                     .subscribe(new HabitRPGUserCallback(this), throwable -> {
                     });
         }
@@ -941,16 +941,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        apiHelper.apiService.updateUser(event.updateData).compose(apiHelper.configureApiCallObserver())
+        apiClient.updateUser(event.updateData)
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
     }
 
     @Subscribe
     public void onEvent(EquipCommand event) {
-        this.apiHelper.apiService.equipItem(event.type, event.key)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+        this.apiClient.equipItem(event.type, event.key)
+               .subscribe(new ItemsCallback(this, this.user), throwable -> {
                 });
     }
 
@@ -958,8 +957,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onEvent(UnlockPathCommand event) {
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
-        apiHelper.apiService.unlockPath(event.path)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.unlockPath(event.path)
+                
                 .subscribe(new UnlockCallback(this, this.user), throwable -> {
                 });
     }
@@ -972,26 +971,26 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(final BuyGemItemCommand event) {
         if (event.item.canBuy(user) || !event.item.getCurrency().equals("gems")) {
-            Observable<HabitResponse<Void>> observable;
+            Observable<Void> observable;
             if (event.shopIdentifier.equals(Shop.TIME_TRAVELERS_SHOP)) {
                 if (event.item.purchaseType.equals("gear")) {
-                    observable = apiHelper.apiService.purchaseMysterySet(event.item.categoryIdentifier);
+                    observable = apiClient.purchaseMysterySet(event.item.categoryIdentifier);
                 } else {
-                    observable = apiHelper.apiService.purchaseHourglassItem(event.item.purchaseType, event.item.key);
+                    observable = apiClient.purchaseHourglassItem(event.item.purchaseType, event.item.key);
                 }
             } else if (event.item.purchaseType.equals("quests") && event.item.getCurrency().equals("gold")) {
-                observable = apiHelper.apiService.purchaseQuest(event.item.key);
+                observable = apiClient.purchaseQuest(event.item.key);
             } else {
-                observable = apiHelper.apiService.purchaseItem(event.item.purchaseType, event.item.key);
+                observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
             }
             observable
-                    .compose(apiHelper.configureApiCallObserver())
+                    
                     .doOnNext(aVoid -> {
                         showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
                     })
                     .subscribe(buyResponse -> {
-                        apiHelper.retrieveUser(false)
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiClient.retrieveUser(false)
+                                
                                 .subscribe(new HabitRPGUserCallback(this), throwable -> {
                                 });
                     }, throwable -> {
@@ -1025,8 +1024,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            apiHelper.apiService.buyItem(event.Reward.getId())
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.buyItem(event.Reward.getId())
                     .subscribe(buyResponse -> {
                         String snackbarMessage = getString(R.string.successful_purchase, event.Reward.getText());
 
@@ -1070,8 +1068,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         } else {
             soundManager.loadAndPlayAudio(SoundManager.SoundReward);
             // user created Rewards
-            apiHelper.apiService.postTaskDirection(rewardKey, TaskDirection.down.toString())
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.postTaskDirection(rewardKey, TaskDirection.down.toString())
+                    
                     .subscribe(new TaskScoringCallback(this, rewardKey), throwable -> {
                     });
         }
@@ -1087,7 +1085,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final DeleteTaskCommand cmd) {
-        apiHelper.apiService.deleteTask(cmd.TaskIdToDelete).compose(apiHelper.configureApiCallObserver())
+        apiClient.deleteTask(cmd.TaskIdToDelete)
                 .subscribe(aVoid -> {
                     EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
                 }, throwable -> {
@@ -1111,8 +1109,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(SellItemCommand event) {
-        this.apiHelper.apiService.sellItem(event.item.getType(), event.item.getKey())
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.sellItem(event.item.getType(), event.item.getKey())
+                
                 .subscribe(habitRPGUser -> {
                     user.setItems(habitRPGUser.getItems());
                     user.save();
@@ -1127,8 +1125,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             return;
         }
-        this.apiHelper.apiService.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
+                
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
@@ -1165,8 +1163,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
         final Pet pet = event.usingPet;
-        this.apiHelper.apiService.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
+                
                 .subscribe(feedResponse -> {
                     MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
                     MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
@@ -1209,8 +1207,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void reloadContent(ReloadContentEvent event) {
         if (!this.isloadingContent) {
             this.isloadingContent = true;
-            this.apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.getContent()
                     .subscribe(contentResult -> {
                         isloadingContent = false;
                         ContentReloadedEvent event1 = new ContentReloadedEvent();
@@ -1253,8 +1250,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (lvl > user.getStats().getLvl()) {
             displayLevelUpDialog(lvl);
 
-            this.apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.retrieveUser(true)
+                    
                     .subscribe(new HabitRPGUserCallback(this), throwable -> {
                     });
             user.getStats().setLvl(lvl);
@@ -1314,8 +1311,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        apiHelper.apiService.revive()
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiClient.revive()
+                                
                                 .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {
                                 });
                     })
@@ -1430,8 +1427,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         String path = "flags.tutorial." + step.getTutorialGroup() + "." + step.getIdentifier();
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
-        apiHelper.apiService.updateUser(updateData)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.updateUser(updateData)
+                
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
         this.overlayFrameLayout.removeView(this.activeTutorialView);
@@ -1485,8 +1482,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
-        apiHelper.apiService.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
+                
                 .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
                     event.Task.completed = !event.Task.completed;
                     event.Task.save();
@@ -1505,8 +1502,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
-        apiHelper.apiService.scoreChecklistItem(event.task.getId(), event.item.getId())
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.scoreChecklistItem(event.task.getId(), event.item.getId())
+                
                 .subscribe(new TaskUpdateCallback(), throwable -> {
                 });
     }
@@ -1526,13 +1523,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onEvent(final TaskSaveEvent event) {
         Task task = event.task;
         if (event.created) {
-            this.apiHelper.apiService.createItem(task)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.createItem(task)
+                    
                     .subscribe(new TaskCreationCallback(), throwable -> {
                     });
         } else {
-            this.apiHelper.apiService.updateTask(task.getId(), task)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.updateTask(task.getId(), task)
+                    
                     .subscribe(new TaskUpdateCallback(), throwable -> {
                     });
         }
@@ -1540,7 +1537,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void checkMaintenance() {
         this.maintenanceService.getMaintenanceStatus()
-                .compose(apiHelper.configureApiCallObserver())
+                .compose(apiClient.configureApiCallObserver())
                 .subscribe(maintenanceResponse -> {
                     if (maintenanceResponse.activeMaintenance) {
                         Intent intent = createMaintenanceIntent(maintenanceResponse, false);

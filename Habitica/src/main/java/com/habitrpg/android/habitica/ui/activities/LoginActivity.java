@@ -14,7 +14,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity
 
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
     @Inject
     public SharedPreferences sharedPrefs;
     public String mTmpUserToken;
@@ -131,8 +131,7 @@ public class LoginActivity extends BaseActivity
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                apiHelper.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                         .subscribe(LoginActivity.this, throwable -> {
                             hideProgress();
                         });
@@ -193,8 +192,7 @@ public class LoginActivity extends BaseActivity
 					showValidationError(R.string.login_validation_error_fieldsmissing);
 					return;
 				}
-                apiHelper.registerUser(username,email,password, cpassword)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.registerUser(username,email,password, cpassword)
                         .subscribe(LoginActivity.this, throwable -> {hideProgress();});
             } else {
                 String username,password;
@@ -204,8 +202,8 @@ public class LoginActivity extends BaseActivity
 					showValidationError(R.string.login_validation_error_fieldsmissing);
 					return;
 				}
-                apiHelper.connectUser(username,password)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.connectUser(username,password)
+
                         .subscribe(LoginActivity.this, throwable -> {hideProgress();});
             }
 		}
@@ -343,7 +341,7 @@ public class LoginActivity extends BaseActivity
     }
 
     private void saveTokens(String api, String user) throws Exception {
-        this.apiHelper.updateAuthenticationCredentials(user, api);
+        this.apiClient.updateAuthenticationCredentials(user, api);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
                 .putString(getString(R.string.SP_userID), user)
@@ -421,8 +419,8 @@ public class LoginActivity extends BaseActivity
                 throw Exceptions.propagate(e);
             }
         })
-                .flatMap(token -> apiHelper.connectSocial("google", googleEmail, token))
-                .compose(apiHelper.configureApiCallObserver())
+                .flatMap(token -> apiClient.connectSocial("google", googleEmail, token))
+
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
                     if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
@@ -40,7 +40,7 @@ public class ShopFragment extends BaseFragment {
     public Shop shop;
 
     @Inject
-    APIHelper apiHelper;
+    IApiClient apiClient;
 
     @Nullable
     @Override
@@ -100,8 +100,7 @@ public class ShopFragment extends BaseFragment {
                 shopUrl = "seasonal";
                 break;
         }
-        this.apiHelper.apiService.fetchShopInventory(shopUrl)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiClient.fetchShopInventory(shopUrl)
                 .subscribe(shop -> {
                     this.shop = shop;
                     this.adapter.setShop(shop);

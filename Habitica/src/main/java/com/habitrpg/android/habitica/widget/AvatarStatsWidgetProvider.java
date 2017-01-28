@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -36,12 +36,12 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     }
 
     @Inject
-    APIHelper apiHelper;
+    IApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }

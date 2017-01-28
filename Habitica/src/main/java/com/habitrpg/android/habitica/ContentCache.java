@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica;
 
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -12,16 +13,14 @@ import java.util.Collection;
 import java.util.List;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class ContentCache {
-    private APIHelper apiHelper;
+    private IApiClient apiClient;
 
 
-    public ContentCache(APIHelper apiHelper) {
-        this.apiHelper = apiHelper;
+    public ContentCache(IApiClient apiClient) {
+        this.apiClient = apiClient;
     }
 
     public void GetQuestContent(final String key, final QuestContentCallback cb) {
@@ -71,8 +70,8 @@ public class ContentCache {
     }
 
     private <T> void getContentAndSearchFor(final String typeOfSearch, final String searchKey, final GotContentEntryCallback<T> gotEntry) {
-        apiHelper.getContent()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getContent()
+
                 .subscribe(contentResult -> {
                     switch (typeOfSearch) {
                         case "quest": {
@@ -114,8 +113,8 @@ public class ContentCache {
 
     private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
         List<ItemData> resultList = new ArrayList<>();
-        apiHelper.getContent()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getContent()
+
                 .flatMap(contentResult -> {
                     List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);

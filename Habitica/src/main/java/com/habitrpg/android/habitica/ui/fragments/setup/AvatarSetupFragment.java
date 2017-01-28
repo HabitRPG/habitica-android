@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -43,7 +43,7 @@ public class AvatarSetupFragment extends BaseFragment {
     private HabitRPGUser user;
 
     @Inject
-    APIHelper apiHelper;
+    IApiClient apiClient;
 
     @Nullable
     @Override
@@ -108,7 +108,7 @@ public class AvatarSetupFragment extends BaseFragment {
 
         List<Customization> customizations = select.queryList();
         if (customizations.size() == 0) {
-            this.apiHelper.getContent().compose(this.apiHelper.configureApiCallObserver())
+            this.apiClient.getContent()
                     .subscribe(contentResult -> {
                         this.loadCustomizations();
                     }, throwable -> {});

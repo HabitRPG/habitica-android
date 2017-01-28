@@ -80,8 +80,8 @@ public class InboxMessageListFragment extends BaseMainFragment
 
         private void refreshUserInbox () {
             this.swipeRefreshLayout.setRefreshing(true);
-            this.apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
+            this.apiClient.retrieveUser(true)
+
                     .subscribe(new HabitRPGUserCallback(this), throwable -> {});
         }
 
@@ -125,8 +125,8 @@ public class InboxMessageListFragment extends BaseMainFragment
             messageObject.put("message", cmd.Message);
             messageObject.put("toUserId", cmd.UserToSendTo);
 
-            apiHelper.apiService.postPrivateMessage(messageObject)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.postPrivateMessage(messageObject)
+
                     .subscribe(postChatMessageResult -> {
                         this.refreshUserInbox();
                     }, throwable -> {

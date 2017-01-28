@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
@@ -22,13 +21,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +45,7 @@ public class PartyInviteActivity extends BaseActivity {
     private String userIdToInvite;
 
     @Inject
-    APIHelper apiHelper;
+    IApiClient apiClient;
 
     @Inject
     protected HostConfig hostConfig;
@@ -210,10 +207,7 @@ public class PartyInviteActivity extends BaseActivity {
         invites.add(userIdToInvite);
         inviteData.put("uuids", invites);
 
-        this.apiHelper.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        this.apiClient.inviteToGroup(this.user.getParty().getId(), inviteData)
+                .subscribe(aVoid -> {}, throwable -> {});
     }
 }

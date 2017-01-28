@@ -26,7 +26,7 @@ public class TagAPITests extends BaseAPITests {
         TestSubscriber<HabitResponse<Tag>> testSubscriber = new TestSubscriber<>();
         Tag tag = new Tag();
         tag.setName("foo");
-        apiHelper.apiService.createTag(tag).subscribe(testSubscriber);
+        apiClient.createTag(tag).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -44,7 +44,7 @@ public class TagAPITests extends BaseAPITests {
 
         //Attempt to update the test user's first tag
         String testId = getUser().getTags().get(0).getId();
-        apiHelper.apiService.updateTag(testId,t).subscribe(testSubscriber);
+        apiClient.updateTag(testId,t).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getData().getName());
@@ -56,7 +56,7 @@ public class TagAPITests extends BaseAPITests {
         TestSubscriber<HabitResponse<Void>> testSub = new TestSubscriber<>();
 
         String testId = getUser().getTags().get(0).getId();
-        apiHelper.apiService.deleteTag(testId).subscribe(testSub);
+        apiClient.deleteTag(testId).subscribe(testSub);
         testSub.assertNoErrors();
         testSub.assertCompleted();
     }

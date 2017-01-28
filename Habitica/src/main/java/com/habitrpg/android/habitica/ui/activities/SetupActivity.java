@@ -10,8 +10,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
-import com.amplitude.api.Amplitude;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -28,15 +27,12 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -45,7 +41,7 @@ import butterknife.BindView;
 public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
     @Inject
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)
@@ -83,8 +79,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         String currentDeviceLanguage = Locale.getDefault().getLanguage();
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
-                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.registrationLanguage(currentDeviceLanguage)
                         .subscribe(new MergeUserCallback(this, user), throwable -> {
                         });
             }
@@ -105,8 +100,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             if (this.user != null) {
                 setupViewpager();
             } else {
-                this.apiHelper.apiService.getUser()
-                        .compose(this.apiHelper.configureApiCallObserver())
+                this.apiClient.getUser()
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
@@ -152,8 +146,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiHelper.apiService.updateUser(event.updateData)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiClient.updateUser(event.updateData)
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
     }
@@ -169,13 +162,12 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
                 this.completedSetup = true;
-                this.apiHelper.apiService.createTasks(newTasks)
-                        .compose(this.apiHelper.configureApiCallObserver())
+                this.apiClient.createTasks(newTasks)
                         .subscribe(tasks -> {
                             onUserReceived(user);
                         }, throwable -> {
                         });
-                //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
+                //this.apiClient.batchOperation(operations, new HabitRPGUserCallback(this));
             }
             this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
         } else if (v == this.previousButton) {

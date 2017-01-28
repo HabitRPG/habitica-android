@@ -4,15 +4,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
 
@@ -26,17 +24,17 @@ import java.util.Map;
 
 public class PopupNotificationsManager {
     private Map<String, Boolean> seenNotifications;
-    private APIHelper apiHelper;
+    private IApiClient apiClient;
     private static PopupNotificationsManager instance;
 
     // @TODO: A queue for displaying alert dialogues
 
-    private PopupNotificationsManager(APIHelper apiHelper) {
-        this.apiHelper = apiHelper;
+    private PopupNotificationsManager(IApiClient apiClient) {
+        this.apiClient = apiClient;
         this.seenNotifications = new HashMap<>();
     }
 
-    public static PopupNotificationsManager getInstance(APIHelper apiHelper) {
+    public static PopupNotificationsManager getInstance(IApiClient apiHelper) {
         if (instance == null) {
             instance = new PopupNotificationsManager(apiHelper);
         }
@@ -90,13 +88,10 @@ public class PopupNotificationsManager {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (apiHelper != null) {
+                if (apiClient != null) {
                     // @TODO: This should be handled somewhere else? MAybe we notifiy via event
-                    apiHelper.apiService.readNotificaiton(notification.getId())
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(next -> {
-                            }, throwable -> {
-                            });
+                    apiClient.readNotificaiton(notification.getId())
+                            .subscribe(next -> {}, throwable -> {});
                 }
 
                 dialog.hide();

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -69,7 +70,7 @@ public class ChallegeDetailDialogHolder {
     LinearLayout task_group_layout;
 
     private AlertDialog dialog;
-    private APIHelper apiHelper;
+    private IApiClient apiClient;
     private HabitRPGUser user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
@@ -82,10 +83,10 @@ public class ChallegeDetailDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, IApiClient apiClient, HabitRPGUser user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
-        this.apiHelper = apiHelper;
+        this.apiClient = apiClient;
         this.user = user;
         this.challenge = challenge;
         this.challengeJoinedAction = challengeJoinedAction;
@@ -104,8 +105,7 @@ public class ChallegeDetailDialogHolder {
         gem_amount.setText(challenge.prize + "");
         member_count.setText(challenge.memberCount + "");
 
-        apiHelper.apiService.getChallengeTasks(challenge.id)
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getChallengeTasks(challenge.id)
                 .subscribe(taskList -> {
                             ArrayList<Task> todos = new ArrayList<>();
                             ArrayList<Task> habits = new ArrayList<>();
@@ -290,8 +290,7 @@ public class ChallegeDetailDialogHolder {
 
     @OnClick(R.id.challenge_join_btn)
     public void joinChallenge() {
-        this.apiHelper.apiService.joinChallenge(challenge.id)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.joinChallenge(challenge.id)
                 .subscribe(challenge -> {
                     challenge.user_id = this.user.getId();
                     challenge.async().save();
@@ -310,8 +309,7 @@ public class ChallegeDetailDialogHolder {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.challenge_leave_title))
                 .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
-                .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> this.apiHelper.apiService.leaveChallenge(challenge.id)
-                        .compose(apiHelper.configureApiCallObserver())
+                .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> this.apiClient.leaveChallenge(challenge.id)
                         .subscribe(aVoid -> {
                             challenge.user_id = null;
                             challenge.async().save();
@@ -330,7 +328,7 @@ public class ChallegeDetailDialogHolder {
     }
 
 
-    public static void showDialog(Activity activity, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
+    public static void showDialog(Activity activity, IApiClient apiClient, HabitRPGUser user, Challenge challenge,
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
@@ -339,6 +337,6 @@ public class ChallegeDetailDialogHolder {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge, challengeJoinedAction, challengeLeftAction);
+        challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 }

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -21,8 +21,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MaintenanceActivity extends BaseActivity {
 
@@ -30,7 +28,7 @@ public class MaintenanceActivity extends BaseActivity {
     public MaintenanceApiService maintenanceService;
 
     @Inject
-    public APIHelper apiHelper;
+    public IApiClient apiClient;
 
     @BindView(R.id.titleTextView)
     TextView titleTextView;
@@ -77,7 +75,7 @@ public class MaintenanceActivity extends BaseActivity {
         super.onResume();
         if (!isDeprecationNotice) {
             this.maintenanceService.getMaintenanceStatus()
-                    .compose(apiHelper.configureApiCallObserver())
+                    .compose(apiClient.configureApiCallObserver())
                     .subscribe(maintenanceResponse -> {
                         if (!maintenanceResponse.activeMaintenance) {
                             finish();

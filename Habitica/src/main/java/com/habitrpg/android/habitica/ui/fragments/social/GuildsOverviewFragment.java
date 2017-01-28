@@ -68,9 +68,9 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     }
 
     private void fetchGuilds() {
-        if (this.apiHelper != null && this.apiHelper.apiService != null) {
-            this.apiHelper.apiService.listGroups("guilds")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiClient != null && this.apiClient != null) {
+            this.apiClient.listGroups("guilds")
+
                     .subscribe(groups -> {
                         GuildsOverviewFragment.this.guilds = groups;
                         GuildsOverviewFragment.this.setGuildsOnListView();

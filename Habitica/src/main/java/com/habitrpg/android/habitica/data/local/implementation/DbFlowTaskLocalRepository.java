@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class DbFlowTaskLocalRepository implements TaskLocalRepository {
     }
 
     @Override
-    public void saveTasks(TasksOrder tasksOrder, ArrayList<Task> tasks) {
+    public void saveTasks(TasksOrder tasksOrder, TaskList tasks) {
         sortTasks(tasks, tasksOrder.getHabits());
         sortTasks(tasks, tasksOrder.getDailys());
         sortTasks(tasks, tasksOrder.getTodos());
@@ -39,26 +40,21 @@ public class DbFlowTaskLocalRepository implements TaskLocalRepository {
         task.async().save();
     }
 
-    private List<Task> sortTasks(List<Task> taskList, List<String> taskOrder) {
+    private List<Task> sortTasks(TaskList taskList, List<String> taskOrder) {
         List<Task> taskResult = new ArrayList<>();
         int position = 0;
 
-        HashMap<String, Task> taskMap = new HashMap<>();
-
-        for (Task t : taskList){
-            taskMap.put(t.getId(), t);
-        }
 
         for (String taskId : taskOrder) {
-            Task task = taskMap.get(taskId);
+            Task task = taskList.tasks.get(taskId);
             if (task != null) {
                 task.position = position;
                 taskResult.add(task);
                 position++;
-                taskMap.remove(taskId);
+                taskList.tasks.remove(taskId);
             }
         }
-        return taskList;
+        return taskResult;
     }
 
     @Override

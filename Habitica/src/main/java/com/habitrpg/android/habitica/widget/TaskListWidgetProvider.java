@@ -10,7 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -28,12 +28,12 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public static final String TASK_ID_ITEM = "com.habitrpg.android.habitica.TASK_ID_ITEM";
 
     @Inject
-    APIHelper apiHelper;
+    IApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }
@@ -54,8 +54,8 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                apiHelper.apiService.postTaskDirection(taskId, TaskDirection.up.toString())
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.postTaskDirection(taskId, TaskDirection.up.toString())
+
                         .subscribe(taskDirectionData -> {
                             Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
                             task.completed = true;

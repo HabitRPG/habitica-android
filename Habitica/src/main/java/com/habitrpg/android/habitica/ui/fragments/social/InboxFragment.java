@@ -58,8 +58,8 @@ public class InboxFragment extends BaseMainFragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        this.apiHelper.apiService.markPrivateMessagesRead()
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.markPrivateMessagesRead()
+
                 .subscribe(aVoid -> {}, throwable -> {});
 
         View v = inflater.inflate(R.layout.fragment_inbox, container, false);
@@ -125,8 +125,7 @@ public class InboxFragment extends BaseMainFragment
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        this.apiHelper.retrieveUser(true)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.retrieveUser(true)
                 .subscribe(new HabitRPGUserCallback(this), throwable -> {});
     }
 
