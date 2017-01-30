@@ -68,6 +68,8 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                         if (userChallengesHash.contains(challenge.id) && challenge.name != null && !challenge.name.isEmpty()) {
                             challenge.user_id = this.user.getId();
                             userChallenges.add(challenge);
+                        } else {
+                            challenge.user_id = null;
                         }
 
                         challenge.async().save();
@@ -153,6 +155,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     private void setChallengeEntries(List<Challenge> challenges) {
+        if (swipeRefreshEmptyLayout == null || swipeRefreshLayout == null) {
+            return;
+        }
         if (viewUserChallengesOnly && challenges.size() == 0) {
             swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setVisibility(View.GONE);

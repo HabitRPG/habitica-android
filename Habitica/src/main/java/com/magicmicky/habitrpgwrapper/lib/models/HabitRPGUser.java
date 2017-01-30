@@ -17,6 +17,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.database.sqlite.SQLiteException;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -118,10 +119,14 @@ public class HabitRPGUser extends BaseModel {
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "challengeList")
     public List<Challenge> getChallengeList() {
         if (challengeList == null) {
-            challengeList = new Select()
-                    .from(Challenge.class)
-                    .where(Condition.column("user_id").eq(this.id))
-                    .queryList();
+            try {
+                challengeList = new Select()
+                        .from(Challenge.class)
+                        .where(Condition.column("user_id").eq(this.id))
+                        .queryList();
+            } catch (SQLiteException exception) {
+                challengeList = new ArrayList<>();
+            }
         }
         return challengeList;
     }
