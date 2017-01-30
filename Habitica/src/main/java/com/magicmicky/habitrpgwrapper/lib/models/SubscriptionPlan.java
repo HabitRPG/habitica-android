@@ -9,6 +9,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(databaseName = HabitDatabase.NAME)
 public class SubscriptionPlan extends BaseModel {
@@ -45,6 +46,8 @@ public class SubscriptionPlan extends BaseModel {
             foreignColumnName = "customerId")})
     public SubscriptionPlanConsecutive consecutive;
 
+    public List<String> mysteryItems;
+
     public boolean isActive() {
         Date today = new Date();
         return (this.dateCreated != null && this.dateCreated.before(today)) && (this.dateTerminated == null || this.dateTerminated.after(today));
@@ -59,4 +62,13 @@ public class SubscriptionPlan extends BaseModel {
 
         super.save();
     }
+
+    public Integer numberOfGemsLeft() {
+        if (customerId == null) {
+            return 0;
+        }
+        return 25+consecutive.getGemCapExtra()-gemsBought;
+    }
+
+
 }

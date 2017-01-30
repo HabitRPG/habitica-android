@@ -5,6 +5,7 @@ import android.databinding.ObservableList;
 
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Gear;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
@@ -172,6 +173,8 @@ public interface ApiService {
     @POST("user/mark-pms-read")
     Observable<HabitResponse<Void>> markPrivateMessagesRead();
 
+
+
     /* Group API */
 
     @GET("groups")
@@ -295,4 +298,7 @@ public interface ApiService {
     // Notifications
     @POST("notifications/{notificationId}/read")
     Observable<HabitResponse<Void>> readNotificaiton(@Path("notificationId") String notificationId);
+
+    @POST("user/open-mystery-item")
+    Observable<HabitResponse<ItemData>> openMysteryItem();
 }

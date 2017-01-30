@@ -309,7 +309,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="armoireNotesFull" formatted="false">Open the Armoire to randomly receive special Equipment, Experience, or food! Equipment pieces remaining: %d</string>
     <string name="armoireLastItem">You\'ve found the last piece of rare Equipment in the Enchanted Armoire.</string>
     <string name="armoireNotesEmpty">The Armoire will have new Equipment in the first week of every month. Until then, keep clicking for Experience and Food!</string>
-    <string name="sell" formatted="false">Sell (%s Gold)</string>
+    <string name="sell" formatted="false">Sell (%d Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="feed_to_pet">Feed to pet</string>
     <string name="hatch_egg">Hatch with egg</string>
@@ -511,4 +511,12 @@ To start, which parts of your life do you want to improve?</string>
     <string name="dont_keep_activities_warning">It seems like you have the Developer option \"Don\'t keep Activities\" active. Currently this option causes issues with the habitica app, so we suggest disabling it.</string>
     <string name="inbox">Inbox</string>
     <string name="FAQ">Frequently Asked Questions</string>
+    <string name="special">Special</string>
+    <string name="gem_for_gold_description">Because you subscribe to Habitica, you can purchase a number of Gems each month using Gold.</string>
+    <string name="limited_count" formatted="false">%d left</string>
+    <string name="gem_shop">Gem</string>
+    <string name="mystery_item">Mystery Item</string>
+    <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
+    <string name="open">Open</string>
+    <string name="notification_mystery_item">You open the box and find %s!</string>
 </resources>

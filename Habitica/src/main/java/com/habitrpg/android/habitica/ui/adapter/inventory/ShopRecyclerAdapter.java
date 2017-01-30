@@ -103,6 +103,21 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return items != null ? items.size() : 0;
     }
 
+    public void updateGoldGemCount(int numberLeft) {
+        int itemPos = 0;
+        for (Object obj : items) {
+            if (obj.getClass().equals(ShopItem.class)) {
+                ShopItem item = (ShopItem) obj;
+                if (item.key.equals(ShopItem.GEM_FOR_GOLD)) {
+                    item.limitedNumberLeft = numberLeft;
+                    break;
+                }
+            }
+            itemPos++;
+        }
+        notifyItemChanged(itemPos);
+    }
+
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.imageView)
@@ -115,6 +130,8 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Button buyButton;
         @BindView(R.id.unlockView)
         TextView unlockView;
+        @BindView(R.id.limitedCountText)
+                TextView limitedCountText;
 
         String shopIdentifier;
         ShopItem item;
@@ -194,6 +211,13 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (item.getLocked()) {
                 buyButton.setVisibility(View.GONE);
+            }
+
+            if (item.limitedNumberLeft != null) {
+                limitedCountText.setText(context.getString(R.string.limited_count, item.limitedNumberLeft));
+                limitedCountText.setVisibility(View.VISIBLE);
+            } else {
+                limitedCountText.setVisibility(View.GONE);
             }
         }
 

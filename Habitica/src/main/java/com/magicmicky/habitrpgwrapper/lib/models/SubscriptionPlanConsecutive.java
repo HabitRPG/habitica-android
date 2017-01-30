@@ -6,6 +6,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.List;
+
 @Table(databaseName = HabitDatabase.NAME)
 public class SubscriptionPlanConsecutive extends BaseModel {
 
@@ -51,5 +53,13 @@ public class SubscriptionPlanConsecutive extends BaseModel {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

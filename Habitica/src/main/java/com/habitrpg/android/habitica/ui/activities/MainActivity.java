@@ -18,6 +18,8 @@ import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
+import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
@@ -26,6 +28,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
@@ -181,6 +184,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     CrashlyticsProxy crashlyticsProxy;
 
     @BindView(R.id.floating_menu_wrapper)
+    public
     FrameLayout floatingMenuWrapper;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -981,14 +985,16 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             }
             observable
                     .compose(apiHelper.configureApiCallObserver())
-                    .doOnNext(aVoid -> {
-                        showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
-                    })
+                    .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
                     .subscribe(buyResponse -> {
                         apiHelper.retrieveUser(false)
                                 .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                                });
+                                .subscribe(new HabitRPGUserCallback(user1 -> {
+                                    UpdateGoldGemsPurchasedevent event1 = new UpdateGoldGemsPurchasedevent();
+                                    event1.numberLeft = user1.getPurchased().getPlan().numberOfGemsLeft();
+                                    EventBus.getDefault().post(event1);
+                                    MainActivity.this.onUserReceived(user1);
+                                }), throwable -> {});
                     }, throwable -> {
                         HttpException error = (HttpException) throwable;
                         if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
@@ -1087,6 +1093,21 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
                 }, throwable -> {
                 });
+    }
+
+    @Subscribe
+    public void openMysteryItem(OpenMysteryItemEvent event) {
+        apiHelper.apiService.openMysteryItem().compose(apiHelper.configureApiCallObserver())
+                .subscribe(mysteryItem -> {
+                    apiHelper.retrieveUser(false).compose(apiHelper.configureApiCallObserver())
+                            .subscribe(new HabitRPGUserCallback(user1 -> {
+                                OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
+                                openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
+                                openedEvent.mysteryItem = mysteryItem;
+                                EventBus.getDefault().post(openedEvent);
+                                MainActivity.this.onUserReceived(user1);
+                            }), throwable -> {});
+                }, throwable -> {});
     }
 
     @Subscribe

@@ -82,6 +82,7 @@ public abstract class BaseMainFragment extends BaseFragment {
             if (this.usesTabLayout) {
                 tabLayout.removeAllTabs();
                 tabLayout.setVisibility(View.VISIBLE);
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
             } else {
                 tabLayout.setVisibility(View.GONE);
             }
