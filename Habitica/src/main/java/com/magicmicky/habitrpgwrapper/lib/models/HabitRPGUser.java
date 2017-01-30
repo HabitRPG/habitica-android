@@ -393,7 +393,7 @@ public class HabitRPGUser extends BaseModel {
         }
 
         List<Challenge> challenges = getChallengeList();
-
+        List<Challenge> newChallenges = new ArrayList<>();
         if (getChallenges() != null) {
             for (String s : getChallenges()) {
                 boolean challengeExistInDatabase = false;
@@ -401,7 +401,8 @@ public class HabitRPGUser extends BaseModel {
                 for (Challenge challenge : challenges) {
                     if (challenge.id.equals(s)) {
                         challengeExistInDatabase = true;
-
+                        challenges.remove(challenge);
+                        newChallenges.add(challenge);
                         break;
                     }
                 }
@@ -411,12 +412,15 @@ public class HabitRPGUser extends BaseModel {
                     challenge.id = s;
                     challenge.user_id = id;
 
-                    challenges.add(challenge);
+                    newChallenges.add(challenge);
                 }
+            }
+            for (Challenge challenge : challenges) {
+                challenge.user_id = null;
             }
         }
 
-        setChallengeList(challenges);
+        setChallengeList(newChallenges);
 
         super.save();
     }

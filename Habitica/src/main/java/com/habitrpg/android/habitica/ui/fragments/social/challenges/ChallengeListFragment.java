@@ -75,14 +75,15 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                         challenge.async().save();
                     }
 
+                    setRefreshingIfVisible(swipeRefreshLayout, false);
+                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
+
                     if (viewUserChallengesOnly) {
                         setChallengeEntries(userChallenges);
                     } else {
                         setChallengeEntries(challenges);
                     }
 
-                    setRefreshingIfVisible(swipeRefreshLayout, false);
-                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
 
                 }, throwable -> {
                     Log.e("ChallengeListFragment", "", throwable);
@@ -160,8 +161,10 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         }
         if (viewUserChallengesOnly && challenges.size() == 0) {
             swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.setVisibility(View.GONE);
         } else {
+            swipeRefreshEmptyLayout.setRefreshing(false);
             swipeRefreshEmptyLayout.setVisibility(View.GONE);
             swipeRefreshLayout.setVisibility(View.VISIBLE);
         }
