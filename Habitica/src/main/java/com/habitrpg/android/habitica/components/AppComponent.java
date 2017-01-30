@@ -73,6 +73,7 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
+import com.habitrpg.android.habitica.widget.TaskListFactory;
 import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
 
 import javax.inject.Singleton;
@@ -225,4 +226,6 @@ public interface AppComponent {
     void inject(ChallengeTasksRecyclerViewFragment.ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
 
     void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);
+
+    void inject(TaskListFactory taskListFactory);
 }

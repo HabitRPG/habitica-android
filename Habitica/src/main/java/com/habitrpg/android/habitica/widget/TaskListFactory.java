@@ -8,8 +8,10 @@ import android.text.style.DynamicDrawableSpan;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
@@ -20,18 +22,26 @@ import net.pherth.android.emoji_library.EmojiHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
+    private Integer customDayStart;
     private int listItemResId;
     private int listItemTextResId;
     private String taskType;
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
+
+    @Inject
+    @Named("UserID")
+    public String userID;
 
     public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId, int listItemTextResId) {
         this.context = context;
@@ -41,7 +51,19 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
         this.reloadData = false;
         this.taskType = taskType;
 
-        this.loadData();
+        if (userID == null) {
+            HabiticaApplication.getComponent().inject(this);
+        }
+
+        if (customDayStart == null) {
+            Observable.defer(() -> Observable.just(new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).querySingle()))
+                    .subscribe(habitRPGUser -> {
+                        customDayStart = habitRPGUser.getPreferences().getDayStart();
+                        this.loadData();
+                    }, throwable -> {});
+        } else {
+            this.loadData();
+        }
     }
 
     private void loadData() {
@@ -51,7 +73,7 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                 .and(Condition.column("completed").eq(false))
                 .orderBy(OrderBy.columns("position", "dateCreated").descending())
                 .queryList()))
-                .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(0))
+                .filter(task -> task.type.equals(Task.TYPE_TODO) || task.isDisplayedActive(customDayStart))
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
