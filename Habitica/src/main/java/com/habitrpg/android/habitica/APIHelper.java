@@ -75,6 +75,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.Image;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
@@ -126,6 +127,9 @@ public class APIHelper implements Action1<Throwable> {
     @Inject
     CrashlyticsProxy crashlyticsProxy;
 
+    @Inject
+    Context context;
+
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
     final Observable.Transformer apiCallTransformer =
@@ -133,7 +137,7 @@ public class APIHelper implements Action1<Throwable> {
                     .map(new Func1<HabitResponse, Object>() {
                         @Override public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
-                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(APIHelper.this);
+                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(APIHelper.this, context);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
                             }
                             return habitResponse.getData();

@@ -33,15 +33,15 @@ public class PopupNotificationsManager {
 
     // @TODO: A queue for displaying alert dialogues
 
-    private PopupNotificationsManager(APIHelper apiHelper) {
+    private PopupNotificationsManager(APIHelper apiHelper, Context context) {
         this.apiHelper = apiHelper;
         this.seenNotifications = new HashMap<>();
-	    context.getApplicationContext();
+        this.context = context;
     }
 
-    public static PopupNotificationsManager getInstance(APIHelper apiHelper) {
+    public static PopupNotificationsManager getInstance(APIHelper apiHelper, Context context) {
         if (instance == null) {
-            instance = new PopupNotificationsManager(apiHelper);
+            instance = new PopupNotificationsManager(apiHelper, context);
         }
         return instance;
     }

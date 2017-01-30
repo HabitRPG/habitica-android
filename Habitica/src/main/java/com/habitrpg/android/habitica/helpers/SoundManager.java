@@ -47,7 +47,7 @@ public class SoundManager {
     }
 
     public Observable<List<SoundFile>> preloadAllFiles() {
-        if(soundTheme == "off") {
+        if(soundTheme.equals("off")) {
             return Observable.empty();
         }
 
@@ -71,8 +71,7 @@ public class SoundManager {
     }
 
     public void loadAndPlayAudio(String type){
-        if(soundTheme == "off")
-        {
+        if(soundTheme.equals("off")) {
             return;
         }
 
