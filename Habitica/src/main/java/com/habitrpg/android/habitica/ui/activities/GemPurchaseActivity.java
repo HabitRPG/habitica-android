@@ -62,7 +62,7 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
 
     @Override
     protected void injectActivity(AppComponent component) {
-
+        component.inject(this);
     }
 
     @Override

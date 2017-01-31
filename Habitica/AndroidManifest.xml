@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="149"
-    android:versionName="0.0.36"
+    android:versionCode="151"
+    android:versionName="0.0.37"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
