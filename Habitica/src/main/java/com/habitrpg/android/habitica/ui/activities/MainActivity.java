@@ -1,6 +1,10 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
+import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
+import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
+import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -196,6 +200,18 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Inject
     HabitScoreUseCase habitScoreUseCase;
 
+    @Inject
+    DailyCheckUseCase dailyCheckUseCase;
+
+    @Inject
+    TodoCheckUseCase todoCheckUseCase;
+
+    @Inject
+    BuyRewardUseCase buyRewardUseCase;
+
+    @Inject
+    ChecklistCheckUseCase checklistCheckUseCase;
+
     private Drawer drawer;
     private Drawer filterDrawer;
     private AccountHeader accountHeader;
@@ -244,17 +260,16 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language","en"));
+        LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString("language", "en"));
         Locale.setDefault(languageHelper.getLocale());
         Configuration configuration = new Configuration();
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
             configuration.locale = languageHelper.getLocale();
         } else {
             configuration.setLocale(languageHelper.getLocale());
         }
         getResources().updateConfiguration(configuration,
                 getResources().getDisplayMetrics());
-
 
 
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
@@ -351,10 +366,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void updateWidget(Class widgetClass) {
-        Intent intent = new Intent(this,widgetClass);
+        Intent intent = new Intent(this, widgetClass);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), widgetClass));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         sendBroadcast(intent);
     }
 
@@ -402,7 +417,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
             Preferences preferences = user.getPreferences();
 
-            if(preferences!= null) {
+            if (preferences != null) {
                 apiClient.setLanguageCode(preferences.getLanguage());
             }
 
@@ -882,13 +897,12 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
     }
 
-    private void setTranslatedFragmentTitle(BaseMainFragment fragment){
-	    if(fragment!= null && fragment.customTitle() != null){
-		    getSupportActionBar().setTitle(fragment.customTitle());
-	    }
-	    else if(user != null && user.getProfile() != null){
-		    getSupportActionBar().setTitle(user.getProfile().getName());
-	    }
+    private void setTranslatedFragmentTitle(BaseMainFragment fragment) {
+        if (fragment != null && fragment.customTitle() != null) {
+            getSupportActionBar().setTitle(fragment.customTitle());
+        } else if (user != null && user.getProfile() != null) {
+            getSupportActionBar().setTitle(user.getProfile().getName());
+        }
     }
 
     public void onBackPressed() {
@@ -913,13 +927,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (resultCode == SELECT_CLASS_RESULT) {
             if (this.apiClient != null) {
                 this.apiClient.retrieveUser(true)
-                        
+
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
         } else if (requestCode == GEM_PURCHASE_REQUEST) {
             this.apiClient.retrieveUser(true)
-                    
+
                     .subscribe(new HabitRPGUserCallback(this), throwable -> {
                     });
         }
@@ -949,7 +963,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-               .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                .subscribe(new ItemsCallback(this, this.user), throwable -> {
                 });
     }
 
@@ -958,7 +972,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
         apiClient.unlockPath(event.path)
-                
+
                 .subscribe(new UnlockCallback(this, this.user), throwable -> {
                 });
     }
@@ -984,13 +998,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
             }
             observable
-                    
+
                     .doOnNext(aVoid -> {
                         showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL);
                     })
                     .subscribe(buyResponse -> {
                         apiClient.retrieveUser(false)
-                                
+
                                 .subscribe(new HabitRPGUserCallback(this), throwable -> {
                                 });
                     }, throwable -> {
@@ -1066,12 +1080,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     }, throwable -> {
                     });
         } else {
-            soundManager.loadAndPlayAudio(SoundManager.SoundReward);
-            // user created Rewards
-            apiClient.postTaskDirection(rewardKey, TaskDirection.down.toString())
-                    
-                    .subscribe(new TaskScoringCallback(this, rewardKey), throwable -> {
-                    });
+            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
+                    .subscribe(res -> {
+                        onTaskDataReceived(res, event.Reward);
+                    }, error -> {});
         }
 
         //Update the users gold
@@ -1110,7 +1122,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(SellItemCommand event) {
         this.apiClient.sellItem(event.item.getType(), event.item.getKey())
-                
+
                 .subscribe(habitRPGUser -> {
                     user.setItems(habitRPGUser.getItems());
                     user.save();
@@ -1126,7 +1138,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
         this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
-                
+
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
@@ -1164,7 +1176,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         final Pet pet = event.usingPet;
         this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
-                
+
                 .subscribe(feedResponse -> {
                     MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
                     MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
@@ -1251,7 +1263,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             displayLevelUpDialog(lvl);
 
             this.apiClient.retrieveUser(true)
-                    
+
                     .subscribe(new HabitRPGUserCallback(this), throwable -> {
                     });
             user.getStats().setLvl(lvl);
@@ -1312,7 +1324,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
                         apiClient.revive()
-                                
+
                                 .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {
                                 });
                     })
@@ -1428,7 +1440,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
         apiClient.updateUser(updateData)
-                
+
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
         this.overlayFrameLayout.removeView(this.activeTutorialView);
@@ -1482,29 +1494,32 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
-        apiClient.postTaskDirection(event.Task.getId(), (event.Task.getCompleted() ? TaskDirection.down : TaskDirection.up).toString())
-                
-                .subscribe(new TaskScoringCallback(this, event.Task.getId()), throwable -> {
-                    event.Task.completed = !event.Task.completed;
-                    event.Task.save();
-                    EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
-                });
-
-        switch(event.Task.type){
+        switch (event.Task.type) {
             case Task.TYPE_DAILY: {
-                soundManager.loadAndPlayAudio(SoundManager.SoundDaily);
-            } break;
+                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
+                        .subscribe(res -> {
+                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
+                        }, error -> {
+                        });
+            }
+            break;
             case Task.TYPE_TODO: {
-                soundManager.loadAndPlayAudio(SoundManager.SoundTodo);
-            } break;
+                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
+                        .subscribe(res -> {
+                           EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
+                        }, error -> {
+                        });
+            }
+            break;
         }
     }
 
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
-        apiClient.scoreChecklistItem(event.task.getId(), event.item.getId())
-                
-                .subscribe(new TaskUpdateCallback(), throwable -> {
+        checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
+                .subscribe(res -> {
+                    EventBus.getDefault().post(new TaskUpdatedEvent(event.task));
+                }, error -> {
                 });
     }
 
@@ -1514,8 +1529,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .subscribe(res -> {
                     onTaskDataReceived(res, event.habit);
                 }, error -> {
-
-
                 });
     }
 
@@ -1524,12 +1537,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         Task task = event.task;
         if (event.created) {
             this.apiClient.createItem(task)
-                    
                     .subscribe(new TaskCreationCallback(), throwable -> {
                     });
         } else {
             this.apiClient.updateTask(task.getId(), task)
-                    
                     .subscribe(new TaskUpdateCallback(), throwable -> {
                     });
         }
@@ -1629,7 +1640,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(OpenFullProfileCommand cmd) {
-        if(cmd.MemberId.equals("system"))
+        if (cmd.MemberId.equals("system"))
             return;
 
         Bundle bundle = new Bundle();
@@ -1645,8 +1656,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.filterDrawer.removeItemByPosition(position);
     }
 
-    public void updateFilterDrawerItem (IDrawerItem item, int position) {
+    public void updateFilterDrawerItem(IDrawerItem item, int position) {
         this.filterDrawer.removeItemByPosition(position);
-        this.filterDrawer.addItemAtPosition(item,position);
+        this.filterDrawer.addItemAtPosition(item, position);
     }
 }

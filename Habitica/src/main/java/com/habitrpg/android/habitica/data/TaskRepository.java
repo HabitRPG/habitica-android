@@ -15,5 +15,6 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
-    Observable<TaskDirectionData> scoreHabit(Task task, boolean up);
+    Observable<TaskDirectionData> taskChecked(Task task, boolean up);
+    Observable<Task> scoreChecklistItem(String taskId, String itemId);
 }

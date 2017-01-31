@@ -32,7 +32,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskDirectionData> scoreHabit(Task task, boolean up) {
+    public Observable<TaskDirectionData> taskChecked(Task task, boolean up) {
         return this.apiClient.postTaskDirection(task.getId(), (up ? TaskDirection.up : TaskDirection.down).toString())
                 .doOnNext(res -> {
                     // save local task changes
@@ -42,5 +42,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                         this.localRepository.saveTask(task);
                     }
                 });
+    }
+
+    public Observable<Task> scoreChecklistItem(String taskId, String itemId){
+        return apiClient.scoreChecklistItem(taskId, itemId).doOnNext(res -> {
+            this.localRepository.saveTask(res);
+        });
     }
 }

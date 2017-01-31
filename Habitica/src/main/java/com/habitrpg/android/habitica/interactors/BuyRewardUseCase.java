@@ -11,36 +11,32 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, TaskDirectionData> {
+public class BuyRewardUseCase extends UseCase<BuyRewardUseCase.RequestValues, TaskDirectionData> {
 
     private TaskRepository taskRepository;
     private SoundManager soundManager;
 
     @Inject
-    public HabitScoreUseCase(TaskRepository taskRepository, SoundManager soundManager,
-                             ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public BuyRewardUseCase(TaskRepository taskRepository, SoundManager soundManager,
+                            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.taskRepository = taskRepository;
         this.soundManager = soundManager;
     }
 
     @Override
-    protected Observable<TaskDirectionData> buildUseCaseObservable(RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.habit, requestValues.Up).doOnNext(res -> {
+    protected Observable<TaskDirectionData> buildUseCaseObservable(BuyRewardUseCase.RequestValues requestValues) {
+        return taskRepository.taskChecked(requestValues.task, false).doOnNext(res -> {
 
-            soundManager.loadAndPlayAudio(requestValues.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
+            soundManager.loadAndPlayAudio(SoundManager.SoundReward);
         });
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
+        protected final Task task;
 
-        protected boolean Up = false;
-
-        protected final Task habit;
-
-        public RequestValues(Task habit, boolean up) {
-            this.habit = habit;
-            this.Up = up;
+        public RequestValues(Task task) {
+            this.task = task;
         }
     }
 }
