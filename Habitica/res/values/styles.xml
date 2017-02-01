@@ -189,6 +189,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:drawableLeft">@drawable/ic_check_purple</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
     </style>
 
     <style name="FragmentDialogTitle">
@@ -202,7 +203,9 @@
 
     <style name="GemPurchaseListItemDescription">
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
         <item name="android:textColor">@color/subscription_description_text</item>
     </style>
 

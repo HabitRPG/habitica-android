@@ -236,6 +236,9 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
                 }
                 fragment.setListener(GemPurchaseActivity.this);
                 fragment.setupCheckout();
+                if (billingRequests != null) {
+                    fragment.setBillingRequests(billingRequests);
+                }
                 return (Fragment)fragment;
             }
 

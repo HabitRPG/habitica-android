@@ -85,7 +85,7 @@ public class SubscriptionOptionView extends FrameLayout {
         int verticalPadding = (int) getResources().getDimension(R.dimen.pill_vertical_padding);
         if (purchased) {
             subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_selected);
-            subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_100);
+            subscriptionSelectedFrameView.setBackgroundResource(R.color.brand_300);
             gemCapTextView.setBackgroundResource(R.drawable.pill_bg_green);
             gemCapTextView.setTextColor(getContext().getResources().getColor(R.color.white));
             gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);

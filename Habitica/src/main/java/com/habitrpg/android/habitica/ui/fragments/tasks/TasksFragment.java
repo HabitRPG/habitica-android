@@ -67,6 +67,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -413,7 +414,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(AddNewTaskCommand event) {
-        openNewTaskActivity(event.ClassType.toLowerCase());
+        openNewTaskActivity(event.ClassType.toLowerCase(Locale.US));
     }
 
     @Subscribe
@@ -661,6 +662,5 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
 
 	@Override
-	public String customTitle() {
-        return getString(R.string.sidebar_tasks);	}
+	public String customTitle() { return null; }
 }

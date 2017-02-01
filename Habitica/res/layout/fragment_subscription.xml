@@ -76,7 +76,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/subscribeButton"
                     android:layout_gravity="center"
-                    style="@style/Button.Purple"/>
+                    style="@style/Button.Purple"
+                    android:layout_marginTop="8dp"/>
         </LinearLayout>
 
 
@@ -96,7 +97,9 @@
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="23dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"/>
 
         <FrameLayout
                 android:layout_width="match_parent"
