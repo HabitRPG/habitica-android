@@ -2,34 +2,24 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
-import org.solovyev.android.checkout.Checkout;
 import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Purchase;
-import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -49,11 +39,8 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     @Inject
     CrashlyticsProxy crashlyticsProxy;
 
-    private static final int GEMS_TO_ADD = 21;
-    Button btnPurchaseGems;
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
-    private Inventory inventory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +72,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     public void setupCheckout() {
         final ActivityCheckout checkout = listener.getActivityCheckout();
         if (checkout != null) {
-            inventory = checkout.makeInventory();
+            Inventory inventory = checkout.makeInventory();
 
             inventory.load(Inventory.Request.create()
                             .loadAllPurchases().loadSkus(ProductTypes.IN_APP, PurchaseTypes.allGemTypes),
