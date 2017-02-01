@@ -2,11 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -15,9 +10,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
