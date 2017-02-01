@@ -13,7 +13,12 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -29,6 +34,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -225,5 +231,30 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     String getClassName() {
         return this.classType;
+    }
+
+    @Subscribe
+    public void onEvent(FilterTasksByTagsCommand cmd) {
+        recyclerAdapter.filter();
+    }
+
+    @Subscribe
+    public void onEvent(TaskCheckedCommand event) {
+        recyclerAdapter.checkTask(event.Task, event.completed);
+    }
+
+    @Subscribe
+    public void onEvent(TaskUpdatedEvent event) {
+        recyclerAdapter.updateTask(event.task);
+    }
+
+    @Subscribe
+    public void onEvent(TaskCreatedEvent event) {
+        recyclerAdapter.addTask(event.task);
+    }
+
+    @Subscribe
+    public void onEvent(TaskRemovedEvent event) {
+        recyclerAdapter.removeTask(event.deletedTaskId);
     }
 }

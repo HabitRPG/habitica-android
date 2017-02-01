@@ -150,7 +150,7 @@ public interface ApiService {
 
 
     @POST("user/sleep")
-    Observable<HabitResponse<Void>> sleep();
+    Observable<HabitResponse<Boolean>> sleep();
 
     @POST("user/revive")
     Observable<HabitResponse<HabitRPGUser>> revive();

@@ -661,5 +661,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
 
 	@Override
-	public String customTitle() {	return getString(R.string.sidebar_tasks);	}
+	public String customTitle() {
+        return getString(R.string.sidebar_tasks);	}
 }

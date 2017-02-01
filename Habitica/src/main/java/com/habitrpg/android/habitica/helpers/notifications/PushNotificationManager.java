@@ -1,17 +1,16 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.RemoteMessage;
+
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.RemoteMessage;
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,11 +54,11 @@ public class PushNotificationManager {
 
     public static PushNotificationManager getInstance(Context context) {
         if(instance == null) {
-            instance = new PushNotificationManager(context);
+            instance = new PushNotificationManager(context.getApplicationContext());
         }
 
         instance.refreshedToken = instance.sharedPreferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "");
-        instance.context = context;
+        instance.context = context.getApplicationContext();
 
         return instance;
     }

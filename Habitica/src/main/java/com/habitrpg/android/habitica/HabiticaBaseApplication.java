@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
@@ -56,6 +57,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     @Inject
     CrashlyticsProxy crashlyticsProxy;
     private static AppComponent component;
+
+    public RefWatcher refWatcher;
+
     /**
      * For better performance billing class should be used as singleton
      */
@@ -123,6 +127,11 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
         setupDagger();
         crashlyticsProxy.init(this);
         setupLeakCanary();
@@ -177,10 +186,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     protected abstract AppComponent initDagger();
 
     private void setupLeakCanary() {
-        // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LeakCanary.install(this);
-        }
+        refWatcher = LeakCanary.install(this);
     }
 
     private void setupFlowManager() {

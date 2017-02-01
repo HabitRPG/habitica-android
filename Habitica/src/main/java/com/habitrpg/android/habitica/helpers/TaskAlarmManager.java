@@ -48,7 +48,7 @@ public class TaskAlarmManager {
 
     private TaskAlarmManager(Context context) {
         HabiticaBaseApplication.getComponent().inject(this);
-        this.context = context;
+        this.context = context.getApplicationContext();
         EventBus.getDefault().register(this);
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }

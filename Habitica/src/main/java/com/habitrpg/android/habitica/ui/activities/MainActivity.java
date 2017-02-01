@@ -882,7 +882,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void setTranslatedFragmentTitle(BaseMainFragment fragment){
-	    if(fragment!= null && fragment.customTitle() != null){
+        if (getSupportActionBar() == null) {
+            return;
+        }
+	    if(fragment!= null && fragment.isAdded() && fragment.customTitle() != null){
 		    getSupportActionBar().setTitle(fragment.customTitle());
 	    }
 	    else if(user != null && user.getProfile() != null){
