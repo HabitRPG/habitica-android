@@ -164,7 +164,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-        editor.commit();
+        editor.apply();
         if (v == this.nextButton) {
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();

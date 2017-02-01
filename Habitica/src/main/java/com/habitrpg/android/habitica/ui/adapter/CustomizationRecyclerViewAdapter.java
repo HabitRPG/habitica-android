@@ -170,12 +170,12 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
 
             DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, hairColor));
-            cardView.setCardBackgroundColor(android.R.color.white);
+            cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
             if (customization.isUsable()) {
                 imageView.setAlpha(1.0f);
                 purchaseOverlay.setAlpha(0.0f);
                 if (customization.getIdentifier().equals(activeCustomization)) {
-                    cardView.setCardBackgroundColor(R.color.brand_500);
+                    cardView.setCardBackgroundColor(context.getResources().getColor(R.color.brand_500));
                 }
             } else {
                 imageView.setAlpha(0.3f);

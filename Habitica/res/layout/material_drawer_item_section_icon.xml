@@ -9,12 +9,12 @@
     android:paddingTop="@dimen/material_drawer_section_vertical_padding"
     android:paddingBottom="@dimen/material_drawer_section_vertical_padding">
     <TextView
-        android:id="@+id/material_drawer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center_vertical|start"
-        android:lines="1"
-        android:singleLine="true"
-        android:textSize="@dimen/drawer_section_item_text" />
+            android:id="@+id/material_drawer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical|start"
+            android:lines="1"
+            android:textSize="@dimen/drawer_section_item_text"
+            android:maxLines="1"/>
 </LinearLayout>

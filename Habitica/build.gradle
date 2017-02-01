@@ -208,7 +208,8 @@ android {
     }
 
     lintOptions {
-        disable 'UnusedResources'
+        disable 'UnusedResources','MissingTranslation','UnusedAttribute','InvalidPackage'
+        enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
 }
 

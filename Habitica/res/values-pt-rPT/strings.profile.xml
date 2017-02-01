@@ -11,4 +11,7 @@
     <string name="profile_allocated">Alocada:</string>
     <string name="profile_boosts">Aumentos</string>
     <string name="profile_private_message">Mensagem Privada</string>
-    </resources>
+    <string name="profile_achievements">Conquistas</string>
+    <string name="profile_achievement_ok">ACEITAR</string>
+
+</resources>

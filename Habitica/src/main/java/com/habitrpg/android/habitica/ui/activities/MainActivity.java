@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
@@ -159,6 +160,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -376,7 +378,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
             return;
         }
-        if (this.isDestroyed()) {
+        if (SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && this.isDestroyed()) {
             return;
         }
         this.activeFragment = fragment;

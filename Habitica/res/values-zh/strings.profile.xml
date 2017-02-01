@@ -11,4 +11,7 @@
     <string name="profile_allocated">已分配：</string>
     <string name="profile_boosts">增益：</string>
     <string name="profile_private_message">私信</string>
-    </resources>
+    <string name="profile_achievements">成就</string>
+    <string name="profile_achievement_ok">OK</string>
+
+</resources>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">更新</string>
   <string name="XP_default">經驗值</string>
   <string name="HP_default">生命值</string>
@@ -114,9 +114,9 @@
   <string name="faint_button">補全生命值 &amp; 请重試</string>
   <string name="filter">過濾器</string>
   <string name="profile_image">頭像</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">你在 %1$s 用了 %2$d 魔法值。</string>
-  <string name="used_skill_without_mana" formatted="false">你使用了 %1$s。</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">你在 %1$s 用了 %2$d 魔法值。</string>
+  <string name="used_skill_without_mana">你使用了 %1$s。</string>
   <string name="new_checklist_item">新增清單內容</string>
   <string name="add_checklist_item">添加</string>
   <string name="reminder_title">記得完成你的每日任務！</string>
@@ -160,9 +160,9 @@
   <string name="avatar_size_broad">強壯</string>
   <string name="avatar_background">背景</string>
   <string name="purchase_customization">用戶支付</string>
-  <string name="purchase_set_button" formatted="false">解鎖%d寶石</string>
+  <string name="purchase_set_button">解鎖%d寶石</string>
   <string name="purchase_button">支付</string>
-  <string name="purchase_set_title" formatted="false">購買禮包 %s</string>
+  <string name="purchase_set_title">購買禮包 %s</string>
   <string name="due_date">截止日期</string>
   <string name="quest.accept">接受</string>
   <string name="quest.reject">拒絕</string>
@@ -174,7 +174,7 @@
   <string name="quest.accepted">接受了</string>
   <string name="quest.rejected">拒絕的</string>
   <string name="quest.participants">參與者</string>
-  <string name="version_info" formatted="false">版本%s (%d)</string>
+  <string name="version_info">版本%1$s (%2$d)</string>
   <string name="sidebar_help">幫助&amp;FAQ</string>
   <string name="complete_tutorial">成功！</string>
   <string name="dismiss_tutorial">再次提醒我</string>
@@ -240,8 +240,8 @@
   <string name="write_message">寫消息</string>
   <string name="post">公告</string>
   <string name="guild_search_hint">搜尋公會</string>
-  <string name="todo_due" formatted="false">到期：%s</string>
-  <string name="daily_streak" formatted="false">目前連擊數：%d</string>
+  <string name="todo_due">到期：%s</string>
+  <string name="daily_streak">目前連擊數：%d</string>
   <string name="todo_has_duedate">任務有截止日</string>
   <string name="battle_gear">戰鬥裝備</string>
   <string name="costume">服裝</string>
@@ -260,10 +260,10 @@
   <string name="quest_begin_message">準備好開始任務了嗎?開始後就無法加入新成員了</string>
   <string name="quest.invitation.text">你已經被邀請加入任務!</string>
   <string name="ago_1day">1 天前</string>
-  <string name="ago_days" formatted="false">%d 天前</string>
+  <string name="ago_days">%d 天前</string>
   <string name="ago_1Minute">1 分鐘之前</string>
-  <string name="ago_minutes" formatted="false">%d 分鐘之前</string>
-  <string name="ago_hours" formatted="false">%d 小時之前</string>
+  <string name="ago_minutes">%d 分鐘之前</string>
+  <string name="ago_hours">%d 小時之前</string>
   <string name="ago_1hour">1 小時之前</string>
   <string name="today">今天</string>
   <string name="sidebar_items">物品</string>
@@ -273,26 +273,26 @@
   <string name="quests">任務</string>
   <string name="pets">寵物</string>
   <string name="mounts">坐騎</string>
-  <string name="armoireEquipment" formatted="false">你在神秘寶箱裡找到稀有物品: %s! 真是太棒了!</string>
-  <string name="armoireFood" formatted="false">你在魔法衣櫥裡找到了%1$s %2$s。它是用來做什麼的？</string>
+  <string name="armoireEquipment">你在神秘寶箱裡找到稀有物品: %s! 真是太棒了!</string>
+  <string name="armoireFood">你在魔法衣櫥裡找到了%1$s %2$s。它是用來做什麼的？</string>
   <string name="armoireExp">你奮力打開神秘寶箱而且拿到經驗值!</string>
-  <string name="armoireNotesFull" formatted="false">打開神秘寶箱會隨機獲得特殊裝備，經驗，或是食物! 數量剩下: %d 份</string>
+  <string name="armoireNotesFull">打開神秘寶箱會隨機獲得特殊裝備，經驗，或是食物! 數量剩下: %d 份</string>
   <string name="armoireLastItem">你在神秘寶箱裡找到最後一份稀有裝備。</string>
   <string name="armoireNotesEmpty">神秘寶箱會在每個月的第一個星期更新，在那之前，持續點擊以獲得經驗值與食物!</string>
-  <string name="sell" formatted="false">賣掉 (%s 黃金)</string>
+  <string name="sell">賣掉 (%d 黃金)</string>
   <string name="hatch_with_potion">用藥水孵化</string>
   <string name="feed_to_pet">餵食寵物</string>
   <string name="hatch_egg">孵化寵物蛋</string>
   <string name="invite_party">隊伍邀請</string>
-  <string name="dialog_feeding" formatted="false">餵養%1$s %2$s用：</string>
+  <string name="dialog_feeding">餵養%1$s %2$s用：</string>
   <string name="use_animal">用</string>
   <string name="feed">餵</string>
-  <string name="hatch_with" formatted="false">用 %s 孵化寵物</string>
-  <string name="hatched_pet_title" formatted="false">你孵化了一隻 %1$s %2$s！</string>
+  <string name="hatch_with">用 %s 孵化寵物</string>
+  <string name="hatched_pet_title">你孵化了一隻 %1$s %2$s！</string>
   <string name="close">關閉</string>
   <string name="share">分享</string>
-  <string name="notification_pet_fed" formatted="false">你餵食了你的%1$s %2$s！</string>
-  <string name="notification_purchase" formatted="false">%s 被買下來了</string>
+  <string name="notification_pet_fed">你餵食了你的%1$s %2$s！</string>
+  <string name="notification_purchase">%s 被買下來了</string>
   <string name="sectionpets">基本寵物</string>
   <string name="sectionpremiumPets">神奇藥水寵物</string>
   <string name="sectionquestPets">劇情任務寵物</string>
@@ -303,7 +303,7 @@
   <string name="sectionspecialMounts">稀有坐騎</string>
   <string name="world_quest">世界任務</string>
   <string name="inn_description">在客棧休息讓你未完成的每日任務不會傷害你！ (注意：它不能阻止來自任務怪物的傷害。)</string>
-  <string name="empty_items" formatted="false">你沒有擁有任何的%s</string>
+  <string name="empty_items">你沒有擁有任何的%s</string>
   <string name="warrior">戰士</string>
   <string name="rogue">盜賊</string>
   <string name="mage">法師</string>
@@ -315,7 +315,7 @@
   <string name="select_class">選擇職業</string>
   <string name="opt_out_class">退出</string>
   <string name="opt_out_description">不知道選什麼職業？想以後再選？沒問題 - 你現在可以先做一個沒有特殊技能的戰士。我們的維基頁面上有關於職業系統的介紹，之後隨時可以定你的職業。</string>
-  <string name="class_confirmation" formatted="false">你確定想要成為%s嗎？</string>
+  <string name="class_confirmation">你確定想要成為%1$s嗎？</string>
   <string name="choose_class">選擇職業</string>
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你確定要退出嗎？</string>
@@ -334,12 +334,12 @@
   <string name="email">電子郵件</string>
   <string name="invite_users">邀請加入隊伍</string>
   <string name="share_using">分享使用</string>
-  <string name="share_levelup" formatted="false">我在Habitica中通過改善我現實生活中的習慣到達了%s級！</string>
-  <string name="share_hatched" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
-  <string name="share_raised" formatted="false">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
+  <string name="share_levelup">我在Habitica中通過改善我現實生活中的習慣到達了%d級！</string>
+  <string name="share_hatched">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
+  <string name="share_raised">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
   <string name="open_in_store">開啟Play sotre</string>
   <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
-  <string name="leaderMessage" formatted="false">訊息來自%1$s</string>
+  <string name="leaderMessage">訊息來自%1$s</string>
   <string name="confirm">確認</string>
   <string name="market">市集</string>
   <string name="timeTravelers">時光旅人</string>
@@ -348,9 +348,9 @@
   <string name="party_invite">解鎖 邀請朋友</string>
   <string name="no_gold">金幣不足</string>
   <string name="no_potion">你不需要購買治療藥水</string>
-  <string name="successful_purchase" formatted="false">成功購入 %1$s</string>
+  <string name="successful_purchase">成功購入 %1$s</string>
   <string name="purchase_confirmation_title">確認購買</string>
-  <string name="confirm_purchase_text" formatted="false">購買 %1$s 用了 %2$s %3$s</string>
+  <string name="confirm_purchase_text">購買 %1$s 用了 %2$s %3$s</string>
   <string name="gem">寶石</string>
   <string name="gold_singular">金幣</string>
   <string name="gold_plural">金幣</string>

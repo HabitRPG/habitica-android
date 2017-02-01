@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Odśwież</string>
   <string name="XP_default">Doświadczenie</string>
   <string name="HP_default">Zdrowie</string>
@@ -116,9 +116,9 @@
   <string name="faint_button">Uzupełnij Zdrowie &amp; Spróbuj jeszcze raz</string>
   <string name="filter">Filtr</string>
   <string name="profile_image">Obrazek profilowy</string>
-  <string name="mana_price_button" formatted="false">%d PM</string>
-  <string name="used_skill" formatted="false">Użyłeś %1$s za %2$d pkt. many.</string>
-  <string name="used_skill_without_mana" formatted="false">Użyto %1$s.</string>
+  <string name="mana_price_button">%d PM</string>
+  <string name="used_skill">Użyłeś %1$s za %2$d pkt. many.</string>
+  <string name="used_skill_without_mana">Użyto %1$s.</string>
   <string name="new_checklist_item">nowa część zadania</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="reminder_title">Pamiętaj o odhaczaniu Codziennych!</string>
@@ -139,6 +139,7 @@
   <string name="members">Członkowie</string>
   <string name="habits">Nawyki</string>
   <string name="dailies">Codzienne</string>
+  <string name="todos">Do zrobienia</string>
   <string name="rewards">Nagrody</string>
   <string name="taskform.delete.title">Jesteś pewien?</string>
   <string name="taskform.delete.message">Czy na pewno chcesz usunąć?</string>
@@ -162,9 +163,9 @@
   <string name="avatar_size_broad">Krzepka</string>
   <string name="avatar_background">Obrazek</string>
   <string name="purchase_customization">Ustawienia zakupów</string>
-  <string name="purchase_set_button" formatted="false">Odblokuj zestaw za %d gemów</string>
+  <string name="purchase_set_button">Odblokuj zestaw za %d gemów</string>
   <string name="purchase_button">Kup</string>
-  <string name="purchase_set_title" formatted="false">Kup zestaw %s</string>
+  <string name="purchase_set_title">Kup zestaw %s</string>
   <string name="due_date">Termin</string>
   <string name="quest.accept">Akceptuj</string>
   <string name="quest.reject">Odrzuć</string>
@@ -176,12 +177,12 @@
   <string name="quest.accepted">Zaakceptowane</string>
   <string name="quest.rejected">Odrzucone</string>
   <string name="quest.participants">Uczestnicy</string>
-  <string name="version_info" formatted="false">Wersja %s (%d)</string>
+  <string name="version_info">Wersja %1$s (%2$d)</string>
   <string name="sidebar_help">Pomoc i FAQ</string>
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
   <string name="intro_1_title">Witaj w Habitica</string>
-  <string name="intro_1_description" formatted="false">Dołącz do ponad %s ludzi bawiących się podczas wypełniania swoich zadań. Stwórz awatar i śledź swoje zadania w życiu codziennym.</string>
+  <string name="intro_1_description">Dołącz do ponad %s ludzi bawiących się podczas wypełniania swoich zadań. Stwórz awatar i śledź swoje zadania w życiu codziennym.</string>
   <string name="intro_2_title">Awans w grze = Awans w życiu</string>
   <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
   <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
@@ -243,8 +244,8 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="write_message">Napisz wiadomość</string>
   <string name="post">Wyślij</string>
   <string name="guild_search_hint">Szukaj gildii</string>
-  <string name="todo_due" formatted="false">Termin: %s</string>
-  <string name="daily_streak" formatted="false">licznik serii: %d</string>
+  <string name="todo_due">Termin: %s</string>
+  <string name="daily_streak">licznik serii: %d</string>
   <string name="todo_has_duedate">Zdania mają termin wykonania</string>
   <string name="battle_gear">Sprzęt Bojowy</string>
   <string name="costume">Kostium</string>
@@ -263,10 +264,10 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="quest_begin_message">Czy jesteś pewien, ze chcesz zacząć misję? Gdy zostanie aktywowana, żaden dodatkowy członek drużyny nie będzie mógł do niej dołączyc.</string>
   <string name="quest.invitation.text">Zostałeś zaproszony do udziału w misji!</string>
   <string name="ago_1day">1 dzień temu</string>
-  <string name="ago_days" formatted="false">%d dni temu</string>
+  <string name="ago_days">%d dni temu</string>
   <string name="ago_1Minute">1 minutę temu</string>
-  <string name="ago_minutes" formatted="false">%d minut temu</string>
-  <string name="ago_hours" formatted="false">%d godzin temu</string>
+  <string name="ago_minutes">%d minut temu</string>
+  <string name="ago_hours">%d godzin temu</string>
   <string name="ago_1hour">1 godzinę temu</string>
   <string name="today">Dzisiaj</string>
   <string name="sidebar_items">Przedmioty</string>
@@ -276,26 +277,26 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="quests">Misje</string>
   <string name="pets">Zwierzaki</string>
   <string name="mounts">Wierzchowce</string>
-  <string name="armoireEquipment" formatted="false">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
-  <string name="armoireFood" formatted="false">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
+  <string name="armoireEquipment">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
+  <string name="armoireFood">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
   <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
-  <string name="armoireNotesFull" formatted="false">Otwórz Skrzynię żeby losowo otrzymać specjalne Wyposażenie, Doświadczenie lub jedzenie! Pozostało elementów : %d</string>
+  <string name="armoireNotesFull">Otwórz Skrzynię żeby losowo otrzymać specjalne Wyposażenie, Doświadczenie lub jedzenie! Pozostało elementów : %d</string>
   <string name="armoireLastItem">Znalazłeś ostatni element rzadkiego Wyposażenia w Zaklętej Skrzyni.</string>
   <string name="armoireNotesEmpty">Skrzynia otrzyma nowe Wyposażenie w pierwszym tygodniu każdego miesiąca. Do tego czasu klikaj aby otrzymać Doświadczenie i Jedzenie!</string>
-  <string name="sell" formatted="false">Sprzedaj (%s Złoto)</string>
+  <string name="sell">Sprzedaj (%d Złoto)</string>
   <string name="hatch_with_potion">Wykluj za pomocą mikstury</string>
   <string name="feed_to_pet">Nakarm chowańca</string>
   <string name="hatch_egg">Wykluj za pomocą jaja</string>
   <string name="invite_party">Zaproś drużynę</string>
-  <string name="dialog_feeding" formatted="false">Nakarm %1$s %2$s</string>
+  <string name="dialog_feeding">Nakarm %1$s %2$s</string>
   <string name="use_animal">Użyj</string>
   <string name="feed">Nakarm</string>
-  <string name="hatch_with" formatted="false">Wykluj za pomocą %s</string>
-  <string name="hatched_pet_title" formatted="false">Wyklułeś/as %1$s %2$s!</string>
+  <string name="hatch_with">Wykluj za pomocą %s</string>
+  <string name="hatched_pet_title">Wyklułeś/as %1$s %2$s!</string>
   <string name="close">Zamknij</string>
   <string name="share">Podziel się</string>
-  <string name="notification_pet_fed" formatted="false">Nakarmiłeś/aś %1$s %2$s!</string>
-  <string name="notification_purchase" formatted="false">%s zakupiony</string>
+  <string name="notification_pet_fed">Nakarmiłeś/aś %1$s %2$s!</string>
+  <string name="notification_purchase">%s zakupiony</string>
   <string name="sectionpets">Podstawowe chowańce</string>
   <string name="sectionpremiumPets">Magiczne chowańce</string>
   <string name="sectionquestPets">Chowańce z misji</string>
@@ -306,7 +307,9 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="sectionspecialMounts">Rzadkie wierzchowce</string>
   <string name="world_quest">Zadanie ogólnoświatowe</string>
   <string name="inn_description">Odpoczywaj w Karczmie aby zapobiec obrażeniu z niewykonanych zadań codziennych w ciągu nocy! (Notatka: nie zapobiega przed obrażeniami otrzymanymi od Bossa ogólnoświatowego.)</string>
-  <string name="empty_items" formatted="false">Nie posiadasz %s</string>
+  <string name="empty_items">Nie posiadasz %s</string>
+  <string name="user_level">poz %d</string>
+  <string name="user_level_with_class">poz %1$d %2$s</string>
   <string name="warrior">Wojownik</string>
   <string name="rogue">Łotrzyk</string>
   <string name="mage">Mag</string>
@@ -318,7 +321,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="select_class">Wybierz klasę postaci</string>
   <string name="opt_out_class">Wycofaj się</string>
   <string name="opt_out_description">Nie zależy ci na klasach? Chcesz wybrać później? Wycofaj się - będziesz wojownikiem bez specjalnych umiejętności. Możesz przeczytać o systemie klas później na wiki i włączyć klasy w każdej chwili.</string>
-  <string name="class_confirmation" formatted="false">Jesteś pewien, że chcesz być %s?</string>
+  <string name="class_confirmation">Jesteś pewien, że chcesz być %s?</string>
   <string name="class_changed">Jesteś teraz %s!</string>
   <string name="class_changed_description">Masz nowe domyślne wyposażenie bojowe, które możesz zmienić pod Wyposażeniem!</string>
   <string name="choose_class">Wybierz klasę postaci</string>
@@ -339,14 +342,14 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="email">Email</string>
   <string name="invite_users">Zaproś do drużyny</string>
   <string name="share_using">Udostępnij używanie</string>
-  <string name="share_levelup" formatted="false">Ulepszając życiowe nawyki, osiągnąłem %s level w Habitice!</string>
-  <string name="share_hatched" formatted="false">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
-  <string name="share_raised" formatted="false">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="share_levelup">Ulepszając życiowe nawyki, osiągnąłem %d level w Habitice!</string>
+  <string name="share_hatched">Właśnie wyklułem chowańca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
+  <string name="share_raised">Właśnie zyskałem wierzchowca %1$s %2$s w Habitice dzięki wypełnianiu życiowych zadań!</string>
   <string name="open_in_store">Otwórz w sklepie Google Play</string>
   <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę? Będzie to kosztować 3 kryształy.</string>
   <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s</string>
-  <string name="leaderMessage" formatted="false">Wiadomość od %1$s</string>
-  <string name="leaderName" formatted="false">Lider: %1$s</string>
+  <string name="leaderMessage">Wiadomość od %1$s</string>
+  <string name="leaderName">Lider: %1$s</string>
   <string name="confirm">Potwierdź</string>
   <string name="market">Sklep</string>
   <string name="timeTravelers">Podróżnicy w czasie</string>
@@ -355,9 +358,9 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="party_invite">Odblokuj poprzez zapraszanie przyjaciół</string>
   <string name="no_gold">Niewystarczająca ilość złota</string>
   <string name="no_potion">Nie potrzebujesz kupować eliksiru uzdrawiającego</string>
-  <string name="successful_purchase" formatted="false">%1$s jest w Twoim posiadaniu</string>
+  <string name="successful_purchase">%1$s jest w Twoim posiadaniu</string>
   <string name="purchase_confirmation_title">Potwierdź zakup</string>
-  <string name="confirm_purchase_text" formatted="false">Zakup %1$s za %2$s %3$s</string>
+  <string name="confirm_purchase_text">Zakup %1$s za %2$s %3$s</string>
   <string name="gem">diament</string>
   <string name="hourglass">klepsydra</string>
   <string name="hourglasses">klepsydry</string>
@@ -408,7 +411,7 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="hatching_market_info">Nie znajdujesz poszukiwanych prezentów? Sprawdź na Targu!</string>
   <string name="feeding_market_info">Szukasz innego pokarmu? Kup je na Targu!</string>
   <string name="open_market">Otwórz Targ</string>
-  <string name="cds_description" formatted="false">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
+  <string name="cds_description">Twoje codzienne zostaną zresotowane, podczas pierwszego uruchomienia Habitica po %1$s. Upewnij się, że ukończyłeś swoje codzienne przed upływem tego czasu.</string>
   <string name="AudioTheme_title">Temat dźwiękowy</string>
   <string name="AudioTheme_summary">Zmień temat dźwiękowy Habitiki</string>
   <!--Login Incentives-->
@@ -416,4 +419,46 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="belongs_to_challenge">Należy do wyzwania</string>
   <string name="has_reminder">Ma powiadomienie</string>
   <string name="has_tag">Ma tag</string>
+  <string name="subscribe.listitem1">Kup klejnoty za złoto</string>
+  <string name="subscribe.listitem2">Ekskluzywne przedmioty miesiąca </string>
+  <string name="subscriptions">Subskrypcje</string>
+  <string name="subscription">Subskrypcja</string>
+  <string name="active">Aktywne</string>
+  <string name="cancel_subscription">Anuluj Subskrypcję</string>
+  <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
+  <string name="current_bonuses">Obecne Dodatki</string>
+  <string name="inactive">Nieaktywne</string>
+  <string name="one_month">1 Miesiąc</string>
+  <string name="months">%d Miesięcy</string>
+  <string name="month">miesiąc</string>
+  <string name="three_months">3 miesiące</string>
+  <string name="six_months">6 miesięcy</string>
+  <string name="twelve_months">12 miesięcy</string>
+  <string name="subscription_status">Status Subskrypcji</string>
+  <string name="byLeader">przez %s</string>
+  <string name="challenge_details">Szczegóły wyzwania</string>
+  <string name="challenge_leave_title">Opuść wyzwanie.</string>
+  <string name="my_challenges">Moje wyzwania</string>
+  <string name="public_challenges">Publiczne</string>
+  <string name="challenges">Wyzwania</string>
+  <string name="daily">Codzienny </string>
+  <string name="habit">Nawyk</string>
+  <string name="reward">Nagroda</string>
+  <string name="todo">Do-Zrobienia</string>
+  <string name="official">Oficjalne</string>
+  <string name="participating">Uczestnictwo </string>
+  <string name="challenge">Wyzwanie</string>
+  <string name="go_to_challenge">Idź do wyzwania </string>
+  <string name="not_part_of_a_challenge">Obecnie nie uczestniczysz w żadnym wyzwaniu!</string>
+  <string name="add_reminder">Dodaj przypomnienie</string>
+  <string name="warning">Uwaga</string>
+  <string name="open_settings">Otwórz ustawienia</string>
+  <string name="inbox">Skrzynka odbiorcza</string>
+  <string name="FAQ">Najczęściej Zadawane Pytania</string>
+  <string name="special">Specjalne</string>
+  <string name="limited_count">%d zostało</string>
+  <string name="gem_shop">Diament</string>
+  <string name="mystery_item">Mistyczny Przedmiot</string>
+  <string name="open">Otwórz</string>
+  <string name="notification_mystery_item">Otwórz pudełko i znajdź %s!</string>
 </resources>

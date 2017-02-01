@@ -4,7 +4,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
@@ -18,22 +17,19 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-/**
- * Created by keithholliday on 6/27/16.
- */
 public class PushNotificationManager {
 
     private static PushNotificationManager instance = null;
-    public static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
+    private static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
 
-    public static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
-    public static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
-    public static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
-    public static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
-    public static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
-    public static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
-    public static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
-    public static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
+    static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
+    static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
+    static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
+    static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
+    static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
+    static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
+    static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
+    static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
 
 
     @Inject
@@ -64,7 +60,7 @@ public class PushNotificationManager {
         return instance;
     }
 
-    public void setRefreshedToken (String refreshedToken) {
+    void setRefreshedToken(String refreshedToken) {
         if (this.refreshedToken == null) {
             return;
         }
@@ -72,7 +68,7 @@ public class PushNotificationManager {
         this.refreshedToken = refreshedToken;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DEVICE_TOKEN_PREFERENCE_KEY, refreshedToken);
-        editor.commit();
+        editor.apply();
     }
 
     //@TODO: Use preferences
@@ -93,7 +89,7 @@ public class PushNotificationManager {
             return;
         }
 
-        Map<String, String> pushDeviceData = new HashMap<String, String>();
+        Map<String, String> pushDeviceData = new HashMap<>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
         apiHelper.apiService.addPushDevice(pushDeviceData)
@@ -120,7 +116,7 @@ public class PushNotificationManager {
         return false;
     }
 
-    public void displayNotification (RemoteMessage remoteMessage) {
+    void displayNotification(RemoteMessage remoteMessage) {
         String remoteMessageIdentifier = remoteMessage.getData().get("identifier");
 
         HabiticaLocalNotificationFactory notificationFactory = new HabiticaLocalNotificationFactory();

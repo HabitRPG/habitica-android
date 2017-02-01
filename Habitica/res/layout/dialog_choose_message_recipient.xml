@@ -12,7 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/uuidEditText" android:layout_gravity="center_horizontal"
-            android:focusable="true" android:singleLine="true"/>
+            android:focusable="true"
+            android:maxLines="1"/>
     <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

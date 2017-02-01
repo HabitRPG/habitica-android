@@ -151,7 +151,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
 
         Context context;
 
-        public CustomizationViewHolder(View itemView) {
+        CustomizationViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -164,11 +164,11 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             this.customization = customization;
 
             DataBindingUtils.loadImage(this.imageView, customization.getImageName(userSize, getHairColor()));
-            cardView.setCardBackgroundColor(android.R.color.white);
+            cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
             imageView.setAlpha(1.0f);
             purchaseOverlay.setAlpha(0.0f);
             if (isCustomizationActive(this.customization)) {
-                cardView.setCardBackgroundColor(R.color.brand_500);
+                cardView.setCardBackgroundColor(context.getResources().getColor(R.color.brand_500));
             }
         }
 

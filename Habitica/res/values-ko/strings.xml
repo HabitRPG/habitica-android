@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">새로고침</string>
   <string name="XP_default">경험치</string>
   <string name="HP_default">체력</string>
@@ -116,9 +116,9 @@
   <string name="faint_button">체력을 채우고 다시 도전하세요.</string>
   <string name="filter">필터</string>
   <string name="profile_image">프로필 사진</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">당신은 %1$s을 사용해 %2$d 마나를 얻었습니다.</string>
-  <string name="used_skill_without_mana" formatted="false">%1$s을(를) 사용했습니다.</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">당신은 %1$s을 사용해 %2$d 마나를 얻었습니다.</string>
+  <string name="used_skill_without_mana">%1$s을(를) 사용했습니다.</string>
   <string name="new_checklist_item">새로운 체크리스트 항목</string>
   <string name="add_checklist_item">더하기</string>
   <string name="reminder_title">일일과제 체크하는 것을 잊지마세요!</string>
@@ -162,9 +162,9 @@
   <string name="avatar_size_broad">통통하게</string>
   <string name="avatar_background">배경</string>
   <string name="purchase_customization"> 구매</string>
-  <string name="purchase_set_button" formatted="false">%d개의 보석으로 전체 세트 열기</string>
+  <string name="purchase_set_button">%d개의 보석으로 전체 세트 열기</string>
   <string name="purchase_button">구매</string>
-  <string name="purchase_set_title" formatted="false">%s 세트 구매</string>
+  <string name="purchase_set_title">%s 세트 구매</string>
   <string name="due_date">만기일</string>
   <string name="quest.accept">승인</string>
   <string name="quest.reject">거부</string>
@@ -176,12 +176,12 @@
   <string name="quest.accepted">승인됨</string>
   <string name="quest.rejected">거부됨</string>
   <string name="quest.participants">참가자</string>
-  <string name="version_info" formatted="false">버젼 %s (%d)</string>
+  <string name="version_info">버젼 %1$s (%2$d)</string>
   <string name="sidebar_help">도움말 &amp; FAQ</string>
   <string name="complete_tutorial">네, 알겠어요!</string>
   <string name="dismiss_tutorial">나중에 알려주세요</string>
   <string name="intro_1_title">Habitica에 오신걸 환영합니다</string>
-  <string name="intro_1_description" formatted="false">%s명이 넘는 사람들과 함께 아바타도 만들고 재미있게 즐기면서 실생활 목표들을 달성하세요.</string>
+  <string name="intro_1_description">%s명이 넘는 사람들과 함께 아바타도 만들고 재미있게 즐기면서 실생활 목표들을 달성하세요.</string>
   <string name="intro_2_title">게임 진행도 = 인생 진행도</string>
   <string name="intro_2_description">일상생활의 과제들을 해결하면서 게임의 새로운 기능을 열어보세요. 당신이 목표를 달성할 때 마다 갑옷, 펫과 같은 다양한 보상들을 얻을 수 있습니다!</string>
   <string name="intro_3_title">친구들과 몬스터를 물리치세요</string>
@@ -250,8 +250,8 @@
   <string name="write_message">메세지 작성</string>
   <string name="post">게시</string>
   <string name="guild_search_hint">길드 검색</string>
-  <string name="todo_due" formatted="false">만기: %s</string>
-  <string name="daily_streak" formatted="false">연속 달성: %d</string>
+  <string name="todo_due">만기: %s</string>
+  <string name="daily_streak">연속 달성: %d</string>
   <string name="todo_has_duedate">과제가 만기일이 있습니다</string>
   <string name="battle_gear">전투 장비</string>
   <string name="costume">의상</string>
@@ -270,10 +270,10 @@
   <string name="quest_begin_message">정말 이 퀘스트를 시작하시겠습니까? 시작 후 더이상 새로운 파티 멤버가 참여할 수 없습니다.</string>
   <string name="quest.invitation.text">퀘스트에 초대받았습니다!</string>
   <string name="ago_1day">하루 전</string>
-  <string name="ago_days" formatted="false">%d 일 전</string>
+  <string name="ago_days">%d 일 전</string>
   <string name="ago_1Minute">1분 전</string>
-  <string name="ago_minutes" formatted="false">%d 분 전</string>
-  <string name="ago_hours" formatted="false">%d 시간 전</string>
+  <string name="ago_minutes">%d 분 전</string>
+  <string name="ago_hours">%d 시간 전</string>
   <string name="ago_1hour">1시간 전</string>
   <string name="today">오늘</string>
   <string name="sidebar_items">아이템</string>
@@ -283,26 +283,26 @@
   <string name="quests">퀘스트</string>
   <string name="pets">펫</string>
   <string name="mounts">탑승펫</string>
-  <string name="armoireEquipment" formatted="false">옷장에서 귀한 장비를 찾았습니다: %s! 대단해요!</string>
-  <string name="armoireFood" formatted="false">당신은 옷장안에서  %1$s %2$s 를 발견합니다. 왜 이것들이 여기 들어있지?</string>
+  <string name="armoireEquipment">옷장에서 귀한 장비를 찾았습니다: %s! 대단해요!</string>
+  <string name="armoireFood">당신은 옷장안에서  %1$s %2$s 를 발견합니다. 왜 이것들이 여기 들어있지?</string>
   <string name="armoireExp">당신은 옷장과 씨름하여 경험치를 얻었습니다. 맛 좀 봐라!</string>
-  <string name="armoireNotesFull" formatted="false">옷장을 열어 무작위로 장비, 경험치, 혹은 음식을 얻으세요! 남은 장비 부품: %d</string>
+  <string name="armoireNotesFull">옷장을 열어 무작위로 장비, 경험치, 혹은 음식을 얻으세요! 남은 장비 부품: %d</string>
   <string name="armoireLastItem">당신은 마지막 귀한 장비를 마법의 옷장에서 찾았습니다.</string>
   <string name="armoireNotesEmpty">옷장에는 매달 첫째주에 새로운 장비가 들어있을 것입니다. 그때까지는 계속 클릭하여 경험치와 음식을 얻으세요!</string>
-  <string name="sell" formatted="false">팔기 (%s 골드)</string>
+  <string name="sell">팔기 (%d 골드)</string>
   <string name="hatch_with_potion">물약으로 알 부화</string>
   <string name="feed_to_pet">펫 먹이주기</string>
   <string name="hatch_egg">알 부화</string>
   <string name="invite_party">파티에 초대</string>
-  <string name="dialog_feeding" formatted="false">%1$s %2$s 에게 다음의 먹이 주기:</string>
+  <string name="dialog_feeding">%1$s %2$s 에게 다음의 먹이 주기:</string>
   <string name="use_animal">사용</string>
   <string name="feed">먹이주기</string>
-  <string name="hatch_with" formatted="false">%s 으로 펫 부화</string>
-  <string name="hatched_pet_title" formatted="false">당신은 %1$s %2$s 를 부화시켰습니다!</string>
+  <string name="hatch_with">%s 으로 펫 부화</string>
+  <string name="hatched_pet_title">당신은 %1$s %2$s 를 부화시켰습니다!</string>
   <string name="close">닫기</string>
   <string name="share">나누기</string>
-  <string name="notification_pet_fed" formatted="false">%1$s %2$s 에게 먹이를 줬습니다!</string>
-  <string name="notification_purchase" formatted="false">%s 를 구매했습니다</string>
+  <string name="notification_pet_fed">%1$s %2$s 에게 먹이를 줬습니다!</string>
+  <string name="notification_purchase">%s 를 구매했습니다</string>
   <string name="sectionpets">기본 펫</string>
   <string name="sectionpremiumPets">마법 물약의 펫</string>
   <string name="sectionquestPets">퀘스트 펫</string>
@@ -313,7 +313,7 @@
   <string name="sectionspecialMounts">희귀 탑승펫</string>
   <string name="world_quest">세계 퀘스트</string>
   <string name="inn_description">여관에서 쉬면 완료하지 못한 일일과제가 당신을 다치게 하는 것을 막을 수 있습니다. (주의: 보스로부터 받는 데미지는 피하지 못합니다.)</string>
-  <string name="empty_items" formatted="false">%s 가 하나도 없습니다</string>
+  <string name="empty_items">%s 가 하나도 없습니다</string>
   <string name="warrior">전사</string>
   <string name="rogue">도적</string>
   <string name="mage">마법사</string>
@@ -325,7 +325,7 @@
   <string name="select_class">직업 고르기</string>
   <string name="opt_out_class">선택 유예</string>
   <string name="opt_out_description">직업을 신경쓰고 싶지 않으신가요? 나중에 고르고 싶으시다고요? 선택유예 하세요 - 당신은 아무런 능력이 없는 전사가 되어있을 꺼에요. wiki를 방문하면 직업시스템에 대해서 자세히 알 수 있고, 이후에 언제라도 직업을 선택할 수 있습니다.</string>
-  <string name="class_confirmation" formatted="false">%s 가 되고싶은 것이 확실한가요?</string>
+  <string name="class_confirmation">%s 가 되고싶은 것이 확실한가요?</string>
   <string name="class_changed">%s가 되었습니다!</string>
   <string name="class_changed_description">장비 메뉴에서 교체할 수 있는 새로운 기본 전투 장비를 얻었습니다!</string>
   <string name="choose_class">직업 선택</string>
@@ -346,14 +346,14 @@
   <string name="email">이메일</string>
   <string name="invite_users">파티 초대</string>
   <string name="share_using">올리기</string>
-  <string name="share_levelup" formatted="false">일상생활의 습관을 개선하여 Habitica에서 레벨 %s가 되었어요!</string>
-  <string name="share_hatched" formatted="false">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
-  <string name="share_raised" formatted="false">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
+  <string name="share_levelup">일상생활의 습관을 개선하여 Habitica에서 레벨 %d가 되었어요!</string>
+  <string name="share_hatched">일상생활의 과제들을 달성하여 Habitica에서 %1$s %2$s 펫을 깨웠어요!</string>
+  <string name="share_raised">일상생활의 과제들을 달성하여 %1$s %2$s 탈것을 얻었어요!</string>
   <string name="open_in_store">플레이스토어로 열기</string>
   <string name="change_class_confirmation">보석 3개를 사용하여 직업을 바꾸시겠습니까? </string>
   <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
-  <string name="leaderMessage" formatted="false">%1$s로부터 온 메세지</string>
-  <string name="leaderName" formatted="false">리더: %1$s</string>
+  <string name="leaderMessage">%1$s로부터 온 메세지</string>
+  <string name="leaderName">리더: %1$s</string>
   <string name="confirm">확인</string>
   <string name="market">시장</string>
   <string name="timeTravelers">시간 여행자들</string>
@@ -362,9 +362,9 @@
   <string name="party_invite">친구를 초대하여 잠금 해제하기</string>
   <string name="no_gold">골드가 충분하지 않음</string>
   <string name="no_potion">체력 물약을 살 필요가 없음</string>
-  <string name="successful_purchase" formatted="false">%1$s을(를) 성공적으로 구매했음</string>
+  <string name="successful_purchase">%1$s을(를) 성공적으로 구매했음</string>
   <string name="purchase_confirmation_title">구매 확인</string>
-  <string name="confirm_purchase_text" formatted="false">%1$s을(를) %2$s %3$s(으)로 구매함</string>
+  <string name="confirm_purchase_text">%1$s을(를) %2$s %3$s(으)로 구매함</string>
   <string name="gem">보석</string>
   <string name="hourglass">모래시계</string>
   <string name="hourglasses">모래시계</string>
@@ -415,7 +415,7 @@
   <string name="hatching_market_info">필요한 아이템이 드롭되지 않나요? 시장으로 가보세요!</string>
   <string name="feeding_market_info">다른 종류의 음식이 필요한가요? 시장에서 음식을 구매해보세요!</string>
   <string name="open_market">시장으로</string>
-  <string name="cds_description" formatted="false">일일과제는 %1$s 후에 처음 해비티카를 사용할 때 리셋됩니다. 꼭 이 시간 전에 일일과제들을 완료하세요!</string>
+  <string name="cds_description">일일과제는 %1$s 후에 처음 해비티카를 사용할 때 리셋됩니다. 꼭 이 시간 전에 일일과제들을 완료하세요!</string>
   <string name="AudioTheme_title">오디오 테마</string>
   <string name="AudioTheme_summary">Habitica 오디오 바꾸기</string>
   <!--Login Incentives-->

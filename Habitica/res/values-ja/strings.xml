@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">更新</string>
   <string name="XP_default">経験値</string>
   <string name="HP_default">体力</string>
@@ -116,9 +116,9 @@
   <string name="faint_button">体力を全回復してやり直す</string>
   <string name="filter">フィルター</string>
   <string name="profile_image">プロフィール画像</string>
-  <string name="mana_price_button" formatted="false">%d マナ</string>
-  <string name="used_skill" formatted="false">%2$dマナを消費して%1$sを唱えた。</string>
-  <string name="used_skill_without_mana" formatted="false">%1$s を唱えた。</string>
+  <string name="mana_price_button">%d マナ</string>
+  <string name="used_skill">%2$dマナを消費して%1$sを唱えた。</string>
+  <string name="used_skill_without_mana">%1$s を唱えた。</string>
   <string name="new_checklist_item">新しいチェックリスト項目</string>
   <string name="add_checklist_item">追加</string>
   <string name="reminder_title">日課をチェックした?</string>
@@ -139,6 +139,7 @@
   <string name="members">メンバー</string>
   <string name="habits">習慣</string>
   <string name="dailies">日課</string>
+  <string name="todos">To-Do</string>
   <string name="rewards">ごほうび</string>
   <string name="taskform.delete.title">よろしいですか?</string>
   <string name="taskform.delete.message">削除します。いいですか?</string>
@@ -162,9 +163,9 @@
   <string name="avatar_size_broad">がっしり</string>
   <string name="avatar_background">背景</string>
   <string name="purchase_customization">カスタマイズを購入</string>
-  <string name="purchase_set_button" formatted="false">%d ジェムでセットをアンロック</string>
+  <string name="purchase_set_button">%d ジェムでセットをアンロック</string>
   <string name="purchase_button">購入</string>
-  <string name="purchase_set_title" formatted="false">%s セットを購入</string>
+  <string name="purchase_set_title">%s セットを購入</string>
   <string name="due_date">締切日</string>
   <string name="quest.accept">承認</string>
   <string name="quest.reject">拒否</string>
@@ -176,12 +177,12 @@
   <string name="quest.accepted">承認済</string>
   <string name="quest.rejected">拒否</string>
   <string name="quest.participants">参加者</string>
-  <string name="version_info" formatted="false">バージョン : %s (%d)</string>
+  <string name="version_info">バージョン : %1$s (%2$d)</string>
   <string name="sidebar_help">ヘルプとFAQ</string>
   <string name="complete_tutorial">わかった!</string>
   <string name="dismiss_tutorial">もう一度通知</string>
   <string name="intro_1_title">Habitica へようこそ</string>
-  <string name="intro_1_description" formatted="false">%s人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
+  <string name="intro_1_description">%s人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
   <string name="intro_2_title">ゲームの進行 = 人生の進行</string>
   <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろい、ペット、そして「ごほうび」を手に入れながら、自分自身の目標に接近しよう!</string>
   <string name="intro_3_title">友達とつながってモンスターと戦おう</string>
@@ -244,8 +245,8 @@
   <string name="write_message">メッセージを書く</string>
   <string name="post">投稿</string>
   <string name="guild_search_hint">ギルドを検索</string>
-  <string name="todo_due" formatted="false">期限 : %s</string>
-  <string name="daily_streak" formatted="false">現在の連続実行 : %d 回</string>
+  <string name="todo_due">期限 : %s</string>
+  <string name="daily_streak">現在の連続実行 : %d 回</string>
   <string name="todo_has_duedate">期限ありタスク</string>
   <string name="battle_gear">武装</string>
   <string name="costume">衣装</string>
@@ -264,10 +265,10 @@
   <string name="quest_begin_message">クエストをはじめます。よろしいですか?　クエストを開始すると、新たにメンバーがクエストに参加することはできません。</string>
   <string name="quest.invitation.text">クエストへの招待状が届いた!</string>
   <string name="ago_1day">1日前</string>
-  <string name="ago_days" formatted="false">%d日前</string>
+  <string name="ago_days">%d日前</string>
   <string name="ago_1Minute">1分前</string>
-  <string name="ago_minutes" formatted="false">%d分前</string>
-  <string name="ago_hours" formatted="false">%d時間前</string>
+  <string name="ago_minutes">%d分前</string>
+  <string name="ago_hours">%d時間前</string>
   <string name="ago_1hour">1時間前</string>
   <string name="today">今日</string>
   <string name="sidebar_items">アイテム</string>
@@ -277,26 +278,26 @@
   <string name="quests">クエスト</string>
   <string name="pets">ペット</string>
   <string name="mounts">乗騎</string>
-  <string name="armoireEquipment" formatted="false">宝箱に貴重なアイテム、 %s を見つけた!　すごい!</string>
-  <string name="armoireFood" formatted="false">宝箱をひっかきまわして%1$s%2$sを見つけた。何でこんなとこに?</string>
+  <string name="armoireEquipment">宝箱に貴重なアイテム、 %s を見つけた!　すごい!</string>
+  <string name="armoireFood">宝箱をひっかきまわして%1$s%2$sを見つけた。何でこんなとこに?</string>
   <string name="armoireExp">宝箱と格闘して経験値を増やした。どうぞっ!</string>
-  <string name="armoireNotesFull" formatted="false">宝箱を開くと、特別な装備、経験値、えさなどが手に入るよ!　残っているアイテムの数 : %d</string>
+  <string name="armoireNotesFull">宝箱を開くと、特別な装備、経験値、えさなどが手に入るよ!　残っているアイテムの数 : %d</string>
   <string name="armoireLastItem">最後の貴重なアイテムをラッキー宝箱で発見した。</string>
   <string name="armoireNotesEmpty">宝箱には毎月最初の週に新しいアイテムが入ります。それまでは、クリックして経験値やえさを手に入れよう!</string>
-  <string name="sell" formatted="false">%s ゴールドで売る</string>
+  <string name="sell">%d ゴールドで売る</string>
   <string name="hatch_with_potion">たまごがえしの薬を使う</string>
   <string name="feed_to_pet">ペットにえさをやる</string>
   <string name="hatch_egg">たまごをかえす</string>
   <string name="invite_party">パーティーに招待する</string>
-  <string name="dialog_feeding" formatted="false">%1$s%2$s にえさをやる :</string>
+  <string name="dialog_feeding">%1$s%2$s にえさをやる :</string>
   <string name="use_animal">連れていく</string>
   <string name="feed">えさをやる</string>
-  <string name="hatch_with" formatted="false">%s でペットをかえす</string>
-  <string name="hatched_pet_title" formatted="false">%1$s%2$sが生まれた!</string>
+  <string name="hatch_with">%s でペットをかえす</string>
+  <string name="hatched_pet_title">%1$s%2$sが生まれた!</string>
   <string name="close">閉じる</string>
   <string name="share">共有する</string>
-  <string name="notification_pet_fed" formatted="false">%1$s%2$sにえさをやった!</string>
-  <string name="notification_purchase" formatted="false">%s は購入済み</string>
+  <string name="notification_pet_fed">%1$s%2$sにえさをやった!</string>
+  <string name="notification_purchase">%s は購入済み</string>
   <string name="sectionpets">基本のペット</string>
   <string name="sectionpremiumPets">魔法の薬のペット</string>
   <string name="sectionquestPets">クエスト ペット</string>
@@ -307,7 +308,9 @@
   <string name="sectionspecialMounts">レアな乗騎</string>
   <string name="world_quest">世界のクエスト</string>
   <string name="inn_description">ロッジで休んでいる間は、日課をやらずに夜が明けてもダメージを受けない! ( 注 : ボスから受けるダメージは避けられない)</string>
-  <string name="empty_items" formatted="false">%s を持ってないよ</string>
+  <string name="empty_items">%s を持ってないよ</string>
+  <string name="user_level">レベル %d</string>
+  <string name="user_level_with_class">レベル %1$d %2$s</string>
   <string name="warrior">戦士</string>
   <string name="rogue">盗賊</string>
   <string name="mage">魔道士</string>
@@ -319,8 +322,9 @@
   <string name="select_class">クラスを選ぶ</string>
   <string name="opt_out_class">選ばない</string>
   <string name="opt_out_description">クラスなんてめんどくさい? 後で選びたい? 選ばなくても構わないよ。スキルのない戦士になります。クラスのしくみについてwiki を参照し、いつでも ユーザー -&gt; ステータス で有効にできる。</string>
-  <string name="class_confirmation" formatted="false">%s になります。いいですか?</string>
+  <string name="class_confirmation">%s になります。いいですか?</string>
   <string name="class_changed">あなたは%s に転職した！</string>
+  <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます。</string>
   <string name="choose_class">クラスを選ぶ</string>
   <string name="dialog_go_back">戻る</string>
   <string name="opt_out_confirmation">選ばないでいい?</string>
@@ -339,12 +343,14 @@
   <string name="email">メール</string>
   <string name="invite_users">パーティーに招待する</string>
   <string name="share_using">共有 ( シェア ) : </string>
-  <string name="share_levelup" formatted="false">生活を改善して、Habitica でのレベルが %s になった!</string>
-  <string name="share_hatched" formatted="false">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめた。</string>
-  <string name="share_raised" formatted="false">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな乗騎まで成長した。</string>
+  <string name="share_levelup">生活を改善して、Habitica でのレベルが %d になった!</string>
+  <string name="share_hatched">実生活でのタスクをこなして、Habitica で %1$s%2$s のペットを飼いはじめた。</string>
+  <string name="share_raised">実生活でのタスクをこなして、%1$s%2$s のペットが乗れるほど大きな乗騎まで成長した。</string>
   <string name="open_in_store">Play ストアで開く</string>
   <string name="change_class_confirmation">クラスを変更します。いいですか? 3 ジェムかかります。</string>
-  <string name="leaderMessage" formatted="false">%1$s からのメッセージ</string>
+  <string name="change_class_equipment_warning">注意 : %s クラスの装備を買うことはできなくなります。</string>
+  <string name="leaderMessage">%1$s からのメッセージ</string>
+  <string name="leaderName">リーダー : %1$s</string>
   <string name="confirm">確認</string>
   <string name="market">市場</string>
   <string name="timeTravelers">タイムトラベラー</string>
@@ -353,9 +359,9 @@
   <string name="party_invite">友達を招待するとアンロック</string>
   <string name="no_gold">ゴールドが足りません</string>
   <string name="no_potion">体力回復の薬を買う必要がありません</string>
-  <string name="successful_purchase" formatted="false">%1$s を買いました</string>
+  <string name="successful_purchase">%1$s を買いました</string>
   <string name="purchase_confirmation_title">購入の確認</string>
-  <string name="confirm_purchase_text" formatted="false">%2$s %3$s で %1$s  を買う</string>
+  <string name="confirm_purchase_text">%2$s %3$s で %1$s  を買う</string>
   <string name="gem">ジェム</string>
   <string name="hourglass">砂時計</string>
   <string name="hourglasses">砂時計</string>
@@ -406,9 +412,27 @@
   <string name="hatching_market_info">ほしい落とし物が見つからない?　市場をチェックしてみよう!</string>
   <string name="feeding_market_info">違うえさがほしい?　市場で買いましょう!</string>
   <string name="open_market">市場を開く</string>
-  <string name="cds_description" formatted="false">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう!</string>
+  <string name="cds_description">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう!</string>
   <string name="AudioTheme_title">サウンド テーマ</string>
   <string name="AudioTheme_summary">Habitica のサウンド テーマを変更する</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">また明日！</string>
+  <string name="belongs_to_challenge">チャレンジに参加中</string>
+  <string name="has_reminder">通知あり</string>
+  <string name="has_tag">タグあり</string>
+  <string name="challenge_details">チャレンジの概要</string>
+  <string name="challenge_leave_title">チャレンジから抜ける</string>
+  <string name="my_challenges">参加しているチャレンジ</string>
+  <string name="public_challenges">みんなのチャレンジ</string>
+  <string name="challenges">チャレンジ</string>
+  <string name="daily">日課</string>
+  <string name="habit">習慣</string>
+  <string name="reward">ごほうび</string>
+  <string name="todo">To-Do</string>
+  <string name="official">Habitica公式</string>
+  <string name="participating">参加済み</string>
+  <string name="challenge">チャレンジ</string>
+  <string name="add_reminder">リマインダーを追加する</string>
+  <string name="inbox">受信箱</string>
+  <string name="FAQ">よくある質問</string>
 </resources>
