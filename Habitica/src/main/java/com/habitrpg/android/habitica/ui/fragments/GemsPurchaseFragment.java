@@ -95,6 +95,11 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         this.listener = listener;
     }
 
+    @Override
+    public void setBillingRequests(BillingRequests billingRequests) {
+        this.billingRequests = billingRequests;
+    }
+
     private void updateButtonLabel(String sku, String price) {
         GemPurchaseOptionsView matchingView;
         if (sku.equals(PurchaseTypes.Purchase4Gems)) {

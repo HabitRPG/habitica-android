@@ -131,6 +131,10 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
             public void onReady(@NonNull final BillingRequests billingRequests) {
                 GemPurchaseActivity.this.billingRequests = billingRequests;
 
+                for (CheckoutFragment fragment : fragments) {
+                    fragment.setBillingRequests(billingRequests);
+                }
+
                 checkIfPendingPurchases();
             }
 
@@ -261,6 +265,8 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
 
         void setupCheckout();
         void setListener(GemPurchaseActivity listener);
+
+        void setBillingRequests(BillingRequests billingRequests);
     }
 
     private void checkIfPendingPurchases() {

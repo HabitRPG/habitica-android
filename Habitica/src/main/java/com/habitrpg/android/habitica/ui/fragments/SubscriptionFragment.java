@@ -208,6 +208,11 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.listener = listener;
     }
 
+    @Override
+    public void setBillingRequests(BillingRequests billingRequests) {
+        this.billingRequests = billingRequests;
+    }
+
     private void purchaseSubscription() {
         if (selectedSubscriptionSku != null) {
             billingRequests.isPurchased(ProductTypes.SUBSCRIPTION, this.selectedSubscriptionSku.id.code, new RequestListener<Boolean>() {
