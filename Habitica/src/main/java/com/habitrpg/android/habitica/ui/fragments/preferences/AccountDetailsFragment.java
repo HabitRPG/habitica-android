@@ -28,7 +28,7 @@ import java.util.Map;
 public class AccountDetailsFragment extends BasePreferencesFragment {
 
     private QrCodeManager qrCodeManager;
-
+    private HabitRPGUser user;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {
@@ -45,7 +45,6 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             return true;
         }
     };
-    private HabitRPGUser user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +101,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
     private void showSubscriptionStatusDialog() {
         SubscriptionDetailsView view = new SubscriptionDetailsView(getContext());
         view.setPlan(user.getPurchased().getPlan());
-        final AlertDialog dialog =  new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setView(view)
                 .setTitle(R.string.subscription_status)
                 .setPositiveButton(R.string.close, (dialogInterface, i) -> {

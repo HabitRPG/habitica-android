@@ -253,8 +253,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         this.activity.supportInvalidateOptionsMenu();
     }
 
-	@Override
-	public String customTitle() {
-		return getString(R.string.guild);
-	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.guild);
+    }
 }

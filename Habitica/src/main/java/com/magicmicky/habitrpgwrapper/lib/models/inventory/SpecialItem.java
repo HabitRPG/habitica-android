@@ -12,19 +12,19 @@ public class SpecialItem extends Item {
 
     public boolean isMysteryItem;
 
-    @Override
-    public String getType() {
-        return "special";
-    }
-
     public static Item makeMysteryItem(Context context) {
         SpecialItem item = new SpecialItem();
         item.text = context.getString(R.string.mystery_item);
         item.notes = context.getString(R.string.myster_item_notes);
         SimpleDateFormat sdf = new SimpleDateFormat("MM");
         String month = sdf.format(new Date());
-        item.key = "inventory_present_"+month;
+        item.key = "inventory_present_" + month;
         item.isMysteryItem = true;
         return item;
+    }
+
+    @Override
+    public String getType() {
+        return "special";
     }
 }

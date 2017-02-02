@@ -1,17 +1,14 @@
 package com.habitrpg.android.habitica.ui;
 
+import com.habitrpg.android.habitica.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,12 +69,12 @@ public class SubscriptionOptionView extends FrameLayout {
         this.priceTextView.setText(text);
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
     public String getSku() {
         return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public void setIsPurchased(boolean purchased) {

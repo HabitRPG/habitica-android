@@ -193,12 +193,11 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view == gemsText) {
+        if (view == gemsText) {
             // Gems Clicked
 
             EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
-        }
-        else {
+        } else {
             // Avatar overview
             OpenMenuItemCommand event = new OpenMenuItemCommand();
             event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;

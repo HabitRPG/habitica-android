@@ -66,7 +66,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         gems42View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase42Gems));
         gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
-        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity)this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
+        gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
     }
 
     @Override

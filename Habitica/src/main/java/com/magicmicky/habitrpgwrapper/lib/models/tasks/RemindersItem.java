@@ -3,7 +3,6 @@ package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.database.ExcludeCheckListItem;
 import com.habitrpg.android.habitica.events.ReminderDeleteEvent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -82,8 +81,7 @@ public class RemindersItem extends BaseModel {
             //This will get all the task info
             Task taskModel = task.toModel();
 
-            if (taskModel.getId() == null)
-            {
+            if (taskModel.getId() == null) {
                 return taskModel;
             }
 

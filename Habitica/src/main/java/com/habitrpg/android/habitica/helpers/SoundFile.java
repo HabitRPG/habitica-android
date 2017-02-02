@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import java.io.File;
 
@@ -14,7 +13,7 @@ public class SoundFile implements MediaPlayer.OnCompletionListener {
     private Boolean playerPrepared = false;
     private boolean isPlaying;
 
-    public SoundFile(String theme, String fileName){
+    public SoundFile(String theme, String fileName) {
 
         this.theme = theme;
         this.fileName = fileName;
@@ -30,12 +29,12 @@ public class SoundFile implements MediaPlayer.OnCompletionListener {
         return fileName;
     }
 
-    public String getWebUrl(){
-        return "https://habitica.com/assets/audio/"+getTheme()+"/"+getFileName()+".mp3";
+    public String getWebUrl() {
+        return "https://habitica.com/assets/audio/" + getTheme() + "/" + getFileName() + ".mp3";
     }
 
     public String getFilePath() {
-        return getTheme()+"_"+getFileName()+".mp3";
+        return getTheme() + "_" + getFileName() + ".mp3";
     }
 
     public File getFile() {
@@ -46,8 +45,8 @@ public class SoundFile implements MediaPlayer.OnCompletionListener {
         this.file = file;
     }
 
-    public void prepareMediaPlayer(){
-        if(playerPrepared) {
+    public void prepareMediaPlayer() {
+        if (playerPrepared) {
             return;
         }
 
@@ -61,14 +60,13 @@ public class SoundFile implements MediaPlayer.OnCompletionListener {
             playerPrepared = true;
 
             file = null;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void play(){
-        if(isPlaying) {
+    public void play() {
+        if (isPlaying) {
             return;
         }
         prepareMediaPlayer();

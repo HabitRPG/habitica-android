@@ -1,7 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -72,26 +71,22 @@ public class Challenge extends BaseModel {
 
     public HabitRPGUser leader;
 
-    public HashMap<String, String[]> getTasksOrder(){
+    public HashMap<String, String[]> getTasksOrder() {
         HashMap<String, String[]> map = new HashMap();
 
-        if(!dailyList.isEmpty())
-        {
+        if (!dailyList.isEmpty()) {
             map.put(TASK_ORDER_DAILYS, dailyList.split(","));
         }
 
-        if(!habitList.isEmpty())
-        {
+        if (!habitList.isEmpty()) {
             map.put(TASK_ORDER_HABITS, habitList.split(","));
         }
 
-        if(!rewardList.isEmpty())
-        {
+        if (!rewardList.isEmpty()) {
             map.put(TASK_ORDER_REWARDS, rewardList.split(","));
         }
 
-        if(!todoList.isEmpty())
-        {
+        if (!todoList.isEmpty()) {
             map.put(TASK_ORDER_TODOS, todoList.split(","));
         }
 

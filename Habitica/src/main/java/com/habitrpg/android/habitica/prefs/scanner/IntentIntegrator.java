@@ -35,7 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>A utility class which helps ease integration with Barcode Scanner via {@link Intent}s. This is
+ * <p>A utility class which helps ease integration with Barcode Scanner via {@link Intent}s. This
+ * is
  * a simple
  * way to invoke barcode scanning and receive the result, without any need to integrate, modify, or
  * learn the
@@ -84,7 +85,8 @@ import java.util.Map;
  * <p/>
  * <p>You can use {@link #setTitle(String)} to customize the title of this download prompt dialog
  * (or, use
- * {@link #setTitleByID(int)} to set the title by string resource ID.) Likewise, the prompt message,
+ * {@link #setTitleByID(int)} to set the title by string resource ID.) Likewise, the prompt
+ * message,
  * and
  * yes/no button labels can be changed.</p>
  * <p/>
@@ -341,7 +343,7 @@ public class IntentIntegrator {
         activity.startActivityForResult(intent, code);
     }
 
-    protected  void startActivityForResult(Fragment fragment, Intent intent, int code) {
+    protected void startActivityForResult(Fragment fragment, Intent intent, int code) {
         fragment.startActivityForResult(intent, code);
     }
 

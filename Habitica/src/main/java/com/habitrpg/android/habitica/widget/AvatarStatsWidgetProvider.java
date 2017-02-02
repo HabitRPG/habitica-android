@@ -28,17 +28,32 @@ import javax.inject.Inject;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private static final String LOG = AvatarStatsWidgetProvider.class.getName();
+    @Inject
+    APIHelper apiHelper;
+    @Inject
+    HostConfig hostConfig;
     private AppWidgetManager appWidgetManager;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            updateData(habitRPGUser);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 
     @Override
     public int layoutResourceId() {
         return R.layout.widget_avatar_stats;
     }
-
-    @Inject
-    APIHelper apiHelper;
-    @Inject
-    HostConfig hostConfig;
 
     private void setUp(Context context) {
         if (apiHelper == null) {
@@ -59,7 +74,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
     }
 
-
     @Override
     public RemoteViews configureRemoteViews(RemoteViews remoteViews, int widgetId, int columns, int rows) {
         if (columns > 3) {
@@ -78,23 +92,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
         return remoteViews;
     }
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            updateData(habitRPGUser);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
     private void updateData(HabitRPGUser user) {
         if (user == null || user.getStats() == null) {

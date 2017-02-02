@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.widget;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import android.content.Context;
+import android.content.Intent;
 
 
 public class DailiesListFactory extends TaskListFactory {

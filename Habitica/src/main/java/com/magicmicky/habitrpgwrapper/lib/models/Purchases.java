@@ -18,13 +18,11 @@ import java.util.List;
 public class Purchases extends BaseModel {
 
 
+    public List<Customization> customizations;
     @Column
     @PrimaryKey
     @NotNull
     String user_id;
-
-    public List<Customization> customizations;
-
     @Column
     @ForeignKey(references = {@ForeignKeyReference(columnName = "plan_user_id",
             columnType = String.class,

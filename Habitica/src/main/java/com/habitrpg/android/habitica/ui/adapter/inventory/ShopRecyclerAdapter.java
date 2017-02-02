@@ -76,7 +76,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Object obj = this.items.get(position);
         if (obj.getClass().equals(Shop.class)) {
             ShopHeaderViewHolder viewHolder = (ShopHeaderViewHolder) holder;
-            Shop shop = (Shop)obj;
+            Shop shop = (Shop) obj;
             DataBindingUtils.loadImage(viewHolder.imageView, shop.imageName);
             viewHolder.descriptionView.setText(Html.fromHtml(shop.getNotes()));
         } else if (obj.getClass().equals(ShopCategory.class)) {
@@ -131,7 +131,7 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.unlockView)
         TextView unlockView;
         @BindView(R.id.limitedCountText)
-                TextView limitedCountText;
+        TextView limitedCountText;
 
         String shopIdentifier;
         ShopItem item;
@@ -249,6 +249,6 @@ public class ShopRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, itemView);
             descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         }
-        
+
     }
 }

@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
@@ -75,10 +74,10 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         for (Object obj : itemList) {
             if (obj.getClass().equals(SpecialItem.class)) {
                 SpecialItem item = (SpecialItem) obj;
-                    if (item.isMysteryItem) {
-                        item.setOwned(numberLeft);
-                        break;
-                    }
+                if (item.isMysteryItem) {
+                    item.setOwned(numberLeft);
+                    break;
+                }
             }
             itemPos++;
         }
@@ -147,7 +146,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         public void onClick(View v) {
             if (!isHatching && !isFeeding) {
                 BottomSheetMenu menu = new BottomSheetMenu(context);
-                if (!(item instanceof QuestContent) && !(item instanceof  SpecialItem)) {
+                if (!(item instanceof QuestContent) && !(item instanceof SpecialItem)) {
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.sell, item.getValue()), true));
                 }
                 if (item instanceof Egg) {
@@ -157,7 +156,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 } else if (item instanceof QuestContent) {
                     menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.invite_party)));
                 } else if (item instanceof SpecialItem) {
-                    SpecialItem specialItem = (SpecialItem)item;
+                    SpecialItem specialItem = (SpecialItem) item;
                     if (specialItem.isMysteryItem && specialItem.getOwned() > 0) {
                         menu.addMenuItem(new BottomSheetMenuItem(context.getString(R.string.open)));
                     }

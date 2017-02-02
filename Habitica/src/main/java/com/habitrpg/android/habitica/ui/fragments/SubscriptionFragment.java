@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
@@ -13,22 +12,17 @@ import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
-import org.solovyev.android.checkout.Checkout;
 import org.solovyev.android.checkout.Inventory;
 import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.Purchase;
-import org.solovyev.android.checkout.Purchases;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +30,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -100,13 +93,14 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Override
     public void onDestroyView() {
-         super.onDestroyView();
+        super.onDestroyView();
     }
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
         apiHelper.apiService.getUser().compose(apiHelper.configureApiCallObserver())
-                .subscribe(this::setUser, throwable -> {});
+                .subscribe(this::setUser, throwable -> {
+                });
     }
 
     @Override

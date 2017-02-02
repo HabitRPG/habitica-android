@@ -1,19 +1,16 @@
 package com.magicmicky.habitrpgwrapper.lib.utils;
 
-import android.text.TextUtils;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
-import java.util.HashMap;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+
+import android.text.TextUtils;
 
 import java.lang.reflect.Type;
-import java.util.StringJoiner;
 
 public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
     @Override
@@ -64,7 +61,7 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
 
         JsonElement tasksOrderElement = jsonObject.get("tasksOrder");
 
-        if(tasksOrderElement != null && !tasksOrderElement.isJsonNull()){
+        if (tasksOrderElement != null && !tasksOrderElement.isJsonNull()) {
             JsonObject tasksOrderObj = tasksOrderElement.getAsJsonObject();
 
             challenge.todoList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_TODOS);
@@ -76,7 +73,7 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
         return challenge;
     }
 
-    private String getTaskArrayAsString(JsonDeserializationContext context, JsonObject tasksOrderObj, String taskType){
+    private String getTaskArrayAsString(JsonDeserializationContext context, JsonObject tasksOrderObj, String taskType) {
 
         if (tasksOrderObj.has(taskType)) {
             JsonElement jsonElement = tasksOrderObj.get(taskType);

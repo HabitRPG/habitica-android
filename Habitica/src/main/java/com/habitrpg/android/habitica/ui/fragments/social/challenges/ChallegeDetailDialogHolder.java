@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -18,7 +7,6 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -27,6 +15,16 @@ import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -80,6 +78,18 @@ public class ChallegeDetailDialogHolder {
     protected ChallegeDetailDialogHolder(View view, Activity context) {
         this.context = context;
         ButterKnife.bind(this, view);
+    }
+
+    public static void showDialog(Activity activity, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
+                                  Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
+        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
+
+        ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setView(dialogLayout);
+
+        challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
     public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
@@ -195,13 +205,13 @@ public class ChallegeDetailDialogHolder {
             TextView title = (TextView) entry.findViewById(R.id.daily_title);
             title.setText(EmojiParser.parseEmojis(task.text));
 
-            if(task.checklist != null && !task.checklist.isEmpty()){
+            if (task.checklist != null && !task.checklist.isEmpty()) {
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
 
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
-                TextView checkListAllTextView = (TextView)entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(task.checklist.size()+"");
+                TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
+                checkListAllTextView.setText(task.checklist.size() + "");
             }
 
             tasks_layout.addView(entry);
@@ -228,13 +238,13 @@ public class ChallegeDetailDialogHolder {
 
             tasks_layout.addView(entry);
 
-            if(task.checklist != null && !task.checklist.isEmpty()){
+            if (task.checklist != null && !task.checklist.isEmpty()) {
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
 
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
-                TextView checkListAllTextView = (TextView)entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(task.checklist.size()+"");
+                TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
+                checkListAllTextView.setText(task.checklist.size() + "");
             }
         }
 
@@ -327,18 +337,5 @@ public class ChallegeDetailDialogHolder {
                         })).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
             dialog.dismiss();
         }).show();
-    }
-
-
-    public static void showDialog(Activity activity, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
-                                  Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
-        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
-
-        ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                .setView(dialogLayout);
-
-        challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 }

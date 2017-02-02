@@ -67,7 +67,7 @@ public class SubscriptionPlan extends BaseModel {
         if (customerId == null) {
             return 0;
         }
-        return 25+consecutive.getGemCapExtra()-gemsBought;
+        return 25 + consecutive.getGemCapExtra() - gemsBought;
     }
 
 

@@ -1,28 +1,9 @@
 package com.habitrpg.android.habitica;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.multidex.MultiDexApplication;
-import android.util.Log;
-
 import com.amplitude.api.Amplitude;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -34,9 +15,24 @@ import com.squareup.leakcanary.RefWatcher;
 import org.solovyev.android.checkout.Billing;
 import org.solovyev.android.checkout.Cache;
 import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.Inventory;
-import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.PurchaseVerifier;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -50,16 +46,14 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
+    private static AppComponent component;
+    public RefWatcher refWatcher;
     @Inject
     Lazy<APIHelper> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
-    private static AppComponent component;
-
-    public RefWatcher refWatcher;
-
     /**
      * For better performance billing class should be used as singleton
      */
@@ -123,6 +117,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     }
 
     // region SQLite overrides
+
+    public static AppComponent getComponent() {
+        return component;
+    }
 
     @Override
     public void onCreate() {
@@ -209,7 +207,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         }
     }
 
-
     private void registerActivityLifecycleCallbacks() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
@@ -262,6 +259,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
     }
 
+    // endregion
+
+    // region IAP - Specific
+
     @Override
     public boolean deleteDatabase(String name) {
         if (!name.endsWith(".db")) {
@@ -287,10 +288,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
         return deleted;
     }
-
-    // endregion
-
-    // region IAP - Specific
 
     // Hack for DBFlow - Not deleting Database
     // https://github.com/kaeawc/dbflow-sample-app/blob/master/app/src/main/java/io/kaeawc/flow/app/ui/MainActivityFragment.java#L201
@@ -350,13 +347,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         return checkout;
     }
 
-    public Billing getBilling() {
-        return billing;
-    }
-
     // endregion
 
-    public static AppComponent getComponent() {
-        return component;
+    public Billing getBilling() {
+        return billing;
     }
 }

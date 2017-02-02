@@ -5,8 +5,6 @@ import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
-import org.w3c.dom.Text;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -101,7 +99,7 @@ public class SubscriptionDetailsView extends LinearLayout {
         } else {
             monthsSubscribedTextView.setText(getResources().getString(R.string.months, plan.consecutive.getCount()));
         }
-        gemCapTextView.setText(String.valueOf(plan.consecutive.getGemCapExtra()+25));
+        gemCapTextView.setText(String.valueOf(plan.consecutive.getGemCapExtra() + 25));
         currentHourglassesTextView.setText(String.valueOf(plan.consecutive.getTrinkets()));
 
         if (plan.paymentMethod.equals("Google")) {
@@ -118,10 +116,10 @@ public class SubscriptionDetailsView extends LinearLayout {
         Intent intent;
         if (plan.paymentMethod.equals("Google")) {
             intent = new Intent("android.intent.action.VIEW");
-            intent.setComponent(new ComponentName("com.android.vending","com.android.vending.MyDownloadsActivity"));
+            intent.setComponent(new ComponentName("com.android.vending", "com.android.vending.MyDownloadsActivity"));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } else {
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL+"/"));
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
         }
         getContext().startActivity(intent);
     }

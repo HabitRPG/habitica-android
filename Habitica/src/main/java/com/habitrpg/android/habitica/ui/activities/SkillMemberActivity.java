@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -15,19 +9,23 @@ import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAd
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class SkillMemberActivity extends BaseActivity {
 
-    private PartyMemberRecyclerViewAdapter viewAdapter;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-
     @Inject
     public APIHelper apiHelper;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Override
     protected int getLayoutResId() {
@@ -74,7 +72,7 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(SelectMemberCommand evt){
+    public void onEvent(SelectMemberCommand evt) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("member_id", evt.MemberId);
         setResult(Activity.RESULT_OK, resultIntent);

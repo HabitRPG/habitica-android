@@ -135,7 +135,7 @@ public class HabitRPGUser extends BaseModel {
         this.challengeList = challenges;
     }
 
-    public void resetChallengeList(){
+    public void resetChallengeList() {
         challengeList = null;
     }
 
@@ -159,18 +159,17 @@ public class HabitRPGUser extends BaseModel {
         return stats;
     }
 
-    public void setInbox(Inbox inbox) {
-        this.inbox = inbox;
+    public void setStats(Stats stats) {
+        this.stats = stats;
     }
 
     public Inbox getInbox() {
         return inbox;
     }
 
-    public void setStats(Stats stats) {
-        this.stats = stats;
+    public void setInbox(Inbox inbox) {
+        this.inbox = inbox;
     }
-
 
     public Profile getProfile() {
         return profile;
@@ -361,8 +360,12 @@ public class HabitRPGUser extends BaseModel {
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
-        if (purchased != null) { purchased.user_id = id; }
-        if (contributor != null) { contributor.user_id = id; }
+        if (purchased != null) {
+            purchased.user_id = id;
+        }
+        if (contributor != null) {
+            contributor.user_id = id;
+        }
         if (invitations != null) {
             invitations.user_id = id;
         }

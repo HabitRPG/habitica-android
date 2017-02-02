@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -22,21 +13,30 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
-import rx.Observable;
-import rx.subjects.AsyncSubject;
 import rx.subjects.PublishSubject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
     public FragmentStatePagerAdapter statePagerAdapter;
+    int currentPage;
     private Stack<Integer> pageHistory;
     private boolean saveToHistory;
-    int currentPage;
     private PublishSubject<ArrayList<Challenge>> getUserChallengesObservable;
+    private ChallengeListFragment userChallengesFragment;
+    private ChallengeListFragment availableChallengesFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +70,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         return v;
     }
 
-    private void subscribeGetChallenges(){
+    private void subscribeGetChallenges() {
         this.apiHelper.apiService.getUserChallenges()
                 .compose(apiHelper.configureApiCallObserver())
                 .subscribe(challenges -> {
@@ -84,9 +84,6 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
-
-    private ChallengeListFragment userChallengesFragment;
-    private ChallengeListFragment availableChallengesFragment;
 
     public void setViewPagerAdapter() {
         android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();
@@ -153,7 +150,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
         Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
 
-        ChallegeDetailDialogHolder.showDialog(HabiticaApplication.currentActivity, apiHelper, user, challenge, challenge1 ->  {
+        ChallegeDetailDialogHolder.showDialog(HabiticaApplication.currentActivity, apiHelper, user, challenge, challenge1 -> {
             // challenge joined
             userChallengesFragment.addItem(challenge1);
             availableChallengesFragment.updateItem(challenge1);

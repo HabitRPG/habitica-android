@@ -19,19 +19,16 @@ import javax.inject.Inject;
 
 public class PushNotificationManager {
 
+    static final String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
+    static final String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
+    static final String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
+    static final String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
+    static final String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
+    static final String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
+    static final String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
+    static final String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
+    private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
     private static PushNotificationManager instance = null;
-    private static String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
-
-    static String PARTY_INVITE_PUSH_NOTIFICATION_KEY = "invitedParty";
-    static String RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY = "newPM";
-    static String RECEIVED_GEMS_PUSH_NOTIFICATION_KEY = "giftedGems";
-    static String RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY = "giftedSubscription";
-    static String GUILD_INVITE_PUSH_NOTIFICATION_KEY = "invitedGuild";
-    static String QUEST_INVITE_PUSH_NOTIFICATION_KEY = "questInvitation";
-    static String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
-    static String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
-
-
     @Inject
     public APIHelper apiHelper;
 
@@ -45,12 +42,8 @@ public class PushNotificationManager {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public void setUser(HabitRPGUser user) {
-        this.user = user;
-    }
-
     public static PushNotificationManager getInstance(Context context) {
-        if(instance == null) {
+        if (instance == null) {
             instance = new PushNotificationManager(context.getApplicationContext());
         }
 
@@ -58,6 +51,10 @@ public class PushNotificationManager {
         instance.context = context.getApplicationContext();
 
         return instance;
+    }
+
+    public void setUser(HabitRPGUser user) {
+        this.user = user;
     }
 
     void setRefreshedToken(String refreshedToken) {
@@ -72,7 +69,7 @@ public class PushNotificationManager {
     }
 
     //@TODO: Use preferences
-    public void addPushDeviceUsingStoredToken () {
+    public void addPushDeviceUsingStoredToken() {
         if (this.refreshedToken == null || this.refreshedToken.isEmpty()) {
             this.refreshedToken = FirebaseInstanceId.getInstance().getToken();
         }
@@ -81,7 +78,7 @@ public class PushNotificationManager {
             return;
         }
 
-        if (this.user == null ||  this.userHasPushDevice()) {
+        if (this.user == null || this.userHasPushDevice()) {
             return;
         }
 
@@ -93,14 +90,18 @@ public class PushNotificationManager {
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
         apiHelper.apiService.addPushDevice(pushDeviceData)
-            .compose(apiHelper.configureApiCallObserver())
-            .subscribe(aVoid -> {}, throwable -> {});
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+                }, throwable -> {
+                });
     }
 
-    public void removePushDeviceUsingStoredToken () {
+    public void removePushDeviceUsingStoredToken() {
         apiHelper.apiService.deletePushDevice(this.refreshedToken)
-            .compose(apiHelper.configureApiCallObserver())
-            .subscribe(aVoid -> {}, throwable -> {});
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(aVoid -> {
+                }, throwable -> {
+                });
     }
 
     private Boolean userHasPushDevice() {
@@ -108,8 +109,8 @@ public class PushNotificationManager {
             return true;
         }
 
-        for(PushDevice pushDevice : this.user.getPushDevices()) {
-            if(pushDevice.getRegId().equals(this.refreshedToken)) {
+        for (PushDevice pushDevice : this.user.getPushDevices()) {
+            if (pushDevice.getRegId().equals(this.refreshedToken)) {
                 return true;
             }
         }

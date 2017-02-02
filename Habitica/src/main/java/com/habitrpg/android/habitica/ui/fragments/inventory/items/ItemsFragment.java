@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -144,6 +143,8 @@ public class ItemsFragment extends BaseMainFragment {
     }
 
 
-	@Override
-	public String customTitle() {	return getString(R.string.sidebar_items);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_items);
+    }
 }

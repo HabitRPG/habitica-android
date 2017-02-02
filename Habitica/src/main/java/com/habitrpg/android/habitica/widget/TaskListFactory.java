@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -18,6 +10,14 @@ import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.pherth.android.emoji_library.EmojiHandler;
+
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,9 @@ import rx.schedulers.Schedulers;
 
 public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsFactory {
     private final int widgetId;
+    @Inject
+    @Named("UserID")
+    public String userID;
     private Integer customDayStart;
     private int listItemResId;
     private int listItemTextResId;
@@ -38,10 +41,6 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
     private List<Task> taskList = new ArrayList<>();
     private Context context = null;
     private boolean reloadData;
-
-    @Inject
-    @Named("UserID")
-    public String userID;
 
     public TaskListFactory(Context context, Intent intent, String taskType, int listItemResId, int listItemTextResId) {
         this.context = context;
@@ -60,7 +59,8 @@ public abstract class TaskListFactory implements RemoteViewsService.RemoteViewsF
                     .subscribe(habitRPGUser -> {
                         customDayStart = habitRPGUser.getPreferences().getDayStart();
                         this.loadData();
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         } else {
             this.loadData();
         }

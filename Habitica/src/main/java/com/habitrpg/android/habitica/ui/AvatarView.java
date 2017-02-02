@@ -66,6 +66,7 @@ public class AvatarView extends View {
     private Consumer<Bitmap> avatarImageConsumer;
     private Bitmap avatarBitmap;
     private Canvas avatarCanvas;
+    private Map<LayerType, String> currentLayers;
 
     public AvatarView(Context context) {
         super(context);
@@ -110,8 +111,6 @@ public class AvatarView extends View {
             a.recycle();
         }
     }
-
-    private Map<LayerType, String> currentLayers;
 
     private void showLayers(@NonNull Map<LayerType, String> layerMap) {
         if (multiDraweeHolder.size() > 0) return;
@@ -324,7 +323,7 @@ public class AvatarView extends View {
             Map<LayerType, String> newLayerMap = getLayerMap(user, false);
 
             boolean equals = currentLayers != null && currentLayers.equals(newLayerMap);
-            
+
             if (!equals) {
                 multiDraweeHolder.clear();
                 numberLayersInProcess.set(0);

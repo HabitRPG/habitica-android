@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.util.Log;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 
-import java.io.File;
+import android.media.MediaPlayer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,18 +33,18 @@ public class SoundManager {
 
     private HashMap<String, SoundFile> loadedSoundFiles;
 
-    public SoundManager(){
+    public SoundManager() {
         HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getComponent().inject(this);
 
         loadedSoundFiles = new HashMap<>();
     }
 
-    public void setSoundTheme(String soundTheme){
+    public void setSoundTheme(String soundTheme) {
         this.soundTheme = soundTheme;
     }
 
     public Observable<List<SoundFile>> preloadAllFiles() {
-        if(soundTheme.equals("off")) {
+        if (soundTheme.equals("off")) {
             return Observable.empty();
         }
 
@@ -66,16 +63,16 @@ public class SoundManager {
         return soundFileLoader.download(soundFiles);
     }
 
-    public void clearLoadedFiles(){
+    public void clearLoadedFiles() {
         loadedSoundFiles.clear();
     }
 
-    public void loadAndPlayAudio(String type){
-        if(soundTheme.equals("off")) {
+    public void loadAndPlayAudio(String type) {
+        if (soundTheme.equals("off")) {
             return;
         }
 
-        if(loadedSoundFiles.containsKey(type)){
+        if (loadedSoundFiles.containsKey(type)) {
             loadedSoundFiles.get(type).play();
         } else {
             ArrayList<SoundFile> soundFiles = new ArrayList<>();

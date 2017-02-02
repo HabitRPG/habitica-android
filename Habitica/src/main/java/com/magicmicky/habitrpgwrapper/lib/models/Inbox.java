@@ -2,9 +2,9 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -22,7 +22,7 @@ public class Inbox extends BaseModel {
     @Column
     @PrimaryKey
 //    @NotNull
-    String user_Id;
+            String user_Id;
 
     @SerializedName("optOut")
     @Expose
@@ -41,72 +41,56 @@ public class Inbox extends BaseModel {
     private Integer newMessages;
 
     /**
-     *
-     * @return
-     * The optOut
+     * @return The optOut
      */
     public Boolean getOptOut() {
         return optOut;
     }
 
     /**
-     *
-     * @param optOut
-     * The optOut
+     * @param optOut The optOut
      */
     public void setOptOut(Boolean optOut) {
         this.optOut = optOut;
     }
 
     /**
-     *
-     * @return
-     * The messages
+     * @return The messages
      */
     public Map<String, ChatMessage> getMessages() {
         return messages;
     }
 
     /**
-     *
-     * @param messages
-     * The messages
+     * @param messages The messages
      */
     public void setMessages(Map<String, ChatMessage> messages) {
         this.messages = messages;
     }
 
     /**
-     *
-     * @return
-     * The blocks
+     * @return The blocks
      */
     public List<Object> getBlocks() {
         return blocks;
     }
 
     /**
-     *
-     * @param blocks
-     * The blocks
+     * @param blocks The blocks
      */
     public void setBlocks(List<Object> blocks) {
         this.blocks = blocks;
     }
 
     /**
-     *
-     * @return
-     * The newMessages
+     * @return The newMessages
      */
     public Integer getNewMessages() {
         return newMessages;
     }
 
     /**
-     *
-     * @param newMessages
-     * The newMessages
+     * @param newMessages The newMessages
      */
     public void setNewMessages(Integer newMessages) {
         this.newMessages = newMessages;

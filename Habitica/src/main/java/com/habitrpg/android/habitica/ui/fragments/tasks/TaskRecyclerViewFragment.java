@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -29,12 +19,21 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -105,7 +104,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
     }
 
-    private void allowReordering(){
+    private void allowReordering() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
@@ -118,19 +117,20 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             @Override
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
-                if (viewHolder != null){
+                if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
                 }
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
-                ((ItemTouchHelperAdapter)recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            }
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             @Override
@@ -144,8 +144,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 super.clearView(recyclerView, viewHolder);
 
                 viewHolder.itemView.setBackgroundColor(Color.WHITE);
-                if (mFromPosition != null){
-                    ((ItemTouchHelperDropCallback)recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+                if (mFromPosition != null) {
+                    ((ItemTouchHelperDropCallback) recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
                 }
             }
         };

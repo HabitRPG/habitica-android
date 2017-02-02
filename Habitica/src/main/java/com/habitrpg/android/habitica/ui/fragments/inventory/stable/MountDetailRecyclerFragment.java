@@ -107,6 +107,8 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.mounts);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.mounts);
+    }
 }

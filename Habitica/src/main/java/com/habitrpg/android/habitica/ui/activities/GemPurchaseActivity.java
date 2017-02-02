@@ -4,16 +4,13 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.playseeds.android.sdk.Seeds;
 import com.playseeds.android.sdk.inappmessaging.InAppMessageListener;
 
-import org.greenrobot.eventbus.EventBus;
 import org.solovyev.android.checkout.ActivityCheckout;
 import org.solovyev.android.checkout.BillingRequests;
 import org.solovyev.android.checkout.Checkout;
@@ -43,16 +40,12 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
 
     @Inject
     CrashlyticsProxy crashlyticsProxy;
-
-    private ActivityCheckout checkout;
-
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     List<CheckoutFragment> fragments = new ArrayList<>();
+    private ActivityCheckout checkout;
     private BillingRequests billingRequests;
 
     @Override
@@ -239,7 +232,7 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
                 if (billingRequests != null) {
                     fragment.setBillingRequests(billingRequests);
                 }
-                return (Fragment)fragment;
+                return (Fragment) fragment;
             }
 
             @Override
@@ -262,14 +255,6 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
         if (tabLayout != null && viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
         }
-    }
-
-    public interface CheckoutFragment {
-
-        void setupCheckout();
-        void setListener(GemPurchaseActivity listener);
-
-        void setBillingRequests(BillingRequests billingRequests);
     }
 
     private void checkIfPendingPurchases() {
@@ -298,6 +283,15 @@ public class GemPurchaseActivity extends BaseActivity implements InAppMessageLis
                 crashlyticsProxy.fabricLogE("Purchase", "getAllPurchases", e);
             }
         });
+    }
+
+    public interface CheckoutFragment {
+
+        void setupCheckout();
+
+        void setListener(GemPurchaseActivity listener);
+
+        void setBillingRequests(BillingRequests billingRequests);
     }
 
 }

@@ -9,7 +9,7 @@ public class UpdateTagCommand {
     public Tag tag;
     public String uuid;
 
-    public  UpdateTagCommand(Tag tag, String uuid) {
+    public UpdateTagCommand(Tag tag, String uuid) {
         this.tag = tag;
         this.uuid = uuid;
     }

@@ -211,11 +211,11 @@ public class Preferences extends BaseModel {
         this.disableClasses = disableClasses;
     }
 
-    public String getLanguage(){
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language){
+    public void setLanguage(String language) {
         this.language = language;
     }
 

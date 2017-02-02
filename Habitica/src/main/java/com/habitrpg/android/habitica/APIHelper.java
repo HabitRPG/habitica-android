@@ -8,9 +8,8 @@ import com.google.gson.reflect.TypeToken;
 
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
@@ -20,11 +19,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Notification;
-import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
-import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
-import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
@@ -39,6 +33,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
@@ -71,22 +66,9 @@ import com.magicmicky.habitrpgwrapper.lib.utils.TaskTagDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -103,11 +85,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.net.ssl.SSLException;
 
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
@@ -124,18 +103,21 @@ import rx.schedulers.Schedulers;
 
 
 public class APIHelper implements Action1<Throwable> {
-    @Inject
-    CrashlyticsProxy crashlyticsProxy;
-
-    @Inject
-    Context context;
-
     // I think we don't need the APIHelper anymore we could just use ApiService
     public final ApiService apiService;
+    private final GsonConverterFactory gsonConverter;
+    private final HostConfig hostConfig;
+    private final Retrofit retrofitAdapter;
+    public String languageCode;
+    @Inject
+    CrashlyticsProxy crashlyticsProxy;
+    @Inject
+    Context context;
     final Observable.Transformer apiCallTransformer =
             observable -> ((Observable) observable)
                     .map(new Func1<HabitResponse, Object>() {
-                        @Override public Object call(HabitResponse habitResponse) {
+                        @Override
+                        public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
                                 PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(APIHelper.this, context);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
@@ -146,12 +128,7 @@ public class APIHelper implements Action1<Throwable> {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(this);
-    private final GsonConverterFactory gsonConverter;
-    private final HostConfig hostConfig;
-    private final Retrofit retrofitAdapter;
     private AlertDialog displayedAlert;
-
-    public String languageCode;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -302,7 +279,7 @@ public class APIHelper implements Action1<Throwable> {
     @Override
     public void call(Throwable throwable) {
         final Class<?> throwableClass = throwable.getClass();
-        if (SocketException.class.isAssignableFrom(throwableClass)  ||  SSLException.class.isAssignableFrom(throwableClass)) {
+        if (SocketException.class.isAssignableFrom(throwableClass) || SSLException.class.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api);
         } else if (throwableClass.equals(SocketTimeoutException.class) || UnknownHostException.class.equals(throwableClass)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
@@ -453,11 +430,11 @@ public class APIHelper implements Action1<Throwable> {
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
     }
 
-    public static class ErrorResponse {
-        public String message;
+    public Observable<HabitResponse<ContentResult>> getContent() {
+        return apiService.getContent(languageCode);
     }
 
-    public Observable<HabitResponse<ContentResult>>getContent() {
-        return apiService.getContent(languageCode);
+    public static class ErrorResponse {
+        public String message;
     }
 }

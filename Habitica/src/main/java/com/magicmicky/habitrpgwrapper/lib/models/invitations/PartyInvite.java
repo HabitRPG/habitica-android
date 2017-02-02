@@ -18,54 +18,42 @@ public class PartyInvite {
     private String inviter;
 
     /**
-     *
-     * @return
-     * The id
+     * @return The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
-     * The id
+     * @param id The id
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
-     * The name
+     * @return The name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
-     * The name
+     * @param name The name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
-     * The inviter
+     * @return The inviter
      */
     public String getInviter() {
         return inviter;
     }
 
     /**
-     *
-     * @param inviter
-     * The inviter
+     * @param inviter The inviter
      */
     public void setInviter(String inviter) {
         this.inviter = inviter;

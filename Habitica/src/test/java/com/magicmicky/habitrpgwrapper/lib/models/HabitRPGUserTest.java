@@ -10,7 +10,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @Config(constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)

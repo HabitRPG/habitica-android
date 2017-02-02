@@ -38,7 +38,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public ContentCache providesContentCache(APIHelper helper){
+    public ContentCache providesContentCache(APIHelper helper) {
         return new ContentCache(helper);
     }
 

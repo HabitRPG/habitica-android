@@ -37,17 +37,13 @@ public class ShopFragment extends BaseFragment {
     public RecyclerViewEmptySupport recyclerView;
     @BindView(R.id.empty_view)
     public TextView emptyView;
-
-    private View view;
     public ShopRecyclerAdapter adapter;
-
     public String shopIdentifier;
     public HabitRPGUser user;
-
     public Shop shop;
-
     @Inject
     APIHelper apiHelper;
+    private View view;
 
     @Nullable
     @Override
@@ -126,7 +122,8 @@ public class ShopFragment extends BaseFragment {
                 .subscribe(shop -> {
                     this.shop = shop;
                     this.adapter.setShop(shop);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @Override

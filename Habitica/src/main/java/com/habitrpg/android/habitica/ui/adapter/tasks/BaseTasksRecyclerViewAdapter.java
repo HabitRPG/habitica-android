@@ -29,15 +29,14 @@ import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
         extends RecyclerView.Adapter<VH> {
+    private final String userID;
+    public String taskType;
     @Inject
     protected CrashlyticsProxy crashlyticsProxy;
-
-    private final String userID;
-    int layoutResource;
-    public String taskType;
-    Context context;
     protected List<Task> content;
     protected List<Task> filteredContent;
+    int layoutResource;
+    Context context;
     private TagsHelper tagsHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
@@ -50,10 +49,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         this.filteredContent = new ArrayList<>();
         injectThis(HabiticaBaseApplication.getComponent());
 
-        if(loadFromDatabase()) {
+        if (loadFromDatabase()) {
             this.loadContent(true);
         }
-        
+
         this.layoutResource = layoutResource;
     }
 
@@ -154,7 +153,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         filter();
     }
 
-    public boolean loadFromDatabase(){
+    public boolean loadFromDatabase() {
         return true;
     }
 

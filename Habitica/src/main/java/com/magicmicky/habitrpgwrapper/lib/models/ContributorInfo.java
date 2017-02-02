@@ -2,6 +2,7 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -55,36 +56,36 @@ public class ContributorInfo extends BaseModel {
     @Expose
     private String text;
 
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
-
     public Boolean getAdmin() {
         return this.admin;
     }
 
-    public void setContributions(String contributions) {
-        this.contributions = contributions;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     public String getContributions() {
         return this.contributions;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setContributions(String contributions) {
+        this.contributions = contributions;
     }
 
     public int getLevel() {
         return this.level;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public String getText() {
         return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public int getContributorColor() {

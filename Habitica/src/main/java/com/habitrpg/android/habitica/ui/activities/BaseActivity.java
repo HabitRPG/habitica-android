@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import android.content.Intent;
 import android.os.Build;
@@ -78,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    void showDeveloperOptionsScreen(){
+    void showDeveloperOptionsScreen() {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
