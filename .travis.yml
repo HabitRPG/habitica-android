@@ -11,18 +11,18 @@ before_install:
   - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - nvm install 6.9.3
-  - nvm use 6.9.3
-  - npm i -g npm@4
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-  - sudo apt-get update
-  - sudo apt-get install mongodb-org-server
-  - git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg
-  - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done
-  - cd ../habitrpg && cp config.json.example config.json && npm install
-  - npm start &
-  - until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done
+  - if [ $REQUIRES_SERVER ]; then nvm install 6.9.3; fi
+  - if [ $REQUIRES_SERVER ]; then nvm use 6.9.3; fi
+  - if [ $REQUIRES_SERVER ]; then npm i -g npm@4; fi
+  - if [ $REQUIRES_SERVER ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; fi
+  - if [ $REQUIRES_SERVER ]; then echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; fi
+  - if [ $REQUIRES_SERVER ]; then sudo apt-get update; fi
+  - if [ $REQUIRES_SERVER ]; then sudo apt-get install mongodb-org-server; fi
+  - if [ $REQUIRES_SERVER ]; then git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg; fi
+  - if [ $REQUIRES_SERVER ]; then until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done; fi
+  - if [ $REQUIRES_SERVER ]; then cd ../habitrpg && cp config.json.example config.json && npm install; fi
+  - if [ $REQUIRES_SERVER ]; then npm start &; fi
+  - if [ $REQUIRES_SERVER ]; then until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done; fi
   - cd -
 android:
   components:
@@ -62,4 +62,4 @@ env:
     - DISABLE_REQUEST_LOGGING=true
   matrix:
     - TEST="assembleDebug -PdisablePreDex"
-    - TEST="testDebugUnitTest -PdisablePreDex --stacktrace --info"
+    - TEST="testDebugUnitTest -PdisablePreDex --stacktrace --info" REQUIRES_SERVER=true
