@@ -23,7 +23,7 @@ before_install:
   - if [ $REQUIRES_SERVER ]; then cd ../habitrpg && cp config.json.example config.json && npm install; fi
   - if [ $REQUIRES_SERVER ]; then npm start; fi &
   - if [ $REQUIRES_SERVER ]; then until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done; fi
-  - cd -
+  - if [ $REQUIRES_SERVER ]; cd -; fi
 android:
   components:
     # Uncomment the lines below if you want to
