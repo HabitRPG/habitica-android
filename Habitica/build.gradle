@@ -2,19 +2,26 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.android.databinding'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.chaitanyapramod.findbugs-android'
+apply plugin: 'com.noveogroup.android.check'
 
 buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.5'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath('com.noveogroup.android:check:1.2.3') {
+            exclude module: 'checkstyle'
+            exclude module: 'pmd-java'
+        }
+        classpath 'com.puppycrawl.tools:checkstyle:7.5'
+        classpath 'net.sourceforge.pmd:pmd-java:5.5.3'
     }
 }
 
@@ -276,6 +283,8 @@ tasks.whenTaskAdded { task ->
         task.enabled = false
     }
 }
+
+check { findbugs { skip true } }
 
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.android.application' //or apply plugin: 'java'
