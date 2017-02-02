@@ -15,7 +15,6 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -82,7 +81,7 @@ public class LoginActivity extends BaseActivity
     @Inject
     public SharedPreferences sharedPrefs;
     @Inject
-    private HostConfig hostConfig;
+    public HostConfig hostConfig;
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;

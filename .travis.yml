@@ -1,5 +1,6 @@
 language: android
 jdk: oraclejdk8
+sudo: required
 addons:
   apt:
     sources:
@@ -7,6 +8,7 @@ addons:
     packages:
       - g++-4.8
 before_install:
+  - $CXX --version
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - nvm install 6.9.3
@@ -48,9 +50,16 @@ android:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+before_script:
+  - cp habitica.properties.travis habitica.properties
+  - cp habitica.resources.example habitica.resources
+  - cp Habitica/google-services.json.example Habitica/google-services.json
 script:
-    - cp habitica.properties.travis habitica.properties
-    - cp habitica.resources.example habitica.resources
-    - cp Habitica/google-services.json.example Habitica/google-services.json
-    - ./gradlew assembleDebug -PdisablePreDex
-    - ./gradlew testDebugUnitTest -PdisablePreDex --stacktrace --info
+  - ./gradlew $TEST
+env:
+  global:
+    - CXX=g++-4.8
+    - DISABLE_REQUEST_LOGGING=true
+  matrix:
+    - TEST="assembleDebug -PdisablePreDex"
+    - TEST="testDebugUnitTest -PdisablePreDex --stacktrace --info"
