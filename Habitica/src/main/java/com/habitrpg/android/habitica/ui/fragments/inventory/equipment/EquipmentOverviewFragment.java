@@ -166,7 +166,9 @@ public class EquipmentOverviewFragment extends BaseMainFragment implements Trans
         return true;
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.sidebar_equipment);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_equipment);
+    }
 
 }

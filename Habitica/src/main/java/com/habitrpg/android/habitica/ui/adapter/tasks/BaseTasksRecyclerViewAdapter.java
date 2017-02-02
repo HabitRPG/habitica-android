@@ -2,11 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -16,10 +11,6 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.support.v7.widget.RecyclerView;
@@ -38,31 +29,30 @@ import rx.schedulers.Schedulers;
 
 public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder>
         extends RecyclerView.Adapter<VH> {
+    private final String userID;
+    public String taskType;
     @Inject
     protected CrashlyticsProxy crashlyticsProxy;
-
-    private final String userID;
-    int layoutResource;
-    String taskType;
-    Context context;
     protected List<Task> content;
     protected List<Task> filteredContent;
+    int layoutResource;
+    Context context;
     private TagsHelper tagsHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
                                         Context newContext, String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
-        this.context = newContext;
+        this.context = newContext.getApplicationContext();
         this.tagsHelper = tagsHelper;
         this.userID = userID;
         this.filteredContent = new ArrayList<>();
         injectThis(HabiticaBaseApplication.getComponent());
 
-        if(loadFromDatabase()) {
+        if (loadFromDatabase()) {
             this.loadContent(true);
         }
-        
+
         this.layoutResource = layoutResource;
     }
 
@@ -99,72 +89,9 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        EventBus.getDefault().unregister(this);
-
-    }
-
-    @Subscribe
-    public void onEvent(FilterTasksByTagsCommand cmd) {
-        filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskCheckedCommand evnt) {
-        if (!taskType.equals(evnt.Task.getType()))
+    public void updateTask(Task task) {
+        if (!taskType.equals(task.getType()))
             return;
-
-        if (evnt.completed && evnt.Task.getType().equals("todo")) {
-            // remove from the list
-            content.remove(evnt.Task);
-        }
-        this.updateTask(evnt.Task);
-        filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskUpdatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
-            return;
-        this.updateTask(evnt.task);
-        filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskCreatedEvent evnt) {
-        if (!taskType.equals(evnt.task.getType()))
-            return;
-
-        content.add(0, evnt.task);
-        filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskRemovedEvent evnt) {
-        Task taskToDelete = null;
-
-        for (Task t : content) {
-            if (t.getId().equals(evnt.deletedTaskId)) {
-                taskToDelete = t;
-                break;
-            }
-        }
-
-        if (taskToDelete != null) {
-            content.remove(taskToDelete);
-            filter();
-        }
-    }
-
-    private void updateTask(Task task) {
         int i;
         for (i = 0; i < this.content.size(); ++i) {
             if (content.get(i).getId().equals(task.getId())) {
@@ -174,9 +101,10 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         if (i < content.size()) {
             content.set(i, task);
         }
+        filter();
     }
 
-    private void filter() {
+    public void filter() {
         if (this.tagsHelper == null || this.tagsHelper.howMany() == 0) {
             filteredContent = content;
         } else {
@@ -184,7 +112,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
             filteredContent.addAll(this.tagsHelper.filter(content));
         }
 
-        ((Activity) context).runOnUiThread(this::notifyDataSetChanged);
+        this.notifyDataSetChanged();
     }
 
     public void loadContent(boolean forced) {
@@ -225,7 +153,43 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         filter();
     }
 
-    public boolean loadFromDatabase(){
+    public boolean loadFromDatabase() {
         return true;
+    }
+
+    public void checkTask(Task task, Boolean completed) {
+        if (!taskType.equals(task.getType()))
+            return;
+
+        if (completed && task.getType().equals("todo")) {
+            // remove from the list
+            content.remove(task);
+        }
+        this.updateTask(task);
+        filter();
+    }
+
+    public void addTask(Task task) {
+        if (!taskType.equals(task.getType()))
+            return;
+
+        content.add(0, task);
+        filter();
+    }
+
+    public void removeTask(String deletedTaskId) {
+        Task taskToDelete = null;
+
+        for (Task t : content) {
+            if (t.getId().equals(deletedTaskId)) {
+                taskToDelete = t;
+                break;
+            }
+        }
+
+        if (taskToDelete != null) {
+            content.remove(taskToDelete);
+            filter();
+        }
     }
 }

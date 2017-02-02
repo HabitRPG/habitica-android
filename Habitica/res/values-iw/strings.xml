@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
-  <string name="app_name">האביטיקה</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">ריענון</string>
   <string name="XP_default">ניסיון</string>
   <string name="HP_default">בריאות</string>
@@ -13,12 +12,22 @@
   <string name="SP_userID_summary">מזהה המשתמש שלכם</string>
   <string name="SP_APIToken_title">מפתח API</string>
   <string name="SP_APIToken_summary">מפתח ה API שלכם</string>
+  <string name="SP_user_qr_code">קוד ה QR שלכם</string>
   <string name="PS_contact_title">צרו איתי קשר</string>
   <string name="unknown_error">ארעה תקלה...</string>
   <string name="pref_account_header">חשבון</string>
   <string name="pref_reminder_header">תזכורת יומית</string>
   <string name="pref_reminder_checkbox">הפעל תזכורת</string>
   <string name="pref_reminder_picker">קבע מועד תזכורת</string>
+  <string name="pref_push_notifications_checkbox">הודעות בדחיפה של משתמש</string>
+  <string name="push_notifications">התראות בדחיפה</string>
+  <string name="preference_push_you_won_challenge">זכיתם באתגר!</string>
+  <string name="preference_push_received_a_private_message">קיבלתם הודעה פרטית</string>
+  <string name="preference_push_gifted_gems">אבני חן ניתנו במתנה</string>
+  <string name="preference_push_gifted_subscription">מנוי ניתן במתנה</string>
+  <string name="preference_push_invited_to_party">הוזמנו לחבורה</string>
+  <string name="preference_push_your_quest_has_begun">ההרפתקה שלכם החלה</string>
+  <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
   <!--Adding tasks-->
   <string name="task_value">ערך</string>
   <string name="new_todo">מטרה חדשה</string>
@@ -97,8 +106,8 @@
   <string name="faint_button">מלאו בריאות ונסו מחדש</string>
   <string name="filter">מסנן</string>
   <string name="profile_image">תמונת פרופיל</string>
-  <string name="mana_price_button" formatted="false">%d מאנה</string>
-  <string name="used_skill" formatted="false">השתמשתם ב %1$s בעבור %2$d מאנה.</string>
+  <string name="mana_price_button">%d מאנה</string>
+  <string name="used_skill">השתמשתם ב %1$s בעבור %2$d מאנה.</string>
   <string name="new_checklist_item">שורה חדשה לרשימה</string>
   <string name="add_checklist_item">הוסף</string>
   <string name="reminder_title">זיכרו לסמן את המטלות היומיות!</string>
@@ -143,9 +152,9 @@
   <string name="avatar_size_broad">רחב</string>
   <string name="avatar_background">רקע</string>
   <string name="purchase_customization">ריכשו התאמה אישית</string>
-  <string name="purchase_set_button" formatted="false">שחררו סט בעבור %d אבני חן</string>
+  <string name="purchase_set_button">שחררו סט בעבור %d אבני חן</string>
   <string name="purchase_button">קנייה</string>
-  <string name="purchase_set_title" formatted="false">קנו סט %s</string>
+  <string name="purchase_set_title">קנו סט %s</string>
   <string name="due_date">תאריך יעד</string>
   <string name="quest.accept">קבלו</string>
   <string name="quest.reject">דחו</string>
@@ -157,12 +166,11 @@
   <string name="quest.accepted">התקבל</string>
   <string name="quest.rejected">נדחה</string>
   <string name="quest.participants">משתתפים</string>
-  <string name="version_info" formatted="false">גרסה %s (%d)</string>
   <string name="sidebar_help">עזרה ושאלות נפוצות</string>
   <string name="complete_tutorial">הבנתי!</string>
   <string name="dismiss_tutorial">הזכר לי שוב</string>
   <string name="intro_1_title">ברוכים הבאים להאביטיקה</string>
-  <string name="intro_1_description">הצטרפו ללמעלה מ 1,100,000 אנשים שנהנים בזמן שהם גורמים לדברים לקרות. צרו דמות ועיקבו אחר משימותיכם מהעולם האמיתי.</string>
+  <string name="intro_1_description">הצטרפו ללמעלה מ %s אנשים שנהנים בזמן שהם גורמים לדברים לקרות. צרו דמות ועיקבו אחר משימותיכם מהעולם האמיתי.</string>
   <string name="intro_2_title">התקדמות במשחק = התקדמות בחיים</string>
   <string name="intro_2_description">אפשרו יכולות של המשחק על ידי סימון שהשלמתם משימות בעולם האמיתי. הרוויחו שיריון, חיות מחמד, ועוד - כדי לתגמל את עצמכם על עמידה ביעדים!</string>
   <string name="intro_3_title">היו חברותיים והילחמו במפלצות</string>
@@ -223,8 +231,9 @@
   <string name="privacy">פרטיות</string>
   <string name="write_message">כיתבו הודעה</string>
   <string name="post">שליחה</string>
-  <string name="todo_due" formatted="false">חל: %s</string>
-  <string name="daily_streak" formatted="false">רצף נוכחי: %d</string>
+  <string name="guild_search_hint">חיפוש אחר גילדות</string>
+  <string name="todo_due">חל: %s</string>
+  <string name="daily_streak">רצף נוכחי: %d</string>
   <string name="todo_has_duedate">למשימה יש תאריך יעד</string>
   <string name="battle_gear">ציוד קרב</string>
   <string name="costume">תחפושת</string>
@@ -243,10 +252,10 @@
   <string name="quest_begin_message">האם אתם בטוחים שאתם מעוניינים להתחיל בהרפתקאה? ברגע שהיא מתחילה, חברי חבורה נוספים לא יכולים להצטרף אליה.</string>
   <string name="quest.invitation.text">הוזמנתם להשתתף בהרפתקאה!</string>
   <string name="ago_1day">לפני יום</string>
-  <string name="ago_days" formatted="false">לפני %d ימים</string>
+  <string name="ago_days">לפני %d ימים</string>
   <string name="ago_1Minute">לפני דקה</string>
-  <string name="ago_minutes" formatted="false">לפני %d דקות</string>
-  <string name="ago_hours" formatted="false">לפני %d שעות</string>
+  <string name="ago_minutes">לפני %d דקות</string>
+  <string name="ago_hours">לפני %d שעות</string>
   <string name="ago_1hour">לפני שעה</string>
   <string name="today">היום</string>
   <string name="sidebar_items">חפצים</string>
@@ -256,26 +265,26 @@
   <string name="quests">הרפתקאות</string>
   <string name="pets">חיות מחמד</string>
   <string name="mounts">חיות רכיבה</string>
-  <string name="armoireEquipment" formatted="false">מצאתם חתיכת ציוד נדיר בארמואר: %s! מגניב!</string>
-  <string name="armoireFood" formatted="false">אתם נוברים בארמואר ומוצאים %1$s %2$s. מה זה עושה פה?</string>
+  <string name="armoireEquipment">מצאתם חתיכת ציוד נדיר בארמואר: %s! מגניב!</string>
+  <string name="armoireFood">אתם נוברים בארמואר ומוצאים %1$s %2$s. מה זה עושה פה?</string>
   <string name="armoireExp">אתם נאבקים בארמואר וצוברים ניסיון. קבלו!</string>
-  <string name="armoireNotesFull" formatted="false">פתחו את הארמואר כדי לקבל ציוד מיוחד אקראי, ניסיון, או אוכל! חתיכות ציוד שנותרו: %d</string>
+  <string name="armoireNotesFull">פתחו את הארמואר כדי לקבל ציוד מיוחד אקראי, ניסיון, או אוכל! חתיכות ציוד שנותרו: %d</string>
   <string name="armoireLastItem">מצאתם את חתיכת הציוד הנדיר האחרונה בארמואר הקסום.</string>
   <string name="armoireNotesEmpty">הארמואר יכיל ציוד חדש בשבוע הראשון של כל חודש. עד אז, המשיכו ללחוץ כדי לקבל ניסיון ואוכל!</string>
-  <string name="sell" formatted="false">מיכרו (%s זהב)</string>
+  <string name="sell">מיכרו (%d זהב)</string>
   <string name="hatch_with_potion">הבקיעו עם שיקוי</string>
   <string name="feed_to_pet">האכילו חיית מחמד</string>
   <string name="hatch_egg">הבקיעו עם ביצה</string>
   <string name="invite_party">הזמינו חבורה</string>
-  <string name="dialog_feeding" formatted="false">האכלתם %1$s %2$s עם:</string>
+  <string name="dialog_feeding">האכלתם %1$s %2$s עם:</string>
   <string name="use_animal">השתמשו</string>
   <string name="feed">האכילו</string>
-  <string name="hatch_with" formatted="false">הבקיעו חיית מחמד עם %s</string>
-  <string name="hatched_pet_title" formatted="false">הבקעתם %1$s %2$s!</string>
+  <string name="hatch_with">הבקיעו חיית מחמד עם %s</string>
+  <string name="hatched_pet_title">הבקעתם %1$s %2$s!</string>
   <string name="close">סיגרו</string>
   <string name="share">שתפו</string>
-  <string name="notification_pet_fed" formatted="false">האכלתם את ה %1$s %2$s שלכם!</string>
-  <string name="notification_purchase" formatted="false">%s נקנה</string>
+  <string name="notification_pet_fed">האכלתם את ה %1$s %2$s שלכם!</string>
+  <string name="notification_purchase">%s נקנה</string>
   <string name="sectionpets">חיות מחמד רגילות</string>
   <string name="sectionpremiumPets">חיות מחמד משיקויים קסומים</string>
   <string name="sectionquestPets">חיות מחמד מהרפתקאות</string>
@@ -286,9 +295,9 @@
   <string name="sectionspecialMounts">חיות רכיבה נדירות</string>
   <string name="world_quest">הרפתקאה עולמית</string>
   <string name="inn_description">נוחו באכסנייה כדי למנוע ממטלות יומיות לא מושלמות לפגוע בכם במהלך הלילה! (שימו לב: לא מונע מכם להפגע מאוייבים.)</string>
-  <string name="empty_items" formatted="false">אין לכם כל %s</string>
-  <string name="user_level" formatted="false">דרגה %s</string>
-  <string name="user_level_with_class" formatted="false">דרגה %1$s - %2$s</string>
+  <string name="empty_items">אין לכם כל %s</string>
+  <string name="user_level">דרגה %d</string>
+  <string name="user_level_with_class">דרגה %1$d - %2$s</string>
   <string name="warrior">לוחם</string>
   <string name="rogue">נוכל</string>
   <string name="mage">מכשף</string>
@@ -300,7 +309,7 @@
   <string name="select_class">בחרו מקצוע</string>
   <string name="opt_out_class">וותרו</string>
   <string name="opt_out_description">לא מעניינים אתכם מקצועות? רוצים לבחור מאוחר יותר? וותרו - תהיו לוחמים ללא תכונות מיוחדות. תוכלו לקראו על מערכת המקצועות מאוחר יותר בוויקי ולאפשר מקצועות בכל שעה.</string>
-  <string name="class_confirmation" formatted="false">האם אתם בטוחים שברצונכם להיות %s?</string>
+  <string name="class_confirmation">האם אתם בטוחים שברצונכם להיות %s?</string>
   <string name="choose_class">בחרו מקצוע</string>
   <string name="dialog_go_back">חזרה</string>
   <string name="opt_out_confirmation">האם אתם בטוחים שאתם מעוניינים לוותר?</string>
@@ -319,10 +328,45 @@
   <string name="email">מייל</string>
   <string name="invite_users">הזמינו לחבורה</string>
   <string name="share_using">שתפו באמצעות</string>
-  <string name="share_levelup" formatted="false">הגעתי לדרגה %s בהאביטיקה על ידי שיפור הרגלים שלי מהעולם האמיתי!</string>
-  <string name="share_hatched" formatted="false">הרגע הבקעתי ביצת חיית מחמד של %1$s %2$s בהאביטיקה על ידי השלמת משימות בחיים האמיתיים!</string>
-  <string name="share_raised" formatted="false">הרגע הרווחתי חיית רכיבה של %1$s %2$s בהאביטיקה על ידי השלמת משימות בחיים האמיתיים!</string>
+  <string name="share_levelup">הגעתי לדרגה %d בהאביטיקה על ידי שיפור הרגלים שלי מהעולם האמיתי!</string>
+  <string name="share_hatched">הרגע הבקעתי ביצת חיית מחמד של %1$s %2$s בהאביטיקה על ידי השלמת משימות בחיים האמיתיים!</string>
+  <string name="share_raised">הרגע הרווחתי חיית רכיבה של %1$s %2$s בהאביטיקה על ידי השלמת משימות בחיים האמיתיים!</string>
   <string name="open_in_store">פתיחה בפליי סטור</string>
   <string name="change_class_confirmation">האם אתם בטוחים שאתם מעוניינים להחליף מקצוע? זה יעלה לכם 3 אבני חן.</string>
-  <string name="leaderMessage" formatted="false">הודעה מאת %1$s</string>
+  <string name="leaderMessage">הודעה מאת %1$s</string>
+  <string name="confirm">אישור</string>
+  <string name="market">שוק</string>
+  <string name="timeTravelers">נוסעים בזמן</string>
+  <string name="seasonalShop">חנות עונתית</string>
+  <string name="empty_inbox">אין לכם הודעות בדואר הנכנס. אתם יכולים לשלוח למשתמשים הודעה חדשה מהצ׳אט הפומבי שלהם!</string>
+  <string name="party_invite">שחררו על-ידי הזמנת חברים</string>
+  <string name="no_gold">אין די זהב</string>
+  <string name="no_potion">אינכם צריכים לקנות שיקוי בריאות</string>
+  <string name="successful_purchase">%1$s נרכש בהצלחה</string>
+  <string name="purchase_confirmation_title">אשרו רכישה</string>
+  <string name="confirm_purchase_text">קנו %1$s בעבור %2$s %3$s</string>
+  <string name="gem">אבן חן</string>
+  <string name="hourglass">שעון חול</string>
+  <string name="hourglasses">שעוני חול</string>
+  <string name="gold_singular">זהב</string>
+  <string name="gold_plural">זהב</string>
+  <string name="chat_message_copied">הודעה הועתקה ללוח</string>
+  <string name="copy_chat_message">העתקה ללוח</string>
+  <string name="edit_tag_title">עריכת תג</string>
+  <string name="edit_tag_btn_edit">עריכה</string>
+  <string name="edit_tag_btn_delete">מחיקה</string>
+  <string name="confirm_delete_tag_title">האם אתם בטוחים?</string>
+  <string name="confirm_delete_tag_message">האם אתם באמת רוצים למחוק?</string>
+  <string name="filter_drawer_edit_tags">עריכת תגים</string>
+  <string name="filter_drawer_filter_tags">סינון לפי תגיות</string>
+  <!--QR Strings-->
+  <string name="qr_section_title">תנו למישהו להזמין אתכם עם קוד ה QR הזה</string>
+  <string name="qr_save_message">קוד QR נשמר ב</string>
+  <string name="qr_dialogue_title">קוד ה QR שלכם</string>
+  <string name="download">הורדה</string>
+  <string name="send_new_message">שליחת הודעה חדשה</string>
+  <string name="choose_recipient_title">בחרו נמען להודעה</string>
+  <string name="action_continue">המשך</string>
+  <string name="scan_qr_code">סריקת קוד QR</string>
+  <!--Login Incentives-->
 </resources>

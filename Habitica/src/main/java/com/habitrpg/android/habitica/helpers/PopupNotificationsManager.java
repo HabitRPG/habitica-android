@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -15,6 +7,13 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
+
+import android.content.Context;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,20 +24,22 @@ import java.util.Map;
  */
 
 public class PopupNotificationsManager {
+    private static PopupNotificationsManager instance;
     private Map<String, Boolean> seenNotifications;
     private APIHelper apiHelper;
-    private static PopupNotificationsManager instance;
+    private Context context;
 
     // @TODO: A queue for displaying alert dialogues
 
-    private PopupNotificationsManager(APIHelper apiHelper) {
+    private PopupNotificationsManager(APIHelper apiHelper, Context context) {
         this.apiHelper = apiHelper;
         this.seenNotifications = new HashMap<>();
+        this.context = context.getApplicationContext();
     }
 
-    public static PopupNotificationsManager getInstance(APIHelper apiHelper) {
+    public static PopupNotificationsManager getInstance(APIHelper apiHelper, Context context) {
         if (instance == null) {
-            instance = new PopupNotificationsManager(apiHelper);
+            instance = new PopupNotificationsManager(apiHelper, context);
         }
         return instance;
     }
@@ -65,17 +66,17 @@ public class PopupNotificationsManager {
                         earnedString += ", ";
                     }
                 }
-                youEarnedMessage = "You earned a " + earnedString + " as a reward for your devotion to improving your life.";
+                youEarnedMessage = context.getString(R.string.checkInRewardEarned, earnedString);
             }
         }
         DataBindingUtils.loadImage(imageView, imageKey);
 
-        String message = "Your next prize unlocks at " + notification.data.nextRewardAt + " Check-Ins";
-        TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
-        nextUnlockTextView.setText(message);
-
         TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
         youEarnedTexView.setText(youEarnedMessage);
+
+        String message = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
+        TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
+        nextUnlockTextView.setText(message);
 
         Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
 
@@ -119,7 +120,7 @@ public class PopupNotificationsManager {
                 this.seenNotifications = new HashMap<>();
             }
 
-            for (Notification notification: notifications) {
+            for (Notification notification : notifications) {
                 if (this.seenNotifications.get(notification.getId()) != null) {
                     continue;
                 }

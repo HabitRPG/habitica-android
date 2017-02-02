@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
@@ -17,6 +8,15 @@ import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
+
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -68,10 +68,15 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                         if (userChallengesHash.contains(challenge.id) && challenge.name != null && !challenge.name.isEmpty()) {
                             challenge.user_id = this.user.getId();
                             userChallenges.add(challenge);
+                        } else {
+                            challenge.user_id = null;
                         }
 
                         challenge.async().save();
                     }
+
+                    setRefreshingIfVisible(swipeRefreshLayout, false);
+                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
 
                     if (viewUserChallengesOnly) {
                         setChallengeEntries(userChallenges);
@@ -79,8 +84,6 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                         setChallengeEntries(challenges);
                     }
 
-                    setRefreshingIfVisible(swipeRefreshLayout, false);
-                    setRefreshingIfVisible(swipeRefreshEmptyLayout, false);
 
                 }, throwable -> {
                     Log.e("ChallengeListFragment", "", throwable);
@@ -153,10 +156,15 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     private void setChallengeEntries(List<Challenge> challenges) {
+        if (swipeRefreshEmptyLayout == null || swipeRefreshLayout == null) {
+            return;
+        }
         if (viewUserChallengesOnly && challenges.size() == 0) {
             swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.setVisibility(View.GONE);
         } else {
+            swipeRefreshEmptyLayout.setRefreshing(false);
             swipeRefreshEmptyLayout.setVisibility(View.GONE);
             swipeRefreshLayout.setVisibility(View.VISIBLE);
         }
@@ -176,6 +184,8 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         challengeAdapter.replaceChallenge(challenge);
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.sidebar_challenges);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_challenges);
+    }
 }

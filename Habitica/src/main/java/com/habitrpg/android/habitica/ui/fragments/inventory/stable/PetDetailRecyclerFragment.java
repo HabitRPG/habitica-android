@@ -131,6 +131,8 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         adapter.setOwnedMountsMapping(user.getItems().getMounts());
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.pets);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.pets);
+    }
 }

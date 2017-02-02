@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Aggiorna</string>
   <string name="XP_default">Esperienza</string>
   <string name="HP_default">Salute</string>
@@ -116,9 +116,9 @@
   <string name="faint_button">Ripristina Salute &amp; Riprova</string>
   <string name="filter">Filtro</string>
   <string name="profile_image">Immagine profilo</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">Hai usato %1$s per %2$d mana.</string>
-  <string name="used_skill_without_mana" formatted="false">Hai usato %1$s.</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">Hai usato %1$s per %2$d mana.</string>
+  <string name="used_skill_without_mana">Hai usato %1$s.</string>
   <string name="new_checklist_item">Nuovo elemento checklist</string>
   <string name="add_checklist_item">Aggiungi</string>
   <string name="reminder_title">Ricorda di completare le tue Daily!</string>
@@ -163,9 +163,9 @@
   <string name="avatar_size_broad">Robusto</string>
   <string name="avatar_background">Sfondo</string>
   <string name="purchase_customization">Compra personalizzazione</string>
-  <string name="purchase_set_button" formatted="false">Sblocca set per %d gemme</string>
+  <string name="purchase_set_button">Sblocca set per %d gemme</string>
   <string name="purchase_button">Compra</string>
-  <string name="purchase_set_title" formatted="false">Compra set  %s</string>
+  <string name="purchase_set_title">Compra set  %s</string>
   <string name="due_date">Data di scadenza</string>
   <string name="quest.accept">Accetta</string>
   <string name="quest.reject">Rifiuta</string>
@@ -177,12 +177,12 @@
   <string name="quest.accepted">Accettata</string>
   <string name="quest.rejected">Rifiutata</string>
   <string name="quest.participants">Partecipanti</string>
-  <string name="version_info" formatted="false">Versione %s (%d)</string>
+  <string name="version_info">Versione %1$s (%2$d)</string>
   <string name="sidebar_help">Aiuto &amp; FAQ</string>
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
   <string name="intro_1_title">Benvenuto in Habitica</string>
-  <string name="intro_1_description" formatted="false">Unisciti ad oltre %s persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
+  <string name="intro_1_description">Unisciti ad oltre %s persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
   <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
   <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
@@ -244,8 +244,8 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="write_message">Scrivi messaggio</string>
   <string name="post">Invia</string>
   <string name="guild_search_hint">Cerca gilde</string>
-  <string name="todo_due" formatted="false">Scade: %s</string>
-  <string name="daily_streak" formatted="false">serie: %d</string>
+  <string name="todo_due">Scade: %s</string>
+  <string name="daily_streak">serie: %d</string>
   <string name="todo_has_duedate">L\' attività ha una scadenza</string>
   <string name="battle_gear">Assetto da battaglia</string>
   <string name="costume">Costume</string>
@@ -264,10 +264,10 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="quest_begin_message">Vuoi davvero iniziare la missione? Una volta attiva, nessun altro membro della squadra potrà unirsi alla missione.</string>
   <string name="quest.invitation.text">Sei stato invitato a partecipare ad una missione!</string>
   <string name="ago_1day">1 giorno fa</string>
-  <string name="ago_days" formatted="false">%d giorni fa</string>
+  <string name="ago_days">%d giorni fa</string>
   <string name="ago_1Minute">1 minuto fa</string>
-  <string name="ago_minutes" formatted="false">%d minuti fa</string>
-  <string name="ago_hours" formatted="false">%d ore fa</string>
+  <string name="ago_minutes">%d minuti fa</string>
+  <string name="ago_hours">%d ore fa</string>
   <string name="ago_1hour">1 ora fa</string>
   <string name="today">Oggi</string>
   <string name="sidebar_items">Oggetti</string>
@@ -277,26 +277,26 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="quests">Missioni</string>
   <string name="pets">Animali</string>
   <string name="mounts">Cavalcature</string>
-  <string name="armoireEquipment" formatted="false">Hai trovato dell\'equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
-  <string name="armoireFood" formatted="false">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
+  <string name="armoireEquipment">Hai trovato dell\'equipaggiamento raro nello Scrigno Incantato: %s! Fantastico!</string>
+  <string name="armoireFood">Frughi nello Scrigno e trovi %1$s %2$s. Cosa ci fa qui dentro?</string>
   <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
-  <string name="armoireNotesFull" formatted="false">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
+  <string name="armoireNotesFull">Apri lo Scrigno Incantato per ricevere casualmente Equipaggiamento speciale, Esperienza o cibo! Oggetti rimanenti: %d</string>
   <string name="armoireLastItem">Hai trovato l\'ultimo oggetto raro disponibile nello Scrigno Incantato.</string>
   <string name="armoireNotesEmpty">Nello Scrigno Incantato compariranno nuovi oggetti la prima settimana di ogni mese. Fino ad allora, continua a cliccare sullo Scrigno per ottenere Esperienza e Cibo!</string>
-  <string name="sell" formatted="false">Vendi (%s Oro)</string>
+  <string name="sell">Vendi (%d Oro)</string>
   <string name="hatch_with_potion">Schiudi con pozione</string>
   <string name="feed_to_pet">Dai ad animale</string>
   <string name="hatch_egg">Schiudi con uovo</string>
   <string name="invite_party">Invita squadra</string>
-  <string name="dialog_feeding" formatted="false">Dai da mangiare a %1$s %2$s:</string>
+  <string name="dialog_feeding">Dai da mangiare a %1$s %2$s:</string>
   <string name="use_animal">Usa</string>
   <string name="feed">Dai da mangiare</string>
-  <string name="hatch_with" formatted="false">Fai nascere un animale con %s</string>
-  <string name="hatched_pet_title" formatted="false">E\' nato un %2$s %1$s!</string>
+  <string name="hatch_with">Fai nascere un animale con %s</string>
+  <string name="hatched_pet_title">E\' nato un %2$s %1$s!</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
-  <string name="notification_pet_fed" formatted="false">Hai dato da mangiare al tuo %1$s %2$s!</string>
-  <string name="notification_purchase" formatted="false">Hai acquistato %s</string>
+  <string name="notification_pet_fed">Hai dato da mangiare al tuo %1$s %2$s!</string>
+  <string name="notification_purchase">Hai acquistato %s</string>
   <string name="sectionpets">Animali base</string>
   <string name="sectionpremiumPets">Animali Pozione Magica</string>
   <string name="sectionquestPets">Animali Missione</string>
@@ -307,9 +307,9 @@ Per cominciare, quali parti della tua vita vuoi migliorare?</string>
   <string name="sectionspecialMounts">Cavalcature rare</string>
   <string name="world_quest">World Quest</string>
   <string name="inn_description">Riposare nella Locanda impedisce alle tue Daily di danneggiarti al cambio di giorno! (Nota:  questo non impedisce di ricevere danni dai Boss)</string>
-  <string name="empty_items" formatted="false">Non hai alcun %s</string>
-  <string name="user_level" formatted="false">LVL %s</string>
-  <string name="user_level_with_class" formatted="false">LVL %1$s - %2$s</string>
+  <string name="empty_items">Non hai alcun %s</string>
+  <string name="user_level">LV %d</string>
+  <string name="user_level_with_class">LV %1$d - %2$s</string>
   <string name="warrior">Guerriero</string>
   <string name="rogue">Assassino</string>
   <string name="mage">Mago</string>
@@ -322,8 +322,9 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="select_class">Seleziona classe</string>
   <string name="opt_out_class">Rinuncia</string>
   <string name="opt_out_description">Non ti vuoi preoccupare dellle classi? Vuoi scegliere dopo? Puoi essere un guerriero senza abilità speciali. Puoi leggere a proposito del sistema di classi più tardi nella Wiki ed abilitare le classi quando vuoi.</string>
-  <string name="class_confirmation" formatted="false">Vuoi davvero essere un %s?</string>
+  <string name="class_confirmation">Vuoi davvero essere un %s?</string>
   <string name="class_changed">Ora sei un %s!</string>
+  <string name="class_changed_description">Hai del nuovo equipaggiamento da battaglia che puoi indossare, vai nella sezione Equipaggiamento!</string>
   <string name="choose_class">Scegli classe</string>
   <string name="dialog_go_back">Ritorna</string>
   <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
@@ -342,14 +343,14 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="email">E-mail</string>
   <string name="invite_users">Invita nella squadra</string>
   <string name="share_using">Condividi con</string>
-  <string name="share_levelup" formatted="false">Ho raggiunto il livello %s su Habitica migliorando le mie abitudini nella vita reale!</string>
-  <string name="share_hatched" formatted="false">Oh apena schiuso un %1$s %2$s beniamino in Habitica completando I miei compiti nella vita reale!</string>
-  <string name="share_raised" formatted="false">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
+  <string name="share_levelup">Ho raggiunto il livello %d su Habitica migliorando le mie abitudini nella vita reale!</string>
+  <string name="share_hatched">Oh apena schiuso un %1$s %2$s beniamino in Habitica completando I miei compiti nella vita reale!</string>
+  <string name="share_raised">Oh apena guadagnato una %1$s %2$s montatura in Habitica completando I miei compiti nella vita reale!</string>
   <string name="open_in_store">Apri nel Play Store</string>
   <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
   <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
-  <string name="leaderMessage" formatted="false">Messaggio da %1$s</string>
-  <string name="leaderName" formatted="false">Leader: %1$s</string>
+  <string name="leaderMessage">Messaggio da %1$s</string>
+  <string name="leaderName">Leader: %1$s</string>
   <string name="confirm">Conferma</string>
   <string name="market">Mercato</string>
   <string name="timeTravelers">Viaggiatori del Tempo</string>
@@ -358,9 +359,9 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="party_invite">Sblocca invitando amici</string>
   <string name="no_gold">Non hai abbastanza Oro</string>
   <string name="no_potion">Non hai bisogno di comprare una pozione di salute</string>
-  <string name="successful_purchase" formatted="false">%1$s comprato con successo</string>
+  <string name="successful_purchase">%1$s comprato con successo</string>
   <string name="purchase_confirmation_title">Conferma acquisto</string>
-  <string name="confirm_purchase_text" formatted="false">Compra %1$s per %2$s %3$s</string>
+  <string name="confirm_purchase_text">Compra %1$s per %2$s %3$s</string>
   <string name="gem">gemma</string>
   <string name="hourglass">clessidra</string>
   <string name="hourglasses">clessidre</string>
@@ -411,7 +412,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
   <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
   <string name="open_market">Entra nel Mercato</string>
-  <string name="cds_description" formatted="false">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
+  <string name="cds_description">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
   <string name="AudioTheme_title">Tema sonoro</string>
   <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
   <!--Login Incentives-->
@@ -419,10 +420,47 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="belongs_to_challenge">Appartiene alla Sfida</string>
   <string name="has_reminder">Ha promemoria</string>
   <string name="has_tag">Ha etichetta</string>
-  <string name="byLeader" formatted="false">di %s</string>
+  <string name="subscribe.title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita </string>
+  <string name="subscribe_prompt">Abbonati per ottenere questi utili benefici:</string>
+  <string name="subscribe.listitem1">Compra gemme con l\'oro</string>
+  <string name="subscribe.listitem2">Oggetti mensili esclusivi</string>
+  <string name="subscribe.listitem3">Più elementi nella cronologia attività</string>
+  <string name="subscribe.listitem4">Limite di drop giornaliero raddoppiato</string>
+  <string name="subscriptions">Abbonamenti</string>
+  <string name="subscription_duration">Ricorrente ogni %s</string>
+  <string name="subscribe">Abbonati</string>
+  <string name="subscribe.listitem1.description">Alexander il Mercante ti venderà Gemme al prezzo di 20 Oro per gemma. Le sue consegne mensili saranno inizialmente limitate a 25 gemme al mese, ma questo limite aumenta di 5 gemme per ogni tre mesi di abbonamento consecutivi, fino a un massimo di 50 gemme al mese!</string>
+  <string name="subscribe.listitem2.description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
+  <string name="subscribe.listitem3.description">Riempi le tue scuderie più velocemente!</string>
+  <string name="subscribe.listitem4.description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar! In più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
+  <string name="subscribe1month.gemcap">Il limite gemme iniziale è 25</string>
+  <string name="subscribe3month.gemcap">Limite gemme alzato a 30</string>
+  <string name="subscribe6month.gemcap">Limite gemme alzato a 35</string>
+  <string name="subscribe12month.gemcap">Limite gemme alzato a 45</string>
+  <string name="subscription_hourglasses">+%d Clessidra Mistica</string>
+  <string name="payment_method">Metodo di pagamento</string>
+  <string name="subscription">Abbonamento</string>
+  <string name="active">Attivo</string>
+  <string name="cancel_subscription">Annulla abbonamento</string>
+  <string name="cancel_subscription_google.description">Vuoi interrompere il tuo abbonamento? Puoi trovare l\'opzione per annullare l\'abbonamento nella sezione \"Le mie app\" nel Google Play Store.</string>
+  <string name="cancel_subscription_notgoogle.description">Vuoi interrompere il tuo abbonamento? A causa del tuo metodo di pagamento, puoi completare questa operazione solo attraverso il sito web. Clicca sul bottone qui sotto per aprire il sito nel tuo browser!</string>
+  <string name="visit_habitica_website">Visita il sito web di Habitica</string>
+  <string name="current_bonuses">Bonus attivi</string>
+  <string name="months_subscribed">Mesi come abbonato</string>
+  <string name="current_hourclasses">Clessidre Mistiche attuali</string>
+  <string name="monthly_gem_cap">Limite gemme mensile</string>
+  <string name="inactive">Inattivo</string>
+  <string name="one_month">1 mese</string>
+  <string name="months">%d mesi</string>
+  <string name="month">mese</string>
+  <string name="three_months">3 mesi</string>
+  <string name="six_months">6 mesi</string>
+  <string name="twelve_months">12 mesi</string>
+  <string name="subscribe_prompt_thanks">Come abbonato hai questi utili benefici:</string>
+  <string name="subscription_status">Stato abbonamento</string>
+  <string name="byLeader">di %s</string>
   <string name="challenge_details">Dettagli sfida</string>
   <string name="challenge_leave_title">Abbandona sfida</string>
-  <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
   <string name="my_challenges">Le mie sfide</string>
   <string name="public_challenges">Pubbliche</string>
   <string name="challenges">Sfide</string>
@@ -440,5 +478,16 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="add_reminder">Aggiungi promemoria</string>
   <string name="warning">Attenzione</string>
   <string name="open_settings">Apri impostazioni</string>
-  <string name="dont_keep_activities_warning">Pare che tu abbia l\'opzione sviluppatore \"Non conservare attività\" abilitata. Al momento questa opzione causa dei problemi all\'app di Habitica, quindi consigliamo di disabilitarla.</string>
+  <string name="inbox">Messaggi</string>
+  <string name="FAQ">Domande frequenti</string>
+  <string name="special">Speciale</string>
+  <string name="gem_for_gold_description">Grazie al tuo abbonamento ad Habitica, ogni mese puoi comprare delle Gemme usando il tuo Oro.</string>
+  <string name="limited_count">%d rimaste</string>
+  <string name="gem_shop">Gemma</string>
+  <string name="mystery_item">Oggetto Misterioso</string>
+  <string name="myster_item_notes">Ogni mese, gli abbonati ricevono un oggetto misterioso. Questo oggetto in genere viene rilasciato circa una settimana prima della fine del mese.</string>
+  <string name="open">Apri</string>
+  <string name="notification_mystery_item">Apri il pacco e trovi %s!</string>
+  <string name="checkInRewardEarned">Hai meritato %1$s come premio per la tua costanza nel migliorare la tua vita.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Il prossimo premio verrà sbloccato a %1$d accessi</string>
 </resources>

@@ -29,9 +29,4 @@ public class DailiesRecyclerViewHolder extends SortableTasksRecyclerViewAdapter<
     protected void injectThis(AppComponent component) {
         HabiticaBaseApplication.getComponent().inject(this);
     }
-
-    @Override
-    public void onBindViewHolder(DailyViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-    }
 }

@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.activities;
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
@@ -22,13 +21,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,24 +40,17 @@ public class PartyInviteActivity extends BaseActivity {
     public static final String USER_IDS_KEY = "userIDs";
     public static final String IS_EMAIL_KEY = "isEmail";
     public static final String EMAILS_KEY = "emails";
-
-    private HabitRPGUser user;
-    private String userIdToInvite;
-
-    @Inject
-    APIHelper apiHelper;
-
     @Inject
     protected HostConfig hostConfig;
-
+    @Inject
+    APIHelper apiHelper;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     List<PartyInviteFragment> fragments = new ArrayList<>();
-
+    private HabitRPGUser user;
+    private String userIdToInvite;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {

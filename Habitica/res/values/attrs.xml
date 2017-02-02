@@ -15,4 +15,9 @@
     <declare-styleable name="MaxHeightScrollView">
         <attr name="maxHeightMultiplier" format="float" />
     </declare-styleable>
+    <declare-styleable name="SubscriptionOptionView">
+        <attr name="recurringText" format="string" />
+        <attr name="gemCapText" format="string" />
+        <attr name="hourGlassCount" format="integer" />
+    </declare-styleable>
 </resources>

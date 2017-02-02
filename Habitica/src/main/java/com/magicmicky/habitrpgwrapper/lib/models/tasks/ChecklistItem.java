@@ -48,8 +48,8 @@ public class ChecklistItem extends BaseModel {
         this.setCompleted(completed);
     }
 
-    public ChecklistItem(String s) {
-        this(null, s);
+    public ChecklistItem(String text) {
+        this(null, text);
     }
 
     public ChecklistItem(ChecklistItem item) {

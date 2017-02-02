@@ -38,7 +38,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,10 +165,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     @Subscribe
-    public void onEvent(CopyChatMessageCommand cmd)
-    {
-        ClipboardManager clipMan = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData chatMessage = ClipData.newPlainText("Chat Message",cmd.chatMessage.text);
+    public void onEvent(CopyChatMessageCommand cmd) {
+        ClipboardManager clipMan = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData chatMessage = ClipData.newPlainText("Chat Message", cmd.chatMessage.text);
         clipMan.setPrimaryClip(chatMessage);
         MainActivity activity = (MainActivity) getActivity();
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), getString(R.string.chat_message_copied), UiUtils.SnackbarDisplayType.NORMAL);

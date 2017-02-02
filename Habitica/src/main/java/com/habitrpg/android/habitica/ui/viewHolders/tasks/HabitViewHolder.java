@@ -6,7 +6,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;

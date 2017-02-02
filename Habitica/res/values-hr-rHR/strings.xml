@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Osvježi</string>
   <string name="XP_default">Iskustvo</string>
   <string name="HP_default">Život</string>
@@ -94,8 +94,8 @@
   <string name="faint_header">Ostao/la si bez života</string>
   <string name="filter">Filtriraj</string>
   <string name="profile_image">Profilna Slika</string>
-  <string name="mana_price_button" formatted="false">%d MP</string>
-  <string name="used_skill" formatted="false">Iskoristio si %1$s za %2$d mane.</string>
+  <string name="mana_price_button">%d MP</string>
+  <string name="used_skill">Iskoristio si %1$s za %2$d mane.</string>
   <string name="new_checklist_item">Novi predmet na spisku</string>
   <string name="add_checklist_item">Dodaj</string>
   <string name="reminder_title">Sjeti se označiti Dailiese</string>
@@ -139,9 +139,9 @@
   <string name="avatar_size_broad">Široko</string>
   <string name="avatar_background">Pozadina</string>
   <string name="purchase_customization">Kupi Prilagodbe</string>
-  <string name="purchase_set_button" formatted="false">Otključaj set za %d dragulja</string>
+  <string name="purchase_set_button">Otključaj set za %d dragulja</string>
   <string name="purchase_button">Kupi</string>
-  <string name="purchase_set_title" formatted="false">Kupi set %s</string>
+  <string name="purchase_set_title">Kupi set %s</string>
   <string name="due_date">Do Dana</string>
   <string name="quest.accept">Prihvati </string>
   <string name="quest.reject">Odbij</string>
@@ -153,7 +153,7 @@
   <string name="quest.accepted">Prihvaćeno</string>
   <string name="quest.rejected">Odbijeno</string>
   <string name="quest.participants">Sudionici </string>
-  <string name="version_info" formatted="false">Verzija %s (%d)</string>
+  <string name="version_info">Verzija %1$s (%2$d)</string>
   <string name="sidebar_help">Pomoć &amp; Često Postavljena Pitanja</string>
   <string name="complete_tutorial">Razumijem!</string>
   <string name="dismiss_tutorial">Podsjeti me ponovno</string>
@@ -218,8 +218,8 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="privacy">Privatnost </string>
   <string name="write_message">Napiši Poruku</string>
   <string name="post">Objavi</string>
-  <string name="todo_due" formatted="false">Do: %s</string>
-  <string name="daily_streak" formatted="false">Trenutni niz: %d</string>
+  <string name="todo_due">Do: %s</string>
+  <string name="daily_streak">Trenutni niz: %d</string>
   <string name="todo_has_duedate">Zadatak ima Rok Do</string>
   <string name="battle_gear">Borbena Oprema</string>
   <string name="costume">Kostim</string>
@@ -238,10 +238,10 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="quest_begin_message">Jesi li siguran da želiš započeti pothvat? Jednom kad je aktivan, članovi grupe se ne mogu pridružiti.</string>
   <string name="quest.invitation.text">Pozvani ste na sudjelovanje u pothvatu!</string>
   <string name="ago_1day">Prije 1 dan</string>
-  <string name="ago_days" formatted="false">Prije %d dana </string>
+  <string name="ago_days">Prije %d dana </string>
   <string name="ago_1Minute">Prije 1 minute </string>
-  <string name="ago_minutes" formatted="false">Prije %d minuta</string>
-  <string name="ago_hours" formatted="false">Prije %d sati</string>
+  <string name="ago_minutes">Prije %d minuta</string>
+  <string name="ago_hours">Prije %d sati</string>
   <string name="ago_1hour">Prije 1 sat</string>
   <string name="today">Danas</string>
   <string name="sidebar_items">Predmeti</string>
@@ -251,26 +251,26 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="quests">Pothvati </string>
   <string name="pets">Ljubimci</string>
   <string name="mounts">Životinje za jahanje</string>
-  <string name="armoireEquipment" formatted="false">Našao si komad rijetke Opreme u Ormaru: %s!! Zakon!</string>
-  <string name="armoireFood" formatted="false">Premećeš po Ormaru i nalaziš %1$s %2$s. Što to radi ovdje?</string>
+  <string name="armoireEquipment">Našao si komad rijetke Opreme u Ormaru: %s!! Zakon!</string>
+  <string name="armoireFood">Premećeš po Ormaru i nalaziš %1$s %2$s. Što to radi ovdje?</string>
   <string name="armoireExp">Hrvaš se s Ormarom i zarađuješ iskustvo. Evo ti ovo!</string>
-  <string name="armoireNotesFull" formatted="false">Otvori Ormar za nasumično dobivanje Opreme, Iskustva ili hrane! Ostalo komada opreme: %d</string>
+  <string name="armoireNotesFull">Otvori Ormar za nasumično dobivanje Opreme, Iskustva ili hrane! Ostalo komada opreme: %d</string>
   <string name="armoireLastItem">Našao si zadnji komad rijetke Opreme u Začaranom Ormaru.</string>
   <string name="armoireNotesEmpty">Ormar će dobiti novu opremu u prvom tjednu svakog mjeseca. Do tada, nastavi klikati za Iskustvo i Hranu!</string>
-  <string name="sell" formatted="false">Prodaj(%s Zlata) </string>
+  <string name="sell">Prodaj(%d Zlata) </string>
   <string name="hatch_with_potion">Izlegni s napitkom</string>
   <string name="feed_to_pet">Nahrani ljubimca</string>
   <string name="hatch_egg">Izlegni s jajetom</string>
   <string name="invite_party">Pozovi grupu</string>
-  <string name="dialog_feeding" formatted="false">Nahrani %1$s %2$s s:</string>
+  <string name="dialog_feeding">Nahrani %1$s %2$s s:</string>
   <string name="use_animal">Koristi</string>
   <string name="feed">Nahrani</string>
-  <string name="hatch_with" formatted="false">Izlegni ljubimca sa %s</string>
-  <string name="hatched_pet_title" formatted="false">%1$s %2$s se izlegao/la!</string>
+  <string name="hatch_with">Izlegni ljubimca sa %s</string>
+  <string name="hatched_pet_title">%1$s %2$s se izlegao/la!</string>
   <string name="close">Zatvori</string>
   <string name="share">Podijeli</string>
-  <string name="notification_pet_fed" formatted="false">Nahranio/la si svoju/ga %1$s %2$s!</string>
-  <string name="notification_purchase" formatted="false">%s je kupljen/a</string>
+  <string name="notification_pet_fed">Nahranio/la si svoju/ga %1$s %2$s!</string>
+  <string name="notification_purchase">%s je kupljen/a</string>
   <string name="sectionpets">Bazni Ljubimci</string>
   <string name="sectionpremiumPets">Ljubimci Čarobnog Napitka</string>
   <string name="sectionquestPets">Ljubimci s Pothvata</string>
@@ -281,7 +281,7 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="sectionspecialMounts">Rijetke Životinje za jahanje</string>
   <string name="world_quest">Svjetski Pothvat</string>
   <string name="inn_description">Odmori se u Krčmi da spriječiš prekonoćnu ozljedu od neizvršenih Dailies-a! (Napomena: ne sprječava od primanja ozljeda od Šefova.)</string>
-  <string name="empty_items" formatted="false">Nemaš %s</string>
+  <string name="empty_items">Nemaš %s</string>
   <string name="warrior">Ratnik</string>
   <string name="rogue">Odmetnik</string>
   <string name="mage">Čarobnjak</string>
@@ -293,7 +293,7 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="select_class">Odaberi Klasu</string>
   <string name="opt_out_class">Isključi se</string>
   <string name="opt_out_description">Ne želiš da te gnjave klase? Želiš odabrati kasnije? Isključi se - bit ćeš Ratnik bez posebnih sposobnosti. Možeš pročitati sve o sustavu klasa kasnije na wikiju i uključiti klase u bilo kojem trenutku.</string>
-  <string name="class_confirmation" formatted="false">Jeste li sigurni da želite biti %s?</string>
+  <string name="class_confirmation">Jeste li sigurni da želite biti %s?</string>
   <string name="choose_class">Odaberi Klasu </string>
   <string name="dialog_go_back">Idi natrag</string>
   <string name="opt_out_confirmation">Jeste li sigurni da želite isključiti?</string>
@@ -312,9 +312,9 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="email">Email</string>
   <string name="invite_users">Pozovi u Grupu</string>
   <string name="share_using">Podijeli koristeći</string>
-  <string name="share_levelup" formatted="false">Stigao sam do %s razine u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
-  <string name="share_hatched" formatted="false">Upravo sam izlegao %1$s %2$s ljubimca u Habitici izvršavajući svoje zadatke u stvarnom životu!</string>
-  <string name="share_raised" formatted="false">Upravo sam dobio %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
+  <string name="share_levelup">Stigao sam do %d razine u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
+  <string name="share_hatched">Upravo sam izlegao %1$s %2$s ljubimca u Habitici izvršavajući svoje zadatke u stvarnom životu!</string>
+  <string name="share_raised">Upravo sam dobio %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
   <string name="open_in_store">Otvori u Trgovini Play</string>
   <string name="change_class_confirmation">Jeste li sigurni da želite promijeniti svoju Klasu? Ovo će te koštati 3 dragulja.</string>
   <!--QR Strings-->

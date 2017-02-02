@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.receivers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,7 +13,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 /**
  * Created by keithholliday on 5/29/16.

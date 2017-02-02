@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable{
+public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 
     public APIHelper apiHelper;
     private List<Group> publicGuildList;
@@ -104,12 +105,12 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<Group> filteredGuilds = null;
+                List<Group> filteredGuilds;
 
-                if(constraint.length() == 0) {
+                if (constraint.length() == 0) {
                     filteredGuilds = fullPublicGuildList;
                 } else {
-                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase());
+                    filteredGuilds = getFilteredResults(constraint.toString().toLowerCase(Locale.US));
                 }
 
                 FilterResults results = new FilterResults();
@@ -128,8 +129,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
     protected List<Group> getFilteredResults(String query) {
         List<Group> filteredGuilds = new ArrayList<>();
 
-        for(Group guild : fullPublicGuildList) {
-            if(guild.name.toLowerCase().contains(query)) {
+        for (Group guild : fullPublicGuildList) {
+            if (guild.name.toLowerCase().contains(query)) {
                 filteredGuilds.add(guild);
             }
         }

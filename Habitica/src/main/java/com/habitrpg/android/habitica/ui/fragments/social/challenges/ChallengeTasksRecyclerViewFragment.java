@@ -217,7 +217,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
         public DividerViewHolder(View itemView) {
             super(itemView, false);
 
-            divider_name = (TextView)itemView.findViewById(R.id.divider_name);
+            divider_name = (TextView) itemView.findViewById(R.id.divider_name);
 
             context = itemView.getContext();
         }

@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.List;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class ContentCache {

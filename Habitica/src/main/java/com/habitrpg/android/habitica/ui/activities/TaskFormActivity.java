@@ -1,5 +1,33 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
+import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+import net.pherth.android.emoji_library.EmojiPopup;
+
+import org.greenrobot.eventbus.EventBus;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,34 +62,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
-import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
-import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
-import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import net.pherth.android.emoji_library.EmojiEditText;
-import net.pherth.android.emoji_library.EmojiPopup;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -601,12 +601,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                 int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                 this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
-                this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
-                this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
-                this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
-                this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
-                this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
-                this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
+                this.weekdayCheckboxes.get((offset + 1) % 7).setChecked(this.task.getRepeat().getT());
+                this.weekdayCheckboxes.get((offset + 2) % 7).setChecked(this.task.getRepeat().getW());
+                this.weekdayCheckboxes.get((offset + 3) % 7).setChecked(this.task.getRepeat().getTh());
+                this.weekdayCheckboxes.get((offset + 4) % 7).setChecked(this.task.getRepeat().getF());
+                this.weekdayCheckboxes.get((offset + 5) % 7).setChecked(this.task.getRepeat().getS());
+                this.weekdayCheckboxes.get((offset + 6) % 7).setChecked(this.task.getRepeat().getSu());
             } else {
                 this.frequencyPicker.setValue(this.task.getEveryX());
             }
@@ -695,12 +695,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 if (weekdayCheckboxes.size() == 7) {
                     int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                     this.weekdayCheckboxes.get(offset).setChecked(this.task.getRepeat().getM());
-                    this.weekdayCheckboxes.get((offset+1) % 7).setChecked(this.task.getRepeat().getT());
-                    this.weekdayCheckboxes.get((offset+2) % 7).setChecked(this.task.getRepeat().getW());
-                    this.weekdayCheckboxes.get((offset+3) % 7).setChecked(this.task.getRepeat().getTh());
-                    this.weekdayCheckboxes.get((offset+4) % 7).setChecked(this.task.getRepeat().getF());
-                    this.weekdayCheckboxes.get((offset+5) % 7).setChecked(this.task.getRepeat().getS());
-                    this.weekdayCheckboxes.get((offset+6) % 7).setChecked(this.task.getRepeat().getSu());
+                    this.weekdayCheckboxes.get((offset + 1) % 7).setChecked(this.task.getRepeat().getT());
+                    this.weekdayCheckboxes.get((offset + 2) % 7).setChecked(this.task.getRepeat().getW());
+                    this.weekdayCheckboxes.get((offset + 3) % 7).setChecked(this.task.getRepeat().getTh());
+                    this.weekdayCheckboxes.get((offset + 4) % 7).setChecked(this.task.getRepeat().getF());
+                    this.weekdayCheckboxes.get((offset + 5) % 7).setChecked(this.task.getRepeat().getS());
+                    this.weekdayCheckboxes.get((offset + 6) % 7).setChecked(this.task.getRepeat().getSu());
                 }
             } else {
                 this.dailyFrequencySpinner.setSelection(1);
@@ -798,12 +798,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                     int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
                     repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
-                    repeat.setT(this.weekdayCheckboxes.get((offset+1) % 7).isChecked());
-                    repeat.setW(this.weekdayCheckboxes.get((offset+2) % 7).isChecked());
-                    repeat.setTh(this.weekdayCheckboxes.get((offset+3) % 7).isChecked());
-                    repeat.setF(this.weekdayCheckboxes.get((offset+4) % 7).isChecked());
-                    repeat.setS(this.weekdayCheckboxes.get((offset+5) % 7).isChecked());
-                    repeat.setSu(this.weekdayCheckboxes.get((offset+6) % 7).isChecked());
+                    repeat.setT(this.weekdayCheckboxes.get((offset + 1) % 7).isChecked());
+                    repeat.setW(this.weekdayCheckboxes.get((offset + 2) % 7).isChecked());
+                    repeat.setTh(this.weekdayCheckboxes.get((offset + 3) % 7).isChecked());
+                    repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
+                    repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
+                    repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
                 } else {
                     task.setFrequency("daily");
                     task.setEveryX(this.frequencyPicker.getValue());

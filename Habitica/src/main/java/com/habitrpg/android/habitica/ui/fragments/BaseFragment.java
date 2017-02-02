@@ -1,13 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
@@ -17,9 +10,18 @@ import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
+
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -116,6 +118,8 @@ public abstract class BaseFragment extends DialogFragment {
         }
 
         super.onDestroyView();
+        RefWatcher refWatcher = HabiticaApplication.getInstance(getContext()).refWatcher;
+        refWatcher.watch(this);
     }
 
     public String getDisplayedClassName() {

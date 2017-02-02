@@ -56,7 +56,7 @@ public class AppModule {
     }
 
     @Provides
-    public SoundFileLoader providesSoundFileLoader(){
+    public SoundFileLoader providesSoundFileLoader() {
         return new SoundFileLoader();
     }
 

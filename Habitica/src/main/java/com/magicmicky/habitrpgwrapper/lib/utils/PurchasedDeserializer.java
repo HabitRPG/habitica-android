@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
+import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
@@ -73,6 +74,7 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
         TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
 
         purchases.customizations = customizations;
+        purchases.setPlan(context.deserialize(object.get("plan"), SubscriptionPlan.class));
 
         return purchases;
     }

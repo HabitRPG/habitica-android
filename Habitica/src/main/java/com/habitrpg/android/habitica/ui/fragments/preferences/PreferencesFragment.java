@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceScreen;
-
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -31,6 +21,16 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -44,12 +44,12 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public APIHelper apiHelper;
     @Inject
     public SoundManager soundManager;
+    public MainActivity activity;
     private Context context;
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
-    public MainActivity activity;
     private PushNotificationManager pushNotificationManager;
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
@@ -157,7 +157,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     }
 
 
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("use_reminder")) {
@@ -187,13 +186,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             updateObject.put("dayStart", hour);
             apiHelper.apiService.changeCustomDayStart(updateObject)
                     .compose(apiHelper.configureApiCallObserver())
-                    .subscribe(user -> {}, throwable -> {});
+                    .subscribe(user -> {
+                    }, throwable -> {
+                    });
         } else if (key.equals("language")) {
-            LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key,"en"));
+            LanguageHelper languageHelper = new LanguageHelper(sharedPreferences.getString(key, "en"));
 
             Locale.setDefault(languageHelper.getLocale());
             Configuration configuration = new Configuration();
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN){
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
                 configuration.locale = languageHelper.getLocale();
             } else {
                 configuration.setLocale(languageHelper.getLocale());
@@ -217,7 +218,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     }, throwable -> {
                     });
 
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1){
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -226,7 +227,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 this.startActivity(intent);
                 getActivity().finishAffinity();
             }
-	        EventBus.getDefault().post(new RefreshUserCommand());
+            EventBus.getDefault().post(new RefreshUserCommand());
 
         } else if (key.equals("audioTheme")) {
             String newAudioTheme = sharedPreferences.getString(key, "off");
@@ -287,7 +288,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         }
         if (user != null && user.getPreferences() != null) {
             TimePreference cdsTimePreference = (TimePreference) findPreference("cds_time");
-            cdsTimePreference.setText(user.getPreferences().getDayStart()+":00");
+            cdsTimePreference.setText(user.getPreferences().getDayStart() + ":00");
         }
     }
 }

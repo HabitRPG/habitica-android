@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.android.databinding'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.chaitanyapramod.findbugs-android'
 
 buildscript {
     repositories {
@@ -35,8 +36,8 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //Networking
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     //REST API handling
     compile('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude module: 'okhttp'
@@ -45,17 +46,17 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     //Crash Logging
-    releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+    releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
 
     // View Elements Binding :)
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    apt 'com.jakewharton:butterknife-compiler:8.5.1'
 
     //Dependency Injection
-    compile 'com.google.dagger:dagger:2.7'
-    apt 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.google.dagger:dagger:2.8'
+    apt 'com.google.dagger:dagger-compiler:2.8'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     compile('com.mikepenz:materialdrawer:5.3.6@aar') {
@@ -74,7 +75,7 @@ dependencies {
     compile 'com.github.viirus:emoji-lib:0.0.3.2'
 
     // Markdown
-    compile 'com.commonsware.cwac:anddown:0.2.4'
+    compile 'com.commonsware.cwac:anddown:0.3.0'
 
     // About View for all dependent Libraries, we are using
     compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
@@ -93,10 +94,10 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
 
     // IAP Handling / Verification
-    compile 'org.solovyev.android:checkout:0.7.5@aar'
+    compile 'org.solovyev.android:checkout:0.9.3@aar'
 
     //Facebook
-    compile('com.facebook.android:facebook-android-sdk:4.17.0') {
+    compile('com.facebook.android:facebook-android-sdk:4.19.0') {
         transitive = true
     }
 
@@ -107,13 +108,13 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.0'
 
     //Analytics
-    compile 'com.amplitude:android-sdk:2.9.2'
+    compile 'com.amplitude:android-sdk:2.13.1'
 
     // Fresco Image Management Library
-    compile('com.facebook.fresco:fresco:0.14.0') {
+    compile('com.facebook.fresco:fresco:1.0.1') {
         exclude module: 'bolts-android'
     }
-    compile('com.facebook.fresco:animated-gif:0.14.0') {
+    compile('com.facebook.fresco:animated-gif:1.0.1') {
         exclude module: 'bolts-android'
     }
     //Tests
@@ -130,10 +131,12 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     //Push Notifications
-    compile 'com.google.firebase:firebase-core:9.4.0'
-    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
 
-    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+
+    compile 'org.apmem.tools:layouts:1.10@aar'
 
     compile(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'
@@ -205,7 +208,8 @@ android {
     }
 
     lintOptions {
-        disable 'UnusedResources'
+        disable 'UnusedResources','MissingTranslation','UnusedAttribute','InvalidPackage'
+        enable 'LogConditional','IconExpectedSize','MissingRegistered','TypographyQuotes'
     }
 }
 

@@ -14,10 +14,10 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.shops.ShopsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildsOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -30,6 +30,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
+
+import java.util.Locale;
 
 import static com.habitrpg.android.habitica.ui.activities.MainActivity.GEM_PURCHASE_REQUEST;
 
@@ -80,14 +82,14 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tasks)).withIdentifier(SIDEBAR_TASKS),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_skills)).withIdentifier(SIDEBAR_SKILLS),
 
-                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social).toUpperCase()),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_social).toUpperCase(Locale.getDefault())),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_inbox)).withIdentifier(SIDEBAR_INBOX),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_tavern)).withIdentifier(SIDEBAR_TAVERN),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_party)).withIdentifier(SIDEBAR_PARTY),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_guilds)).withIdentifier(SIDEBAR_GUILDS),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_challenges)).withIdentifier(SIDEBAR_CHALLENGES),
 
-                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory).toUpperCase()),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_section_inventory).toUpperCase(Locale.getDefault())),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_shops)).withIdentifier(SIDEBAR_SHOPS),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_avatar)).withIdentifier(SIDEBAR_AVATAR),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_equipment)).withIdentifier(SIDEBAR_EQUIPMENT),
@@ -95,7 +97,7 @@ public class MainDrawerBuilder {
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_stable)).withIdentifier(SIDEBAR_STABLE),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_purchaseGems)).withIdentifier(SIDEBAR_PURCHASE),
 
-                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about).toUpperCase()),
+                        new SectionIconDrawerItem().withName(activity.getString(R.string.sidebar_about).toUpperCase(Locale.getDefault())),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_news)).withIdentifier(SIDEBAR_NEWS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_settings)).withIdentifier(SIDEBAR_SETTINGS).withSelectable(false),
                         new PrimaryDrawerItem().withName(activity.getString(R.string.sidebar_help)).withIdentifier(SIDEBAR_HELP),

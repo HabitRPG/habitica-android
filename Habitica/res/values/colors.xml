@@ -104,9 +104,11 @@
 
     <color name="widget_background">#c8432874</color>
 
-    <color name="gem_view_background">#10bda8ff</color>
+    <color name="gem_view_background">@color/habit_inactive_gray</color>
     <color name="task_border_gray">#1a000000</color>
     <color name="task_secondary_text">#B2B2B2</color>
     <color name="header_class_name">#CCBEED</color>
     <color name="gem_icon_color">#24cc8f</color>
+    <color name="subscription_description_text">#b1000000</color>
+    <color name="pill_gray">#deddde</color>
 </resources>

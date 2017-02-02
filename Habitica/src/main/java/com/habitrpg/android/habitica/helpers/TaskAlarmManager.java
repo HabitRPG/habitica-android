@@ -41,14 +41,14 @@ public class TaskAlarmManager {
     public static final String TASK_ID_INTENT_KEY = "TASK_ID";
     public static final String TASK_NAME_INTENT_KEY = "TASK_NAME";
     private static TaskAlarmManager instance = null;
-    private Context context;
-    private AlarmManager am;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    private Context context;
+    private AlarmManager am;
 
     private TaskAlarmManager(Context context) {
         HabiticaBaseApplication.getComponent().inject(this);
-        this.context = context;
+        this.context = context.getApplicationContext();
         EventBus.getDefault().register(this);
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
@@ -58,6 +58,63 @@ public class TaskAlarmManager {
             instance = new TaskAlarmManager(context);
         }
         return instance;
+    }
+
+    public static void scheduleDailyReminder(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs.getBoolean("use_reminder", false)) {
+
+            String timeval = prefs.getString("reminder_time", "19:00");
+
+            String[] pieces = timeval.split(":");
+            int hour = Integer.parseInt(pieces[0]);
+            int minute = Integer.parseInt(pieces[1]);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.MINUTE, minute);
+            cal.set(Calendar.SECOND, 0);
+            if (cal.getTimeInMillis() < new Date().getTime()) {
+                cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
+            }
+            long trigger_time = cal.getTimeInMillis();
+
+            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            PendingIntent previousSender = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
+            if (previousSender != null) {
+                previousSender.cancel();
+                alarmManager.cancel(previousSender);
+            }
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            setAlarm(context, trigger_time, pendingIntent);
+        }
+    }
+
+    public static void removeDailyReminder(Context context) {
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
+        alarmManager.cancel(displayIntent);
+    }
+
+    private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (pendingIntent == null) {
+            return;
+        }
+
+        if (SDK_INT < Build.VERSION_CODES.KITKAT)
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M)
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time, time + 60000, pendingIntent);
+        else if (SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
     @Subscribe
@@ -71,7 +128,6 @@ public class TaskAlarmManager {
         Task task = event.task;
         this.removeAlarmsForTask(task);
     }
-
 
     @Subscribe
     public void onEvent(ReminderDeleteEvent event) {
@@ -122,7 +178,8 @@ public class TaskAlarmManager {
                 .queryList()))
                 .doOnNext(this::setAlarmsForTask)
                 .subscribeOn(Schedulers.io())
-                .subscribe(task -> {},crashlyticsProxy::logException);
+                .subscribe(task -> {
+                }, crashlyticsProxy::logException);
 
         scheduleDailyReminder(context);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -179,62 +236,5 @@ public class TaskAlarmManager {
         sender.cancel();
         am.cancel(sender);
 
-    }
-
-    public static void scheduleDailyReminder(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (prefs.getBoolean("use_reminder", false)) {
-
-            String timeval = prefs.getString("reminder_time", "19:00");
-
-            String[] pieces = timeval.split(":");
-            int hour = Integer.parseInt(pieces[0]);
-            int minute = Integer.parseInt(pieces[1]);
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, hour);
-            cal.set(Calendar.MINUTE, minute);
-            cal.set(Calendar.SECOND, 0);
-            if (cal.getTimeInMillis() < new Date().getTime()) {
-                cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR)+1);
-            }
-            long trigger_time = cal.getTimeInMillis();
-
-            Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-            notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-            notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false);
-
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            PendingIntent previousSender = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
-            if (previousSender != null) {
-                previousSender.cancel();
-                alarmManager.cancel(previousSender);
-            }
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            setAlarm(context, trigger_time, pendingIntent);
-        }
-    }
-
-    public static void removeDailyReminder(Context context) {
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent displayIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, 0);
-        alarmManager.cancel(displayIntent);
-    }
-
-    private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        if (pendingIntent == null) {
-            return;
-        }
-
-        if (SDK_INT < Build.VERSION_CODES.KITKAT)
-            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-        else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M)
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time, time+60000, pendingIntent);
-        else if (SDK_INT >= Build.VERSION_CODES.M)
-            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 }

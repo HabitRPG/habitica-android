@@ -7,19 +7,13 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.w3c.dom.Text;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -60,7 +54,9 @@ public class InboxFragment extends BaseMainFragment
 
         this.apiHelper.apiService.markPrivateMessagesRead()
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {}, throwable -> {});
+                .subscribe(aVoid -> {
+                }, throwable -> {
+                });
 
         View v = inflater.inflate(R.layout.fragment_inbox, container, false);
         unbinder = ButterKnife.bind(this, v);
@@ -94,14 +90,14 @@ public class InboxFragment extends BaseMainFragment
     }
 
     private void openNewMessageDialog() {
-        this.chooseRecipientDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_choose_message_recipient,null);
+        this.chooseRecipientDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_choose_message_recipient, null);
 
         Button scaneQRCodeButton = (Button) chooseRecipientDialogView.findViewById(R.id.scanQRCodeButton);
 
         AlertDialog alert = new AlertDialog.Builder(this.activity)
                 .setTitle(getString(R.string.choose_recipient_title))
                 .setPositiveButton(getString(R.string.action_continue), (dialog, which) -> {
-                    EditText uuidEditText = (EditText)chooseRecipientDialogView.findViewById(R.id.uuidEditText);
+                    EditText uuidEditText = (EditText) chooseRecipientDialogView.findViewById(R.id.uuidEditText);
                     openInboxMessages(uuidEditText.getText().toString(), "");
                 })
                 .setNeutralButton(getString(R.string.action_cancel), (dialog, which) -> {
@@ -127,7 +123,8 @@ public class InboxFragment extends BaseMainFragment
         swipeRefreshLayout.setRefreshing(true);
         this.apiHelper.retrieveUser(true)
                 .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                });
     }
 
     public void setInboxMessages() {
@@ -206,8 +203,8 @@ public class InboxFragment extends BaseMainFragment
         }
     }
 
-	@Override
-	public String customTitle() {
-		return getString(R.string.sidebar_inbox);
-	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_inbox);
+    }
 }

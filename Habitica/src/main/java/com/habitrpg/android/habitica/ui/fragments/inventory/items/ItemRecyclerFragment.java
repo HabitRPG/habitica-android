@@ -3,18 +3,26 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
+import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.inventory.SpecialItem;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
+import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -32,12 +40,15 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class ItemRecyclerFragment extends BaseFragment {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
@@ -61,12 +72,14 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Item hatchingItem;
     public Pet feedingPet;
     public HashMap<String, Integer> ownedPets;
+    public HabitRPGUser user;
     LinearLayoutManager layoutManager = null;
 
     private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_items, container, false);
         }
@@ -183,8 +196,20 @@ public class ItemRecyclerFragment extends BaseFragment {
                 from = new Select().from(QuestContent.class);
         }
 
+        List<Item> items = new ArrayList<>();
         if (from != null) {
-            List<Item> items = from.where(Condition.column("owned").greaterThan(0)).queryList();
+            items.addAll(from.where(Condition.column("owned").greaterThan(0)).queryList());
+        }
+
+        if (this.itemType.equals("special")) {
+            if (user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
+                Item mysterItem = SpecialItem.makeMysteryItem(getContext());
+                mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
+                items.add(mysterItem);
+            }
+        }
+
+        if (items.size() > 0) {
             adapter.setItemList(items);
         }
     }
@@ -204,5 +229,29 @@ public class ItemRecyclerFragment extends BaseFragment {
         OpenMenuItemCommand command = new OpenMenuItemCommand();
         command.identifier = MainDrawerBuilder.SIDEBAR_SHOPS;
         EventBus.getDefault().post(command);
+    }
+
+    @Subscribe
+    public void openedMysteryItem(OpenedMysteryItemEvent event) {
+        this.adapter.openedMysteryItem(event.numberLeft);
+        new Select().from(ItemData.class).where(Condition.column("key").eq(event.mysteryItem.getKey())).async().querySingle(new TransactionListener<ItemData>() {
+            @Override
+            public void onResultReceived(ItemData result) {
+                result.setOwned(true);
+                result.async().save();
+                MainActivity activity = (MainActivity) getActivity();
+                showSnackbar(activity, activity.floatingMenuWrapper, getString(R.string.notification_mystery_item, result.getText()), UiUtils.SnackbarDisplayType.NORMAL);
+            }
+
+            @Override
+            public boolean onReady(BaseTransaction<ItemData> transaction) {
+                return true;
+            }
+
+            @Override
+            public boolean hasResult(BaseTransaction<ItemData> transaction, ItemData result) {
+                return true;
+            }
+        });
     }
 }

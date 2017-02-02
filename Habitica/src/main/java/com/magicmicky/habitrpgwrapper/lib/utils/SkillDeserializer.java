@@ -42,8 +42,7 @@ public class SkillDeserializer
 
                 JsonElement lvlElement = skillObject.get("lvl");
 
-                if(lvlElement != null)
-                {
+                if (lvlElement != null) {
                     skill.lvl = lvlElement.getAsInt();
                 }
 

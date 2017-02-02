@@ -1,20 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.AlertDialog;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -30,6 +15,21 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
+import android.app.AlertDialog;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -42,16 +42,12 @@ import butterknife.OnClick;
 public class ChallengeDetailActivity extends BaseActivity {
 
     public static String CHALLENGE_ID = "CHALLENGE_ID";
-
-    @BindView(R.id.detail_tabs)
-    TabLayout detail_tabs;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     @Inject
     public APIHelper apiHelper;
-
+    @BindView(R.id.detail_tabs)
+    TabLayout detail_tabs;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private ChallengeViewHolder challengeViewHolder;
 
     private Challenge challenge;
@@ -184,6 +180,47 @@ public class ChallengeDetailActivity extends BaseActivity {
         component.inject(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_leave:
+                new AlertDialog.Builder(this)
+                        .setTitle(this.getString(R.string.challenge_leave_title))
+                        .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
+                        .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
+                            this.apiHelper.apiService.leaveChallenge(challenge.id)
+                                    .compose(apiHelper.configureApiCallObserver())
+                                    .subscribe(aVoid -> {
+                                        challenge.user_id = null;
+                                        challenge.async().save();
+
+                                        HabiticaApplication.User.resetChallengeList();
+                                        finish();
+
+                                    }, throwable -> {
+                                    });
+                        })
+                        .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
+                            dialog.dismiss();
+                        }).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     public class ChallengeViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.challenge_name)
         EmojiTextView challengeName;
@@ -234,46 +271,5 @@ public class ChallengeDetailActivity extends BaseActivity {
                     },
                     challenge1 -> ChallengeDetailActivity.this.onBackPressed());
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_leave:
-                new AlertDialog.Builder(this)
-                        .setTitle(this.getString(R.string.challenge_leave_title))
-                        .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
-                        .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
-                            this.apiHelper.apiService.leaveChallenge(challenge.id)
-                                    .compose(apiHelper.configureApiCallObserver())
-                                    .subscribe(aVoid -> {
-                                        challenge.user_id = null;
-                                        challenge.async().save();
-
-                                        HabiticaApplication.User.resetChallengeList();
-                                        finish();
-
-                                    }, throwable -> {
-                                    });
-                        })
-                        .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
-                        }).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 }
