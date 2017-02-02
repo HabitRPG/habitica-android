@@ -21,7 +21,7 @@ before_install:
   - if [ $REQUIRES_SERVER ]; then git clone https://github.com/HabitRPG/habitrpg.git ../habitrpg; fi
   - if [ $REQUIRES_SERVER ]; then until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 2; done; fi
   - if [ $REQUIRES_SERVER ]; then cd ../habitrpg && cp config.json.example config.json && npm install; fi
-  - if [ $REQUIRES_SERVER ]; then npm start &; fi
+  - if [ $REQUIRES_SERVER ]; then npm start; fi &
   - if [ $REQUIRES_SERVER ]; then until nc -z localhost 3000; do echo Waiting for Habitica Server; sleep 2; done; fi
   - cd -
 android:
