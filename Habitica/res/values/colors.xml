@@ -110,5 +110,5 @@
     <color name="header_class_name">#CCBEED</color>
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
-    <color name="pill_gray">#deddde</color>
+    <color name="pill_gray">#efefef</color>
 </resources>

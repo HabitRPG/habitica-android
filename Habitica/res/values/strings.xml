@@ -457,10 +457,10 @@ To start, which parts of your life do you want to improve?</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration" >Recurring every %s</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe.listitem1.description">Alexander the Merchant will sell you Gems at a cost of 20 gold per gem. His monthly shipments are initially capped at 25 Gems per month, but this cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
-    <string name="subscribe.listitem2.description">Makes completed To-Dos and task history available for longer.</string>
-    <string name="subscribe.listitem3.description">Complete your stable faster!</string>
-    <string name="subscribe.listitem4.description">Each month you will receive a unique cosmetic item for your avatar! Plus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
+    <string name="subscribe.listitem1.description">Alexander the Merchant will now sell you gems for 20 gold each!\n\nHis monthly shipments are initially capped at 25 Gems per month, but can increase based on your subscription length.\n\nThe cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
+    <string name="subscribe.listitem2.description">Each month you will receive a unique cosmetic item for your avatar!\n\nPlus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
+    <string name="subscribe.listitem3.description">Makes completed To-Dos and task history available for longer.</string>
+    <string name="subscribe.listitem4.description">Double drop caps will let you receive more items from your completed tasks every day, helping you complete your stable faster!</string>
     <string name="subscribe1month.gemcap">Gem cap starts at 25</string>
     <string name="subscribe3month.gemcap">Gem cap raised to 30</string>
     <string name="subscribe6month.gemcap">Gem cap raised to 35</string>
@@ -470,7 +470,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="subscription">Subscription</string>
     <string name="active">Active</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the "My Apps" section of the Google Play Store.</string>
+    <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store.</string>
     <string name="cancel_subscription_notgoogle.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>

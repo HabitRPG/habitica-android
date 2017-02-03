@@ -27,6 +27,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -44,6 +46,33 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Inject
     APIHelper apiHelper;
+
+    @BindView(R.id.subscribe_listitem1_box)
+    View subscribeListitem1Box;
+    @BindView(R.id.subscribe_listitem2_box)
+    View subscribeListitem2Box;
+    @BindView(R.id.subscribe_listitem3_box)
+    View subscribeListitem3Box;
+    @BindView(R.id.subscribe_listitem4_box)
+    View subscribeListitem4Box;
+
+    @BindView(R.id.subscribe_listitem1_expand)
+    ImageView subscribeListitem1Button;
+    @BindView(R.id.subscribe_listitem2_expand)
+    ImageView subscribeListitem2Button;
+    @BindView(R.id.subscribe_listitem3_expand)
+    ImageView subscribeListitem3Button;
+    @BindView(R.id.subscribe_listitem4_expand)
+    ImageView subscribeListitem4Button;
+
+    @BindView(R.id.subscribe_listitem1_description)
+    TextView subscribeListItem1Description;
+    @BindView(R.id.subscribe_listitem2_description)
+    TextView subscribeListItem2Description;
+    @BindView(R.id.subscribe_listitem3_description)
+    TextView subscribeListItem3Description;
+    @BindView(R.id.subscribe_listitem4_description)
+    TextView subscribeListItem4Description;
 
     @BindView(R.id.loadingIndicator)
     ProgressBar loadingIndicator;
@@ -114,6 +143,29 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscription3MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription3Month));
         this.subscription6MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription6Month));
         this.subscription12MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription12Month));
+
+        this.subscribeListitem1Box.setOnClickListener(view1 -> {
+            toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description);
+        });
+        this.subscribeListitem2Box.setOnClickListener(view1 -> {
+            toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description);
+        });
+        this.subscribeListitem3Box.setOnClickListener(view1 -> {
+            toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description);
+        });
+        this.subscribeListitem4Box.setOnClickListener(view1 -> {
+            toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description);
+        });
+    }
+
+    private void toggleDescriptionView(ImageView button, TextView descriptionView) {
+        if (descriptionView.getVisibility() == View.VISIBLE) {
+            descriptionView.setVisibility(View.GONE);
+            button.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+        } else {
+            descriptionView.setVisibility(View.VISIBLE);
+            button.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+        }
     }
 
     @Override

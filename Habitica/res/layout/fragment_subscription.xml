@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
@@ -14,18 +15,134 @@
                   android:layout_height="wrap_content"
                   android:padding="20dp">
 
-        <TextView android:layout_height="wrap_content"
-                  android:layout_width="wrap_content"
-                  android:paddingLeft="16dp"
-                  android:paddingRight="16dp"
-                  android:paddingBottom="20dp"
-                  android:text="@string/subscribe.title"
-                  android:layout_gravity="center_horizontal"
-                  android:gravity="center"
-                  android:textColor="@color/best_10"
-                  android:drawableTop="@drawable/ic_heart_large"
-                  android:textSize="14sp"
-                  android:lineSpacingExtra="4dp" />
+        <TextView
+                android:id="@+id/subscribeBenefitsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/subscribe_prompt"
+                android:gravity="center"
+                android:textStyle="normal|bold"
+                android:textColor="@color/brand_100"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"/>
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem1.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+
+            <TextView
+                    android:text="@string/subscribe.listitem1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem1.expand"
+                    android:layout_gravity="right"/>
+
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem1.description"
+                android:text="@string/subscribe.listitem1.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone"/>
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem2.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+            <TextView
+                    android:text="@string/subscribe.listitem2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem2.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem2.description"
+                android:text="@string/subscribe.listitem2.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem3.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox">
+            <TextView
+                    android:text="@string/subscribe.listitem3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem3.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem3.description"
+                android:text="@string/subscribe.listitem3.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
+
+        <FrameLayout
+                android:id="@+id/subscribe.listitem4.box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subscriptionBox"
+                android:layout_marginBottom="8dp">
+            <TextView
+                    android:text="@string/subscribe.listitem4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubscriptionListTitle"
+                    />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/subscribe.listitem4.expand"
+                    android:layout_gravity="right"/>
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/subscribe.listitem4.description"
+                android:text="@string/subscribe.listitem4.description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubscriptionListDescription"
+                android:visibility="gone" />
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"
@@ -38,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="24dp"
                 >
 
             <com.habitrpg.android.habitica.ui.SubscriptionOptionView
@@ -46,6 +164,7 @@
                     android:layout_height="wrap_content"
                     app:recurringText="@string/month"
                     app:gemCapText="@string/subscribe1month.gemcap"/>
+
             <com.habitrpg.android.habitica.ui.SubscriptionOptionView
                     android:id="@+id/subscription3month"
                     android:layout_width="match_parent"
@@ -84,96 +203,22 @@
         <com.habitrpg.android.habitica.ui.SubscriptionDetailsView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/subscriptionDetails"/>
+                android:id="@+id/subscriptionDetails"
+                android:layout_marginTop="24dp"/>
 
-        <TextView
-                android:id="@+id/subscribeBenefitsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/subscribe_prompt"
-                android:gravity="center"
-                android:textStyle="normal|bold"
-                android:textColor="@color/brand_100"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginTop="23dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="26dp"/>
+        <TextView android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+                  android:paddingLeft="16dp"
+                  android:paddingRight="16dp"
+                  android:paddingBottom="20dp"
+                  android:text="@string/subscribe.title"
+                  android:layout_gravity="center_horizontal"
+                  android:gravity="center"
+                  android:textColor="@color/best_10"
+                  android:drawableTop="@drawable/ic_heart_large"
+                  android:textSize="14sp"
+                  android:lineSpacingExtra="4dp"
+                android:layout_marginTop="16dp"/>
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/subscriptionBox"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp">
-            <TextView
-                    android:text="@string/subscribe.listitem1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/GemPurchaseListItem"
-                    />
-        </FrameLayout>
-        <TextView
-                android:text="@string/subscribe.listitem1.description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/GemPurchaseListItemDescription" />
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/subscriptionBox"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp">
-            <TextView
-                    android:text="@string/subscribe.listitem2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/GemPurchaseListItem"
-                    />
-        </FrameLayout>
-        <TextView
-                android:text="@string/subscribe.listitem2.description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/GemPurchaseListItemDescription" />
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/subscriptionBox"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp">
-            <TextView
-                    android:text="@string/subscribe.listitem3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/GemPurchaseListItem"
-                    />
-        </FrameLayout>
-        <TextView
-                android:text="@string/subscribe.listitem3.description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/GemPurchaseListItemDescription" />
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/subscriptionBox"
-                android:layout_marginBottom="8dp">
-            <TextView
-                    android:text="@string/subscribe.listitem4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/GemPurchaseListItem"
-                    />
-        </FrameLayout>
-        <TextView
-                android:text="@string/subscribe.listitem4.description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/GemPurchaseListItemDescription" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

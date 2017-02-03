@@ -192,6 +192,12 @@
         <item name="android:drawablePadding">4dp</item>
     </style>
 
+    <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="FragmentDialogTitle">
         <item name="android:textSize">@dimen/card_medium_text</item>
         <item name="android:textStyle">bold</item>
@@ -233,8 +239,11 @@
 
     <style name="subscriptionBox">
         <item name="android:background">@color/habit_inactive_gray</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
     </style>
 
     <style name="subscriptionBoxText">
@@ -251,6 +260,18 @@
 
     <style name="subscriptionBoxText.Title.Red">
         <item name="android:textColor">@color/worse_50</item>
+    </style>
+
+    <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_condensed
+        </item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+        <item name="android:lineSpacingExtra">2.0dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
     <style name="Button">
