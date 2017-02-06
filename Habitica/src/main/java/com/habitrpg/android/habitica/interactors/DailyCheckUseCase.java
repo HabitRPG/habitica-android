@@ -25,7 +25,7 @@ public class DailyCheckUseCase extends UseCase<DailyCheckUseCase.RequestValues, 
     }
 
     @Override
-    protected Observable<TaskDirectionData> buildUseCaseObservable(DailyCheckUseCase.RequestValues requestValues) {
+    protected Observable<TaskDirectionData> buildUseCaseObservable(RequestValues requestValues) {
         return taskRepository.taskChecked(requestValues.task, requestValues.Up).doOnNext(res -> {
 
             soundManager.loadAndPlayAudio(SoundManager.SoundDaily);

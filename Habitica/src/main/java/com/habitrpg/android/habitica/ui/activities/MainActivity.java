@@ -2,8 +2,11 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
+import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase;
 import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
+import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
+import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -162,6 +165,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
+import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -170,12 +174,12 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int GEM_PURCHASE_REQUEST = 111;
-    public static final int MIN_LEVEL_FOR_SKILLS = 11;
     @Inject
     public IApiClient apiClient;
 
     @Inject
     public SoundManager soundManager;
+
     @Inject
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
@@ -197,6 +201,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @BindView(R.id.overlayFrameLayout)
     FrameLayout overlayFrameLayout;
 
+    // region UseCases
+
     @Inject
     HabitScoreUseCase habitScoreUseCase;
 
@@ -211,6 +217,17 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Inject
     ChecklistCheckUseCase checklistCheckUseCase;
+
+    @Inject
+    CheckClassSelectionUseCase checkClassSelectionUseCase;
+
+    @Inject
+    DisplayItemDropUseCase displayItemDropUseCase;
+
+    @Inject
+    NotifyUserUseCase notifyUserUseCase;
+
+    // endregion
 
     private Drawer drawer;
     private Drawer filterDrawer;
@@ -244,9 +261,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     };
 
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
-    }
 
     PushNotificationManager pushNotificationManager;
 
@@ -312,9 +326,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         //resync, if last sync was more than 10 minutes ago
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
             if (this.apiClient != null && this.apiClient.hasAuthenticationKeys()) {
-                this.apiClient.retrieveUser(true)
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                        });
+                retrieveUser();
                 this.checkMaintenance();
             }
         }
@@ -412,7 +424,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
-    private void setUserData(boolean fromLocalDb) {
+    protected void setUserData(boolean fromLocalDb) {
         if (user != null) {
 
             Preferences preferences = user.getPreferences();
@@ -1083,7 +1095,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
                     .subscribe(res -> {
                         onTaskDataReceived(res, event.Reward);
-                    }, error -> {});
+                    }, error -> {
+                    });
         }
 
         //Update the users gold
@@ -1238,65 +1251,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         } else {
 
             if (user != null) {
-                notifyUser(data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl());
+                notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, this::retrieveUser,
+                        user, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()));
             }
 
-            showSnackBarForDataReceived(data);
+            displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+                    .subscribe(aVoid -> {}, throwable -> {});
         }
     }
 
-    private void showSnackBarForDataReceived(final TaskDirectionData data) {
-        if (data.get_tmp() != null) {
-            if (data.get_tmp().getDrop() != null) {
-                new Handler().postDelayed(() -> {
-                    showSnackbar(MainActivity.this, floatingMenuWrapper, data.get_tmp().getDrop().getDialog(), SnackbarDisplayType.DROP);
-                    soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
-                }, 3000L);
-            }
-        }
-    }
-
-    private void notifyUser(double xp, double hp, double gold, double mp, int lvl) {
-        StringBuilder message = new StringBuilder();
-        SnackbarDisplayType displayType = SnackbarDisplayType.NORMAL;
-        if (lvl > user.getStats().getLvl()) {
-            displayLevelUpDialog(lvl);
-
-            this.apiClient.retrieveUser(true)
-
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                    });
-            user.getStats().setLvl(lvl);
-
-            showSnackbar(this, floatingMenuWrapper, message.toString(), SnackbarDisplayType.NORMAL);
-        } else {
-            com.magicmicky.habitrpgwrapper.lib.models.Stats stats = user.getStats();
-
-            if (xp > stats.getExp()) {
-                message.append(" + ").append(round(xp - stats.getExp(), 2)).append(" XP");
-                user.getStats().setExp(xp);
-            }
-            if (hp != stats.getHp()) {
-                displayType = SnackbarDisplayType.FAILURE;
-                message.append(" - ").append(round(stats.getHp() - hp, 2)).append(" HP");
-                user.getStats().setHp(hp);
-            }
-            if (gold > stats.getGp()) {
-                message.append(" + ").append(round(gold - stats.getGp(), 2)).append(" GP");
-                stats.setGp(gold);
-            } else if (gold < stats.getGp()) {
-                displayType = SnackbarDisplayType.FAILURE;
-                message.append(" - ").append(round(stats.getGp() - gold, 2)).append(" GP");
-                stats.setGp(gold);
-            }
-            if (mp > stats.getMp() && stats.getLvl() >= MIN_LEVEL_FOR_SKILLS) {
-                message.append(" + ").append(round(mp - stats.getMp(), 2)).append(" MP");
-                stats.setMp(mp);
-            }
-            showSnackbar(this, floatingMenuWrapper, message.toString(), displayType);
-        }
-        setUserData(true);
-    }
 
     private void displayDeathDialogIfNeeded() {
 
@@ -1335,57 +1298,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
-    private void displayLevelUpDialog(int level) {
-        soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
-
-        SuppressedModals suppressedModals = user.getPreferences().getSuppressModals();
-        if (suppressedModals != null) {
-            if (suppressedModals.getLevelUp()) {
-                checkClassSelection();
-                return;
-            }
-        }
-
-        View customView = getLayoutInflater().inflate(R.layout.dialog_levelup, null);
-        if (customView != null) {
-            TextView detailView = (TextView) customView.findViewById(R.id.levelupDetail);
-            detailView.setText(this.getString(R.string.levelup_detail, level));
-            dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
-            dialogAvatarView.setUser(user);
-        }
-
-        final ShareEvent event = new ShareEvent();
-        event.sharedMessage = getString(R.string.share_levelup, level) + " https://habitica.com/social/level-up";
-        AvatarView avatarView = new AvatarView(this, true, true, true);
-        avatarView.setUser(user);
-        avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
-
-        AlertDialog alert = new AlertDialog.Builder(this)
-                .setTitle(R.string.levelup_header)
-                .setView(customView)
-                .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
-                    checkClassSelection();
-                })
-                .setNeutralButton(R.string.share, (dialog, which) -> {
-                    EventBus.getDefault().post(event);
-                    dialog.dismiss();
-                })
-                .create();
-        if (!this.isFinishing()) {
-            alert.show();
-        }
-    }
-
-    private void checkClassSelection() {
-        if (user.getStats().getLvl() > 10 &&
-                !user.getPreferences().getDisableClasses() &&
-                !user.getFlags().getClassSelected()) {
-            SelectClassEvent event = new SelectClassEvent();
-            event.isInitialSelection = true;
-            event.currentClass = user.getStats().get_class().toString();
-            displayClassSelectionActivity(event);
-        }
-    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -1401,23 +1313,18 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return floatingMenuWrapper;
     }
 
+    protected void retrieveUser() {
+        this.apiClient.retrieveUser(true)
+                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                });
+    }
+
     @Subscribe
     public void displayClassSelectionActivity(SelectClassEvent event) {
-        Bundle bundle = new Bundle();
-        bundle.putString("size", user.getPreferences().getSize());
-        bundle.putString("skin", user.getPreferences().getSkin());
-        bundle.putString("shirt", user.getPreferences().getShirt());
-        bundle.putInt("hairBangs", user.getPreferences().getHair().getBangs());
-        bundle.putInt("hairBase", user.getPreferences().getHair().getBase());
-        bundle.putString("hairColor", user.getPreferences().getHair().getColor());
-        bundle.putInt("hairMustache", user.getPreferences().getHair().getMustache());
-        bundle.putInt("hairBeard", user.getPreferences().getHair().getBeard());
-        bundle.putBoolean("isInitialSelection", event.isInitialSelection);
-        bundle.putString("currentClass", event.currentClass);
-
-        Intent intent = new Intent(this, ClassSelectionActivity.class);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, SELECT_CLASS_RESULT);
+        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(user, event))
+                .subscribe(aVoid -> {
+                }, throwable -> {
+                });
     }
 
     private void displayTutorialStep(TutorialStep step, String text) {
@@ -1506,7 +1413,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
                         .subscribe(res -> {
-                           EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
+                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
                         }, error -> {
                         });
             }

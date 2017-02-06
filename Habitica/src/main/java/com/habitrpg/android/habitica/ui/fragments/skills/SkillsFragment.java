@@ -37,6 +37,8 @@ import java.util.List;
 import butterknife.BindView;
 import rx.Observable;
 
+import static com.habitrpg.android.habitica.helpers.MathHelper.round;
+
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
@@ -230,11 +232,6 @@ public class SkillsFragment extends BaseMainFragment {
             progressDialog.dismiss();
         }
     }
-
-    static public Double round(Double value, int n) {
-        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
-    }
-
 
 	@Override
 	public String customTitle() {	return getString(R.string.sidebar_skills);	}

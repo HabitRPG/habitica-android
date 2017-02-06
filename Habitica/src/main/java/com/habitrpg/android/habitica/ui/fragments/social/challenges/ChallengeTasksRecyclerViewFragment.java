@@ -205,7 +205,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
                     break;
             }
 
-            viewHolder.setDisabled(true);
+            //viewHolder.setDisabled(true);
             return viewHolder;
         }
     }
