@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GemPurchaseListItem">
+        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
+    </style>
+
+</resources>

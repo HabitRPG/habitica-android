@@ -293,11 +293,11 @@
                                 android:textStyle="bold" />
 
                             <com.facebook.drawee.view.SimpleDraweeView
-                                android:id="@+id/attributes_collapse_icon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-                                android:layout_gravity="bottom" />
+                                    android:id="@+id/attributes_collapse_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                                    android:layout_gravity="bottom" />
 
                         </LinearLayout>
 

@@ -108,7 +108,11 @@ public class PopupNotificationsManager {
     }
 
     public Boolean showNotificationDialog(final List<Notification> notifications) {
-        if (notifications.size() == 0) {
+        if (notifications == null || notifications.size() == 0) {
+            return false;
+        }
+
+        if (HabiticaApplication.currentActivity == null || HabiticaApplication.currentActivity.isFinishing()) {
             return false;
         }
 
