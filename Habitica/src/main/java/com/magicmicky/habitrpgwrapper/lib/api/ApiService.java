@@ -1,8 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
-import android.databinding.ObservableList;
-
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
@@ -14,6 +13,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
+import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
@@ -27,7 +27,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,7 +147,7 @@ public interface ApiService {
 
 
     @POST("user/sleep")
-    Observable<HabitResponse<Void>> sleep();
+    Observable<HabitResponse<Boolean>> sleep();
 
     @POST("user/revive")
     Observable<HabitResponse<HabitRPGUser>> revive();
@@ -170,6 +169,8 @@ public interface ApiService {
 
     @POST("user/mark-pms-read")
     Observable<HabitResponse<Void>> markPrivateMessagesRead();
+
+
 
     /* Group API */
 
@@ -243,6 +244,9 @@ public interface ApiService {
     @POST("/iap/android/verify")
     Observable<HabitResponse<PurchaseValidationResult>> validatePurchase(@Body PurchaseValidationRequest request);
 
+    @POST("/iap/android/subscribe")
+    Observable<HabitResponse<Void>> validateSubscription(@Body SubscriptionValidationRequest request);
+
     @POST("user/custom-day-start")
     Observable<HabitResponse<HabitRPGUser>> changeCustomDayStart(@Body Map<String, Object> updateObject);
 
@@ -291,4 +295,7 @@ public interface ApiService {
     // Notifications
     @POST("notifications/{notificationId}/read")
     Observable<HabitResponse<Void>> readNotificaiton(@Path("notificationId") String notificationId);
+
+    @POST("user/open-mystery-item")
+    Observable<HabitResponse<ItemData>> openMysteryItem();
 }

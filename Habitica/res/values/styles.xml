@@ -187,9 +187,15 @@
         <item name="android:textColor">@color/brand_100</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:drawableLeft">@drawable/ic_check_purple</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:paddingTop">12dp</item>
+        <item name="android:drawableLeft">@drawable/ic_check_purple_24dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
+    </style>
+
+    <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="FragmentDialogTitle">
@@ -200,4 +206,90 @@
         <item name="android:paddingTop">@dimen/section_top_padding</item>
         <item name="android:paddingBottom">@dimen/section_top_padding</item>
     </style>
+
+    <style name="GemPurchaseListItemDescription">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:textColor">@color/subscription_description_text</item>
+    </style>
+
+    <style name="Pill">
+        <item name="android:textSize">11sp</item>
+        <item name="android:background">@drawable/pill_bg</item>
+        <item name="android:paddingRight">@dimen/pill_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/pill_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/pill_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/pill_vertical_padding</item>
+    </style>
+
+    <style name="Pill.Selected">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/pill_bg_purple</item>
+    </style>
+
+    <style name="Pill.Selected.Green">
+        <item name="android:background">@drawable/pill_bg_green</item>
+    </style>
+
+    <style name="Pill.Selected.Red">
+        <item name="android:background">@drawable/pill_bg_red</item>
+    </style>
+
+    <style name="subscriptionBox">
+        <item name="android:background">@color/habit_inactive_gray</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="subscriptionBoxText">
+        <item name="android:textColor">@color/brand_100</item>
+    </style>
+
+    <style name="subscriptionBoxText.Title">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="subscriptionBoxText.Subtitle">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="subscriptionBoxText.Title.Red">
+        <item name="android:textColor">@color/worse_50</item>
+    </style>
+
+    <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+            @string/font_family_condensed
+        </item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.035</item>
+        <item name="android:lineSpacingExtra">2.0dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:paddingLeft">@dimen/button_padding</item>
+        <item name="android:paddingRight">@dimen/button_padding</item>
+    </style>
+
+    <style name="Button.Purple">
+        <item name="android:background">@drawable/rounded_purple_square</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Purple.Small">
+        <item name="android:paddingLeft">@dimen/button_padding_small</item>
+        <item name="android:paddingRight">@dimen/button_padding_small</item>
+        <item name="android:paddingTop">@dimen/button_padding_vertical_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_vertical_small</item>
+    </style>
+
+
 </resources>

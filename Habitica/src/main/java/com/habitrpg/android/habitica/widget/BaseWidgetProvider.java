@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.widget;
 
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

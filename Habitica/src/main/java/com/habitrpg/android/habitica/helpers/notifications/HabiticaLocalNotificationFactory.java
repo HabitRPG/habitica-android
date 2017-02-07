@@ -6,8 +6,8 @@ package com.habitrpg.android.habitica.helpers.notifications;
 public class HabiticaLocalNotificationFactory {
 
     //use getShape method to get object of type shape
-    public HabiticaLocalNotification build(String notificationType){
-        if(notificationType == null){
+    public HabiticaLocalNotification build(String notificationType) {
+        if (notificationType == null) {
             return null;
         }
 

@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 
 /**
  * Created by keithholliday on 7/16/16.

@@ -2,8 +2,8 @@ package com.magicmicky.habitrpgwrapper.lib.models.invitations;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.magicmicky.habitrpgwrapper.lib.models.invitations.PartyInvite;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -12,7 +12,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by keithholliday on 7/2/16.
@@ -34,36 +33,28 @@ public class Invitations extends BaseModel {
     private List<GuildInvite> guilds = new ArrayList<GuildInvite>();
 
     /**
-     *
-     * @return
-     * The party invite
+     * @return The party invite
      */
     public PartyInvite getParty() {
         return party;
     }
 
     /**
-     *
-     * @param party
-     * The party
+     * @param party The party
      */
     public void setParty(PartyInvite party) {
         this.party = party;
     }
 
     /**
-     *
-     * @return
-     * The guilds invite
+     * @return The guilds invite
      */
     public List<GuildInvite> getGuilds() {
         return guilds;
     }
 
     /**
-     *
-     * @param guilds
-     * The guilds
+     * @param guilds The guilds
      */
     public void setGuilds(List<GuildInvite> guilds) {
         this.guilds = guilds;

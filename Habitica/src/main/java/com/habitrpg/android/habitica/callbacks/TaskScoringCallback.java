@@ -12,6 +12,8 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.Locale;
+
 import rx.functions.Action1;
 
 /**
@@ -57,7 +59,7 @@ public class TaskScoringCallback implements Action1<TaskDirectionData> {
                 String type = taskDirectionData.get_tmp().getDrop().getType();
                 From from = null;
 
-                switch (type.toLowerCase()) {
+                switch (type.toLowerCase(Locale.US)) {
                     case "hatchingpotion":
                         from = new Select().from(HatchingPotion.class);
                         break;

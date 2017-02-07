@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 public class TavernFragment extends BaseMainFragment {
@@ -133,6 +131,8 @@ public class TavernFragment extends BaseMainFragment {
         }
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.sidebar_tavern);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_tavern);
+    }
 }

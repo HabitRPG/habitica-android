@@ -24,7 +24,7 @@ import rx.functions.Action1;
 
 public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
 
-    String  currentClass;
+    String currentClass;
     Boolean isInitialSelection;
     Boolean classWasUnset = false;
     Boolean shouldFinish = false;
@@ -175,8 +175,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
                     });
             AlertDialog alert = builder.create();
             alert.show();
-        }
-        else {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.class_confirmation, className))
                     .setNegativeButton(getString(R.string.dialog_go_back), (dialog, which) -> {

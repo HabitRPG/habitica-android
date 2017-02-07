@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
@@ -81,6 +82,7 @@ import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
 import java.io.IOException;
@@ -124,7 +126,8 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     final Observable.Transformer apiCallTransformer =
             observable -> ((Observable) observable)
                     .map(new Func1<HabitResponse, Object>() {
-                        @Override public Object call(HabitResponse habitResponse) {
+                        @Override
+                        public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
                                 PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(ApiClient.this);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
@@ -135,12 +138,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(this);
-    private final GsonConverterFactory gsonConverter;
-    private final HostConfig hostConfig;
-    private final Retrofit retrofitAdapter;
     private AlertDialog displayedAlert;
-
-    public String languageCode;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
@@ -292,7 +290,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     @Override
     public void call(Throwable throwable) {
         final Class<?> throwableClass = throwable.getClass();
-        if (SocketException.class.isAssignableFrom(throwableClass)  ||  SSLException.class.isAssignableFrom(throwableClass)) {
+        if (SocketException.class.isAssignableFrom(throwableClass) || SSLException.class.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api);
         } else if (throwableClass.equals(SocketTimeoutException.class) || UnknownHostException.class.equals(throwableClass)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);

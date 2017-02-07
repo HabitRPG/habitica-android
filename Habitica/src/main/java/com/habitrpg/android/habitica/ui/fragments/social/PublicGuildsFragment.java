@@ -89,9 +89,9 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         inflater.inflate(R.menu.menu_public_guild, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_guild_search);
-        guildSearchView = (SearchView)searchItem.getActionView();
+        guildSearchView = (SearchView) searchItem.getActionView();
         SearchView.SearchAutoComplete theTextArea = (SearchView.SearchAutoComplete) guildSearchView.findViewById(R.id.search_src_text);
-        theTextArea.setHintTextColor(ContextCompat.getColor(this.activity,R.color.white));
+        theTextArea.setHintTextColor(ContextCompat.getColor(this.activity, R.color.white));
         guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
         guildSearchView.setOnQueryTextListener(this);
 
@@ -110,6 +110,8 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         return true;
     }
 
-	@Override
-	public String customTitle() {	return getString(R.string.public_guilds);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.public_guilds);
+    }
 }

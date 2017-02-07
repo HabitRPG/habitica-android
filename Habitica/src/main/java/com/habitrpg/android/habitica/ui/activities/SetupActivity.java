@@ -28,6 +28,16 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -157,7 +167,7 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
-        editor.commit();
+        editor.apply();
         if (v == this.nextButton) {
             if (this.pager.getCurrentItem() == 1) {
                 List<Task> newTasks = this.taskSetupFragment.createSampleTasks();

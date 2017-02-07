@@ -40,10 +40,9 @@ public class AvatarSetupFragment extends BaseFragment {
     AvatarView avatarView;
     CustomizationSetupAdapter adapter;
     GridLayoutManager layoutManager;
-    private HabitRPGUser user;
-
     @Inject
     IApiClient apiClient;
+    private HabitRPGUser user;
 
     @Nullable
     @Override
@@ -111,7 +110,8 @@ public class AvatarSetupFragment extends BaseFragment {
             this.apiClient.getContent()
                     .subscribe(contentResult -> {
                         this.loadCustomizations();
-                    }, throwable -> {});
+                    }, throwable -> {
+                    });
         }
         this.adapter.setCustomizationList(customizations);
     }

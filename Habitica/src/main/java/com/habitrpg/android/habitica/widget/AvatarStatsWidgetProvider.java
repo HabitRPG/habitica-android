@@ -28,7 +28,27 @@ import javax.inject.Inject;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private static final String LOG = AvatarStatsWidgetProvider.class.getName();
+    @Inject
+    APIHelper apiHelper;
+    @Inject
+    HostConfig hostConfig;
     private AppWidgetManager appWidgetManager;
+    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
+        @Override
+        public void onResultReceived(HabitRPGUser habitRPGUser) {
+            updateData(habitRPGUser);
+        }
+
+        @Override
+        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
+            return true;
+        }
+
+        @Override
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+            return true;
+        }
+    };
 
     @Override
     public int layoutResourceId() {
@@ -59,7 +79,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
     }
 
-
     @Override
     public RemoteViews configureRemoteViews(RemoteViews remoteViews, int widgetId, int columns, int rows) {
         if (columns > 3) {
@@ -78,23 +97,6 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
 
         return remoteViews;
     }
-
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            updateData(habitRPGUser);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
     private void updateData(HabitRPGUser user) {
         if (user == null || user.getStats() == null) {
@@ -124,7 +126,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setTextViewText(R.id.gold_tv, String.valueOf(gp));
             remoteViews.setTextViewText(R.id.silver_tv, String.valueOf(sp));
             remoteViews.setTextViewText(R.id.gems_tv, String.valueOf((int) (user.getBalance() * 4)));
-            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl().toString()));
+            remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.getStats().getLvl()));
 
             AvatarView avatarView = new AvatarView(context, true, true, true);
             ;

@@ -20,7 +20,7 @@ import rx.schedulers.Schedulers;
 public class SoundFileLoader {
     OkHttpClient client;
 
-    public SoundFileLoader(){
+    public SoundFileLoader() {
         client = new OkHttpClient();
     }
 
@@ -41,12 +41,14 @@ public class SoundFileLoader {
                         Response response;
                         try {
                             response = client.newCall(request).execute();
-                            if (!response.isSuccessful()) { throw new IOException(); }
+                            if (!response.isSuccessful()) {
+                                throw new IOException();
+                            }
                         } catch (IOException io) {
                             throw OnErrorThrowable.from(OnErrorThrowable.addValueAsLastCause(io, audioFile));
                         }
 
-                        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                             try {
                                 BufferedSink sink = Okio.buffer(Okio.sink(file));
                                 sink.writeAll(response.body().source());

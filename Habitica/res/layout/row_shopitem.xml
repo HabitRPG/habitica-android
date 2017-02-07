@@ -23,14 +23,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Title"
-                style="@style/RowTitle" />
+                style="@style/Subheader1" />
+        <TextView
+                android:id="@+id/limitedCountText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:text="2 Left"
+                style="@style/Caption3" />
         <TextView
                 android:id="@+id/descriptionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Description"
                 android:maxLines="5"
-                style="@style/RowText" />
+                style="@style/Caption2.Regular" />
     </LinearLayout>
 
     <Button

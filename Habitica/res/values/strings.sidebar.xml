@@ -6,7 +6,7 @@
     <string name="sidebar.inbox">Inbox</string>
     <string name="sidebar.tavern">Tavern</string>
     <string name="sidebar.party">Party</string>
-    <string name="sidebar.purchaseGems">Purchase Gems</string>
+    <string name="sidebar.purchaseGems">Gems &amp; Subscription</string>
     <string name="sidebar.guilds">Guilds</string>
     <string name="sidebar.challenges">Challenges</string>
     <string name="sidebar.section.inventory">Inventory</string>

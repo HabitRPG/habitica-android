@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by viirus on 23-Sep-16.
@@ -18,7 +17,7 @@ public class AmplitudeManager {
     public static String EVENT_CATEGORY_NAVIGATION = "navigation";
 
     public static String EVENT_HITTYPE_EVENT = "event";
-    public static String EVENT_HITTYPE_PAGEVIEW= "pageview";
+    public static String EVENT_HITTYPE_PAGEVIEW = "pageview";
 
     public static void sendEvent(String eventAction, String eventCategory, String hitType) {
         sendEvent(eventAction, eventCategory, hitType, null);

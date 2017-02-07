@@ -1,13 +1,13 @@
 package com.magicmicky.habitrpgwrapper.lib.models;
 
-import android.content.Context;
-
 import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.R;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
+
+import android.content.Context;
 
 /**
  * Created by MagicMicky on 12/06/2014.
@@ -79,17 +79,17 @@ public abstract class PlayerMinStats extends BasicStats {
     }
 
     public String getTranslatedClassName(Context context) {
-        switch(_class){
-	        case healer:
-		        return context.getString(R.string.healer);
-	        case rogue:
-		        return context.getString(R.string.rogue);
-	        case warrior:
-		        return context.getString(R.string.warrior);
-	        case wizard:
-		        return context.getString(R.string.mage);
-	        default:
-		        return context.getString(R.string.warrior);
+        switch (_class) {
+            case healer:
+                return context.getString(R.string.healer);
+            case rogue:
+                return context.getString(R.string.rogue);
+            case warrior:
+                return context.getString(R.string.warrior);
+            case wizard:
+                return context.getString(R.string.mage);
+            default:
+                return context.getString(R.string.warrior);
         }
     }
 

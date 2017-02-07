@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_pets_and_mounts">Любимци и превози</string>
+    <string name="profile_pets_found">Открити любимци</string>
+    <string name="profile_mounts_tamed">Опитомени превози</string>
+    <string name="profile_loading_data">зареждане на данните за членовете.</string>
+    <string name="profile_send_message_to">Изпращане на съобщение до %s</string>
+    <string name="profile_message_sent_to">Съобщението е изпратено до %s</string>
+    <string name="profile_level">Ниво:</string>
+    <string name="profile_class_bonus">Класов бонус:</string>
+    <string name="profile_allocated">Разпределени:</string>
+    <string name="profile_boosts">Подсилки:</string>
+    <string name="profile_private_message">Лично съобщение</string>
+    <string name="profile_achievements">Постижения</string>
+    <string name="profile_achievement_ok">Добре</string>
+
+</resources>

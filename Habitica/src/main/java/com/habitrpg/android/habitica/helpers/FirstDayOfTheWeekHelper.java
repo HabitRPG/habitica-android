@@ -16,7 +16,7 @@ public class FirstDayOfTheWeekHelper {
     }
 
     public static FirstDayOfTheWeekHelper newInstance(int firstDayOfTheWeekSharedPref) {
-        switch (firstDayOfTheWeekSharedPref){
+        switch (firstDayOfTheWeekSharedPref) {
             case Calendar.SUNDAY:
                 return new FirstDayOfTheWeekHelper(1, Calendar.SUNDAY);
             case Calendar.MONDAY:

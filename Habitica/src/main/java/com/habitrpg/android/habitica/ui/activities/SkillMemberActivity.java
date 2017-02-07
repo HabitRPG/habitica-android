@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -15,16 +9,23 @@ import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAd
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class SkillMemberActivity extends BaseActivity {
 
-    private PartyMemberRecyclerViewAdapter viewAdapter;
-
+    @Inject
+    public APIHelper apiHelper;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Inject
     public IApiClient apiClient;

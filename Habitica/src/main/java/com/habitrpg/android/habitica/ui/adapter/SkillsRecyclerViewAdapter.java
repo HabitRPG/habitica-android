@@ -90,13 +90,13 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
 
-            if(skill.isSpecialItem){
+            if (skill.isSpecialItem) {
                 priceButton.setText(R.string.skill_transformation_use);
 
-                priceButton.setCompoundDrawables(null, null,null,null);
-            } else  {
-                priceButton.setText(skill.mana+"");
-                priceButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_magic, 0,0,0);
+                priceButton.setCompoundDrawables(null, null, null, null);
+            } else {
+                priceButton.setText(skill.mana + "");
+                priceButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_header_magic, 0, 0, 0);
             }
             DataBindingUtils.loadImage(skillImageView, "shop_" + skill.key);
 

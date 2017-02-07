@@ -10,32 +10,26 @@ import java.util.List;
 
 public class HabitResponse<T> {
 
-    private Boolean success;
     public T data;
     public List<Notification> notifications;
+    private Boolean success;
 
     /**
-     *
-     * @return
-     * The success
+     * @return The success
      */
     public Boolean getSuccess() {
         return success;
     }
 
     /**
-     *
-     * @param success
-     * The success
+     * @param success The success
      */
     public void setSuccess(Boolean success) {
         this.success = success;
     }
 
     /**
-     *
-     * @return
-     * The data
+     * @return The data
      */
     public T getData() {
         return data;

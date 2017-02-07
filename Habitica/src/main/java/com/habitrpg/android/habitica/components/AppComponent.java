@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.GemsPurchaseFragment;
 import com.habitrpg.android.habitica.ui.fragments.NewsFragment;
+import com.habitrpg.android.habitica.ui.fragments.SubscriptionFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.faq.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
@@ -53,9 +55,6 @@ import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillsFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -64,6 +63,9 @@ import com.habitrpg.android.habitica.ui.fragments.social.InboxFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.InboxMessageListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.PublicGuildsFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.TavernFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFragment;
@@ -73,6 +75,7 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
+import com.habitrpg.android.habitica.widget.TaskListFactory;
 import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 
@@ -222,7 +225,13 @@ public interface AppComponent {
 
     void inject(TodosRecyclerViewAdapter todosRecyclerViewAdapter);
 
+    void inject(SubscriptionFragment subscriptionFragment);
+
     void inject(ChallengeTasksRecyclerViewFragment.ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter);
 
     void inject(ChallengeTasksRecyclerViewFragment challengeTasksRecyclerViewFragment);
+
+    void inject(TaskListFactory taskListFactory);
+
+    void inject(GemPurchaseActivity gemPurchaseActivity);
 }

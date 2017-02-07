@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Animatable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,6 +10,16 @@ import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
+
+import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -107,9 +105,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         public void bind(Achievement item) {
-            String iconUrl = AvatarView.IMAGE_URI_ROOT  + (!item.earned ? "achievement-unearned" : item.icon ) + "2x.png";
+            String iconUrl = AvatarView.IMAGE_URI_ROOT + (!item.earned ? "achievement-unearned" : item.icon) + "2x.png";
 
-              draweeView.setController(Fresco.newDraweeControllerBuilder()
+            draweeView.setController(Fresco.newDraweeControllerBuilder()
                     .setUri(iconUrl)
                     .setControllerListener(new BaseControllerListener<ImageInfo>() {
                         @Override
@@ -119,13 +117,12 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .build());
 
 
-
             this.achievement = item;
             titleView.setText(item.title);
 
-            if(item.optionalCount == null) {
+            if (item.optionalCount == null) {
                 countText.setVisibility(View.GONE);
-            } else{
+            } else {
                 countText.setVisibility(View.VISIBLE);
                 countText.setText(item.optionalCount.toString());
             }
@@ -137,7 +134,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             View customView = LayoutInflater.from(itemView.getContext())
                     .inflate(R.layout.dialog_achievement_details, null);
-            ImageView achievementImage = (ImageView)customView.findViewById(R.id.achievement_image);
+            ImageView achievementImage = (ImageView) customView.findViewById(R.id.achievement_image);
             achievementImage.setImageDrawable(draweeView.getDrawable());
 
             TextView titleView = (TextView) customView.findViewById(R.id.achievement_title);
@@ -148,7 +145,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             textView.setText(achievement.text);
 
             b.setView(customView);
-            b.setPositiveButton(R.string.profile_achievement_ok, (dialogInterface, i) -> {});
+            b.setPositiveButton(R.string.profile_achievement_ok, (dialogInterface, i) -> {
+            });
 
             b.show();
         }

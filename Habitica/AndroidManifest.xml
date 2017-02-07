@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:versionCode="149"
-    android:versionName="0.0.36"
+    android:versionCode="156"
+    android:versionName="0.0.37.1"
     android:screenOrientation="portrait"
     android:installLocation="auto" >
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="24" />
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -75,7 +75,9 @@
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-
+        <meta-data
+                android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+                android:value="false"/>
         <activity
             android:name=".ui.activities.AboutActivity"
             android:theme="@style/AppThemeWithActionBarBlackText"

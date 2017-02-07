@@ -72,8 +72,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
         itemView.setOnClickListener(this);
         itemView.setClickable(true);
 
-        if(useButterKnife)
-        {
+        if (useButterKnife) {
             ButterKnife.bind(this, itemView);
         }
 

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Pozitif Alışkanlıkları tamamlayarak Altın ve Deneyim kazanın! Negatif Alışkanlıkların üzerlerine tıklarsanız Avatar\'ınız can kaybeder, bu yüzden onlardan gerçek hayatta kaçının! </string>
-  <string name="tutorial_dailies">Tekrar eden Günlük işlerinizi Altın ve Deneyim kazanmık için bozguna uğratın. Tehlike! Günlük işler, zamanında tamamlayamazsanız karakterinize zarar verecektir. </string>
-  <string name="tutorial_todos">Gerçek hayatta Yapılacak-İşleriniz tamamlayın, sonrasında oyun içerisinde ALTIN ve DENEYİM için işaretleyin ki Öfüller kazanıp yeni özellikler açabilesiniz! </string>
-  <string name="tutorial_rewards">Bunlar senin ödüllerin! Gerçek hayat alışkanlıklarınızı, günlüklerinizi, ve yapılacak işler listenizi tamamlayarak altın kazanın. Sonra o altınları oyun içi ödüllerine ya da kendi belirlediğiniz gerçek hayat ödüllerinde harcayın!</string>
-  <string name="tutorial_equipment">Donanım satın aldığınızda burada gözükür. Savaş Tertibatın istatistiğini, ve Kostümün  ( eğer etkinse) avatarının ne giydiğini etkiler.</string>
-  <string name="tutorial_items">Görevlerini tamamlayarak ve seviye yükselerek öge kazan. Kullanmak için ögenin üzerine basın.</string>
-  <string name="tutorial_pets">Gerçek dünya görevlerini tamamladığından, artık rastgele yumurta ve iksir bulma şansın var. Hayvancıkları yumurtadan çıkarmak için o ikisini birleştir.</string>
-  <string name="tutorial_skills">Beceriler güçlü etkileri olan özel yeteneklerdir! Kullanmak için bir beceriye bas. Bu Mana (mavi çubuk), yani hergün giriş yapmakla ve gerçek hayat görevlerini tamamlamakla kazandığın şeyle ödenir. Daha fazla bilgi için menüdeki FAQ\'ı kontrol et!</string>
+  <string name="tutorial_habits">Pozitif Alışkanlıkları tamamlayarak altın ve deneyim kazan! Negatif Alışkanlıkların üzerlerine tıklarsan avatar\'ın can kaybeder, bu yüzden onlardan gerçek hayatta kaçın! </string>
+  <string name="tutorial_dailies">Tekrar eden Günlük işlerini altın ve deneyim kazanmak için bozguna uğrat. Tehlike! Günlük işleri, zamanında tamamlayamazsan karakterine zarar verir. </string>
+  <string name="tutorial_todos">Gerçek hayatta Yapılacak İşlerini tamamla, sonrasında oyun içerisinde ALTIN ve DENEYİM için işaretle ki Ödüller kazanıp yeni özellikler açabilesin!</string>
+  <string name="tutorial_rewards">Bunlar senin Ödüllerin! Gerçek hayat Alışkanlıklarını, Günlük İşlerini, ve Yapılacak İşlerini tamamlayarak altın kazan. Sonra o altınları oyun içi Ödüllerine ya da kendi belirlediğin gerçek hayat Ödüllerinde harca!</string>
+  <string name="tutorial_equipment">Ekipman satın aldığında burada gözükür. Savaş Ekipmanın niteliklerini, ve Kostümün (eğer etkinse) avatarının ne giydiğini etkiler.</string>
+  <string name="tutorial_items">Görevlerini tamamlayarak ve seviye yükselerek eşya kazan. Kullanmak için eşyanın üzerine tıkla!</string>
+  <string name="tutorial_pets">Gerçek dünya işlerini tamamladıkça, artık rastgele yumurta ve iksir bulma şansın var. Hayvanları yumurtadan çıkarmak için o ikisini birleştir</string>
+  <string name="tutorial_skills">Yetenekler güçlü etkileri olan özel becerilerdir! Kullanmak için bir yetenğe bas. Bu Mana ile (mavi çubuk), yani hergün giriş yapmakla ve gerçek hayat görevlerini tamamlamakla kazanarak ödenir. Daha fazla bilgi için menüdeki SSS\'ı kontrol et!</string>
   <string name="tutorial_party">Burası senin ve arkadaşlarının birbirinizi hedeflerinize sorumlu tutabileceğiniz ve görevlerinizle canavarlarla savaştığınız yer!</string>
   <string name="tutorial_tavern">Taverna, yani herkese açık ve her yaşın sohbet odasına hoşgeldin! Burda üretkenlik hakkında sohbet edebilir ve sorular sorabilirsin. Iyi eğlenceler!</string>
-  <string name="tutorial_classes">Savaşçı, Büyücü, Şifacı veya Düzenbaz olmak için birini seç! Her bir sınıfın kendine özgü donanımı ve yeteneği vardır. daha fazlasını öğrenmek için (?)\' a bas!</string>
+  <string name="tutorial_classes">Savaşçı, Büyücü, Şifacı veya Düzenbaz olmak için birini seç! Her bir sınıfın kendine özgü donanımı ve yeteneği vardır. Daha fazlasını öğrenmek için (?)\'ne bas!</string>
 </resources>

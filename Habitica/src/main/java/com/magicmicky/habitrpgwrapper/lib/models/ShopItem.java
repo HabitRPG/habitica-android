@@ -2,18 +2,37 @@ package com.magicmicky.habitrpgwrapper.lib.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.habitrpg.android.habitica.R;
+
+import android.content.res.Resources;
+
 public class ShopItem {
 
+    public static final String GEM_FOR_GOLD = "gem";
     public String key;
     public String text;
     public String notes;
-    @SerializedName("class") public String imageName;
+    @SerializedName("class")
+    public String imageName;
     public Integer value;
     public Boolean locked;
     public String currency;
     public String purchaseType;
     public String categoryIdentifier;
+    public Integer limitedNumberLeft;
     public ShopItemUnlockCondition unlockCondition;
+
+    public static ShopItem makeGemItem(Resources res) {
+        ShopItem item = new ShopItem();
+        item.key = GEM_FOR_GOLD;
+        item.text = res.getString(R.string.gem_shop);
+        item.notes = res.getString(R.string.gem_for_gold_description);
+        item.imageName = "gem_shop";
+        item.value = 20;
+        item.currency = "gold";
+        item.purchaseType = "gems";
+        return item;
+    }
 
     public String getKey() {
         return key;
@@ -43,7 +62,7 @@ public class ShopItem {
         if (imageName != null) {
             return imageName;
         } else {
-            return "shop_"+key;
+            return "shop_" + key;
         }
     }
 
@@ -86,6 +105,22 @@ public class ShopItem {
         this.purchaseType = purchaseType;
     }
 
+    public String getCategoryIdentifier() {
+        return categoryIdentifier;
+    }
+
+    public void setCategoryIdentifier(String categoryIdentifier) {
+        this.categoryIdentifier = categoryIdentifier;
+    }
+
+    public Integer getLimitedNumberLeft() {
+        return limitedNumberLeft;
+    }
+
+    public void setLimitedNumberLeft(Integer limitedNumberLeft) {
+        this.limitedNumberLeft = limitedNumberLeft;
+    }
+
     public ShopItemUnlockCondition getUnlockCondition() {
         return unlockCondition;
     }
@@ -98,7 +133,7 @@ public class ShopItem {
         if (getCurrency().equals("gold")) {
             return getValue() <= user.getStats().getGp();
         } else if (getCurrency().equals("gems")) {
-            return getValue() <= (user.getBalance()*4);
+            return getValue() <= (user.getBalance() * 4);
         } else {
             return false;
         }

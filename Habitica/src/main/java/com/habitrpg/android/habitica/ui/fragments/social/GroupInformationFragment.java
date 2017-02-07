@@ -322,7 +322,8 @@ public class GroupInformationFragment extends BaseFragment {
                 .subscribe(group -> {
                     setGroup(group);
                     viewBinding.setInvitation(null);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 
     @OnClick(R.id.btnPartyInviteReject)
@@ -331,6 +332,7 @@ public class GroupInformationFragment extends BaseFragment {
 
                 .subscribe(aVoid -> {
                     viewBinding.setInvitation(null);
-                }, throwable -> {});
+                }, throwable -> {
+                });
     }
 }

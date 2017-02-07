@@ -8,7 +8,7 @@
     <string name="profile_message_sent_to">%s kişisine mesaj gönderildi</string>
     <string name="profile_level">Seviye:</string>
     <string name="profile_class_bonus">Sınıf-Bonusu:</string>
-    <string name="profile_allocated">Tahsis Edilmiş:</string>
+    <string name="profile_allocated">Dağıtılmış:</string>
     <string name="profile_boosts">Yükselmeler:</string>
     <string name="profile_private_message">Özel Mesaj</string>
     <string name="profile_achievements">Başarılar</string>

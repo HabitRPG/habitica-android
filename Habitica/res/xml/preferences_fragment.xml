@@ -47,13 +47,18 @@
                     android:summary="@string/SP_APIToken_summary"/>
 
                 <Preference
-                    android:key="@string/SP_user_qr_code"
+                    android:key="SP_user_qr_code"
                     android:title="@string/SP_user_qr_code"
                     android:selectable="true"
                     android:persistent="false"
                     android:shouldDisableView="false"
                     android:summary="@string/SP_user_qr_code"/>
-
+                <Preference
+                        android:key="subscription_status"
+                        android:title="@string/subscription_status"
+                        android:selectable="true"
+                        android:persistent="false"
+                        android:shouldDisableView="false"/>
             </PreferenceCategory>
 
         </PreferenceScreen>

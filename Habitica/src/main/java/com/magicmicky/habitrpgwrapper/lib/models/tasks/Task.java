@@ -1,8 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib.models.tasks;
 
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
 
 import com.habitrpg.android.habitica.HabitDatabase;
@@ -21,6 +18,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -159,19 +158,19 @@ public class Task extends BaseModel {
     }
 
     /**
+     * @param value the value to set
+     */
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    /**
      * To be allowed to set int value without problems
      *
      * @param value the value to set
      */
     public void setValue(double value) {
         this.setValue(Double.valueOf(value));
-    }
-
-    /**
-     * @param value the value to set
-     */
-    public void setValue(Double value) {
-        this.value = value;
     }
 
     /**
@@ -604,7 +603,7 @@ public class Task extends BaseModel {
         Calendar newTime = new GregorianCalendar();
         newTime.setTime(oldTime);
 
-        if (this.getFrequency().equals(FREQUENCY_DAILY) ) {
+        if (this.getFrequency().equals(FREQUENCY_DAILY)) {
             Calendar startDate = new GregorianCalendar();
             startDate.setTime(this.getStartDate());
 

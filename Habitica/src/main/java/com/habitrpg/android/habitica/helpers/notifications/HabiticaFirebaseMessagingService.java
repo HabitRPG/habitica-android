@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
-import android.util.Log;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

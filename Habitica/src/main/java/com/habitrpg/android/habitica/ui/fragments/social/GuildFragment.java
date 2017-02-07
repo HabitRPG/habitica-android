@@ -167,7 +167,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1 && GuildFragment.this.guild != null) {
+                if (position == 1 && GuildFragment.this.guild != null && chatListFragment != null) {
                     chatListFragment.setNavigatedToFragment(GuildFragment.this.guild.id);
                 }
             }

@@ -1,19 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -28,6 +23,17 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -98,7 +104,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
     }
 
-    private void allowReordering(){
+    private void allowReordering() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
@@ -111,19 +117,20 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             @Override
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
-                if (viewHolder != null){
+                if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
                 }
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
-                ((ItemTouchHelperAdapter)recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            }
 
             //defines the enabled move directions in each state (idle, swiping, dragging).
             @Override
@@ -137,8 +144,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 super.clearView(recyclerView, viewHolder);
 
                 viewHolder.itemView.setBackgroundColor(Color.WHITE);
-                if (mFromPosition != null){
-                    ((ItemTouchHelperDropCallback)recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
+                if (mFromPosition != null) {
+                    ((ItemTouchHelperDropCallback) recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
                 }
             }
         };
@@ -224,5 +231,30 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     String getClassName() {
         return this.classType;
+    }
+
+    @Subscribe
+    public void onEvent(FilterTasksByTagsCommand cmd) {
+        recyclerAdapter.filter();
+    }
+
+    @Subscribe
+    public void onEvent(TaskCheckedCommand event) {
+        recyclerAdapter.checkTask(event.Task, event.completed);
+    }
+
+    @Subscribe
+    public void onEvent(TaskUpdatedEvent event) {
+        recyclerAdapter.updateTask(event.task);
+    }
+
+    @Subscribe
+    public void onEvent(TaskCreatedEvent event) {
+        recyclerAdapter.addTask(event.task);
+    }
+
+    @Subscribe
+    public void onEvent(TaskRemovedEvent event) {
+        recyclerAdapter.removeTask(event.deletedTaskId);
     }
 }

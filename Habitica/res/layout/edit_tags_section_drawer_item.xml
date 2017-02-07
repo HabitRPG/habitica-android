@@ -24,9 +24,9 @@
                 android:lines="1"
                 android:paddingLeft="@dimen/material_drawer_vertical_padding"
                 android:paddingRight="@dimen/material_drawer_vertical_padding"
-                android:singleLine="true"
                 android:textSize="@dimen/material_drawer_item_section_text"
-                android:text="@string/filter_drawer_filter_tags"/>
+                android:text="@string/filter_drawer_filter_tags"
+                android:maxLines="1"/>
         <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"

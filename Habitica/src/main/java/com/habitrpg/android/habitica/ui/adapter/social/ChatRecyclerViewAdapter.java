@@ -55,7 +55,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     private List<ChatMessage> messages;
     private HabitRPGUser user;
-	private String uuid;
+    private String uuid;
     private String groupId;
     private boolean isTavern;
     private boolean isInboxChat = false;
@@ -64,8 +64,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     public ChatRecyclerViewAdapter(List<ChatMessage> messages, HabitRPGUser user, String groupId, boolean isTavern) {
         this.messages = messages;
-	    this.user = user;
-	    if(user!=null) this.uuid = user.getId();
+        this.user = user;
+        if (user != null) this.uuid = user.getId();
         this.groupId = groupId;
         this.isTavern = isTavern;
     }
@@ -359,14 +359,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
                     ChatMessage chatMsg = currentMsg;
 
-                    if (!chatMsg.uuid.equals(uuid) )
-						{
+                    if (!chatMsg.uuid.equals(uuid)) {
                         popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(false);
-						}
-                    if (user.getContributor().getAdmin())
-						{
-		                popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
-						}
+                    }
+                    if (user.getContributor().getAdmin()) {
+                        popupMenu.getMenu().findItem(R.id.menu_chat_delete).setVisible(true);
+                    }
                     popupMenu.getMenu().findItem(R.id.menu_chat_copy_as_todo).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.menu_chat_send_pm).setVisible(false);
 
@@ -443,15 +441,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_chat_delete: {
-	                new AlertDialog.Builder(context)
-			                .setTitle(R.string.confirm_delete_tag_title)
-			                .setMessage(R.string.confirm_delete_tag_message)
-			                .setIcon(android.R.drawable.ic_dialog_alert)
-			                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-				                Toast.makeText(context, R.string.edit_tag_btn_done, Toast.LENGTH_SHORT).show();
-				                EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
-			                })
-			                .setNegativeButton(android.R.string.no, null).show();
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.confirm_delete_tag_title)
+                            .setMessage(R.string.confirm_delete_tag_message)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                                Toast.makeText(context, R.string.edit_tag_btn_done, Toast.LENGTH_SHORT).show();
+                                EventBus.getDefault().post(new DeleteChatMessageCommand(groupId, currentMsg));
+                            })
+                            .setNegativeButton(android.R.string.no, null).show();
                     break;
                 }
                 case R.id.menu_chat_flag: {

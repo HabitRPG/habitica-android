@@ -1,5 +1,22 @@
 package com.habitrpg.android.habitica;
 
+import com.amplitude.api.Amplitude;
+import com.facebook.FacebookSdk;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.activities.IntroActivity;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.PurchaseVerifier;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -50,13 +66,14 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     public static HabitRPGUser User;
     public static Activity currentActivity = null;
+    private static AppComponent component;
+    public RefWatcher refWatcher;
     @Inject
     Lazy<IApiClient> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
-    private static AppComponent component;
     /**
      * For better performance billing class should be used as singleton
      */
@@ -121,9 +138,18 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     // region SQLite overrides
 
+    public static AppComponent getComponent() {
+        return component;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
         setupDagger();
         crashlyticsProxy.init(this);
         setupLeakCanary();
@@ -174,10 +200,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     protected abstract AppComponent initDagger();
 
     private void setupLeakCanary() {
-        // LeakCanary 1.3.1 has problems on Marshmallow; can remove check once updated with fixes
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LeakCanary.install(this);
-        }
+        refWatcher = LeakCanary.install(this);
     }
 
     private void setupFlowManager() {
@@ -199,7 +222,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
     }
-
 
     private void registerActivityLifecycleCallbacks() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -253,6 +275,10 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         return super.openOrCreateDatabase(getDatabasePath(name).getAbsolutePath(), mode, factory, errorHandler);
     }
 
+    // endregion
+
+    // region IAP - Specific
+
     @Override
     public boolean deleteDatabase(String name) {
         if (!name.endsWith(".db")) {
@@ -278,10 +304,6 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
         return deleted;
     }
-
-    // endregion
-
-    // region IAP - Specific
 
     // Hack for DBFlow - Not deleting Database
     // https://github.com/kaeawc/dbflow-sample-app/blob/master/app/src/main/java/io/kaeawc/flow/app/ui/MainActivityFragment.java#L201
@@ -333,7 +355,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         });
 
 
-        checkout = Checkout.forApplication(billing, Products.create().add(ProductTypes.IN_APP, PurchaseTypes.allTypes));
+        checkout = Checkout.forApplication(billing);
     }
 
     @NonNull
@@ -343,7 +365,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     // endregion
 
-    public static AppComponent getComponent() {
-        return component;
+    public Billing getBilling() {
+        return billing;
     }
 }

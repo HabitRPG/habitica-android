@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 /**
  * Created by Negue on 14.06.2015.
  */
@@ -117,7 +119,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
-            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass));
+            lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
             Drawable drawable;
             switch (stats.get_class()) {
                 case warrior:
@@ -191,12 +193,11 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view == gemsText) {
+        if (view == gemsText) {
             // Gems Clicked
 
             EventBus.getDefault().post(new OpenGemPurchaseFragmentCommand());
-        }
-        else {
+        } else {
             // Avatar overview
             OpenMenuItemCommand event = new OpenMenuItemCommand();
             event.identifier = MainDrawerBuilder.SIDEBAR_AVATAR;

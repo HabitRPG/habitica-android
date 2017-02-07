@@ -70,7 +70,7 @@ public class EditTagsDrawerItem extends BasePrimaryDrawerItem<EditTagsDrawerItem
         ViewHelper.SetBackgroundTint(viewHolder.btnEdit, ContextCompat.getColor(ctx, R.color.brand));
         viewHolder.btnEdit.setEnabled(true);
 
-        viewHolder.tag = (Tag)this.getTag();
+        viewHolder.tag = (Tag) this.getTag();
 
         //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
         onPostBindView(this, viewHolder.itemView);
@@ -94,15 +94,15 @@ public class EditTagsDrawerItem extends BasePrimaryDrawerItem<EditTagsDrawerItem
 
         private ViewHolder(View view) {
             super(view);
-            tagTextView = (TextView)view.findViewById(R.id.tagTextView);
+            tagTextView = (TextView) view.findViewById(R.id.tagTextView);
 
-            btnEdit = (Button)view.findViewById(R.id.btnEdit);
+            btnEdit = (Button) view.findViewById(R.id.btnEdit);
             btnEdit.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(this.tag != null) {
+            if (this.tag != null) {
                 EventBus.getDefault().post(new EditTagCommand(this.tag));
                 //EventBus.getDefault().post(new DeleteTagCommand(this.tag));
             }

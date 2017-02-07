@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
@@ -19,6 +9,16 @@ import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +135,18 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             }
         }
 
+        public static String getLabelByTypeAndCount(Context context, String type, int count) {
+            if (type == Challenge.TASK_ORDER_DAILYS) {
+                return context.getString(count == 1 ? R.string.daily : R.string.dailies);
+            } else if (type == Challenge.TASK_ORDER_HABITS) {
+                return context.getString(count == 1 ? R.string.habit : R.string.habits);
+            } else if (type == Challenge.TASK_ORDER_REWARDS) {
+                return context.getString(count == 1 ? R.string.reward : R.string.rewards);
+            } else {
+                return context.getString(count == 1 ? R.string.todo : R.string.todos);
+            }
+        }
+
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 
@@ -158,18 +170,6 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             }
 
             gemPrizeTextView.setText(String.valueOf(challenge.prize));
-        }
-
-        public static String getLabelByTypeAndCount(Context context, String type, int count) {
-            if (type == Challenge.TASK_ORDER_DAILYS) {
-                return context.getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if (type == Challenge.TASK_ORDER_HABITS) {
-                return context.getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if (type == Challenge.TASK_ORDER_REWARDS) {
-                return context.getString(count == 1 ? R.string.reward : R.string.rewards);
-            } else {
-                return context.getString(count == 1 ? R.string.todo : R.string.todos);
-            }
         }
 
         @Override

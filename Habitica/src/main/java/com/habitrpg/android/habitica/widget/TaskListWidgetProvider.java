@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.RemoteViews;
-
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
@@ -20,6 +10,16 @@ import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.RemoteViews;
 
 import javax.inject.Inject;
 
@@ -40,7 +40,9 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     }
 
     protected abstract Class getServiceClass();
+
     protected abstract Class getProviderClass();
+
     protected abstract int getTitleResId();
 
 

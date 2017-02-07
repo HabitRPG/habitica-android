@@ -51,6 +51,10 @@ public class SkillsFragment extends BaseMainFragment {
     private Skill selectedSkill;
     private ProgressDialog progressDialog;
 
+    static public Double round(Double value, int n) {
+        return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

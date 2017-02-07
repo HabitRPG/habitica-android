@@ -15,7 +15,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
-import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -69,10 +69,10 @@ import rx.functions.Action1;
  */
 public class LoginActivity extends BaseActivity
         implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
+    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
     private final static String TAG_APIKEY = "key";
-    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
 
 
@@ -80,6 +80,8 @@ public class LoginActivity extends BaseActivity
     public IApiClient apiClient;
     @Inject
     public SharedPreferences sharedPrefs;
+    @Inject
+    public HostConfig hostConfig;
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;
@@ -102,6 +104,55 @@ public class LoginActivity extends BaseActivity
     private Menu menu;
     private CallbackManager callbackManager;
     private String googleEmail;
+    private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            if (isRegistering) {
+                String username, email, password, cpassword;
+                username = String.valueOf(mUsernameET.getText()).trim();
+                email = String.valueOf(mEmail.getText()).trim();
+                password = String.valueOf(mPasswordET.getText());
+                cpassword = String.valueOf(mConfirmPassword.getText());
+                if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
+                    showValidationError(R.string.login_validation_error_fieldsmissing);
+                    return;
+                }
+                apiHelper.registerUser(username, email, password, cpassword)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(LoginActivity.this, throwable -> {
+                            hideProgress();
+                        });
+            } else {
+                String username, password;
+                username = String.valueOf(mUsernameET.getText()).trim();
+                password = String.valueOf(mPasswordET.getText());
+                if (username.length() == 0 || password.length() == 0) {
+                    showValidationError(R.string.login_validation_error_fieldsmissing);
+                    return;
+                }
+                apiHelper.connectUser(username, password)
+                        .compose(apiHelper.configureApiCallObserver())
+                        .subscribe(LoginActivity.this, throwable -> {
+                            hideProgress();
+                        });
+            }
+        }
+    };
+    private View.OnClickListener mForgotPWClick = v -> {
+        String url = hostConfig.getAddress();
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    };
+
+    public static void show(final View v) {
+        v.setVisibility(View.VISIBLE);
+    }
+
+    public static void hide(final View v) {
+        v.setVisibility(View.GONE);
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -383,7 +434,7 @@ public class LoginActivity extends BaseActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         if (userAuthResponse.getNewUser()) {
             this.startSetupActivity();
         } else {
@@ -424,7 +475,7 @@ public class LoginActivity extends BaseActivity
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
                     if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
-                        handleGoogleAuthException((GoogleAuthException)throwable.getCause());
+                        handleGoogleAuthException((GoogleAuthException) throwable.getCause());
                     }
                 });
     }
@@ -434,7 +485,7 @@ public class LoginActivity extends BaseActivity
             // The Google Play services APK is old, disabled, or not present.
             // Show a dialog created by Google Play services that allows
             // the user to update the APK
-            int statusCode = ((GooglePlayServicesAvailabilityException)e)
+            int statusCode = ((GooglePlayServicesAvailabilityException) e)
                     .getConnectionStatusCode();
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
                     LoginActivity.this,
@@ -444,7 +495,7 @@ public class LoginActivity extends BaseActivity
             // Unable to authenticate, such as when the user has not yet granted
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
-            Intent intent = ((UserRecoverableAuthException)e).getIntent();
+            Intent intent = ((UserRecoverableAuthException) e).getIntent();
             startActivityForResult(intent,
                     REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
         }

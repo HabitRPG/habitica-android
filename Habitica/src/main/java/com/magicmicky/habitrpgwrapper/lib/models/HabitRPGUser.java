@@ -17,6 +17,7 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.database.sqlite.SQLiteException;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -104,6 +105,10 @@ public class HabitRPGUser extends BaseModel {
 
     private List<PushDevice> pushDevices;
 
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "purchased_id",
+            columnType = String.class,
+            foreignColumnName = "user_id")})
     private Purchases purchased;
 
     private TasksOrder tasksOrder;
@@ -114,10 +119,14 @@ public class HabitRPGUser extends BaseModel {
     @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "challengeList")
     public List<Challenge> getChallengeList() {
         if (challengeList == null) {
-            challengeList = new Select()
-                    .from(Challenge.class)
-                    .where(Condition.column("user_id").eq(this.id))
-                    .queryList();
+            try {
+                challengeList = new Select()
+                        .from(Challenge.class)
+                        .where(Condition.column("user_id").eq(this.id))
+                        .queryList();
+            } catch (SQLiteException exception) {
+                challengeList = new ArrayList<>();
+            }
         }
         return challengeList;
     }
@@ -150,18 +159,17 @@ public class HabitRPGUser extends BaseModel {
         return stats;
     }
 
-    public void setInbox(Inbox inbox) {
-        this.inbox = inbox;
+    public void setStats(Stats stats) {
+        this.stats = stats;
     }
 
     public Inbox getInbox() {
         return inbox;
     }
 
-    public void setStats(Stats stats) {
-        this.stats = stats;
+    public void setInbox(Inbox inbox) {
+        this.inbox = inbox;
     }
-
 
     public Profile getProfile() {
         return profile;
@@ -352,6 +360,9 @@ public class HabitRPGUser extends BaseModel {
         items.user_id = id;
         authentication.user_id = id;
         flags.user_id = id;
+        if (purchased != null) {
+            purchased.user_id = id;
+        }
         if (contributor != null) {
             contributor.user_id = id;
         }
@@ -385,7 +396,7 @@ public class HabitRPGUser extends BaseModel {
         }
 
         List<Challenge> challenges = getChallengeList();
-
+        List<Challenge> newChallenges = new ArrayList<>();
         if (getChallenges() != null) {
             for (String s : getChallenges()) {
 
@@ -394,7 +405,8 @@ public class HabitRPGUser extends BaseModel {
                 for (Challenge challenge : challenges) {
                     if (challenge.id.equals(s)) {
                         challengeExistInDatabase = true;
-
+                        challenges.remove(challenge);
+                        newChallenges.add(challenge);
                         break;
                     }
                 }
@@ -404,12 +416,15 @@ public class HabitRPGUser extends BaseModel {
                     challenge.id = s;
                     challenge.user_id = id;
 
-                    challenges.add(challenge);
+                    newChallenges.add(challenge);
                 }
+            }
+            for (Challenge challenge : challenges) {
+                challenge.user_id = null;
             }
         }
 
-        setChallengeList(challenges);
+        setChallengeList(newChallenges);
 
         super.save();
     }

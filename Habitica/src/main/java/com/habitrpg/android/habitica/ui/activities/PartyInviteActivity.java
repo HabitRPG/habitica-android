@@ -40,24 +40,15 @@ public class PartyInviteActivity extends BaseActivity {
     public static final String USER_IDS_KEY = "userIDs";
     public static final String IS_EMAIL_KEY = "isEmail";
     public static final String EMAILS_KEY = "emails";
-
-    private HabitRPGUser user;
-    private String userIdToInvite;
-
     @Inject
     IApiClient apiClient;
-
-    @Inject
-    protected HostConfig hostConfig;
-
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
     List<PartyInviteFragment> fragments = new ArrayList<>();
-
+    private HabitRPGUser user;
+    private String userIdToInvite;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
         public void onResultReceived(HabitRPGUser habitRPGUser) {

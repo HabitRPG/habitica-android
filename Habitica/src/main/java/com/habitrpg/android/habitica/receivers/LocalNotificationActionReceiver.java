@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.receivers;
 
+import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,7 +44,8 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
         this.context = context;
 
         this.apiClient.getUser()
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                });
     }
 
     @Override
@@ -57,39 +64,51 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
             String partyId = this.user.getInvitations().getParty().getId();
             apiClient.joinGroup(partyId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         } else if (action.equals(this.resources.getString(R.string.reject_party_invite))) {
             if (this.user.getInvitations().getParty() == null) return;
             String partyId = this.user.getInvitations().getParty().getId();
             apiClient.rejectGroupInvite(partyId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         } else if (action.equals(this.resources.getString(R.string.accept_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
             apiClient.acceptQuest(partyId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         } else if (action.equals(this.resources.getString(R.string.reject_quest_invite))) {
             if (this.user.getParty() == null) return;
             String partyId = this.user.getParty().getId();
             apiClient.rejectQuest(partyId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         } else if (action.equals(this.resources.getString(R.string.accept_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
             apiClient.joinGroup(guildId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         } else if (action.equals(this.resources.getString(R.string.reject_guild_invite))) {
             Bundle extras = this.intent.getExtras();
             String guildId = extras.getString("groupID");
             if (guildId == null) return;
             apiClient.rejectGroupInvite(guildId)
 
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {
+                    }, throwable -> {
+                    });
         }
     }
 }

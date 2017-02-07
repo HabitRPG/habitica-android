@@ -26,9 +26,9 @@ import javax.inject.Inject;
 
 public class RemindersManager {
 
-    private DateFormat dateFormater;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    private DateFormat dateFormater;
 
     public RemindersManager(String taskType) {
         HabiticaBaseApplication.getComponent().inject(this);
@@ -56,7 +56,7 @@ public class RemindersManager {
         }
     }
 
-    public String reminderTimeToString (Date time) {
+    public String reminderTimeToString(Date time) {
         return dateFormater.format(time);
     }
 
@@ -92,7 +92,7 @@ public class RemindersManager {
             dialogConfirmButton.setOnClickListener(view -> {
                 int day = dialogDatePicker.getDayOfMonth();
                 int month = dialogDatePicker.getMonth();
-                int year =  dialogDatePicker.getYear();
+                int year = dialogDatePicker.getYear();
                 int hour1 = dialogTimePicker.getCurrentHour();
                 int minute1 = dialogTimePicker.getCurrentMinute();
 

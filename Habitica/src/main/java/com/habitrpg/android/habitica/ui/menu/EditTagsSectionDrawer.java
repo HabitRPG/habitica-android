@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.menu;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.mikepenz.fastadapter.utils.ViewHolderFactory;
 import com.mikepenz.materialdrawer.holder.ColorHolder;
@@ -8,9 +10,6 @@ import com.mikepenz.materialdrawer.model.AbstractDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialdrawer.model.interfaces.Typefaceable;
 import com.mikepenz.materialize.util.UIUtils;
-
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -131,9 +130,9 @@ public class EditTagsSectionDrawer extends AbstractDrawerItem<EditTagsSectionDra
 
         viewHolder.editing = this.editing;
 
-        if(this.editing) {
+        if (this.editing) {
             viewHolder.btnEdit.setText(ctx.getString(R.string.edit_tag_btn_done));
-        }else {
+        } else {
             viewHolder.btnEdit.setText(ctx.getString(R.string.edit_tag_btn_edit));
         }
 

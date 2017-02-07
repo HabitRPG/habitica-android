@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -19,15 +17,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,14 +36,12 @@ import javax.inject.Inject;
 public class PartyFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
+    @Inject
+    ContentCache contentCache;
     private Group group;
-
     private PartyMemberListFragment partyMemberListFragment;
     private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
-
-    @Inject
-    ContentCache contentCache;
     private FragmentPagerAdapter viewPagerAdapter;
 
     @Override
@@ -357,7 +350,9 @@ public class PartyFragment extends BaseMainFragment {
     }
 
 
-	@Override
-	public String customTitle() {	return getString(R.string.sidebar_party);	}
+    @Override
+    public String customTitle() {
+        return getString(R.string.sidebar_party);
+    }
 
 }

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="action_refresh">Atnaujinti</string>
   <string name="XP_default">Partirtis</string>
   <string name="HP_default">Gyvybingumas</string>
@@ -116,9 +116,9 @@
   <string name="faint_button">Atstatyti Gyvybes ir bandyti dar kartą</string>
   <string name="filter">FIltras</string>
   <string name="profile_image">Profilis Paveikslėlis</string>
-  <string name="mana_price_button" formatted="false">%d Magijos Taškai</string>
-  <string name="used_skill" formatted="false">Panaudojai [%1$s] už %2$d magijos taškus.</string>
-  <string name="used_skill_without_mana" formatted="false">Panaudojai %1$s.</string>
+  <string name="mana_price_button">%d Magijos Taškai</string>
+  <string name="used_skill">Panaudojai [%1$s] už %2$d magijos taškus.</string>
+  <string name="used_skill_without_mana">Panaudojai %1$s.</string>
   <string name="new_checklist_item">naujas sąrašo punktas</string>
   <string name="add_checklist_item">Pridėti</string>
   <string name="reminder_title">Nepamiršk pažymėti savo Užduočių!</string>
@@ -162,9 +162,9 @@
   <string name="avatar_size_broad">Stambus</string>
   <string name="avatar_background">Fonas</string>
   <string name="purchase_customization">Pirkti Pakeitimus</string>
-  <string name="purchase_set_button" formatted="false">Atidengti už %d brangakmenių</string>
+  <string name="purchase_set_button">Atidengti už %d brangakmenių</string>
   <string name="purchase_button">Pirkti</string>
-  <string name="purchase_set_title" formatted="false">Pirkti rinkinį %s</string>
+  <string name="purchase_set_title">Pirkti rinkinį %s</string>
   <string name="due_date">Baigimo Terminas</string>
   <string name="quest.accept">Sutikti</string>
   <string name="quest.reject">Atmesti</string>
@@ -176,12 +176,12 @@
   <string name="quest.accepted">Sutiko</string>
   <string name="quest.rejected">Atsisakė</string>
   <string name="quest.participants">Dalyviai</string>
-  <string name="version_info" formatted="false">Versija: %s (%d)</string>
+  <string name="version_info">Versija: %1$s (%2$d)</string>
   <string name="sidebar_help">Pagalba &amp; DUK</string>
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
   <string name="intro_1_title">Sveiki užsukę į Habitica</string>
-  <string name="intro_1_description" formatted="false">Prisijunkite prie virš %s žmonių smagiai atliekančių kasdienes užduotis. Susikurkite avatarą ir sekite savo realaus gyvenimo užduotis.</string>
+  <string name="intro_1_description">Prisijunkite prie virš %s žmonių smagiai atliekančių kasdienes užduotis. Susikurkite avatarą ir sekite savo realaus gyvenimo užduotis.</string>
   <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
   <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
   <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
@@ -243,8 +243,8 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="write_message">Rašyti Žinutę</string>
   <string name="post">Siųsti</string>
   <string name="guild_search_hint">Ieškoti gildijų</string>
-  <string name="todo_due" formatted="false">Terminas: %s</string>
-  <string name="daily_streak" formatted="false">dabartinė serija: %d</string>
+  <string name="todo_due">Terminas: %s</string>
+  <string name="daily_streak">dabartinė serija: %d</string>
   <string name="todo_has_duedate">Užduotis turi Terminą</string>
   <string name="battle_gear">Kovinė Apranga</string>
   <string name="costume">Kostiumas</string>
@@ -263,10 +263,10 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="quest_begin_message">Ar tikrai nori pradėti misiją? Kai ji prasidės, kiti grupės nariai nebegalės prisijungti.</string>
   <string name="quest.invitation.text">Tave pakvietė dalyvauti misijoje!</string>
   <string name="ago_1day">Liko 1 diena</string>
-  <string name="ago_days" formatted="false">prieš %d dieną(as)</string>
+  <string name="ago_days">prieš %d dieną(as)</string>
   <string name="ago_1Minute">prieš 1 minutę</string>
-  <string name="ago_minutes" formatted="false">prieš %d minutę(es)</string>
-  <string name="ago_hours" formatted="false">prieš %d valandą(as)</string>
+  <string name="ago_minutes">prieš %d minutę(es)</string>
+  <string name="ago_hours">prieš %d valandą(as)</string>
   <string name="ago_1hour">prieš 1 valandą</string>
   <string name="today">Šiandien</string>
   <string name="sidebar_items">Daiktai</string>
@@ -276,26 +276,26 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="quests">Misijos</string>
   <string name="pets">Maži Augintiniai</string>
   <string name="mounts">Suaugę Augintiniai</string>
-  <string name="armoireEquipment" formatted="false">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
-  <string name="armoireFood" formatted="false">Betyrinėjant Drabužinę randi %1$s %2$s. Ką tai čia veikia?</string>
+  <string name="armoireEquipment">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
+  <string name="armoireFood">Betyrinėjant Drabužinę randi %1$s %2$s. Ką tai čia veikia?</string>
   <string name="armoireExp">Besigrumiant su Drabužine, gauni patirties!</string>
-  <string name="armoireNotesFull" formatted="false">Atidaryk Drabužinę ir gauk retos Aprangos dalį, Patirties ar maisto! Nerasto aprangos dalys: %d</string>
+  <string name="armoireNotesFull">Atidaryk Drabužinę ir gauk retos Aprangos dalį, Patirties ar maisto! Nerasto aprangos dalys: %d</string>
   <string name="armoireLastItem">Radai paskutinę retos aprangos dalį Užburtoje Drabužinėje.</string>
   <string name="armoireNotesEmpty">Drabužinėje atsiranda naujų daiktų pirmą kiekvieno mėnesio savaitę. Iki tol, gali toliau joje ieškoti Patirties ir Maisto!</string>
-  <string name="sell" formatted="false">Parduoti (%s Augso)</string>
+  <string name="sell">Parduoti (%d Augso)</string>
   <string name="hatch_with_potion">Užauginti su eliksyru</string>
   <string name="feed_to_pet">Maitinti gyvūnui</string>
   <string name="hatch_egg">Išperėti kiaušinį</string>
   <string name="invite_party">Pakviesti grupę</string>
-  <string name="dialog_feeding" formatted="false">Pašerti %1$s %2$s su:</string>
+  <string name="dialog_feeding">Pašerti %1$s %2$s su:</string>
   <string name="use_animal">Naudoti</string>
   <string name="feed">Maitinti</string>
-  <string name="hatch_with" formatted="false">Užauginti gyvūną su %s</string>
-  <string name="hatched_pet_title" formatted="false">Užauginai %1$s %2$s!</string>
+  <string name="hatch_with">Užauginti gyvūną su %s</string>
+  <string name="hatched_pet_title">Užauginai %1$s %2$s!</string>
   <string name="close">Uždaryti</string>
   <string name="share">Dalintis</string>
-  <string name="notification_pet_fed" formatted="false">Pašėrei savo %1$s %2$s!</string>
-  <string name="notification_purchase" formatted="false">%s nupirkta</string>
+  <string name="notification_pet_fed">Pašėrei savo %1$s %2$s!</string>
+  <string name="notification_purchase">%s nupirkta</string>
   <string name="sectionpets">Paprasti Augintiniai</string>
   <string name="sectionpremiumPets">Stebuklingų Eliksyrų Augintiniai</string>
   <string name="sectionquestPets">Misijų Augintiniai</string>
@@ -306,7 +306,7 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="sectionspecialMounts">Reti Augintiniai</string>
   <string name="world_quest">Pasaulinė Misija</string>
   <string name="inn_description">Pailsėk Smuklėje, kad tavo nepabaigtos Kasdienės Užduotys nepadarytų tau žalos nakties metu! (Pastaba: pabaisos vistiek padarys tau žalos.)</string>
-  <string name="empty_items" formatted="false">Nebeturi %s</string>
+  <string name="empty_items">Nebeturi %s</string>
   <string name="warrior">Karys</string>
   <string name="rogue">Sukčius</string>
   <string name="mage">Magas</string>
@@ -318,7 +318,7 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="select_class">Pasirinkti Klasę</string>
   <string name="opt_out_class">Atsisakyti</string>
   <string name="opt_out_description">Tingi gilintis į klases? Nori pasirinkti vėliau? Atsisakyk. Liksi kariu be specialių sugebėjimų. Galėsi vėliau lengvai ją įjungti, kai pasiskaitysi daugiau apie klases wiki puslapyje.</string>
-  <string name="class_confirmation" formatted="false">Ar tikrai nori būti %s?</string>
+  <string name="class_confirmation">Ar tikrai nori būti %s?</string>
   <string name="choose_class">Pasirink Klasę</string>
   <string name="dialog_go_back">Grįžti</string>
   <string name="opt_out_confirmation">Ar tikrai nori atsisakyti?</string>
@@ -337,12 +337,12 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="email">El. paštas</string>
   <string name="invite_users">Pakviesk į Grupę</string>
   <string name="share_using">Pasidalinti su</string>
-  <string name="share_levelup" formatted="false">Pasiekiau %s Habitica lygį tobulinant savo gyvenimo įpročius!</string>
-  <string name="share_hatched" formatted="false">Kątik gavau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
-  <string name="share_raised" formatted="false">Kątik užauginau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="share_levelup">Pasiekiau %d Habitica lygį tobulinant savo gyvenimo įpročius!</string>
+  <string name="share_hatched">Kątik gavau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
+  <string name="share_raised">Kątik užauginau %1$s %2$s Habitica augintinį atliekant kasdienes užduotis!</string>
   <string name="open_in_store">Atidaryti play parduotuvėje</string>
   <string name="change_class_confirmation">Ar tikrai nori pasikeisti savo klasę? Tai kainuos 3 brangakmenius.</string>
-  <string name="leaderMessage" formatted="false">Žinutė nuo %1$s</string>
+  <string name="leaderMessage">Žinutė nuo %1$s</string>
   <string name="confirm">Patvirtinti</string>
   <string name="market">Turgus</string>
   <string name="timeTravelers">Keliautojai Laiku</string>
@@ -351,9 +351,9 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="party_invite">Atidenk pakviečiant draugus</string>
   <string name="no_gold">Nepakanka Aukso</string>
   <string name="no_potion">Tau nereikia gyvybių eliksyro</string>
-  <string name="successful_purchase" formatted="false">%1$s nupirktas</string>
+  <string name="successful_purchase">%1$s nupirktas</string>
   <string name="purchase_confirmation_title">Patvirtinti pirkinį</string>
-  <string name="confirm_purchase_text" formatted="false">Pirkti %1$s už %2$s %3$s</string>
+  <string name="confirm_purchase_text">Pirkti %1$s už %2$s %3$s</string>
   <string name="gem">brangakmenis</string>
   <string name="hourglass">smėlio laikrodis</string>
   <string name="hourglasses">smėlio laikrodžiai</string>
@@ -404,7 +404,7 @@ Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="hatching_market_info">Negaunate reikiamų lašiukų? Patikrinkite turguje!</string>
   <string name="feeding_market_info">Reikia kitokio maisto? Nusipirkite daugiau iš turgaus!</string>
   <string name="open_market">Atviras turgus</string>
-  <string name="cds_description" formatted="false">Jūsų kasdienės užduotys iš naujo nusistatys po %1$s. Įsitikinkite, kad atlikote savo kasdienes užduotis iki šio laiko.</string>
+  <string name="cds_description">Jūsų kasdienės užduotys iš naujo nusistatys po %1$s. Įsitikinkite, kad atlikote savo kasdienes užduotis iki šio laiko.</string>
   <string name="AudioTheme_title">Garsinė tema</string>
   <string name="AudioTheme_summary">Pakeiskite Habitica garsinę temą</string>
   <!--Login Incentives-->

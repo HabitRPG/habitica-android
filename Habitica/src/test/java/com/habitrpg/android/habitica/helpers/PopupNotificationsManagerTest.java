@@ -19,13 +19,13 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -42,9 +42,11 @@ public class PopupNotificationsManagerTest {
 
     public String username;
     public final String password = "password";
+    private Context context;
 
     @Before
     public void setUp() {
+        context = ShadowApplication.getInstance().getApplicationContext();
         hostConfig = new HostConfig(BuildConfig.BASE_URL,
                 BuildConfig.PORT,
                 "",
