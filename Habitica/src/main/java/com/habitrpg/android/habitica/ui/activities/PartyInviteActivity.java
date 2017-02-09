@@ -41,6 +41,8 @@ public class PartyInviteActivity extends BaseActivity {
     public static final String IS_EMAIL_KEY = "isEmail";
     public static final String EMAILS_KEY = "emails";
     @Inject
+    protected HostConfig hostConfig;
+    @Inject
     IApiClient apiClient;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;

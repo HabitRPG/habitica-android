@@ -10,7 +10,6 @@ import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
@@ -29,6 +28,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
+import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
@@ -97,7 +97,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.net.ssl.SSLException;
 
 import okhttp3.OkHttpClient;
@@ -113,12 +112,16 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 
 public class ApiClient implements Action1<Throwable>, IApiClient {
+    private final GsonConverterFactory gsonConverter;
+    private final HostConfig hostConfig;
+    private final Retrofit retrofitAdapter;
+
     CrashlyticsProxy crashlyticsProxy;
+    Context context;
 
     // I think we don't need the ApiClient anymore we could just use ApiService
     private final ApiService apiService;
@@ -129,7 +132,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
                         @Override
                         public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
-                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(ApiClient.this);
+                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(ApiClient.this, context);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
                             }
                             return habitResponse.getData();
@@ -139,12 +142,15 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(this);
     private AlertDialog displayedAlert;
+    private String languageCode;
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
-    public ApiClient(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy) {
+    public ApiClient(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy,  Context context) {
         this.gsonConverter = gsonConverter;
         this.hostConfig = hostConfig;
+        this.context = context;
+
         HabiticaBaseApplication.getComponent().inject(this);
         crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
         crashlyticsProxy.setUserName(this.hostConfig.getUser());
@@ -492,6 +498,11 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     }
 
     @Override
+    public Observable<Void> validateSubscription(SubscriptionValidationRequest request){
+        return apiService.validateSubscription(request).compose(configureApiCallObserver());
+    }
+
+    @Override
     public Observable<Void> purchaseHourglassItem(String type, String itemKey) {
 
         return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver());
@@ -588,22 +599,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     }
 
     @Override
-    public Observable<UserAuthResponse> registerUser(UserAuth auth) {
-        return apiService.registerUser(auth).compose(configureApiCallObserver());
-    }
-
-    @Override
-    public Observable<UserAuthResponse> connectLocal(UserAuth auth) {
-        return apiService.connectLocal(auth).compose(configureApiCallObserver());
-    }
-
-    @Override
-    public Observable<UserAuthResponse> connectSocial(UserAuthSocial auth) {
-        return apiService.connectSocial(auth).compose(configureApiCallObserver());
-    }
-
-    @Override
-    public Observable<Void> sleep() {
+    public Observable<Boolean> sleep() {
         return apiService.sleep().compose(configureApiCallObserver());
     }
 
@@ -824,7 +820,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
 
     @Override
     public Observable<Void> readNotificaiton(String notificationId) {
-        return apiService.readNotificaiton(notificationId).compose(configureApiCallObserver());
+        return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 
     public static class ErrorResponse {
@@ -834,4 +830,11 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     public Observable<ContentResult>getContent() {
         return apiService.getContent(languageCode).compose(configureApiCallObserver());
     }
+
+
+    @Override
+    public Observable<ItemData> openMysteryItem() {
+        return apiService.openMysteryItem().compose(configureApiCallObserver());
+    }
+
 }

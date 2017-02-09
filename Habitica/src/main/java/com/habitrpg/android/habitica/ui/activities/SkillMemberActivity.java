@@ -20,9 +20,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class SkillMemberActivity extends BaseActivity {
-
-    @Inject
-    public APIHelper apiHelper;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private PartyMemberRecyclerViewAdapter viewAdapter;

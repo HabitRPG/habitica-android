@@ -15,6 +15,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
+import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
@@ -66,6 +67,7 @@ public interface IApiClient {
     Observable<Void> purchaseMysterySet(String itemKey);
 
     Observable<Void> purchaseQuest(String key);
+    Observable<Void> validateSubscription(SubscriptionValidationRequest request);
 
     Observable<HabitRPGUser> sellItem(String itemType, String itemKey);
 
@@ -101,15 +103,12 @@ public interface IApiClient {
 
     Observable<Void> deleteTag(String id);
 
-    Observable<UserAuthResponse> registerUser(UserAuth auth);
     Observable<UserAuthResponse> registerUser(String username, String email, String password, String confirmPassword);
 
-    Observable<UserAuthResponse> connectLocal(UserAuth auth);
     Observable<UserAuthResponse> connectUser(String username, String password);
 
-    Observable<UserAuthResponse> connectSocial(UserAuthSocial auth);
     Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken);
-    Observable<Void> sleep();
+    Observable<Boolean> sleep();
 
     Observable<HabitRPGUser> revive();
 
@@ -218,4 +217,6 @@ public interface IApiClient {
     Observable<HabitRPGUser> retrieveUser(boolean b);
 
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
+
+    Observable<ItemData> openMysteryItem();
 }

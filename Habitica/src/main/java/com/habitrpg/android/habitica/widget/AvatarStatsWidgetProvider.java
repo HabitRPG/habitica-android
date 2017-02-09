@@ -28,10 +28,7 @@ import javax.inject.Inject;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private static final String LOG = AvatarStatsWidgetProvider.class.getName();
-    @Inject
-    APIHelper apiHelper;
-    @Inject
-    HostConfig hostConfig;
+
     private AppWidgetManager appWidgetManager;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override

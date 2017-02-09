@@ -34,8 +34,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public IApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig,  CrashlyticsProxy crashlyticsProxy) {
-        return new ApiClient(gsonConverter, hostConfig, crashlyticsProxy);
+    public IApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig,  CrashlyticsProxy crashlyticsProxy, Context context) {
+        return new ApiClient(gsonConverter, hostConfig, crashlyticsProxy, context);
     }
 
     @Provides

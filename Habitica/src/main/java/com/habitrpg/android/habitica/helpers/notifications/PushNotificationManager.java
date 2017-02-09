@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;

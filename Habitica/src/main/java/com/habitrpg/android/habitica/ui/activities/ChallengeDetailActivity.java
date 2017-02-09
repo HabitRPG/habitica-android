@@ -1,20 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDetailDialogHolder;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import net.pherth.android.emoji_library.EmojiParser;
-import net.pherth.android.emoji_library.EmojiTextView;
-
 import android.app.AlertDialog;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
@@ -31,32 +16,27 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
-import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase;
 import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
 import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -82,8 +62,7 @@ import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 public class ChallengeDetailActivity extends BaseActivity {
 
     public static String CHALLENGE_ID = "CHALLENGE_ID";
-    @Inject
-    public APIHelper apiHelper;
+
     @BindView(R.id.detail_tabs)
     TabLayout detail_tabs;
     @BindView(R.id.toolbar)
@@ -251,36 +230,6 @@ public class ChallengeDetailActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_leave:
-                new AlertDialog.Builder(this)
-                        .setTitle(this.getString(R.string.challenge_leave_title))
-                        .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
-                        .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
-                            this.apiHelper.apiService.leaveChallenge(challenge.id)
-                                    .compose(apiHelper.configureApiCallObserver())
-                                    .subscribe(aVoid -> {
-                                        challenge.user_id = null;
-                                        challenge.async().save();
-
-                                        HabiticaApplication.User.resetChallengeList();
-                                        finish();
-
-                                    }, throwable -> {
-                                    });
-                        })
-                        .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
-                        }).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
@@ -372,19 +321,6 @@ public class ChallengeDetailActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-
 
     @Subscribe
     public void onEvent(TaskCheckedCommand event) {
