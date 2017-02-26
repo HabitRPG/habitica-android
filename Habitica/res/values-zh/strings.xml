@@ -437,7 +437,6 @@
   <string name="subscription">捐助</string>
   <string name="active">活跃的</string>
   <string name="cancel_subscription">取消订阅</string>
-  <string name="cancel_subscription_google.description">不想再继续捐助了？你可以在Google应用商店里找到“我的应用程序”部分里找到退订选项。</string>
   <string name="cancel_subscription_notgoogle.description">不想再继续捐助了？由于您的付款方式，您只能通过这个网站停止捐助。点击下面的按钮，在您的浏览器中打开站点。</string>
   <string name="visit_habitica_website">访问Habitica的网站</string>
   <string name="current_bonuses">当前奖励</string>
@@ -455,6 +454,7 @@
   <string name="subscription_status">捐助状态</string>
   <string name="challenge_details">挑战细节</string>
   <string name="challenge_leave_title">退出挑战</string>
+  <string name="challenge_leave_text">你是否确定想放弃这个挑战“%s”？</string>
   <string name="my_challenges">我的挑战</string>
   <string name="public_challenges">公共挑战</string>
   <string name="challenges">享受挑战吧！</string>
@@ -483,4 +483,5 @@
   <string name="open">打开</string>
   <string name="notification_mystery_item">你打开了盒子并发现了%s!</string>
   <string name="checkInRewardEarned">由于你投入改善你的生活，你得到%1$s。</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">你的下一次奖赏在签到%1$d后解锁</string>
 </resources>

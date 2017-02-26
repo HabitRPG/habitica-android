@@ -342,7 +342,7 @@
   <string name="email">Е-поща</string>
   <string name="invite_users">Поканване в групата</string>
   <string name="share_using">Споделяне чрез</string>
-  <string name="share_levelup">Достигнах ниво %d в Хабитика, като подобрих навиците си в истинския живот!</string>
+  <string name="share_levelup">Достигнах ниво %d в Хабитика, като подобрявам навиците си в истинския живот!</string>
   <string name="share_hatched">Току-що излюпих любимец — %1$s %2$s в Хабитика, като изпълнявах задачите си в истинския живот!</string>
   <string name="share_raised">Току-що се сдобих с превоз — %1$s %2$s в Хабитика като изпълнявах задачите си в истинския живот!</string>
   <string name="open_in_store">Отваряне в магазина</string>
@@ -428,10 +428,10 @@
   <string name="subscriptions">Абонаменти</string>
   <string name="subscription_duration">Повтаря се всеки %s</string>
   <string name="subscribe">Абониране</string>
-  <string name="subscribe.listitem1.description">Александър Търговеца ще Ви продава диаманти на цената от 20 злато за диамант. Месечните му доставки отначало ще бъдат ограничени до 25 диаманта на месец, но това ограничение се вдига с по 5 диаманта след всеки три месеца непрекъснат абонамент, докато не достигне 50 диаманта на месец!</string>
-  <string name="subscribe.listitem2.description">Прави завършените задачи и историята на задачите налични за по-дълго време.</string>
-  <string name="subscribe.listitem3.description">Завършете конюшнята си по-бързо!</string>
-  <string name="subscribe.listitem4.description">Всеки месец ще получавате уникален козметичен предмет за героя си! Освен това, за всеки три месеца непрекъснат абонамент, тайнствените пътешественици във времето ще Ви дават достъп до исторически козметични предмети (както и такива от бъдещето).</string>
+  <string name="subscribe.listitem1.description">Александър Търговеца вече ще Ви продава диаманти на цената от 20 злато за диамант.\n\nМесечните му доставки отначало ще бъдат ограничени до 25 диаманта на месец, но може да се увеличат в зависимост от продължителността на абонамента Ви.\n\nОграничението се вдига с по 5 диаманта след всеки три месеца непрекъснат абонамент, докато не достигне 50 диаманта на месец!</string>
+  <string name="subscribe.listitem2.description">Всеки месец ще получавате уникален козметичен предмет за героя си!\n\nОсвен това, за всеки три месеца непрекъснат абонамент, тайнствените пътешественици във времето ще Ви дават достъп до исторически козметични предмети (както и такива от бъдещето).</string>
+  <string name="subscribe.listitem3.description">Прави завършените задачи и историята на задачите налични за по-дълго време.</string>
+  <string name="subscribe.listitem4.description">С двойно увеличеното ограничение на паданията ще получавате повече предмети от завършените си задачи всеки ден, което ще Ви помогне да завършите конюшнята си по-бързо!</string>
   <string name="subscribe1month.gemcap">Ограничението на диамантите започва от 25</string>
   <string name="subscribe3month.gemcap">Ограничението на диамантите е вдигнато на 30</string>
   <string name="subscribe6month.gemcap">Ограничението на диамантите е вдигнато на 35</string>
@@ -441,7 +441,7 @@
   <string name="subscription">Абонамент</string>
   <string name="active">Активен</string>
   <string name="cancel_subscription">Прекратяване на абонамента</string>
-  <string name="cancel_subscription_google.description">Искате да прекратите абонамента си? Можете да го направите в раздела „Моите приложения“ в магазина „Google Play“.</string>
+  <string name="cancel_subscription_google.description">Не искате вече да бъдете абонат? Можете да прекратите абонамента си от раздела „Моите приложения“ в магазина „Google Play“.</string>
   <string name="cancel_subscription_notgoogle.description">Искате да прекратите абонамента си? Заради избрания от Вас разплащателен метод, можете да направите това само от уеб сайта. Натиснете бутона по-долу, за да отворите уеб сайта в браузъра си!</string>
   <string name="visit_habitica_website">Към уеб сайта на Хабитика</string>
   <string name="current_bonuses">Текущи бонуси</string>
@@ -460,6 +460,7 @@
   <string name="byLeader">от %s</string>
   <string name="challenge_details">Подробности за предизвикателството</string>
   <string name="challenge_leave_title">Напускане на предизвикателството</string>
+  <string name="challenge_leave_text">Наистина ли искате да напуснете предизвикателството „%s“?</string>
   <string name="my_challenges">Моите предизвикателства</string>
   <string name="public_challenges">Обществени</string>
   <string name="challenges">Предизвикателства</string>
@@ -477,6 +478,7 @@
   <string name="add_reminder">Добавяне на напомняне</string>
   <string name="warning">Внимание</string>
   <string name="open_settings">Отваряне на настройките</string>
+  <string name="dont_keep_activities_warning">Изглежда сте включили опцията за разработчици „Да не се пазят дейностите“. В момента тя предизвиква проблеми с приложението на Хабитика, така че е препоръчително да я изключите.</string>
   <string name="inbox">Входящи</string>
   <string name="FAQ">Често задавани въпроси</string>
   <string name="special">Специален</string>

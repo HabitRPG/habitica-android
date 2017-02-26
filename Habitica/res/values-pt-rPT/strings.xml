@@ -339,7 +339,6 @@ Para começar, quais as partes da tua vida que queres melhorar?</string>
   <string name="email">E-mail</string>
   <string name="invite_users">Convidar para a Equipa</string>
   <string name="share_using">Partilhe, utilizando</string>
-  <string name="share_levelup">Eu cheguei até ao níve l%d em Habitica melhorando meus hábitos na vida real!</string>
   <string name="share_hatched">Eu acabei de ganhar uma mascote %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
   <string name="share_raised">Eu acabei de ganhar uma montada %1$s %2$s no Habitica ao concluir as minhas tarefas da vida real!</string>
   <string name="open_in_store">Abrir na Play Store</string>

@@ -343,7 +343,6 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="email">E-mail</string>
   <string name="invite_users">Convidar para o Grupo</string>
   <string name="share_using">Compartilhar via</string>
-  <string name="share_levelup">Eu cheguei ao nível %d no Habitica melhorando os hábitos da minha vida real.</string>
   <string name="share_hatched">Eu acabei de ganhar um filhote de %1$s %2$s no Habitica por completar minhas tarefas da vida real!</string>
   <string name="share_raised">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
   <string name="open_in_store">Abra na Play Store</string>
@@ -429,6 +428,15 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="subscriptions">Assinaturas</string>
   <string name="subscription_duration">Recorrente a cada %s</string>
   <string name="subscribe">Assine</string>
+  <string name="payment_method">Método de pagamento</string>
+  <string name="cancel_subscription">Cancelar Assinatura</string>
+  <string name="inactive">Inativo</string>
+  <string name="one_month">1 Mês</string>
+  <string name="months">%d Meses</string>
+  <string name="month">mês</string>
+  <string name="three_months">3 meses</string>
+  <string name="six_months">6 meses</string>
+  <string name="twelve_months">12 meses</string>
   <string name="byLeader">em %s</string>
   <string name="challenge_details">Detalhes do Desafios</string>
   <string name="challenge_leave_title">Deixar Desafio</string>
@@ -451,4 +459,8 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="open_settings">Abrir Configurações</string>
   <string name="inbox">Caixa de Entrada</string>
   <string name="FAQ">Perguntas Frequentes</string>
+  <string name="special">Especial</string>
+  <string name="gem_shop">Gema</string>
+  <string name="mystery_item">Item Misterioso</string>
+  <string name="open">Abrir</string>
 </resources>

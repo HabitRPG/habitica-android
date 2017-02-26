@@ -6,7 +6,7 @@
   <string name="sidebar.inbox">받은 편지함</string>
   <string name="sidebar.tavern">주막</string>
   <string name="sidebar.party">파티</string>
-  <string name="sidebar.purchaseGems">보석 구매</string>
+  <string name="sidebar.purchaseGems">보석 &amp; 구독</string>
   <string name="sidebar.guilds">길드</string>
   <string name="sidebar.challenges">도전</string>
   <string name="sidebar.section.inventory">인벤토리</string>

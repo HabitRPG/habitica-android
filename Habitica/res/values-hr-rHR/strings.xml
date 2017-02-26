@@ -312,7 +312,6 @@ Za početak, koje djelove života želiš poboljšati?</string>
   <string name="email">Email</string>
   <string name="invite_users">Pozovi u Grupu</string>
   <string name="share_using">Podijeli koristeći</string>
-  <string name="share_levelup">Stigao sam do %d razine u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
   <string name="share_hatched">Upravo sam izlegao %1$s %2$s ljubimca u Habitici izvršavajući svoje zadatke u stvarnom životu!</string>
   <string name="share_raised">Upravo sam dobio %1$s %2$s životinju za jahanje u Habitici izvršavanjem svojih zadataka u stvarnom životu!</string>
   <string name="open_in_store">Otvori u Trgovini Play</string>

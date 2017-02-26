@@ -137,6 +137,7 @@
   <string name="members">成員</string>
   <string name="habits">習慣</string>
   <string name="dailies">每日任務</string>
+  <string name="todos">待辦事項</string>
   <string name="rewards">獎勵</string>
   <string name="taskform.delete.title">你確定嗎？</string>
   <string name="taskform.delete.message">你確定要刪除嗎？</string>
@@ -304,6 +305,7 @@
   <string name="world_quest">世界任務</string>
   <string name="inn_description">在客棧休息讓你未完成的每日任務不會傷害你！ (注意：它不能阻止來自任務怪物的傷害。)</string>
   <string name="empty_items">你沒有擁有任何的%s</string>
+  <string name="user_level_with_class">等級 %1$d - %2$s</string>
   <string name="warrior">戰士</string>
   <string name="rogue">盜賊</string>
   <string name="mage">法師</string>
@@ -316,6 +318,7 @@
   <string name="opt_out_class">退出</string>
   <string name="opt_out_description">不知道選什麼職業？想以後再選？沒問題 - 你現在可以先做一個沒有特殊技能的戰士。我們的維基頁面上有關於職業系統的介紹，之後隨時可以定你的職業。</string>
   <string name="class_confirmation">你確定想要成為%1$s嗎？</string>
+  <string name="class_changed">你成為了%s!</string>
   <string name="choose_class">選擇職業</string>
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你確定要退出嗎？</string>
@@ -334,7 +337,6 @@
   <string name="email">電子郵件</string>
   <string name="invite_users">邀請加入隊伍</string>
   <string name="share_using">分享使用</string>
-  <string name="share_levelup">我在Habitica中通過改善我現實生活中的習慣到達了%d級！</string>
   <string name="share_hatched">我剛剛在Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
   <string name="share_raised">我剛剛在Habitica中通完成我現實生活中的任務得到了一匹坐騎%1$s %2$s！</string>
   <string name="open_in_store">開啟Play sotre</string>
@@ -352,6 +354,8 @@
   <string name="purchase_confirmation_title">確認購買</string>
   <string name="confirm_purchase_text">購買 %1$s 用了 %2$s %3$s</string>
   <string name="gem">寶石</string>
+  <string name="hourglass">沙漏</string>
+  <string name="hourglasses">沙漏</string>
   <string name="gold_singular">金幣</string>
   <string name="gold_plural">金幣</string>
   <string name="chat_message_copied">已複製到剪貼板的訊息</string>
@@ -390,6 +394,7 @@
   <string name="gem.purchase.title">購買寶石會幫助開發者維持Habitica</string>
   <string name="gem.purchase.listitem1">為你的角色穿上酷衣裝</string>
   <string name="gem.purchase.listitem2">超讚的背景</string>
+  <string name="gem.purchase.listitem4">可以在100等級以前更換職業的能力</string>
   <string name="support_habitica">贊助Habitica</string>
   <string name="skill_transformation_use">使用</string>
   <string name="hatching_market_info">沒有得到想要的掉落物嗎？立刻查看市集！</string>
@@ -398,4 +403,38 @@
   <string name="AudioTheme_title">聲音主題</string>
   <string name="AudioTheme_summary">更改Habitica的聲音主題</string>
   <!--Login Incentives-->
+  <string name="see_you_tomorrow">明天再見！</string>
+  <string name="belongs_to_challenge">屬於挑戰</string>
+  <string name="has_reminder">有提醒</string>
+  <string name="has_tag">有標籤</string>
+  <string name="subscribe.listitem1">使用金幣購買寶石</string>
+  <string name="subscribe.listitem3">保留外加歷史條目</string>
+  <string name="subscribe">加入會員</string>
+  <string name="cancel_subscription">取消會員</string>
+  <string name="visit_habitica_website">查訪Habitica官方網站</string>
+  <string name="one_month">1個月</string>
+  <string name="months">%d個月</string>
+  <string name="month">月</string>
+  <string name="three_months">3個月</string>
+  <string name="six_months">6個月</string>
+  <string name="twelve_months">12個月</string>
+  <string name="byLeader">按照%s</string>
+  <string name="challenge_details">挑戰細節</string>
+  <string name="challenge_leave_title">離開挑戰</string>
+  <string name="challenge_leave_text">你確認你要離開\"%s\"挑戰嗎？</string>
+  <string name="my_challenges">我的挑戰</string>
+  <string name="public_challenges">公開</string>
+  <string name="challenges">挑戰</string>
+  <string name="daily">每日任務</string>
+  <string name="habit">習慣</string>
+  <string name="reward">獎勵</string>
+  <string name="todo">待辦事項</string>
+  <string name="challenge">挑戰</string>
+  <string name="go_to_challenge">查看挑戰</string>
+  <string name="not_part_of_a_challenge">你現在沒有加入任何挑戰！</string>
+  <string name="add_reminder">添加提醒</string>
+  <string name="warning">注意</string>
+  <string name="open_settings">打開設定</string>
+  <string name="inbox">收件匣</string>
+  <string name="gem_shop">寶石</string>
 </resources>
