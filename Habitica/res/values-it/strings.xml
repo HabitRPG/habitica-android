@@ -492,4 +492,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="notification_mystery_item">Apri il pacco e trovi %s!</string>
   <string name="checkInRewardEarned">Hai meritato %1$s come premio per la tua costanza nel migliorare la tua vita.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Il prossimo premio verrà sbloccato a %1$d accessi</string>
+  <string name="pending_approval">in attesa di approvazione</string>
+  <string name="group_tasks_edit_description">Le attività di gruppo non possono essere modificate.</string>
+  <string name="group_tasks_edit_title">Non puoi modificare questa attività</string>
 </resources>

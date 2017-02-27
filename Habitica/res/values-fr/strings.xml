@@ -491,4 +491,7 @@ Pour commencer, quels aspects de votre vie souhaitez-vous améliorer ?</string>
   <string name="notification_mystery_item">Vous ouvrez le paquet et trouvez %s !</string>
   <string name="checkInRewardEarned">Vous avez mérité cette récompense : %1$s pour votre dévotion à améliorer votre vie.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Votre prochain prix sera débloqué à %1$d connexions</string>
+  <string name="pending_approval">En attente d\'acceptation</string>
+  <string name="group_tasks_edit_description">Les tâches de groupe ne peuvent être modifiées.</string>
+  <string name="group_tasks_edit_title">Cette tâche ne peut être modifiée</string>
 </resources>

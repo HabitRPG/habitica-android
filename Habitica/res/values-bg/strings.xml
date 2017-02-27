@@ -491,4 +491,7 @@
   <string name="notification_mystery_item">Вие отворихте кутията и намерихте %s!</string>
   <string name="checkInRewardEarned">Спечелихте %1$s като награда за усърдието си в подобряването на живота си.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Следващата Ви награда ще се отключи след %1$d отчитания</string>
+  <string name="pending_approval">изчакване за одобрение</string>
+  <string name="group_tasks_edit_description">Груповите задачи не могат да бъдат редактирани.</string>
+  <string name="group_tasks_edit_title">Тази задача не може да се редактира</string>
 </resources>
