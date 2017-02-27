@@ -421,16 +421,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         throwable -> {
                         }
                 );
-
-        if (task.isGroupTask()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.group_tasks_edit_title)
-                    .setMessage(R.string.group_tasks_edit_description)
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        finish();
-                    })
-                    .show();
-        }
     }
 
 
@@ -729,6 +719,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         }
 
+        if (task.isGroupTask()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.group_tasks_edit_title)
+                    .setMessage(R.string.group_tasks_edit_description)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> finish())
+                    .show();
+        }
     }
 
     private void fillTagCheckboxes() {
