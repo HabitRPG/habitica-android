@@ -103,6 +103,9 @@ dependencies {
 
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
+    // lodash/underscore
+    compile 'com.github.javadev:underscore:1.23'
+
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.0'

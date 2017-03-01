@@ -521,4 +521,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="notification_mystery_item">You open the box and find %s!</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
+    <string name="filters">Filters</string>
+    <string name="done">Done</string>
+    <string name="groups">Groups</string>
+    <string name="all">All</string>
+    <string name="none">None</string>
+    <string name="owned">Owned</string>
+    <string name="not_owned">Not owned</string>
 </resources>

@@ -17,6 +17,10 @@
         <item name="android:letterSpacing" tools:targetApi="lollipop">0.071</item>
     </style>
 
+    <style name="Title1_WideLetterSpacing"  parent="@style/Title1">
+        <item name="android:letterSpacing" tools:targetApi="lollipop">0.133</item>
+    </style>
+
     <style name="Title2">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">
             @string/font_family_condensed
