@@ -50,7 +50,7 @@ public class SubscriptionPlan extends BaseModel {
 
     public boolean isActive() {
         Date today = new Date();
-        return (this.dateCreated != null && this.dateCreated.before(today)) && (this.dateTerminated == null || this.dateTerminated.after(today));
+        return planId != null && this.dateTerminated == null || this.dateTerminated.after(today);
     }
 
     @Override
