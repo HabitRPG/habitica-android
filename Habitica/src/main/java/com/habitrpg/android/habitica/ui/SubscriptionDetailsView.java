@@ -78,14 +78,16 @@ public class SubscriptionDetailsView extends LinearLayout {
 
         String duration = null;
 
-        if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC) || plan.planId.equals(SubscriptionPlan.PLANID_BASICEARNED)) {
-            duration = getResources().getString(R.string.month);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC3MONTH)) {
-            duration = getResources().getString(R.string.three_months);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC6MONTH) || plan.planId.equals(SubscriptionPlan.PLANID_GOOGLE6MONTH)) {
-            duration = getResources().getString(R.string.six_months);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC12MONTH)) {
-            duration = getResources().getString(R.string.twelve_months);
+        if (plan.planId != null) {
+            if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC) || plan.planId.equals(SubscriptionPlan.PLANID_BASICEARNED)) {
+                duration = getResources().getString(R.string.month);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC3MONTH)) {
+                duration = getResources().getString(R.string.three_months);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC6MONTH) || plan.planId.equals(SubscriptionPlan.PLANID_GOOGLE6MONTH)) {
+                duration = getResources().getString(R.string.six_months);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC12MONTH)) {
+                duration = getResources().getString(R.string.twelve_months);
+            }
         }
 
         if (duration != null) {

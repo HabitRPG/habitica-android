@@ -8,6 +8,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.support.annotation.Nullable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class SubscriptionPlan extends BaseModel {
     @Column
     public String paymentMethod;
     @Column
+    @Nullable
     public String planId;
     @Column
     public Integer gemsBought;

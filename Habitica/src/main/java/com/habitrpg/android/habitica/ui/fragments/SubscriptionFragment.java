@@ -144,18 +144,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscription6MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription6Month));
         this.subscription12MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription12Month));
 
-        this.subscribeListitem1Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description);
-        });
-        this.subscribeListitem2Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description);
-        });
-        this.subscribeListitem3Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description);
-        });
-        this.subscribeListitem4Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description);
-        });
+        this.subscribeListitem1Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description));
+        this.subscribeListitem2Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description));
+        this.subscribeListitem3Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description));
+        this.subscribeListitem4Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description));
     }
 
     private void toggleDescriptionView(ImageView button, TextView descriptionView) {
