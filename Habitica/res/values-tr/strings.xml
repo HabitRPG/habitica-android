@@ -428,6 +428,8 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="subscriptions">Abonelikler</string>
   <string name="subscription_duration">Her %s tekrar eden</string>
   <string name="subscribe">Abone Ol</string>
+  <string name="subscribe.listitem1.description">Tüccar İskender artık sana tanesi 20 altına elmas satıcak!\n\nAylık sevkiyatı başlangıçta aylık 25 Elmas ile sınırlıdır, ama ardışık abonelik süresine göre artabilir.\n\nElmas limiti her üç aylık ardışık abonelik için 5 artar, toplam üst limit olan aylık 50 Elmasa kadar artabilir!</string>
+  <string name="subscribe.listitem2.description">Her ay avatarın için özel görsel bir eşya alırsın!\n\nAyrıca, her üç aylık ardışık abonelik için, Gizemli Zaman Yolcuları sana tarihi (ve fütürist!) görsel eşyalara erişim sağlar.</string>
   <string name="subscribe.listitem3.description">Tamamlanmış Yapılacak İş ve iş geçmişlerine daha uzun süre erişim sağlar.</string>
   <string name="subscribe1month.gemcap">Elmas limiti 25\'le başlar</string>
   <string name="subscribe3month.gemcap">Elmas limiti 30\'a çıkar</string>
@@ -481,4 +483,9 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="myster_item_notes">Her ay, aboneler gizemli eşya alırlar. Bu genelde ayın son haftasında açıklanır.</string>
   <string name="open">Aç</string>
   <string name="notification_mystery_item">Kutuyu açtın ve %s buldun!</string>
+  <string name="checkInRewardEarned">Kendini hayatını geliştirmeye adadığın için ödül olarak %1$s kazandın.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Bir sonraki ödülün %1$d Girişten sonra açılacak</string>
+  <string name="pending_approval">onay bekleniyor</string>
+  <string name="group_tasks_edit_description">Grup işleri düzenlenemez.</string>
+  <string name="group_tasks_edit_title">Bu işi düzenleyemezsin</string>
 </resources>

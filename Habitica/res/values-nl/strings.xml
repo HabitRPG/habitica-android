@@ -428,6 +428,10 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="subscriptions">Abonnementen</string>
   <string name="subscription_duration">Keert iedere %s terug</string>
   <string name="subscribe">Abonneer</string>
+  <string name="subscribe.listitem1.description">Alexander de Koopman zal nu edelstenen aan je verkopen voor 20 goud per edelsteen!\n\nZijn maandelijkse levering is initieel beperkt tot 25 edelstenen per maand, maar stijgt afhankelijk van de duur van je abonnement.\n\nDit limiet verhoogt met 5 edelstenen voor elke 3 maanden van opeenvolgende abonnement periodes, tot een maximum van 50 edelstenen per maand!</string>
+  <string name="subscribe.listitem2.description">Iedere maand ontvang je een uniek cosmetisch voorwerp voor je avatar!\n\nEn voor iedere 3 maanden van opeenvolgende abonnement periodes, geven de mysterieuze tijdreizigers je toegang to historische (en futuristische!) cosmetische voorwerpen.</string>
+  <string name="subscribe.listitem3.description">Maakt voltooide To-do\'s en taakgeschiedenis langer beschikbaar.</string>
+  <string name="subscribe.listitem4.description">Dubbele vondst limieten laten je dagelijks meer voorwerpen verdienen van je voltooide taken, waardoor je je stal sneller kan voltooien!</string>
   <string name="subscribe1month.gemcap">Edelsteenlimiet begint bij 25</string>
   <string name="subscribe3month.gemcap">Edelsteenlimiet verhoogt naar 30</string>
   <string name="subscribe6month.gemcap">Edelsteenlimiet verhoogt naar 35</string>
@@ -437,6 +441,7 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="subscription">Abonnement</string>
   <string name="active">Actief</string>
   <string name="cancel_subscription">Annuleer Abonnement</string>
+  <string name="cancel_subscription_google.description">Wil je niet langer abonneren? Je kan de optie om je abonnement stop te zetten vinden in de \"Mijn apps\" sectie van de Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">Wil je niet langer abonneren? Vanwege je betaalmethode kan je enkel via de website je abonnement stop zetten. Klik op de knop hieronder om de site in je browser te openen!</string>
   <string name="visit_habitica_website">Bezoek Habitica Website</string>
   <string name="current_bonuses">Huidige bonussen</string>

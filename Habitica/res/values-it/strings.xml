@@ -429,7 +429,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="subscriptions">Abbonamenti</string>
   <string name="subscription_duration">Ricorrente ogni %s</string>
   <string name="subscribe">Abbonati</string>
-  <string name="subscribe.listitem1.description">Da ora Alexander il Mercante ti venderà Gemme al prezzo di 20 oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma posso aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
+  <string name="subscribe.listitem1.description">Da ora Alexander il Mercante ti venderà Gemme al prezzo di 20 oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
   <string name="subscribe.listitem2.description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar!\n\nIn più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
   <string name="subscribe.listitem3.description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
   <string name="subscribe.listitem4.description">Raddoppiare il numero massimo di drop giornalieri ti farà ricevere più oggetti dalle attività completate ogni giorno, aiutandoti a completare la tua scuderia più velocemente!</string>

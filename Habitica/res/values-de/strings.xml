@@ -491,4 +491,7 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="notification_mystery_item">Du öffnest die Kiste und findest %s!</string>
   <string name="checkInRewardEarned">Du hast ein %1$s als Belohnung für Deine Hingabe, dein Leben zu verbessern, erhalten.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Deine nächste Belohnung wird nach %1$d Log-Ins freigeschalten </string>
+  <string name="pending_approval">Zustimmung ausstehend</string>
+  <string name="group_tasks_edit_description">Gruppenaufgaben können nicht bearbeitet werden.</string>
+  <string name="group_tasks_edit_title">Aufgabe kann nicht bearbeitet werden</string>
 </resources>

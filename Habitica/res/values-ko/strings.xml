@@ -435,7 +435,14 @@
   <string name="subscriptions">구독</string>
   <string name="subscription_duration">자동이체: 매 %s</string>
   <string name="subscribe">구독하기</string>
+  <string name="subscribe.listitem1.description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!\n\n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.\n\n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다.</string>
   <string name="subscribe.listitem2.description">매달 당신의 아바타를 위한 독특한 의상 아이템을 드립니다!\n\n더불어, 정기 후원을 해주시는 매 3달마다 미스터리 시간 여행자가 전통적인 (그리고 미래지향적인!) 꾸미기 아이템을 소개해 줄 겁니다.</string>
+  <string name="subscribe.listitem3.description">완료한 할 일과 과제 기록이 더 오래 남습니다.</string>
+  <string name="subscribe.listitem4.description">드롭 제한 두 배로 인하여 매일 과제를 수행하며 펫 컬렉션 완성을 도울 더 많은 아이템을 얻을 수 있습니다.</string>
+  <string name="subscribe1month.gemcap">최대 보석 구매량은 25 부터입니다.</string>
+  <string name="subscribe3month.gemcap">최대 보석 구매량이 30으로 늘었습니다.</string>
+  <string name="subscribe6month.gemcap">최대 보석 구매량이 35로 늘었습니다.</string>
+  <string name="subscribe12month.gemcap">최대 보석 구매량이 45로 늘었습니다.</string>
   <string name="subscription_hourglasses">신비한 모래시계 +%d</string>
   <string name="payment_method">지급방법</string>
   <string name="subscription">정기구독</string>
@@ -478,6 +485,7 @@
   <string name="open_settings">설정 열기</string>
   <string name="inbox">받은 편지함</string>
   <string name="FAQ">자주 묻는 질문</string>
+  <string name="special">스페셜</string>
   <string name="gem_for_gold_description">당신은 Habitica를 정기 후원하시므로, 매달 골드를 이용해 특정량의 보석을 구입할 수 있습니다.</string>
   <string name="limited_count">%d 남음</string>
   <string name="gem_shop">보석</string>
