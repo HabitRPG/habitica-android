@@ -163,12 +163,16 @@ public class PartyFragment extends BaseMainFragment {
                 new AlertDialog.Builder(viewPager.getContext())
                         .setTitle("Leave Party")
                         .setMessage("Are you sure you want to leave the party?")
+                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiHelper.apiService.leaveGroup(this.group.id)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(group -> {
+                                    getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
+                                }, throwable -> {
+                            }))
+                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> {
+                            dialog.dismiss();
+                        })
                         .show();
-//                this.apiHelper.apiService.leaveGroup(this.group.id).compose(apiHelper.configureApiCallObserver())
-//                        .subscribe(group -> {
-//                            getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-//                        }, throwable -> {
-//                        });
                 return true;
         }
 
