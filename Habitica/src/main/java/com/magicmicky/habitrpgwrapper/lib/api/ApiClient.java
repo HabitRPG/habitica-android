@@ -1,5 +1,6 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import com.habitrpg.android.habitica.ErrorResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -204,7 +205,7 @@ public interface ApiClient {
     // Notifications
     Observable<Void> readNotificaiton(String notificationId);
 
-    com.habitrpg.android.habitica.ApiClientImpl.ErrorResponse getErrorResponse(HttpException throwable);
+    ErrorResponse getErrorResponse(HttpException throwable);
 
     void updateAuthenticationCredentials(String userID, String apiToken);
 

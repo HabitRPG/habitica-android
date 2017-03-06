@@ -823,10 +823,6 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 
-    public static class ErrorResponse {
-        public String message;
-    }
-
     public Observable<ContentResult>getContent() {
         return apiService.getContent(languageCode).compose(configureApiCallObserver());
     }
