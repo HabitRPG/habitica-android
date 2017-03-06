@@ -10,7 +10,7 @@ import android.os.Bundle;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
  */
 public class LocalNotificationActionReceiver extends BroadcastReceiver implements HabitRPGUserCallback.OnUserReceived {
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
 
     private HabitRPGUser user;
     private String action;

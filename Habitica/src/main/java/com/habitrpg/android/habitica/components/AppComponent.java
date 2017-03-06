@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.components;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -77,7 +77,6 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
 import com.habitrpg.android.habitica.widget.TaskListFactory;
 import com.habitrpg.android.habitica.widget.TaskListWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 
 import javax.inject.Singleton;
 
@@ -209,7 +208,7 @@ public interface AppComponent {
 
     void inject(ChallengeDetailActivity challengeDetailActivity);
 
-    void inject(IApiClient apiClient);
+    void inject(ApiClient apiClient);
 
     void inject(TaskListWidgetProvider taskListWidgetProvider);
 

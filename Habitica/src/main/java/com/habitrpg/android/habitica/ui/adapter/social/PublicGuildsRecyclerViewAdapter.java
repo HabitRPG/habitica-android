@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     private List<Group> publicGuildList;
     private List<Group> fullPublicGuildList;
     private List<String> memberGuildIDs;

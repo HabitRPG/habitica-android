@@ -26,21 +26,21 @@ public class HabitScoreUseCase extends UseCase<HabitScoreUseCase.RequestValues, 
 
     @Override
     protected Observable<TaskDirectionData> buildUseCaseObservable(RequestValues requestValues) {
-        return taskRepository.taskChecked(requestValues.habit, requestValues.Up).doOnNext(res -> {
+        return taskRepository.taskChecked(requestValues.habit, requestValues.up).doOnNext(res -> {
 
-            soundManager.loadAndPlayAudio(requestValues.Up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
+            soundManager.loadAndPlayAudio(requestValues.up ? SoundManager.SoundPlusHabit : SoundManager.SoundMinusHabit);
         });
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
 
-        protected boolean Up = false;
+        protected boolean up = false;
 
         protected final Task habit;
 
         public RequestValues(Task habit, boolean up) {
             this.habit = habit;
-            this.Up = up;
+            this.up = up;
         }
     }
 }

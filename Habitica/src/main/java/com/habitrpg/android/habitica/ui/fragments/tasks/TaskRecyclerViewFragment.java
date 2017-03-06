@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
@@ -52,7 +52,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Named("UserID")
     String userID;
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
     @Inject
     TagsHelper tagsHelper;
     LinearLayoutManager layoutManager = null;

@@ -1,8 +1,7 @@
 package com.habitrpg.android.habitica.modules;
 
-import com.habitrpg.android.habitica.ApiClient;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
@@ -29,18 +28,18 @@ public class ApiModule {
 
     @Provides
     public GsonConverterFactory providesGsonConverterFactory() {
-        return ApiClient.createGsonFactory();
+        return com.habitrpg.android.habitica.ApiClientImpl.createGsonFactory();
     }
 
     @Provides
     @Singleton
-    public IApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig,  CrashlyticsProxy crashlyticsProxy, Context context) {
-        return new ApiClient(gsonConverter, hostConfig, crashlyticsProxy, context);
+    public ApiClient providesApiHelper(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, Context context) {
+        return new com.habitrpg.android.habitica.ApiClientImpl(gsonConverter, hostConfig, crashlyticsProxy, context);
     }
 
     @Provides
     @Singleton
-    public ContentCache providesContentCache(IApiClient client){
+    public ContentCache providesContentCache(ApiClient client){
         return new ContentCache(client);
     }
 

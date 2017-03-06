@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
@@ -25,7 +25,7 @@ public class SkillMemberActivity extends BaseActivity {
     private PartyMemberRecyclerViewAdapter viewAdapter;
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
 
     @Override
     protected int getLayoutResId() {

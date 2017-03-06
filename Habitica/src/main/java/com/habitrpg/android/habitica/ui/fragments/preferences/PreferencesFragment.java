@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
@@ -41,7 +41,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     @Inject
     public SoundManager soundManager;
     public MainActivity activity;

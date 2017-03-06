@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica;
 
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Transaction;
@@ -31,11 +31,11 @@ import retrofit2.adapter.rxjava.HttpException;
 public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
     private static final String PURCHASED_PRODUCTS_KEY = "PURCHASED_PRODUCTS";
-    private final IApiClient apiClient;
+    private final ApiClient apiClient;
     private Set<String> purchasedOrderList = new HashSet<>();
     private SharedPreferences preferences;
 
-    public HabiticaPurchaseVerifier(Context context, IApiClient apiClient) {
+    public HabiticaPurchaseVerifier(Context context, ApiClient apiClient) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         preferences.getStringSet(PURCHASED_PRODUCTS_KEY, purchasedOrderList);
@@ -78,7 +78,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                 }, throwable -> {
                     if (throwable.getClass().equals(HttpException.class)) {
                         HttpException error = (HttpException)throwable;
-                        ApiClient.ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
+                        com.habitrpg.android.habitica.ApiClientImpl.ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                         if (error.code() == 401) {
                             if (res.message.equals("RECEIPT_ALREADY_USED")) {
                                 purchasedOrderList.add(purchase.orderId);
@@ -107,7 +107,7 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                     }, throwable -> {
                         if (throwable.getClass().equals(HttpException.class)) {
                             HttpException error = (HttpException) throwable;
-                            ApiClient.ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
+                            com.habitrpg.android.habitica.ApiClientImpl.ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
                                 if (res.message.equals("RECEIPT_ALREADY_USED")) {
                                     purchasedOrderList.add(purchase.orderId);

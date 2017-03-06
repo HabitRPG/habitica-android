@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -16,10 +16,10 @@ import rx.Observable;
 
 
 public class ContentCache {
-    private IApiClient apiClient;
+    private ApiClient apiClient;
 
 
-    public ContentCache(IApiClient apiClient) {
+    public ContentCache(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
 

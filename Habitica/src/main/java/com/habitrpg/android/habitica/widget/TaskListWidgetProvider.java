@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -28,7 +28,7 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public static final String TASK_ID_ITEM = "com.habitrpg.android.habitica.TASK_ID_ITEM";
 
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 

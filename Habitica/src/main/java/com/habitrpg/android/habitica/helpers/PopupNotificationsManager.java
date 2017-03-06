@@ -10,16 +10,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,18 +27,18 @@ import java.util.Map;
 public class PopupNotificationsManager {
     private static PopupNotificationsManager instance;
     private Map<String, Boolean> seenNotifications;
-    private IApiClient apiClient;
+    private ApiClient apiClient;
     private Context context;
 
     // @TODO: A queue for displaying alert dialogues
 
-    private PopupNotificationsManager(IApiClient apiClient, Context context) {
+    private PopupNotificationsManager(ApiClient apiClient, Context context) {
         this.apiClient = apiClient;
         this.seenNotifications = new HashMap<>();
         this.context = context.getApplicationContext();
     }
 
-    public static PopupNotificationsManager getInstance(IApiClient apiHelper, Context context) {
+    public static PopupNotificationsManager getInstance(ApiClient apiHelper, Context context) {
         if (instance == null) {
             instance = new PopupNotificationsManager(apiHelper, context);
         }

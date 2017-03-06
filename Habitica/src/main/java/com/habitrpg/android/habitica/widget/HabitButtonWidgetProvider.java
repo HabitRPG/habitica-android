@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -16,14 +16,6 @@ import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
-
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.RemoteViews;
 
 import javax.inject.Inject;
 
@@ -33,7 +25,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
     public static final String TASK_ID = "com.habitrpg.android.habitica.TASK_ID_ITEM";
     public static final String TASK_DIRECTION = "com.habitrpg.android.habitica.TASK_DIRECTION";
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     @Inject
     public HostConfig hostConfig;
 

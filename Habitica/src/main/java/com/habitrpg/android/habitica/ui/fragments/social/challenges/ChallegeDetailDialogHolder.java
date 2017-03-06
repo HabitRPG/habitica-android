@@ -1,13 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -68,7 +67,7 @@ public class ChallegeDetailDialogHolder {
     LinearLayout task_group_layout;
 
     private AlertDialog dialog;
-    private IApiClient apiClient;
+    private ApiClient apiClient;
     private HabitRPGUser user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
@@ -81,7 +80,7 @@ public class ChallegeDetailDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bind(AlertDialog dialog, IApiClient apiClient, HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
         this.apiClient = apiClient;
@@ -326,7 +325,7 @@ public class ChallegeDetailDialogHolder {
     }
 
 
-    public static void showDialog(Activity activity, IApiClient apiClient, HabitRPGUser user, Challenge challenge,
+    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 

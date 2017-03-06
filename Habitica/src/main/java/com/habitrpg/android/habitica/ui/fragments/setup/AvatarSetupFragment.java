@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -41,7 +41,7 @@ public class AvatarSetupFragment extends BaseFragment {
     CustomizationSetupAdapter adapter;
     GridLayoutManager layoutManager;
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
     private HabitRPGUser user;
 
     @Nullable

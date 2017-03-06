@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -53,7 +53,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     }
 
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -37,7 +37,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     @Named("UserID")
     String userID;
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
 
     ObservableList<Task> tasksOnInitialize;
 

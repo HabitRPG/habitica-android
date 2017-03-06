@@ -1,7 +1,5 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
-import com.habitrpg.android.habitica.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
@@ -18,9 +16,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthSocial;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
@@ -38,7 +34,7 @@ import java.util.Map;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 
-public interface IApiClient {
+public interface ApiClient {
     void setLanguageCode(String languageCode);
 
     Observable<Status> getStatus();
@@ -208,7 +204,7 @@ public interface IApiClient {
     // Notifications
     Observable<Void> readNotificaiton(String notificationId);
 
-    ApiClient.ErrorResponse getErrorResponse(HttpException throwable);
+    com.habitrpg.android.habitica.ApiClientImpl.ErrorResponse getErrorResponse(HttpException throwable);
 
     void updateAuthenticationCredentials(String userID, String apiToken);
 

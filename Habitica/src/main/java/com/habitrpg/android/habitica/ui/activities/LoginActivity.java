@@ -15,7 +15,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity
 
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     @Inject
     public SharedPreferences sharedPrefs;
     @Inject

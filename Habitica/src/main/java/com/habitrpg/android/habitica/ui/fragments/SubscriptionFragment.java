@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.SubscriptionOptionView;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
@@ -44,7 +44,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;

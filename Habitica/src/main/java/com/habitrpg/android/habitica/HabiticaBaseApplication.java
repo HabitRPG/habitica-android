@@ -24,7 +24,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -50,7 +50,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     private static AppComponent component;
     public RefWatcher refWatcher;
     @Inject
-    Lazy<IApiClient> lazyApiHelper;
+    Lazy<ApiClient> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
     @Inject
@@ -166,7 +166,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
         if (lastInstalledVersion < info.versionCode) {
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
-            IApiClient apiClient = this.lazyApiHelper.get();
+            ApiClient apiClient = this.lazyApiHelper.get();
 
             apiClient.getContent()
                     .subscribe(contentResult -> { }, throwable -> {});

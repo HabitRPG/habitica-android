@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 public class IntroActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     @BindView(R.id.view_pager)
     ViewPager pager;
     @BindView(R.id.view_pager_indicator)

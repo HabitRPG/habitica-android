@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
@@ -39,7 +39,7 @@ public class GroupInformationFragment extends BaseFragment {
     FragmentGroupInfoBinding viewBinding;
 
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
 
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;

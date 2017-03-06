@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.modules;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.implementation.TaskRepositoryImpl;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
@@ -18,7 +18,7 @@ public class RepositoryModule {
     }
 
     @Provides
-    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, IApiClient apiClient) {
+    TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient) {
         return new TaskRepositoryImpl(localRepository, apiClient);
     }
 }

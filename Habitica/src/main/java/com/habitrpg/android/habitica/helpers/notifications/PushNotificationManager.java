@@ -7,14 +7,9 @@ import android.preference.PreferenceManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +29,7 @@ public class PushNotificationManager {
     private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
     private static PushNotificationManager instance = null;
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;

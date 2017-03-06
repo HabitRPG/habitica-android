@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
@@ -16,7 +16,7 @@ import rx.Observable;
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
 
-    public TaskRepositoryImpl(TaskLocalRepository localRepository, IApiClient apiClient) {
+    public TaskRepositoryImpl(TaskLocalRepository localRepository, ApiClient apiClient) {
         super(localRepository, apiClient);
     }
 

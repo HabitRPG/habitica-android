@@ -10,7 +10,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -28,16 +28,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +41,7 @@ import butterknife.BindView;
 public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     @Inject
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)

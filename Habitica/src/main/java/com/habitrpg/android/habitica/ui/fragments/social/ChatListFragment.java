@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -52,7 +52,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
     public String seenGroupId;
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     public boolean isTavern;
     @BindView(R.id.chat_list)
     RecyclerView mRecyclerView;

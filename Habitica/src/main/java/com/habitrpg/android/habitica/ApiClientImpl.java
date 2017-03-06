@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
@@ -115,7 +115,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class ApiClient implements Action1<Throwable>, IApiClient {
+public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
@@ -123,7 +123,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
     CrashlyticsProxy crashlyticsProxy;
     Context context;
 
-    // I think we don't need the ApiClient anymore we could just use ApiService
+    // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private final ApiService apiService;
 
     final Observable.Transformer apiCallTransformer =
@@ -132,7 +132,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
                         @Override
                         public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
-                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(ApiClient.this, context);
+                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(com.habitrpg.android.habitica.ApiClientImpl.this, context);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
                             }
                             return habitResponse.getData();
@@ -146,7 +146,7 @@ public class ApiClient implements Action1<Throwable>, IApiClient {
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
-    public ApiClient(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy,  Context context) {
+    public ApiClientImpl(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, Context context) {
         this.gsonConverter = gsonConverter;
         this.hostConfig = hostConfig;
         this.context = context;

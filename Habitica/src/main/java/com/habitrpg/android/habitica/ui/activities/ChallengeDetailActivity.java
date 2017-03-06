@@ -35,7 +35,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDeta
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -69,7 +69,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     Toolbar toolbar;
 
     @Inject
-    public IApiClient apiClient;
+    public ApiClient apiClient;
 
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.api;
 
 
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -18,7 +18,7 @@ import rx.observers.TestSubscriber;
 
 public class BaseAPITests {
 
-    public IApiClient apiClient;
+    public ApiClient apiClient;
     public HostConfig hostConfig;
 
     public String username;

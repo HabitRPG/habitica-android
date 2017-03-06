@@ -4,7 +4,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.magicmicky.habitrpgwrapper.lib.api.IApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -58,7 +58,7 @@ public class FullProfileActivity extends BaseActivity {
     @Inject
     ContentCache contentCache;
     @Inject
-    IApiClient apiClient;
+    ApiClient apiClient;
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
     @BindView(R.id.profile_blurb)
