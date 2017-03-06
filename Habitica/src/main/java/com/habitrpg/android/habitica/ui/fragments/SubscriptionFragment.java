@@ -31,6 +31,17 @@ import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -106,7 +117,6 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     private HabitRPGUser user;
     private boolean hasLoadedSubscriptionOptions;
-    private boolean isSubscribed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -142,18 +152,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscription6MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription6Month));
         this.subscription12MonthView.setOnPurchaseClickListener(view1 -> selectSubscription(PurchaseTypes.Subscription12Month));
 
-        this.subscribeListitem1Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description);
-        });
-        this.subscribeListitem2Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description);
-        });
-        this.subscribeListitem3Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description);
-        });
-        this.subscribeListitem4Box.setOnClickListener(view1 -> {
-            toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description);
-        });
+        this.subscribeListitem1Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem1Button, this.subscribeListItem1Description));
+        this.subscribeListitem2Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description));
+        this.subscribeListitem3Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description));
+        this.subscribeListitem4Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description));
     }
 
     private void toggleDescriptionView(ImageView button, TextView descriptionView) {
@@ -285,7 +287,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     private void updateSubscriptionInfo() {
         if (user != null) {
             SubscriptionPlan plan = user.getPurchased().getPlan();
-            isSubscribed = false;
+            boolean isSubscribed = false;
             if (plan != null) {
                 if (plan.isActive()) {
                     isSubscribed = true;

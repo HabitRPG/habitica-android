@@ -56,8 +56,13 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
     @Override
     public void bindHolder(Task newTask, int position) {
         super.bindHolder(newTask, position);
-        this.checkbox.setChecked(this.task.completed);
-        if (this.shouldDisplayAsActive()) {
+
+        boolean completed = this.task.completed;
+        if (task.isPendingApproval()) {
+            completed = false;
+        }
+        this.checkbox.setChecked(completed);
+        if (this.shouldDisplayAsActive() && !task.isPendingApproval()) {
             this.checkboxHolder.setBackgroundResource(this.task.getLightTaskColor());
         } else {
             this.checkboxHolder.setBackgroundColor(this.taskGray);
@@ -77,6 +82,7 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 this.rightBorderView.setBackgroundColor(this.taskGray);
             }
         }
+
     }
 
     abstract public Boolean shouldDisplayAsActive();

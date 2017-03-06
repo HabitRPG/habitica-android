@@ -343,7 +343,7 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="email">E-mail</string>
   <string name="invite_users">Convidar para o Grupo</string>
   <string name="share_using">Compartilhar via</string>
-  <string name="share_levelup">Eu cheguei ao nível %d no Habitica melhorando os hábitos da minha vida real.</string>
+  <string name="share_levelup">Eu cheguei ao nível %d em Habitica, melhorando meus hábitos da vida real!</string>
   <string name="share_hatched">Eu acabei de ganhar um filhote de %1$s %2$s no Habitica por completar minhas tarefas da vida real!</string>
   <string name="share_raised">Eu acabei de ganhar um %1$s %2$s de montaria no Habitica por completar minhas tarefas da vida real!</string>
   <string name="open_in_store">Abra na Play Store</string>
@@ -429,9 +429,21 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="subscriptions">Assinaturas</string>
   <string name="subscription_duration">Recorrente a cada %s</string>
   <string name="subscribe">Assine</string>
+  <string name="payment_method">Método de pagamento</string>
+  <string name="active">Ativo</string>
+  <string name="cancel_subscription">Cancelar Assinatura</string>
+  <string name="current_bonuses">Bônus atuais</string>
+  <string name="inactive">Inativo</string>
+  <string name="one_month">1 Mês</string>
+  <string name="months">%d Meses</string>
+  <string name="month">mês</string>
+  <string name="three_months">3 meses</string>
+  <string name="six_months">6 meses</string>
+  <string name="twelve_months">12 meses</string>
   <string name="byLeader">em %s</string>
   <string name="challenge_details">Detalhes do Desafios</string>
   <string name="challenge_leave_title">Deixar Desafio</string>
+  <string name="challenge_leave_text">Tem certeza que deseja sair do Desafio “%s”?</string>
   <string name="my_challenges">Meus Desafios</string>
   <string name="public_challenges">Públicos</string>
   <string name="challenges">Desafios</string>
@@ -449,6 +461,18 @@ Para começar, quais partes da sua vida você quer melhorar?</string>
   <string name="add_reminder">Adicionar Lembrete</string>
   <string name="warning">Aviso</string>
   <string name="open_settings">Abrir Configurações</string>
+  <string name="dont_keep_activities_warning">Parece que você tem a opção de Desenvolvedor \\"Não manter Atividades\\" ativa. Atualmente, esta opção causa problemas com o aplicativo Habitica, por isso sugerimos desativá-la.</string>
   <string name="inbox">Caixa de Entrada</string>
   <string name="FAQ">Perguntas Frequentes</string>
+  <string name="special">Especial</string>
+  <string name="limited_count">%d saiu</string>
+  <string name="gem_shop">Gema</string>
+  <string name="mystery_item">Item Misterioso</string>
+  <string name="open">Abrir</string>
+  <string name="notification_mystery_item">Você abre a caixa e encontra %s!</string>
+  <string name="checkInRewardEarned">Você ganhou um %1$s como recompensa por sua devoção para melhorar sua vida.</string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Seu próximo prêmio desbloquei em %1$d Check-Ins</string>
+  <string name="pending_approval">aprovação pendente</string>
+  <string name="group_tasks_edit_description">Tarefas de grupo não podem ser editadas.</string>
+  <string name="group_tasks_edit_title">Não é possível editar esta tarefa</string>
 </resources>

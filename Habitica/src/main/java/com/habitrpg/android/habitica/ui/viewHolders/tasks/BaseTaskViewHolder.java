@@ -60,6 +60,9 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
     @BindView(R.id.taskIconWrapper)
     LinearLayout taskIconWrapper;
 
+    @BindView(R.id.approvalRequiredTextField)
+    TextView approvalRequiredTextView;
+
     boolean disabled;
 
     public BaseTaskViewHolder(View itemView) {
@@ -134,7 +137,16 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
         if (this.taskIconWrapper != null) {
             this.taskIconWrapper.setVisibility(getTaskIconWrapperIsVisible() ? View.VISIBLE : View.GONE);
         }
+
+        if (task.isPendingApproval()) {
+            approvalRequiredTextView.setVisibility(View.VISIBLE);
+        } else {
+            approvalRequiredTextView.setVisibility(View.GONE);
+        }
+
     }
+
+
 
     protected void configureSpecialTaskTextView(Task task) {
         if (this.specialTaskTextView != null) {

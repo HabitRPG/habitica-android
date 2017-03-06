@@ -111,6 +111,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         mItemTouchCallback = new ItemTouchHelper.Callback() {
             private Integer mFromPosition = null;
 

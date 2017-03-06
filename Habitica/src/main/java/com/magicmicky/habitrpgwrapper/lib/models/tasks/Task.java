@@ -58,6 +58,11 @@ public class Task extends BaseModel {
     public Date dateCreated;
     @Column
     public int position;
+    @Column
+    @ForeignKey(references = {@ForeignKeyReference(columnName = "group_id",
+            columnType = String.class,
+            foreignColumnName = "task_id")})
+    public TaskGroupPlan group;
     //Habits
     @Column
     public Boolean up, down;
@@ -439,8 +444,13 @@ public class Task extends BaseModel {
         checklist = null;
         reminders = null;
 
-        if (repeat != null)
+        if (repeat != null) {
             repeat.task_id = this.id;
+        }
+
+        if (group != null) {
+            group.task_id = this.id;
+        }
 
         super.save();
 
@@ -632,5 +642,23 @@ public class Task extends BaseModel {
         event.task = this;
         EventBus.getDefault().post(event);
         super.delete();
+    }
+
+    public boolean isGroupTask() {
+        if (group != null) {
+            if (group.approvalRequired) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPendingApproval() {
+        if (group != null) {
+            if (group.approvalRequired && group.approvalRequested && !group.approvalApproved) {
+                return true;
+            }
+        }
+        return false;
     }
 }

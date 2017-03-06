@@ -352,7 +352,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="leaderName">Leader: %1$s</string>
   <string name="confirm">Confirm</string>
   <string name="market">Market</string>
-  <string name="timeTravelers">Time Travelers</string>
+  <string name="timeTravelers">Time Travellers</string>
   <string name="seasonalShop">Seasonal Shop</string>
   <string name="empty_inbox">You don\'t have any Inbox messages. You can send a user a new message from their public chat messages!</string>
   <string name="party_invite">Unlock by inviting friends</string>
@@ -428,10 +428,10 @@ To start, which parts of your life do you want to improve?</string>
   <string name="subscriptions">Subscriptions</string>
   <string name="subscription_duration">Recurring every %s</string>
   <string name="subscribe">Subscribe</string>
-  <string name="subscribe.listitem1.description">Alexander the Merchant will sell you Gems at a cost of 20 gold per gem. His monthly shipments are initially capped at 25 Gems per month, but this cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
-  <string name="subscribe.listitem2.description">Makes completed To-Dos and task history available for longer.</string>
-  <string name="subscribe.listitem3.description">Complete your stable faster!</string>
-  <string name="subscribe.listitem4.description">Each month you will receive a unique cosmetic item for your avatar! Plus, for every three months of consecutive subscription, the Mysterious Time Travelers will grant you access to historic (and futuristic!) cosmetic items.</string>
+  <string name="subscribe.listitem1.description">Alexander the Merchant will now sell you gems for 20 gold each!\n\nHis monthly shipments are initially capped at 25 Gems per month, but can increase based on your subscription length.\n\nThe cap increases by 5 Gems for every three months of consecutive subscription, up to a maximum of 50 Gems per month!</string>
+  <string name="subscribe.listitem2.description">Each month you will receive a unique cosmetic item for your avatar!\n\nPlus, for every three months of consecutive subscription, the Mysterious Time Travellers will grant you access to historic (and futuristic!) cosmetic items.</string>
+  <string name="subscribe.listitem3.description">Makes completed To-Dos and task history available for longer.</string>
+  <string name="subscribe.listitem4.description">Double drop caps will let you receive more items from your completed tasks every day, helping you complete your stable faster!</string>
   <string name="subscribe1month.gemcap">Gem cap starts at 25</string>
   <string name="subscribe3month.gemcap">Gem cap raised to 30</string>
   <string name="subscribe6month.gemcap">Gem cap raised to 35</string>
@@ -441,7 +441,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="subscription">Subscription</string>
   <string name="active">Active</string>
   <string name="cancel_subscription">Cancel Subscription</string>
-  <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the \"My Apps\" section of the Google Play Store.</string>
+  <string name="cancel_subscription_google.description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">No longer want to subscribe? Due to your payment method, you can only unsubscribe through the website. Click the button below, to open the site in your browser!</string>
   <string name="visit_habitica_website">Visit Habitica Website</string>
   <string name="current_bonuses">Current Bonuses</string>
@@ -460,6 +460,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="byLeader">by %s</string>
   <string name="challenge_details">Challenge Details</string>
   <string name="challenge_leave_title">Leave Challenge</string>
+  <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
   <string name="my_challenges">My Challenges</string>
   <string name="public_challenges">Public</string>
   <string name="challenges">Challenges</string>
@@ -477,6 +478,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="add_reminder">Add Reminder</string>
   <string name="warning">Warning</string>
   <string name="open_settings">Open Settings</string>
+  <string name="dont_keep_activities_warning">It seems like you have the Developer option \“Don\'t keep Activities\” active. Currently this option causes issues with the Habitica app, so we suggest disabling it.</string>
   <string name="inbox">Inbox</string>
   <string name="FAQ">Frequently Asked Questions</string>
   <string name="special">Special</string>
@@ -489,4 +491,7 @@ To start, which parts of your life do you want to improve?</string>
   <string name="notification_mystery_item">You open the box and find %s!</string>
   <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
+  <string name="pending_approval">pending approval</string>
+  <string name="group_tasks_edit_description">Group tasks cannot be edited.</string>
+  <string name="group_tasks_edit_title">Can\'t edit this task</string>
 </resources>
