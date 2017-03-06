@@ -27,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -107,7 +106,6 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     private HabitRPGUser user;
     private boolean hasLoadedSubscriptionOptions;
-    private boolean isSubscribed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -279,7 +277,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     private void updateSubscriptionInfo() {
         if (user != null) {
             SubscriptionPlan plan = user.getPurchased().getPlan();
-            isSubscribed = false;
+            boolean isSubscribed = false;
             if (plan != null) {
                 if (plan.isActive()) {
                     isSubscribed = true;

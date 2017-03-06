@@ -31,8 +31,10 @@ public class SubscriptionPlan extends BaseModel {
     @Column
     public Date dateUpdated;
     @Column
+    @Nullable
     public Date dateTerminated;
     @Column
+    @Nullable
     public String paymentMethod;
     @Column
     @Nullable
@@ -53,7 +55,7 @@ public class SubscriptionPlan extends BaseModel {
 
     public boolean isActive() {
         Date today = new Date();
-        if (this.dateTerminated == null) {
+        if (planId != null && this.dateTerminated == null) {
             return true;
         }
         return planId != null || this.dateTerminated.after(today);
