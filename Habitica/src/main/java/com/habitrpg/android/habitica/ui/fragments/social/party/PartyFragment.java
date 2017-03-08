@@ -161,8 +161,8 @@ public class PartyFragment extends BaseMainFragment {
                 return true;
             case R.id.menu_guild_leave:
                 new AlertDialog.Builder(viewPager.getContext())
-                        .setTitle("Leave Party")
-                        .setMessage("Are you sure you want to leave the Party?")
+                        .setTitle(viewPager.getContext().getString(R.string.party_leave))
+                        .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
                         .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiHelper.apiService.leaveGroup(this.group.id)
                                 .compose(apiHelper.configureApiCallObserver())
                                 .subscribe(group -> {

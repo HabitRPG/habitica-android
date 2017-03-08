@@ -494,4 +494,6 @@ To start, which parts of your life do you want to improve?</string>
   <string name="pending_approval">pending approval</string>
   <string name="group_tasks_edit_description">Group tasks can not be edited.</string>
   <string name="group_tasks_edit_title">Can\'t edit this task</string>
+  <string name="party_leave">Leave Party</string>
+  <string name="party_leave_confirmation">Are you sure you want to leave the Party?</string>
 </resources>
