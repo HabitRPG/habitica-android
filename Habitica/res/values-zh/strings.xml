@@ -277,11 +277,11 @@
   <string name="quests">任务</string>
   <string name="pets">宠物</string>
   <string name="mounts">坐骑</string>
-  <string name="armoireEquipment">您在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
+  <string name="armoireEquipment">你在魔法衣橱里找到了一件稀有装备：%s！恭喜你！</string>
   <string name="armoireFood">你在魔法衣橱里找到了%1$s %2$s。它是用来做什么的？</string>
   <string name="armoireExp">你和大衣柜展开了殊死搏斗，并赢得了经验，尝尝这个吧！</string>
   <string name="armoireNotesFull">拉开 魔法衣橱 来获得随机的特殊装备，经验或者食物！剩余的装备：%d</string>
-  <string name="armoireLastItem">您在魔法衣橱里找到了最后一件稀有装备。</string>
+  <string name="armoireLastItem">你在魔法衣橱里找到了最后一件稀有装备。</string>
   <string name="armoireNotesEmpty">每个月的第一个星期这里都会有新的装备，到时记得常点进来获得经验和食物！</string>
   <string name="sell">出售 (%d金币)</string>
   <string name="hatch_with_potion">用孵化药水孵化</string>
@@ -328,7 +328,7 @@
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你确定要退出吗？</string>
   <string name="change_class">更换你的职业</string>
-  <string name="change_class_description">转换你的职业并重置属性点需要3颗宝石。你能通过网页分配属性点</string>
+  <string name="change_class_description">更换你的职业并重置属性点需要3颗宝石。你能通过网页分配属性点</string>
   <string name="enable_class">开启职业系统</string>
   <string name="changing_class_progress">更换职业</string>
   <string name="by_email">通过电子邮件</string>
