@@ -53,7 +53,7 @@
   <string name="emailAddress">电子邮件地址</string>
   <string name="confirmpassword">确认密码</string>
   <string name="logout">注销</string>
-  <string name="logout_description">從你的帳號登出</string>
+  <string name="logout_description">从你的账号登出</string>
   <string name="account_details_sum">账号信息</string>
   <string name="account_details">账号信息</string>
   <string name="LoginActivityName">欢迎</string>
@@ -87,8 +87,8 @@
   <string name="hard">困难</string>
   <string name="start_date">开始日期</string>
   <string name="positive_habit_form">正面的(+)</string>
-  <string name="negative_habit_form">负面的 (-)</string>
-  <string name="checklist">检查蛋</string>
+  <string name="negative_habit_form">负面的(-)</string>
+  <string name="checklist">检查单</string>
   <string name="reminders">提醒</string>
   <string name="actions">动作</string>
   <string name="attributes">属性</string>
@@ -310,10 +310,10 @@
   <string name="empty_items">你没有拥有任何的%s</string>
   <string name="user_level">Lvl %d</string>
   <string name="user_level_with_class">Lvl %1$d %2$s</string>
-  <string name="warrior">戰士</string>
-  <string name="rogue">盜賊</string>
-  <string name="mage">法師</string>
-  <string name="healer">醫師</string>
+  <string name="warrior">战士</string>
+  <string name="rogue">盗贼</string>
+  <string name="mage">法师</string>
+  <string name="healer">医师</string>
   <string name="warrior_description">战士们会有更大的机率触发暴击并在完成任务时随机获得额外的金币，经验和掉率。他们还能对boss造成严重的伤害。如果你希望获得随机性的奖励，或者在boss任务中重创boss，来玩战士吧！</string>
   <string name="mage_description">法师非常善于学习，获得经验值和升级比其他职业快。他们也会获得大量的魔力值来使用一些特殊的法术。如果你喜欢玩得有策略性，或者你强烈地希望升级解锁更多的游戏内容，来玩法师吧！</string>
   <string name="rogue_description">盗贼热衷于积累财富，比其他人获得更多的金币，还擅长寻找随机物品。他们标志性的潜行技能使得他们能够躲避未完成的日常带来的伤害。如果你希望获得更多的奖励，成就，掉落以及徽章，来玩盗贼吧！</string>
@@ -328,7 +328,7 @@
   <string name="dialog_go_back">返回</string>
   <string name="opt_out_confirmation">你确定要退出吗？</string>
   <string name="change_class">更换你的职业</string>
-  <string name="change_class_description">转换你的职业病重置属性点需要3颗宝石。你能通过网页分配属性点</string>
+  <string name="change_class_description">转换你的职业并重置属性点需要3颗宝石。你能通过网页分配属性点</string>
   <string name="enable_class">开启职业系统</string>
   <string name="changing_class_progress">更换职业</string>
   <string name="by_email">通过电子邮件</string>
@@ -413,7 +413,7 @@
   <string name="open_market">打开市场</string>
   <string name="cds_description">你的每日任务将会在 %1$s 后第一次打开 Habitica 时进行结算并被重置。请确保在此之前完成所有的每日任务！</string>
   <string name="AudioTheme_title">声音主题</string>
-  <string name="AudioTheme_summary">更高 Habitica 的声音主题</string>
+  <string name="AudioTheme_summary">更改 Habitica 的声音主题</string>
   <!--Login Incentives-->
   <string name="see_you_tomorrow">明天再见！</string>
   <string name="belongs_to_challenge">来自挑战</string>
