@@ -11,6 +11,7 @@
         android:text="@string/qr_section_title"
         style="@style/SectionTitle"
         android:layout_gravity="center"
+        android:layout_marginTop="40dp"
          />
 
     <FrameLayout
