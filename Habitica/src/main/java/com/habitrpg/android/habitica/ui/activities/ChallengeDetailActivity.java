@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDeta
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -38,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 public class ChallengeDetailActivity extends BaseActivity {
 
@@ -184,30 +186,56 @@ public class ChallengeDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_leave:
-                new AlertDialog.Builder(this)
-                        .setTitle(this.getString(R.string.challenge_leave_title))
-                        .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
-                        .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
-                            this.apiHelper.apiService.leaveChallenge(challenge.id)
-                                    .compose(apiHelper.configureApiCallObserver())
-                                    .subscribe(aVoid -> {
-                                        challenge.user_id = null;
-                                        challenge.async().save();
+                showChallengeLeaveDialog();
 
-                                        HabiticaApplication.User.resetChallengeList();
-                                        finish();
-
-                                    }, throwable -> {
-                                    });
-                        })
-                        .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
-                        }).show();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showChallengeLeaveDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle(this.getString(R.string.challenge_leave_title))
+                .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
+                .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
+                    dialog.dismiss();
+
+                    showRemoveTasksDialog(keepTasks -> {
+                        this.apiHelper.apiService.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(aVoid -> {
+                                    challenge.user_id = null;
+                                    challenge.async().save();
+
+                                    HabiticaApplication.User.resetChallengeList();
+                                    finish();
+
+                                }, throwable -> {
+                                });
+                    });
+
+
+                })
+                .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
+                    dialog.dismiss();
+                }).show();
+    }
+
+    // refactor as an UseCase later - see ChallengeDetailDialogHolder
+    private void showRemoveTasksDialog(Action1<String> callback){
+        new AlertDialog.Builder(this)
+                .setTitle(this.getString(R.string.challenge_remove_tasks_title))
+                .setMessage(this.getString(R.string.challenge_remove_tasks_text))
+                .setPositiveButton(this.getString(R.string.remove_tasks), (dialog, which) -> {
+                    callback.call("remove-all");
+                    dialog.dismiss();
+                })
+                .setNegativeButton(this.getString(R.string.keep_tasks), (dialog, which) -> {
+                    callback.call("keep-all");
+                    dialog.dismiss();
+                }).show();
     }
 
     @Override
