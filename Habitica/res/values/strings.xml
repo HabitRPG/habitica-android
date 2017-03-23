@@ -204,13 +204,16 @@
     <string name="sidebar_help">Help &amp; FAQ</string>
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
-    <string name="intro_1_title">Welcome to Habitica</string>
-    <string name="intro_1_description" >Join over %s people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
-    <string name="intro_2_title">Game Progress = Life Progress</string>
-    <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armor, pets, and more to reward you for meeting your goals!</string>
-    <string name="intro_3_title">Get Social and Fight Monsters</string>
+    <string name="intro_1_subtitle">Welcome to</string>
+    <string name="intro_1_title">Habitica</string>
+    <string name="intro_1_description" >It’s time to have fun while you get things done. Join over %s others improving their life one task at a time.</string>
+    <string name="intro_2_subtitle">Progress in the game</string>
+    <string name="intro_2_title">Progress in life</string>
+    <string name="intro_2_description">Unlock features in the game by checking off your real life tasks. Earn armor, pets, and more as rewards for meeting your goals.</string>
+    <string name="intro_3_subtitle">Get social</string>
+    <string name="intro_3_title">Fight monsters</string>
     <string name="intro_3_description">Keep your goals on track with help from your friends. Support each other in life and in battle as you improve together!</string>
-    <string name="intro_finish_button">Get Started</string>
+    <string name="intro_finish_button">Let\'s start!</string>
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
     <string name="skip_button">Skip</string>
