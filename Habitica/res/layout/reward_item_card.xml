@@ -47,6 +47,14 @@
                 android:layout_height="wrap_content"
                 tools:text="Notes"/>
 
+            <TextView
+                    android:id="@+id/approvalRequiredTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Caption4"
+                    android:text="@string/pending_approval"
+                    />
+
         </LinearLayout>
 
         <Button

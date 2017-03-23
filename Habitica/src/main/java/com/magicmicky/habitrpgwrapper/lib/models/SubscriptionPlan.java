@@ -8,6 +8,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import android.support.annotation.Nullable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,10 +31,13 @@ public class SubscriptionPlan extends BaseModel {
     @Column
     public Date dateUpdated;
     @Column
+    @Nullable
     public Date dateTerminated;
     @Column
+    @Nullable
     public String paymentMethod;
     @Column
+    @Nullable
     public String planId;
     @Column
     public Integer gemsBought;
@@ -50,7 +55,7 @@ public class SubscriptionPlan extends BaseModel {
 
     public boolean isActive() {
         Date today = new Date();
-        return planId != null && this.dateTerminated == null || this.dateTerminated.after(today);
+        return planId != null && (this.dateTerminated == null || this.dateTerminated.after(today));
     }
 
     @Override

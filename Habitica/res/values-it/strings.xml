@@ -7,7 +7,7 @@
   <string name="ERR_pb_barcode">Le preferenze non possono essere importate dal codice a barre</string>
   <!--Prefs-->
   <string name="PS_settings_title">Impostazioni</string>
-  <string name="SP_address_hint">Il tuo server</string>
+  <string name="SP_address_hint">Il tuo server personalizzato</string>
   <string name="SP_userID_title">ID utente</string>
   <string name="SP_userID_summary">Il tuo ID utente</string>
   <string name="SP_APIToken_title">API Token</string>
@@ -411,7 +411,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="skill_transformation_use">usa</string>
   <string name="hatching_market_info">Non trovi i drop giusti? Dai un\'occhiata al Mercato!</string>
   <string name="feeding_market_info">Hai bisogno di cibo diverso? Comprane un po\' nel Mercato!</string>
-  <string name="open_market">Entra nel Mercato</string>
+  <string name="open_market">Vai nel Mercato</string>
   <string name="cds_description">Le tue Daily saranno resettate la prima volta che userai Habitica dopo %1$s. Assicurati di aver completato le tue Daily prima di allora!</string>
   <string name="AudioTheme_title">Tema sonoro</string>
   <string name="AudioTheme_summary">Cambia il tema sonoro di Habitica</string>
@@ -429,10 +429,10 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="subscriptions">Abbonamenti</string>
   <string name="subscription_duration">Ricorrente ogni %s</string>
   <string name="subscribe">Abbonati</string>
-  <string name="subscribe.listitem1.description">Alexander il Mercante ti venderà Gemme al prezzo di 20 Oro per gemma. Le sue consegne mensili saranno inizialmente limitate a 25 gemme al mese, ma questo limite aumenta di 5 gemme per ogni tre mesi di abbonamento consecutivi, fino a un massimo di 50 gemme al mese!</string>
-  <string name="subscribe.listitem2.description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
-  <string name="subscribe.listitem3.description">Riempi le tue scuderie più velocemente!</string>
-  <string name="subscribe.listitem4.description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar! In più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
+  <string name="subscribe.listitem1.description">Da ora Alexander il Mercante ti venderà Gemme al prezzo di 20 oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
+  <string name="subscribe.listitem2.description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar!\n\nIn più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
+  <string name="subscribe.listitem3.description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
+  <string name="subscribe.listitem4.description">Raddoppiare il numero massimo di drop giornalieri ti farà ricevere più oggetti dalle attività completate ogni giorno, aiutandoti a completare la tua scuderia più velocemente!</string>
   <string name="subscribe1month.gemcap">Il limite gemme iniziale è 25</string>
   <string name="subscribe3month.gemcap">Limite gemme alzato a 30</string>
   <string name="subscribe6month.gemcap">Limite gemme alzato a 35</string>
@@ -461,6 +461,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="byLeader">di %s</string>
   <string name="challenge_details">Dettagli sfida</string>
   <string name="challenge_leave_title">Abbandona sfida</string>
+  <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
   <string name="my_challenges">Le mie sfide</string>
   <string name="public_challenges">Pubbliche</string>
   <string name="challenges">Sfide</string>
@@ -478,6 +479,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="add_reminder">Aggiungi promemoria</string>
   <string name="warning">Attenzione</string>
   <string name="open_settings">Apri impostazioni</string>
+  <string name="dont_keep_activities_warning">Pare che tu abbia l\'opzione sviluppatore \\"Non conservare attività\\" abilitata. Al momento questa opzione causa dei problemi all\'app di Habitica, quindi consigliamo di disabilitarla.</string>
   <string name="inbox">Messaggi</string>
   <string name="FAQ">Domande frequenti</string>
   <string name="special">Speciale</string>
@@ -490,4 +492,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="notification_mystery_item">Apri il pacco e trovi %s!</string>
   <string name="checkInRewardEarned">Hai meritato %1$s come premio per la tua costanza nel migliorare la tua vita.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Il prossimo premio verrà sbloccato a %1$d accessi</string>
+  <string name="pending_approval">in attesa di approvazione</string>
+  <string name="group_tasks_edit_description">Le attività di gruppo non possono essere modificate.</string>
+  <string name="group_tasks_edit_title">Non puoi modificare questa attività</string>
 </resources>

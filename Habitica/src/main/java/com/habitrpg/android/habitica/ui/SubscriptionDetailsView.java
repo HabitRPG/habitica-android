@@ -78,14 +78,16 @@ public class SubscriptionDetailsView extends LinearLayout {
 
         String duration = null;
 
-        if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC) || plan.planId.equals(SubscriptionPlan.PLANID_BASICEARNED)) {
-            duration = getResources().getString(R.string.month);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC3MONTH)) {
-            duration = getResources().getString(R.string.three_months);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC6MONTH) || plan.planId.equals(SubscriptionPlan.PLANID_GOOGLE6MONTH)) {
-            duration = getResources().getString(R.string.six_months);
-        } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC12MONTH)) {
-            duration = getResources().getString(R.string.twelve_months);
+        if (plan.planId != null) {
+            if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC) || plan.planId.equals(SubscriptionPlan.PLANID_BASICEARNED)) {
+                duration = getResources().getString(R.string.month);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC3MONTH)) {
+                duration = getResources().getString(R.string.three_months);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC6MONTH) || plan.planId.equals(SubscriptionPlan.PLANID_GOOGLE6MONTH)) {
+                duration = getResources().getString(R.string.six_months);
+            } else if (plan.planId.equals(SubscriptionPlan.PLANID_BASIC12MONTH)) {
+                duration = getResources().getString(R.string.twelve_months);
+            }
         }
 
         if (duration != null) {
@@ -102,25 +104,29 @@ public class SubscriptionDetailsView extends LinearLayout {
         gemCapTextView.setText(String.valueOf(plan.consecutive.getGemCapExtra() + 25));
         currentHourglassesTextView.setText(String.valueOf(plan.consecutive.getTrinkets()));
 
-        if (plan.paymentMethod.equals("Google")) {
-            cancelSubscripnDescription.setText(R.string.cancel_subscription_google_description);
-            visitWebsiteButton.setText(R.string.open_in_store);
-        } else {
-            cancelSubscripnDescription.setText(R.string.cancel_subscription_notgoogle_description);
-            visitWebsiteButton.setText(R.string.visit_habitica_website);
+        if (plan.paymentMethod != null) {
+            if (plan.paymentMethod.equals("Google")) {
+                cancelSubscripnDescription.setText(R.string.cancel_subscription_google_description);
+                visitWebsiteButton.setText(R.string.open_in_store);
+            } else {
+                cancelSubscripnDescription.setText(R.string.cancel_subscription_notgoogle_description);
+                visitWebsiteButton.setText(R.string.visit_habitica_website);
+            }
         }
     }
 
     @OnClick(R.id.visitWebsiteButton)
     public void openSubscriptionWebsite() {
-        Intent intent;
-        if (plan.paymentMethod.equals("Google")) {
-            intent = new Intent("android.intent.action.VIEW");
-            intent.setComponent(new ComponentName("com.android.vending", "com.android.vending.MyDownloadsActivity"));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else {
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
+        if (plan.paymentMethod != null) {
+            Intent intent;
+            if (plan.paymentMethod.equals("Google")) {
+                intent = new Intent("android.intent.action.VIEW");
+                intent.setComponent(new ComponentName("com.android.vending", "com.android.vending.MyDownloadsActivity"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            } else {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
+            }
+            getContext().startActivity(intent);
         }
-        getContext().startActivity(intent);
     }
 }
