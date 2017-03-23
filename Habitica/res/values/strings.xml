@@ -529,6 +529,13 @@ To start, which parts of your life do you want to improve?</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
+    <string name="filters">Filters</string>
+    <string name="done">Done</string>
     <string name="group_tasks_edit_description">Group tasks can not be edited.</string>
     <string name="group_tasks_edit_title">Can\'t edit this task</string>
+    <string name="groups">Groups</string>
+    <string name="all">All</string>
+    <string name="none">None</string>
+    <string name="owned">Owned</string>
+    <string name="not_owned">Not owned</string>
 </resources>

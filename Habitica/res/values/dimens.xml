@@ -97,4 +97,7 @@
 	<dimen name="button_padding">32dp</dimen>
 	<dimen name="button_padding_small">16dp</dimen>
 	<dimen name="button_padding_vertical_small">4dp</dimen>
+
+	<dimen name="dialog_marginLeftRight">24dp</dimen>
+	<dimen name="dialog_marginTopBottom">24dp</dimen>
 </resources>
