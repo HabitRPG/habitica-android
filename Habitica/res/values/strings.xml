@@ -538,4 +538,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="none">None</string>
     <string name="owned">Owned</string>
     <string name="not_owned">Not owned</string>
+    <string name="new_game">New\nGame</string>
+    <string name="login_btn_fb">Login with Facebook</string>
+    <string name="login_btn_google">Login with Google</string>
 </resources>

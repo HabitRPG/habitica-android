@@ -113,4 +113,7 @@
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
     <color name="pill_gray">#efefef</color>
+    <color name="white_75_alpha">#bfffffff</color>
+    <color name="white_50_alpha">#7fffffff</color>
+    <color name="white_15_alpha">#26ffffff</color>
 </resources>
