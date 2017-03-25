@@ -142,7 +142,8 @@
                         android:drawableEnd="@drawable/ic_email"
                         android:hint="@string/emailAddress"
                         android:textColor="@color/white_75_alpha"
-                        android:theme="@style/LoginEditTextTheme"/>
+                        android:theme="@style/LoginEditTextTheme"
+                        />
 
                 <EditText
                         android:id="@+id/password"

@@ -3,18 +3,25 @@ package com.habitrpg.android.habitica.ui.views.login;
 
 import com.habitrpg.android.habitica.R;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LoginBackgroundView extends RelativeLayout {
 
@@ -36,8 +43,26 @@ public class LoginBackgroundView extends RelativeLayout {
     public LoginBackgroundView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.random = new Random();
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this, this);
         starViews = new ArrayList<>();
         generateStars();
+        animateClouds();
+    }
+
+    private void animateClouds() {
+        ValueAnimator leftAnimator = ObjectAnimator.ofFloat(leftCloudView, View.TRANSLATION_Y, 10.0f).setDuration(5000);
+        leftAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        leftAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        leftAnimator.start();
+        ValueAnimator rightAnimator = ObjectAnimator.ofFloat(rightCloudView, View.TRANSLATION_Y, -10.0f).setDuration(8000);
+        rightAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        rightAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        rightAnimator.start();
     }
 
     @Override
@@ -86,12 +111,19 @@ public class LoginBackgroundView extends RelativeLayout {
         StarView starView = new StarView(getContext()
         );
         starView.setStarSize(size);
+        if (random.nextInt(10) > 2) {
+            starView.setBlinkDurations(Arrays.asList(getBlinkDuration(), getBlinkDuration(), getBlinkDuration()));
+        }
         starViews.add(starView);
         if (width > 0 && height > 0) {
-            this.addView(starView, getStarParams());
+            this.addView(starView, 0, getStarParams());
         } else {
-            this.addView(starView);
+            this.addView(starView, 0);
         }
+    }
+
+    private int getBlinkDuration() {
+        return random.nextInt(30)*800+4;
     }
 
     private void updateStarLayoutParams() {
