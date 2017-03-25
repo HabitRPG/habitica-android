@@ -177,6 +177,7 @@ android {
             multiDexEnabled true
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }
@@ -186,6 +187,15 @@ android {
             multiDexEnabled true
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
+        }
+    }
+
+    productFlavors {
+        dev {
+            minSdkVersion 21
+        }
+
+        prod {
         }
     }
 
