@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import net.pherth.android.emoji_library.EmojiParser;
@@ -320,22 +321,43 @@ public class ChallegeDetailDialogHolder {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.challenge_leave_title))
                 .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
-                .setPositiveButton(context.getString(R.string.yes), (dialog, which) -> this.apiHelper.apiService.leaveChallenge(challenge.id)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(aVoid -> {
-                            challenge.user_id = null;
-                            challenge.async().save();
+                .setPositiveButton(context.getString(R.string.yes), (dialog, which) ->
 
-                            this.user.resetChallengeList();
+                        showRemoveTasksDialog(keepTasks -> {
 
-                            if (challengeLeftAction != null) {
-                                challengeLeftAction.call(challenge);
-                            }
+                            this.apiHelper.apiService.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
+                                    .compose(apiHelper.configureApiCallObserver())
+                                    .subscribe(aVoid -> {
+                                        challenge.user_id = null;
+                                        challenge.async().save();
 
-                            this.dialog.dismiss();
-                        }, throwable -> {
+                                        this.user.resetChallengeList();
+
+                                        if (challengeLeftAction != null) {
+                                            challengeLeftAction.call(challenge);
+                                        }
+
+                                        this.dialog.dismiss();
+                                    }, throwable -> {
+                                    });
                         })).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
             dialog.dismiss();
         }).show();
     }
+
+    // refactor as an UseCase later - see ChallengeDetailActivity
+    private void showRemoveTasksDialog(Action1<String> callback){
+        new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.challenge_remove_tasks_title))
+                .setMessage(context.getString(R.string.challenge_remove_tasks_text))
+                .setPositiveButton(context.getString(R.string.remove_tasks), (dialog, which) -> {
+                    callback.call("remove-all");
+                    dialog.dismiss();
+                })
+                .setNegativeButton(context.getString(R.string.keep_tasks), (dialog, which) -> {
+                    callback.call("keep-all");
+                    dialog.dismiss();
+                }).show();
+    }
+
 }

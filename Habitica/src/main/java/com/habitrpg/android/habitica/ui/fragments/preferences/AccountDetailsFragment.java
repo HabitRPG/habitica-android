@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.preferences;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.ui.SubscriptionDetailsView;
+import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;

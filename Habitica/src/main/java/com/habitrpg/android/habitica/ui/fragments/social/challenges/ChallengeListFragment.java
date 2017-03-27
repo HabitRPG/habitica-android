@@ -1,15 +1,20 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +34,12 @@ import rx.Observable;
 import rx.functions.Action0;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    @BindView(R.id.challenge_filter_layout)
+    LinearLayout challengeFilterLayout;
+
+    @BindView(R.id.action_filter_icon)
+    View actionFilterIcon;
 
     @BindView(R.id.challenges_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -41,6 +53,11 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private ChallengesListViewAdapter challengeAdapter;
     private boolean viewUserChallengesOnly;
     private Action0 refreshCallback;
+    private boolean withFilter;
+
+    public void setWithFilter(boolean withFilter){
+        this.withFilter = withFilter;
+    }
 
     public void setViewUserChallengesOnly(boolean only) {
         this.viewUserChallengesOnly = only;
@@ -49,6 +66,10 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     public void setRefreshingCallback(Action0 refreshCallback) {
         this.refreshCallback = refreshCallback;
     }
+
+    private List<Challenge> currentChallengesInView;
+
+    private ChallengeFilterOptions lastFilterOptions;
 
     public void setObservable(Observable<ArrayList<Challenge>> listObservable) {
         listObservable
@@ -100,10 +121,20 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         View v = inflater.inflate(R.layout.fragment_challengeslist, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly);
+        challengeAdapter = new ChallengesListViewAdapter(viewUserChallengesOnly, user);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshEmptyLayout.setOnRefreshListener(this);
+
+        challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
+        challengeFilterLayout.setClickable(true);
+        challengeFilterLayout.setOnClickListener(view -> {
+            ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, this.apiHelper,
+                    HabiticaApplication.User, currentChallengesInView, lastFilterOptions, filterOptions -> {
+                        challengeAdapter.setFilterByGroups(filterOptions);
+                        this.lastFilterOptions = filterOptions;
+                    });
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
@@ -159,6 +190,8 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         if (swipeRefreshEmptyLayout == null || swipeRefreshLayout == null) {
             return;
         }
+        currentChallengesInView = challenges;
+
         if (viewUserChallengesOnly && challenges.size() == 0) {
             swipeRefreshEmptyLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setRefreshing(false);

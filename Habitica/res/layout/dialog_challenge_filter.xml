@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.habitrpg.android.habitica.ui.MaxHeightLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:orientation="vertical"
+    app:maxHeightMultiplier="0.7">
+
+    <!-- margins can't be at the first LinearLayout, it has to be the inner one -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dialog_marginLeftRight"
+        android:layout_marginLeft="@dimen/dialog_marginLeftRight"
+        android:layout_marginRight="@dimen/dialog_marginLeftRight"
+        android:layout_marginStart="@dimen/dialog_marginLeftRight"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Title1_WideLetterSpacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:text="@string/filters"
+                android:textColor="#000" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/challenge_filter_button_done"
+                    style="@style/Body1_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="@string/done"
+                    android:textColor="#6133b4"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1f000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Caption3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:height="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/groups"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/challenge_filter_button_all"
+                style="@style/Body1_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/all"
+                android:textColor="#6133b4"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/challenge_filter_button_none"
+                style="@style/Body1_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/none"
+                android:textColor="#6133b4"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/challenge_filter_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/dialog_challenge_filter_group_item"
+            tools:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Caption3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:height="20dp"
+                android:gravity="center_vertical"
+                android:text="Ownerchip"
+                android:textAllCaps="true" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/challenge_filter_owned"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="" />
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/owned" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/challenge_filter_not_owned"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="" />
+
+            <TextView
+                style="@style/Subheader2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_owned" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.habitrpg.android.habitica.ui.MaxHeightLinearLayout>
