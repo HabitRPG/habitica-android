@@ -7,6 +7,8 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -24,18 +26,25 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -101,6 +110,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     }
 
     public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
+        startActivity(SetupActivity.class, context);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
             startActivity(IntroActivity.class, context);
 

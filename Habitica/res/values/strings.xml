@@ -219,7 +219,7 @@
     <string name="skip_button">Skip</string>
     <string name="setup_welcome_description">Welcome to Habitica, where advancing in the game will improve your real life! As you accomplish real-world goals, you\'ll unlock equipment, pets, quests, and more.</string>
     <string name="setup_welcome_title">Welcome</string>
-    <string name="avatar_setup_description">First, you need an avatar in the game to represent you! The things you do in real life will affect your avatar\'s health, experience level, and gold.</string>
+    <string name="avatar_setup_description">So, how would you like to look? Don\'t worry, you can change this later.</string>
     <string name="task_setup_description">Splendid! Now let\'s set up your tasks so that you can start earning experience and gold.
 
 To start, which parts of your life do you want to improve?</string>
@@ -541,4 +541,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="new_game">New\nGame</string>
     <string name="login_btn_fb">Login with Facebook</string>
     <string name="login_btn_google">Login with Google</string>
+    <string name="action_back">Back</string>
+    <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
+    <string name="randomize">Randomize</string>
 </resources>

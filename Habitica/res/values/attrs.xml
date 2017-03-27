@@ -20,4 +20,9 @@
         <attr name="gemCapText" format="string" />
         <attr name="hourGlassCount" format="integer" />
     </declare-styleable>
+    <declare-styleable name="SpeechBubbleView">
+        <attr name="namePlate" format="string" />
+        <attr name="text" format="string" />
+        <attr name="npcDrawable" format="integer" />
+    </declare-styleable>
 </resources>

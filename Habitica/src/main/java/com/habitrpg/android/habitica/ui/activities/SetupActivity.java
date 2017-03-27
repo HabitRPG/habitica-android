@@ -9,23 +9,32 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
+import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
+import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.viewpagerindicator.IconPageIndicator;
+import com.viewpagerindicator.IconPagerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import java.util.Calendar;
@@ -37,8 +46,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class SetupActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
+public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
     public APIHelper apiHelper;
@@ -46,12 +56,12 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)
     ViewPager pager;
-    @BindView(R.id.skipButton)
-    Button skipButton;
     @BindView(R.id.nextButton)
     Button nextButton;
     @BindView(R.id.previousButton)
     Button previousButton;
+    @BindView(R.id.view_pager_indicator)
+    IconPageIndicator indicator;
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
     HabitRPGUser user;
@@ -67,9 +77,6 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
 
-        this.skipButton.setOnClickListener(this);
-        this.nextButton.setOnClickListener(this);
-        this.previousButton.setOnClickListener(this);
         this.completedSetup = false;
 
         Map<String, Object> additionalData = new HashMap<>();
@@ -84,6 +91,11 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
                         .subscribe(new MergeUserCallback(this, user), throwable -> {
                         });
             }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(getResources().getColor(R.color.light_gray_bg));
         }
     }
 
@@ -118,32 +130,10 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     private void setupViewpager() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-        pager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
-            @Override
-            public Fragment getItem(int position) {
-                Fragment fragment;
-
-                if (position == 0) {
-                    avatarSetupFragment = new AvatarSetupFragment();
-                    avatarSetupFragment.activity = SetupActivity.this;
-                    avatarSetupFragment.setUser(user);
-                    avatarSetupFragment.width = pager.getWidth();
-                    fragment = avatarSetupFragment;
-                } else {
-                    taskSetupFragment = new TaskSetupFragment();
-                    fragment = taskSetupFragment;
-                }
-
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return 2;
-            }
-        });
+        pager.setAdapter(new ViewPageAdapter(fragmentManager));
 
         pager.addOnPageChangeListener(this);
+        indicator.setViewPager(pager);
     }
 
     @Subscribe
@@ -154,34 +144,42 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
                 });
     }
 
-    @Override
-    public void onClick(View v) {
+    @OnClick(R.id.nextButton)
+    public void nextClicked(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("FirstDayOfTheWeek",
                 Integer.toString(Calendar.getInstance().getFirstDayOfWeek()));
         editor.apply();
-        if (v == this.nextButton) {
-            if (this.pager.getCurrentItem() == 1) {
-                List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
-                this.completedSetup = true;
-                this.apiHelper.apiService.createTasks(newTasks)
-                        .compose(this.apiHelper.configureApiCallObserver())
-                        .subscribe(tasks -> {
-                            onUserReceived(user);
-                        }, throwable -> {
-                        });
-                //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
-            }
-            this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
-        } else if (v == this.previousButton) {
-            this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
-        } else if (v == this.skipButton) {
-            Map<String, Object> additionalData = new HashMap<>();
-            additionalData.put("status", "skipped");
-            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
-            this.startMainActivity();
+        if (isLastPage()) {
+            List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
+            this.completedSetup = true;
+            this.apiHelper.apiService.createTasks(newTasks)
+                    .compose(this.apiHelper.configureApiCallObserver())
+                    .subscribe(tasks -> {
+                        onUserReceived(user);
+                    }, throwable -> {
+                    });
+            //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
         }
+        this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
+    }
+
+    @OnClick(R.id.previousButton)
+    public void previousClicked() {
+        this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
+    }
+
+    private void setPreviousButtonEnabled(boolean enabled) {
+        Drawable leftDrawable;
+        if (enabled) {
+            previousButton.setText(R.string.action_back);
+            leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_enabled);
+        } else {
+            previousButton.setText(null);
+            leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_disabled);
+        }
+        previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null);
     }
 
     @Override
@@ -192,11 +190,13 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onPageSelected(int position) {
         if (position == 0) {
-            this.previousButton.setVisibility(View.GONE);
+            this.setPreviousButtonEnabled(false);
             this.nextButton.setText(this.getString(R.string.next_button));
-        } else if (position == 1) {
-            this.previousButton.setVisibility(View.VISIBLE);
+        } else if (isLastPage()) {
+            this.setPreviousButtonEnabled(true);
             this.nextButton.setText(this.getString(R.string.intro_finish_button));
+        } else {
+            this.setPreviousButtonEnabled(true);
         }
     }
 
@@ -230,5 +230,53 @@ public class SetupActivity extends BaseActivity implements View.OnClickListener,
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private class ViewPageAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
+
+        public ViewPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+
+            switch (position) {
+                case 0: {
+                    fragment = new WelcomeFragment();
+                    break;
+                }
+                case 1: {
+                    avatarSetupFragment = new AvatarSetupFragment();
+                    avatarSetupFragment.activity = SetupActivity.this;
+                    avatarSetupFragment.setUser(user);
+                    avatarSetupFragment.width = pager.getWidth();
+                    fragment = avatarSetupFragment;
+                    break;
+                }
+                case 2: {
+                    taskSetupFragment = new TaskSetupFragment();
+                    fragment = taskSetupFragment;
+                    break;
+                }
+            }
+
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public int getIconResId(int index) {
+            return R.drawable.indicator_diamond;
+        }
+    }
+
+    private boolean isLastPage() {
+        return this.pager.getCurrentItem() == this.pager.getAdapter().getCount()-1;
     }
 }

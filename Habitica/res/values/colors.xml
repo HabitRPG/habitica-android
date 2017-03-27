@@ -116,4 +116,5 @@
     <color name="white_75_alpha">#bfffffff</color>
     <color name="white_50_alpha">#7fffffff</color>
     <color name="white_15_alpha">#26ffffff</color>
+    <color name="light_gray_bg">#F6F4F8</color>
 </resources>
