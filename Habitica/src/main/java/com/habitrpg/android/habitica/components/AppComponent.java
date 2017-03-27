@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
@@ -232,4 +233,6 @@ public interface AppComponent {
     void inject(TaskListFactory taskListFactory);
 
     void inject(GemPurchaseActivity gemPurchaseActivity);
+
+    void inject(CreateChallengeActivity createChallengeActivity);
 }
