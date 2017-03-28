@@ -276,6 +276,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         EventBus.getDefault().register(this);
+
     }
 
     @Override

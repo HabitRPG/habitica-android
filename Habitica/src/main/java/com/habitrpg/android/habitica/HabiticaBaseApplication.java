@@ -5,6 +5,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
@@ -110,7 +111,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     }
 
     public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
-        startActivity(SetupActivity.class, context);
+        startActivity(CreateChallengeActivity.class, context);
+
+
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
             startActivity(IntroActivity.class, context);
 

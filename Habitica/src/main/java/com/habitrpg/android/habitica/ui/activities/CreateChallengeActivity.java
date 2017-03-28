@@ -9,7 +9,7 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.id.activity_create_challenge;
+        return R.layout.activity_create_challenge;
     }
 
     @Override
