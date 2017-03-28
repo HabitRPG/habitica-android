@@ -1,10 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/challenge_filter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/action_filter_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="13dp"
+            android:src="@drawable/ic_action_filter_list"
+            android:tint="#80000000"
+            android:contentDescription="filter icon" />
+
+        <TextView
+            style="@style/Caption2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            android:textAllCaps="true" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_arrow_drop_down_80000000_24dp"
+            android:contentDescription="filter icon" />
+
+    </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/challenges.refresh.layout"

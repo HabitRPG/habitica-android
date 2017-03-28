@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/transparent">
+    <ImageView
+            android:id="@+id/npc_image_view"
+            android:layout_width="80dp"
+            android:layout_height="105dp"
+            tools:src="@drawable/npc_justin_only"
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"/>
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="21dp"
+            android:paddingTop="16dp"
+            android:paddingRight="21dp"
+            android:paddingBottom="14dp"
+            android:layout_marginTop="74dp"
+            tools:text="@string/welcome_text"/>
+    <TextView
+            android:id="@+id/name_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            tools:text="Justin"
+            android:background="@drawable/name_plate"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="60dp"
+            android:textStyle="bold" />
+</FrameLayout>

@@ -158,28 +158,28 @@
                 android:layout_marginTop="24dp"
                 >
 
-            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription1month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/month"
                     app:gemCapText="@string/subscribe1month.gemcap"/>
 
-            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription3month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/three_months"
                     app:gemCapText="@string/subscribe3month.gemcap"
                     app:hourGlassCount="1" />
-            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription6month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:recurringText="@string/six_months"
                     app:gemCapText="@string/subscribe6month.gemcap"
                     app:hourGlassCount="2" />
-            <com.habitrpg.android.habitica.ui.SubscriptionOptionView
+            <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                     android:id="@+id/subscription12month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                     app:gemCapText="@string/subscribe12month.gemcap"
                     app:hourGlassCount="4" >
 
-            </com.habitrpg.android.habitica.ui.SubscriptionOptionView>
+            </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
 
             <Button
                     android:text="@string/subscribe"
@@ -200,7 +200,7 @@
         </LinearLayout>
 
 
-        <com.habitrpg.android.habitica.ui.SubscriptionDetailsView
+        <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/subscriptionDetails"

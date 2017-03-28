@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
+import com.github.underscore.$;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -33,15 +36,38 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
 
 
     private List<Challenge> challenges = new ArrayList<>();
+    private List<Challenge> challengesSource = new ArrayList<>();
+
     private boolean viewUserChallengesOnly;
+    private HabitRPGUser user;
 
-    public ChallengesListViewAdapter(boolean viewUserChallengesOnly) {
-
+    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, HabitRPGUser user) {
         this.viewUserChallengesOnly = viewUserChallengesOnly;
+        this.user = user;
     }
 
     public void setChallenges(List<Challenge> challenges) {
-        this.challenges = challenges;
+        this.challengesSource = challenges;
+        this.challenges = new ArrayList<>(challengesSource);
+        this.notifyDataSetChanged();
+    }
+
+    public void setFilterByGroups(ChallengeFilterOptions filterOptions){
+        this.challenges = $.filter(challengesSource, arg ->
+        {
+            boolean showChallenge = $.find(filterOptions.ShowByGroups, g -> g.id.contains(arg.groupId)).isPresent();
+
+            boolean showByOwnership = false;
+            if(filterOptions.ShowOwned){
+                showByOwnership |= arg.leaderId == this.user.getId();
+            }
+
+            if(filterOptions.NotOwned){
+                showByOwnership |= arg.leaderId != this.user.getId();
+            }
+
+            return showChallenge && showByOwnership;
+        });
         this.notifyDataSetChanged();
     }
 

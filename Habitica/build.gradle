@@ -14,7 +14,6 @@ buildscript {
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.5'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath('com.noveogroup.android:check:1.2.3') {
             exclude module: 'checkstyle'
@@ -46,11 +45,11 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     //REST API handling
-    compile('com.squareup.retrofit2:retrofit:2.1.0') {
+    compile('com.squareup.retrofit2:retrofit:2.2.0') {
         exclude module: 'okhttp'
     }
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
 
     //Crash Logging
     releaseCompile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
@@ -69,10 +68,10 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.3.6@aar') {
         transitive = true
     }
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:recyclerview-v7:25.1.1'
-    compile 'com.android.support:preference-v14:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.android.support:preference-v14:25.3.0'
     compile 'com.android.support:multidex:1.0.1'
 
     //QR Code
@@ -110,6 +109,9 @@ dependencies {
 
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
+    // lodash/underscore
+    compile 'com.github.javadev:underscore:1.23'
+
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.0'
@@ -138,10 +140,10 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     //Push Notifications
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.google.firebase:firebase-core:10.2.0'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
 
-    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.2.0'
 
     compile 'org.apmem.tools:layouts:1.10@aar'
 
@@ -153,7 +155,7 @@ dependencies {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"
@@ -174,6 +176,7 @@ android {
             multiDexEnabled true
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
             resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }
@@ -183,6 +186,15 @@ android {
             multiDexEnabled true
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica"
+        }
+    }
+
+    productFlavors {
+        dev {
+            minSdkVersion 21
+        }
+
+        prod {
         }
     }
 
@@ -212,7 +224,7 @@ android {
 
     dexOptions {
         preDexLibraries false
-        javaMaxHeapSize "4g" // Use gig increments depending on needs
+        javaMaxHeapSize "6g" // Use gig increments depending on needs
     }
 
     lintOptions {
@@ -287,7 +299,6 @@ tasks.whenTaskAdded { task ->
 
 check { findbugs { skip true } }
 
-apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.google.gms.google-services'

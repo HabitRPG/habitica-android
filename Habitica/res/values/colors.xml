@@ -55,6 +55,8 @@
     <color name="changelog.note">#ffcf42</color>
 
 
+    <color name="colorPrimary">@color/brand_300</color>
+    <color name="colorPrimaryDark">@color/brand_50</color>
     <!-- text -->
     <color name="textColorDark">#FFFFFF</color>
     <color name="textColorSecondaryDark">@color/brand_500</color>
@@ -111,4 +113,8 @@
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
     <color name="pill_gray">#efefef</color>
+    <color name="white_75_alpha">#bfffffff</color>
+    <color name="white_50_alpha">#7fffffff</color>
+    <color name="white_15_alpha">#26ffffff</color>
+    <color name="light_gray_bg">#F6F4F8</color>
 </resources>
