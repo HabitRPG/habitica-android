@@ -99,7 +99,14 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 }
             }
             tagsHelper.setTags(tagList);
-            EventBus.getDefault().post(new FilterTasksByTagsCommand());
+
+            TasksFragment.this.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    EventBus.getDefault().post(new FilterTasksByTagsCommand());
+                }
+            });
+
         }
     };
 
