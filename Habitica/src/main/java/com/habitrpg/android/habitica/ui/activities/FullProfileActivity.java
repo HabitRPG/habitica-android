@@ -383,6 +383,11 @@ public class FullProfileActivity extends BaseActivity {
         float conAttributes = 0;
         float perAttributes = 0;
 
+        float strClassBonus = 0;
+        float intClassBonus = 0;
+        float conClassBonus = 0;
+        float perClassBonus = 0;
+
         // Summarize stats and fill equipment table
         for (ItemData i : obj) {
             int str_ = (int) i.getStr();
@@ -416,40 +421,39 @@ public class FullProfileActivity extends BaseActivity {
             }
 
             addEquipmentRow(equipmentTableLayout, i.getKey(), i.getText(), sb.toString());
+
+            // Calculate class bonus
+            String itemClass = i.getKlass();
+
+            if (itemClass.isEmpty()) {
+                continue;
+            }
+
+            switch (itemClass) {
+                case "rogue":
+                    strClassBonus = str_ * 0.5f;
+                    perClassBonus = per_ * 0.5f;
+                    break;
+                case "healer":
+                    conClassBonus = con_ * 0.5f;
+                    intClassBonus = int_ * 0.5f;
+                    break;
+                case "warrior":
+                    strClassBonus = str_ * 0.5f;
+                    conClassBonus = con_ * 0.5f;
+                    break;
+                case "wizard":
+                    intClassBonus = int_ * 0.5f;
+                    perClassBonus = per_ * 0.5f;
+                    break;
+            }
         }
 
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
         addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, true, false);
-
-        if (!user.getPreferences().isDisableClasses()) {
-            float strClassBonus = 0;
-            float intClassBonus = 0;
-            float conClassBonus = 0;
-            float perClassBonus = 0;
-
-            switch (user.getStats().get_class()) {
-                case rogue:
-                    strClassBonus = strAttributes * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-                case healer:
-                    conClassBonus = conAttributes * 0.5f;
-                    intClassBonus = intClassBonus * 0.5f;
-                    break;
-                case warrior:
-                    strClassBonus = strAttributes * 0.5f;
-                    conClassBonus = conAttributes * 0.5f;
-                    break;
-                case wizard:
-                    intClassBonus = intClassBonus * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-            }
-
-            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
-        }
+        addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
     }
 
     public void gotCostume(List<ItemData> obj) {
