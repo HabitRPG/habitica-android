@@ -544,4 +544,11 @@ To start, which parts of your life do you want to improve?</string>
     <string name="action_back">Back</string>
     <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
     <string name="randomize">Randomize</string>
+    <string name="avatar_extras">Extras</string>
+    <string name="avatar_skin_color">Skin Color</string>
+    <string name="avatar_hair_color">Hair Color</string>
+    <string name="avatar_hair_bangs">Bangs</string>
+    <string name="avatar_hair_ponytail">Ponytail</string>
+    <string name="avatar_glasses">Glasses</string>
+    <string name="avatar_wheelchair">Wheelchair</string>
 </resources>

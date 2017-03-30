@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.modules.DeveloperModule;
+import com.habitrpg.android.habitica.modules.RepositoryModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
@@ -82,7 +83,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class})
+@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class, RepositoryModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);

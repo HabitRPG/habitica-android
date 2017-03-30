@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/light_gray_bg"
+        android:gravity="center_horizontal">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <Button
+                android:id="@+id/randomize_button"
+                android:layout_width="wrap_content"
+                android:text="@string/randomize"
+                style="@style/DiamondButton"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_centerHorizontal="true"/>
 
         <com.habitrpg.android.habitica.ui.AvatarView
-            android:id="@+id/avatarView"
-            android:layout_width="@dimen/avatar_width"
-            android:layout_height="@dimen/avatar_height"
-            app:showBackground="true"
-            app:showMount="true"
-            app:showPet="true" />
+                android:id="@+id/avatarView"
+                android:layout_width="224dp"
+                android:layout_height="108dp"
+                app:showBackground="true"
+                app:showMount="false"
+                app:showPet="false"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/randomize_button"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+    <com.habitrpg.android.habitica.ui.views.setup.AvatarCustomizationDrawer
+            android:id="@+id/customization_drawer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/avatar_setup_description"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginRight="6dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="6dp" />
-    </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerView"/>
-</LinearLayout>
+            android:layout_alignParentBottom="true"
+            />
+
+        <com.habitrpg.android.habitica.ui.SpeechBubbleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:namePlate="Justin"
+                app:text="@string/avatar_setup_description"
+                app:npcDrawable="@drawable/npc_justin_only"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_above="@id/customization_drawer"
+                android:layout_marginBottom="12dp"/>
+
+</RelativeLayout>
