@@ -103,7 +103,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
                     case "flower":
                         return Integer.parseInt(customization.key) == prefs.getHair().getFlower();
                     case "wheelchair":
-                        return customization.key.equals(prefs.getChair());
+                        return ("chair_"+customization.key).equals(prefs.getChair()) || customization.key.equals(prefs.getChair()) || (customization.key.equals("none") && prefs.getChair() == null);
                 }
             }
         }

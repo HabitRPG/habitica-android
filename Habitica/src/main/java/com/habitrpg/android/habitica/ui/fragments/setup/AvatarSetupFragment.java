@@ -4,22 +4,20 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
+import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+
+import org.greenrobot.eventbus.EventBus;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -66,6 +68,7 @@ public class AvatarSetupFragment extends BaseFragment {
     private AvatarCategoryView activeButton;
     private String activeCategory;
     private String activeSubCategory;
+    private Random random;
 
     @Nullable
     @Override
@@ -111,6 +114,8 @@ public class AvatarSetupFragment extends BaseFragment {
         });
 
         this.selectedBodyCategory();
+
+        this.random = new Random();
 
         if (this.user != null) {
             this.updateAvatar();
@@ -163,7 +168,7 @@ public class AvatarSetupFragment extends BaseFragment {
         activateButton(skinButton);
         this.activeCategory = "skin";
         this.subCategoryTabs.removeAllTabs();
-        this.subcategories = Arrays.asList("color");
+        this.subcategories = Collections.singletonList("color");
         this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_skin_color));
         loadCustomizations();
     }
@@ -190,6 +195,38 @@ public class AvatarSetupFragment extends BaseFragment {
         this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_flower));
         this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_wheelchair));
         loadCustomizations();
+    }
+
+    @OnClick(R.id.randomize_button)
+    protected  void randomizeCharacter() {
+        if (user == null) {
+            return;
+        }
+        UpdateUserCommand command = new UpdateUserCommand();
+        Map<String, Object> updateData = new HashMap<>();
+        updateData.put("preferences.size", chooseRandomKey(customizationRepository.getCustomizations("body", "size", user), false));
+        updateData.put("preferences.shirt", chooseRandomKey(customizationRepository.getCustomizations("body", "shirt", user), false));
+        updateData.put("preferences.skin", chooseRandomKey(customizationRepository.getCustomizations("skin", "color", user), false));
+        updateData.put("preferences.hair.color", chooseRandomKey(customizationRepository.getCustomizations("hair", "color", user), false));
+        updateData.put("preferences.hair.base", chooseRandomKey(customizationRepository.getCustomizations("hair", "ponytail", user), false));
+        updateData.put("preferences.hair.bangs", chooseRandomKey(customizationRepository.getCustomizations("hair", "bangs", user), false));
+        updateData.put("preferences.hair.flower", chooseRandomKey(customizationRepository.getCustomizations("extras", "flower", user), true));
+        updateData.put("preferences.chair", chooseRandomKey(customizationRepository.getCustomizations("extras", "wheelchair", user), true));
+        command.updateData = updateData;
+
+        EventBus.getDefault().post(command);
+    }
+
+    private String chooseRandomKey(List<SetupCustomization> customizations, boolean weighFirstOption) {
+        if (customizations.size() == 0) {
+            return null;
+        }
+        if (weighFirstOption) {
+            if (random.nextInt(10) > 3) {
+                return customizations.get(0).key;
+            }
+        }
+        return customizations.get(random.nextInt(customizations.size())).key;
     }
 
     private void activateButton(AvatarCategoryView button) {

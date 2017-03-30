@@ -58,6 +58,6 @@
             android:layout_height="wrap_content"
             app:namePlate="Justin"
             app:text="@string/welcome_text"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"/>
+            android:layout_marginLeft="@dimen/content_inset"
+            android:layout_marginRight="@dimen/content_inset"/>
 </LinearLayout>

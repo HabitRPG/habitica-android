@@ -4,14 +4,16 @@
               android:orientation="vertical"
               android:layout_width="70dp"
               android:layout_height="70dp"
-              android:gravity="center_horizontal"
-        tools:background="@color/brand_200">
+              android:gravity="center"
+              tools:background="@color/brand_200">
+
     <ImageView
             android:id="@+id/icon_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:src="@drawable/icon_body"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
+
     <TextView
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
@@ -20,5 +22,6 @@
             android:textAllCaps="true"
             android:layout_marginTop="8dp"
             android:textColor="@color/white_50_alpha"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:ellipsize="marquee"/>
 </LinearLayout>

@@ -114,8 +114,8 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
     private List<SetupCustomization> getHairBases() {
         return Arrays.asList(
                 SetupCustomization.createHairPonytail("0", R.drawable.creator_blank_face),
-                SetupCustomization.createHairPonytail("1", R.drawable.creator_hair_bangs_1_red),
-                SetupCustomization.createHairPonytail("2", R.drawable.creator_hair_bangs_2_red)
+                SetupCustomization.createHairPonytail("1", R.drawable.creator_hair_base_1_red),
+                SetupCustomization.createHairPonytail("3", R.drawable.creator_hair_base_3_red)
                 );
     }
 

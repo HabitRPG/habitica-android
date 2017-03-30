@@ -320,7 +320,7 @@
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="DiamondButton">
+    <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">36dp</item>
         <item name="android:background">@drawable/login_button</item>
         <item name="android:paddingLeft">36dp</item>
