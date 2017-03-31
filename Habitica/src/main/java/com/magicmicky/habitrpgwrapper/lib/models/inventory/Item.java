@@ -16,9 +16,6 @@ public abstract class Item extends BaseModel {
     @Column
     Integer value, owned;
 
-    @Column
-    String klass;
-
     public String getKey() {
         return key;
     }
@@ -60,14 +57,6 @@ public abstract class Item extends BaseModel {
 
     public void setOwned(Integer owned) {
         this.owned = owned;
-    }
-
-    public String getKlass() {
-        return klass;
-    }
-
-    public void setKlass(String klass) {
-        this.klass = klass;
     }
 
     public abstract String getType();

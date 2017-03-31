@@ -424,27 +424,38 @@ public class FullProfileActivity extends BaseActivity {
 
             // Calculate class bonus
             String itemClass = i.getKlass();
+            String itemSpecialClass = i.getSpecialClass();
+
+            if (itemClass.isEmpty() && itemSpecialClass.isEmpty()) {
+                continue;
+            }
+
+            float classBonus = 0.5f;
+            Boolean userClassMatchesGearClass = itemClass.equals(user.getClass());
+            Boolean userClassMatchesGearSpecialClass = itemSpecialClass.equals(user.getClass());
+
+            if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0;
 
             if (itemClass.isEmpty()) {
-                continue;
+                itemClass = itemSpecialClass;
             }
 
             switch (itemClass) {
                 case "rogue":
-                    strClassBonus = str_ * 0.5f;
-                    perClassBonus = per_ * 0.5f;
+                    strClassBonus = str_ * classBonus;
+                    perClassBonus = per_ * classBonus;
                     break;
                 case "healer":
-                    conClassBonus = con_ * 0.5f;
-                    intClassBonus = int_ * 0.5f;
+                    conClassBonus = con_ * classBonus;
+                    intClassBonus = int_ * classBonus;
                     break;
                 case "warrior":
-                    strClassBonus = str_ * 0.5f;
-                    conClassBonus = con_ * 0.5f;
+                    strClassBonus = str_ * classBonus;
+                    conClassBonus = con_ * classBonus;
                     break;
                 case "wizard":
-                    intClassBonus = int_ * 0.5f;
-                    perClassBonus = per_ * 0.5f;
+                    intClassBonus = int_ * classBonus;
+                    perClassBonus = per_ * classBonus;
                     break;
             }
         }

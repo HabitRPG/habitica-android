@@ -20,8 +20,13 @@ public class ItemData extends BaseModel {
     @PrimaryKey
     @Column
     public String key;
+
     @Column
     public String klass;
+
+    @Column
+    public String specialClass;
+
     @Column(name = "_index")
     public String index;
     @Column
@@ -70,6 +75,15 @@ public class ItemData extends BaseModel {
     public void setKlass(String klass) {
         this.klass = klass;
     }
+
+    public String getSpecialClass() {
+        return specialClass;
+    }
+
+    public void setSpecialClass(String specialClass) {
+        this.specialClass = specialClass;
+    }
+
 
     public String getIndex() {
         return index;
