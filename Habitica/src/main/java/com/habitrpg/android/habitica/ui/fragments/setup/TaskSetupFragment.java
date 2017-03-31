@@ -2,14 +2,17 @@ package com.habitrpg.android.habitica.ui.fragments.setup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,9 +34,12 @@ public class TaskSetupFragment extends BaseFragment {
     View view;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.avatarView)
+    AvatarView avatarView;
     TaskSetupAdapter adapter;
     private String[][] taskGroups;
     private Object[][] tasks;
+    private HabitRPGUser user;
 
     @Nullable
     @Override
@@ -47,9 +53,25 @@ public class TaskSetupFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         this.adapter = new TaskSetupAdapter();
         this.adapter.setTaskList(this.taskGroups);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        this.recyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
         this.recyclerView.setAdapter(this.adapter);
+
+        if (this.user != null) {
+            this.updateAvatar();
+        }
+
         return view;
+    }
+
+    public void setUser(HabitRPGUser user) {
+        this.user = user;
+        if (avatarView != null) {
+            updateAvatar();
+        }
+    }
+
+    private void updateAvatar() {
+        avatarView.setUser(user);
     }
 
     @Override

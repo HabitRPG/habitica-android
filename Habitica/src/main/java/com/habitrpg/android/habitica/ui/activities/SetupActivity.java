@@ -4,8 +4,10 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
@@ -30,6 +32,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.preference.PreferenceManager;
@@ -95,7 +98,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.setStatusBarColor(getResources().getColor(R.color.light_gray_bg));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.days_gray));
         }
     }
 
@@ -141,6 +144,14 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         this.apiHelper.apiService.updateUser(event.updateData)
                 .compose(this.apiHelper.configureApiCallObserver())
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(EquipCommand event) {
+        this.apiHelper.apiService.equipItem(event.type, event.key)
+                .compose(apiHelper.configureApiCallObserver())
+                .subscribe(new ItemsCallback(this, this.user), throwable -> {
                 });
     }
 
@@ -197,6 +208,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             this.nextButton.setText(this.getString(R.string.intro_finish_button));
         } else {
             this.setPreviousButtonEnabled(true);
+            this.nextButton.setText(this.getString(R.string.next_button));
         }
     }
 
@@ -257,6 +269,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                 }
                 case 2: {
                     taskSetupFragment = new TaskSetupFragment();
+                    taskSetupFragment.setUser(user);
                     fragment = taskSetupFragment;
                     break;
                 }

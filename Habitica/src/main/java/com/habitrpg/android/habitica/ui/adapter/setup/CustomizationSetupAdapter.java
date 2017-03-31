@@ -4,6 +4,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
@@ -165,18 +166,21 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
-            UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, Object> updateData = new HashMap<>();
             if (customization.path.equals("glasses")) {
-                String updatePath = "items.gear.equipped.eyewear";
-                updateData.put(updatePath, customization.key);
+                EquipCommand command = new EquipCommand();
+                command.key = customization.key;
+                command.type = "equipped";
+                EventBus.getDefault().post(command);
             } else {
+                UpdateUserCommand command = new UpdateUserCommand();
+                Map<String, Object> updateData = new HashMap<>();
                 String updatePath = "preferences." + customization.getPath();
                 updateData.put(updatePath, customization.key);
-            }
-            command.updateData = updateData;
 
-            EventBus.getDefault().post(command);
+                command.updateData = updateData;
+
+                EventBus.getDefault().post(command);
+            }
         }
     }
 }
