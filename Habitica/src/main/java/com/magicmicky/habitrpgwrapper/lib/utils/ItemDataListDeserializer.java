@@ -33,6 +33,7 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
                         item.value = parsedItem.value;
                         item.type = parsedItem.type;
                         item.klass = parsedItem.klass;
+                        item.specialClass = parsedItem.specialClass;
                         item.index = parsedItem.index;
                         item.notes = parsedItem.notes;
                         item.con = parsedItem.con;

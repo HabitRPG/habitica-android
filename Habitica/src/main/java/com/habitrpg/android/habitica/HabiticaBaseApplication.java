@@ -110,7 +110,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     }
 
     public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
-//        startActivity(SetupActivity.class, context);
+        startActivity(SetupActivity.class, context);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
             startActivity(IntroActivity.class, context);
 
