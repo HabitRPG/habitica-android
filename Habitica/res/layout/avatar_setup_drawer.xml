@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
+
     <LinearLayout
+            android:id="@+id/subcategory_layout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/customization_drawer_subcategory_height"
-            android:background="@color/brand_100">
+            android:background="@drawable/avatar_customization_subcategory_bg"
+            android:layout_alignParentTop="true">
+
         <android.support.design.widget.TabLayout
                 android:id="@+id/subcategory_tabs"
                 android:layout_width="match_parent"
@@ -20,7 +24,7 @@
                 app:tabGravity="center"
                 app:tabPaddingEnd="16dp"
                 app:tabPaddingStart="16dp"
-                 />
+                />
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/customization_list"
@@ -33,10 +37,12 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/customization_drawer_category_height"
-            android:background="@color/brand_200"
+            android:background="@drawable/avatar_customization_category_bg"
             android:orientation="horizontal"
             android:gravity="center"
-            android:elevation="4dp">
+            android:layout_below="@id/subcategory_layout"
+            android:elevation="4dp"
+            android:id="@+id/category_layout">
 
         <com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
                 android:id="@+id/body_button"
@@ -74,4 +80,13 @@
                 app:categoryTitle="@string/avatar_extras"
                 android:gravity="center"/>
     </LinearLayout>
-</LinearLayout>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/customization_selection_caret"
+                android:id="@+id/caret_view"
+                android:layout_alignBottom="@id/category_layout"
+                android:layout_marginBottom="@dimen/customization_drawer_caret_margin"
+                android:elevation="6dp"/>
+</RelativeLayout>

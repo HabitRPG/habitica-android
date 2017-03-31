@@ -145,7 +145,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             if (customization.drawableId != null) {
                 imageView.setImageResource(customization.drawableId);
             } else if (customization.colorId != null) {
-                Drawable drawable = context.getDrawable(R.drawable.setup_customization_circle);
+                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.setup_customization_circle);
                 if (drawable != null) {
                     drawable.setColorFilter(ContextCompat.getColor(context, customization.colorId), PorterDuff.Mode.MULTIPLY);
                 }

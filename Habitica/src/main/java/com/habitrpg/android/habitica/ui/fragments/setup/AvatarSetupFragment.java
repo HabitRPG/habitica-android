@@ -15,14 +15,19 @@ import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,6 +61,9 @@ public class AvatarSetupFragment extends BaseFragment {
     AvatarCategoryView hairButton;
     @BindView(R.id.extras_button)
     AvatarCategoryView extrasButton;
+    @BindView(R.id.caret_view)
+    ImageView caretView;
+
     CustomizationSetupAdapter adapter;
     LinearLayoutManager layoutManager;
     @Inject
@@ -235,5 +243,17 @@ public class AvatarSetupFragment extends BaseFragment {
         }
         this.activeButton = button;
         this.activeButton.setActive(true);
+        int[] location = new int[2];
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)this.caretView.getLayoutParams();
+        this.activeButton.getLocationOnScreen(location);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Resources r = getResources();
+            int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, r.getDisplayMetrics());
+            params.setMarginStart(location[0]+px);
+            this.caretView.setLayoutParams(params);
+        } else {
+            caretView.setVisibility(View.GONE);
+        }
+
     }
 }
