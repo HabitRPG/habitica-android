@@ -147,6 +147,8 @@ dependencies {
 
     compile 'org.apmem.tools:layouts:1.10@aar'
 
+    compile 'com.roughike:bottom-bar:2.2.0'
+
     compile(project(':seeds-sdk')) {
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.support', module: 'multidex'
