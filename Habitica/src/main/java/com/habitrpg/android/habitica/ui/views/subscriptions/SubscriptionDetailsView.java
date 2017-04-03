@@ -120,9 +120,10 @@ public class SubscriptionDetailsView extends LinearLayout {
         if (plan.paymentMethod != null) {
             Intent intent;
             if (plan.paymentMethod.equals("Google")) {
-                intent = new Intent("android.intent.action.VIEW");
-                intent.setComponent(new ComponentName("com.android.vending", "com.android.vending.MyDownloadsActivity"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent = new Intent(Intent.ACTION_VIEW)
+                        .setComponent(new ComponentName("com.android.vending",
+                                "com.google.android.finsky.activities.MainActivity"))
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             } else {
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
             }
