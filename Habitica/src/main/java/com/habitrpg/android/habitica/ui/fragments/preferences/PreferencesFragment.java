@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
@@ -41,7 +41,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     @Inject
     public SoundManager soundManager;
     public MainActivity activity;
@@ -184,8 +184,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             int hour = Integer.parseInt(pieces[0]);
             Map<String, Object> updateObject = new HashMap<>();
             updateObject.put("dayStart", hour);
-            apiHelper.apiService.changeCustomDayStart(updateObject)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.changeCustomDayStart(updateObject)
                     .subscribe(user -> {
                     }, throwable -> {
                     });
@@ -204,16 +203,15 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.language", languageHelper.getLanguageCode());
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.updateUser(updateData)
+
                     .subscribe(new MergeUserCallback(activity, user), throwable -> {
                     });
 
             Preferences preferences = user.getPreferences();
             preferences.setLanguage(languageHelper.getLanguageCode());
-            apiHelper.languageCode = preferences.getLanguage();
-            apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.setLanguageCode(preferences.getLanguage());
+            apiClient.getContent()
                     .subscribe(contentResult -> {
                     }, throwable -> {
                     });
@@ -235,8 +233,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.sound", newAudioTheme);
             MergeUserCallback mergeUserCallback = new MergeUserCallback(activity, user);
-            apiHelper.apiService.updateUser(updateData)
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.updateUser(updateData)
                     .subscribe(mergeUserCallback, throwable -> {
                     });
 

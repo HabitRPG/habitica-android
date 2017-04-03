@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<PublicGuildsRecyclerViewAdapter.GuildViewHolder> implements Filterable {
 
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     private List<Group> publicGuildList;
     private List<Group> fullPublicGuildList;
     private List<String> memberGuildIDs;
@@ -59,8 +59,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
             Group guild = (Group) v.getTag();
             boolean isMember = this.memberGuildIDs != null && this.memberGuildIDs.contains(guild.id);
             if (isMember) {
-                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.leaveGroup(guild.id)
-                        .compose(apiHelper.configureApiCallObserver())
+                PublicGuildsRecyclerViewAdapter.this.apiClient.leaveGroup(guild.id)
+
                         .subscribe(aVoid -> {
                             memberGuildIDs.remove(guild.id);
                             int indexOfGroup = publicGuildList.indexOf(guild);
@@ -68,8 +68,8 @@ public class PublicGuildsRecyclerViewAdapter extends RecyclerView.Adapter<Public
                         }, throwable -> {
                         });
             } else {
-                PublicGuildsRecyclerViewAdapter.this.apiHelper.apiService.joinGroup(guild.id)
-                        .compose(apiHelper.configureApiCallObserver())
+                PublicGuildsRecyclerViewAdapter.this.apiClient.joinGroup(guild.id)
+
                         .subscribe(group -> {
                             memberGuildIDs.add(group.id);
                             int indexOfGroup = publicGuildList.indexOf(group);

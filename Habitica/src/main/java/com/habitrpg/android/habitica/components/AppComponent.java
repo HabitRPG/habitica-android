@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.components;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -83,7 +83,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class, RepositoryModule.class})
+@Component(modules = {DeveloperModule.class, AppModule.class, ApiModule.class, RepositoryModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);
@@ -208,7 +208,7 @@ public interface AppComponent {
 
     void inject(ChallengeDetailActivity challengeDetailActivity);
 
-    void inject(APIHelper apiHelper);
+    void inject(ApiClient apiClient);
 
     void inject(TaskListWidgetProvider taskListWidgetProvider);
 

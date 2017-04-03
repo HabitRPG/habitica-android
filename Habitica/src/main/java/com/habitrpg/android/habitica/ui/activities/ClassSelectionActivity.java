@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -39,7 +39,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     AvatarView warriorAvatarView;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     ProgressDialog progressDialog;
 
@@ -102,8 +102,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
-            apiHelper.apiService.changeClass()
-                    .compose(apiHelper.configureApiCallObserver())
+            apiClient.changeClass()
                     .subscribe(user -> {
                         classWasUnset = true;
                     }, throwable -> {
@@ -204,8 +203,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.disableClasses()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.disableClasses()
+
                 .subscribe(this, throwable -> {
                 });
     }
@@ -213,8 +212,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiHelper.apiService.changeClass(selectedClass)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.changeClass(selectedClass)
+
                 .subscribe(this, throwable -> {
                 });
     }

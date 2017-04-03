@@ -1,6 +1,16 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
+
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -54,7 +64,7 @@ import butterknife.OnClick;
 public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     @Inject
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)
@@ -89,8 +99,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         String currentDeviceLanguage = Locale.getDefault().getLanguage();
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
-                apiHelper.apiService.registrationLanguage(currentDeviceLanguage)
-                        .compose(apiHelper.configureApiCallObserver())
+                apiClient.registrationLanguage(currentDeviceLanguage)
                         .subscribe(new MergeUserCallback(this, user), throwable -> {
                         });
             }
@@ -116,8 +125,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             if (this.user != null) {
                 setupViewpager();
             } else {
-                this.apiHelper.apiService.getUser()
-                        .compose(this.apiHelper.configureApiCallObserver())
+                this.apiClient.getUser()
                         .subscribe(new HabitRPGUserCallback(this), throwable -> {
                         });
             }
@@ -141,8 +149,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiHelper.apiService.updateUser(event.updateData)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiClient.updateUser(event.updateData)
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
     }

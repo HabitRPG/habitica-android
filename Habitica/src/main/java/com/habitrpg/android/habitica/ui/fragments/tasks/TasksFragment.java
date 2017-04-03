@@ -221,9 +221,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
         refreshItem.setActionView(iv);
 
-        if (apiHelper != null) {
-            apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.retrieveUser(true)
+
                     .subscribe(
                             new HabitRPGUserCallback(activity),
                             throwable -> stopAnimatingRefreshItem()
@@ -241,9 +241,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 TaskRecyclerViewFragment fragment;
                 SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback =
                         (task, from, to) -> {
-                            if (apiHelper != null) {
-                                apiHelper.apiService.postTaskNewPosition(task.getId(), String.valueOf(to))
-                                        .compose(apiHelper.configureApiCallObserver())
+                            if (apiClient != null){
+                                apiClient.postTaskNewPosition(task.getId(), String.valueOf(to))
+
                                         .subscribe(aVoid -> {
                                         }, e -> {
                                         });
@@ -340,9 +340,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         UiUtils.dismissKeyboard(activity);
         final Tag t = new Tag();
         t.setName(event.tagName);
-        if (apiHelper != null) {
-            apiHelper.apiService.createTag(t)
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.createTag(t)
+
                     .subscribe(tag -> {
                         // Since we get a list of all tags, we just save them all
                         tag.user_id = user.getId();
@@ -359,9 +359,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     @Subscribe
     public void onEvent(final DeleteTagCommand event) {
         final Tag t = event.tag;
-        if (apiHelper != null) {
-            apiHelper.apiService.deleteTag(t.getId())
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.deleteTag(t.getId())
+
                     .subscribe(tag -> {
                         tagFilterMap.remove(t.getId());
                         filterChangedHandler.hit();
@@ -382,9 +382,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     public void onEvent(final UpdateTagCommand event) {
         final Tag t = event.tag;
         final String uuid = event.uuid;
-        if (apiHelper != null) {
-            apiHelper.apiService.updateTag(uuid, t)
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.updateTag(uuid,t)
+
                     .subscribe(tag -> {
                         UiUtils.dismissKeyboard(this.activity);
                         updateTagFilterDrawerItem(tag);
@@ -397,9 +397,9 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
     @Subscribe
     public void onEvent(RefreshUserCommand event) {
-        if (apiHelper != null) {
-            apiHelper.retrieveUser(true)
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.retrieveUser(true)
+
                     .subscribe(
                             new HabitRPGUserCallback(activity),
                             throwable -> stopAnimatingRefreshItem()

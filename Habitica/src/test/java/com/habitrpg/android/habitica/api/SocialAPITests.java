@@ -38,7 +38,7 @@ public class SocialAPITests extends BaseAPITests {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", "Foo Bar"+messageSuffix);
         TestSubscriber<HabitResponse<PostChatMessageResult>> testSubscriber = new TestSubscriber<>();
-        apiHelper.apiService.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
+        apiClient.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0).getData();
@@ -51,7 +51,7 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "1");
 
         TestSubscriber<HabitResponse<Group>> testSubscriber = new TestSubscriber<>();
-        apiHelper.apiService.getGroup(groupID).subscribe(testSubscriber);
+        apiClient.getGroup(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -64,7 +64,7 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "2");
 
         TestSubscriber<HabitResponse<List<ChatMessage>>> testSubscriber = new TestSubscriber<>();
-        apiHelper.apiService.listGroupChat(groupID).subscribe(testSubscriber);
+        apiClient.listGroupChat(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -74,7 +74,7 @@ public class SocialAPITests extends BaseAPITests {
     public void tearDown() {
         TestSubscriber<HabitResponse<Void>> testSubscriber = new TestSubscriber<>();
         for (String messageID : this.messagesIDs) {
-            apiHelper.apiService.deleteMessage("habitrpg", messageID)
+            apiClient.deleteMessage("habitrpg", messageID)
                     .subscribe(testSubscriber);
             testSubscriber.assertNoErrors();
             testSubscriber.assertCompleted();

@@ -53,9 +53,8 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiHelper != null) {
-            apiHelper.apiService.getGroup("habitrpg")
-                    .compose(apiHelper.configureApiCallObserver())
+        if (this.apiClient != null) {
+            apiClient.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {

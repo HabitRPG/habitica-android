@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -28,10 +28,7 @@ import javax.inject.Inject;
 
 public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private static final String LOG = AvatarStatsWidgetProvider.class.getName();
-    @Inject
-    APIHelper apiHelper;
-    @Inject
-    HostConfig hostConfig;
+
     private AppWidgetManager appWidgetManager;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
@@ -55,8 +52,13 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         return R.layout.widget_avatar_stats;
     }
 
+    @Inject
+    ApiClient apiClient;
+    @Inject
+    HostConfig hostConfig;
+
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }

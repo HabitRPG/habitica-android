@@ -37,6 +37,8 @@ import java.util.List;
 import butterknife.BindView;
 import rx.Observable;
 
+import static com.habitrpg.android.habitica.helpers.MathHelper.round;
+
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
@@ -179,8 +181,8 @@ public class SkillsFragment extends BaseMainFragment {
             message.append(" + ").append(round(event.gold, 2)).append(" GP");
         }
         UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
-        apiHelper.apiService.getUser()
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.getUser()
+
                 .subscribe(new MergeUserCallback(activity, user), throwable -> {
                 });
     }
@@ -210,13 +212,13 @@ public class SkillsFragment extends BaseMainFragment {
 
     private void useSkill(Skill skill, String taskId) {
         displayProgressDialog();
-        Observable<HabitResponse<SkillResponse>> observable;
+        Observable<SkillResponse> observable;
         if (taskId != null) {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target, taskId);
+            observable = apiClient.useSkill(skill.key, skill.target, taskId);
         } else {
-            observable = apiHelper.apiService.useSkill(skill.key, skill.target);
+            observable = apiClient.useSkill(skill.key, skill.target);
         }
-        observable.compose(apiHelper.configureApiCallObserver())
+        observable
                 .subscribe(new SkillCallback(activity, user, skill), throwable -> {
                     removeProgressDialog();
                 });
@@ -235,9 +237,7 @@ public class SkillsFragment extends BaseMainFragment {
         }
     }
 
-    @Override
-    public String customTitle() {
-        return getString(R.string.sidebar_skills);
-    }
+	@Override
+	public String customTitle() {	return getString(R.string.sidebar_skills);	}
 
 }

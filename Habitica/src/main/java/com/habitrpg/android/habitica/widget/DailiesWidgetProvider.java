@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -16,12 +16,12 @@ public class DailiesWidgetProvider extends TaskListWidgetProvider {
     public static final String TASK_ID_ITEM = "com.habitrpg.android.habitica.TASK_ID_ITEM";
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @Inject
     HostConfig hostConfig;
 
     private void setUp(Context context) {
-        if (apiHelper == null) {
+        if (apiClient == null) {
             HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
             application.getComponent().inject(this);
         }

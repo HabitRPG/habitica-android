@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
@@ -67,9 +67,9 @@ public class AvatarSetupFragment extends BaseFragment {
     CustomizationSetupAdapter adapter;
     LinearLayoutManager layoutManager;
     @Inject
-    APIHelper apiHelper;
-    @Inject
     SetupCustomizationRepository customizationRepository;
+    @Inject
+    ApiClient apiClient;
 
     private HabitRPGUser user;
     private List<String> subcategories;

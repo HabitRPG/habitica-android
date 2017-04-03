@@ -58,8 +58,7 @@ public class PartyFragment extends BaseMainFragment {
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
-            apiHelper.apiService.getGroup("party")
-                    .compose(this.apiHelper.configureApiCallObserver())
+            apiClient.getGroup("party")
                     .subscribe(group -> {
                         if (group == null) {
                             return;
@@ -68,8 +67,8 @@ public class PartyFragment extends BaseMainFragment {
 
                         updateGroupUI();
 
-                        apiHelper.apiService.getGroupMembers(group.id, true)
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiClient.getGroupMembers(group.id, true)
+
                                 .subscribe(members -> {
                                             PartyFragment.this.group.members = members;
                                             updateGroupUI();
@@ -217,8 +216,8 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiHelper.apiService.updateGroup(this.group.id, this.group)
-                                .compose(apiHelper.configureApiCallObserver())
+                        this.apiClient.updateGroup(this.group.id, this.group)
+
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -247,8 +246,8 @@ public class PartyFragment extends BaseMainFragment {
                         Collections.addAll(invites, userIDs);
                         inviteData.put("uuids", invites);
                     }
-                    this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
-                            .compose(apiHelper.configureApiCallObserver())
+                    this.apiClient.inviteToGroup(this.group.id, inviteData)
+
                             .subscribe(aVoid -> {
                             }, throwable -> {
                             });

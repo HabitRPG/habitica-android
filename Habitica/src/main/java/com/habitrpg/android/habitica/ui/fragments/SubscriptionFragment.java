@@ -1,6 +1,16 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.APIHelper;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
@@ -9,6 +19,7 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
 
@@ -44,7 +55,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;
@@ -125,8 +136,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
-        apiHelper.apiService.getUser().compose(apiHelper.configureApiCallObserver())
-                .subscribe(this::setUser, throwable -> {
+        apiClient.getUser().subscribe(this::setUser, throwable -> {
                 });
     }
 

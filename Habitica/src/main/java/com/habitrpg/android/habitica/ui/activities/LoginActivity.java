@@ -16,7 +16,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -92,7 +93,7 @@ public class LoginActivity extends BaseActivity
 
 
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     @Inject
     public SharedPreferences sharedPrefs;
     @Inject
@@ -136,55 +137,6 @@ public class LoginActivity extends BaseActivity
     private Menu menu;
     private CallbackManager callbackManager;
     private String googleEmail;
-    private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            if (isRegistering) {
-                String username, email, password, cpassword;
-                username = String.valueOf(mUsernameET.getText()).trim();
-                email = String.valueOf(mEmail.getText()).trim();
-                password = String.valueOf(mPasswordET.getText());
-                cpassword = String.valueOf(mConfirmPassword.getText());
-                if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
-                    showValidationError(R.string.login_validation_error_fieldsmissing);
-                    return;
-                }
-                apiHelper.registerUser(username, email, password, cpassword)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(LoginActivity.this, throwable -> {
-                            hideProgress();
-                        });
-            } else {
-                String username, password;
-                username = String.valueOf(mUsernameET.getText()).trim();
-                password = String.valueOf(mPasswordET.getText());
-                if (username.length() == 0 || password.length() == 0) {
-                    showValidationError(R.string.login_validation_error_fieldsmissing);
-                    return;
-                }
-                apiHelper.connectUser(username, password)
-                        .compose(apiHelper.configureApiCallObserver())
-                        .subscribe(LoginActivity.this, throwable -> {
-                            hideProgress();
-                        });
-            }
-        }
-    };
-    private View.OnClickListener mForgotPWClick = v -> {
-        String url = hostConfig.getAddress();
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-    };
-
-    public static void show(final View v) {
-        v.setVisibility(View.VISIBLE);
-    }
-
-    public static void hide(final View v) {
-        v.setVisibility(View.GONE);
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -276,6 +228,53 @@ public class LoginActivity extends BaseActivity
                 hide(this.mConfirmPassword);
             }
         }
+	}
+
+	private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            if (isRegistering) {
+                String username, email,password,cpassword;
+                username = String.valueOf(mUsernameET.getText()).trim();
+                email = String.valueOf(mEmail.getText()).trim();
+                password = String.valueOf(mPasswordET.getText());
+                cpassword = String.valueOf(mConfirmPassword.getText());
+				if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
+                apiClient.registerUser(username,email,password, cpassword)
+                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
+            } else {
+                String username,password;
+                username = String.valueOf(mUsernameET.getText()).trim();
+                password = String.valueOf(mPasswordET.getText());
+				if (username.length() == 0 || password.length() == 0) {
+					showValidationError(R.string.login_validation_error_fieldsmissing);
+					return;
+				}
+                apiClient.connectUser(username,password)
+
+                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
+            }
+		}
+	};
+
+	private View.OnClickListener mForgotPWClick = v -> {
+        String url = BuildConfig.BASE_URL;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    };
+
+
+	public static void show(final View v) {
+		v.setVisibility(View.VISIBLE);
+	}
+
+	public static void hide(final View v) {
+        v.setVisibility(View.GONE);
     }
 
     private void startMainActivity() {
@@ -383,7 +382,7 @@ public class LoginActivity extends BaseActivity
     }
 
     private void saveTokens(String api, String user) throws Exception {
-        this.apiHelper.updateAuthenticationCredentials(user, api);
+        this.apiClient.updateAuthenticationCredentials(user, api);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_APIToken), api)
                 .putString(getString(R.string.SP_userID), user)
@@ -466,8 +465,8 @@ public class LoginActivity extends BaseActivity
                 throw Exceptions.propagate(e);
             }
         })
-                .flatMap(token -> apiHelper.connectSocial("google", googleEmail, token))
-                .compose(apiHelper.configureApiCallObserver())
+                .flatMap(token -> apiClient.connectSocial("google", googleEmail, token))
+
                 .subscribe(LoginActivity.this, throwable -> {
                     hideProgress();
                     if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {

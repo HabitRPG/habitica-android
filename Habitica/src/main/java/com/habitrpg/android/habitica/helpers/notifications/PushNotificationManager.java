@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.helpers.notifications;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.RemoteMessage;
-
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.RemoteMessage;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class PushNotificationManager {
     private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
     private static PushNotificationManager instance = null;
     @Inject
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
@@ -89,19 +88,15 @@ public class PushNotificationManager {
         Map<String, String> pushDeviceData = new HashMap<>();
         pushDeviceData.put("regId", this.refreshedToken);
         pushDeviceData.put("type", "android");
-        apiHelper.apiService.addPushDevice(pushDeviceData)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        apiClient.addPushDevice(pushDeviceData)
+
+            .subscribe(aVoid -> {}, throwable -> {});
     }
 
     public void removePushDeviceUsingStoredToken() {
-        apiHelper.apiService.deletePushDevice(this.refreshedToken)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        apiClient.deletePushDevice(this.refreshedToken)
+
+            .subscribe(aVoid -> {}, throwable -> {});
     }
 
     private Boolean userHasPushDevice() {

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
@@ -52,7 +52,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Named("UserID")
     String userID;
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @Inject
     TagsHelper tagsHelper;
     LinearLayoutManager layoutManager = null;
@@ -98,7 +98,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                     return;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
-                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiHelper);
+                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiClient);
                     break;
             }
         }

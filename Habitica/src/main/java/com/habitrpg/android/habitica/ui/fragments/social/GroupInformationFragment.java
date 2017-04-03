@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
@@ -39,7 +39,7 @@ public class GroupInformationFragment extends BaseFragment {
     FragmentGroupInfoBinding viewBinding;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
@@ -215,8 +215,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnQuestAccept)
     public void onQuestAccept() {
-        apiHelper.apiService.acceptQuest(group.id)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.acceptQuest(group.id)
+
                 .subscribe(aVoid -> {
                     user.getParty().getQuest().RSVPNeeded = false;
                     group.quest.members.put(user.getId(), true);
@@ -229,8 +229,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnQuestReject)
     public void onQuestReject() {
-        apiHelper.apiService.rejectQuest(group.id)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.rejectQuest(group.id)
+
                 .subscribe(aVoid -> {
                     user.getParty().getQuest().RSVPNeeded = false;
                     group.quest.members.put(user.getId(), false);
@@ -246,8 +246,8 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to leave the active quest? All your quest progress will be lost.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    apiHelper.apiService.leaveQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.leaveQuest(group.id)
+
                             .subscribe(aVoid -> {
                                 group.quest.members.remove(user.getId());
                                 setGroup(group);
@@ -265,8 +265,8 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_begin_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    apiHelper.apiService.forceStartQuest(group.id, group)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.forceStartQuest(group.id, group)
+
                             .subscribe(quest -> {
                                 group.quest = quest;
                                 setGroup(group);
@@ -283,8 +283,8 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.quest_cancel_message)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    apiHelper.apiService.cancelQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.cancelQuest(group.id)
+
                             .subscribe(aVoid -> {
                                 setGroup(group);
                                 setQuestContent(null);
@@ -301,8 +301,8 @@ public class GroupInformationFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setMessage("Are you sure you want to abort this mission? It will abort it for everyone in your party and all progress will be lost. The quest scroll will be returned to the quest owner.")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    apiHelper.apiService.abortQuest(group.id)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.abortQuest(group.id)
+
                             .subscribe(quest -> {
                                 group.quest = quest;
                                 setGroup(group);
@@ -317,8 +317,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnPartyInviteAccept)
     public void onPartyInviteAccepted() {
-        apiHelper.apiService.joinGroup(user.getInvitations().getParty().getId())
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.joinGroup(user.getInvitations().getParty().getId())
+
                 .subscribe(group -> {
                     setGroup(group);
                     viewBinding.setInvitation(null);
@@ -328,8 +328,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @OnClick(R.id.btnPartyInviteReject)
     public void onPartyInviteRejected() {
-        apiHelper.apiService.rejectGroupInvite(user.getInvitations().getParty().getId())
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.rejectGroupInvite(user.getInvitations().getParty().getId())
+
                 .subscribe(aVoid -> {
                     viewBinding.setInvitation(null);
                 }, throwable -> {

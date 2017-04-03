@@ -1,20 +1,36 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.HabitScoreEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
+import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
+import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
+import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
+import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
+import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
+import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
+import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import android.app.AlertDialog;
 import android.databinding.ObservableArrayList;
@@ -28,6 +44,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,15 +58,48 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
+import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
+
 public class ChallengeDetailActivity extends BaseActivity {
 
     public static String CHALLENGE_ID = "CHALLENGE_ID";
-    @Inject
-    public APIHelper apiHelper;
+
     @BindView(R.id.detail_tabs)
     TabLayout detail_tabs;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @Inject
+    public ApiClient apiClient;
+
+    @BindView(R.id.floating_menu_wrapper)
+    FrameLayout floatingMenuWrapper;
+
+    // region UseCases
+
+    @Inject
+    HabitScoreUseCase habitScoreUseCase;
+
+    @Inject
+    DailyCheckUseCase dailyCheckUseCase;
+
+    @Inject
+    TodoCheckUseCase todoCheckUseCase;
+
+    @Inject
+    BuyRewardUseCase buyRewardUseCase;
+
+    @Inject
+    ChecklistCheckUseCase checklistCheckUseCase;
+
+    @Inject
+    DisplayItemDropUseCase displayItemDropUseCase;
+
+    @Inject
+    NotifyUserUseCase notifyUserUseCase;
+
+    // endregion
+
     private ChallengeViewHolder challengeViewHolder;
 
     private Challenge challenge;
@@ -72,7 +122,9 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         setupToolbar(toolbar);
 
-        getSupportActionBar().setTitle(R.string.challenge_details);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.challenge_details);
+        }
         detail_tabs.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
@@ -82,11 +134,9 @@ public class ChallengeDetailActivity extends BaseActivity {
         ObservableList<Task> fullList = new ObservableArrayList<>();
 
 
-        apiHelper.apiService.getChallengeTasks(challengeId)
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getChallengeTasks(challengeId)
                 .subscribe(taskList -> {
                     ArrayList<Task> resultList = new ArrayList<>();
-
 
                     ArrayList<Task> todos = new ArrayList<>();
                     ArrayList<Task> habits = new ArrayList<>();
@@ -202,25 +252,20 @@ public class ChallengeDetailActivity extends BaseActivity {
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 
-                    showRemoveTasksDialog(keepTasks -> {
-                        this.apiHelper.apiService.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
-                                .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(aVoid -> {
-                                    challenge.user_id = null;
-                                    challenge.async().save();
+                    showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id)
+                            .subscribe(aVoid -> {
+                                challenge.user_id = null;
+                                challenge.async().save();
 
-                                    HabiticaApplication.User.resetChallengeList();
-                                    finish();
+                                HabiticaApplication.User.resetChallengeList();
+                                finish();
 
-                                }, throwable -> {
-                                });
-                    });
+                            }, throwable -> {
+                            }));
 
 
                 })
-                .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
-                    dialog.dismiss();
-                }).show();
+                .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 
     // refactor as an UseCase later - see ChallengeDetailDialogHolder
@@ -290,9 +335,9 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
         @OnClick(R.id.btn_show_more)
-        public void onShowMore() {
+        void onShowMore() {
 
-            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiHelper,
+            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
                     HabiticaApplication.User, challenge,
                     challenge1 -> {
 
@@ -300,4 +345,78 @@ public class ChallengeDetailActivity extends BaseActivity {
                     challenge1 -> ChallengeDetailActivity.this.onBackPressed());
         }
     }
+
+    @Subscribe
+    public void onEvent(TaskCheckedCommand event) {
+        switch (event.Task.type) {
+            case Task.TYPE_DAILY: {
+                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
+                        .subscribe(res -> {
+                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
+                        }, error -> {
+                        });
+            }
+            break;
+            case Task.TYPE_TODO: {
+                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
+                        .subscribe(res -> {
+                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
+                        }, error -> {
+                        });
+            }
+            break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(ChecklistCheckedCommand event) {
+        checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
+                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), error -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(HabitScoreEvent event) {
+        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
+                .subscribe(res -> onTaskDataReceived(res, event.habit), error -> {
+                });
+    }
+
+    @Subscribe
+    public void onEvent(final BuyRewardCommand event) {
+        if (HabiticaApplication.User.getStats().getGp() < event.Reward.getValue()) {
+            showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), UiUtils.SnackbarDisplayType.FAILURE);
+            return;
+        }
+
+
+        if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
+
+            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
+                    .subscribe(res -> {
+                        onTaskDataReceived(res, event.Reward);
+                    }, error -> {});
+        }
+
+    }
+
+    public void onTaskDataReceived(TaskDirectionData data, Task task) {
+        if (task.type.equals("reward")) {
+
+            showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), UiUtils.SnackbarDisplayType.NORMAL);
+
+        } else {
+
+            if (HabiticaApplication.User != null) {
+                notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, () -> {
+                    // retrieveUser? forward message to MainActivity ? or mark it to refresh ?
+                },
+                        HabiticaApplication.User, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()));
+            }
+
+            displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+                    .subscribe(aVoid -> {}, throwable -> {});
+        }
+    }
+
 }

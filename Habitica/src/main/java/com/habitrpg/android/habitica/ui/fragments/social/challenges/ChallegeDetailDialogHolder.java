@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
@@ -68,7 +68,7 @@ public class ChallegeDetailDialogHolder {
     LinearLayout task_group_layout;
 
     private AlertDialog dialog;
-    private APIHelper apiHelper;
+    private ApiClient apiClient;
     private HabitRPGUser user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
@@ -93,10 +93,10 @@ public class ChallegeDetailDialogHolder {
         challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
-    public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
-        this.apiHelper = apiHelper;
+        this.apiClient = apiClient;
         this.user = user;
         this.challenge = challenge;
         this.challengeJoinedAction = challengeJoinedAction;
@@ -115,8 +115,7 @@ public class ChallegeDetailDialogHolder {
         gem_amount.setText(challenge.prize + "");
         member_count.setText(challenge.memberCount + "");
 
-        apiHelper.apiService.getChallengeTasks(challenge.id)
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getChallengeTasks(challenge.id)
                 .subscribe(taskList -> {
                             ArrayList<Task> todos = new ArrayList<>();
                             ArrayList<Task> habits = new ArrayList<>();
@@ -301,8 +300,7 @@ public class ChallegeDetailDialogHolder {
 
     @OnClick(R.id.challenge_join_btn)
     public void joinChallenge() {
-        this.apiHelper.apiService.joinChallenge(challenge.id)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.joinChallenge(challenge.id)
                 .subscribe(challenge -> {
                     challenge.user_id = this.user.getId();
                     challenge.async().save();
@@ -360,4 +358,15 @@ public class ChallegeDetailDialogHolder {
                 }).show();
     }
 
+    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
+                                  Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
+        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
+
+        ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setView(dialogLayout);
+
+        challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
+    }
 }

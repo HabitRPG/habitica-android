@@ -42,6 +42,24 @@ import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.amplitude.api.Amplitude;
+import com.facebook.FacebookSdk;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.activities.IntroActivity;
+import com.habitrpg.android.habitica.ui.activities.LoginActivity;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
+import org.solovyev.android.checkout.Billing;
+import org.solovyev.android.checkout.Cache;
+import org.solovyev.android.checkout.Checkout;
+import org.solovyev.android.checkout.PurchaseVerifier;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -58,7 +76,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     private static AppComponent component;
     public RefWatcher refWatcher;
     @Inject
-    Lazy<APIHelper> lazyApiHelper;
+    Lazy<ApiClient> lazyApiHelper;
     @Inject
     SharedPreferences sharedPrefs;
     @Inject
@@ -174,15 +192,11 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         int lastInstalledVersion = sharedPrefs.getInt("last_installed_version", 0);
         if (lastInstalledVersion < info.versionCode) {
             sharedPrefs.edit().putInt("last_installed_version", info.versionCode).apply();
-            APIHelper apiHelper = this.lazyApiHelper.get();
+            ApiClient apiClient = this.lazyApiHelper.get();
 
-            apiHelper.apiService.getContent(apiHelper.languageCode)
-                    .compose(this.lazyApiHelper.get().configureApiCallObserver())
-                    .subscribe(contentResult -> {
-                    }, throwable -> {
-                    });
+            apiClient.getContent()
+                    .subscribe(contentResult -> { }, throwable -> {});
         }
-
     }
 
     private void setupDagger() {
