@@ -146,7 +146,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
         private int dailyResetOffset = 0;
 
-        public ChallengeTasksRecyclerViewAdapter(TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
+        public ChallengeTasksRecyclerViewAdapter(@Nullable TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, String userID, @Nullable SortTasksCallback sortCallback) {
             super("", taskFilterHelper, layoutResource, newContext, userID, sortCallback);
 
             if (user != null) {
@@ -185,7 +185,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
         @Override
         public BaseTaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            BaseTaskViewHolder viewHolder = null;
+            BaseTaskViewHolder viewHolder;
 
             switch (viewType) {
                 case TYPE_HABIT:

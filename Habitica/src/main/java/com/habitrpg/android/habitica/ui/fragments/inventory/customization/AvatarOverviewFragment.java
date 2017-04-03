@@ -9,6 +9,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         component.inject(this);
     }
 
-    private void displayCustomizationFragment(String type, String category) {
+    private void displayCustomizationFragment(String type, @Nullable String category) {
         AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
         fragment.type = type;
         fragment.category = category;
@@ -135,7 +136,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
             newSize = "broad";
         }
 
-        if (!this.user.getPreferences().getSize().equals(newSize)) {
+        if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("preferences.size", newSize);
             apiClient.updateUser(updateData)

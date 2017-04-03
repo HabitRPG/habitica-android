@@ -71,7 +71,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         listObservable
                 .subscribe(challenges -> {
 
-                    List<Challenge> userChallenges = this.user.getChallengeList();
+                    List<Challenge> userChallenges = this.user != null ? this.user.getChallengeList() : new ArrayList<>();
 
                     HashSet<String> userChallengesHash = new HashSet<>();
 

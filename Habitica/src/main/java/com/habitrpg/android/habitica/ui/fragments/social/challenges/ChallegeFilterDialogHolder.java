@@ -85,8 +85,8 @@ class ChallegeFilterDialogHolder {
         fillChallengeGroups();
 
         if(currentFilter != null ){
-            checkboxOwned.setChecked(currentFilter.ShowOwned);
-            checkboxNotOwned.setChecked(currentFilter.NotOwned);
+            checkboxOwned.setChecked(currentFilter.showOwned);
+            checkboxNotOwned.setChecked(currentFilter.notOwned);
         }
     }
 
@@ -94,8 +94,8 @@ class ChallegeFilterDialogHolder {
 
        this.groupRecyclerView.setLayoutManager(new LinearLayoutManager(context));
        adapter = new ChallengesFilterRecyclerViewAdapter(getGroups(challengesViewed));
-        if(currentFilter != null && currentFilter.ShowByGroups != null){
-            adapter.selectAll(currentFilter.ShowByGroups);
+        if(currentFilter != null && currentFilter.showByGroups != null){
+            adapter.selectAll(currentFilter.showByGroups);
         }
 
        this.groupRecyclerView.setAdapter(adapter);
@@ -120,9 +120,9 @@ class ChallegeFilterDialogHolder {
     @OnClick(R.id.challenge_filter_button_done)
     public void doneClicked() {
         ChallengeFilterOptions options = new ChallengeFilterOptions();
-        options.ShowByGroups = this.adapter.getCheckedEntries();
-        options.ShowOwned = checkboxOwned.isChecked();
-        options.NotOwned = checkboxNotOwned.isChecked();
+        options.showByGroups = this.adapter.getCheckedEntries();
+        options.showOwned = checkboxOwned.isChecked();
+        options.notOwned = checkboxNotOwned.isChecked();
 
         selectedGroupsCallback.call(options);
         this.dialog.hide();

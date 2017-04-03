@@ -438,8 +438,10 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     public void updateAuthenticationCredentials(String userID, String apiToken) {
         this.hostConfig.setUser(userID);
         this.hostConfig.setApi(apiToken);
-        crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
-        crashlyticsProxy.setUserName(this.hostConfig.getUser());
+        if (crashlyticsProxy != null) {
+            crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
+            crashlyticsProxy.setUserName(this.hostConfig.getUser());
+        }
         Amplitude.getInstance().setUserId(this.hostConfig.getUser());
     }
 

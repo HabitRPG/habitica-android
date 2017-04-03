@@ -63,9 +63,11 @@ public class InboxFragment extends BaseMainFragment
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        this.messages = this.user.getInbox().getMessages();
-        if (this.messages != null) {
-            this.setInboxMessages();
+        if (this.user != null) {
+            this.messages = this.user.getInbox().getMessages();
+            if (this.messages != null) {
+                this.setInboxMessages();
+            }
         }
 
         return v;

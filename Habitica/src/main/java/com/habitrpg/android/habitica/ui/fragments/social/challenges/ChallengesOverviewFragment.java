@@ -74,11 +74,8 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     private void subscribeGetChallenges() {
         this.apiClient.getUserChallenges()
 
-                .subscribe(challenges -> {
-                    getUserChallengesObservable.onNext(challenges);
-                }, e -> {
-                    getUserChallengesObservable.onError(e);
-                });
+                .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),
+                        e -> getUserChallengesObservable.onError(e));
     }
 
     @Override

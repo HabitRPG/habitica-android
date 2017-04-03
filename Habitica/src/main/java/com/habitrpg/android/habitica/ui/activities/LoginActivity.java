@@ -134,7 +134,6 @@ public class LoginActivity extends BaseActivity
     Button mFacebookLoginBtn;
     @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
-    private Menu menu;
     private CallbackManager callbackManager;
     private String googleEmail;
 
@@ -184,9 +183,7 @@ public class LoginActivity extends BaseActivity
                     public void onSuccess(LoginResult loginResult) {
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
                         apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
-                                .subscribe(LoginActivity.this, throwable -> {
-                                    hideProgress();
-                                });
+                                .subscribe(LoginActivity.this, throwable -> hideProgress());
                     }
 
                     @Override
@@ -227,40 +224,40 @@ public class LoginActivity extends BaseActivity
                 hide(this.mConfirmPassword);
             }
         }
-	}
+    }
 
-	private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
+    private View.OnClickListener mLoginNormalClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
             mProgressBar.setVisibility(View.VISIBLE);
             if (isRegistering) {
-                String username, email,password,cpassword;
+                String username, email, password, cpassword;
                 username = String.valueOf(mUsernameET.getText()).trim();
                 email = String.valueOf(mEmail.getText()).trim();
                 password = String.valueOf(mPasswordET.getText());
                 cpassword = String.valueOf(mConfirmPassword.getText());
-				if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
-					showValidationError(R.string.login_validation_error_fieldsmissing);
-					return;
-				}
-                apiClient.registerUser(username,email,password, cpassword)
-                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
+                if (username.length() == 0 || password.length() == 0 || email.length() == 0 || cpassword.length() == 0) {
+                    showValidationError(R.string.login_validation_error_fieldsmissing);
+                    return;
+                }
+                apiClient.registerUser(username, email, password, cpassword)
+                        .subscribe(LoginActivity.this, throwable -> hideProgress());
             } else {
-                String username,password;
+                String username, password;
                 username = String.valueOf(mUsernameET.getText()).trim();
                 password = String.valueOf(mPasswordET.getText());
-				if (username.length() == 0 || password.length() == 0) {
-					showValidationError(R.string.login_validation_error_fieldsmissing);
-					return;
-				}
-                apiClient.connectUser(username,password)
+                if (username.length() == 0 || password.length() == 0) {
+                    showValidationError(R.string.login_validation_error_fieldsmissing);
+                    return;
+                }
+                apiClient.connectUser(username, password)
 
-                        .subscribe(LoginActivity.this, throwable -> {hideProgress();});
+                        .subscribe(LoginActivity.this, throwable -> hideProgress());
             }
-		}
-	};
+        }
+    };
 
-	private View.OnClickListener mForgotPWClick = v -> {
+    private View.OnClickListener mForgotPWClick = v -> {
         String url = BuildConfig.BASE_URL;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -268,11 +265,11 @@ public class LoginActivity extends BaseActivity
     };
 
 
-	public static void show(final View v) {
-		v.setVisibility(View.VISIBLE);
-	}
+    public static void show(final View v) {
+        v.setVisibility(View.VISIBLE);
+    }
 
-	public static void hide(final View v) {
+    public static void hide(final View v) {
         v.setVisibility(View.GONE);
     }
 
@@ -455,7 +452,7 @@ public class LoginActivity extends BaseActivity
     }
 
     private void handleGoogleLoginResult() {
-        String scopesString = Scopes.PLUS_LOGIN + " " + Scopes.PROFILE + " " + Scopes.EMAIL;
+        String scopesString = Scopes.PROFILE + " " + Scopes.EMAIL;
         String scopes = "oauth2:" + scopesString;
         Observable.defer(() -> {
             try {
@@ -518,7 +515,7 @@ public class LoginActivity extends BaseActivity
 
     private void showForm() {
         isShowingForm = true;
-        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY",  0).setDuration(1000);
+        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", 0).setDuration(1000);
         ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 0);
 
         ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 0);
@@ -556,7 +553,7 @@ public class LoginActivity extends BaseActivity
             View view = formWrapper.getChildAt(i);
             view.setAlpha(0);
             ValueAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1).setDuration(400);
-            animator.setStartDelay(100*i);
+            animator.setStartDelay(100 * i);
             showAnimation.play(animator).after(panAnimation);
         }
 
@@ -565,7 +562,7 @@ public class LoginActivity extends BaseActivity
 
     private void hideForm() {
         isShowingForm = false;
-        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY",  backgroundContainer.getBottom()).setDuration(1000);
+        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", backgroundContainer.getBottom()).setDuration(1000);
         ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 1).setDuration(700);
         ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 1).setDuration(700);
         showLoginAlphaAnimation.setStartDelay(300);

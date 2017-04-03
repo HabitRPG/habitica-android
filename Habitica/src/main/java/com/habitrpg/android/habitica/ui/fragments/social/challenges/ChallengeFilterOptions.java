@@ -5,7 +5,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import java.util.List;
 
 public class ChallengeFilterOptions {
-    public List<Group> ShowByGroups;
-    public boolean ShowOwned;
-    public boolean NotOwned;
+    public List<Group> showByGroups;
+    public boolean showOwned;
+    public boolean notOwned;
 }

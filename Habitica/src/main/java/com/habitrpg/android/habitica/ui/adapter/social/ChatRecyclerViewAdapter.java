@@ -249,10 +249,12 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             if (layoutType != TYPE_DANIEL && layoutType != TYPE_NEW_MESSAGE) {
                 setLikeProperties(msg);
 
-                if (msg.sent != null && msg.sent.equals("true")) {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
-                } else {
-                    DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                if (userBackground != null) {
+                    if (msg.sent != null && msg.sent.equals("true")) {
+                        DataBindingUtils.setRoundedBackgroundInt(userBackground, sendingUser.getContributor().getContributorColor());
+                    } else {
+                        DataBindingUtils.setRoundedBackgroundInt(userBackground, msg.getContributorColor());
+                    }
                 }
 
                 if (msg.user == null || msg.user.equals("")) {

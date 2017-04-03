@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +32,10 @@ public abstract class BaseMainFragment extends BaseFragment {
     public int fragmentSidebarPosition;
     @Inject
     protected SoundManager soundManager;
+    @Nullable
     protected HabitRPGUser user;
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(@Nullable HabitRPGUser user) {
         this.user = user;
     }
 
