@@ -1,5 +1,27 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -14,6 +36,7 @@ import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
 import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
 import com.habitrpg.android.habitica.events.commands.EditTagCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.RefreshTasksCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
@@ -35,36 +58,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,12 +98,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
             }
             tagsHelper.setTags(tagList);
 
-            TasksFragment.this.activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    EventBus.getDefault().post(new FilterTasksByTagsCommand());
-                }
-            });
+            TasksFragment.this.activity.runOnUiThread(() -> EventBus.getDefault().post(new FilterTasksByTagsCommand()));
 
         }
     };
@@ -211,24 +202,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     }
 
     public void refresh() {
-     /* Attach a rotating ImageView to the refresh item as an ActionView */
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_actionview, null);
-
-        Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.clockwise_rotate);
-        rotation.setRepeatCount(Animation.INFINITE);
-        iv.startAnimation(rotation);
-
-        refreshItem.setActionView(iv);
-
-        if (apiClient != null) {
-            apiClient.retrieveUser(true)
-
-                    .subscribe(
-                            new HabitRPGUserCallback(activity),
-                            throwable -> stopAnimatingRefreshItem()
-                    );
-        }
+        ViewFragmentsDictionary.get(viewPager.getCurrentItem()).onRefresh();
     }
 
     public void loadTaskLists() {
@@ -295,7 +269,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     //region Events
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        stopAnimatingRefreshItem();
         if (this.user != null) {
             fillTagFilterDrawer(tags);
             for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
@@ -350,9 +323,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
 
                         tags.add(tag);
                         addTagFilterDrawerItem(tag);
-                    }, throwable -> {
-                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
-                    });
+                    }, throwable -> UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE));
         }
     }
 
@@ -367,9 +338,7 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         filterChangedHandler.hit();
                         removeTagFilterDrawerItem(t);
                         EventBus.getDefault().post(new RefreshUserCommand());
-                    }, throwable -> {
-                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
-                    });
+                    }, throwable -> UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE));
         }
     }
 
@@ -389,22 +358,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                         UiUtils.dismissKeyboard(this.activity);
                         updateTagFilterDrawerItem(tag);
                         EventBus.getDefault().post(new RefreshUserCommand());
-                    }, throwable -> {
-                        UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE);
-                    });
+                    }, throwable -> UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Error: " + throwable.getMessage(), UiUtils.SnackbarDisplayType.FAILURE));
         }
     }
 
     @Subscribe
     public void onEvent(RefreshUserCommand event) {
-        if (apiClient != null) {
-            apiClient.retrieveUser(true)
-
-                    .subscribe(
-                            new HabitRPGUserCallback(activity),
-                            throwable -> stopAnimatingRefreshItem()
-                    );
-        }
+        ViewFragmentsDictionary.get(viewPager.getCurrentItem()).onRefresh();
     }
 
     @Subscribe
@@ -588,19 +548,10 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         }
     }
 
+    @Nullable
     @Override
     public String getDisplayedClassName() {
         return null;
-    }
-
-    public void stopAnimatingRefreshItem() {
-        if (refreshItem != null) {
-            View actionView = refreshItem.getActionView();
-            if (actionView != null) {
-                actionView.clearAnimation();
-            }
-            refreshItem.setActionView(null);
-        }
     }
 
     public void showEditTagDialog(Tag tag) {
@@ -621,48 +572,49 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 .setTitle(getString(R.string.edit_tag_title))
                 .setPositiveButton(getString(R.string.save_changes), null)
                 .setNeutralButton(getString(R.string.dialog_go_back), (dialog, which) -> {
-                    EditText tagEditText = (EditText) editTagDialogView.findViewById(R.id.tagEditText);
+                    EditText tagEditText = null;
+                    if (editTagDialogView != null) {
+                        tagEditText = (EditText) editTagDialogView.findViewById(R.id.tagEditText);
+                    }
                     UiUtils.dismissKeyboard(this.activity, tagEditText);
                     dialog.cancel();
                 })
                 .create();
-        btnDelete.setOnClickListener((View v) -> {
-            showDeleteTagDialog(alert, tag);
-        });
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener((View v) -> showDeleteTagDialog(alert, tag));
+        }
         alert.setView(editTagDialogView);
         alert.show();
 
-        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
+        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+             if (editTagDialogView != null) {
                 EditText tagEditText = (EditText) editTagDialogView.findViewById(R.id.tagEditText);
-                if (attemptUpdateTag(tagEditText, tag)) {
-                    alert.dismiss();
-                }
-            }
+                 if (attemptUpdateTag(tagEditText, tag)) {
+                     alert.dismiss();
+                 }
+            } else {
+                 alert.dismiss();
+             }
         });
     }
 
     public boolean attemptUpdateTag(EditText tagEditText, Tag tag) {
         String newTagName = tagEditText.getText().toString();
-        boolean dismiss = true;
 
         if (newTagName.equals("")) {
-            dismiss = false;
-            return dismiss;
+            return false;
         }
 
         UiUtils.dismissKeyboard(activity, tagEditText);
 
         if (newTagName.equals(tag.getName())) {
-            return dismiss;
+            return true;
         }
 
         String uuid = tag.getId();
         tag.setName(newTagName);
         EventBus.getDefault().post(new UpdateTagCommand(tag, uuid));
-        return dismiss;
+        return true;
     }
 
     public void showDeleteTagDialog(AlertDialog d, Tag tag) {
@@ -675,14 +627,13 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                     dialog.dismiss();
                     d.dismiss();
                 })
-                .setNegativeButton(getString(R.string.no), (dialog, which) -> {
-                    dialog.dismiss();
-                })
+                .setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss())
                 .create();
         confirmDeleteAlert.show();
     }
 
 
+    @Nullable
     @Override
     public String customTitle() {
         return null;

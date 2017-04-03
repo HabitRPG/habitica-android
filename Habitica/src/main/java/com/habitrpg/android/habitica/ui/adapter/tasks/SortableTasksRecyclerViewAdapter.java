@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import java.util.Collections;
 
@@ -19,7 +20,7 @@ public abstract class SortableTasksRecyclerViewAdapter<VH extends BaseTaskViewHo
     private SortTasksCallback sortCallback;
 
     public SortableTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
-                                            Context newContext, String userID, SortTasksCallback sortCallback) {
+                                            Context newContext, String userID, @Nullable SortTasksCallback sortCallback) {
         super(taskType, tagsHelper, layoutResource, newContext, userID);
         this.sortCallback = sortCallback;
     }

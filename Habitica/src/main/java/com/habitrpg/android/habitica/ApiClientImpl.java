@@ -341,15 +341,13 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     public Observable<HabitRPGUser> retrieveUser(boolean withTasks) {
 
-        Observable<HabitRPGUser> userObservable = apiService.getUser()
-                .compose(configureApiCallObserver());
+        Observable<HabitRPGUser> userObservable = this.getUser();
 
         if (withTasks) {
-            Observable<HabitResponse<TaskList>> tasksObservable = apiService.getTasks();
+            Observable<TaskList> tasksObservable = this.getTasks();
 
             userObservable = Observable.zip(userObservable, tasksObservable,
-                    (habitRPGUser, taskListHabitResponse) -> {
-                        TaskList tasks = taskListHabitResponse.getData();
+                    (habitRPGUser, tasks) -> {
 
                         habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
                         habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));

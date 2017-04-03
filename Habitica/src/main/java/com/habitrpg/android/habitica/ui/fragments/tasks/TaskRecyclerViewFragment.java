@@ -1,7 +1,18 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
@@ -10,6 +21,7 @@ import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
@@ -19,24 +31,18 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * TaskRecyclerViewFragment
@@ -44,9 +50,8 @@ import javax.inject.Named;
  * - Adds FAB Icon
  * - Handles the ScrollPosition - if anyone has a better solution please share it
  */
-public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener {
+public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
-    public RecyclerView recyclerView;
     public BaseTasksRecyclerViewAdapter recyclerAdapter;
     @Inject
     @Named("UserID")
@@ -56,14 +61,22 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Inject
     TagsHelper tagsHelper;
     LinearLayoutManager layoutManager = null;
+
+
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recyclerView)
+    public RecyclerView recyclerView;
+
     private String classType;
     private HabitRPGUser user;
     private View view;
+    @Nullable
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
 
     public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType,
-                                                       SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
+                                                       @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
@@ -152,9 +165,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         };
 
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
 
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            ButterKnife.bind(this, view);
 
             android.support.v4.app.FragmentActivity context = getActivity();
 
@@ -168,6 +181,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
+
+            swipeRefreshLayout.setOnRefreshListener(this);
         }
 
         if (savedInstanceState != null) {
@@ -257,5 +272,16 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Subscribe
     public void onEvent(TaskRemovedEvent event) {
         recyclerAdapter.removeTask(event.deletedTaskId);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        apiClient.retrieveUser(true)
+                .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
+                .subscribe(
+                        new HabitRPGUserCallback((MainActivity)getActivity()),
+                        throwable -> {}
+                );
     }
 }

@@ -6,12 +6,13 @@ import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 public class HabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
 
 
-    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
+    public HabitsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, @Nullable SortTasksCallback sortCallback) {
         super(taskType, tagsHelper, layoutResource, newContext, userID, sortCallback);
     }
 

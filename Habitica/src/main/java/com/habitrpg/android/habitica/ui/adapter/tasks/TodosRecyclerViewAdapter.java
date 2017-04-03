@@ -6,12 +6,13 @@ import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 public class TodosRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<TodoViewHolder> {
 
     public TodosRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
-                                    Context newContext, String userID, SortTasksCallback sortCallback) {
+                                    Context newContext, String userID, @Nullable SortTasksCallback sortCallback) {
         super(taskType, tagsHelper, layoutResource, newContext, userID, sortCallback);
     }
 
