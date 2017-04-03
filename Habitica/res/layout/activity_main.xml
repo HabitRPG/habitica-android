@@ -87,7 +87,6 @@
                 android:background="@color/brand_100"
                 app:bb_tabXmlResource="@xml/main_menu_tasks"
                 app:bb_inActiveTabColor="@color/brand_500"
-                app:bb_inActiveTabAlpha="0.4"
                 app:bb_activeTabColor="@color/white"
                 />
 
