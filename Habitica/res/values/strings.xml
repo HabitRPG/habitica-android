@@ -551,4 +551,9 @@ To start, which parts of your life do you want to improve?</string>
     <string name="avatar_hair_ponytail">Ponytail</string>
     <string name="avatar_glasses">Glasses</string>
     <string name="avatar_wheelchair">Wheelchair</string>
+    <string name="weak">Weak</string>
+    <string name="strong">Strong</string>
+    <string name="gray">Gray</string>
+    <string name="dated">Dated</string>
+    <string name="completed">Complated</string>
 </resources>

@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
@@ -194,7 +194,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     LinearLayout tagsContainerLinearLayout;
 
     @Inject
-    TagsHelper tagsHelper;
+    TaskFilterHelper taskFilterHelper;
 
     EmojiPopup popup;
 
@@ -526,7 +526,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     }
                 }
             });
-            checkbox.setChecked(tagsHelper.isTagChecked(tag.getId()));
+            checkbox.setChecked(taskFilterHelper.isTagChecked(tag.getId()));
             tagsContainerLinearLayout.addView(row);
             tagCheckBoxList.add(checkbox);
             position++;

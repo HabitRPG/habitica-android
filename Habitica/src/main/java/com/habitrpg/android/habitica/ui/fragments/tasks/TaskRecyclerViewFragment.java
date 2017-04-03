@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -59,7 +59,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Inject
     ApiClient apiClient;
     @Inject
-    TagsHelper tagsHelper;
+    TaskFilterHelper taskFilterHelper;
     LinearLayoutManager layoutManager = null;
 
 
@@ -68,20 +68,22 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
 
-    private String classType;
+    String classType;
     private HabitRPGUser user;
     private View view;
     @Nullable
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
+    private String activeFilter;
 
-    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType,
+    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType, @Nullable String activeFilter,
                                                        @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
         fragment.sortCallback = sortCallback;
+        fragment.activeFilter = activeFilter;
         return fragment;
     }
 
@@ -92,7 +94,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             switch (this.classType) {
                 case Task.TYPE_HABIT:
                     layoutOfType = R.layout.habit_item_card;
-                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, tagsHelper, layoutOfType, getContext(), userID, sortCallback);
+                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, taskFilterHelper, layoutOfType, getContext(), userID, sortCallback);
                     allowReordering();
                     break;
                 case Task.TYPE_DAILY:
@@ -101,17 +103,17 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                     if (user != null) {
                         dailyResetOffset = user.getPreferences().getDayStart();
                     }
-                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, tagsHelper, layoutOfType, getContext(), userID, dailyResetOffset, sortCallback);
+                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, taskFilterHelper, layoutOfType, getContext(), userID, dailyResetOffset, sortCallback);
                     allowReordering();
                     break;
                 case Task.TYPE_TODO:
                     layoutOfType = R.layout.todo_item_card;
-                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, tagsHelper, layoutOfType, getContext(), userID, sortCallback);
+                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, taskFilterHelper, layoutOfType, getContext(), userID, sortCallback);
                     allowReordering();
                     return;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
-                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, tagsHelper, layoutOfType, getContext(), user, apiClient);
+                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, taskFilterHelper, layoutOfType, getContext(), user, apiClient);
                     break;
             }
         }
@@ -125,6 +127,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
+        taskFilterHelper.setActiveFilter(activeFilter);
+
         mItemTouchCallback = new ItemTouchHelper.Callback() {
             private Integer mFromPosition = null;
 
@@ -283,5 +288,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         new HabitRPGUserCallback((MainActivity)getActivity()),
                         throwable -> {}
                 );
+    }
+
+    public void setActiveFilter(String activeFilter) {
+        this.activeFilter = activeFilter;
+        taskFilterHelper.setActiveFilter(activeFilter);
+        recyclerAdapter.filter();
     }
 }

@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -146,8 +146,8 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
         private int dailyResetOffset = 0;
 
-        public ChallengeTasksRecyclerViewAdapter(TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
-            super("", tagsHelper, layoutResource, newContext, userID, sortCallback);
+        public ChallengeTasksRecyclerViewAdapter(TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
+            super("", taskFilterHelper, layoutResource, newContext, userID, sortCallback);
 
             if (user != null) {
                 dailyResetOffset = user.getPreferences().getDayStart();

@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 
 import android.content.Context;
@@ -13,10 +13,10 @@ public class DailiesRecyclerViewHolder extends SortableTasksRecyclerViewAdapter<
 
     public int dailyResetOffset;
 
-    public DailiesRecyclerViewHolder(String taskType, TagsHelper tagsHelper, int layoutResource,
+    public DailiesRecyclerViewHolder(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
                                      Context newContext, String userID, int dailyResetOffset,
                                      @Nullable SortTasksCallback sortTasksCallback) {
-        super(taskType, tagsHelper, layoutResource, newContext, userID, sortTasksCallback);
+        super(taskType, taskFilterHelper, layoutResource, newContext, userID, sortTasksCallback);
         this.dailyResetOffset = dailyResetOffset;
     }
 

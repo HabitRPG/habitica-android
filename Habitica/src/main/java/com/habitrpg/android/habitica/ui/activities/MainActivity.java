@@ -235,7 +235,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     // endregion
 
     private Drawer drawer;
-    private Drawer filterDrawer;
     private AccountHeader accountHeader;
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
@@ -302,14 +301,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 .build();
         drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);
-
-        if (this.filterDrawer == null) {
-            filterDrawer = new DrawerBuilder()
-                    .withActivity(this)
-                    .withDrawerGravity(Gravity.END)
-                    .withCloseOnClick(false)
-                    .append(this.drawer);
-        }
 
         EventBus.getDefault().register(this);
     }
@@ -1518,43 +1509,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     public void closeDrawer(int gravity) {
-        Drawer drawer;
-        if (gravity == GravityCompat.START) {
-            drawer = this.drawer;
-        } else {
-            drawer = this.filterDrawer;
-        }
-        if (drawer != null) {
-            drawer.closeDrawer();
-        }
+        this.drawer.closeDrawer();
     }
 
     public void openDrawer(int gravity) {
-        Drawer drawer;
-        if (gravity == GravityCompat.START) {
-            drawer = this.drawer;
-        } else {
-            drawer = this.filterDrawer;
-        }
-        if (drawer != null) {
-            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
-            drawer.openDrawer();
-        }
+        EventBus.getDefault().post(new ToggledEditTagsEvent(false));
+        this.drawer.openDrawer();
     }
-
-    public void fillFilterDrawer(List<IDrawerItem> items) {
-        if (this.filterDrawer != null) {
-            this.filterDrawer.removeAllItems();
-            for (IDrawerItem item : items) {
-                this.filterDrawer.addItem(item);
-            }
-        }
-    }
-
-    public void addFilterDrawerItem(IDrawerItem item) {
-        this.filterDrawer.addItem(item);
-    }
-
 
     @Subscribe
     public void onEvent(OpenFullProfileCommand cmd) {
@@ -1568,14 +1529,5 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
-    }
-
-    public void removeFilterDrawerItem(int position) {
-        this.filterDrawer.removeItemByPosition(position);
-    }
-
-    public void updateFilterDrawerItem(IDrawerItem item, int position) {
-        this.filterDrawer.removeItemByPosition(position);
-        this.filterDrawer.addItemAtPosition(item, position);
     }
 }

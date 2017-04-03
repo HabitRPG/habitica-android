@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -28,8 +28,8 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     private final HabitRPGUser user;
     private ApiClient apiClient;
 
-    public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
-        super(taskType, tagsHelper, layoutResource, newContext, user.getId());
+    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
+        super(taskType, taskFilterHelper, layoutResource, newContext, user.getId());
         this.user = user;
         this.apiClient = apiClient;
         this.contentCache = new ContentCache(apiClient);

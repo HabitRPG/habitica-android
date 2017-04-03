@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.executors.UIThread;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 
 import android.app.Application;
 import android.content.Context;
@@ -50,8 +50,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public TagsHelper providesTagsHelper() {
-        return new TagsHelper();
+    public TaskFilterHelper providesTagsHelper() {
+        return new TaskFilterHelper();
     }
 
     @Provides

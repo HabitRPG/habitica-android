@@ -329,4 +329,13 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:shadowColor">@color/transparent</item>
     </style>
+
+    <style name="TaskFilterRadioButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@color/transparent</item>
+        <item name="android:background">@drawable/pill_radio_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@drawable/radio_button_text_color</item>
+    </style>
 </resources>
