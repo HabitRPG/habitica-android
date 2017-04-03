@@ -183,8 +183,7 @@ public class LoginActivity extends BaseActivity
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                        apiHelper.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                                 .subscribe(LoginActivity.this, throwable -> {
                                     hideProgress();
                                 });

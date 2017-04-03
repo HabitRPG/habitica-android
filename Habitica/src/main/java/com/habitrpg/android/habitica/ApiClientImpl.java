@@ -22,6 +22,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
@@ -120,8 +121,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
 
-    CrashlyticsProxy crashlyticsProxy;
-    Context context;
+    private CrashlyticsProxy crashlyticsProxy;
+    private Context context;
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private final ApiService apiService;
@@ -808,8 +809,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> leaveChallenge(String challengeId) {
-        return apiService.leaveChallenge(challengeId).compose(configureApiCallObserver());
+    public Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body) {
+        return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver());
     }
 
     @Override

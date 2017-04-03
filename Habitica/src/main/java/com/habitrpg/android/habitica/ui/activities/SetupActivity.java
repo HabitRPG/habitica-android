@@ -156,8 +156,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Subscribe
     public void onEvent(EquipCommand event) {
-        this.apiHelper.apiService.equipItem(event.type, event.key)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.equipItem(event.type, event.key)
                 .subscribe(new ItemsCallback(this, this.user), throwable -> {
                 });
     }
@@ -172,8 +171,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         if (isLastPage()) {
             List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
             this.completedSetup = true;
-            this.apiHelper.apiService.createTasks(newTasks)
-                    .compose(this.apiHelper.configureApiCallObserver())
+            this.apiClient.createTasks(newTasks)
                     .subscribe(tasks -> {
                         onUserReceived(user);
                     }, throwable -> {

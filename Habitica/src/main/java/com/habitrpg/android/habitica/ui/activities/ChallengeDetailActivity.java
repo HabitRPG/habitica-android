@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -100,8 +101,6 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     // endregion
 
-    private ChallengeViewHolder challengeViewHolder;
-
     private Challenge challenge;
 
     @Override
@@ -133,83 +132,84 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         ObservableList<Task> fullList = new ObservableArrayList<>();
 
+        if (challengeId != null) {
 
-        apiClient.getChallengeTasks(challengeId)
-                .subscribe(taskList -> {
-                    ArrayList<Task> resultList = new ArrayList<>();
+            apiClient.getChallengeTasks(challengeId)
+                    .subscribe(taskList -> {
+                        ArrayList<Task> resultList = new ArrayList<>();
 
-                    ArrayList<Task> todos = new ArrayList<>();
-                    ArrayList<Task> habits = new ArrayList<>();
-                    ArrayList<Task> dailies = new ArrayList<>();
-                    ArrayList<Task> rewards = new ArrayList<>();
+                        ArrayList<Task> todos = new ArrayList<>();
+                        ArrayList<Task> habits = new ArrayList<>();
+                        ArrayList<Task> dailies = new ArrayList<>();
+                        ArrayList<Task> rewards = new ArrayList<>();
 
-                    for (Map.Entry<String, Task> entry : taskList.tasks.entrySet()) {
-                        switch (entry.getValue().type) {
-                            case Task.TYPE_TODO:
-                                todos.add(entry.getValue());
-                                break;
-                            case Task.TYPE_HABIT:
+                        for (Map.Entry<String, Task> entry : taskList.tasks.entrySet()) {
+                            switch (entry.getValue().type) {
+                                case Task.TYPE_TODO:
+                                    todos.add(entry.getValue());
+                                    break;
+                                case Task.TYPE_HABIT:
 
-                                habits.add(entry.getValue());
-                                break;
-                            case Task.TYPE_DAILY:
+                                    habits.add(entry.getValue());
+                                    break;
+                                case Task.TYPE_DAILY:
 
-                                dailies.add(entry.getValue());
-                                break;
-                            case Task.TYPE_REWARD:
+                                    dailies.add(entry.getValue());
+                                    break;
+                                case Task.TYPE_REWARD:
 
-                                rewards.add(entry.getValue());
-                                break;
+                                    rewards.add(entry.getValue());
+                                    break;
+                            }
                         }
-                    }
 
 
-                    if (!habits.isEmpty()) {
-                        Task dividerTask = new Task();
-                        dividerTask.setId("divhabits");
-                        dividerTask.type = "divider";
-                        dividerTask.text = "Challenge Habits";
+                        if (!habits.isEmpty()) {
+                            Task dividerTask = new Task();
+                            dividerTask.setId("divhabits");
+                            dividerTask.type = "divider";
+                            dividerTask.text = "Challenge Habits";
 
-                        resultList.add(dividerTask);
-                        resultList.addAll(habits);
-                    }
-
-
-                    if (!dailies.isEmpty()) {
-                        Task dividerTask = new Task();
-                        dividerTask.setId("divdailies");
-                        dividerTask.type = "divider";
-                        dividerTask.text = "Challenge Dailies";
-
-                        resultList.add(dividerTask);
-                        resultList.addAll(dailies);
-                    }
+                            resultList.add(dividerTask);
+                            resultList.addAll(habits);
+                        }
 
 
-                    if (!todos.isEmpty()) {
-                        Task dividerTask = new Task();
-                        dividerTask.setId("divtodos");
-                        dividerTask.type = "divider";
-                        dividerTask.text = "Challenge To-Dos";
+                        if (!dailies.isEmpty()) {
+                            Task dividerTask = new Task();
+                            dividerTask.setId("divdailies");
+                            dividerTask.type = "divider";
+                            dividerTask.text = "Challenge Dailies";
 
-                        resultList.add(dividerTask);
-                        resultList.addAll(todos);
-                    }
-
-                    if (!rewards.isEmpty()) {
-                        Task dividerTask = new Task();
-                        dividerTask.setId("divrewards");
-                        dividerTask.type = "divider";
-                        dividerTask.text = "Challenge Rewards";
-
-                        resultList.add(dividerTask);
-                        resultList.addAll(rewards);
-                    }
+                            resultList.add(dividerTask);
+                            resultList.addAll(dailies);
+                        }
 
 
-                    fullList.addAll(resultList);
-                }, Throwable::printStackTrace);
+                        if (!todos.isEmpty()) {
+                            Task dividerTask = new Task();
+                            dividerTask.setId("divtodos");
+                            dividerTask.type = "divider";
+                            dividerTask.text = "Challenge To-Dos";
 
+                            resultList.add(dividerTask);
+                            resultList.addAll(todos);
+                        }
+
+                        if (!rewards.isEmpty()) {
+                            Task dividerTask = new Task();
+                            dividerTask.setId("divrewards");
+                            dividerTask.type = "divider";
+                            dividerTask.text = "Challenge Rewards";
+
+                            resultList.add(dividerTask);
+                            resultList.addAll(rewards);
+                        }
+
+
+                        fullList.addAll(resultList);
+                    }, Throwable::printStackTrace);
+        }
 
         ChallengeTasksRecyclerViewFragment fragment = ChallengeTasksRecyclerViewFragment.newInstance(HabiticaApplication.User, fullList);
 
@@ -223,7 +223,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         challenge = new Select().from(Challenge.class).where(Condition.column("id").is(challengeId)).querySingle();
 
-        challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
+        ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
         challengeViewHolder.bind(challenge);
     }
 
@@ -252,7 +252,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 
-                    showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id)
+                    showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
                             .subscribe(aVoid -> {
                                 challenge.user_id = null;
                                 challenge.async().save();
@@ -262,8 +262,6 @@ public class ChallengeDetailActivity extends BaseActivity {
 
                             }, throwable -> {
                             }));
-
-
                 })
                 .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
@@ -294,7 +292,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         finish();
     }
 
-    public class ChallengeViewHolder extends RecyclerView.ViewHolder {
+    class ChallengeViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.challenge_name)
         EmojiTextView challengeName;
 
@@ -312,7 +310,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         private Challenge challenge;
 
-        public ChallengeViewHolder(View itemView) {
+        ChallengeViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
@@ -351,17 +349,13 @@ public class ChallengeDetailActivity extends BaseActivity {
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> {
-                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
-                        }, error -> {
+                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> {
-                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
-                        }, error -> {
+                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
                         });
             }
             break;
@@ -393,9 +387,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
 
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
-                    .subscribe(res -> {
-                        onTaskDataReceived(res, event.Reward);
-                    }, error -> {});
+                    .subscribe(res -> onTaskDataReceived(res, event.Reward), error -> {});
         }
 
     }

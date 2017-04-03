@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
@@ -427,9 +428,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
             if (preferences != null) {
                 apiClient.setLanguageCode(preferences.getLanguage());
+                soundManager.setSoundTheme(preferences.getSound());
             }
-
-            soundManager.setSoundTheme(preferences.getSound());
 
             Calendar calendar = new GregorianCalendar();
             TimeZone timeZone = calendar.getTimeZone();
@@ -871,7 +871,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
             }
         } else {
-            IDrawerItem newItem = item;
+            IDrawerItem newItem;
             if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
                 newItem = new PrimaryDrawerItem()
                         .withName(this.getString(R.string.sidebar_skills))
@@ -906,6 +906,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void setTranslatedFragmentTitle(BaseMainFragment fragment) {
+        if (getSupportActionBar() == null) {
+            return;
+        }
         if (fragment != null && fragment.customTitle() != null) {
             getSupportActionBar().setTitle(fragment.customTitle());
         } else if (user != null && user.getProfile() != null) {
@@ -1008,12 +1011,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             observable
 
                     .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .subscribe(buyResponse -> {
-                        apiClient.retrieveUser(false)
+                    .subscribe(buyResponse -> apiClient.retrieveUser(false)
 
-                                .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                                });
-                    }, throwable -> {
+                            .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                            }), throwable -> {
                         HttpException error = (HttpException) throwable;
                         if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
                             openGemPurchaseFragment(null);
@@ -1129,7 +1130,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Subscribe
-    public void openGemPurchaseFragment(OpenGemPurchaseFragmentCommand cmd) {
+    public void openGemPurchaseFragment(@Nullable OpenGemPurchaseFragmentCommand cmd) {
         drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
     }
 
@@ -1435,18 +1436,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(res -> {
-                    EventBus.getDefault().post(new TaskUpdatedEvent(event.task));
-                }, error -> {
+                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(res -> {
-                    onTaskDataReceived(res, event.habit);
-                }, error -> {
+                .subscribe(res -> onTaskDataReceived(res, event.habit), error -> {
                 });
     }
 

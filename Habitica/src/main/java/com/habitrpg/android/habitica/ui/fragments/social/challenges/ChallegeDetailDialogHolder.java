@@ -1,22 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
-import net.pherth.android.emoji_library.EmojiParser;
-import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -26,6 +9,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
+import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import net.pherth.android.emoji_library.EmojiParser;
+import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -76,12 +76,12 @@ public class ChallegeDetailDialogHolder {
     private Activity context;
 
 
-    protected ChallegeDetailDialogHolder(View view, Activity context) {
+    private ChallegeDetailDialogHolder(View view, Activity context) {
         this.context = context;
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, APIHelper apiHelper, HabitRPGUser user, Challenge challenge,
+    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
@@ -90,7 +90,7 @@ public class ChallegeDetailDialogHolder {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeDetailDialogHolder.bind(builder.show(), apiHelper, user, challenge, challengeJoinedAction, challengeLeftAction);
+        challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
     public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
@@ -321,24 +321,20 @@ public class ChallegeDetailDialogHolder {
                 .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
                 .setPositiveButton(context.getString(R.string.yes), (dialog, which) ->
 
-                        showRemoveTasksDialog(keepTasks -> {
+                        showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
+                                .subscribe(aVoid -> {
+                                    challenge.user_id = null;
+                                    challenge.async().save();
 
-                            this.apiHelper.apiService.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
-                                    .compose(apiHelper.configureApiCallObserver())
-                                    .subscribe(aVoid -> {
-                                        challenge.user_id = null;
-                                        challenge.async().save();
+                                    this.user.resetChallengeList();
 
-                                        this.user.resetChallengeList();
+                                    if (challengeLeftAction != null) {
+                                        challengeLeftAction.call(challenge);
+                                    }
 
-                                        if (challengeLeftAction != null) {
-                                            challengeLeftAction.call(challenge);
-                                        }
-
-                                        this.dialog.dismiss();
-                                    }, throwable -> {
-                                    });
-                        })).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
+                                    this.dialog.dismiss();
+                                }, throwable -> {
+                                }))).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
             dialog.dismiss();
         }).show();
     }
@@ -356,17 +352,5 @@ public class ChallegeDetailDialogHolder {
                     callback.call("keep-all");
                     dialog.dismiss();
                 }).show();
-    }
-
-    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
-                                  Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
-        View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
-
-        ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-                .setView(dialogLayout);
-
-        challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 }

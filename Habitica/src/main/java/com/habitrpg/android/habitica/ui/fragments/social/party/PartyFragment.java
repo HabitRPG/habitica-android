@@ -162,15 +162,10 @@ public class PartyFragment extends BaseMainFragment {
                 new AlertDialog.Builder(viewPager.getContext())
                         .setTitle(viewPager.getContext().getString(R.string.party_leave))
                         .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
-                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiHelper.apiService.leaveGroup(this.group.id)
-                                .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(group -> {
-                                    getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-                                }, throwable -> {
+                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiClient.leaveGroup(this.group.id)
+                                .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), throwable -> {
                             }))
-                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
-                        })
+                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> dialog.dismiss())
                         .show();
                 return true;
         }

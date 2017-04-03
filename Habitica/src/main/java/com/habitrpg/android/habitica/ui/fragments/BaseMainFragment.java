@@ -14,6 +14,7 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
+import com.roughike.bottombar.BottomBar;
 
 import javax.inject.Inject;
 
@@ -127,4 +128,6 @@ public abstract class BaseMainFragment extends BaseFragment {
     public String customTitle() {
         return null;
     }
+
+
 }

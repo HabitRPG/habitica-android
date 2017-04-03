@@ -45,8 +45,6 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId){
-        return apiClient.scoreChecklistItem(taskId, itemId).doOnNext(res -> {
-            this.localRepository.saveTask(res);
-        });
+        return apiClient.scoreChecklistItem(taskId, itemId).doOnNext(this.localRepository::saveTask);
     }
 }

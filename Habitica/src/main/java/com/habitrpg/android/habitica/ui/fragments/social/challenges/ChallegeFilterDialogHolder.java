@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ChallegeFilterDialogHolder {
+class ChallegeFilterDialogHolder {
 
     @BindView(R.id.challenge_filter_recycler_view)
     RecyclerView groupRecyclerView;
@@ -45,7 +45,7 @@ public class ChallegeFilterDialogHolder {
     CheckBox checkboxNotOwned;
 
     private AlertDialog dialog;
-    private APIHelper apiHelper;
+    private ApiClient apiClient;
     private HabitRPGUser user;
     private List<Challenge> challengesViewed;
     private ChallengeFilterOptions currentFilter;
@@ -59,7 +59,7 @@ public class ChallegeFilterDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, APIHelper apiHelper, HabitRPGUser user, List<Challenge> challengesViewed,
+    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, List<Challenge> challengesViewed,
                                   ChallengeFilterOptions currentFilter,
                                   Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_filter, null);
@@ -69,14 +69,14 @@ public class ChallegeFilterDialogHolder {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeFilterDialogHolder.bind(builder.show(), apiHelper, user, challengesViewed, currentFilter, selectedGroupsCallback);
+        challegeFilterDialogHolder.bind(builder.show(), apiClient, user, challengesViewed, currentFilter, selectedGroupsCallback);
     }
 
-    public void bind(AlertDialog dialog, APIHelper apiHelper, HabitRPGUser user, List<Challenge> challengesViewed,
+    public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, List<Challenge> challengesViewed,
                      ChallengeFilterOptions currentFilter,
                      Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         this.dialog = dialog;
-        this.apiHelper = apiHelper;
+        this.apiClient = apiClient;
         this.user = user;
         this.challengesViewed = challengesViewed;
         this.currentFilter = currentFilter;

@@ -57,7 +57,7 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
             if (Math.abs(translationY - this.mTranslationY) == (float) dependency.getHeight()) {
                 ViewCompat.animate(child)
                         .translationY(translationY)
-                        .setListener((ViewPropertyAnimatorListener) null);
+                        .setListener(null);
             } else {
                 ViewCompat.setTranslationY(child, translationY);
             }

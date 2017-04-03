@@ -79,7 +79,6 @@
         </android.support.design.widget.AppBarLayout>
 
         <com.roughike.bottombar.BottomBar
-                app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
