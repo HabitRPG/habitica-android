@@ -58,6 +58,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         userChallengesFragment.setRefreshingCallback(this::subscribeGetChallenges);
         userChallengesFragment.setObservable(getUserChallengesObservable);
         userChallengesFragment.setViewUserChallengesOnly(true);
+        userChallengesFragment.setWithFilter(true);
 
         availableChallengesFragment = new ChallengeListFragment();
         availableChallengesFragment.setUser(this.user);

@@ -204,19 +204,22 @@
     <string name="sidebar_help">Help &amp; FAQ</string>
     <string name="complete_tutorial">Got it!</string>
     <string name="dismiss_tutorial">Remind me again</string>
-    <string name="intro_1_title">Welcome to Habitica</string>
-    <string name="intro_1_description" >Join over %s people having fun while getting things done. Create an avatar and track your real-life tasks.</string>
-    <string name="intro_2_title">Game Progress = Life Progress</string>
-    <string name="intro_2_description">Unlock features in the game by checking off your real-life tasks. Earn armor, pets, and more to reward you for meeting your goals!</string>
-    <string name="intro_3_title">Get Social and Fight Monsters</string>
+    <string name="intro_1_subtitle">Welcome to</string>
+    <string name="intro_1_title">Habitica</string>
+    <string name="intro_1_description" >It’s time to have fun while you get things done. Join over %s others improving their life one task at a time.</string>
+    <string name="intro_2_subtitle">Progress in the game</string>
+    <string name="intro_2_title">Progress in life</string>
+    <string name="intro_2_description">Unlock features in the game by checking off your real life tasks. Earn armor, pets, and more as rewards for meeting your goals.</string>
+    <string name="intro_3_subtitle">Get social</string>
+    <string name="intro_3_title">Fight monsters</string>
     <string name="intro_3_description">Keep your goals on track with help from your friends. Support each other in life and in battle as you improve together!</string>
-    <string name="intro_finish_button">Get Started</string>
+    <string name="intro_finish_button">Let\'s start!</string>
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
     <string name="skip_button">Skip</string>
     <string name="setup_welcome_description">Welcome to Habitica, where advancing in the game will improve your real life! As you accomplish real-world goals, you\'ll unlock equipment, pets, quests, and more.</string>
     <string name="setup_welcome_title">Welcome</string>
-    <string name="avatar_setup_description">First, you need an avatar in the game to represent you! The things you do in real life will affect your avatar\'s health, experience level, and gold.</string>
+    <string name="avatar_setup_description">So, how would you like to look? Don\'t worry, you can change this later.</string>
     <string name="task_setup_description">Splendid! Now let\'s set up your tasks so that you can start earning experience and gold.
 
 To start, which parts of your life do you want to improve?</string>
@@ -491,6 +494,10 @@ To start, which parts of your life do you want to improve?</string>
     <string name="challenge_details">Challenge Details</string>
     <string name="challenge_leave_title">Leave Challenge</string>
     <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
+    <string name="challenge_remove_tasks_title">Remove tasks</string>
+    <string name="challenge_remove_tasks_text">Do you want to remove the tasks?</string>
+    <string name="remove_tasks">Remove</string>
+    <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
     <string name="public_challenges">Public</string>
     <string name="challenges">Challenges</string>
@@ -522,6 +529,26 @@ To start, which parts of your life do you want to improve?</string>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Your next prize unlocks at %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
+    <string name="filters">Filters</string>
+    <string name="done">Done</string>
     <string name="group_tasks_edit_description">Group tasks can not be edited.</string>
     <string name="group_tasks_edit_title">Can\'t edit this task</string>
+    <string name="groups">Groups</string>
+    <string name="all">All</string>
+    <string name="none">None</string>
+    <string name="owned">Owned</string>
+    <string name="not_owned">Not owned</string>
+    <string name="new_game">New\nGame</string>
+    <string name="login_btn_fb">Login with Facebook</string>
+    <string name="login_btn_google">Login with Google</string>
+    <string name="action_back">Back</string>
+    <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
+    <string name="randomize">Randomize</string>
+    <string name="avatar_extras">Extras</string>
+    <string name="avatar_skin_color">Skin Color</string>
+    <string name="avatar_hair_color">Hair Color</string>
+    <string name="avatar_hair_bangs">Bangs</string>
+    <string name="avatar_hair_ponytail">Ponytail</string>
+    <string name="avatar_glasses">Glasses</string>
+    <string name="avatar_wheelchair">Wheelchair</string>
 </resources>

@@ -1,21 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import android.app.AlertDialog;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -48,6 +32,22 @@ import net.pherth.android.emoji_library.EmojiTextView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import android.app.AlertDialog;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -56,6 +56,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -121,7 +122,9 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         setupToolbar(toolbar);
 
-        getSupportActionBar().setTitle(R.string.challenge_details);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.challenge_details);
+        }
         detail_tabs.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
@@ -230,6 +233,57 @@ public class ChallengeDetailActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_leave:
+                showChallengeLeaveDialog();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showChallengeLeaveDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle(this.getString(R.string.challenge_leave_title))
+                .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
+                .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
+                    dialog.dismiss();
+
+                    showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id)
+                            .subscribe(aVoid -> {
+                                challenge.user_id = null;
+                                challenge.async().save();
+
+                                HabiticaApplication.User.resetChallengeList();
+                                finish();
+
+                            }, throwable -> {
+                            }));
+
+
+                })
+                .setNegativeButton(this.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
+    }
+
+    // refactor as an UseCase later - see ChallengeDetailDialogHolder
+    private void showRemoveTasksDialog(Action1<String> callback){
+        new AlertDialog.Builder(this)
+                .setTitle(this.getString(R.string.challenge_remove_tasks_title))
+                .setMessage(this.getString(R.string.challenge_remove_tasks_text))
+                .setPositiveButton(this.getString(R.string.remove_tasks), (dialog, which) -> {
+                    callback.call("remove-all");
+                    dialog.dismiss();
+                })
+                .setNegativeButton(this.getString(R.string.keep_tasks), (dialog, which) -> {
+                    callback.call("keep-all");
+                    dialog.dismiss();
+                }).show();
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
@@ -281,7 +335,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
         @OnClick(R.id.btn_show_more)
-        public void onShowMore() {
+        void onShowMore() {
 
             ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
                     HabiticaApplication.User, challenge,
@@ -289,36 +343,6 @@ public class ChallengeDetailActivity extends BaseActivity {
 
                     },
                     challenge1 -> ChallengeDetailActivity.this.onBackPressed());
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_leave:
-                new AlertDialog.Builder(this)
-                        .setTitle(this.getString(R.string.challenge_leave_title))
-                        .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
-                        .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
-                            this.apiClient.leaveChallenge(challenge.id)
-
-                                    .subscribe(aVoid -> {
-                                        challenge.user_id = null;
-                                        challenge.async().save();
-
-                                        HabiticaApplication.User.resetChallengeList();
-                                        finish();
-
-                                    }, throwable -> {
-                                    });
-                        })
-                        .setNegativeButton(this.getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
-                        }).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -347,25 +371,19 @@ public class ChallengeDetailActivity extends BaseActivity {
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(res -> {
-                    EventBus.getDefault().post(new TaskUpdatedEvent(event.task));
-                }, error -> {
+                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(res -> {
-                    onTaskDataReceived(res, event.habit);
-                }, error -> {
+                .subscribe(res -> onTaskDataReceived(res, event.habit), error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(final BuyRewardCommand event) {
-        final String rewardKey = event.Reward.getId();
-
         if (HabiticaApplication.User.getStats().getGp() < event.Reward.getValue()) {
             showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), UiUtils.SnackbarDisplayType.FAILURE);
             return;

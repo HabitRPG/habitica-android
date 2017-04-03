@@ -35,6 +35,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +45,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
@@ -99,7 +101,14 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 }
             }
             tagsHelper.setTags(tagList);
-            EventBus.getDefault().post(new FilterTasksByTagsCommand());
+
+            TasksFragment.this.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    EventBus.getDefault().post(new FilterTasksByTagsCommand());
+                }
+            });
+
         }
     };
 
@@ -111,11 +120,12 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        this.usesTabLayout = true;
+        this.usesTabLayout = false;
+        this.usesBottomNavigation = true;
         this.displayingTaskForm = false;
         this.editingTags = false;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
+        View v = inflater.inflate(R.layout.fragment_fading_viewpager, container, false);
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
@@ -139,6 +149,18 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
         this.activity.unlockDrawer(GravityCompat.END);
 
         loadTaskLists();
+
+        bottomNavigation.setOnTabSelectListener(tabId -> {
+            if (tabId == R.id.tab_habits) {
+                viewPager.setCurrentItem(0);
+            } else if (tabId == R.id.tab_dailies) {
+                viewPager.setCurrentItem(1);
+            } else if (tabId == R.id.tab_todos) {
+                viewPager.setCurrentItem(2);
+            } else if (tabId == R.id.tab_rewards) {
+                viewPager.setCurrentItem(3);
+            }
+        });
 
         return v;
     }
@@ -267,10 +289,6 @@ public class TasksFragment extends BaseMainFragment implements OnCheckedChangeLi
                 return "";
             }
         });
-
-        if (tabLayout != null) {
-            tabLayout.setupWithViewPager(viewPager);
-        }
     }
     // endregion
 

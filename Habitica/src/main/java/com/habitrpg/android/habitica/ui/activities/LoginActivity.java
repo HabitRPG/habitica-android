@@ -12,6 +12,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.habitrpg.android.habitica.BuildConfig;
@@ -23,6 +25,8 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
+import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
 
@@ -30,6 +34,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.accounts.AccountManager;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -46,13 +55,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +101,23 @@ public class LoginActivity extends BaseActivity
     public String mTmpUserToken;
     public String mTmpApiToken;
     public Boolean isRegistering;
+    Boolean isShowingForm = false;
+
+    @BindView(R.id.background_container)
+    LockableScrollView backgroundContainer;
+    @BindView(R.id.background_view)
+    LoginBackgroundView backgroundView;
+    @BindView(R.id.new_game_button)
+    Button newGameButton;
+    @BindView(R.id.show_login_button)
+    Button showLoginButton;
+    @BindView(R.id.login_scrollview)
+    ScrollView scrollView;
+    @BindView(R.id.login_linear_layout)
+    LinearLayout formWrapper;
+    @BindView(R.id.back_button)
+    Button backButton;
+
     @BindView(R.id.login_btn)
     Button mLoginNormalBtn;
     @BindView(R.id.PB_AsyncTask)
@@ -98,8 +130,8 @@ public class LoginActivity extends BaseActivity
     EditText mEmail;
     @BindView(R.id.confirm_password)
     EditText mConfirmPassword;
-    @BindView(R.id.login_button)
-    LoginButton mFacebookLoginBtn;
+    @BindView(R.id.fb_login_button)
+    Button mFacebookLoginBtn;
     @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
     private Menu menu;
@@ -108,20 +140,23 @@ public class LoginActivity extends BaseActivity
 
     @Override
     protected int getLayoutResId() {
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         return R.layout.activity_login;
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         //Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false);
 
         ButterKnife.bind(this);
 
-        mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
+        setupFacebookLogin();
 
-        mFacebookLoginBtn.setReadPermissions("user_friends");
+        mLoginNormalBtn.setOnClickListener(mLoginNormalClick);
 
         mForgotPWTV.setOnClickListener(mForgotPWClick);
         SpannableString content = new SpannableString(mForgotPWTV.getText());
@@ -130,32 +165,46 @@ public class LoginActivity extends BaseActivity
 
         callbackManager = CallbackManager.Factory.create();
 
-        mFacebookLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
-                        .subscribe(LoginActivity.this, throwable -> {
-                            hideProgress();
-                        });
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d("FB Login", "Cancelled");
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Log.e("FB Login", "Error", exception);
-            }
-        });
 
         this.isRegistering = true;
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("page", this.getClass().getSimpleName());
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData);
+
+        backgroundContainer.post(() -> backgroundContainer.scrollTo(0, backgroundContainer.getBottom()));
+        backgroundContainer.setScrollingEnabled(false);
+    }
+
+    private void setupFacebookLogin() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                        apiHelper.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(LoginActivity.this, throwable -> {
+                                    hideProgress();
+                                });
+                    }
+
+                    @Override
+                    public void onCancel() {
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                    }
+                });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
     }
 
     @Override
@@ -248,15 +297,12 @@ public class LoginActivity extends BaseActivity
     }
 
     private void setRegistering() {
-        MenuItem menuItem = menu.findItem(R.id.action_toggleRegistering);
         if (this.isRegistering) {
             this.mLoginNormalBtn.setText(getString(R.string.register_btn));
-            menuItem.setTitle(getString(R.string.login_btn));
             mUsernameET.setHint(R.string.username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         } else {
             this.mLoginNormalBtn.setText(getString(R.string.login_btn));
-            menuItem.setTitle(getString(R.string.register_btn));
             mUsernameET.setHint(R.string.email_username);
             mPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
@@ -296,7 +342,6 @@ public class LoginActivity extends BaseActivity
             adr = obj.getString(TAG_ADDRESS);
             user = obj.getString(TAG_USERID);
             key = obj.getString(TAG_APIKEY);
-            Log.d("", "adr" + adr + " user:" + user + " key" + key);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = prefs.edit();
             boolean ans = editor.putString(getString(R.string.SP_address), adr)
@@ -324,13 +369,6 @@ public class LoginActivity extends BaseActivity
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(Color.RED);//change Snackbar's background color;
         snackbar.show(); // Don’t forget to show!
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.login, menu);
-        this.menu = menu;
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -395,6 +433,11 @@ public class LoginActivity extends BaseActivity
         }
     }
 
+    @OnClick(R.id.fb_login_button)
+    public void handleFacebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("user_friends"));
+    }
+
     @OnClick(R.id.google_login_button)
     public void handleGoogleLogin() {
         String[] accountTypes = new String[]{"com.google"};
@@ -451,5 +494,95 @@ public class LoginActivity extends BaseActivity
             startActivityForResult(intent,
                     REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
         }
+    }
+
+    @OnClick(R.id.new_game_button)
+    void newGameButtonClicked() {
+        isRegistering = true;
+        showForm();
+        setRegistering();
+    }
+
+    @OnClick(R.id.show_login_button)
+    void showLoginButtonClicked() {
+        isRegistering = false;
+        showForm();
+        setRegistering();
+    }
+
+    @OnClick(R.id.back_button)
+    void backButtonClicked() {
+        if (isShowingForm) {
+            hideForm();
+        }
+    }
+
+    private void showForm() {
+        isShowingForm = true;
+        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY",  0).setDuration(1000);
+        ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 0);
+
+        ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 0);
+
+        if (isRegistering) {
+            newGameAlphaAnimation.setStartDelay(600);
+            newGameAlphaAnimation.setDuration(400);
+            showLoginAlphaAnimation.setDuration(400);
+            newGameAlphaAnimation.addListener(new AnimatorListenerAdapter() {
+                public void onAnimationEnd(Animator animation) {
+                    newGameButton.setVisibility(View.GONE);
+                    showLoginButton.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
+                    scrollView.setAlpha(1);
+                }
+            });
+        } else {
+            showLoginAlphaAnimation.setStartDelay(600);
+            showLoginAlphaAnimation.setDuration(400);
+            newGameAlphaAnimation.setDuration(400);
+            showLoginAlphaAnimation.addListener(new AnimatorListenerAdapter() {
+                public void onAnimationEnd(Animator animation) {
+                    newGameButton.setVisibility(View.GONE);
+                    showLoginButton.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
+                    scrollView.setAlpha(1);
+                }
+            });
+        }
+        ValueAnimator backAlphaAnimation = ObjectAnimator.ofFloat(backButton, View.ALPHA, 1).setDuration(800);
+        AnimatorSet showAnimation = new AnimatorSet();
+        showAnimation.playTogether(panAnimation, newGameAlphaAnimation, showLoginAlphaAnimation);
+        showAnimation.play(backAlphaAnimation).after(panAnimation);
+        for (int i = 0; i < formWrapper.getChildCount(); i++) {
+            View view = formWrapper.getChildAt(i);
+            view.setAlpha(0);
+            ValueAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1).setDuration(400);
+            animator.setStartDelay(100*i);
+            showAnimation.play(animator).after(panAnimation);
+        }
+
+        showAnimation.start();
+    }
+
+    private void hideForm() {
+        isShowingForm = false;
+        ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY",  backgroundContainer.getBottom()).setDuration(1000);
+        ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 1).setDuration(700);
+        ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 1).setDuration(700);
+        showLoginAlphaAnimation.setStartDelay(300);
+        ValueAnimator scrollViewAlphaAnimation = ObjectAnimator.ofFloat(scrollView, View.ALPHA, 0).setDuration(800);
+        scrollViewAlphaAnimation.addListener(new AnimatorListenerAdapter() {
+            public void onAnimationEnd(Animator animation) {
+                newGameButton.setVisibility(View.VISIBLE);
+                showLoginButton.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.INVISIBLE);
+            }
+        });
+        ValueAnimator backAlphaAnimation = ObjectAnimator.ofFloat(backButton, View.ALPHA, 0).setDuration(800);
+        AnimatorSet showAnimation = new AnimatorSet();
+        showAnimation.playTogether(panAnimation, scrollViewAlphaAnimation, backAlphaAnimation);
+        showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation);
+        showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation);
+        showAnimation.start();
     }
 }

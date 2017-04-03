@@ -138,6 +138,7 @@ import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.roughike.bottombar.BottomBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -183,6 +184,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @BindView(R.id.floating_menu_wrapper)
     public
     FrameLayout floatingMenuWrapper;
+    @BindView(R.id.bottom_navigation)
+    BottomBar bottomNavigation;
     @Inject
     protected HostConfig hostConfig;
     @Inject
@@ -404,6 +407,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         fragment.setUser(user);
         fragment.setActivity(this);
         fragment.setTabLayout(detail_tabs);
+        fragment.setBottomNavigation(bottomNavigation);
         fragment.setFloatingMenuWrapper(floatingMenuWrapper);
 
 

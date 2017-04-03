@@ -12,6 +12,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.UserParty;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -158,11 +159,19 @@ public class PartyFragment extends BaseMainFragment {
                 this.displayEditForm();
                 return true;
             case R.id.menu_guild_leave:
-                this.apiClient.leaveGroup(this.group.id)
-                        .subscribe(group -> {
-                            getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-                        }, throwable -> {
-                        });
+                new AlertDialog.Builder(viewPager.getContext())
+                        .setTitle(viewPager.getContext().getString(R.string.party_leave))
+                        .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
+                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiHelper.apiService.leaveGroup(this.group.id)
+                                .compose(apiHelper.configureApiCallObserver())
+                                .subscribe(group -> {
+                                    getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
+                                }, throwable -> {
+                            }))
+                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
                 return true;
         }
 

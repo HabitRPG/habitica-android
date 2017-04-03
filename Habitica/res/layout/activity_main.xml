@@ -35,7 +35,6 @@
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="false"
                 app:titleEnabled="false"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="?attr/actionBarSize"
@@ -79,6 +78,20 @@
                 app:tabMode="fixed" />
         </android.support.design.widget.AppBarLayout>
 
+        <com.roughike.bottombar.BottomBar
+                app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|center"
+                android:background="@color/brand_100"
+                app:bb_tabXmlResource="@xml/main_menu_tasks"
+                app:bb_inActiveTabColor="@color/brand_500"
+                app:bb_inActiveTabAlpha="0.4"
+                app:bb_activeTabColor="@color/white"
+                />
+
         <FrameLayout
             android:id="@+id/floating_menu_wrapper"
             app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
@@ -87,8 +100,10 @@
             android:layout_gravity="bottom|right"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginBottom="44dp"
+            android:layout_marginRight="8dp"
+                />
+
 
     </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>

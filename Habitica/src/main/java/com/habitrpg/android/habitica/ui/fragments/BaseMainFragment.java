@@ -23,8 +23,10 @@ public abstract class BaseMainFragment extends BaseFragment {
     public ApiClient apiClient;
     public MainActivity activity;
     public TabLayout tabLayout;
+    public BottomBar bottomNavigation;
     public FrameLayout floatingMenuWrapper;
     public boolean usesTabLayout;
+    public boolean usesBottomNavigation = false;
     public int fragmentSidebarPosition;
     @Inject
     protected SoundManager soundManager;
@@ -40,6 +42,10 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     public void setTabLayout(TabLayout tabLayout) {
         this.tabLayout = tabLayout;
+    }
+
+    public void setBottomNavigation(BottomBar bottomNavigation) {
+        this.bottomNavigation = bottomNavigation;
     }
 
     public void setFloatingMenuWrapper(FrameLayout view) {
@@ -83,6 +89,16 @@ public abstract class BaseMainFragment extends BaseFragment {
                 tabLayout.setTabMode(TabLayout.MODE_FIXED);
             } else {
                 tabLayout.setVisibility(View.GONE);
+            }
+        }
+
+        if (bottomNavigation != null) {
+            if (this.usesBottomNavigation) {
+                bottomNavigation.removeOnTabSelectListener();
+                bottomNavigation.removeOnTabReselectListener();
+                bottomNavigation.setVisibility(View.VISIBLE);
+            } else {
+                bottomNavigation.setVisibility(View.GONE);
             }
         }
 

@@ -185,8 +185,12 @@ public class Preferences extends BaseModel {
     }
 
     public String getChair() {
-        if (chair != null && !chair.equals("none") && chair.length() > 5 && !chair.substring(0, 6).equals("chair_")) {
-            return "chair_" + chair;
+        if (chair != null && !chair.equals("none")) {
+            if (chair.length() > 5 && !chair.substring(0, 6).equals("chair_")) {
+                return chair;
+            } else {
+                return "chair_" +chair;
+            }
         }
         return null;
     }

@@ -7,6 +7,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
+import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
@@ -285,7 +286,7 @@ public interface ApiService {
     Observable<HabitResponse<Challenge>> joinChallenge(@Path("challengeId") String challengeId);
 
     @POST("challenges/{challengeId}/leave")
-    Observable<HabitResponse<Void>> leaveChallenge(@Path("challengeId") String challengeId);
+    Observable<HabitResponse<Void>> leaveChallenge(@Path("challengeId") String challengeId, @Body LeaveChallengeBody body);
 
     //DEBUG: These calls only work on a local development server
 

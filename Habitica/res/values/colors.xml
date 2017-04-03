@@ -55,6 +55,8 @@
     <color name="changelog.note">#ffcf42</color>
 
 
+    <color name="colorPrimary">@color/brand_300</color>
+    <color name="colorPrimaryDark">@color/brand_50</color>
     <!-- text -->
     <color name="textColorDark">#FFFFFF</color>
     <color name="textColorSecondaryDark">@color/brand_500</color>
@@ -111,4 +113,23 @@
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
     <color name="pill_gray">#efefef</color>
+    <color name="white_75_alpha">#bfffffff</color>
+    <color name="white_50_alpha">#7fffffff</color>
+    <color name="white_15_alpha">#26ffffff</color>
+    <color name="light_gray_bg">#F6F4F8</color>
+
+    <color name="skin_ddc994">#ddc994</color>
+    <color name="skin_f5a76e">#f5a76e</color>
+    <color name="skin_ea8349">#ea8349</color>
+    <color name="skin_c06534">#c06534</color>
+    <color name="skin_98461a">#98461a</color>
+    <color name="skin_915533">#915533</color>
+    <color name="skin_c3e1dc">#c3e1dc</color>
+    <color name="skin_6bd049">#6bd049</color>
+    
+    <color name="hair_white">#DEDEDE</color>
+    <color name="hair_brown">#903A00</color>
+    <color name="hair_blond">#CFA925</color>
+    <color name="hair_red">#EC720E</color>
+    <color name="hair_black">#313131</color>
 </resources>
