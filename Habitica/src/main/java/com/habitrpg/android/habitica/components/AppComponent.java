@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.components;
 
+import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
@@ -233,4 +234,6 @@ public interface AppComponent {
     void inject(TaskListFactory taskListFactory);
 
     void inject(GemPurchaseActivity gemPurchaseActivity);
+
+    void inject(TaskFilterDialog taskFilterDialog);
 }

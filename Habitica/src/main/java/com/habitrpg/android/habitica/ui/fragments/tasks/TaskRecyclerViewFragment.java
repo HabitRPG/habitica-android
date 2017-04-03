@@ -76,7 +76,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private ItemTouchHelper.Callback mItemTouchCallback;
     private String activeFilter;
 
-    public static TaskRecyclerViewFragment newInstance(HabitRPGUser user, String classType, @Nullable String activeFilter,
+    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType, @Nullable String activeFilter,
                                                        @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);

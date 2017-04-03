@@ -66,11 +66,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<Task> updateTask(String id, Task task) {
+    public Observable<Task> updateTask(Task task) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
-        return apiClient.updateTask(id, task);
+        return apiClient.updateTask(task.getId(), task);
     }
 }

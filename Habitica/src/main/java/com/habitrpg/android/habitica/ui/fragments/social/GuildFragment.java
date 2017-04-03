@@ -99,9 +99,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                 return true;
             case R.id.menu_guild_leave:
                 this.apiClient.leaveGroup(this.guild.id)
-                        .subscribe(aVoid -> {
-                            this.activity.supportInvalidateOptionsMenu();
-                        }, throwable -> {
+                        .subscribe(aVoid -> this.activity.supportInvalidateOptionsMenu(), throwable -> {
                         });
                 this.isMember = false;
                 return true;

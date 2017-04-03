@@ -7,36 +7,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.CreateTagCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteTagCommand;
-import com.habitrpg.android.habitica.events.commands.EditTagCommand;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateTagCommand;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
@@ -44,22 +35,13 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapt
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.Debounce;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,7 +57,7 @@ public class TasksFragment extends BaseMainFragment {
     public TaskFilterHelper taskFilterHelper; // This will be used for this fragment. Currently being used to help filtering
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
-    Map<Integer, TaskRecyclerViewFragment> ViewFragmentsDictionary = new HashMap<>();
+    SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
     Map<String, String> activeTaskFilters = new HashMap<>();
 
     private boolean displayingTaskForm;
@@ -134,7 +116,7 @@ public class TasksFragment extends BaseMainFragment {
 
     private boolean onFloatingMenuLongClicked(View view) {
         int currentType = viewPager.getCurrentItem();
-        TaskRecyclerViewFragment currentFragment = ViewFragmentsDictionary.get(currentType);
+        TaskRecyclerViewFragment currentFragment = viewFragmentsDictionary.get(currentType);
         String className = currentFragment.getClassName();
         openNewTaskActivity(className);
         return true;
@@ -168,8 +150,10 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void showFilterDialog() {
-        TaskFilterDialog dialog = new TaskFilterDialog(getContext());
-        dialog.setTags(user.getTags());
+        TaskFilterDialog dialog = new TaskFilterDialog(getContext(), HabiticaBaseApplication.getComponent());
+        if (user != null) {
+            dialog.setTags(user.getTags());
+        }
         dialog.setActiveTags(taskFilterHelper.getTags());
         String taskType = getActiveFragment().classType;
         dialog.setTaskType(taskType, activeTaskFilters.get(taskType));
@@ -217,7 +201,7 @@ public class TasksFragment extends BaseMainFragment {
                         fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, activeTaskFilters.get(Task.TYPE_TODO),sortCallback);
                 }
 
-                ViewFragmentsDictionary.put(position, fragment);
+                viewFragmentsDictionary.put(position, fragment);
 
                 return fragment;
             }
@@ -249,11 +233,12 @@ public class TasksFragment extends BaseMainFragment {
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
         if (this.user != null) {
-            for (TaskRecyclerViewFragment fragm : ViewFragmentsDictionary.values()) {
-                if (fragm != null) {
-                    BaseTasksRecyclerViewAdapter adapter = fragm.recyclerAdapter;
+            for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
+                TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
+                if (fragment != null) {
+                    BaseTasksRecyclerViewAdapter adapter = fragment.recyclerAdapter;
                     if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
-                        final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragm.recyclerAdapter;
+                        final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragment.recyclerAdapter;
                         dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();
                     }
                     AsyncTask.execute(() -> adapter.loadContent(true));
@@ -274,7 +259,7 @@ public class TasksFragment extends BaseMainFragment {
 
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
-        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user.getId());
+        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
@@ -292,7 +277,7 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private TaskRecyclerViewFragment getActiveFragment() {
-        return ViewFragmentsDictionary.get(viewPager.getCurrentItem());
+        return viewFragmentsDictionary.get(viewPager.getCurrentItem());
     }
 
     @Subscribe
@@ -309,7 +294,7 @@ public class TasksFragment extends BaseMainFragment {
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, event.Task.getType());
         bundle.putString(TaskFormActivity.TASK_ID_KEY, event.Task.getId());
-        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user.getId());
+        bundle.putString(TaskFormActivity.USER_ID_KEY, this.user != null ? this.user.getId() : null);
         bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
 
         Intent intent = new Intent(activity, TaskFormActivity.class);
@@ -361,10 +346,9 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void switchToTaskTab(String taskType) {
-        HashMap<Integer, TaskRecyclerViewFragment> dict = new HashMap<>(ViewFragmentsDictionary);
-        for (Map.Entry<Integer, TaskRecyclerViewFragment> tabEntry : dict.entrySet()) {
-            if (tabEntry.getValue().getClassName().equals(taskType)) {
-                viewPager.setCurrentItem(tabEntry.getKey());
+        for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
+            if (viewFragmentsDictionary.get(index).getClassName().equals(taskType)) {
+                viewPager.setCurrentItem(index);
             }
         }
     }

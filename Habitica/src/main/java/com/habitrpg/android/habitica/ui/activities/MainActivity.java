@@ -1449,7 +1449,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             this.taskRepository.createTask(task).subscribe(new TaskCreationCallback(), throwable -> {
                     });
         } else {
-            this.taskRepository.updateTask(task.getId(), task)
+            this.taskRepository.updateTask(task)
                     .subscribe(new TaskUpdateCallback(), throwable -> {
                     });
         }

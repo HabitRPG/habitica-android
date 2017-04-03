@@ -20,5 +20,5 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<Task> createTask(Task task);
 
-    Observable<Task> updateTask(String id, Task task);
+    Observable<Task> updateTask(Task task);
 }
