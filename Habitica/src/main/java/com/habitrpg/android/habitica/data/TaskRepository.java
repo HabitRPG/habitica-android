@@ -17,4 +17,8 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<TaskDirectionData> taskChecked(Task task, boolean up);
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
+
+    Observable<Task> createTask(Task task);
+
+    Observable<Task> updateTask(String id, Task task);
 }

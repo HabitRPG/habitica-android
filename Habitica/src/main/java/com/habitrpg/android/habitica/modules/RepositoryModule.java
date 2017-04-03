@@ -11,6 +11,8 @@ import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,6 +31,7 @@ public class RepositoryModule {
     }
 
     @Provides
+    @Singleton
     TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient) {
         return new TaskRepositoryImpl(localRepository, apiClient);
     }

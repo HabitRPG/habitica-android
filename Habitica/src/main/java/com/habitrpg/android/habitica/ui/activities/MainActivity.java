@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
@@ -227,6 +228,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Inject
     NotifyUserUseCase notifyUserUseCase;
+
+    @Inject
+    TaskRepository taskRepository;
 
     // endregion
 
@@ -1451,11 +1455,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onEvent(final TaskSaveEvent event) {
         Task task = event.task;
         if (event.created) {
-            this.apiClient.createItem(task)
-                    .subscribe(new TaskCreationCallback(), throwable -> {
+            this.taskRepository.createTask(task).subscribe(new TaskCreationCallback(), throwable -> {
                     });
         } else {
-            this.apiClient.updateTask(task.getId(), task)
+            this.taskRepository.updateTask(task.getId(), task)
                     .subscribe(new TaskUpdateCallback(), throwable -> {
                     });
         }

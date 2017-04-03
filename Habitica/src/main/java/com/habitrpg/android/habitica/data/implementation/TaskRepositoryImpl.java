@@ -10,11 +10,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import rx.Observable;
 
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
+
+    private long lastTaskAction = 0;
 
     public TaskRepositoryImpl(TaskLocalRepository localRepository, ApiClient apiClient) {
         super(localRepository, apiClient);
@@ -33,10 +36,15 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     @Override
     public Observable<TaskDirectionData> taskChecked(Task task, boolean up) {
+        long now = new Date().getTime();
+        if (lastTaskAction > now-500) {
+            return Observable.empty();
+        }
+        lastTaskAction = now;
         return this.apiClient.postTaskDirection(task.getId(), (up ? TaskDirection.up : TaskDirection.down).toString())
                 .doOnNext(res -> {
                     // save local task changes
-                    if (task != null && task.type != null && !task.type.equals("reward")) {
+                    if (task.type != null && !task.type.equals("reward")) {
                         task.value = task.value + res.getDelta();
 
                         this.localRepository.saveTask(task);
@@ -46,5 +54,23 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId){
         return apiClient.scoreChecklistItem(taskId, itemId).doOnNext(this.localRepository::saveTask);
+    }
+
+    @Override
+    public Observable<Task> createTask(Task task) {
+        long now = new Date().getTime();
+        if (lastTaskAction > now-500) {
+            return Observable.empty();
+        }
+        return apiClient.createItem(task);
+    }
+
+    @Override
+    public Observable<Task> updateTask(String id, Task task) {
+        long now = new Date().getTime();
+        if (lastTaskAction > now-500) {
+            return Observable.empty();
+        }
+        return apiClient.updateTask(id, task);
     }
 }
