@@ -76,6 +76,7 @@
             android:id="@+id/login_intro_view"
             android:orientation="vertical"
             android:background="@color/transparent"
+            android:fitsSystemWindows="true"
             >
 
             <ImageView

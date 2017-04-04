@@ -32,6 +32,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -315,7 +316,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_10_alpha));
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
-            avatar_with_bars.setPadding(0, getStatusBarHeight(), 0, 0);
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+            avatar_with_bars.setPadding((int)px, getStatusBarHeight(), (int)px, 0);
             floatingMenuWrapper.setPadding(0, 0, 0, getNavigationBarHeight());
         }
 
