@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,7 +23,10 @@ import com.habitrpg.android.habitica.data.TagRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -60,12 +64,14 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     private String filterType;
     private List<Tag> tags;
     private List<String> activeTags;
+    private Map<String, Tag> editedTags = new HashMap<>();
+    private Map<String, Tag> createdTags = new HashMap<>();
+    private List<String> deletedTags = new ArrayList<>();
 
     private boolean isEditing;
 
     public TaskFilterDialog(Context context, AppComponent component) {
         super(context);
-
         component.inject(this);
 
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -88,6 +94,14 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         });
     }
 
+    @Override
+    public void show() {
+        super.show();
+        if (this.getWindow() != null) {
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+    }
+
     public void setTags(List<Tag> tags) {
         this.tags = tags;
         createTagViews();
@@ -97,6 +111,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         for (Tag tag : tags) {
             CheckBox tagCheckbox = new CheckBox(getContext());
             tagCheckbox.setText(tag.getName());
+            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
             tagCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     if (!activeTags.contains(tag.getId())) {
@@ -124,6 +139,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         Tag tag = new Tag();
         tag.id = UUID.randomUUID().toString();
         tags.add(tag);
+        createdTags.put(tag.getId(), tag);
         startEditing();
     }
 
@@ -145,18 +161,23 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         if (this.getWindow() != null) {
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
+        repository.updateTags(editedTags.values()).subscribe(tag -> editedTags.remove(tag.getId()), throwable -> {});
+        repository.createTags(createdTags.values()).subscribe(tag -> createdTags.remove(tag.getId()), throwable -> {});
+        repository.deleteTags(deletedTags).subscribe(tags1 -> deletedTags.clear(), throwable -> {});
     }
 
     private void createTagEditViews() {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         for (int index = 0; index < tags.size(); index++) {
             Tag tag = tags.get(index);
-            createTagEditView(index, tag);
+            createTagEditView(inflater, index, tag);
         }
         createAddTagButton();
     }
 
-    private void createTagEditView(int index, Tag tag) {
-        EditText tagEditText = new EditText(getContext());
+    private void createTagEditView(LayoutInflater inflater, int index, Tag tag) {
+        LinearLayout wrapper = (LinearLayout) inflater.inflate(R.layout.edit_tag_item, tagsList, false);
+        EditText tagEditText = (EditText) wrapper.findViewById(R.id.edit_text);
         tagEditText.setText(tag.getName());
         tagEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -166,7 +187,14 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tags.get(index).setName(s.toString());
+                Tag tag = tags.get(index);
+                tag.setName(s.toString());
+                if (createdTags.containsKey(tag.getId())) {
+                    createdTags.put(tag.getId(), tag);
+                } else {
+                    editedTags.put(tag.getId(), tag);
+                }
+                tags.set(index, tag);
             }
 
             @Override
@@ -174,7 +202,19 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
             }
         });
-        tagsList.addView(tagEditText);
+        Button deleteButton = (Button) wrapper.findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(v -> {
+            deletedTags.add(tag.getId());
+            if (createdTags.containsKey(tag.getId())) {
+                createdTags.remove(tag.getId());
+            }
+            if (editedTags.containsKey(tag.getId())) {
+                editedTags.remove(tag.getId());
+            }
+            tags.remove(tag);
+            tagsList.removeView(wrapper);
+        });
+        tagsList.addView(wrapper);
     }
 
     public void setActiveTags(List<String> tagIds) {
