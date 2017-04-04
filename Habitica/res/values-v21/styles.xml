@@ -10,4 +10,14 @@
         <item name="android:drawablePadding">4dp</item>
     </style>
 
+    <style name="AppTheme.ActionBar.Transparent">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Transparent">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
 </resources>

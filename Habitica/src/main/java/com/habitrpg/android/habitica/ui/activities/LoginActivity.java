@@ -1,38 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -45,28 +12,60 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
+import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +116,8 @@ public class LoginActivity extends BaseActivity
     LinearLayout formWrapper;
     @BindView(R.id.back_button)
     Button backButton;
+    @BindView(R.id.logo_view)
+    ImageView logoView;
 
     @BindView(R.id.login_btn)
     Button mLoginNormalBtn;
@@ -173,6 +174,12 @@ public class LoginActivity extends BaseActivity
 
         backgroundContainer.post(() -> backgroundContainer.scrollTo(0, backgroundContainer.getBottom()));
         backgroundContainer.setScrollingEnabled(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     private void setupFacebookLogin() {
@@ -517,9 +524,14 @@ public class LoginActivity extends BaseActivity
         isShowingForm = true;
         ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", 0).setDuration(1000);
         ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 0);
-
         ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 0);
-
+        ValueAnimator scaleLogoAnimation = ValueAnimator.ofInt(logoView.getMeasuredHeight(), (int)(logoView.getMeasuredHeight()*0.75));
+        scaleLogoAnimation.addUpdateListener(valueAnimator -> {
+            int val = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = logoView.getLayoutParams();
+            layoutParams.height = val;
+            logoView.setLayoutParams(layoutParams);
+        });
         if (isRegistering) {
             newGameAlphaAnimation.setStartDelay(600);
             newGameAlphaAnimation.setDuration(400);
@@ -547,7 +559,7 @@ public class LoginActivity extends BaseActivity
         }
         ValueAnimator backAlphaAnimation = ObjectAnimator.ofFloat(backButton, View.ALPHA, 1).setDuration(800);
         AnimatorSet showAnimation = new AnimatorSet();
-        showAnimation.playTogether(panAnimation, newGameAlphaAnimation, showLoginAlphaAnimation);
+        showAnimation.playTogether(panAnimation, newGameAlphaAnimation, showLoginAlphaAnimation, scaleLogoAnimation);
         showAnimation.play(backAlphaAnimation).after(panAnimation);
         for (int i = 0; i < formWrapper.getChildCount(); i++) {
             View view = formWrapper.getChildAt(i);
@@ -565,6 +577,13 @@ public class LoginActivity extends BaseActivity
         ValueAnimator panAnimation = ObjectAnimator.ofInt(backgroundContainer, "scrollY", backgroundContainer.getBottom()).setDuration(1000);
         ValueAnimator newGameAlphaAnimation = ObjectAnimator.ofFloat(newGameButton, View.ALPHA, 1).setDuration(700);
         ValueAnimator showLoginAlphaAnimation = ObjectAnimator.ofFloat(showLoginButton, View.ALPHA, 1).setDuration(700);
+        ValueAnimator scaleLogoAnimation = ValueAnimator.ofInt(logoView.getMeasuredHeight(), (int)(logoView.getMeasuredHeight()*1.333333));
+        scaleLogoAnimation.addUpdateListener(valueAnimator -> {
+            int val = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = logoView.getLayoutParams();
+            layoutParams.height = val;
+            logoView.setLayoutParams(layoutParams);
+        });
         showLoginAlphaAnimation.setStartDelay(300);
         ValueAnimator scrollViewAlphaAnimation = ObjectAnimator.ofFloat(scrollView, View.ALPHA, 0).setDuration(800);
         scrollViewAlphaAnimation.addListener(new AnimatorListenerAdapter() {
@@ -576,7 +595,7 @@ public class LoginActivity extends BaseActivity
         });
         ValueAnimator backAlphaAnimation = ObjectAnimator.ofFloat(backButton, View.ALPHA, 0).setDuration(800);
         AnimatorSet showAnimation = new AnimatorSet();
-        showAnimation.playTogether(panAnimation, scrollViewAlphaAnimation, backAlphaAnimation);
+        showAnimation.playTogether(panAnimation, scrollViewAlphaAnimation, backAlphaAnimation, scaleLogoAnimation);
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation);
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation);
         showAnimation.start();

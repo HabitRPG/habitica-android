@@ -41,13 +41,23 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <style name="AppThemeWithActionBar" parent="AppTheme">
+    <style name="AppTheme.ActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-
     </style>
 
-    <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
+    <style name="AppTheme.ActionBar.Transparent">
+    </style>
+    
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Transparent">
+    </style>
+
+    <style name="AppThemeWithActionBarBlackText" parent="AppTheme.ActionBar">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 

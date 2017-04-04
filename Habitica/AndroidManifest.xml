@@ -48,12 +48,13 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
-            android:theme="@style/AppThemeWithActionBarBlackText"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activities.IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
         </activity>
