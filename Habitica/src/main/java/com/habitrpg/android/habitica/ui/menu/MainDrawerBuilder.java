@@ -70,7 +70,8 @@ public class MainDrawerBuilder {
 
     public static DrawerBuilder CreateDefaultBuilderSettings(final MainActivity activity, SharedPreferences sharedPreferences, Toolbar toolbar, final AccountHeader accountHeader) {
         DrawerBuilder builder = new DrawerBuilder()
-                .withActivity(activity);
+                .withActivity(activity)
+                .withFullscreen(true);
 
         if (toolbar != null) {
             builder.withToolbar(toolbar);

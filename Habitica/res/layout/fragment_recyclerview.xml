@@ -11,7 +11,10 @@
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/md_grey_500"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false"
+        android:paddingBottom="?attr/actionBarSize"/>
 
     <TextView
         android:layout_width="match_parent"
