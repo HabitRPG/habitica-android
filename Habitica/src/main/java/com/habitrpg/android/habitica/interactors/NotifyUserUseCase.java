@@ -18,7 +18,7 @@ import rx.functions.Action0;
 import static com.habitrpg.android.habitica.helpers.MathHelper.round;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
-public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, Void> {
+public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, Stats> {
 
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
     private LevelUpUseCase levelUpUseCase;
@@ -31,8 +31,8 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
     }
 
     @Override
-    protected Observable<Void> buildUseCaseObservable(RequestValues r) {
-        return Observable.from(() -> {
+    protected Observable<Stats> buildUseCaseObservable(RequestValues r) {
+        return Observable.defer(() -> {
             Stats stats = r.user.getStats();
 
             if (r.lvl > stats.getLvl()) {
@@ -49,7 +49,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
                 showSnackbar(r.context, r.snackbarTargetView, pair.first, pair.second);
             }
 
-            return null;
+            return Observable.just(stats);
         });
     }
 

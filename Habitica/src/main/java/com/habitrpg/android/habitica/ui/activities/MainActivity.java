@@ -1280,6 +1280,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Override
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
+
         if (task.type.equals("reward")) {
 
             showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), SnackbarDisplayType.NORMAL);
@@ -1288,12 +1289,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
             if (user != null) {
                 notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, this::retrieveUser,
-                        user, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()));
+                        user, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()))
+                        .subscribe(aVoid -> {
+                            user.getStats().hp = data.getHp();
+                            user.getStats().exp = data.getExp();
+                            user.getStats().mp = data.getMp();
+                            user.getStats().gp = data.getGp();
+                            setUserData(true);
+                        }, throwable -> {});
             }
 
             displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
                     .subscribe(aVoid -> {}, throwable -> {});
         }
+
     }
 
 
