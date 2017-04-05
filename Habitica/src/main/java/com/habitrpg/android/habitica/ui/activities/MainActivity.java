@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -19,23 +18,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.OnApplyWindowInsetsListener;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.WindowInsetsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -133,7 +128,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -193,8 +187,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public MaintenanceApiService maintenanceService;
     public HabitRPGUser user;
     @BindView(R.id.floating_menu_wrapper)
-    public
-    FrameLayout floatingMenuWrapper;
+    public ViewGroup floatingMenuWrapper;
     @BindView(R.id.bottom_navigation)
     BottomBar bottomNavigation;
     @Inject
@@ -210,7 +203,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @BindView(R.id.avatar_with_bars)
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
-    CoordinatorLayout overlayFrameLayout;
+    ViewGroup overlayLayout;
     PushNotificationManager pushNotificationManager;
     // region UseCases
 
@@ -318,7 +311,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
             avatar_with_bars.setPadding((int)px, getStatusBarHeight(), (int)px, 0);
-            floatingMenuWrapper.setPadding(0, 0, 0, getNavigationBarHeight());
         }
 
         EventBus.getDefault().register(this);
@@ -1353,7 +1345,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return super.onKeyUp(keyCode, event);
     }
 
-    public FrameLayout getFloatingMenuWrapper() {
+    public ViewGroup getFloatingMenuWrapper() {
         return floatingMenuWrapper;
     }
 
@@ -1375,7 +1367,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         TutorialView view = new TutorialView(this, step, this);
         view.setTutorialText(text);
         view.onReaction = this;
-        this.overlayFrameLayout.addView(view);
+        this.overlayLayout.addView(view);
         this.activeTutorialView = view;
 
         Map<String, Object> additionalData = new HashMap<>();
@@ -1394,7 +1386,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
                 .subscribe(new MergeUserCallback(this, user), throwable -> {
                 });
-        this.overlayFrameLayout.removeView(this.activeTutorialView);
+        this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
 
         Map<String, Object> additionalData = new HashMap<>();
@@ -1414,7 +1406,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void removeActiveTutorialView() {
         if (this.activeTutorialView != null) {
-            this.overlayFrameLayout.removeView(this.activeTutorialView);
+            this.overlayLayout.removeView(this.activeTutorialView);
             this.activeTutorialView = null;
         }
     }
@@ -1448,17 +1440,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> {
-                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
-                        }, error -> {
+                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> {
-                            EventBus.getDefault().post(new TaskUpdatedEvent(event.Task));
-                        }, error -> {
+                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
                         });
             }
             break;

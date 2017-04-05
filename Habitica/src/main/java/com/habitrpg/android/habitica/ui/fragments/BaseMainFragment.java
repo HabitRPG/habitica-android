@@ -26,7 +26,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     public MainActivity activity;
     public TabLayout tabLayout;
     public BottomBar bottomNavigation;
-    public FrameLayout floatingMenuWrapper;
+    public ViewGroup floatingMenuWrapper;
     public boolean usesTabLayout;
     public boolean usesBottomNavigation = false;
     public int fragmentSidebarPosition;
@@ -51,7 +51,7 @@ public abstract class BaseMainFragment extends BaseFragment {
         this.bottomNavigation = bottomNavigation;
     }
 
-    public void setFloatingMenuWrapper(FrameLayout view) {
+    public void setFloatingMenuWrapper(ViewGroup view) {
         this.floatingMenuWrapper = view;
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
@@ -74,16 +75,16 @@ public class TasksFragment extends BaseMainFragment {
         this.usesBottomNavigation = true;
         this.displayingTaskForm = false;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_fading_viewpager, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
-        if (view.getClass() == FrameLayout.class) {
-            FrameLayout frame = (FrameLayout) view;
-            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
-        } else {
+        if (view.getClass() == FloatingActionMenu.class) {
             floatingMenu = (FloatingActionMenu) view;
+        } else {
+            ViewGroup frame = (ViewGroup) view;
+            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
         }
         FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
         habit_fab.setOnClickListener(v1 -> openNewTaskActivity("habit"));

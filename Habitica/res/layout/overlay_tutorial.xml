@@ -1,74 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:clickable="true"
-    android:id="@+id/background">
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:fitsSystemWindows="true"
+                android:id="@+id/background">
     <View android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="@android:color/black"
-        android:alpha="0.6"/>
+          android:layout_width="match_parent"
+          android:background="@android:color/black"
+          android:alpha="0.6"/>
     <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView8"
-            android:src="@drawable/npc_justin_only"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:src="@drawable/npc_justin_only"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"/>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/speech_bubble"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="24dp"
-            android:paddingBottom="24dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="12dp"
-            android:paddingRight="10dp">
-
-            <TextView
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tutorialTextView"
+                android:background="@drawable/speech_bubble"
                 android:layout_gravity="bottom"
-                android:textSize="20sp" />
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="24dp"
+                android:paddingBottom="24dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="12dp"
+                android:paddingRight="10dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tutorialTextView"
+                    android:layout_gravity="bottom"
+                    android:textSize="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="?android:attr/buttonBarStyle" >
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="?android:attr/buttonBarStyle" >
 
                 <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dismiss_tutorial"
-                    android:id="@+id/dismissButton"
-                    android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton"
-                    style="?android:attr/buttonBarButtonStyle" />
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/dismiss_tutorial"
+                        android:id="@+id/dismissButton"
+                        android:layout_gravity="center_vertical"
+                        android:theme="@style/DialogButton"
+                        style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/complete_tutorial"
-                    android:id="@+id/completeButton"
-                    android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton"
-                    style="?android:attr/buttonBarButtonStyle" />
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/complete_tutorial"
+                        android:id="@+id/completeButton"
+                        android:layout_gravity="center_vertical"
+                        android:theme="@style/DialogButton"
+                        style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
         </LinearLayout>
