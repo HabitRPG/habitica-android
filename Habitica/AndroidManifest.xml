@@ -143,7 +143,7 @@
         </activity>
         <activity
             android:name=".ui.activities.CreateChallengeActivity"
-            android:theme="@style/AppThemeWithActionBar"
+            android:theme="@style/AppTheme.ActionBar"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"

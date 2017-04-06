@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
-import butterknife.OnClick;
 import rx.functions.Action1;
 
 public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
@@ -40,7 +38,7 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
     public ChallengeTasksRecyclerViewAdapter(@Nullable TaskFilterHelper taskFilterHelper, int layoutResource,
                                              Context newContext, String userID, @Nullable SortTasksCallback sortCallback,
                                              boolean openTaskDisabled, boolean taskActionsDisabled) {
-        super("", tagsHelper, layoutResource, newContext, userID, sortCallback);
+        super("", taskFilterHelper, layoutResource, newContext, userID, sortCallback);
         this.openTaskDisabled = openTaskDisabled;
         this.taskActionsDisabled = taskActionsDisabled;
     }
