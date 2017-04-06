@@ -141,15 +141,16 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
-        android:name=".ui.activities.CreateChallengeActivity"
-        android:parentActivityName=".ui.activities.MainActivity"
-        android:screenOrientation="portrait"
-        android:launchMode="singleTask"
-        tools:ignore="UnusedAttribute">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
+            android:name=".ui.activities.CreateChallengeActivity"
+            android:theme="@style/AppThemeWithActionBar"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

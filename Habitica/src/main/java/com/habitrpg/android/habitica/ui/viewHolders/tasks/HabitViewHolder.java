@@ -88,10 +88,10 @@ public class HabitViewHolder extends BaseTaskViewHolder {
     }
 
     @Override
-    public void setDisabled(boolean disabled) {
-        super.setDisabled(disabled);
+    public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
+        super.setDisabled(openTaskDisabled, taskActionsDisabled);
 
-        this.btnPlus.setEnabled(!disabled);
-        this.btnMinus.setEnabled(!disabled);
+        this.btnPlus.setEnabled(!taskActionsDisabled);
+        this.btnMinus.setEnabled(!taskActionsDisabled);
     }
 }

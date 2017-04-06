@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.APIHelper;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -86,7 +87,10 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     }
 
     public void setInnerAdapter() {
-        this.recyclerAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null);
+        ChallengeTasksRecyclerViewAdapter challengeTasksRecyclerViewAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null, true, true);
+        this.recyclerAdapter = challengeTasksRecyclerViewAdapter;
+
+        challengeTasksRecyclerViewAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
 
         if (tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
             recyclerAdapter.setTasks(tasksOnInitialize);
@@ -137,96 +141,8 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
     // region Challenge specific RecyclerViewAdapters
 
-    public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
-        private static final int TYPE_HEADER = 0;
-        private static final int TYPE_HABIT = 1;
-        private static final int TYPE_DAILY = 2;
-        private static final int TYPE_TODO = 3;
-        private static final int TYPE_REWARD = 4;
 
-        private int dailyResetOffset = 0;
 
-        public ChallengeTasksRecyclerViewAdapter(TagsHelper tagsHelper, int layoutResource, Context newContext, String userID, SortTasksCallback sortCallback) {
-            super("", tagsHelper, layoutResource, newContext, userID, sortCallback);
-
-            if (user != null) {
-                dailyResetOffset = user.getPreferences().getDayStart();
-            }
-        }
-
-        @Override
-        protected void injectThis(AppComponent component) {
-            component.inject(this);
-        }
-
-        @Override
-        public boolean loadFromDatabase() {
-            return false;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            Task task = this.filteredContent.get(position);
-
-            if (task.type.equals(Task.TYPE_HABIT))
-                return TYPE_HABIT;
-
-            if (task.type.equals(Task.TYPE_DAILY))
-                return TYPE_DAILY;
-
-            if (task.type.equals(Task.TYPE_TODO))
-                return TYPE_TODO;
-
-            if (task.type.equals(Task.TYPE_REWARD))
-                return TYPE_REWARD;
-
-            return TYPE_HEADER;
-        }
-
-        @Override
-        public BaseTaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            BaseTaskViewHolder viewHolder = null;
-
-            switch (viewType) {
-                case TYPE_HABIT:
-                    viewHolder = new HabitViewHolder(getContentView(parent, R.layout.habit_item_card));
-                    break;
-                case TYPE_DAILY:
-                    viewHolder = new DailyViewHolder(getContentView(parent, R.layout.daily_item_card), dailyResetOffset);
-                    break;
-                case TYPE_TODO:
-                    viewHolder = new TodoViewHolder(getContentView(parent, R.layout.todo_item_card));
-                    break;
-                case TYPE_REWARD:
-                    viewHolder = new RewardViewHolder(getContentView(parent, R.layout.reward_item_card));
-                    break;
-                default:
-                    viewHolder = new DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider));
-                    break;
-            }
-
-            viewHolder.setDisabled(true);
-            return viewHolder;
-        }
-    }
-
-    private class DividerViewHolder extends BaseTaskViewHolder {
-
-        private TextView divider_name;
-
-        public DividerViewHolder(View itemView) {
-            super(itemView, false);
-
-            divider_name = (TextView) itemView.findViewById(R.id.divider_name);
-
-            context = itemView.getContext();
-        }
-
-        @Override
-        public void bindHolder(Task newTask, int position) {
-            divider_name.setText(newTask.text);
-        }
-    }
 
     // endregion
 }

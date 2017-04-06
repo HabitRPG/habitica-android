@@ -88,6 +88,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
+    public static final String SAVE_TO_DB = "saveToDb";
 
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
@@ -214,6 +215,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private RemindersManager remindersManager;
     private TaskAlarmManager taskAlarmManager;
     private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
+    private boolean saveToDb;
 
     @Override
     protected int getLayoutResId() {
@@ -230,6 +232,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskId = bundle.getString(TASK_ID_KEY);
         userId = bundle.getString(USER_ID_KEY);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
+        saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
         tagCheckBoxList = new ArrayList<>();
         selectedTags = new ArrayList<>();
         if (taskType == null) {
@@ -873,7 +876,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
             //save
             this.task.setTags(taskTags);
-            this.task.save();
+            if(saveToDb){
+                this.task.save();
+            }
+
             //send back to other elements.
             TaskSaveEvent event = new TaskSaveEvent();
             if (TaskFormActivity.this.task.getId() == null) {

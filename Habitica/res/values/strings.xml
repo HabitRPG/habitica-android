@@ -544,4 +544,8 @@ To start, which parts of your life do you want to improve?</string>
     <string name="action_back">Back</string>
     <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nTo start, you’ll need to create an avatar.</string>
     <string name="randomize">Randomize</string>
+    <string name="save">Save</string>
+    <string name="location">Location</string>
+    <string name="gem_reward">Gem reward</string>
+    <string name="tasks">Tasks</string>
 </resources>
