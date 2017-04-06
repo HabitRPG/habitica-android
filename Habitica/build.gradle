@@ -61,8 +61,8 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.5.1'
 
     //Dependency Injection
-    compile 'com.google.dagger:dagger:2.8'
-    apt 'com.google.dagger:dagger-compiler:2.8'
+    compile 'com.google.dagger:dagger:2.10'
+    apt 'com.google.dagger:dagger-compiler:2.10'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     //App Compatibility and Material Design
     compile('com.mikepenz:materialdrawer:5.8.3@aar') {
@@ -84,7 +84,7 @@ dependencies {
     compile 'com.commonsware.cwac:anddown:0.3.0'
 
     // About View for all dependent Libraries, we are using
-    compile('com.mikepenz:aboutlibraries:5.7.1@aar') {
+    compile('com.mikepenz:aboutlibraries:5.9.4@aar') {
         transitive = true
     }
 

@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,6 +187,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
+
+            int bottomPadding = (int) (recyclerView.getPaddingBottom() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics()));
+            recyclerView.setPadding(0, 0, 0, bottomPadding);
 
             swipeRefreshLayout.setOnRefreshListener(this);
         }

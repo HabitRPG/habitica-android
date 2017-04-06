@@ -54,9 +54,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @Inject
     public ApiClient apiClient;
     public boolean isTavern;
-    @BindView(R.id.chat_list)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.chat_refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager layoutManager;
     private String groupId;
@@ -100,7 +100,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_chatlist, container, false);
+            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
 
         return view;
     }
