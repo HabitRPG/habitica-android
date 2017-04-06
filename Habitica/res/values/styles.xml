@@ -41,13 +41,23 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <style name="AppThemeWithActionBar" parent="AppTheme">
+    <style name="AppTheme.ActionBar" parent="AppTheme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-
     </style>
 
-    <style name="AppThemeWithActionBarBlackText" parent="AppThemeWithActionBar">
+    <style name="AppTheme.ActionBar.Transparent">
+    </style>
+    
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Transparent">
+    </style>
+
+    <style name="AppThemeWithActionBarBlackText" parent="AppTheme.ActionBar">
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
@@ -320,12 +330,22 @@
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="DiamondButton">
+    <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">36dp</item>
-        <item name="android:background">@drawable/login_button</item>
+        <item name="android:background">@drawable/diamond_button</item>
         <item name="android:paddingLeft">36dp</item>
         <item name="android:paddingRight">36dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:shadowColor">@color/transparent</item>
+    </style>
+
+    <style name="TaskFilterRadioButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@color/transparent</item>
+        <item name="android:background">@drawable/pill_radio_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@drawable/radio_button_text_color</item>
     </style>
 </resources>

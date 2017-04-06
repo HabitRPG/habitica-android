@@ -4,11 +4,12 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.UserStatComputer;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
@@ -58,7 +59,7 @@ public class FullProfileActivity extends BaseActivity {
     @Inject
     ContentCache contentCache;
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
     @BindView(R.id.profile_blurb)
@@ -123,8 +124,8 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiHelper.apiService.GetMember(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.GetMember(this.userId)
+
                 .subscribe(this::updateView,
                         throwable -> {
                         });
@@ -174,8 +175,8 @@ public class FullProfileActivity extends BaseActivity {
                     messageObject.put("message", emojiEditText.getText().toString());
                     messageObject.put("toUserId", userId);
 
-                    apiHelper.apiService.postPrivateMessage(messageObject)
-                            .compose(apiHelper.configureApiCallObserver())
+                    apiClient.postPrivateMessage(messageObject)
+
                             .subscribe(postChatMessageResult -> {
                                 UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
                                         String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
@@ -247,8 +248,8 @@ public class FullProfileActivity extends BaseActivity {
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiHelper.apiService.GetMemberAchievements(this.userId)
-                .compose(apiHelper.configureApiCallObserver())
+        apiClient.GetMemberAchievements(this.userId)
+
                 .subscribe(this::fillAchievements,
                         throwable -> {
                         });
@@ -377,79 +378,23 @@ public class FullProfileActivity extends BaseActivity {
         contentCache.GetItemDataList(outfitList, gotEntries);
     }
 
-    public void gotGear(List<ItemData> obj, HabitRPGUser user) {
-        float strAttributes = 0;
-        float intAttributes = 0;
-        float conAttributes = 0;
-        float perAttributes = 0;
+    public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {
+        UserStatComputer userStatComputer = new UserStatComputer();
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
 
-        // Summarize stats and fill equipment table
-        for (ItemData i : obj) {
-            int str_ = (int) i.getStr();
-            int int_ = (int) i.get_int();
-            int con_ = (int) i.getCon();
-            int per_ = (int) i.getPer();
-
-            strAttributes += str_;
-            intAttributes += int_;
-            conAttributes += con_;
-            perAttributes += per_;
-
-            StringBuilder sb = new StringBuilder();
-
-            if (str_ != 0) {
-                sb.append("STR " + str_ + ", ");
-            }
-            if (int_ != 0) {
-                sb.append("INT " + int_ + ", ");
-            }
-            if (con_ != 0) {
-                sb.append("CON " + con_ + ", ");
-            }
-            if (per_ != 0) {
-                sb.append("PER " + per_ + ", ");
-            }
-
-            // remove the last comma
-            if (sb.length() > 2) {
-                sb.delete(sb.length() - 2, sb.length());
-            }
-
-            addEquipmentRow(equipmentTableLayout, i.getKey(), i.getText(), sb.toString());
-        }
+        // @TODO: MAke this dynamic by iterating over rows and check type?
+        UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) statsRows.get(0);
+        addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats);
 
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        addAttributeRow(getString(R.string.battle_gear) + ": ", strAttributes, intAttributes, conAttributes, perAttributes, true, false);
+        // @TOOD: We could probably remove the excess parameters - thank you classes
+        UserStatComputer.AttributeRow attributeRow1 = (UserStatComputer.AttributeRow) statsRows.get(1);
+        addAttributeRow(getString(attributeRow1.labelId) + ": ", attributeRow1.strVal, attributeRow1.intVal, attributeRow1.conVal, attributeRow1.perVal, attributeRow1.roundDown, attributeRow1.isSummary);
 
-        if (!user.getPreferences().isDisableClasses()) {
-            float strClassBonus = 0;
-            float intClassBonus = 0;
-            float conClassBonus = 0;
-            float perClassBonus = 0;
-
-            switch (user.getStats().get_class()) {
-                case rogue:
-                    strClassBonus = strAttributes * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-                case healer:
-                    conClassBonus = conAttributes * 0.5f;
-                    intClassBonus = intClassBonus * 0.5f;
-                    break;
-                case warrior:
-                    strClassBonus = strAttributes * 0.5f;
-                    conClassBonus = conAttributes * 0.5f;
-                    break;
-                case wizard:
-                    intClassBonus = intClassBonus * 0.5f;
-                    perClassBonus = perAttributes * 0.5f;
-                    break;
-            }
-
-            addAttributeRow(getString(R.string.profile_class_bonus), strClassBonus, intClassBonus, conClassBonus, perClassBonus, false, false);
-        }
+        UserStatComputer.AttributeRow attributeRow2 = (UserStatComputer.AttributeRow) statsRows.get(2);
+        addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary);
     }
 
     public void gotCostume(List<ItemData> obj) {

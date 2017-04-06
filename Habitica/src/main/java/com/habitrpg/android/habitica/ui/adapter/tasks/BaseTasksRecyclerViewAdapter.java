@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
@@ -37,14 +37,14 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     protected List<Task> filteredContent;
     int layoutResource;
     Context context;
-    private TagsHelper tagsHelper;
+    private TaskFilterHelper taskFilterHelper;
 
-    public BaseTasksRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource,
+    public BaseTasksRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
                                         Context newContext, String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext.getApplicationContext();
-        this.tagsHelper = tagsHelper;
+        this.taskFilterHelper = taskFilterHelper;
         this.userID = userID;
         this.filteredContent = new ArrayList<>();
         injectThis(HabiticaBaseApplication.getComponent());
@@ -105,11 +105,11 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     public void filter() {
-        if (this.tagsHelper == null || this.tagsHelper.howMany() == 0) {
+        if (this.taskFilterHelper == null || this.taskFilterHelper.howMany() == 0) {
             filteredContent = content;
         } else {
             filteredContent = new ObservableArrayList<>();
-            filteredContent.addAll(this.tagsHelper.filter(content));
+            filteredContent.addAll(this.taskFilterHelper.filter(content));
         }
 
         this.notifyDataSetChanged();

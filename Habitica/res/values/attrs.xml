@@ -25,4 +25,8 @@
         <attr name="text" format="string" />
         <attr name="npcDrawable" format="integer" />
     </declare-styleable>
+    <declare-styleable name="AvatarCategoryView">
+        <attr name="iconDrawable" format="integer" />
+        <attr name="categoryTitle" format="string" />
+    </declare-styleable>
 </resources>

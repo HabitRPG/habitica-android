@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.APIHelper;
+
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -25,13 +26,13 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
 
     private final ContentCache contentCache;
     private final HabitRPGUser user;
-    private APIHelper apiHelper;
+    private ApiClient apiClient;
 
-    public RewardsRecyclerViewAdapter(String taskType, TagsHelper tagsHelper, int layoutResource, Context newContext, HabitRPGUser user, APIHelper apiHelper) {
-        super(taskType, tagsHelper, layoutResource, newContext, user.getId());
+    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
+        super(taskType, taskFilterHelper, layoutResource, newContext, user.getId());
         this.user = user;
-        this.apiHelper = apiHelper;
-        this.contentCache = new ContentCache(apiHelper);
+        this.apiClient = apiClient;
+        this.contentCache = new ContentCache(apiClient);
     }
 
     @Override
@@ -40,9 +41,9 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     }
 
     public void loadEquipmentRewards() {
-        if (apiHelper != null) {
-            apiHelper.apiService.getInventoryBuyableGear()
-                    .compose(apiHelper.configureApiCallObserver())
+        if (apiClient != null) {
+            apiClient.getInventoryBuyableGear()
+
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -43,7 +43,7 @@ public class PartyInviteActivity extends BaseActivity {
     @Inject
     protected HostConfig hostConfig;
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
@@ -200,10 +200,7 @@ public class PartyInviteActivity extends BaseActivity {
         invites.add(userIdToInvite);
         inviteData.put("uuids", invites);
 
-        this.apiHelper.apiService.inviteToGroup(this.user.getParty().getId(), inviteData)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                });
+        this.apiClient.inviteToGroup(this.user.getParty().getId(), inviteData)
+                .subscribe(aVoid -> {}, throwable -> {});
     }
 }

@@ -295,7 +295,7 @@ public interface ApiService {
 
     // Notifications
     @POST("notifications/{notificationId}/read")
-    Observable<HabitResponse<Void>> readNotificaiton(@Path("notificationId") String notificationId);
+    Observable<HabitResponse<Void>> readNotification(@Path("notificationId") String notificationId);
 
     @POST("user/open-mystery-item")
     Observable<HabitResponse<ItemData>> openMysteryItem();

@@ -114,8 +114,8 @@ public class ItemsFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(InvitePartyToQuestCommand event) {
-        this.apiHelper.apiService.inviteToQuest("party", event.questKey)
-                .compose(apiHelper.configureApiCallObserver())
+        this.apiClient.inviteToQuest("party", event.questKey)
+
                 .subscribe(group -> {
                     OpenMenuItemCommand event1 = new OpenMenuItemCommand();
                     event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;

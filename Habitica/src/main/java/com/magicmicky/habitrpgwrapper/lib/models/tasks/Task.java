@@ -38,6 +38,13 @@ public class Task extends BaseModel {
     public static final String TYPE_TODO = "todo";
     public static final String TYPE_DAILY = "daily";
     public static final String TYPE_REWARD = "reward";
+    public static final String FILTER_ALL = "all";
+    public static final String FILTER_WEAK = "weak";
+    public static final String FILTER_STRONG = "strong";
+    public static final String FILTER_ACTIVE = "active";
+    public static final String FILTER_GRAY = "gray";
+    public static final String FILTER_DATED = "dated";
+    public static final String FILTER_COMPLETED = "completed";
     public static final String FREQUENCY_WEEKLY = "weekly";
     public static final String FREQUENCY_DAILY = "daily";
     public static final String ATTRIBUTE_STRENGTH = "str";

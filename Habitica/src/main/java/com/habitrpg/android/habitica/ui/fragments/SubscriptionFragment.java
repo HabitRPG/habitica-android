@@ -1,25 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import com.habitrpg.android.habitica.APIHelper;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.UserSubscribedEvent;
-import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
-import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
-import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.solovyev.android.checkout.ActivityCheckout;
-import org.solovyev.android.checkout.BillingRequests;
-import org.solovyev.android.checkout.Inventory;
-import org.solovyev.android.checkout.ProductTypes;
-import org.solovyev.android.checkout.RequestListener;
-import org.solovyev.android.checkout.Sku;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +10,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.UserSubscribedEvent;
+import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
+import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
+import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.solovyev.android.checkout.ActivityCheckout;
+import org.solovyev.android.checkout.BillingRequests;
+import org.solovyev.android.checkout.Inventory;
+import org.solovyev.android.checkout.ProductTypes;
+import org.solovyev.android.checkout.RequestListener;
+import org.solovyev.android.checkout.Sku;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     CrashlyticsProxy crashlyticsProxy;
 
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
 
     @BindView(R.id.subscribe_listitem1_box)
     View subscribeListitem1Box;
@@ -125,8 +125,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     @Subscribe
     public void fetchUser(@Nullable UserSubscribedEvent event) {
-        apiHelper.apiService.getUser().compose(apiHelper.configureApiCallObserver())
-                .subscribe(this::setUser, throwable -> {
+        apiClient.getUser().subscribe(this::setUser, throwable -> {
                 });
     }
 

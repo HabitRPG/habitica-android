@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -35,7 +36,7 @@ public class UiUtils {
      * @param view     View that currently has focus
      * @param activity - Current activity
      */
-    public static void dismissKeyboard(Activity activity, View view) {
+    public static void dismissKeyboard(Activity activity, @Nullable View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (view != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

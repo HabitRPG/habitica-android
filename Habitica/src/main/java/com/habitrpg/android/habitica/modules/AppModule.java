@@ -1,9 +1,13 @@
 package com.habitrpg.android.habitica.modules;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.executors.JobExecutor;
+import com.habitrpg.android.habitica.executors.PostExecutionThread;
+import com.habitrpg.android.habitica.executors.ThreadExecutor;
+import com.habitrpg.android.habitica.executors.UIThread;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.helpers.TagsHelper;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 
 import android.app.Application;
 import android.content.Context;
@@ -46,8 +50,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public TagsHelper providesTagsHelper() {
-        return new TagsHelper();
+    public TaskFilterHelper providesTagsHelper() {
+        return new TaskFilterHelper();
     }
 
     @Provides
@@ -64,5 +68,19 @@ public class AppModule {
     @Singleton
     public SoundManager providesSoundManager() {
         return new SoundManager();
+    }
+
+
+    @Provides
+    @Singleton
+    ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
+        return jobExecutor;
+    }
+
+
+    @Provides
+    @Singleton
+    PostExecutionThread providePostExecutionThread(UIThread uiThread) {
+        return uiThread;
     }
 }

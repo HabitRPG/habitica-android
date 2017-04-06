@@ -1,6 +1,10 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.APIHelper;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.os.Build;
+
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
@@ -17,14 +21,10 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Build;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,7 +37,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 public class PopupNotificationsManagerTest {
 
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     public HostConfig hostConfig;
 
     public String username;
@@ -52,13 +52,13 @@ public class PopupNotificationsManagerTest {
                 "",
                 "");
 
-        apiHelper = new APIHelper(APIHelper.createGsonFactory(), hostConfig);
+        apiClient = new ApiClient(ApiClient.createGsonFactory(), hostConfig);
     }
 
     @Test
     public void itDoesNothingWhenNotificationsListIsEmpty() {
         List<Notification> notifications = new ArrayList<>();
-        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiHelper, context);
+        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiClient);
         popupNotificationsManager.showNotificationDialog(notifications);
 
         AlertDialog alert =

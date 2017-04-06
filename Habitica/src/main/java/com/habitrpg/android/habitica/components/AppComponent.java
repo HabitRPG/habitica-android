@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.components;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -9,6 +10,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.modules.ApiModule;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.modules.DeveloperModule;
+import com.habitrpg.android.habitica.modules.RepositoryModule;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.ui.activities.AboutActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
@@ -84,7 +86,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class, DeveloperModule.class})
+@Component(modules = {DeveloperModule.class, AppModule.class, ApiModule.class, RepositoryModule.class})
 public interface AppComponent {
 
     void inject(ClassSelectionActivity classSelectionActivity);
@@ -209,7 +211,7 @@ public interface AppComponent {
 
     void inject(ChallengeDetailActivity challengeDetailActivity);
 
-    void inject(APIHelper apiHelper);
+    void inject(ApiClient apiClient);
 
     void inject(TaskListWidgetProvider taskListWidgetProvider);
 
@@ -234,6 +236,8 @@ public interface AppComponent {
     void inject(TaskListFactory taskListFactory);
 
     void inject(GemPurchaseActivity gemPurchaseActivity);
+
+    void inject(TaskFilterDialog taskFilterDialog);
 
     void inject(CreateChallengeActivity createChallengeActivity);
 }

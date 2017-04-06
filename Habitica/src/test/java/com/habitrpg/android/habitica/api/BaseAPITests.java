@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.api;
 
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -18,7 +18,7 @@ import rx.observers.TestSubscriber;
 
 public class BaseAPITests {
 
-    public APIHelper apiHelper;
+    public ApiClient apiClient;
     public HostConfig hostConfig;
 
     public String username;
@@ -33,14 +33,14 @@ public class BaseAPITests {
                 BuildConfig.PORT,
                 "",
                 "");
-        apiHelper = new APIHelper(APIHelper.createGsonFactory(), hostConfig);
+        apiClient = new ApiClient(ApiClient.createGsonFactory(), hostConfig);
         generateUser();
     }
 
     public void generateUser() {
         TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
         username = UUID.randomUUID().toString();
-        apiHelper.registerUser(username, username+"@example.com", password, password)
+        apiClient.registerUser(username, username+"@example.com", password, password)
         .subscribe(testSubscriber);
         testSubscriber.assertCompleted();
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
@@ -51,7 +51,7 @@ public class BaseAPITests {
     public HabitRPGUser getUser() {
         TestSubscriber<HabitResponse<HabitRPGUser>> userSubscriber = new TestSubscriber<>();
 
-        apiHelper.apiService.getUser().subscribe(userSubscriber);
+        apiClient.getUser().subscribe(userSubscriber);
         userSubscriber.assertNoErrors();
         userSubscriber.assertCompleted();
         HabitRPGUser user = userSubscriber.getOnNextEvents().get(0).getData();

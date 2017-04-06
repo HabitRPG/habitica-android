@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.amplitude.api.Amplitude;
+import com.habitrpg.android.habitica.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +25,10 @@ public class AmplitudeManager {
     }
 
     public static void sendEvent(String eventAction, String eventCategory, String hitType, Map<String, Object> additionalData) {
-        JSONObject eventProperties = new JSONObject();
+        if (BuildConfig.DEBUG) {
+            return;
+        }
+            JSONObject eventProperties = new JSONObject();
         try {
             eventProperties.put("eventAction", eventAction);
             eventProperties.put("eventCategory", eventCategory);

@@ -399,6 +399,7 @@ public class HabitRPGUser extends BaseModel {
         List<Challenge> newChallenges = new ArrayList<>();
         if (getChallenges() != null) {
             for (String s : getChallenges()) {
+
                 boolean challengeExistInDatabase = false;
 
                 for (Challenge challenge : challenges) {

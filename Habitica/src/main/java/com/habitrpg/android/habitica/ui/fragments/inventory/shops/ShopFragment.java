@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
@@ -42,7 +42,7 @@ public class ShopFragment extends BaseFragment {
     public HabitRPGUser user;
     public Shop shop;
     @Inject
-    APIHelper apiHelper;
+    ApiClient apiClient;
     private View view;
 
     @Nullable
@@ -103,8 +103,7 @@ public class ShopFragment extends BaseFragment {
                 shopUrl = "seasonal";
                 break;
         }
-        this.apiHelper.apiService.fetchShopInventory(shopUrl)
-                .compose(this.apiHelper.configureApiCallObserver())
+        this.apiClient.fetchShopInventory(shopUrl)
                 .map(shop1 -> {
                     if (shop1.identifier.equals(Shop.MARKET)) {
                         if (user.getPurchased().getPlan().isActive()) {

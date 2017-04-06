@@ -1,20 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.sql.language.Where;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +71,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         listObservable
                 .subscribe(challenges -> {
 
-                    List<Challenge> userChallenges = this.user.getChallengeList();
+                    List<Challenge> userChallenges = this.user != null ? this.user.getChallengeList() : new ArrayList<>();
 
                     HashSet<String> userChallengesHash = new HashSet<>();
 
@@ -128,13 +124,11 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
         challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
         challengeFilterLayout.setClickable(true);
-        challengeFilterLayout.setOnClickListener(view -> {
-            ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, this.apiHelper,
-                    HabiticaApplication.User, currentChallengesInView, lastFilterOptions, filterOptions -> {
-                        challengeAdapter.setFilterByGroups(filterOptions);
-                        this.lastFilterOptions = filterOptions;
-                    });
-        });
+        challengeFilterLayout.setOnClickListener(view -> ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, this.apiClient,
+                HabiticaApplication.User, currentChallengesInView, lastFilterOptions, filterOptions -> {
+                    challengeAdapter.setFilterByGroups(filterOptions);
+                    this.lastFilterOptions = filterOptions;
+                }));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);

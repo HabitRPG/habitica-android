@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class PartyMemberListFragment extends BaseFragment {
     private PartyMemberRecyclerViewAdapter viewAdapter;
     private View view;
 
-    public void configure(Context ctx, List<HabitRPGUser> members) {
+    public void configure(Context ctx, @Nullable List<HabitRPGUser> members) {
         this.ctx = ctx;
         this.members = members;
 

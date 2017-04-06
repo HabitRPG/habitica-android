@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -39,6 +40,7 @@ public class PartyFragment extends BaseMainFragment {
     public ViewPager viewPager;
     @Inject
     ContentCache contentCache;
+    @Nullable
     private Group group;
     private PartyMemberListFragment partyMemberListFragment;
     private GroupInformationFragment groupInformationFragment;
@@ -58,8 +60,7 @@ public class PartyFragment extends BaseMainFragment {
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
-            apiHelper.apiService.getGroup("party")
-                    .compose(this.apiHelper.configureApiCallObserver())
+            apiClient.getGroup("party")
                     .subscribe(group -> {
                         if (group == null) {
                             return;
@@ -68,8 +69,8 @@ public class PartyFragment extends BaseMainFragment {
 
                         updateGroupUI();
 
-                        apiHelper.apiService.getGroupMembers(group.id, true)
-                                .compose(apiHelper.configureApiCallObserver())
+                        apiClient.getGroupMembers(group.id, true)
+
                                 .subscribe(members -> {
                                             PartyFragment.this.group.members = members;
                                             updateGroupUI();
@@ -109,7 +110,7 @@ public class PartyFragment extends BaseMainFragment {
             }
         }
 
-        if (partyMemberListFragment != null) {
+        if (partyMemberListFragment != null && group != null) {
             partyMemberListFragment.setMemberList(group.members);
         }
 
@@ -117,7 +118,7 @@ public class PartyFragment extends BaseMainFragment {
             groupInformationFragment.setGroup(group);
         }
 
-        if (chatListFragment != null) {
+        if (chatListFragment != null && group != null) {
             chatListFragment.seenGroupId = group.id;
         }
 
@@ -135,7 +136,7 @@ public class PartyFragment extends BaseMainFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (this.group != null) {
+        if (this.group != null && this.user != null) {
             if (this.group.leaderID.equals(this.user.getId())) {
                 inflater.inflate(R.menu.menu_party_admin, menu);
             } else {
@@ -163,15 +164,14 @@ public class PartyFragment extends BaseMainFragment {
                 new AlertDialog.Builder(viewPager.getContext())
                         .setTitle(viewPager.getContext().getString(R.string.party_leave))
                         .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
-                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  this.apiHelper.apiService.leaveGroup(this.group.id)
-                                .compose(apiHelper.configureApiCallObserver())
-                                .subscribe(group -> {
-                                    getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit();
-                                }, throwable -> {
-                            }))
-                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> {
-                            dialog.dismiss();
+                        .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  {
+                            if (this.group != null){
+                                this.apiClient.leaveGroup(this.group.id)
+                                        .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), throwable -> {
+                                        });
+                            }
                         })
+                        .setNegativeButton(viewPager.getContext().getString(R.string.no), (dialog, which) -> dialog.dismiss())
                         .show();
                 return true;
         }
@@ -181,7 +181,7 @@ public class PartyFragment extends BaseMainFragment {
 
     private void displayEditForm() {
         Bundle bundle = new Bundle();
-        bundle.putString("groupID", this.group.id);
+        bundle.putString("groupID", this.group != null ? this.group.id : null);
         bundle.putString("name", this.group.name);
         bundle.putString("description", this.group.description);
         bundle.putString("leader", this.group.leaderID);
@@ -200,6 +200,9 @@ public class PartyFragment extends BaseMainFragment {
                 if (resultCode == Activity.RESULT_OK) {
                     boolean needsSaving = false;
                     Bundle bundle = data.getExtras();
+                    if (this.group == null) {
+                        break;
+                    }
                     if (this.group.name != null && !this.group.name.equals(bundle.getString("name"))) {
                         this.group.name = bundle.getString("name");
                         needsSaving = true;
@@ -217,8 +220,8 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiHelper.apiService.updateGroup(this.group.id, this.group)
-                                .compose(apiHelper.configureApiCallObserver())
+                        this.apiClient.updateGroup(this.group.id, this.group)
+
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -230,7 +233,7 @@ public class PartyFragment extends BaseMainFragment {
             case (PartyInviteActivity.RESULT_SEND_INVITES): {
                 if (resultCode == Activity.RESULT_OK) {
                     Map<String, Object> inviteData = new HashMap<>();
-                    inviteData.put("inviter", this.user.getProfile().getName());
+                    inviteData.put("inviter", this.user != null ? this.user.getProfile().getName() : null);
                     if (data.getBooleanExtra(PartyInviteActivity.IS_EMAIL_KEY, false)) {
                         String[] emails = data.getStringArrayExtra(PartyInviteActivity.EMAILS_KEY);
                         List<HashMap<String, String>> invites = new ArrayList<>();
@@ -247,11 +250,13 @@ public class PartyFragment extends BaseMainFragment {
                         Collections.addAll(invites, userIDs);
                         inviteData.put("uuids", invites);
                     }
-                    this.apiHelper.apiService.inviteToGroup(this.group.id, inviteData)
-                            .compose(apiHelper.configureApiCallObserver())
-                            .subscribe(aVoid -> {
-                            }, throwable -> {
-                            });
+                    if (this.group != null) {
+                        this.apiClient.inviteToGroup(this.group.id, inviteData)
+
+                                .subscribe(aVoid -> {
+                                }, throwable -> {
+                                });
+                    }
                 }
             }
         }

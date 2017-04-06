@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +40,10 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
     private List<Challenge> challengesSource = new ArrayList<>();
 
     private boolean viewUserChallengesOnly;
+    @Nullable
     private HabitRPGUser user;
 
-    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, HabitRPGUser user) {
+    public ChallengesListViewAdapter(boolean viewUserChallengesOnly, @Nullable HabitRPGUser user) {
         this.viewUserChallengesOnly = viewUserChallengesOnly;
         this.user = user;
     }
@@ -55,15 +57,15 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
     public void setFilterByGroups(ChallengeFilterOptions filterOptions){
         this.challenges = $.filter(challengesSource, arg ->
         {
-            boolean showChallenge = $.find(filterOptions.ShowByGroups, g -> g.id.contains(arg.groupId)).isPresent();
+            boolean showChallenge = $.find(filterOptions.showByGroups, g -> g.id.contains(arg.groupId)).isPresent();
 
-            boolean showByOwnership = false;
-            if(filterOptions.ShowOwned){
-                showByOwnership |= arg.leaderId == this.user.getId();
-            }
-
-            if(filterOptions.NotOwned){
-                showByOwnership |= arg.leaderId != this.user.getId();
+            boolean showByOwnership = true;
+            if(filterOptions.showOwned == filterOptions.notOwned && this.user != null){
+                if (filterOptions.showOwned) {
+                    showByOwnership = Objects.equals(arg.leaderId, this.user.getId());
+                } else {
+                    showByOwnership = !Objects.equals(arg.leaderId, this.user.getId());
+                }
             }
 
             return showChallenge && showByOwnership;
@@ -148,7 +150,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         private Challenge challenge;
         private boolean viewUserChallengesOnly;
 
-        public ChallengeViewHolder(View itemView, boolean viewUserChallengesOnly) {
+        ChallengeViewHolder(View itemView, boolean viewUserChallengesOnly) {
             super(itemView);
             this.viewUserChallengesOnly = viewUserChallengesOnly;
 
@@ -162,11 +164,11 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         }
 
         public static String getLabelByTypeAndCount(Context context, String type, int count) {
-            if (type == Challenge.TASK_ORDER_DAILYS) {
+            if (Objects.equals(type, Challenge.TASK_ORDER_DAILYS)) {
                 return context.getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if (type == Challenge.TASK_ORDER_HABITS) {
+            } else if (Objects.equals(type, Challenge.TASK_ORDER_HABITS)) {
                 return context.getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if (type == Challenge.TASK_ORDER_REWARDS) {
+            } else if (Objects.equals(type, Challenge.TASK_ORDER_REWARDS)) {
                 return context.getString(count == 1 ? R.string.reward : R.string.rewards);
             } else {
                 return context.getString(count == 1 ? R.string.todo : R.string.todos);

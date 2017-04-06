@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.APIHelper;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
@@ -20,12 +20,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class SkillMemberActivity extends BaseActivity {
-
-    @Inject
-    public APIHelper apiHelper;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private PartyMemberRecyclerViewAdapter viewAdapter;
+
+    @Inject
+    public ApiClient apiClient;
 
     @Override
     protected int getLayoutResId() {
@@ -46,21 +46,18 @@ public class SkillMemberActivity extends BaseActivity {
     }
 
     private void loadMemberList() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewAdapter = new PartyMemberRecyclerViewAdapter();
         viewAdapter.context = this;
         recyclerView.setAdapter(viewAdapter);
 
-        apiHelper.apiService.getGroup("party")
-                .compose(this.apiHelper.configureApiCallObserver())
+        apiClient.getGroup("party")
                 .subscribe(group -> {
                             if (group == null) {
                                 return;
                             }
 
-                            apiHelper.apiService.getGroupMembers(group.id, true)
-                                    .compose(apiHelper.configureApiCallObserver())
+                            apiClient.getGroupMembers(group.id, true)
                                     .subscribe(members -> {
                                                 viewAdapter.setMemberList(members, true);
                                             },

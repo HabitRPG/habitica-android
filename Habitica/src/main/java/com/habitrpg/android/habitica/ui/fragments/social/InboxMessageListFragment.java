@@ -76,13 +76,12 @@ public class InboxMessageListFragment extends BaseMainFragment
         component.inject(this);
     }
 
-    private void refreshUserInbox() {
-        this.swipeRefreshLayout.setRefreshing(true);
-        this.apiHelper.retrieveUser(true)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                });
-    }
+        private void refreshUserInbox () {
+            this.swipeRefreshLayout.setRefreshing(true);
+            this.apiClient.retrieveUser(true)
+
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
+        }
 
     @Override
     public void onRefresh() {
@@ -124,12 +123,12 @@ public class InboxMessageListFragment extends BaseMainFragment
         messageObject.put("message", cmd.Message);
         messageObject.put("toUserId", cmd.UserToSendTo);
 
-        apiHelper.apiService.postPrivateMessage(messageObject)
-                .compose(apiHelper.configureApiCallObserver())
-                .subscribe(postChatMessageResult -> {
-                    this.refreshUserInbox();
-                }, throwable -> {
-                });
+            apiClient.postPrivateMessage(messageObject)
+
+                    .subscribe(postChatMessageResult -> {
+                        this.refreshUserInbox();
+                    }, throwable -> {
+                    });
 
         UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
     }
