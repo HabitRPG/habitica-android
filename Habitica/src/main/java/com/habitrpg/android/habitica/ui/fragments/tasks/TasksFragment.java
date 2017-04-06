@@ -9,6 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -59,9 +62,9 @@ public class TasksFragment extends BaseMainFragment {
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
-    Map<String, String> activeTaskFilters = new HashMap<>();
 
     private boolean displayingTaskForm;
+    private TextView filterCountTextView;
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
@@ -131,6 +134,11 @@ public class TasksFragment extends BaseMainFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_activity, menu);
+
+        RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
+        badgeLayout.setOnClickListener(view -> showFilterDialog());
+        updateFilterIcon();
     }
 
     @Override
@@ -157,9 +165,8 @@ public class TasksFragment extends BaseMainFragment {
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
         String taskType = getActiveFragment().classType;
-        dialog.setTaskType(taskType, activeTaskFilters.get(taskType));
+        dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
         dialog.setListener((activeTaskFilter, activeTags) -> {
-            activeTaskFilters.put(taskType, activeTaskFilter);
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
@@ -169,6 +176,7 @@ public class TasksFragment extends BaseMainFragment {
                 viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
             }
             taskFilterHelper.setTags(activeTags);
+            updateFilterIcon();
         });
         dialog.show();
     }
@@ -197,16 +205,16 @@ public class TasksFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, activeTaskFilters.get(Task.TYPE_HABIT), sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, sortCallback);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, activeTaskFilters.get(Task.TYPE_DAILY), sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, sortCallback);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null, null);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, activeTaskFilters.get(Task.TYPE_TODO),sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO,sortCallback);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);
@@ -234,6 +242,39 @@ public class TasksFragment extends BaseMainFragment {
                 return "";
             }
         });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomNavigation.selectTabAtPosition(position);
+                updateFilterIcon();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void updateFilterIcon() {
+        int filterCount = 0;
+        if (getActiveFragment() != null) {
+            filterCount = taskFilterHelper.howMany(getActiveFragment().classType);
+        }
+        if (filterCount == 0) {
+            filterCountTextView.setText(null);
+            filterCountTextView.setVisibility(View.GONE);
+        } else {
+            filterCountTextView.setText(String.valueOf(filterCount));
+            filterCountTextView.setVisibility(View.VISIBLE);
+        }
+
     }
     // endregion
 
@@ -284,6 +325,7 @@ public class TasksFragment extends BaseMainFragment {
         getActiveFragment().onRefresh();
     }
 
+    @Nullable
     private TaskRecyclerViewFragment getActiveFragment() {
         return viewFragmentsDictionary.get(viewPager.getCurrentItem());
     }

@@ -75,16 +75,14 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Nullable
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
-    private String activeFilter;
 
-    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType, @Nullable String activeFilter,
+    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType,
                                                        @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
         fragment.sortCallback = sortCallback;
-        fragment.activeFilter = activeFilter;
         return fragment;
     }
 
@@ -128,8 +126,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
-        taskFilterHelper.setActiveFilter(activeFilter);
 
         mItemTouchCallback = new ItemTouchHelper.Callback() {
             private Integer mFromPosition = null;
@@ -295,8 +291,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     public void setActiveFilter(String activeFilter) {
-        this.activeFilter = activeFilter;
-        taskFilterHelper.setActiveFilter(activeFilter);
+        taskFilterHelper.setActiveFilter(classType, activeFilter);
         recyclerAdapter.filter();
     }
 }
