@@ -160,7 +160,14 @@ public class TasksFragment extends BaseMainFragment {
         dialog.setTaskType(taskType, activeTaskFilters.get(taskType));
         dialog.setListener((activeTaskFilter, activeTags) -> {
             activeTaskFilters.put(taskType, activeTaskFilter);
+            int activePos = viewPager.getCurrentItem();
+            if (activePos >= 1) {
+                viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
+            }
             getActiveFragment().setActiveFilter(activeTaskFilter);
+            if (activePos < viewPager.getAdapter().getCount()) {
+                viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
+            }
             taskFilterHelper.setTags(activeTags);
         });
         dialog.show();

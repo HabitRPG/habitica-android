@@ -134,23 +134,23 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     }
 
     private void createTagViews() {
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+
+                        new int[]{-android.R.attr.state_checked}, //disabled
+                        new int[]{android.R.attr.state_checked} //enabled
+                },
+                new int[] {
+
+                        Color.GRAY, //disabled
+                        ContextCompat.getColor(getContext(), R.color.brand_400) //enabled
+
+                }
+        );
         for (Tag tag : tags) {
             AppCompatCheckBox tagCheckbox = new AppCompatCheckBox(getContext());
             tagCheckbox.setText(tag.getName());
             tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-            ColorStateList colorStateList = new ColorStateList(
-                    new int[][]{
-
-                            new int[]{-android.R.attr.state_checked}, //disabled
-                            new int[]{android.R.attr.state_checked} //enabled
-                    },
-                    new int[] {
-
-                            Color.GRAY, //disabled
-                            ContextCompat.getColor(getContext(), R.color.brand_400) //enabled
-
-                    }
-            );
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList);
             tagCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
