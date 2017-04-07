@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             app:namePlate="Justin"
             app:text="@string/avatar_setup_description"
-            app:npcDrawable="@drawable/npc_justin_only"
+            app:npcDrawable="@drawable/justin_textbox"
             android:layout_marginLeft="@dimen/content_inset"
             android:layout_marginRight="@dimen/content_inset"
             android:layout_above="@id/customization_drawer"

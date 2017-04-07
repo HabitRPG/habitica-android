@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +26,9 @@ public class SpeechBubbleView extends FrameLayout {
 
     @BindView(R.id.npc_image_view)
     ImageView npcImageView;
+
+    @BindView(R.id.confirmation_buttons)
+    ViewGroup confirmationButtons;
 
     public SpeechBubbleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +49,8 @@ public class SpeechBubbleView extends FrameLayout {
         if (iconRes != null) {
             npcImageView.setImageDrawable(iconRes);
         }
+
+        confirmationButtons.setVisibility(View.GONE);
     }
 
 
