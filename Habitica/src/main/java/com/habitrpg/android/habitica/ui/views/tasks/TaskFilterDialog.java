@@ -264,6 +264,9 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         } else {
             this.activeTags = tagIds;
         }
+        for (int index = 0; index < tagsList.getChildCount()-1; index++) {
+            ((AppCompatCheckBox)tagsList.getChildAt(index)).setChecked(false);
+        }
         for (String tagId : this.activeTags) {
             int index = indexForId(tagId);
             if (index >= 0) {
