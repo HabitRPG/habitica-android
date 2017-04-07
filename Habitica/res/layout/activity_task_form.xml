@@ -33,21 +33,22 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-                    <net.pherth.android.emoji_library.EmojiEditText
-                        android:id="@+id/task_text_edittext"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/text"
-                    android:textColor="@android:color/black"
-                    android:inputType="textCapSentences" />
-            </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        app:hintTextAppearance="@style/TextAppearance.AppCompat">
+
+                        <net.pherth.android.emoji_library.EmojiEditText
+                            android:id="@+id/task_text_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:hint="@string/text"
+                            android:textColor="@android:color/black"
+                            android:inputType="textCapSentences" />
+                    </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
@@ -282,35 +283,51 @@
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
+            <include layout="@layout/tasks_duedate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/repeatables"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <include layout="@layout/tasks_duedate" />
+
+            <Spinner
+                android:id="@+id/task_repeatables_frequency_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="72dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/due_date"
+                android:text="@string/repeatEvery"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <Spinner
+                android:id="@+id/task_repeatables_every_x_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="72dp" />
+
             <LinearLayout
-                android:id="@+id/task_duedate_picker_layout"
+                android:id="@+id/task_repeatables_frequency_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:orientation="vertical">
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/todo_has_duedate"
-                    android:id="@+id/duedate_checkbox" />
-
-                <EditText
-                    android:id="@+id/duedate_text_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="4dp"
-                    android:hint="@string/due_date"
-                    android:textColor="@android:color/black"
-                    android:focusable="false" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:is="@id+/summary"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -345,11 +362,11 @@
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:id="@+id/task_tags_wrapper">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:id="@+id/task_tags_wrapper">
 
         <TextView
             android:layout_width="wrap_content"

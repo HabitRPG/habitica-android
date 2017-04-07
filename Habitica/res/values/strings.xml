@@ -78,6 +78,8 @@
     <string name="about.bugreport">Report a Bug</string>
     <string name="about.source_code">Source Code</string>
 
+    <string name="repeatEvery">Repeat Every</string>
+
     <!-- Network Errors -->
     <string name="network_error_title">Connection Error</string>
     <string name="network_error_no_network_body">You are not connected to the internet.</string>
