@@ -1449,13 +1449,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
+                        .subscribe(new TaskScoringCallback(this, event.Task.getId()), error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
+                        .subscribe(new TaskScoringCallback(this, event.Task.getId()), error -> {
                         });
             }
             break;
@@ -1465,14 +1465,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.task)), error -> {
+                .subscribe(new TaskUpdateCallback(), error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(res -> onTaskDataReceived(res, event.habit), error -> {
+                .subscribe(new TaskScoringCallback(this, event.habit.getId()), error -> {
                 });
     }
 
