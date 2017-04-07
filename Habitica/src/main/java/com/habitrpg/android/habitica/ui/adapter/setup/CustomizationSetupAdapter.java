@@ -58,7 +58,6 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Object obj = customizationList.get(position);
         ((CustomizationViewHolder) holder).bind(customizationList.get(position));
     }
 

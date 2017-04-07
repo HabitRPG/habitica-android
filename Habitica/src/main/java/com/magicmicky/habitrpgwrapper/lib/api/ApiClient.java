@@ -28,6 +28,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -208,7 +210,7 @@ public interface ApiClient {
 
     ErrorResponse getErrorResponse(HttpException throwable);
 
-    void updateAuthenticationCredentials(String userID, String apiToken);
+    void updateAuthenticationCredentials(@Nullable String userID, @Nullable String apiToken);
 
     boolean hasAuthenticationKeys();
 

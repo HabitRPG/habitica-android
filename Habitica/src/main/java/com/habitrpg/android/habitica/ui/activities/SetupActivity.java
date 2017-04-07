@@ -10,6 +10,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
+import com.habitrpg.android.habitica.ui.views.FadingViewPager;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
@@ -68,7 +69,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Inject
     protected HostConfig hostConfig;
     @BindView(R.id.view_pager)
-    ViewPager pager;
+    FadingViewPager pager;
     @BindView(R.id.nextButton)
     Button nextButton;
     @BindView(R.id.previousButton)
@@ -107,8 +108,16 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.days_gray));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                View decor = getWindow().getDecorView();
+                    decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_gray_bg));
+            } else {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.days_gray));
+            }
         }
+
+        pager.disableFading = true;
     }
 
     @Override

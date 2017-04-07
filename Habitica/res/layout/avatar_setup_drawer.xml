@@ -22,8 +22,8 @@
                 app:tabTextColor="@color/white_50_alpha"
                 app:tabSelectedTextColor="@color/white"
                 app:tabGravity="center"
-                app:tabPaddingEnd="16dp"
-                app:tabPaddingStart="16dp"
+                app:tabPaddingEnd="24dp"
+                app:tabPaddingStart="24dp"
                 />
 
         <android.support.v7.widget.RecyclerView

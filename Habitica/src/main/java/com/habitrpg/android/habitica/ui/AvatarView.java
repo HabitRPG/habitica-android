@@ -54,6 +54,7 @@ public class AvatarView extends View {
     private boolean showBackground = true;
     private boolean showMount = true;
     private boolean showPet = true;
+    private boolean showSleeping = true;
     private boolean hasBackground;
     private boolean hasMount;
     private boolean hasPet;
@@ -107,6 +108,7 @@ public class AvatarView extends View {
             showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true);
             showMount = a.getBoolean(R.styleable.AvatarView_showMount, true);
             showPet = a.getBoolean(R.styleable.AvatarView_showPet, true);
+            showSleeping = a.getBoolean(R.styleable.AvatarView_showSleeping, true);
         } finally {
             a.recycle();
         }
@@ -191,6 +193,11 @@ public class AvatarView extends View {
             layerMap.put(LayerType.BACKGROUND, "background_" + backgroundName);
             if (resetHasAttributes) hasBackground = true;
         }
+
+        if (showSleeping && user.getPreferences().getSleep()) {
+            layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
+        }
+
         return layerMap;
     }
 

@@ -9,6 +9,8 @@ import android.view.View;
 
 
 public class FadingViewPager extends ViewPager {
+    public boolean disableFading;
+
     public FadingViewPager(Context context) {
         super(context);
 
@@ -31,6 +33,9 @@ public class FadingViewPager extends ViewPager {
                 page.setVisibility(View.VISIBLE);
                 page.setAlpha(1.0F);
             } else {
+                if (disableFading) {
+                    return;
+                }
                 page.setVisibility(View.VISIBLE);
                 // position is between -1.0F & 0.0F OR 0.0F & 1.0F
                 page.setAlpha(1.0F - Math.abs(position));

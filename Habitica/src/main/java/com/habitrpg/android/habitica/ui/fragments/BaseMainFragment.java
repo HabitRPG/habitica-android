@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
@@ -16,7 +7,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBar;
-import com.squareup.haha.perflib.Main;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import javax.inject.Inject;
 

@@ -6,7 +6,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,9 +46,9 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
             case "hair": {
                 switch (subcategory) {
                     case "bangs":
-                        return getBangs();
+                        return getBangs(user.getPreferences().getHair().getColor());
                     case "ponytail":
-                        return getHairBases();
+                        return getHairBases(user.getPreferences().getHair().getColor());
                     case "color":
                         return getHairColors();
                 }
@@ -79,7 +81,7 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
 
     private List<SetupCustomization> getGlasses() {
         return Arrays.asList(
-                SetupCustomization.createGlasses("", 0),
+                SetupCustomization.createGlasses("eyewear_base_0", R.drawable.creator_blank_face),
                 SetupCustomization.createGlasses("eyewear_special_blackTopFrame", R.drawable.creator_eyewear_special_blacktopframe),
                 SetupCustomization.createGlasses("eyewear_special_blueTopFrame", R.drawable.creator_eyewear_special_bluetopframe),
                 SetupCustomization.createGlasses("eyewear_special_greenTopFrame", R.drawable.creator_eyewear_special_greentopframe),
@@ -111,20 +113,20 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
         );
     }
 
-    private List<SetupCustomization> getHairBases() {
+    private List<SetupCustomization> getHairBases(String color) {
         return Arrays.asList(
                 SetupCustomization.createHairPonytail("0", R.drawable.creator_blank_face),
-                SetupCustomization.createHairPonytail("1", R.drawable.creator_hair_base_1_red),
-                SetupCustomization.createHairPonytail("3", R.drawable.creator_hair_base_3_red)
+                SetupCustomization.createHairPonytail("1", getResId("creator_hair_base_1_"+color)),
+                SetupCustomization.createHairPonytail("3", getResId("creator_hair_base_3_"+color))
                 );
     }
 
-    private List<SetupCustomization> getBangs() {
+    private List<SetupCustomization> getBangs(String color) {
         return Arrays.asList(
                 SetupCustomization.createHairBangs("0", R.drawable.creator_blank_face),
-                SetupCustomization.createHairBangs("1", R.drawable.creator_hair_bangs_1_red),
-                SetupCustomization.createHairBangs("2", R.drawable.creator_hair_bangs_2_red),
-                SetupCustomization.createHairBangs("3", R.drawable.creator_hair_bangs_3_red)
+                SetupCustomization.createHairBangs("1", getResId("creator_hair_bangs_1_"+color)),
+                SetupCustomization.createHairBangs("2", getResId("creator_hair_bangs_2_"+color)),
+                SetupCustomization.createHairBangs("3", getResId("creator_hair_bangs_3_"+color))
         );
     }
 
@@ -168,5 +170,15 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
                 SetupCustomization.createSkin("c3e1dc", R.color.skin_c3e1dc),
                 SetupCustomization.createSkin("6bd049", R.color.skin_6bd049)
         );
+    }
+
+    private int getResId(String resName) {
+
+        try {
+            return context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }
