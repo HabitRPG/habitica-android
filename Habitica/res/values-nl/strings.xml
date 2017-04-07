@@ -25,7 +25,7 @@
   <string name="pref_reminder_picker">Stel tijd van herinnering in</string>
   <string name="pref_cds_header">Aangepast begin van de dag</string>
   <string name="pref_cds_picker">Begin van de dag instellen</string>
-  <string name="pref_push_notifications_checkbox">Gebruiker-pushnotificaties</string>
+  <string name="pref_push_notifications_checkbox">Pushnotificaties</string>
   <string name="push_notifications">Pushnotificaties</string>
   <string name="push_notifications_sum">Stel je push-notificaties in</string>
   <string name="preference_push_you_won_challenge">Je hebt een uitdaging gewonnen!</string>
@@ -181,25 +181,24 @@
   <string name="sidebar_help">Help &amp; FAQ</string>
   <string name="complete_tutorial">Begrepen!</string>
   <string name="dismiss_tutorial">Herinner me opnieuw</string>
-  <string name="intro_1_title">Welkom bij Habitica</string>
-  <string name="intro_1_description">Sluit je aan bij meer dan %s mensen en heb plezier terwijl je dingen gedaan krijgt. Maak een avatar en houd je taken in de echte wereld bij.</string>
-  <string name="intro_2_title">Vooruitgang in het spel = Vooruitgang in je leven</string>
-  <string name="intro_2_description">Speel functies vrij in het spel door je echte taken af te strepen. Verdien uitrusting, huisdieren en meer als beloning voor het bereiken van je doelen.</string>
-  <string name="intro_3_title">Word sociaal en vecht tegen monsters</string>
+  <string name="intro_1_subtitle">Welkom bij</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">Het is tijd om plezier te maken terwijl je dingen gedaan krijgt. Doe mee met %s andere mensen die hun leven met iedere taak beteren.</string>
+  <string name="intro_2_subtitle">Vooruitgang in het spel</string>
+  <string name="intro_2_title">Vooruitgang in je leven</string>
+  <string name="intro_2_description">Ontgrendel functies in het spel door taken in je echte leven af te vinken. Verdien uitrusting, huisdieren en meer als beloning voor het bereiken van je doelen.</string>
+  <string name="intro_3_subtitle">Word sociaal</string>
+  <string name="intro_3_title">Vecht tegen monsters</string>
   <string name="intro_3_description">Houd je doelen op peil met hulp van je vrienden. Ondersteun elkaar in het leven en vecht samen terwijl je steeds beter wordt.</string>
-  <string name="intro_finish_button">Ga van start</string>
+  <string name="intro_finish_button">Laten we beginnen!</string>
   <string name="previous_button">Vorige</string>
   <string name="next_button">Volgende</string>
   <string name="skip_button">Sla over</string>
   <string name="setup_welcome_description">Welkom in Habitica, waar vooruitgang in het spel je leven zal verbeteren! Terwijl je echte doelen bereikt, verdien je uitrusting, huisdieren, queestes en meer.</string>
   <string name="setup_welcome_title">Welkom</string>
-  <string name="avatar_setup_description">Als eerste heb je een avatar nodig die jou vertegenwoordigt in het spel! De dingen die je in het echte leven doet zullen een effect hebben op de gezondheid, het niveau en het goud van je avatar.</string>
-  <string name="task_setup_description">Geweldig! Laten we nu wat taken klaar zetten zodat je kan beginnen met het verdienen van ervaringspunten en goud.
-
-Om te beginnen, welke delen van je leven wil je verbeteren?</string>
+  <string name="avatar_setup_description">Dus, hoe wil jij er uit zien? Geen zorgen, je kan dit later veranderen.</string>
   <string name="setup_group_work">Werk</string>
   <string name="setup_group_exercise">Sport</string>
-  <string name="setup_group_heathWellness">Gezondheid + Welzijn</string>
   <string name="setup_group_school">School</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Klusjes</string>
@@ -461,6 +460,10 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="challenge_details">Uitdaging details</string>
   <string name="challenge_leave_title">Verlaat uitdaging</string>
   <string name="challenge_leave_text">Weet zeker dat je de uitdaging \"%s\" wilt verlaten?</string>
+  <string name="challenge_remove_tasks_title">Verwijder taken</string>
+  <string name="challenge_remove_tasks_text">Wil je de taken verwijderen?</string>
+  <string name="remove_tasks">Verwijder</string>
+  <string name="keep_tasks">Houden</string>
   <string name="my_challenges">Mijn uitdagingen</string>
   <string name="public_challenges">Publiek</string>
   <string name="challenges">Uitdagingen</string>
@@ -491,4 +494,25 @@ Om te beginnen, welke delen van je leven wil je verbeteren?</string>
   <string name="notification_mystery_item">Je opent de doos en vind %s!</string>
   <string name="checkInRewardEarned">Je ontvangt een %1$s als beloning voor je toewijding bij het beteren van je leven.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Je volgende prijs wordt vrijgespeeld na %1$d check-ins.</string>
+  <string name="pending_approval">afwachten op goedkeuring</string>
+  <string name="filters">Filters</string>
+  <string name="done">Klaar</string>
+  <string name="group_tasks_edit_description">Groepstaken konden niet bewerkt worden.</string>
+  <string name="group_tasks_edit_title">Kan deze taak niet bewerken</string>
+  <string name="groups">Groepen</string>
+  <string name="all">Alle</string>
+  <string name="none">Geen</string>
+  <string name="owned">Van jou</string>
+  <string name="not_owned">Niet van jou</string>
+  <string name="new_game">Nieuw\nSpel</string>
+  <string name="login_btn_fb">Aanmelden met Facebook</string>
+  <string name="login_btn_google">Aanmelden met Google</string>
+  <string name="action_back">Terug</string>
+  <string name="welcome_text">Oh, jij bent vast nieuw hier. Ik ben Justin, ik zal je gids zijn in Habitica.\n\nOm te beginnen zul je een avatar moeten maken.</string>
+  <string name="randomize">Willekeurig</string>
+  <string name="avatar_extras">Extra\'s</string>
+  <string name="avatar_skin_color">Huidskleur</string>
+  <string name="avatar_hair_color">Haarkleur</string>
+  <string name="avatar_glasses">Bril</string>
+  <string name="avatar_wheelchair">Rolstoel</string>
 </resources>

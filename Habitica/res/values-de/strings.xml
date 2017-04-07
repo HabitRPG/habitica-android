@@ -181,25 +181,23 @@
   <string name="sidebar_help">Hilfe &amp; FAQ</string>
   <string name="complete_tutorial">Verstanden!</string>
   <string name="dismiss_tutorial">Erinnere mich noch einmal</string>
-  <string name="intro_1_title">Willkommen in Habitica</string>
-  <string name="intro_1_description">Tritt einer Gemeinschaft von über %s Menschen bei und erledige Dinge mit Spaß. Erstelle einen Avatar und verwalte spielerisch Deine Aufgaben des Alltags.</string>
-  <string name="intro_2_title">Spielfortschritt = Lebensfortschritt</string>
-  <string name="intro_2_description">Schalte zusätzliche Spielinhalte frei, indem Du Aufgaben im echten Leben erledigst. Verdiene Dir Ausrüstung, Haustiere und mehr als Belohnung für die Erfüllung Deiner Ziele!</string>
-  <string name="intro_3_title">Werde sozial und kämpfe gegen Monster</string>
+  <string name="intro_1_subtitle">Willkommen bei</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">Es ist an der Zeit für Spaß, während du deine Aufgaben machst. Tritt einer Gemeinschaft von %s anderen Menschen bei, die ihr Leben Aufgabe für Aufgabe verbessern möchten.</string>
+  <string name="intro_2_subtitle">Fortschritt im Spiel</string>
+  <string name="intro_2_title">Fortschritt im Leben</string>
+  <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken deiner realen Aufgaben frei. Bekomme Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen deiner Ziele.</string>
+  <string name="intro_3_title">Bekämpfe Monster</string>
   <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
-  <string name="intro_finish_button">Anfangen</string>
+  <string name="intro_finish_button">Fangen wir an!</string>
   <string name="previous_button">Zurück</string>
   <string name="next_button">Weiter</string>
   <string name="skip_button">Überspringen</string>
   <string name="setup_welcome_description">Willkommen zu Habitica! Hier bedeutet Fortschritt im Spiel gleichzeitig Fortschritt im echten Leben! Während Du Ziele im echten Leben erreichst, wirst Du Ausrüstung, Haustiere, Quests und vieles mehr freischalten.</string>
   <string name="setup_welcome_title">Willkommen</string>
-  <string name="avatar_setup_description">Als erstes benötigst Du einen Avatar, der Dich repräsentiert! Dinge die Du im echten Leben tust beeinflussen Deine Lebenspunkte, Dein Level und Dein Gold.</string>
-  <string name="task_setup_description">Großartig! Jetzt lass uns Deine Aufgaben anlegen, damit Du anfangen kannst Erfahrung zu sammeln und Gold zu bekommen.
-
-Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
+  <string name="avatar_setup_description">Also, wie möchtest Du aussehen? Keine Sorge, Du kannst das jederzeit ändern.</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
-  <string name="setup_group_heathWellness">Gesundheit + Wohlbefinden</string>
   <string name="setup_group_school">Schule</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Hausarbeit</string>
@@ -461,6 +459,10 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="challenge_details">Wettbewerbdetails</string>
   <string name="challenge_leave_title">Wettbewerb verlassen</string>
   <string name="challenge_leave_text">Bist Du Dir sicher, dass du den Wettbewerb \"%s\" verlassen willst?</string>
+  <string name="challenge_remove_tasks_title">Aufgaben entfernen</string>
+  <string name="challenge_remove_tasks_text">Willst du deine Aufgaben wirklich entfernen?</string>
+  <string name="remove_tasks">Entfernen</string>
+  <string name="keep_tasks">Behalten</string>
   <string name="my_challenges">Meine Wettbewerbe</string>
   <string name="public_challenges">Öffentlich</string>
   <string name="challenges">Wettbewerbe</string>
@@ -492,6 +494,25 @@ Für den Anfang: Welche Bereiche Deines Lebens möchtest Du verbessern?</string>
   <string name="checkInRewardEarned">Du hast ein %1$s als Belohnung für Deine Hingabe, dein Leben zu verbessern, erhalten.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Deine nächste Belohnung wird nach %1$d Log-Ins freigeschalten </string>
   <string name="pending_approval">Zustimmung ausstehend</string>
+  <string name="filters">Filter</string>
+  <string name="done">Fertig</string>
   <string name="group_tasks_edit_description">Gruppenaufgaben können nicht bearbeitet werden.</string>
   <string name="group_tasks_edit_title">Aufgabe kann nicht bearbeitet werden</string>
+  <string name="all">Alles</string>
+  <string name="none">Nichts</string>
+  <string name="owned">Im Besitz</string>
+  <string name="not_owned">Nicht im Besitz</string>
+  <string name="login_btn_fb">Mit Facebook-Konto einloggen</string>
+  <string name="login_btn_google">Mit Google-Konto einloggen</string>
+  <string name="welcome_text">Oh, Du musst neu hier sein. Ich bin Justin, der Stadtführer von Habitica.\n\nAls erstes erstellen wir Dir einen Avatar.</string>
+  <string name="avatar_extras">Extras</string>
+  <string name="avatar_skin_color">Hautfarbe</string>
+  <string name="avatar_hair_color">Haarfarbe</string>
+  <string name="avatar_hair_bangs">Pony</string>
+  <string name="avatar_hair_ponytail">Zopf</string>
+  <string name="avatar_glasses">Brille</string>
+  <string name="avatar_wheelchair">Rollstuhl</string>
+  <string name="weak">Schwach</string>
+  <string name="strong">Stark</string>
+  <string name="gray">Grau</string>
 </resources>

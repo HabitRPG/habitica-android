@@ -3,6 +3,7 @@
         <attr name="showBackground" format="boolean" />
         <attr name="showMount" format="boolean" />
         <attr name="showPet" format="boolean" />
+        <attr name="showSleeping" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="GemPurchaseOptionsView">
