@@ -37,11 +37,11 @@ public class SocialAPITests extends BaseAPITests {
     public void postMessage(String groupID, String messageSuffix) {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", "Foo Bar"+messageSuffix);
-        TestSubscriber<HabitResponse<PostChatMessageResult>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<PostChatMessageResult> testSubscriber = new TestSubscriber<>();
         apiClient.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0).getData();
+        PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0);
         messagesIDs.add(result.message.id);
     }
 
@@ -50,7 +50,7 @@ public class SocialAPITests extends BaseAPITests {
         groupID = "habitrpg";
         postMessage(groupID, "1");
 
-        TestSubscriber<HabitResponse<Group>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Group> testSubscriber = new TestSubscriber<>();
         apiClient.getGroup(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -63,7 +63,7 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "1");
         postMessage(groupID, "2");
 
-        TestSubscriber<HabitResponse<List<ChatMessage>>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<List<ChatMessage>> testSubscriber = new TestSubscriber<>();
         apiClient.listGroupChat(groupID).subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
@@ -72,7 +72,7 @@ public class SocialAPITests extends BaseAPITests {
 
     @After
     public void tearDown() {
-        TestSubscriber<HabitResponse<Void>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Void> testSubscriber = new TestSubscriber<>();
         for (String messageID : this.messagesIDs) {
             apiClient.deleteMessage("habitrpg", messageID)
                     .subscribe(testSubscriber);

@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica.helpers;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.os.Build;
-
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.ApiClientImpl;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.NotificationData;
 
@@ -21,10 +19,14 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowAlertDialog;
 import org.robolectric.shadows.ShadowApplication;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Build;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -52,13 +54,13 @@ public class PopupNotificationsManagerTest {
                 "",
                 "");
 
-        apiClient = new ApiClient(ApiClient.createGsonFactory(), hostConfig);
+        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), context);
     }
 
     @Test
     public void itDoesNothingWhenNotificationsListIsEmpty() {
         List<Notification> notifications = new ArrayList<>();
-        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiClient);
+        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiClient, context);
         popupNotificationsManager.showNotificationDialog(notifications);
 
         AlertDialog alert =
