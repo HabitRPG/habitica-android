@@ -16,6 +16,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBar;
+import com.squareup.haha.perflib.Main;
 
 import javax.inject.Inject;
 
@@ -23,8 +24,11 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Inject
     public ApiClient apiClient;
+    @Nullable
     public MainActivity activity;
+    @Nullable
     public TabLayout tabLayout;
+    @Nullable
     public BottomBar bottomNavigation;
     public ViewGroup floatingMenuWrapper;
     public boolean usesTabLayout;
@@ -43,11 +47,11 @@ public abstract class BaseMainFragment extends BaseFragment {
         this.user = user;
     }
 
-    public void setTabLayout(TabLayout tabLayout) {
+    public void setTabLayout(@Nullable TabLayout tabLayout) {
         this.tabLayout = tabLayout;
     }
 
-    public void setBottomNavigation(BottomBar bottomNavigation) {
+    public void setBottomNavigation(@Nullable BottomBar bottomNavigation) {
         this.bottomNavigation = bottomNavigation;
     }
 
@@ -55,7 +59,7 @@ public abstract class BaseMainFragment extends BaseFragment {
         this.floatingMenuWrapper = view;
     }
 
-    public void setActivity(MainActivity activity) {
+    public void setActivity(@Nullable MainActivity activity) {
         this.activity = activity;
     }
 
@@ -68,10 +72,8 @@ public abstract class BaseMainFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try {
+        if (getActivity().getClass().equals(MainActivity.class)) {
             this.activity = (MainActivity) getActivity();
-        } catch (ClassCastException ex) {
-
         }
     }
 

@@ -124,8 +124,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
         challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
         challengeFilterLayout.setClickable(true);
-        challengeFilterLayout.setOnClickListener(view -> ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, this.apiClient,
-                HabiticaApplication.User, currentChallengesInView, lastFilterOptions, filterOptions -> {
+        challengeFilterLayout.setOnClickListener(view -> ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, currentChallengesInView, lastFilterOptions, filterOptions -> {
                     challengeAdapter.setFilterByGroups(filterOptions);
                     this.lastFilterOptions = filterOptions;
                 }));
@@ -164,7 +163,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
         Where<Challenge> query = new Select().from(Challenge.class).where(Condition.column("name").isNotNull());
 
-        if (viewUserChallengesOnly) {
+        if (viewUserChallengesOnly && user != null) {
             query = query.and(Condition.column("user_id").is(user.getId()));
         }
 
@@ -200,7 +199,9 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     private void fetchOnlineChallenges() {
-        refreshCallback.call();
+        if (refreshCallback != null) {
+            refreshCallback.call();
+        }
     }
 
     public void addItem(Challenge challenge) {

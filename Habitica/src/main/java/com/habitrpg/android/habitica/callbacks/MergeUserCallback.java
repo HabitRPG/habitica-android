@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.callbacks;
 
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
+import android.support.annotation.Nullable;
+
 
 public class MergeUserCallback extends HabitRPGUserCallback {
 
     private HabitRPGUser user;
 
-    public MergeUserCallback(HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
+    public MergeUserCallback(@Nullable HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
         super(callback);
         this.user = user;
     }
@@ -29,6 +31,8 @@ public class MergeUserCallback extends HabitRPGUserCallback {
 
         this.user.async().save();
 
-        callBack.onUserReceived(this.user);
+        if (callBack != null) {
+            callBack.onUserReceived(this.user);
+        }
     }
 }

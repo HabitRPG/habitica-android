@@ -70,6 +70,7 @@ public class ChallegeDetailDialogHolder {
 
     private AlertDialog dialog;
     private ApiClient apiClient;
+    @Nullable
     private HabitRPGUser user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
@@ -94,7 +95,7 @@ public class ChallegeDetailDialogHolder {
         challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
-    public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
         this.apiClient = apiClient;
@@ -106,15 +107,15 @@ public class ChallegeDetailDialogHolder {
         changeViewsByChallenge(challenge);
     }
 
-    public void changeViewsByChallenge(Challenge challenge) {
+    private void changeViewsByChallenge(Challenge challenge) {
         setJoined(challenge.user_id != null && !challenge.user_id.isEmpty());
 
         challengeName.setText(EmojiParser.parseEmojis(challenge.name));
         challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
         challengeLeader.setText(challenge.leaderName);
 
-        gem_amount.setText(challenge.prize + "");
-        member_count.setText(challenge.memberCount + "");
+        gem_amount.setText(String.valueOf(challenge.prize));
+        member_count.setText(String.valueOf(challenge.memberCount));
 
         apiClient.getChallengeTasks(challenge.id)
                 .subscribe(taskList -> {
@@ -163,7 +164,7 @@ public class ChallegeDetailDialogHolder {
     }
 
     private void addHabits(ArrayList<Task> habits) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, null);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
@@ -174,7 +175,7 @@ public class ChallegeDetailDialogHolder {
         for (int i = 0; i < size; i++) {
             Task task = habits.get(i);
 
-            View habitEntry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_habit, null);
+            View habitEntry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_habit, tasks_layout);
             TextView habitTitle = (TextView) habitEntry.findViewById(R.id.habit_title);
             ImageView plusImg = (ImageView) habitEntry.findViewById(task.up ? R.id.plus_img_tinted : R.id.plus_img);
             ImageView minusImg = (ImageView) habitEntry.findViewById(task.down ? R.id.minus_img_tinted : R.id.minus_img);
@@ -184,25 +185,22 @@ public class ChallegeDetailDialogHolder {
 
             habitTitle.setText(EmojiParser.parseEmojis(task.text));
 
-            tasks_layout.addView(habitEntry);
         }
-
-        task_group_layout.addView(taskGroup);
     }
 
-    private void addDailys(ArrayList<Task> dailys) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, null);
+    private void addDailys(ArrayList<Task> dailies) {
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
 
-        int size = dailys.size();
-        groupName.setText(dailys.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_DAILYS, size));
+        int size = dailies.size();
+        groupName.setText(dailies.size() + " " + ChallengesListViewAdapter.ChallengeViewHolder.getLabelByTypeAndCount(context, Challenge.TASK_ORDER_DAILYS, size));
 
         for (int i = 0; i < size; i++) {
-            Task task = dailys.get(i);
+            Task task = dailies.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, null);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_daily, tasks_layout);
             TextView title = (TextView) entry.findViewById(R.id.daily_title);
             title.setText(EmojiParser.parseEmojis(task.text));
 
@@ -212,17 +210,14 @@ public class ChallegeDetailDialogHolder {
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(task.checklist.size() + "");
+                checkListAllTextView.setText(String.valueOf(task.checklist.size()));
             }
 
-            tasks_layout.addView(entry);
         }
-
-        task_group_layout.addView(taskGroup);
     }
 
     private void addTodos(ArrayList<Task> todos) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, null);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
@@ -233,11 +228,9 @@ public class ChallegeDetailDialogHolder {
         for (int i = 0; i < size; i++) {
             Task task = todos.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, null);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_todo, tasks_layout);
             TextView title = (TextView) entry.findViewById(R.id.todo_title);
             title.setText(EmojiParser.parseEmojis(task.text));
-
-            tasks_layout.addView(entry);
 
             if (task.checklist != null && !task.checklist.isEmpty()) {
                 View checklistIndicatorWrapper = entry.findViewById(R.id.checklistIndicatorWrapper);
@@ -245,15 +238,13 @@ public class ChallegeDetailDialogHolder {
                 checklistIndicatorWrapper.setVisibility(View.VISIBLE);
 
                 TextView checkListAllTextView = (TextView) entry.findViewById(R.id.checkListAllTextView);
-                checkListAllTextView.setText(task.checklist.size() + "");
+                checkListAllTextView.setText(String.valueOf(task.checklist.size()));
             }
         }
-
-        task_group_layout.addView(taskGroup);
     }
 
     private void addRewards(ArrayList<Task> rewards) {
-        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, null);
+        LinearLayout taskGroup = (LinearLayout) context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_task_group, task_group_layout);
         TextView groupName = (TextView) taskGroup.findViewById(R.id.task_group_name);
 
         LinearLayout tasks_layout = (LinearLayout) taskGroup.findViewById(R.id.tasks_layout);
@@ -264,17 +255,13 @@ public class ChallegeDetailDialogHolder {
         for (int i = 0; i < size; i++) {
             Task task = rewards.get(i);
 
-            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, null);
+            View entry = context.getLayoutInflater().inflate(R.layout.dialog_challenge_detail_reward, tasks_layout);
             TextView title = (TextView) entry.findViewById(R.id.reward_title);
             title.setText(EmojiParser.parseEmojis(task.text));
-
-            tasks_layout.addView(entry);
         }
-
-        task_group_layout.addView(taskGroup);
     }
 
-    public void setJoined(boolean joined) {
+    private void setJoined(boolean joined) {
         joinedHeader.setVisibility(joined ? View.VISIBLE : View.GONE);
         leaveButton.setVisibility(joined ? View.VISIBLE : View.GONE);
 
@@ -283,12 +270,12 @@ public class ChallegeDetailDialogHolder {
     }
 
     @OnClick(R.id.challenge_leader)
-    public void openLeaderProfile() {
+    void openLeaderProfile() {
         EventBus.getDefault().post(new OpenFullProfileCommand(challenge.leaderId));
     }
 
     @OnClick(R.id.challenge_go_to_btn)
-    public void openChallengeActivity() {
+    void openChallengeActivity() {
         Bundle bundle = new Bundle();
         bundle.putString(ChallengeDetailActivity.CHALLENGE_ID, challenge.id);
 
@@ -300,10 +287,12 @@ public class ChallegeDetailDialogHolder {
     }
 
     @OnClick(R.id.challenge_join_btn)
-    public void joinChallenge() {
+    void joinChallenge() {
         this.apiClient.joinChallenge(challenge.id)
                 .subscribe(challenge -> {
-                    challenge.user_id = this.user.getId();
+                    if (this.user != null) {
+                        challenge.user_id = this.user.getId();
+                    }
                     challenge.async().save();
 
                     if (challengeJoinedAction != null) {
@@ -316,7 +305,7 @@ public class ChallegeDetailDialogHolder {
     }
 
     @OnClick(R.id.challenge_leave_btn)
-    public void leaveChallenge() {
+    void leaveChallenge() {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.challenge_leave_title))
                 .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
@@ -327,7 +316,9 @@ public class ChallegeDetailDialogHolder {
                                     challenge.user_id = null;
                                     challenge.async().save();
 
-                                    this.user.resetChallengeList();
+                                    if (this.user != null) {
+                                        this.user.resetChallengeList();
+                                    }
 
                                     if (challengeLeftAction != null) {
                                         challengeLeftAction.call(challenge);
@@ -335,9 +326,7 @@ public class ChallegeDetailDialogHolder {
 
                                     this.dialog.dismiss();
                                 }, throwable -> {
-                                }))).setNegativeButton(context.getString(R.string.no), (dialog, which) -> {
-            dialog.dismiss();
-        }).show();
+                                }))).setNegativeButton(context.getString(R.string.no), (dialog, which) -> dialog.dismiss()).show();
     }
 
     // refactor as an UseCase later - see ChallengeDetailActivity

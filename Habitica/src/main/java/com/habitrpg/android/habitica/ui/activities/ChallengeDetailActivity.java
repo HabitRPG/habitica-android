@@ -319,16 +319,18 @@ public class ChallengeDetailActivity extends BaseActivity {
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 
-            challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            if (challengeName != null) {
+                challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            }
             challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
 
-            memberCountTextView.setText(challenge.memberCount + "");
+            memberCountTextView.setText(String.valueOf(challenge.memberCount));
 
             if (challenge.prize == 0) {
                 gem_prize_layout.setVisibility(View.GONE);
             } else {
                 gem_prize_layout.setVisibility(View.VISIBLE);
-                gemPrizeTextView.setText(challenge.prize + "");
+                gemPrizeTextView.setText(String.valueOf(challenge.prize));
             }
         }
 

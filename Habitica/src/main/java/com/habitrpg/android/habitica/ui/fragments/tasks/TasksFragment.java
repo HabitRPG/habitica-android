@@ -1,27 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.HabiticaApplication;
@@ -45,9 +23,28 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.HashMap;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import java.util.Locale;
-import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -64,6 +61,7 @@ public class TasksFragment extends BaseMainFragment {
     SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
 
     private boolean displayingTaskForm;
+    @Nullable
     private TextView filterCountTextView;
 
     public void setActivity(MainActivity activity) {
@@ -83,7 +81,7 @@ public class TasksFragment extends BaseMainFragment {
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
-        if (view.getClass() == FloatingActionMenu.class) {
+        if (Objects.equals(view.getClass(), FloatingActionMenu.class)) {
             floatingMenu = (FloatingActionMenu) view;
         } else {
             ViewGroup frame = (ViewGroup) view;
@@ -99,21 +97,25 @@ public class TasksFragment extends BaseMainFragment {
         reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
         floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
-        this.activity.unlockDrawer(GravityCompat.END);
+        if (this.activity != null) {
+            this.activity.unlockDrawer(GravityCompat.END);
+        }
 
         loadTaskLists();
 
-        bottomNavigation.setOnTabSelectListener(tabId -> {
-            if (tabId == R.id.tab_habits) {
-                viewPager.setCurrentItem(0);
-            } else if (tabId == R.id.tab_dailies) {
-                viewPager.setCurrentItem(1);
-            } else if (tabId == R.id.tab_todos) {
-                viewPager.setCurrentItem(2);
-            } else if (tabId == R.id.tab_rewards) {
-                viewPager.setCurrentItem(3);
-            }
-        });
+        if (bottomNavigation != null) {
+            bottomNavigation.setOnTabSelectListener(tabId -> {
+                if (tabId == R.id.tab_habits) {
+                    viewPager.setCurrentItem(0);
+                } else if (tabId == R.id.tab_dailies) {
+                    viewPager.setCurrentItem(1);
+                } else if (tabId == R.id.tab_todos) {
+                    viewPager.setCurrentItem(2);
+                } else if (tabId == R.id.tab_rewards) {
+                    viewPager.setCurrentItem(3);
+                }
+            });
+        }
 
         return v;
     }
@@ -164,8 +166,10 @@ public class TasksFragment extends BaseMainFragment {
             dialog.setTags(user.getTags());
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
-        String taskType = getActiveFragment().classType;
-        dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
+        if (getActiveFragment() != null) {
+            String taskType = getActiveFragment().classType;
+            dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
+        }
         dialog.setListener((activeTaskFilter, activeTags) -> {
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1) {
@@ -182,7 +186,9 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     public void refresh() {
-        getActiveFragment().onRefresh();
+        if (getActiveFragment() != null) {
+            getActiveFragment().onRefresh();
+        }
     }
 
     public void loadTaskLists() {
@@ -229,15 +235,17 @@ public class TasksFragment extends BaseMainFragment {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return activity.getString(R.string.habits);
-                    case 1:
-                        return activity.getString(R.string.dailies);
-                    case 2:
-                        return activity.getString(R.string.todos);
-                    case 3:
-                        return activity.getString(R.string.rewards);
+                if (activity != null) {
+                    switch (position) {
+                        case 0:
+                            return activity.getString(R.string.habits);
+                        case 1:
+                            return activity.getString(R.string.dailies);
+                        case 2:
+                            return activity.getString(R.string.todos);
+                        case 3:
+                            return activity.getString(R.string.rewards);
+                    }
                 }
                 return "";
             }
@@ -251,7 +259,9 @@ public class TasksFragment extends BaseMainFragment {
 
             @Override
             public void onPageSelected(int position) {
-                bottomNavigation.selectTabAtPosition(position);
+                if (bottomNavigation != null) {
+                    bottomNavigation.selectTabAtPosition(position);
+                }
                 updateFilterIcon();
             }
 
@@ -263,6 +273,9 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void updateFilterIcon() {
+        if (filterCountTextView == null) {
+            return;
+        }
         int filterCount = 0;
         if (getActiveFragment() != null) {
             filterCount = taskFilterHelper.howMany(getActiveFragment().classType);
@@ -322,7 +335,9 @@ public class TasksFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(RefreshUserCommand event) {
-        getActiveFragment().onRefresh();
+        if (getActiveFragment() != null) {
+            getActiveFragment().onRefresh();
+        }
     }
 
     @Nullable
@@ -369,7 +384,6 @@ public class TasksFragment extends BaseMainFragment {
 
     @Override
     public void onDestroyView() {
-        this.activity.lockDrawer(GravityCompat.END);
         super.onDestroyView();
     }
 
@@ -397,7 +411,7 @@ public class TasksFragment extends BaseMainFragment {
 
     private void switchToTaskTab(String taskType) {
         for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-            if (viewFragmentsDictionary.get(index).getClassName().equals(taskType)) {
+            if (viewFragmentsDictionary.get(index).getClassName().equals(taskType) && viewPager != null) {
                 viewPager.setCurrentItem(index);
             }
         }

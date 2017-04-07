@@ -7,10 +7,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by krh12 on 3/31/2017.
- */
-
 public class UserStatComputer {
 
     // @TODO: Not really sure if this is correct
@@ -35,7 +31,7 @@ public class UserStatComputer {
     }
 
     public List<StatsRow> computeClassBonus (List<ItemData> itemDataList, HabitRPGUser user) {
-        List<StatsRow> skillRows = new ArrayList();
+        List<StatsRow> skillRows = new ArrayList<>();
 
         float strAttributes = 0;
         float intAttributes = 0;
@@ -62,16 +58,16 @@ public class UserStatComputer {
             StringBuilder sb = new StringBuilder();
 
             if (str_ != 0) {
-                sb.append("STR " + str_ + ", ");
+                sb.append("STR ").append(str_).append(", ");
             }
             if (int_ != 0) {
-                sb.append("INT " + int_ + ", ");
+                sb.append("INT ").append(int_).append(", ");
             }
             if (con_ != 0) {
-                sb.append("CON " + con_ + ", ");
+                sb.append("CON ").append(con_).append(", ");
             }
             if (per_ != 0) {
-                sb.append("PER " + per_ + ", ");
+                sb.append("PER ").append(per_).append(", ");
             }
 
             // remove the last comma
@@ -102,27 +98,29 @@ public class UserStatComputer {
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0;
 
-            if (itemClass.isEmpty()) {
+            if (itemClass == null || itemClass.isEmpty()) {
                 itemClass = itemSpecialClass;
             }
 
-            switch (itemClass) {
-                case "rogue":
-                    strClassBonus = str_ * classBonus;
-                    perClassBonus = per_ * classBonus;
-                    break;
-                case "healer":
-                    conClassBonus = con_ * classBonus;
-                    intClassBonus = int_ * classBonus;
-                    break;
-                case "warrior":
-                    strClassBonus = str_ * classBonus;
-                    conClassBonus = con_ * classBonus;
-                    break;
-                case "wizard":
-                    intClassBonus = int_ * classBonus;
-                    perClassBonus = per_ * classBonus;
-                    break;
+            if (itemClass != null) {
+                switch (itemClass) {
+                    case "rogue":
+                        strClassBonus = str_ * classBonus;
+                        perClassBonus = per_ * classBonus;
+                        break;
+                    case "healer":
+                        conClassBonus = con_ * classBonus;
+                        intClassBonus = int_ * classBonus;
+                        break;
+                    case "warrior":
+                        strClassBonus = str_ * classBonus;
+                        conClassBonus = con_ * classBonus;
+                        break;
+                    case "wizard":
+                        intClassBonus = int_ * classBonus;
+                        perClassBonus = per_ * classBonus;
+                        break;
+                }
             }
         }
 
