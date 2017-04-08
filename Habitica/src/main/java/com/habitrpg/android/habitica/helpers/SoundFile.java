@@ -54,7 +54,7 @@ public class SoundFile implements MediaPlayer.OnCompletionListener {
 
         try {
             mp.setDataSource(path);
-            mp.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
+            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mp.prepare();
 
             playerPrepared = true;
