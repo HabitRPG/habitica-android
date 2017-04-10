@@ -248,7 +248,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     private void showChallengeLeaveDialog(){
         new AlertDialog.Builder(this)
                 .setTitle(this.getString(R.string.challenge_leave_title))
-                .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
+                .setMessage(this.getString(R.string.challenge_leave_text, challenge.name))
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 
@@ -396,11 +396,8 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
-
             showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), UiUtils.SnackbarDisplayType.NORMAL);
-
         } else {
-
             if (HabiticaApplication.User != null) {
                 notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, () -> {
                     // retrieveUser? forward message to MainActivity ? or mark it to refresh ?
