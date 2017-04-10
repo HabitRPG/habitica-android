@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-
 import com.magicmicky.habitrpgwrapper.lib.models.ContentGear;
 import com.magicmicky.habitrpgwrapper.lib.models.ContentResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Customization;
@@ -27,8 +26,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
@@ -61,21 +60,21 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         items.addAll(result.food);
         items.addAll(result.hatchingPotions);
 
-        result.pets = context.deserialize(object.get("pets"), new TypeToken<HashMap<String, Pet>>() {
+        result.pets = context.deserialize(object.get("pets"), new TypeToken<Map<String, Pet>>() {
         }.getType());
-        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<HashMap<String, Pet>>() {
+        result.specialPets = context.deserialize(object.get("specialPets"), new TypeToken<Map<String, Pet>>() {
         }.getType());
-        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<HashMap<String, Pet>>() {
+        result.premiumPets = context.deserialize(object.get("premiumPets"), new TypeToken<Map<String, Pet>>() {
         }.getType());
-        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<HashMap<String, Pet>>() {
+        result.questPets = context.deserialize(object.get("questPets"), new TypeToken<Map<String, Pet>>() {
         }.getType());
-        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<HashMap<String, Mount>>() {
+        result.mounts = context.deserialize(object.get("mounts"), new TypeToken<Map<String, Mount>>() {
         }.getType());
-        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<HashMap<String, Mount>>() {
+        result.specialMounts = context.deserialize(object.get("specialMounts"), new TypeToken<Map<String, Mount>>() {
         }.getType());
-        result.premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<HashMap<String, Mount>>() {
+        result.premiumMounts = context.deserialize(object.get("premiumMounts"), new TypeToken<Map<String, Mount>>() {
         }.getType());
-        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<HashMap<String, Mount>>() {
+        result.questMounts = context.deserialize(object.get("questMounts"), new TypeToken<Map<String, Mount>>() {
         }.getType());
 
         for (Egg egg : result.eggs) {

@@ -43,7 +43,6 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     private void loadEquipmentRewards() {
         if (apiClient != null) {
             apiClient.getInventoryBuyableGear()
-
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
