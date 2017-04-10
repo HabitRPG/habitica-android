@@ -6,6 +6,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -28,6 +29,8 @@ public class TutorialView extends FrameLayout implements View.OnClickListener {
     Button dismissButton;
     @BindView(R.id.completeButton)
     Button completeButton;
+    @BindView(R.id.confirmation_buttons)
+    ViewGroup confirmationButtons;
 
     public TutorialView(Context context, TutorialStep step, OnTutorialReaction onReaction) {
         super(context);
@@ -37,6 +40,7 @@ public class TutorialView extends FrameLayout implements View.OnClickListener {
         background.setOnClickListener(this);
         dismissButton.setOnClickListener(this);
         completeButton.setOnClickListener(this);
+        confirmationButtons.setVisibility(View.VISIBLE);
         this.step = step;
         this.onReaction = onReaction;
     }

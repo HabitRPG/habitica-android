@@ -556,4 +556,11 @@
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
     <string name="clear">Clear</string>
+    <string name="empty_title_habits">You don\'t have any Habits</string>
+    <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
+    <string name="empty_title_dailies">You don\'t have any Dailies</string>
+    <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
+    <string name="empty_title_todos">You don\'t have any To-Dos</string>
+    <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
+    <string name="empty_title_rewards">You don\'t have any Rewards</string>
 </resources>

@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
@@ -68,7 +70,14 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.recyclerView)
-    public RecyclerView recyclerView;
+    public RecyclerViewEmptySupport recyclerView;
+
+    @BindView(R.id.empty_view)
+    ViewGroup emptyView;
+    @BindView(R.id.empty_view_title)
+    TextView emptyViewTitle;
+    @BindView(R.id.empty_view_description)
+    TextView emptyViewDescription;
 
     String classType;
     private HabitRPGUser user;
@@ -221,6 +230,28 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             recyclerView.setPadding(0, 0, 0, bottomPadding);
 
             swipeRefreshLayout.setOnRefreshListener(this);
+
+            switch (this.classType) {
+                case Task.TYPE_HABIT: {
+                    this.emptyViewTitle.setText(R.string.empty_title_habits);
+                    this.emptyViewDescription.setText(R.string.empty_description_habits);
+                    break;
+                }
+                case Task.FREQUENCY_DAILY: {
+                    this.emptyViewTitle.setText(R.string.empty_title_dailies);
+                    this.emptyViewDescription.setText(R.string.empty_description_dailies);
+                    break;
+                }
+                case Task.TYPE_TODO: {
+                    this.emptyViewTitle.setText(R.string.empty_title_todos);
+                    this.emptyViewDescription.setText(R.string.empty_description_todos);
+                    break;
+                }
+                case Task.TYPE_REWARD: {
+                    this.emptyViewTitle.setText(R.string.empty_title_rewards);
+                    break;
+                }
+            }
         }
 
         if (savedInstanceState != null) {
