@@ -125,7 +125,7 @@ public class PartyFragment extends BaseMainFragment {
         PartyFragment.this.activity.supportInvalidateOptionsMenu();
 
         if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-            contentCache.GetQuestContent(group.quest.key, content -> {
+            contentCache.getQuestContent(group.quest.key, content -> {
                 if (groupInformationFragment != null) {
                     groupInformationFragment.setQuestContent(content);
                 }

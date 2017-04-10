@@ -30,7 +30,9 @@ public class Items extends BaseModel {
     HashMap<String, Integer> pets;
     HashMap<String, Boolean> mounts;
     @Column
-    private String currentMount, currentPet;
+    private String currentMount;
+    @Column
+    private String currentPet;
     @Column
     private int lastDrop_count;
     @Column

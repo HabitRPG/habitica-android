@@ -4,8 +4,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.components.DaggerAppComponent;
 import com.habitrpg.android.habitica.modules.AppModule;
 
-import android.content.Context;
-
 public class HabiticaApplication extends HabiticaBaseApplication {
 
     @Override

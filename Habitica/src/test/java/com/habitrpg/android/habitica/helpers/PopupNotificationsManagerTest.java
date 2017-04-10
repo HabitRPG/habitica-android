@@ -45,6 +45,7 @@ public class PopupNotificationsManagerTest {
     public String username;
     public final String password = "password";
     private Context context;
+    private PopupNotificationsManager popupNotificationsManager;
 
     @Before
     public void setUp() {
@@ -53,14 +54,14 @@ public class PopupNotificationsManagerTest {
                 BuildConfig.PORT,
                 "",
                 "");
+        popupNotificationsManager =new PopupNotificationsManager(context);
 
-        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), context);
+        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), popupNotificationsManager, context);
     }
 
     @Test
     public void itDoesNothingWhenNotificationsListIsEmpty() {
         List<Notification> notifications = new ArrayList<>();
-        PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(apiClient, context);
         popupNotificationsManager.showNotificationDialog(notifications);
 
         AlertDialog alert =

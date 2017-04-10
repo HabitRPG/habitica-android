@@ -491,7 +491,7 @@
     <string name="byLeader" >by %s</string>
     <string name="challenge_details">Challenge Details</string>
     <string name="challenge_leave_title">Leave Challenge</string>
-    <string name="challenge_leave_text" formatted="false">Are you sure you want to leave the Challenge “%s”?</string>
+    <string name="challenge_leave_text">Are you sure you want to leave the Challenge “%s”?</string>
     <string name="challenge_remove_tasks_title">Remove tasks</string>
     <string name="challenge_remove_tasks_text">Do you want to remove the tasks?</string>
     <string name="remove_tasks">Remove</string>

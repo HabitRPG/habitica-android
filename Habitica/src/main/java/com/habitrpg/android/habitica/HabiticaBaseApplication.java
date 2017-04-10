@@ -1,24 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import com.amplitude.api.Amplitude;
-import com.facebook.FacebookSdk;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.activities.IntroActivity;
-import com.habitrpg.android.habitica.ui.activities.LoginActivity;
-import com.habitrpg.android.habitica.ui.activities.SetupActivity;
-import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
-
-import org.solovyev.android.checkout.Billing;
-import org.solovyev.android.checkout.Cache;
-import org.solovyev.android.checkout.Checkout;
-import org.solovyev.android.checkout.PurchaseVerifier;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,19 +7,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Icon;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -62,7 +37,6 @@ import org.solovyev.android.checkout.PurchaseVerifier;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -84,14 +58,12 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     /**
      * For better performance billing class should be used as singleton
      */
-    @NonNull
     private Billing billing;
     /**
      * Application wide {@link Checkout} instance (can be used
      * anywhere in the app).
      * This instance contains all available products in the app.
      */
-    @NonNull
     private Checkout checkout;
 
     public static HabiticaBaseApplication getInstance(Context context) {
@@ -108,7 +80,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         }
     }
 
-    private static void setFinalStatic(Field field, Object newValue) throws NoSuchFieldException, IllegalAccessException {
+    private static void setFinalStatic(Field field, @Nullable Object newValue) throws NoSuchFieldException, IllegalAccessException {
         field.setAccessible(true);
         field.set(null, newValue);
     }
@@ -264,8 +236,9 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                if (currentActivity == activity)
+                if (currentActivity.equals(activity)) {
                     currentActivity = null;
+                }
             }
         });
     }
@@ -336,9 +309,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
     @Override
     public File getDatabasePath(String name) {
-        File dbFile = new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
-        //Crashlytics.setString("Database File", dbFile.getAbsolutePath());
-        return dbFile;
+        return new File(getExternalFilesDir(null), "HabiticaDatabase/" + name);
     }
 
     private void createBillingAndCheckout() {
@@ -355,6 +326,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
                 return Billing.newCache();
             }
 
+            @NonNull
             @Override
             public PurchaseVerifier getPurchaseVerifier() {
                 return new HabiticaPurchaseVerifier(HabiticaBaseApplication.this, lazyApiHelper.get());

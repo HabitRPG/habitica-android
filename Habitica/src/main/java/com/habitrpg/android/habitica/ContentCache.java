@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica;
 
+import android.support.annotation.Nullable;
+
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
@@ -11,11 +13,14 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import rx.Observable;
 
 
 public class ContentCache {
+    private static final String CONTENT_TYPE_ITEM = "item";
+    private static final String CONTENT_TYPE_QUEST = "quest";
     private ApiClient apiClient;
 
 
@@ -23,36 +28,31 @@ public class ContentCache {
         this.apiClient = apiClient;
     }
 
-    public void GetQuestContent(final String key, final QuestContentCallback cb) {
-        final QuestContent quest = new Select().from(QuestContent.class).where(Condition.column("key").eq(key)).querySingle();
+    public void getQuestContent(final String key, final QuestContentCallback cb) {
+        final QuestContent quest = new Select().from(QuestContent.class).where(Condition.column(ItemData.UNIQUE_IDENTIFIER).eq(key)).querySingle();
 
         if (quest != null) {
-            quest.boss = new Select().from(QuestBoss.class).where(Condition.column("key").eq(key)).querySingle();
-            cb.GotQuest(quest);
+            quest.boss = new Select().from(QuestBoss.class).where(Condition.column(ItemData.UNIQUE_IDENTIFIER).eq(key)).querySingle();
+            cb.gotQuest(quest);
         } else {
 
-            getContentAndSearchFor("quest", key, new GotContentEntryCallback<QuestContent>() {
-                @Override
-                public void GotObject(QuestContent obj) {
-                    cb.GotQuest(obj);
-                }
-            });
+            getContentAndSearchFor(CONTENT_TYPE_QUEST, key, cb::gotQuest);
         }
     }
 
-    public void GetItemData(final String key, final GotContentEntryCallback<ItemData> gotEntry) {
-        final ItemData itemData = new Select().from(ItemData.class).where(Condition.column("key").eq(key)).querySingle();
+    public void getItemData(final String key, final GotContentEntryCallback<ItemData> gotEntry) {
+        final ItemData itemData = new Select().from(ItemData.class).where(Condition.column(ItemData.UNIQUE_IDENTIFIER).eq(key)).querySingle();
 
         if (itemData != null) {
-            gotEntry.GotObject(itemData);
+            gotEntry.gotObject(itemData);
         } else {
-            getContentAndSearchFor("item", key, gotEntry);
+            getContentAndSearchFor(CONTENT_TYPE_ITEM, key, gotEntry);
         }
     }
 
-    public void GetItemDataList(final List<String> keysToSearch, GotContentEntryCallback<List<ItemData>> gotEntries) {
+    public void getItemDataList(final List<String> keysToSearch, GotContentEntryCallback<List<ItemData>> gotEntries) {
 
-        Condition.In keyCondition = Condition.column("key").in("");
+        Condition.In keyCondition = Condition.column(ItemData.UNIQUE_IDENTIFIER).in("");
 
         for (String item : keysToSearch) {
             keyCondition = keyCondition.and(item);
@@ -63,9 +63,9 @@ public class ContentCache {
         List<ItemData> items = query.queryList();
 
         if (items != null && items.size() == keysToSearch.size()) {
-            gotEntries.GotObject(items);
+            gotEntries.gotObject(items);
         } else {
-            getContentAndSearchForList("item", keysToSearch, gotEntries);
+            getContentAndSearchForList(keysToSearch, gotEntries);
         }
     }
 
@@ -74,23 +74,23 @@ public class ContentCache {
 
                 .subscribe(contentResult -> {
                     switch (typeOfSearch) {
-                        case "quest": {
+                        case CONTENT_TYPE_QUEST: {
                             Collection<QuestContent> questList = contentResult.quests;
 
                             for (QuestContent quest : questList) {
                                 if (quest.getKey().equals(searchKey)) {
-                                    gotEntry.GotObject((T) quest);
+                                    gotEntry.gotObject((T) quest);
                                 }
                             }
 
                             break;
                         }
-                        case "item": {
+                        case CONTENT_TYPE_ITEM: {
                             T searchedItem = null;
 
-                            if (searchKey.equals("potion")) {
+                            if ("potion".equals(searchKey)) {
                                 searchedItem = (T) contentResult.potion;
-                            } else if (searchKey == "armoire") {
+                            } else if ("armoire".equals(searchKey)) {
                                 searchedItem = (T) contentResult.armoire;
                             } else {
                                 Collection<ItemData> itemList = contentResult.gear.flat;
@@ -102,35 +102,37 @@ public class ContentCache {
                                 }
                             }
 
-                            gotEntry.GotObject(searchedItem);
+                            gotEntry.gotObject(searchedItem);
 
                             break;
                         }
+                        default:
+                            break;
                     }
                 }, throwable -> {
                 });
     }
 
-    private void getContentAndSearchForList(final String typeOfSearch, final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
+    private void getContentAndSearchForList(final List<String> searchKeys, final GotContentEntryCallback<List<ItemData>> gotEntry) {
         List<ItemData> resultList = new ArrayList<>();
         apiClient.getContent()
 
                 .flatMap(contentResult -> {
-                    List<ItemData> itemList = new ArrayList<ItemData>(contentResult.gear.flat);
+                    List<ItemData> itemList = new ArrayList<>(contentResult.gear.flat);
                     itemList.add(contentResult.potion);
                     itemList.add(contentResult.armoire);
                     return Observable.from(itemList);
                 })
                 .filter(item -> searchKeys.contains(item.key))
                 .subscribe(resultList::add, throwable -> {
-                }, () -> gotEntry.GotObject(resultList));
+                }, () -> gotEntry.gotObject(resultList));
     }
 
     public interface GotContentEntryCallback<T extends Object> {
-        void GotObject(T obj);
+        void gotObject(@Nullable T obj);
     }
 
     public interface QuestContentCallback {
-        void GotQuest(QuestContent content);
+        void gotQuest(QuestContent content);
     }
 }

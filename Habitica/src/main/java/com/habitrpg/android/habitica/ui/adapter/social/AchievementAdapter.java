@@ -32,7 +32,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public MainActivity activity;
     private List<Object> itemList;
 
-    public <T extends Achievement> void setItemList(List<Object> itemList) {
+    public void setItemList(List<Object> itemList) {
         this.itemList = itemList;
         this.notifyDataSetChanged();
     }
@@ -93,7 +93,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         Resources resources;
 
-        public AchievementViewHolder(View itemView) {
+        AchievementViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

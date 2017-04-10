@@ -45,7 +45,7 @@ public class AppModule {
     @Provides
     @Named("UserID")
     public String providesUserID(SharedPreferences sharedPreferences) {
-        return sharedPreferences.getString(application.getString(R.string.SP_userID), null);
+        return sharedPreferences.getString(application.getString(R.string.SP_userID), "");
     }
 
     @Provides
@@ -60,8 +60,8 @@ public class AppModule {
     }
 
     @Provides
-    public SoundFileLoader providesSoundFileLoader() {
-        return new SoundFileLoader();
+    public SoundFileLoader providesSoundFileLoader(Context context) {
+        return new SoundFileLoader(context);
     }
 
     @Provides

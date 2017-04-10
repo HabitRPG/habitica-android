@@ -226,7 +226,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                 }, throwable -> {
                 });
 
-        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+        UiUtils.dismissKeyboard(getActivity());
     }
 
     // If the ChatList is Tavern, we're able to toggle the sleep-mode

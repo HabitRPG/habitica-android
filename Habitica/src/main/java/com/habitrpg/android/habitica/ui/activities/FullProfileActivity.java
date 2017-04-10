@@ -124,7 +124,7 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiClient.GetMember(this.userId)
+        apiClient.getMember(this.userId)
 
                 .subscribe(this::updateView,
                         throwable -> {
@@ -248,7 +248,7 @@ public class FullProfileActivity extends BaseActivity {
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.GetMemberAchievements(this.userId)
+        apiClient.getMemberAchievements(this.userId)
 
                 .subscribe(this::fillAchievements,
                         throwable -> {
@@ -375,7 +375,7 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.GetItemDataList(outfitList, gotEntries);
+        contentCache.getItemDataList(outfitList, gotEntries);
     }
 
     public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {

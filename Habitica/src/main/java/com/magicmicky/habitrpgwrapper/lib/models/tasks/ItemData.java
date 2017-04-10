@@ -13,6 +13,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 @Table(databaseName = HabitDatabase.NAME)
 public class ItemData extends BaseModel {
+    public static final String UNIQUE_IDENTIFIER = "key";
+
     @Column
     public double value;
     @Column

@@ -124,7 +124,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
         challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
         challengeFilterLayout.setClickable(true);
-        challengeFilterLayout.setOnClickListener(view -> ChallegeFilterDialogHolder.showDialog(HabiticaApplication.currentActivity, currentChallengesInView, lastFilterOptions, filterOptions -> {
+        challengeFilterLayout.setOnClickListener(view -> ChallegeFilterDialogHolder.showDialog(getActivity(), currentChallengesInView, lastFilterOptions, filterOptions -> {
                     challengeAdapter.setFilterByGroups(filterOptions);
                     this.lastFilterOptions = filterOptions;
                 }));

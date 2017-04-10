@@ -17,6 +17,7 @@ public class MaxHeightLinearLayout extends LinearLayout {
 
     private final float defaultHeight = 0.9f;
     private float maxHeight;
+    private DisplayMetrics displaymetrics = new DisplayMetrics();
 
     public MaxHeightLinearLayout(Context context) {
         super(context);
@@ -58,9 +59,8 @@ public class MaxHeightLinearLayout extends LinearLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         if (HabiticaApplication.currentActivity != null) {
-            DisplayMetrics displaymetrics = new DisplayMetrics();
             HabiticaApplication.currentActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = (int) ((int) displaymetrics.heightPixels * maxHeight);
+            int height = (int) (displaymetrics.heightPixels * maxHeight);
 
             heightMeasureSpec = Math.min(heightMeasureSpec, View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST));
         }

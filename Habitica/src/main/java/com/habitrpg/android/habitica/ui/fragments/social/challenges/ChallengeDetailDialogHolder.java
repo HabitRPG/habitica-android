@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ChallegeDetailDialogHolder {
+public class ChallengeDetailDialogHolder {
 
     @BindView(R.id.challenge_not_joined_header)
     LinearLayout notJoinedHeader;
@@ -78,7 +77,7 @@ public class ChallegeDetailDialogHolder {
     private Activity context;
 
 
-    private ChallegeDetailDialogHolder(View view, Activity context) {
+    private ChallengeDetailDialogHolder(View view, Activity context) {
         this.context = context;
         ButterKnife.bind(this, view);
     }
@@ -87,12 +86,12 @@ public class ChallegeDetailDialogHolder {
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
-        ChallegeDetailDialogHolder challegeDetailDialogHolder = new ChallegeDetailDialogHolder(dialogLayout, activity);
+        ChallengeDetailDialogHolder challengeDetailDialogHolder = new ChallengeDetailDialogHolder(dialogLayout, activity);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
+        challengeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
     public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
@@ -279,7 +278,7 @@ public class ChallegeDetailDialogHolder {
         Bundle bundle = new Bundle();
         bundle.putString(ChallengeDetailActivity.CHALLENGE_ID, challenge.id);
 
-        Intent intent = new Intent(HabiticaApplication.currentActivity, ChallengeDetailActivity.class);
+        Intent intent = new Intent(context, ChallengeDetailActivity.class);
         intent.putExtras(bundle);
         //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         context.startActivity(intent);
@@ -308,7 +307,7 @@ public class ChallegeDetailDialogHolder {
     void leaveChallenge() {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.challenge_leave_title))
-                .setMessage(String.format(context.getString(R.string.challenge_leave_text), challenge.name))
+                .setMessage(context.getString(R.string.challenge_leave_text, challenge.name))
                 .setPositiveButton(context.getString(R.string.yes), (dialog, which) ->
 
                         showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))

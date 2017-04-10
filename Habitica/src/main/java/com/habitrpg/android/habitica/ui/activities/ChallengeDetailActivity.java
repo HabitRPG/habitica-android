@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
 import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDetailDialogHolder;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -337,7 +337,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         @OnClick(R.id.btn_show_more)
         void onShowMore() {
 
-            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
+            ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
                     HabiticaApplication.User, challenge,
                     challenge1 -> {
 

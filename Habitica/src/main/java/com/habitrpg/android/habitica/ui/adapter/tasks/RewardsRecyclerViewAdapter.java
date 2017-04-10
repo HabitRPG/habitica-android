@@ -55,7 +55,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                             itemKeys.add("armoire");
                         }
                         return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> {
-                            contentCache.GetItemDataList(itemKeys, obj -> {
+                            contentCache.getItemDataList(itemKeys, obj -> {
                                 ArrayList<Task> buyableItems = new ArrayList<>();
                                 for (ItemData item : obj) {
                                     Task reward = new Task();
