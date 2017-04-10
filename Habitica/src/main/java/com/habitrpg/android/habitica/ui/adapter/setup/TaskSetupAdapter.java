@@ -64,7 +64,7 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
 
         Context context;
 
-        public TaskViewHolder(View itemView) {
+        TaskViewHolder(View itemView) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
@@ -73,7 +73,7 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
 
             itemView.setOnClickListener(this);
 
-            icon = ContextCompat.getDrawable(context, R.drawable.ic_check);
+            icon = ContextCompat.getDrawable(context, R.drawable.ic_check_white_18dp);
             icon.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY);
         }
 
