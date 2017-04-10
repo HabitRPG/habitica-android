@@ -136,9 +136,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
                 }
+                swipeRefreshLayout.setEnabled(false);
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                swipeRefreshLayout.setEnabled(true);
                 if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
                 ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
