@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/randomize_button"
-            android:src="@drawable/creator_purple_bg"
+            android:src="@drawable/creator_hills_bg"
             android:layout_centerHorizontal="true" />
 
     <com.habitrpg.android.habitica.ui.AvatarView
@@ -30,9 +30,11 @@
             app:showBackground="false"
             app:showMount="false"
             app:showPet="false"
+            app:showSleeping="false"
             android:layout_centerHorizontal="true"
             android:layout_alignTop="@id/avatar_background"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="6dp"
+            />
 
 
     <com.habitrpg.android.habitica.ui.views.setup.AvatarCustomizationDrawer
@@ -47,7 +49,7 @@
             android:layout_height="wrap_content"
             app:namePlate="Justin"
             app:text="@string/avatar_setup_description"
-            app:npcDrawable="@drawable/npc_justin_only"
+            app:npcDrawable="@drawable/justin_textbox"
             android:layout_marginLeft="@dimen/content_inset"
             android:layout_marginRight="@dimen/content_inset"
             android:layout_above="@id/customization_drawer"

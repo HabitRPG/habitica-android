@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
@@ -17,16 +8,27 @@ import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBar;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import javax.inject.Inject;
 
 public abstract class BaseMainFragment extends BaseFragment {
 
     @Inject
     public ApiClient apiClient;
+    @Nullable
     public MainActivity activity;
+    @Nullable
     public TabLayout tabLayout;
+    @Nullable
     public BottomBar bottomNavigation;
-    public FrameLayout floatingMenuWrapper;
+    public ViewGroup floatingMenuWrapper;
     public boolean usesTabLayout;
     public boolean usesBottomNavigation = false;
     public int fragmentSidebarPosition;
@@ -43,19 +45,19 @@ public abstract class BaseMainFragment extends BaseFragment {
         this.user = user;
     }
 
-    public void setTabLayout(TabLayout tabLayout) {
+    public void setTabLayout(@Nullable TabLayout tabLayout) {
         this.tabLayout = tabLayout;
     }
 
-    public void setBottomNavigation(BottomBar bottomNavigation) {
+    public void setBottomNavigation(@Nullable BottomBar bottomNavigation) {
         this.bottomNavigation = bottomNavigation;
     }
 
-    public void setFloatingMenuWrapper(FrameLayout view) {
+    public void setFloatingMenuWrapper(ViewGroup view) {
         this.floatingMenuWrapper = view;
     }
 
-    public void setActivity(MainActivity activity) {
+    public void setActivity(@Nullable MainActivity activity) {
         this.activity = activity;
     }
 
@@ -68,10 +70,8 @@ public abstract class BaseMainFragment extends BaseFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try {
+        if (getActivity().getClass().equals(MainActivity.class)) {
             this.activity = (MainActivity) getActivity();
-        } catch (ClassCastException ex) {
-
         }
     }
 

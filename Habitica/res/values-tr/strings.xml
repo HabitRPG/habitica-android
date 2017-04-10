@@ -181,25 +181,24 @@
   <string name="sidebar_help">Yardım &amp; SSS</string>
   <string name="complete_tutorial">Anladım!</string>
   <string name="dismiss_tutorial">Daha sonra hatırlat</string>
-  <string name="intro_1_title">Habitica\'ya Hoş Geldin</string>
-  <string name="intro_1_description">%s\'dan fazla insanın bir şeyleri tamamlarken eğlenmesine katıl. Bir avatar oluştur ve gerçek hayatta ki görevlerini takip et.</string>
-  <string name="intro_2_title">Oyun Gelişimi = Yaşam Gelişimi</string>
-  <string name="intro_2_description">Gerçek hayatınızdaki görevleri tamamlayarak oyun içindeki özelliklerin kilidini açın. Zırh, evcil hayvan ve daha fazlasını hedeflerinizle tanıştığınızda ödül olarak kazanın.</string>
-  <string name="intro_3_title">Sosyalleş ve Canavarlarla Savaş</string>
+  <string name="intro_1_subtitle">Hoş Geldin</string>
+  <string name="intro_1_title">Habitica\'ya</string>
+  <string name="intro_1_description">Bir şeyleri tamamlarken artık eğlenebilirsin. %s\'dan fazla kişinin hayatlarını birer işe odaklanarak geliştirmelerine katıl. </string>
+  <string name="intro_2_subtitle">Oyun gelişimi</string>
+  <string name="intro_2_title">Hayatta gelişim</string>
+  <string name="intro_2_description">Gerçek hayatındaki işlerini tamamlayarak oyun içindeki özellikleri aç. Zırh, evcil hayvan ve daha fazlasını hedeflerine ulaştığında ödül olarak kazan.</string>
+  <string name="intro_3_subtitle">Sosyalleş</string>
+  <string name="intro_3_title">Canavarlarla Savaş</string>
   <string name="intro_3_description">Hedeflerini arkadaşlarından yardım alarak devam ettir. Hayatta ve savaşlarda birbirinizi birlikte geliştirerek destek olun!</string>
-  <string name="intro_finish_button">Başla</string>
+  <string name="intro_finish_button">Hadi başlayalım!</string>
   <string name="previous_button">Önceki</string>
   <string name="next_button">Sonraki</string>
   <string name="skip_button">Atla</string>
   <string name="setup_welcome_description">Habitica\'ya hoşgeldin, oyunda ilerledikçe gerçek hayatını da geliştireceksin! Gerçek hayat hedeflerine ulaştıkça, ekipman, evcil hayvan, görevler ve dahasını da ortaya çıkaracaksın.</string>
   <string name="setup_welcome_title">Hoş Geldin</string>
-  <string name="avatar_setup_description">Öncelikle, oyunda sizi temsil edecek bir avatar\'a ihtiyacınız var.  Gerçek hayatta yaptıklarınız avatar\'ınızın sağlığını, deneyim seviyesini ve altınlarını etkiliyecektir.</string>
-  <string name="task_setup_description">Müthiş! Şimdi görevlerinizi ayarlayarak deneyim ve altın kazanmaya başlayabilirsiniz.
-
-Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
+  <string name="avatar_setup_description">Nasıl görünmek istersin? Dert etme, daha sonra bunları değiştirebilirsin.</string>
   <string name="setup_group_work">İş</string>
   <string name="setup_group_exercise">Egzersiz</string>
-  <string name="setup_group_heathWellness">Sağlık + Kaliteli Yaşam</string>
   <string name="setup_group_school">Okul</string>
   <string name="setup_group_teams">Takımlar</string>
   <string name="setup_group_chores">Günlük İşler</string>
@@ -431,6 +430,7 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="subscribe.listitem1.description">Tüccar İskender artık sana tanesi 20 altına elmas satıcak!\n\nAylık sevkiyatı başlangıçta aylık 25 Elmas ile sınırlıdır, ama ardışık abonelik süresine göre artabilir.\n\nElmas limiti her üç aylık ardışık abonelik için 5 artar, toplam üst limit olan aylık 50 Elmasa kadar artabilir!</string>
   <string name="subscribe.listitem2.description">Her ay avatarın için özel görsel bir eşya alırsın!\n\nAyrıca, her üç aylık ardışık abonelik için, Gizemli Zaman Yolcuları sana tarihi (ve fütürist!) görsel eşyalara erişim sağlar.</string>
   <string name="subscribe.listitem3.description">Tamamlanmış Yapılacak İş ve iş geçmişlerine daha uzun süre erişim sağlar.</string>
+  <string name="subscribe.listitem4.description">İki katı ganimet limiti tamamladığın işlerinden her gün daha fazla eşya almana ve ahırını daha hızlı tamamlamana yardımcı olur!</string>
   <string name="subscribe1month.gemcap">Elmas limiti 25\'le başlar</string>
   <string name="subscribe3month.gemcap">Elmas limiti 30\'a çıkar</string>
   <string name="subscribe6month.gemcap">Elmas limiti 35\'e çıkar</string>
@@ -440,6 +440,8 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="subscription">Abonelik</string>
   <string name="active">Etkin</string>
   <string name="cancel_subscription">Aboneliği İptal Et</string>
+  <string name="cancel_subscription_google.description">Artık abone olmak istemiyor musun? Google Play Store\'un \"Uygulamalarım\" bölümünde aboneliği iptal etme seçeneğini bulabilirsin.</string>
+  <string name="cancel_subscription_notgoogle.description">Artık abone olmak istemiyor musun? Ödeme yönteminden dolayı, yalnızca web sitesi üzerinden aboneliğini iptal edebilirsin. Siteyi tarayıcında açmak için aşağıdaki düğmeyi tıkla!</string>
   <string name="visit_habitica_website">Habitica Websitesini Ziyaret Et</string>
   <string name="current_bonuses">Sağlanan Faydalar</string>
   <string name="months_subscribed">Abone olunan aylar</string>
@@ -458,6 +460,10 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="challenge_details">Mücadelele Detayları</string>
   <string name="challenge_leave_title">Mücadeleden Ayrıl</string>
   <string name="challenge_leave_text">\"%s\" Mücadelesinden ayrılmak istediğinden emin misin?</string>
+  <string name="challenge_remove_tasks_title">İşleri sil</string>
+  <string name="challenge_remove_tasks_text">İşleri gerçekten silmek istiyor musun?</string>
+  <string name="remove_tasks">Sil</string>
+  <string name="keep_tasks">Tut</string>
   <string name="my_challenges">Benim Mücadelelerim</string>
   <string name="public_challenges">Herkese Açık</string>
   <string name="challenges">Mücadeleler</string>
@@ -470,9 +476,12 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="challenge">Mücadele</string>
   <string name="go_to_challenge">Mücadeleye Git</string>
   <string name="not_part_of_a_challenge">Henüz herhangi bir Mücadele katılımcısı değilsin!</string>
+  <string name="join_a_challenge">Listene seçili işler eklemek için bir Mücadeleye katıl, sonra da başarılar ve hatta elmaslar kazanmak için diğer Habiticalılarla yarış!</string>
+  <string name="check_the_public_challenge_tab">\"Herkese Açık\" sekmesine basarak kullanıcılar tarafından yaratılmış Mücadelelerden sana en uygun olanını bul!</string>
   <string name="add_reminder">Hatırlatıcı Ekle</string>
   <string name="warning">Uyarı</string>
   <string name="open_settings">Ayarları Aç</string>
+  <string name="dont_keep_activities_warning">Görünüşe göre Geliştirici seçeneğinde \ \"Etkinlikleri saklamayın \\" etkin. Şu anda bu seçenek, habitica uygulamasıyla ilgili sorunlara neden oluyor, bu nedenle devre dışı bırakılmasını öneriyoruz.</string>
   <string name="inbox">Mesaj Kutusu</string>
   <string name="FAQ">Sıkça Sorulan Sorular</string>
   <string name="special">Özel</string>
@@ -486,6 +495,32 @@ Başlarken, hayatında neyi geliştirmek istiyorsun?</string>
   <string name="checkInRewardEarned">Kendini hayatını geliştirmeye adadığın için ödül olarak %1$s kazandın.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Bir sonraki ödülün %1$d Girişten sonra açılacak</string>
   <string name="pending_approval">onay bekleniyor</string>
+  <string name="filters">Filtreler</string>
+  <string name="done">Tamam</string>
   <string name="group_tasks_edit_description">Grup işleri düzenlenemez.</string>
   <string name="group_tasks_edit_title">Bu işi düzenleyemezsin</string>
+  <string name="groups">Gruplar</string>
+  <string name="all">Hepsi</string>
+  <string name="none">Hiçbiri</string>
+  <string name="owned">Sahip olunan</string>
+  <string name="not_owned">Sahip olunmayan</string>
+  <string name="new_game">Yeni\nOyun</string>
+  <string name="login_btn_fb">Facebook ile giriş yap</string>
+  <string name="login_btn_google">Google ile giriş yap</string>
+  <string name="action_back">Geri</string>
+  <string name="welcome_text">Ah, burada yeni olmalısın. Ben Justin, Habitica\'da ki rehberin olacağım.\n\nBaşlamak için, bir avatar yaratman gerekecek.</string>
+  <string name="randomize">Rastgele</string>
+  <string name="avatar_extras">Ekstralar</string>
+  <string name="avatar_skin_color">Ten Rengi</string>
+  <string name="avatar_hair_color">Saç Rengi</string>
+  <string name="avatar_hair_bangs">Kahkül</string>
+  <string name="avatar_hair_ponytail">Atkuyruğu</string>
+  <string name="avatar_glasses">Gözlükler</string>
+  <string name="avatar_wheelchair">Tekerlekli Sandalye</string>
+  <string name="weak">Zayıf</string>
+  <string name="strong">Güçlü</string>
+  <string name="gray">Gri</string>
+  <string name="dated">Tarihli</string>
+  <string name="completed">Tamamlanmış</string>
+  <string name="setuP_group_other">Diğer</string>
 </resources>

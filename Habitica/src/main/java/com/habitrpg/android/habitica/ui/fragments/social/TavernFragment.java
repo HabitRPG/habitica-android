@@ -64,7 +64,7 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            contentCache.GetQuestContent(group.quest.key, content -> {
+                            contentCache.getQuestContent(group.quest.key, content -> {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }

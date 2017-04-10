@@ -220,12 +220,10 @@
     <string name="setup_welcome_description">Welcome to Habitica, where advancing in the game will improve your real life! As you accomplish real-world goals, you\'ll unlock equipment, pets, quests, and more.</string>
     <string name="setup_welcome_title">Welcome</string>
     <string name="avatar_setup_description">So, how would you like to look? Don\'t worry, you can change this later.</string>
-    <string name="task_setup_description">Splendid! Now let\'s set up your tasks so that you can start earning experience and gold.
-
-To start, which parts of your life do you want to improve?</string>
+    <string name="task_setup_description">Great! Now, what are you interested in working on throughout this journey?</string>
     <string name="setup_group_work">Work</string>
     <string name="setup_group_exercise">Exercise</string>
-    <string name="setup_group_heathWellness">Health + Wellness</string>
+    <string name="setup_group_health">Health</string>
     <string name="setup_group_school">School</string>
     <string name="setup_group_teams">Teams</string>
     <string name="setup_group_chores">Chores</string>
@@ -557,6 +555,7 @@ To start, which parts of your life do you want to improve?</string>
     <string name="dated">Dated</string>
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
+    <string name="clear">Clear</string>
     <string name="save">Save</string>
     <string name="location">Location</string>
     <string name="gem_reward">Gem reward</string>

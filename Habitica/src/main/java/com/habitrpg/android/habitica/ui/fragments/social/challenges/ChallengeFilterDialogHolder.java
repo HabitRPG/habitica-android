@@ -1,30 +1,30 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.magicmicky.habitrpgwrapper.lib.models.Group;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-class ChallegeFilterDialogHolder {
+class ChallengeFilterDialogHolder {
 
     @BindView(R.id.challenge_filter_recycler_view)
     RecyclerView groupRecyclerView;
@@ -45,8 +45,6 @@ class ChallegeFilterDialogHolder {
     CheckBox checkboxNotOwned;
 
     private AlertDialog dialog;
-    private ApiClient apiClient;
-    private HabitRPGUser user;
     private List<Challenge> challengesViewed;
     private ChallengeFilterOptions currentFilter;
     private Action1<ChallengeFilterOptions> selectedGroupsCallback;
@@ -54,30 +52,28 @@ class ChallegeFilterDialogHolder {
     private ChallengesFilterRecyclerViewAdapter adapter;
 
 
-    protected ChallegeFilterDialogHolder(View view, Activity context) {
+    private ChallengeFilterDialogHolder(View view, Activity context) {
         this.context = context;
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, ApiClient apiClient, HabitRPGUser user, List<Challenge> challengesViewed,
-                                  ChallengeFilterOptions currentFilter,
-                                  Action1<ChallengeFilterOptions> selectedGroupsCallback) {
+    static void showDialog(Activity activity, List<Challenge> challengesViewed,
+                           ChallengeFilterOptions currentFilter,
+                           Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_filter, null);
 
-        ChallegeFilterDialogHolder challegeFilterDialogHolder = new ChallegeFilterDialogHolder(dialogLayout, activity);
+        ChallengeFilterDialogHolder challengeFilterDialogHolder = new ChallengeFilterDialogHolder(dialogLayout, activity);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeFilterDialogHolder.bind(builder.show(), apiClient, user, challengesViewed, currentFilter, selectedGroupsCallback);
+        challengeFilterDialogHolder.bind(builder.show(), challengesViewed, currentFilter, selectedGroupsCallback);
     }
 
-    public void bind(AlertDialog dialog, ApiClient apiClient, HabitRPGUser user, List<Challenge> challengesViewed,
+    public void bind(AlertDialog dialog, List<Challenge> challengesViewed,
                      ChallengeFilterOptions currentFilter,
                      Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         this.dialog = dialog;
-        this.apiClient = apiClient;
-        this.user = user;
         this.challengesViewed = challengesViewed;
         this.currentFilter = currentFilter;
         this.selectedGroupsCallback = selectedGroupsCallback;
@@ -101,16 +97,19 @@ class ChallegeFilterDialogHolder {
        this.groupRecyclerView.setAdapter(adapter);
     }
 
-    private Collection<Group> getGroups(List<Challenge> challenges){
-        HashMap<String, Group> groupMap = new HashMap<>();
+    private Collection<Group> getGroups(@Nullable List<Challenge> challenges){
+        Map<String, Group> groupMap = new HashMap<>();
 
-        for (Challenge c : challenges) {
-            if(!groupMap.containsKey(c.groupName)){
-                Group g = new Group();
-                g.id = c.groupId;
-                g.name = c.groupName;
+        if (challenges != null) {
+            for (Challenge challenge : challenges) {
+                if (groupMap.containsKey(challenge.groupName)) {
+                    continue;
+                }
+                Group group = new Group();
+                group.id = challenge.groupId;
+                group.name = challenge.groupName;
 
-                groupMap.put(c.groupName, g);
+                groupMap.put(challenge.groupName, group);
             }
         }
 
@@ -118,7 +117,7 @@ class ChallegeFilterDialogHolder {
     }
 
     @OnClick(R.id.challenge_filter_button_done)
-    public void doneClicked() {
+    void doneClicked() {
         ChallengeFilterOptions options = new ChallengeFilterOptions();
         options.showByGroups = this.adapter.getCheckedEntries();
         options.showOwned = checkboxOwned.isChecked();
@@ -130,12 +129,12 @@ class ChallegeFilterDialogHolder {
 
 
     @OnClick(R.id.challenge_filter_button_all)
-    public void allClicked() {
+    void allClicked() {
         this.adapter.selectAll();
     }
 
     @OnClick(R.id.challenge_filter_button_none)
-    public void noneClicked() {
+    void noneClicked() {
         this.adapter.deSelectAll();
     }
 

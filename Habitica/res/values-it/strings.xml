@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="action_refresh">Aggiorna</string>
+  <string name="action_refresh">Sincronizza</string>
   <string name="XP_default">Esperienza</string>
   <string name="HP_default">Salute</string>
   <string name="MP_default">Mana</string>
@@ -181,25 +181,24 @@
   <string name="sidebar_help">Aiuto &amp; FAQ</string>
   <string name="complete_tutorial">Capito!</string>
   <string name="dismiss_tutorial">Ricordamelo ancora</string>
-  <string name="intro_1_title">Benvenuto in Habitica</string>
-  <string name="intro_1_description">Unisciti ad oltre %s persone che si divertono raggiungendo i propri obiettivi. Crea un avatar e tieni traccia delle tue attività nella vita reale.</string>
-  <string name="intro_2_title">Progressi nel gioco = Progressi nella vita</string>
-  <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver fatto del tuo meglio!</string>
-  <string name="intro_3_title">Sconfiggi mostri in compagnia</string>
+  <string name="intro_1_subtitle">Benvenuto in</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">È il momento di divertirsi raggiungendo i propri obiettivi. Unisciti ad oltre %s altre persone che migliorano la propria vita un\'attività alla volta.</string>
+  <string name="intro_2_subtitle">Progressi nel gioco</string>
+  <string name="intro_2_title">Progressi nella vita</string>
+  <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver raggiunto i tuoi obiettivi.</string>
+  <string name="intro_3_subtitle">Sii Social</string>
+  <string name="intro_3_title">Combatti mostri</string>
   <string name="intro_3_description">Tieni traccia dei tuoi obiettivi con l\'aiuto dei tuoi amici. Supportatevi a vicenda nella vita e nelle battaglie per migliorare insieme!</string>
-  <string name="intro_finish_button">Inizia</string>
+  <string name="intro_finish_button">Iniziamo!</string>
   <string name="previous_button">Indietro</string>
   <string name="next_button">Avanti</string>
   <string name="skip_button">Salta</string>
   <string name="setup_welcome_description">Benvenuto in Habitica, dove progredire nel gioco migliorerà la tua vita! Man mano che raggiungerai obiettivi nella vita reale, sbloccherai equipaggiamento, animali, missioni e altro.</string>
   <string name="setup_welcome_title">Benvenuto</string>
-  <string name="avatar_setup_description">Per prima cosa, hai bisogno di un avatar che ti rappresenti! Ciò che fai nella vita reale avranno effetto su salute, esperienza e oro del tuo avatar.</string>
-  <string name="task_setup_description">Splendido! Ora sistemiamo le tue attività in modo che tu possa cominciare a guadagnare oro ed esperienza.
-
-Per cominciare, quali parti della tua vita vuoi migliorare?</string>
+  <string name="avatar_setup_description">Quindi, che aspetto ti piacerebbe avere? Non preoccuparti, lo potrai cambiare in seguito.</string>
   <string name="setup_group_work">Lavoro</string>
   <string name="setup_group_exercise">Esercizio fisico</string>
-  <string name="setup_group_heathWellness">Salute + Benessere</string>
   <string name="setup_group_school">Scuola</string>
   <string name="setup_group_teams">Team</string>
   <string name="setup_group_chores">Faccende di casa</string>
@@ -429,7 +428,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="subscriptions">Abbonamenti</string>
   <string name="subscription_duration">Ricorrente ogni %s</string>
   <string name="subscribe">Abbonati</string>
-  <string name="subscribe.listitem1.description">Da ora Alexander il Mercante ti venderà Gemme al prezzo di 20 oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
+  <string name="subscribe.listitem1.description">Ora Alexander il Mercante ti venderà Gemme al prezzo di 20 Oro l\'una!\n\nLe sue consegne mensili sono inizialmente limitate a 25 Gemme al mese, ma possono aumentare a seconda della durata del tuo abbonamento.\n\nIl limite aumenta di 5 Gemme ogni tre mesi di abbonamento consecutivi, fino ad un massimo di 50 Gemme al mese!</string>
   <string name="subscribe.listitem2.description">Ogni mese riceverai un oggetto davvero unico per il tuo avatar!\n\nIn più, ogni tre mesi di abbonamento consecutivi, i misteriosi Viaggiatori del Tempo ti permetteranno di ottenere oggetti antichi (e futuri!).</string>
   <string name="subscribe.listitem3.description">Rende le To-Do completate e la cronologia dei progressi delle attività disponibili più a lungo.</string>
   <string name="subscribe.listitem4.description">Raddoppiare il numero massimo di drop giornalieri ti farà ricevere più oggetti dalle attività completate ogni giorno, aiutandoti a completare la tua scuderia più velocemente!</string>
@@ -462,6 +461,10 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="challenge_details">Dettagli sfida</string>
   <string name="challenge_leave_title">Abbandona sfida</string>
   <string name="challenge_leave_text">Vuoi davvero abbandonare la sfida \"%s\"?</string>
+  <string name="challenge_remove_tasks_title">Rimuovi attività</string>
+  <string name="challenge_remove_tasks_text">Vuoi rimuovere le attività?</string>
+  <string name="remove_tasks">Rimuovi</string>
+  <string name="keep_tasks">Tieni</string>
   <string name="my_challenges">Le mie sfide</string>
   <string name="public_challenges">Pubbliche</string>
   <string name="challenges">Sfide</string>
@@ -493,6 +496,32 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="checkInRewardEarned">Hai meritato %1$s come premio per la tua costanza nel migliorare la tua vita.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Il prossimo premio verrà sbloccato a %1$d accessi</string>
   <string name="pending_approval">in attesa di approvazione</string>
+  <string name="filters">Filtri</string>
+  <string name="done">Fatto</string>
   <string name="group_tasks_edit_description">Le attività di gruppo non possono essere modificate.</string>
   <string name="group_tasks_edit_title">Non puoi modificare questa attività</string>
+  <string name="groups">Gruppi</string>
+  <string name="all">Tutti</string>
+  <string name="none">Nessuno</string>
+  <string name="owned">Posseduto</string>
+  <string name="not_owned">Non posseduto</string>
+  <string name="new_game">Nuovo\nGioco</string>
+  <string name="login_btn_fb">Accedi con Facebook</string>
+  <string name="login_btn_google">Accedi con Google</string>
+  <string name="action_back">Indietro</string>
+  <string name="welcome_text">Oh, devi essere nuovo da queste parti. Mi chiamo Justin, e sarò la tua guida qui ad Habitica.\n\nPer cominciare, devi per prima cosa creare un avatar.</string>
+  <string name="randomize">Rendi casuale</string>
+  <string name="avatar_extras">Extra</string>
+  <string name="avatar_skin_color">Colore pelle</string>
+  <string name="avatar_hair_color">Colore capelli</string>
+  <string name="avatar_hair_bangs">Frangia</string>
+  <string name="avatar_hair_ponytail">Coda</string>
+  <string name="avatar_glasses">Occhiali</string>
+  <string name="avatar_wheelchair">Sedia a rotelle</string>
+  <string name="weak">Deboli</string>
+  <string name="strong">Forti</string>
+  <string name="gray">Grigie</string>
+  <string name="dated">Con scadenza</string>
+  <string name="completed">Completate</string>
+  <string name="setuP_group_other">Altro</string>
 </resources>

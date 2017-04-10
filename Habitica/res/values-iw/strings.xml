@@ -173,25 +173,14 @@
   <string name="sidebar_help">עזרה ושאלות נפוצות</string>
   <string name="complete_tutorial">הבנתי!</string>
   <string name="dismiss_tutorial">הזכר לי שוב</string>
-  <string name="intro_1_title">ברוכים הבאים להאביטיקה</string>
-  <string name="intro_1_description">הצטרפו ללמעלה מ %s אנשים שנהנים בזמן שהם גורמים לדברים לקרות. צרו דמות ועיקבו אחר משימותיכם מהעולם האמיתי.</string>
-  <string name="intro_2_title">התקדמות במשחק = התקדמות בחיים</string>
-  <string name="intro_2_description">אפשרו יכולות של המשחק על ידי סימון שהשלמתם משימות בעולם האמיתי. הרוויחו שיריון, חיות מחמד, ועוד - כדי לתגמל את עצמכם על עמידה ביעדים!</string>
-  <string name="intro_3_title">היו חברותיים והילחמו במפלצות</string>
   <string name="intro_3_description">שימרו על קצב התקדמות עם עזרה מחבריכם. תימכו אחד בשני בחיים ובקרב ככל שאתם משתפרים ביחד!</string>
-  <string name="intro_finish_button">התחילו</string>
   <string name="previous_button">קודם</string>
   <string name="next_button">הבא</string>
   <string name="skip_button">דלגו</string>
   <string name="setup_welcome_description">ברוכים הבאים להאביטיקה, המקום בו התקדמות במשחק תשפר אתכם בחיים האמיתיים! ככל שאתם משיגים יעדים בעולם האמיתי, תשחררו ציוד, חיות מחמד, הרפתקאות, ועוד.</string>
   <string name="setup_welcome_title">ברוכים הבאים</string>
-  <string name="avatar_setup_description">ראשית, אתם צריכים דמות במשחק כדי לייצג אתכם! הדברים שאתם עושים בחיים האמיתיים ישפיעו על בריאות הדמות שלכם, הניסיון והזהב שלה.</string>
-  <string name="task_setup_description">נהדר! עכשיו בואו נקבע את המשימות שלכם כדי שתתחילו להרוויח ניסיון וזהב.
-
-כדי להתחיל, איזה חלקים בחייכם תרצו לשפר?</string>
   <string name="setup_group_work">עבודה</string>
   <string name="setup_group_exercise">התעמלות</string>
-  <string name="setup_group_heathWellness">בריאות + אורח חיים</string>
   <string name="setup_group_school">בית-ספר</string>
   <string name="setup_group_teams">קבוצות</string>
   <string name="setup_group_chores">מטלות</string>

@@ -148,7 +148,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     public void onEvent(ShowChallengeDetailDialogCommand cmd) {
         Challenge challenge = new Select().from(Challenge.class).where(Condition.column("id").is(cmd.challengeId)).querySingle();
 
-        ChallegeDetailDialogHolder.showDialog(HabiticaApplication.currentActivity, apiClient, user, challenge, challenge1 ->  {
+        ChallengeDetailDialogHolder.showDialog(getActivity(), apiClient, user, challenge, challenge1 ->  {
             // challenge joined
             userChallengesFragment.addItem(challenge1);
             availableChallengesFragment.updateItem(challenge1);
@@ -164,10 +164,10 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         Bundle bundle = new Bundle();
         bundle.putString(ChallengeDetailActivity.CHALLENGE_ID, cmd.challengeId);
 
-        Intent intent = new Intent(HabiticaApplication.currentActivity, ChallengeDetailActivity.class);
+        Intent intent = new Intent(getActivity(), ChallengeDetailActivity.class);
         intent.putExtras(bundle);
         //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        HabiticaApplication.currentActivity.startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     public boolean onHandleBackPressed() {

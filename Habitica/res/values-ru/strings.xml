@@ -181,25 +181,14 @@
   <string name="sidebar_help">Помощь и ЧаВо</string>
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
-  <string name="intro_1_title">Добро пожаловать в Habitica</string>
-  <string name="intro_1_description">Присоединитесь к более %s участникам, которые развлекаются и добиваются успехов. Создайте аватар и отслеживайте ваши задачи.</string>
-  <string name="intro_2_title">Прогресс в игре = Прогресс в жизни</string>
-  <string name="intro_2_description">Разблокируйте функции в игре, выполняя реальные задачи. Зарабатывайте оружие, питомцев и многое другое в качестве награды!</string>
-  <string name="intro_3_title">Общайтесь и сражайтесь с монстрами</string>
   <string name="intro_3_description">Добивайтесь поставленнх целей с помощью друзей. Поддерживайте друг друга в реальной жизни и в сражении, делая свою жизнь лучше!</string>
-  <string name="intro_finish_button">Начать</string>
   <string name="previous_button">Назад</string>
   <string name="next_button">Далее</string>
   <string name="skip_button">Пропустить</string>
   <string name="setup_welcome_description">Добро пожаловать в Habitica, где продвижение в игре помогает вам в рельной жизни! Выполняя реальные задачи, вы разблокируете снаряжение, питомцев, квесты и многое другое.</string>
   <string name="setup_welcome_title">Добро пожаловать</string>
-  <string name="avatar_setup_description">Для начала вам необходим игровой персонаж, который будет представлять вас. Ваши действия в реальной жизни будут влиять на здоровье персонажа, на его уровень и количество золота.</string>
-  <string name="task_setup_description">Великолепно! Теперь давайте настроим задачи, чтобы вы могли начать получать опыт и золото.
-
-Для начала, какие стороны своей жизни вы хотели бы улучшить?</string>
   <string name="setup_group_work">Работа</string>
   <string name="setup_group_exercise">Тренировки</string>
-  <string name="setup_group_heathWellness">Здоровье + Благополучие</string>
   <string name="setup_group_school">Школа</string>
   <string name="setup_group_teams">Команды</string>
   <string name="setup_group_chores">Домашние дела</string>
@@ -434,6 +423,7 @@
   <string name="subscription">Подписка</string>
   <string name="active">Активный</string>
   <string name="cancel_subscription">Отменить подписку</string>
+  <string name="cancel_subscription_google.description">Больше не хотите использовать подписку? При желании можете отписаться в разделе \"Мои приложения\" в Google Play Store.</string>
   <string name="cancel_subscription_notgoogle.description">Отменяете подписку? Из-за способа оплаты вы можете отменить подписку только через веб-сайт. Нажмите кнопку ниже, чтобы открыть страницу в браузере!</string>
   <string name="visit_habitica_website">Посетите сайт Habitica</string>
   <string name="current_bonuses">Текущие бонусы</string>
@@ -482,4 +472,6 @@
   <string name="notification_mystery_item">Вы открываете коробку и находите %s!</string>
   <string name="checkInRewardEarned">Вы заработали %1$s в качестве награды за преданность к улучшению жизни.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Ваш следующий приз будет доступен после  %1$d входа в игру</string>
+  <string name="group_tasks_edit_description">Групповые задания не могут быть редактированы.</string>
+  <string name="group_tasks_edit_title">Нельзя редактировать это задание</string>
 </resources>

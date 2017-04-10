@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,7 +20,7 @@ public class TutorialView extends FrameLayout implements View.OnClickListener {
 
     public TutorialStep step;
     public OnTutorialReaction onReaction;
-    @BindView(R.id.tutorialTextView)
+    @BindView(R.id.textView)
     TextView tutorialTextView;
     @BindView(R.id.background)
     RelativeLayout background;
@@ -45,9 +47,9 @@ public class TutorialView extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == background || v == completeButton) {
+        if (Objects.equals(v, background) || Objects.equals(v, completeButton)) {
             this.onReaction.onTutorialCompleted(this.step);
-        } else if (v == dismissButton) {
+        } else if (Objects.equals(v, dismissButton)) {
             this.onReaction.onTutorialDeferred(this.step);
         }
     }

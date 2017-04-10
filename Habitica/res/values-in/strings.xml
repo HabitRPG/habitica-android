@@ -181,25 +181,14 @@
   <string name="sidebar_help">Bantuan &amp; FAQ</string>
   <string name="complete_tutorial">Aku mengerti!</string>
   <string name="dismiss_tutorial">Peringatkan aku lagi</string>
-  <string name="intro_1_title">Selamat datang di Habitica</string>
-  <string name="intro_1_description">Bergabunglah dengan lebih dari %s orang bersenang-senang dalam menyelesaikan tugas. Buatlah avatar dan catat tugas dunia-nyatamu.</string>
-  <string name="intro_2_title">Kemajuan dalam Permainan = Kemajuan dalam Hidup</string>
-  <string name="intro_2_description">Buka fitur dalam game dengan mencentang tugas harianmu. Dapatkan baju, peliharaan, dan banyak lagi untuk hadiahmu menyelesaikan tujuan!</string>
-  <string name="intro_3_title">Bersosialisasi sambil Mengalahkan Monster</string>
   <string name="intro_3_description">Tetaplah berusaha meraih tujuan dengan bantuan teman-teman. Dukung satu sama lain dalam hidup dan bertarunglah sekaligus meningkatkan kehidupan bersama-sama!</string>
-  <string name="intro_finish_button">Mulai</string>
   <string name="previous_button">Sebelumnya</string>
   <string name="next_button">Berikutnya</string>
   <string name="skip_button">Lewati</string>
   <string name="setup_welcome_description">Selamat datang di Habitica, di mana meningkatkan diri dalam permainan akan meningkatkan kehidupan nyata! Seiring kamu menyelesaikan tujuan dunia-nyata, kamu akan membuka perlengkapan, peliharaan, misi, dan banyak lagi.</string>
   <string name="setup_welcome_title">Selamat Datang</string>
-  <string name="avatar_setup_description">Pertama, kamu butuh avatar di dalam game untuk menggambarkan dirimu! Hal-hal yang kamu lakukan di dunia nyata akan mempengaruhi kesehatan, level pengalaman, dan emas avatarmu.</string>
-  <string name="task_setup_description">Keren! Sekarang mari mengatur tugas-tugasmu jadi kamu dapat mulai mendapatkan pengalaman dan emas.
-
-Untuk memulai, bagian mana dari hidupmu yang ingin kamu tingkatkan?</string>
   <string name="setup_group_work">Kerja</string>
   <string name="setup_group_exercise">Latihan Fisik</string>
-  <string name="setup_group_heathWellness">Kesehatan + Kebaikan</string>
   <string name="setup_group_school">Sekolah</string>
   <string name="setup_group_teams">Tim</string>
   <string name="setup_group_chores">Pekerjaan Rumah Tangga</string>

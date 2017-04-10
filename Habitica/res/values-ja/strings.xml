@@ -181,25 +181,21 @@
   <string name="sidebar_help">ヘルプとFAQ</string>
   <string name="complete_tutorial">わかった!</string>
   <string name="dismiss_tutorial">もう一度通知</string>
-  <string name="intro_1_title">Habitica へようこそ</string>
-  <string name="intro_1_description">%s人以上の方々が、やるべき事をかたづけるのを楽しんでいるよ。アバターをつくって、実生活のタスクを記録してみよう。</string>
-  <string name="intro_2_title">ゲームの進行 = 人生の進行</string>
-  <string name="intro_2_description">実生活でタスクをこなし、ゲーム内の機能をアンロックしよう。よろい、ペット、そして「ごほうび」を手に入れながら、自分自身の目標に接近しよう!</string>
-  <string name="intro_3_title">友達とつながってモンスターと戦おう</string>
+  <string name="intro_1_subtitle">へよこそう</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">ゲームの進行</string>
+  <string name="intro_2_title">人生の進行</string>
+  <string name="intro_3_subtitle">友達とつながって</string>
+  <string name="intro_3_title">モンスターと戦おう</string>
   <string name="intro_3_description">友達の力を借りて目標にしがみつこう。実生活とバトルでお互いに助け合い、いっしょに成長しよう!</string>
-  <string name="intro_finish_button">さあ、はじまりだ</string>
+  <string name="intro_finish_button">始めましょう!</string>
   <string name="previous_button">戻る</string>
   <string name="next_button">次へ</string>
   <string name="skip_button">スキップ</string>
   <string name="setup_welcome_description">Habitica へようこそ。ここはゲームが進むほどに、あなたの実生活が改善されるところ!　あなたが現実世界のゴールを達成すれば、装備やペット、クエストなどなど、新たな世界が広がるよ。</string>
   <string name="setup_welcome_title">ようこそ</string>
-  <string name="avatar_setup_description">まず、ゲーム内であなたの代わりとなるアバターをつくろう。あなたの実生活での行動が、アバターの体力、経験値とレベル、そしてゴールドに影響を与えるよ。</string>
-  <string name="task_setup_description">すごい!　自分のタスクを設定して、経験値とゴールドを集めよう。
-
-はじめに、自分の生活のどの部分を改善したい?</string>
   <string name="setup_group_work">仕事</string>
   <string name="setup_group_exercise">エクササイズ</string>
-  <string name="setup_group_heathWellness">健康と体調管理</string>
   <string name="setup_group_school">学校</string>
   <string name="setup_group_teams">チーム</string>
   <string name="setup_group_chores">家事</string>
@@ -439,6 +435,7 @@
   <string name="subscription">寄付</string>
   <string name="one_month">1ヶ月</string>
   <string name="months">%dヶ月</string>
+  <string name="month">月</string>
   <string name="three_months">3ヶ月</string>
   <string name="six_months">6ヶ月</string>
   <string name="twelve_months">12ヶ月</string>
@@ -474,4 +471,7 @@
   <string name="open">開く</string>
   <string name="notification_mystery_item">プレゼントボックスを開いて%sを手に入れました！</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">あと%1$d日のログインで、新たな賞品が手に入ります！</string>
+  <string name="all">全部</string>
+  <string name="none">なし</string>
+  <string name="action_back">戻る</string>
 </resources>

@@ -3,14 +3,16 @@ package com.habitrpg.android.habitica.helpers;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by magicmicky on 02/10/15.
  */
 public class TaskFilterHelper {
     private List<String> tagsId;
-    private String activeFilter;
+    private Map<String, String> activeFilters = new HashMap<>();
 
     public TaskFilterHelper() {
         tagsId = new ArrayList<>();
@@ -21,8 +23,8 @@ public class TaskFilterHelper {
         this.tagsId.add(tags);
     }
 
-    public int howMany() {
-        return this.tagsId.size() + (activeFilter != null ? 1 : 0);
+    public int howMany(String type) {
+        return this.tagsId.size() + (activeFilters.get(type) != null || Task.FILTER_ACTIVE.equals(activeFilters.get(type)) ? 1 : 0);
     }
 
     public List<String> getTags() {
@@ -38,9 +40,10 @@ public class TaskFilterHelper {
     }
 
     public List<Task> filter(List<Task> tasks) {
-        List<Task> filtered = new ArrayList<Task>();
+        List<Task> filtered = new ArrayList<>();
+        String activeFilter = activeFilters.get(tasks.get(0).type);
         for (Task task : tasks) {
-            if (isFiltered(task)) {
+            if (isFiltered(task, activeFilter)) {
                 filtered.add(task);
             }
         }
@@ -48,7 +51,7 @@ public class TaskFilterHelper {
         return filtered;
     }
 
-    private boolean isFiltered(Task task) {
+    private boolean isFiltered(Task task, String activeFilter) {
         if (!task.containsAllTagIds(tagsId)) {
             return false;
         }
@@ -75,7 +78,11 @@ public class TaskFilterHelper {
         return true;
     }
 
-    public void setActiveFilter(String activeFilter) {
-        this.activeFilter = activeFilter;
+    public void setActiveFilter(String type, String activeFilter) {
+        activeFilters.put(type, activeFilter);
+    }
+
+    public String getActiveFilter(String type) {
+        return activeFilters.get(type);
     }
 }

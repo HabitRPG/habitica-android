@@ -15,6 +15,7 @@ import android.os.Build;
 
 import java.util.UUID;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
@@ -26,8 +27,10 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoadUserFromServer() {
-        TestSubscriber<HabitResponse<HabitRPGUser>> testSubscriber = new TestSubscriber<>();
-        apiClient.getUser().subscribe(testSubscriber);
+        TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
+        apiClient.getUser()
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -35,8 +38,10 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoadCompleteUserFromServer() {
-        TestSubscriber<HabitResponse<HabitRPGUser>> testSubscriber = new TestSubscriber<>();
-        apiClient.retrieveUser(true).subscribe(testSubscriber);
+        TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
+        apiClient.retrieveUser(true)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -46,13 +51,14 @@ public class UserAPITests extends BaseAPITests {
     public void shouldRegisterNewUser() {
         hostConfig.setUser("");
         hostConfig.setApi("");
-        TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
         username = UUID.randomUUID().toString();
         apiClient.registerUser(username, username+"@example.com", password, password)
                 .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
+        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
 
         assertNotSame(hostConfig.getUser(), response.getId());
         assertNotSame(hostConfig.getApi(), response.getApiToken() != null ? response.getApiToken() : response.getToken());
@@ -60,11 +66,13 @@ public class UserAPITests extends BaseAPITests {
 
     @Test
     public void shouldLoginExistingUser() {
-        TestSubscriber<HabitResponse<UserAuthResponse>> testSubscriber = new TestSubscriber<>();
-        apiClient.connectUser(username, password).subscribe(testSubscriber);
+        TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
+        apiClient.connectUser(username, password)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0).getData();
+        UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         assertEquals(hostConfig.getUser(), response.getId());
         assertEquals(hostConfig.getApi(), response.getApiToken() != null ? response.getApiToken() : response.getToken());
     }

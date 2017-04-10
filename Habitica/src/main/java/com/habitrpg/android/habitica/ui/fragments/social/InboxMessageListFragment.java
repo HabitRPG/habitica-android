@@ -36,10 +36,10 @@ import butterknife.ButterKnife;
 public class InboxMessageListFragment extends BaseMainFragment
         implements SwipeRefreshLayout.OnRefreshListener, HabitRPGUserCallback.OnUserReceived {
 
-    @BindView(R.id.inbox_refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.chat_list)
+    @BindView(R.id.recyclerView)
     RecyclerView chatRecyclerView;
 
     List<ChatMessage> messages;
@@ -56,7 +56,7 @@ public class InboxMessageListFragment extends BaseMainFragment
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_inbox_message_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
         ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -130,7 +130,7 @@ public class InboxMessageListFragment extends BaseMainFragment
                     }, throwable -> {
                     });
 
-        UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
+        UiUtils.dismissKeyboard(getActivity());
     }
 
 

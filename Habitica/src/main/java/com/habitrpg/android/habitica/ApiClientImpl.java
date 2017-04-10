@@ -1,17 +1,19 @@
 package com.habitrpg.android.habitica;
 
+import android.content.Context;
+import android.support.v7.app.AlertDialog;
+
+import com.amplitude.api.Amplitude;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import com.amplitude.api.Amplitude;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
@@ -26,16 +28,14 @@ import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
+import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
 import com.magicmicky.habitrpgwrapper.lib.models.Quest;
 import com.magicmicky.habitrpgwrapper.lib.models.Shop;
+import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.Status;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Tag;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.Purchases;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuth;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
@@ -47,7 +47,9 @@ import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.BuyResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.FeedResponse;
+import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.responses.UnlockResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
@@ -82,10 +84,6 @@ import com.magicmicky.habitrpgwrapper.lib.utils.TaskTagDeserializer;
 import com.magicmicky.habitrpgwrapper.lib.utils.TutorialStepListDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.AlertDialog;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -94,7 +92,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +117,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     private final GsonConverterFactory gsonConverter;
     private final HostConfig hostConfig;
     private final Retrofit retrofitAdapter;
+    private final PopupNotificationsManager popupNotificationsManager;
 
     private CrashlyticsProxy crashlyticsProxy;
     private Context context;
@@ -127,13 +125,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private final ApiService apiService;
 
-    final Observable.Transformer apiCallTransformer =
+    private final Observable.Transformer apiCallTransformer =
             observable -> ((Observable) observable)
                     .map(new Func1<HabitResponse, Object>() {
                         @Override
                         public Object call(HabitResponse habitResponse) {
                             if (habitResponse.notifications != null) {
-                                PopupNotificationsManager popupNotificationsManager = PopupNotificationsManager.getInstance(com.habitrpg.android.habitica.ApiClientImpl.this, context);
                                 popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
                             }
                             return habitResponse.getData();
@@ -147,10 +144,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     //private OnHabitsAPIResult mResultListener;
     //private HostConfig mConfig;
-    public ApiClientImpl(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, Context context) {
+    public ApiClientImpl(GsonConverterFactory gsonConverter, HostConfig hostConfig, CrashlyticsProxy crashlyticsProxy, PopupNotificationsManager popupNotificationsManager, Context context) {
         this.gsonConverter = gsonConverter;
         this.hostConfig = hostConfig;
         this.context = context;
+        this.crashlyticsProxy = crashlyticsProxy;
+        this.popupNotificationsManager = popupNotificationsManager;
 
         HabiticaBaseApplication.getComponent().inject(this);
         crashlyticsProxy.setUserIdentifier(this.hostConfig.getUser());
@@ -217,9 +216,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         }.getType();
         Type questContentListType = new TypeToken<List<QuestContent>>() {
         }.getType();
-        Type petListType = new TypeToken<HashMap<String, Pet>>() {
+        Type petListType = new TypeToken<Map<String, Pet>>() {
         }.getType();
-        Type mountListType = new TypeToken<HashMap<String, Mount>>() {
+        Type mountListType = new TypeToken<Map<String, Mount>>() {
         }.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
@@ -227,8 +226,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .setExclusionStrategies(new CheckListItemExcludeStrategy())
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getDeclaredClass().equals(ModelAdapter.class);
+                    public boolean shouldSkipField(FieldAttributes field) {
+                        return field.getDeclaredClass().equals(ModelAdapter.class);
                     }
 
                     @Override
@@ -355,17 +354,19 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                         habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
                         for (Task task : tasks.tasks.values()) {
                             switch (task.getType()) {
-                                case "habit":
+                                case Task.TYPE_HABIT:
                                     habitRPGUser.getHabits().add(task);
                                     break;
-                                case "daily":
+                                case Task.TYPE_DAILY:
                                     habitRPGUser.getDailys().add(task);
                                     break;
-                                case "todo":
+                                case Task.TYPE_TODO:
                                     habitRPGUser.getTodos().add(task);
                                     break;
-                                case "reward":
+                                case Task.TYPE_REWARD:
                                     habitRPGUser.getRewards().add(task);
+                                    break;
+                                default:
                                     break;
                             }
                         }
@@ -400,10 +401,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     private void showConnectionProblemDialog(final int resourceTitleString, final int resourceMessageString) {
-        Activity currentActivity = HabiticaApplication.currentActivity;
-        if (currentActivity != null) {
-            showConnectionProblemDialog(currentActivity.getString(resourceTitleString), currentActivity.getString(resourceMessageString));
-        }
+        showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString));
     }
 
     private void showConnectionProblemDialog(final String resourceTitleString, final String resourceMessageString) {
@@ -447,7 +445,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public void setLanguageCode(String languageCode) {
-        this.languageCode =  languageCode;
+        this.languageCode = languageCode;
     }
 
     @Override
@@ -498,7 +496,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Void> validateSubscription(SubscriptionValidationRequest request){
+    public Observable<Void> validateSubscription(SubscriptionValidationRequest request) {
         return apiService.validateSubscription(request).compose(configureApiCallObserver());
     }
 
@@ -669,7 +667,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<PostChatMessageResult> postGroupChat(String groupId, HashMap<String, String> message) {
+    public Observable<PostChatMessageResult> postGroupChat(String groupId, Map<String, String> message) {
         return apiService.postGroupChat(groupId, message).compose(configureApiCallObserver());
     }
 
@@ -730,7 +728,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Quest> forceStartQuest(String groupId, Group group) {
-        return apiService.forceStartQuest(groupId,group).compose(configureApiCallObserver());
+        return apiService.forceStartQuest(groupId, group).compose(configureApiCallObserver());
     }
 
     @Override
@@ -759,17 +757,17 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> GetMember(String memberId) {
-        return apiService.GetMember(memberId).compose(configureApiCallObserver());
+    public Observable<HabitRPGUser> getMember(String memberId) {
+        return apiService.getMember(memberId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<AchievementResult> GetMemberAchievements(String memberId) {
-        return apiService.GetMemberAchievements(memberId).compose(configureApiCallObserver());
+    public Observable<AchievementResult> getMemberAchievements(String memberId) {
+        return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<PostChatMessageResult> postPrivateMessage(HashMap<String, String> messageDetails) {
+    public Observable<PostChatMessageResult> postPrivateMessage(Map<String, String> messageDetails) {
         return apiService.postPrivateMessage(messageDetails).compose(configureApiCallObserver());
     }
 
@@ -823,7 +821,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return apiService.readNotification(notificationId).compose(configureApiCallObserver());
     }
 
-    public Observable<ContentResult>getContent() {
+    public Observable<ContentResult> getContent() {
         return apiService.getContent(languageCode).compose(configureApiCallObserver());
     }
 

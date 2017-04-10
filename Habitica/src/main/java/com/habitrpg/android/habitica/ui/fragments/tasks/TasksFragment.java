@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,7 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -28,6 +30,7 @@ import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
@@ -39,6 +42,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
@@ -58,9 +62,10 @@ public class TasksFragment extends BaseMainFragment {
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
-    Map<String, String> activeTaskFilters = new HashMap<>();
 
     private boolean displayingTaskForm;
+    @Nullable
+    private TextView filterCountTextView;
 
     public void setActivity(MainActivity activity) {
         super.setActivity(activity);
@@ -74,42 +79,46 @@ public class TasksFragment extends BaseMainFragment {
         this.usesBottomNavigation = true;
         this.displayingTaskForm = false;
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_fading_viewpager, container, false);
+        View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
 
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
-        if (view.getClass() == FrameLayout.class) {
-            FrameLayout frame = (FrameLayout) view;
-            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
-        } else {
+        if (FloatingActionMenu.class.equals(view.getClass())) {
             floatingMenu = (FloatingActionMenu) view;
+        } else {
+            ViewGroup frame = (ViewGroup) view;
+            floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
         }
         FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
-        habit_fab.setOnClickListener(v1 -> openNewTaskActivity("habit"));
+        habit_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_HABIT));
         FloatingActionButton daily_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_daily);
-        daily_fab.setOnClickListener(v1 -> openNewTaskActivity("daily"));
+        daily_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_DAILY));
         FloatingActionButton todo_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_todo);
-        todo_fab.setOnClickListener(v1 -> openNewTaskActivity("todo"));
+        todo_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_TODO));
         FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
-        reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
+        reward_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_REWARD));
         floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
-        this.activity.unlockDrawer(GravityCompat.END);
+        if (this.activity != null) {
+            this.activity.unlockDrawer(GravityCompat.END);
+        }
 
         loadTaskLists();
 
-        bottomNavigation.setOnTabSelectListener(tabId -> {
-            if (tabId == R.id.tab_habits) {
-                viewPager.setCurrentItem(0);
-            } else if (tabId == R.id.tab_dailies) {
-                viewPager.setCurrentItem(1);
-            } else if (tabId == R.id.tab_todos) {
-                viewPager.setCurrentItem(2);
-            } else if (tabId == R.id.tab_rewards) {
-                viewPager.setCurrentItem(3);
-            }
-        });
+        if (bottomNavigation != null) {
+            bottomNavigation.setOnTabSelectListener(tabId -> {
+                if (tabId == R.id.tab_habits) {
+                    viewPager.setCurrentItem(0);
+                } else if (tabId == R.id.tab_dailies) {
+                    viewPager.setCurrentItem(1);
+                } else if (tabId == R.id.tab_todos) {
+                    viewPager.setCurrentItem(2);
+                } else if (tabId == R.id.tab_rewards) {
+                    viewPager.setCurrentItem(3);
+                }
+            });
+        }
 
         return v;
     }
@@ -130,6 +139,11 @@ public class TasksFragment extends BaseMainFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_activity, menu);
+
+        RelativeLayout badgeLayout = (RelativeLayout) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        filterCountTextView = (TextView) badgeLayout.findViewById(R.id.badge_textview);
+        badgeLayout.setOnClickListener(view -> showFilterDialog());
+        updateFilterIcon();
     }
 
     @Override
@@ -155,18 +169,49 @@ public class TasksFragment extends BaseMainFragment {
             dialog.setTags(user.getTags());
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
-        String taskType = getActiveFragment().classType;
-        dialog.setTaskType(taskType, activeTaskFilters.get(taskType));
+        if (getActiveFragment() != null) {
+            String taskType = getActiveFragment().classType;
+            dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
+        }
         dialog.setListener((activeTaskFilter, activeTags) -> {
-            activeTaskFilters.put(taskType, activeTaskFilter);
-            getActiveFragment().setActiveFilter(activeTaskFilter);
+            int activePos = viewPager.getCurrentItem();
+            if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
+                viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
+            }
+            if (activePos < viewPager.getAdapter().getCount() && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
+                viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
+            }
+            if (getActiveFragment() != null) {
+                getActiveFragment().setActiveFilter(activeTaskFilter);
+                if (Task.TYPE_DAILY.equals(getActiveFragment().classType)) {
+                    updateDailyDueDefaultSetting(activeTaskFilter);
+                }
+
+            }
             taskFilterHelper.setTags(activeTags);
+            updateFilterIcon();
+
         });
         dialog.show();
     }
 
+    private void updateDailyDueDefaultSetting(String activeTaskFilter) {
+        Boolean showDueDefault = Task.FILTER_ACTIVE.equals(activeTaskFilter);
+        if (user != null) {
+            if (user.getPreferences().getDailyDueDefaultView() != showDueDefault) {
+                UpdateUserCommand command = new UpdateUserCommand();
+                Map<String, Object> data = new HashMap<>();
+                data.put("preferences.dailyDueDefaultView", showDueDefault);
+                command.updateData = data;
+                EventBus.getDefault().post(command);
+            }
+        }
+    }
+
     public void refresh() {
-        getActiveFragment().onRefresh();
+        if (getActiveFragment() != null) {
+            getActiveFragment().onRefresh();
+        }
     }
 
     public void loadTaskLists() {
@@ -189,16 +234,16 @@ public class TasksFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, activeTaskFilters.get(Task.TYPE_HABIT), sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, sortCallback);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, activeTaskFilters.get(Task.TYPE_DAILY), sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, sortCallback);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null, null);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO, activeTaskFilters.get(Task.TYPE_TODO),sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO,sortCallback);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);
@@ -213,19 +258,59 @@ public class TasksFragment extends BaseMainFragment {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return activity.getString(R.string.habits);
-                    case 1:
-                        return activity.getString(R.string.dailies);
-                    case 2:
-                        return activity.getString(R.string.todos);
-                    case 3:
-                        return activity.getString(R.string.rewards);
+                if (activity != null) {
+                    switch (position) {
+                        case 0:
+                            return activity.getString(R.string.habits);
+                        case 1:
+                            return activity.getString(R.string.dailies);
+                        case 2:
+                            return activity.getString(R.string.todos);
+                        case 3:
+                            return activity.getString(R.string.rewards);
+                    }
                 }
                 return "";
             }
         });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (bottomNavigation != null) {
+                    bottomNavigation.selectTabAtPosition(position);
+                }
+                updateFilterIcon();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void updateFilterIcon() {
+        if (filterCountTextView == null) {
+            return;
+        }
+        int filterCount = 0;
+        if (getActiveFragment() != null) {
+            filterCount = taskFilterHelper.howMany(getActiveFragment().classType);
+        }
+        if (filterCount == 0) {
+            filterCountTextView.setText(null);
+            filterCountTextView.setVisibility(View.GONE);
+        } else {
+            filterCountTextView.setText(String.valueOf(filterCount));
+            filterCountTextView.setVisibility(View.VISIBLE);
+        }
+
     }
     // endregion
 
@@ -273,9 +358,12 @@ public class TasksFragment extends BaseMainFragment {
 
     @Subscribe
     public void onEvent(RefreshUserCommand event) {
-        getActiveFragment().onRefresh();
+        if (getActiveFragment() != null) {
+            getActiveFragment().onRefresh();
+        }
     }
 
+    @Nullable
     private TaskRecyclerViewFragment getActiveFragment() {
         return viewFragmentsDictionary.get(viewPager.getCurrentItem());
     }
@@ -319,7 +407,6 @@ public class TasksFragment extends BaseMainFragment {
 
     @Override
     public void onDestroyView() {
-        this.activity.lockDrawer(GravityCompat.END);
         super.onDestroyView();
     }
 
@@ -346,8 +433,11 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void switchToTaskTab(String taskType) {
+        if (taskType == null) {
+            return;
+        }
         for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-            if (viewFragmentsDictionary.get(index).getClassName().equals(taskType)) {
+            if (taskType.equals(viewFragmentsDictionary.get(index).getClassName()) && viewPager != null) {
                 viewPager.setCurrentItem(index);
             }
         }

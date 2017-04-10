@@ -181,25 +181,14 @@
   <string name="sidebar_help">Ayuda y preguntas frecuentes</string>
   <string name="complete_tutorial">¡Ya está!</string>
   <string name="dismiss_tutorial">Vuelve a recordármelo</string>
-  <string name="intro_1_title">Te damos la bienvenida a Habitica</string>
-  <string name="intro_1_description">Únete a mas de %s de personas que se divierten mientras van realizando sus quehaceres. Crea un personaje y registra tus tareas del mundo real.</string>
-  <string name="intro_2_title">Progreso en el juego = Progreso en la vida</string>
-  <string name="intro_2_description">Desbloquea funciones del juego completando tareas en el mundo real. Obtén recompensas, como armaduras, mascotas y otras cosas, por cumplir tus objetivos.</string>
-  <string name="intro_3_title">Socializa y combate monstruos</string>
   <string name="intro_3_description">No pierdas de vista tus objetivos y deja que te ayuden tus amigos. ¡Apoyaos mutuamente en la vida y en la lucha para mejorar juntos!</string>
-  <string name="intro_finish_button">Comenzar</string>
   <string name="previous_button">Anterior</string>
   <string name="next_button">Siguiente</string>
   <string name="skip_button">Omitir</string>
   <string name="setup_welcome_description">Te damos la bienvenida a Habitica, donde al progresar dentro del juego, mejorarás en la vida real. A medida que cumplas tus objetivos del mundo real, desbloquearás piezas de equipamiento, mascotas, misiones y mucho más.</string>
   <string name="setup_welcome_title">Te damos la bienvenida</string>
-  <string name="avatar_setup_description">Primero, necesitas un personaje que te represente dentro del juego. Lo que hagas en el mundo real afectará a la salud, el nivel de experiencia y el oro que tendrá tu personaje.</string>
-  <string name="task_setup_description">¡Perfecto! Ahora, vamos a añadir tus tareas para que puedas empezar a ganar experiencia y oro.
-
-Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="setup_group_work">Trabajo</string>
   <string name="setup_group_exercise">Ejercicio</string>
-  <string name="setup_group_heathWellness">Salud y bienestar</string>
   <string name="setup_group_school">Clases</string>
   <string name="setup_group_teams">Equipos</string>
   <string name="setup_group_chores">Labores domésticas</string>
@@ -460,6 +449,7 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="reward">Recompensa</string>
   <string name="todo">Tarea</string>
   <string name="official">Oficial</string>
+  <string name="participating">Participando</string>
   <string name="challenge">Desafío</string>
   <string name="go_to_challenge">Ir al Desafío</string>
   <string name="not_part_of_a_challenge">¡Ahora mismo no formas parte de ningún Desafío!</string>
@@ -473,6 +463,12 @@ Para empezar, ¿qué aspectos de tu vida te gustaría mejorar?</string>
   <string name="limited_count">%d restantes</string>
   <string name="gem_shop">Gema</string>
   <string name="mystery_item">Objeto Misterioso</string>
+  <string name="myster_item_notes">Cada mes, los suscriptores recibirán un elemento misterioso. Este se lanza cerca de una semana antes del final del mes.</string>
   <string name="open">Abrir</string>
   <string name="notification_mystery_item">¡Abres la caja y encuentras %s!</string>
+  <string name="checkInRewardEarned">Ganaste %1$s en recompensa por tu devoción por mejorar tu vida. </string>
+  <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Su próximo premio se desbloquea en %1$d registros</string>
+  <string name="pending_approval">Esperando aprobación</string>
+  <string name="group_tasks_edit_description">Las Tareas de Equipo no pueden ser editadas</string>
+  <string name="group_tasks_edit_title">No se puede editar tarea</string>
 </resources>

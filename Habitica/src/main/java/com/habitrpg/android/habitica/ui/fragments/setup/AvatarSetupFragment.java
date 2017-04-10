@@ -186,9 +186,9 @@ public class AvatarSetupFragment extends BaseFragment {
         activateButton(hairButton);
         this.activeCategory = "hair";
         this.subCategoryTabs.removeAllTabs();
-        this.subcategories = Arrays.asList("color", "bangs", "ponytail");
-        this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_hair_color));
+        this.subcategories = Arrays.asList("bangs", "color", "ponytail");
         this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_hair_bangs));
+        this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_hair_color));
         this.subCategoryTabs.addTab(subCategoryTabs.newTab().setText(R.string.avatar_hair_ponytail));
         loadCustomizations();
     }
@@ -225,6 +225,7 @@ public class AvatarSetupFragment extends BaseFragment {
         EventBus.getDefault().post(command);
     }
 
+    @Nullable
     private String chooseRandomKey(List<SetupCustomization> customizations, boolean weighFirstOption) {
         if (customizations.size() == 0) {
             return null;

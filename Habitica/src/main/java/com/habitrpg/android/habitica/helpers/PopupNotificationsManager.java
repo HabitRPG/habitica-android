@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,31 +26,27 @@ import java.util.Map;
  */
 
 public class PopupNotificationsManager {
-    private static PopupNotificationsManager instance;
     private Map<String, Boolean> seenNotifications;
+    @Nullable
     private ApiClient apiClient;
     private Context context;
 
     // @TODO: A queue for displaying alert dialogues
 
-    private PopupNotificationsManager(ApiClient apiClient, Context context) {
-        this.apiClient = apiClient;
+    public PopupNotificationsManager(Context context) {
         this.seenNotifications = new HashMap<>();
         this.context = context.getApplicationContext();
     }
 
-    public static PopupNotificationsManager getInstance(ApiClient apiHelper, Context context) {
-        if (instance == null) {
-            instance = new PopupNotificationsManager(apiHelper, context);
-        }
-        return instance;
+    public void setApiClient(@Nullable ApiClient apiClient) {
+        this.apiClient = apiClient;
     }
 
-    public Boolean displayNotification(Notification notification) {
+    Boolean displayNotification(Notification notification) {
         String title = notification.data.message;
         String youEarnedMessage = "";
 
-        LayoutInflater factory = LayoutInflater.from(HabiticaApplication.currentActivity);
+        LayoutInflater factory = LayoutInflater.from(context);
         final View view = factory.inflate(R.layout.dialog_login_incentive, null);
 
         SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.imageView);
@@ -89,17 +86,14 @@ public class PopupNotificationsManager {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (apiClient != null) {
-                    // @TODO: This should be handled somewhere else? MAybe we notifiy via event
-                    apiClient.readNotificaiton(notification.getId())
-                            .subscribe(next -> {}, throwable -> {});
-                }
-
-                dialog.hide();
+        confirmButton.setOnClickListener(view1 -> {
+            if (apiClient != null) {
+                // @TODO: This should be handled somewhere else? MAybe we notifiy via event
+                apiClient.readNotificaiton(notification.getId())
+                        .subscribe(next -> {}, throwable -> {});
             }
+
+            dialog.hide();
         });
 
         return true;

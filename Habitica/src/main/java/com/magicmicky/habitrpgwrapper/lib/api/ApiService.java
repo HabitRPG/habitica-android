@@ -30,7 +30,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -194,7 +193,7 @@ public interface ApiService {
     Observable<HabitResponse<Void>> leaveGroup(@Path("gid") String groupId);
 
     @POST("groups/{gid}/chat")
-    Observable<HabitResponse<PostChatMessageResult>> postGroupChat(@Path("gid") String groupId, @Body HashMap<String, String> message);
+    Observable<HabitResponse<PostChatMessageResult>> postGroupChat(@Path("gid") String groupId, @Body Map<String, String> message);
 
     @DELETE("groups/{gid}/chat/{messageId}")
     Observable<HabitResponse<Void>> deleteMessage(@Path("gid") String groupId, @Path("messageId") String messageId);
@@ -253,13 +252,13 @@ public interface ApiService {
 
     //Members URL
     @GET("members/{mid}")
-    Observable<HabitResponse<HabitRPGUser>> GetMember(@Path("mid") String memberId);
+    Observable<HabitResponse<HabitRPGUser>> getMember(@Path("mid") String memberId);
 
     @GET("members/{mid}/achievements")
-    Observable<HabitResponse<AchievementResult>> GetMemberAchievements(@Path("mid") String memberId);
+    Observable<HabitResponse<AchievementResult>> getMemberAchievements(@Path("mid") String memberId);
 
     @POST("members/send-private-message")
-    Observable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body HashMap<String, String> messageDetails);
+    Observable<HabitResponse<PostChatMessageResult>> postPrivateMessage(@Body Map<String, String> messageDetails);
 
     @GET("shops/{identifier}")
     Observable<HabitResponse<Shop>> fetchShopInventory(@Path("identifier") String identifier);

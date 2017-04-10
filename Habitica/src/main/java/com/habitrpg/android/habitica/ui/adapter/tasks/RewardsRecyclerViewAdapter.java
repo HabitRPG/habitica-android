@@ -29,7 +29,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
     private ApiClient apiClient;
 
     public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, HabitRPGUser user, ApiClient apiClient) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, user.getId());
+        super(taskType, taskFilterHelper, layoutResource, newContext, user != null ? user.getId() : null);
         this.user = user;
         this.apiClient = apiClient;
         this.contentCache = new ContentCache(apiClient);
@@ -40,7 +40,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
         return new RewardViewHolder(getContentView(parent));
     }
 
-    public void loadEquipmentRewards() {
+    private void loadEquipmentRewards() {
         if (apiClient != null) {
             apiClient.getInventoryBuyableGear()
 
@@ -54,9 +54,9 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                         if (user.getFlags().getArmoireEnabled()) {
                             itemKeys.add("armoire");
                         }
-                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> {
-                            contentCache.GetItemDataList(itemKeys, obj -> {
-                                ArrayList<Task> buyableItems = new ArrayList<>();
+                        return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> contentCache.getItemDataList(itemKeys, obj -> {
+                            ArrayList<Task> buyableItems = new ArrayList<>();
+                            if (obj != null) {
                                 for (ItemData item : obj) {
                                     Task reward = new Task();
                                     reward.text = item.text;
@@ -66,7 +66,7 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                                     reward.specialTag = "item";
                                     reward.setId(item.key);
 
-                                    if (item.key.equals("armoire")) {
+                                    if ("armoire".equals(item.key)) {
                                         if (user.getFlags().getArmoireEmpty()) {
                                             reward.notes = context.getResources().getString(R.string.armoireNotesEmpty);
                                         } else {
@@ -81,10 +81,10 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
 
                                     buyableItems.add(reward);
                                 }
-                                subscriber.onNext(buyableItems);
-                                subscriber.onCompleted();
-                            });
-                        });
+                            }
+                            subscriber.onNext(buyableItems);
+                            subscriber.onCompleted();
+                        }));
                     })
                     .subscribe(items -> {
                         this.filteredContent.addAll(items);

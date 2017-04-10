@@ -612,10 +612,6 @@ public class HabitRPGUser extends BaseModel {
             }
         }
 
-        if (prefs.getSleep()) {
-            layerMap.put(AvatarView.LayerType.ZZZ, "zzz");
-        }
-
         return layerMap;
     }
 

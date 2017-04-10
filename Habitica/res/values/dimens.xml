@@ -59,8 +59,10 @@
 	<dimen name="task_top_bottom_compact_padding">16dp</dimen>
 	<dimen name="reward_spacing">8dp</dimen>
 	<dimen name="grid_item_margin">6dp</dimen>
-	<dimen name="avatar_small_width">114dp</dimen>
+	<dimen name="avatar_small_width">90dp</dimen>
 	<dimen name="avatar_small_height">90dp</dimen>
+	<dimen name="avatar_compact_width">114dp</dimen>
+	<dimen name="avatar_compact_height">114dp</dimen>
 	<dimen name="customization_width">100dp</dimen>
 	<dimen name="gear_image_size">60dp</dimen>
 	<dimen name="row_padding">12dp</dimen>
@@ -102,5 +104,5 @@
 	<dimen name="dialog_marginTopBottom">24dp</dimen>
     <dimen name="login_intro_button_size">126dp</dimen>
 	<dimen name="diamond_button_height">40dp</dimen>
-    <dimen name="setup_customization_size">52dp</dimen>
+    <dimen name="setup_customization_size">56dp</dimen>
 </resources>

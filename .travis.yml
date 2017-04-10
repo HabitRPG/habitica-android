@@ -1,6 +1,6 @@
 language: android
 jdk: oraclejdk8
-sudo: required
+udo: required
 addons:
   apt:
     sources:
@@ -62,4 +62,4 @@ env:
     - DISABLE_REQUEST_LOGGING=true
   matrix:
     - TEST="assembleDebug -PdisablePreDex"
-    - TEST="testDebugUnitTest -PdisablePreDex --stacktrace --info" REQUIRES_SERVER=true
+    - TEST="testProdDebugUnitTest -PdisablePreDex --stacktrace" REQUIRES_SERVER=true

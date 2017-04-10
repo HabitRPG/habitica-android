@@ -181,25 +181,22 @@
   <string name="sidebar_help">도움말 &amp; FAQ</string>
   <string name="complete_tutorial">네, 알겠어요!</string>
   <string name="dismiss_tutorial">나중에 알려주세요</string>
-  <string name="intro_1_title">Habitica에 오신걸 환영합니다</string>
-  <string name="intro_1_description">%s명이 넘는 사람들과 함께 아바타도 만들고 재미있게 즐기면서 실생활 목표들을 달성하세요.</string>
-  <string name="intro_2_title">게임 진행도 = 인생 진행도</string>
-  <string name="intro_2_description">일상생활의 과제들을 해결하면서 게임의 새로운 기능을 열어보세요. 당신이 목표를 달성할 때 마다 갑옷, 펫과 같은 다양한 보상들을 얻을 수 있습니다!</string>
-  <string name="intro_3_title">친구들과 몬스터를 물리치세요</string>
+  <string name="intro_1_subtitle">오신 것을 환영합니다</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">게임의 진전</string>
+  <string name="intro_2_title">삶의 진전</string>
+  <string name="intro_2_description">실제 삶에서의 일을 처리하는 것으로 게임의 특색들을 잠금해제 하세요. 목표를 달성해 갑옷, 펫, 그리고 더 많은 것들을 얻으세요.</string>
+  <string name="intro_3_subtitle">친목을 다지세요</string>
+  <string name="intro_3_title">몬스터와 싸우세요</string>
   <string name="intro_3_description">친구들의 도움으로 당신의 목표를 유지시키세요. 일상 생활과 전투에서 서로를 도와가며 함께 성장하세요!</string>
-  <string name="intro_finish_button">시작하기</string>
+  <string name="intro_finish_button">시작합시다!</string>
   <string name="previous_button">이전</string>
   <string name="next_button">다음</string>
   <string name="skip_button">스킵</string>
   <string name="setup_welcome_description">Habitica에 오신걸 환영합니다. 게임에서의 진행도는 당신 일상에서의 진행도를 의미하죠! 과제를 달성할수록 새로운 장비, 펫, 퀘스트 등을 열 수 있어요.</string>
   <string name="setup_welcome_title">환영합니다</string>
-  <string name="avatar_setup_description">우선은 게임에서 당신을 대표할 아바타가 필요해요! 당신이 일상생활에서하는 행동들은 아바타의 체력, 경험치와 골드에 영향을 미칠꺼에요.</string>
-  <string name="task_setup_description">잘했어요! 이제 과제를 설정하여 경험치와 골드를 얻어볼까요.
-
-우선, 당신은 일상의 어떤 부분을 개선하고 싶으신가요?</string>
   <string name="setup_group_work">일</string>
   <string name="setup_group_exercise">운동</string>
-  <string name="setup_group_heathWellness">건강</string>
   <string name="setup_group_school">학교</string>
   <string name="setup_group_teams">팀</string>
   <string name="setup_group_chores">집안일</string>
@@ -448,6 +445,7 @@
   <string name="subscription">정기구독</string>
   <string name="active">활성중</string>
   <string name="cancel_subscription">구독 취소하기</string>
+  <string name="cancel_subscription_google.description">탈퇴하고 싶으신가요? 구글 플레이 스토어의 \"My Apps\"에 탈퇴 옵션이 있습니다.</string>
   <string name="visit_habitica_website">Habitica 웹사이트 가기</string>
   <string name="current_bonuses">현재 발동중인 보너스</string>
   <string name="months_subscribed">구독한 기간</string>
@@ -466,6 +464,10 @@
   <string name="challenge_details">도전 내용</string>
   <string name="challenge_leave_title">도전 그만두기</string>
   <string name="challenge_leave_text">정말로 “%s” 도전을 그만 두시겠습니까?</string>
+  <string name="challenge_remove_tasks_title">할일 제거</string>
+  <string name="challenge_remove_tasks_text">할일을 제거하고 싶으신가요?</string>
+  <string name="remove_tasks">제거하기</string>
+  <string name="keep_tasks">놔두기</string>
   <string name="my_challenges">나의 도전들</string>
   <string name="public_challenges">공개</string>
   <string name="challenges">도전과제들</string>
@@ -493,5 +495,11 @@
   <string name="myster_item_notes">매달, 정기후원자는 미스터리 아이템을 제공받습니다. 아이템은 달이 끝나기 한 주전쯤 출시됩니다.</string>
   <string name="open">열기</string>
   <string name="notification_mystery_item">상자를 열어 %s을/를 찾았습니다!</string>
+  <string name="checkInRewardEarned">삶을 증진시키려는 노력의 대가로 %1$s를 얻었습니다.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">다음 보상은 %1$d번 출석 후에 풀립니다.</string>
+  <string name="done">완료</string>
+  <string name="group_tasks_edit_description">그룹 할일은 편집할 수 없습니다.</string>
+  <string name="group_tasks_edit_title">이 할일을 편집할 수 없습니다.</string>
+  <string name="groups">그룹</string>
+  <string name="all">모든</string>
 </resources>

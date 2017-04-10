@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,16 +75,14 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Nullable
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
-    private String activeFilter;
 
-    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType, @Nullable String activeFilter,
+    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType,
                                                        @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
         fragment.sortCallback = sortCallback;
-        fragment.activeFilter = activeFilter;
         return fragment;
     }
 
@@ -128,7 +127,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        taskFilterHelper.setActiveFilter(activeFilter);
+        if (classType.equals(Task.TYPE_DAILY)) {
+            if (user.getPreferences().getDailyDueDefaultView()) {
+                taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE);
+            }
+        }
 
         mItemTouchCallback = new ItemTouchHelper.Callback() {
             private Integer mFromPosition = null;
@@ -139,9 +142,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
                 }
+                swipeRefreshLayout.setEnabled(false);
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                swipeRefreshLayout.setEnabled(true);
                 if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
                 ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
@@ -186,6 +191,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             if (recyclerView.getAdapter() == null) {
                 this.setInnerAdapter();
             }
+
+            int bottomPadding = (int) (recyclerView.getPaddingBottom() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics()));
+            recyclerView.setPadding(0, 0, 0, bottomPadding);
 
             swipeRefreshLayout.setOnRefreshListener(this);
         }
@@ -291,8 +299,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     public void setActiveFilter(String activeFilter) {
-        this.activeFilter = activeFilter;
-        taskFilterHelper.setActiveFilter(activeFilter);
+        taskFilterHelper.setActiveFilter(classType, activeFilter);
         recyclerAdapter.filter();
     }
 }

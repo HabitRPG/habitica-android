@@ -3,9 +3,7 @@ package com.habitrpg.android.habitica.helpers;
 import com.habitrpg.android.habitica.R;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRpgClass;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
 import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
 
 import junit.framework.Assert;
@@ -14,7 +12,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 /**
  * Created by Keith Holliday on 3/31/2017.
@@ -29,10 +26,10 @@ public class UserStatComputerTest {
     private String key;
     private String text;
 
-    int str = 1;
-    int intStat = 2;
-    int per = 3;
-    int con = 4;
+    private int str = 1;
+    private int intStat = 2;
+    private int per = 3;
+    private int con = 4;
 
     public UserStatComputerTest () {
         userStatComputer = new UserStatComputer();

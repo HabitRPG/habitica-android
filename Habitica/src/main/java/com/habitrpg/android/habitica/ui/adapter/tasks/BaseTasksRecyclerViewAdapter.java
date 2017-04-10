@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +36,12 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     protected CrashlyticsProxy crashlyticsProxy;
     protected List<Task> content;
     protected List<Task> filteredContent;
-    int layoutResource;
+    private int layoutResource;
     Context context;
     private TaskFilterHelper taskFilterHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
-                                        Context newContext, String userID) {
+                                        Context newContext, @Nullable String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext.getApplicationContext();
@@ -81,11 +82,11 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         return filteredContent != null ? filteredContent.size() : 0;
     }
 
-    public View getContentView(ViewGroup parent) {
+    View getContentView(ViewGroup parent) {
         return getContentView(parent, layoutResource);
     }
 
-    public View getContentView(ViewGroup parent, int layoutResource) {
+    protected View getContentView(ViewGroup parent, int layoutResource) {
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
@@ -105,7 +106,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     }
 
     public void filter() {
-        if (this.taskFilterHelper == null || this.taskFilterHelper.howMany() == 0) {
+        if (this.taskFilterHelper == null || this.taskFilterHelper.howMany(taskType) == 0) {
             filteredContent = content;
         } else {
             filteredContent = new ObservableArrayList<>();

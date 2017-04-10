@@ -1,5 +1,7 @@
 package com.magicmicky.habitrpgwrapper.lib.api;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.ErrorResponse;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
@@ -29,7 +31,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,15 +85,15 @@ public interface ApiClient {
 
     Observable<ArrayList<String>> postTaskNewPosition(String id, String position);
 
-    Observable<Task> scoreChecklistItem(String taskId,  String itemId);
+    Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> createItem(Task item);
 
     Observable<List<Task>> createTasks(List<Task> tasks);
 
-    Observable<Task> updateTask(String id,  Task item);
+    Observable<Task> updateTask(String id, Task item);
 
-    Observable<Void> deleteTask( String id);
+    Observable<Void> deleteTask(String id);
 
 
     Observable<Tag> createTag(Tag tag);
@@ -110,9 +111,9 @@ public interface ApiClient {
 
     Observable<HabitRPGUser> revive();
 
-    Observable<SkillResponse> useSkill( String skillName, String targetType,  String targetId);
+    Observable<SkillResponse> useSkill(String skillName, String targetType, String targetId);
 
-    Observable<SkillResponse> useSkill( String skillName,  String targetType);
+    Observable<SkillResponse> useSkill(String skillName, String targetType);
 
     Observable<HabitRPGUser> changeClass();
 
@@ -128,30 +129,30 @@ public interface ApiClient {
 
     Observable<Group> getGroup(String groupId);
 
-    Observable<Void> updateGroup( String id, Group item);
+    Observable<Void> updateGroup(String id, Group item);
 
-    Observable<List<ChatMessage>> listGroupChat( String groupId);
+    Observable<List<ChatMessage>> listGroupChat(String groupId);
 
     Observable<Group> joinGroup(String groupId);
 
-    Observable<Void> leaveGroup( String groupId);
+    Observable<Void> leaveGroup(String groupId);
 
-    Observable<PostChatMessageResult> postGroupChat( String groupId, HashMap<String, String> message);
+    Observable<PostChatMessageResult> postGroupChat(String groupId, Map<String, String> message);
 
-    Observable<Void> deleteMessage( String groupId,  String messageId);
+    Observable<Void> deleteMessage(String groupId, String messageId);
 
-    Observable<List<HabitRPGUser>> getGroupMembers( String groupId,  Boolean includeAllPublicFields);
+    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
 
-    Observable<List<HabitRPGUser>> getGroupMembers( String groupId,  Boolean includeAllPublicFields,  String lastId);
+    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
 
     // Like returns the full chat list
-    Observable<ChatMessage> likeMessage( String groupId, String mid);
+    Observable<ChatMessage> likeMessage(String groupId, String mid);
 
-    Observable<Void> flagMessage(String groupId,  String mid);
+    Observable<Void> flagMessage(String groupId, String mid);
 
     Observable<Void> seenMessages(String groupId);
 
-    Observable<Void> inviteToGroup( String groupId,  Map<String, Object> inviteData);
+    Observable<Void> inviteToGroup(String groupId, Map<String, Object> inviteData);
 
     Observable<Void> rejectGroupInvite(String groupId);
 
@@ -159,13 +160,13 @@ public interface ApiClient {
 
     Observable<Void> rejectQuest(String groupId);
 
-    Observable<Void> cancelQuest( String groupId);
+    Observable<Void> cancelQuest(String groupId);
 
-    Observable<Quest> forceStartQuest( String groupId, Group group);
+    Observable<Quest> forceStartQuest(String groupId, Group group);
 
-    Observable<Quest> inviteToQuest( String groupId,String questKey);
+    Observable<Quest> inviteToQuest(String groupId,String questKey);
 
-    Observable<Quest> abortQuest( String groupId);
+    Observable<Quest> abortQuest(String groupId);
 
     Observable<Void> leaveQuest(String groupId);
 
@@ -174,16 +175,16 @@ public interface ApiClient {
     Observable<HabitRPGUser> changeCustomDayStart(Map<String, Object> updateObject);
 
     //Members URL
-    Observable<HabitRPGUser> GetMember(String memberId);
+    Observable<HabitRPGUser> getMember(String memberId);
 
-    Observable<AchievementResult> GetMemberAchievements(String memberId);
+    Observable<AchievementResult> getMemberAchievements(String memberId);
 
-    Observable<PostChatMessageResult> postPrivateMessage(HashMap<String, String> messageDetails);
+    Observable<PostChatMessageResult> postPrivateMessage(Map<String, String> messageDetails);
 
     Observable<Shop> fetchShopInventory(String identifier);
 
     //Push notifications
-    Observable<Void> addPushDevice( Map<String, String> pushDeviceData);
+    Observable<Void> addPushDevice(Map<String, String> pushDeviceData);
 
     Observable<Void> deletePushDevice(String regId);
 
@@ -191,7 +192,7 @@ public interface ApiClient {
 
     Observable<ArrayList<Challenge>> getUserChallenges();
 
-    Observable<TaskList> getChallengeTasks( String challengeId);
+    Observable<TaskList> getChallengeTasks(String challengeId);
 
     Observable<Challenge> getChallenge(String challengeId);
 
@@ -208,11 +209,11 @@ public interface ApiClient {
 
     ErrorResponse getErrorResponse(HttpException throwable);
 
-    void updateAuthenticationCredentials(String userID, String apiToken);
+    void updateAuthenticationCredentials(@Nullable String userID, @Nullable String apiToken);
 
     boolean hasAuthenticationKeys();
 
-    Observable<HabitRPGUser> retrieveUser(boolean b);
+    Observable<HabitRPGUser> retrieveUser(boolean withTasks);
 
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
 

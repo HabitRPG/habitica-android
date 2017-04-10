@@ -1,8 +1,14 @@
 package com.habitrpg.android.habitica.ui.views.tasks;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -83,7 +89,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
         setTitle(R.string.filters);
         setView(view);
-        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.close), (dialog, which) -> {
+        this.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(R.string.done), (dialog, which) -> {
             if (isEditing) {
                 stopEditing();
             }
@@ -92,6 +98,26 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
             }
             this.dismiss();
         });
+
+        setButton(AlertDialog.BUTTON_NEUTRAL, getContext().getString(R.string.clear), (dialog, which) -> {
+        });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Button clearButton = getButton(AlertDialog.BUTTON_NEUTRAL);
+        if (clearButton != null) {
+            clearButton.setOnClickListener(view1 -> {
+                if (isEditing) {
+                    stopEditing();
+                }
+                setActiveFilter(null);
+                setActiveTags(null);
+            });
+            clearButton.setEnabled(hasActiveFilters());
+        }
+
     }
 
     @Override
@@ -108,10 +134,24 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     }
 
     private void createTagViews() {
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][]{
+
+                        new int[]{-android.R.attr.state_checked}, //disabled
+                        new int[]{android.R.attr.state_checked} //enabled
+                },
+                new int[] {
+
+                        Color.GRAY, //disabled
+                        ContextCompat.getColor(getContext(), R.color.brand_400) //enabled
+
+                }
+        );
         for (Tag tag : tags) {
-            CheckBox tagCheckbox = new CheckBox(getContext());
+            AppCompatCheckBox tagCheckbox = new AppCompatCheckBox(getContext());
             tagCheckbox.setText(tag.getName());
             tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+            CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList);
             tagCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     if (!activeTags.contains(tag.getId())) {
@@ -122,6 +162,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
                         activeTags.remove(tag.getId());
                     }
                 }
+                filtersChanged();
             });
             tagsList.addView(tagCheckbox);
         }
@@ -218,13 +259,21 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     }
 
     public void setActiveTags(List<String> tagIds) {
-        this.activeTags = tagIds;
-        for (String tagId : tagIds) {
+        if (tagIds == null) {
+            this.activeTags.clear();
+        } else {
+            this.activeTags = tagIds;
+        }
+        for (int index = 0; index < tagsList.getChildCount()-1; index++) {
+            ((AppCompatCheckBox)tagsList.getChildAt(index)).setChecked(false);
+        }
+        for (String tagId : this.activeTags) {
             int index = indexForId(tagId);
             if (index >= 0) {
                 ((CheckBox)tagsList.getChildAt(index)).setChecked(true);
             }
         }
+        filtersChanged();
     }
 
     private int indexForId(String tagId) {
@@ -293,6 +342,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
             }
         }
         taskFilters.check(checkedId);
+        filtersChanged();
     }
 
     @Override
@@ -328,6 +378,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
                     break;
             }
         }
+        filtersChanged();
     }
 
     @OnClick(R.id.tag_edit_button)
@@ -338,6 +389,17 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         } else {
             stopEditing();
         }
+    }
+
+    private void filtersChanged() {
+        Button clearButton = getButton(AlertDialog.BUTTON_NEUTRAL);
+        if (clearButton != null) {
+            clearButton.setEnabled(hasActiveFilters());
+        }
+     }
+
+    private boolean hasActiveFilters() {
+        return taskFilters.getCheckedRadioButtonId() != R.id.all_task_filter || activeTags.size() > 0;
     }
 
     public void setListener(OnFilterCompletedListener listener) {

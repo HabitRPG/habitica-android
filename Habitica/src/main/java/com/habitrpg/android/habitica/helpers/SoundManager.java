@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-
-import android.media.MediaPlayer;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +27,10 @@ public class SoundManager {
     SoundFileLoader soundFileLoader;
     private String soundTheme;
 
-    private MediaPlayer mp = new MediaPlayer();
-
     private HashMap<String, SoundFile> loadedSoundFiles;
 
     public SoundManager() {
-        HabiticaApplication.getInstance(HabiticaApplication.currentActivity).getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
 
         loadedSoundFiles = new HashMap<>();
     }
@@ -84,7 +80,7 @@ public class SoundManager {
                 loadedSoundFiles.put(type, file);
                 file.play();
 
-            }, throwable -> throwable.printStackTrace());
+            }, Throwable::printStackTrace);
         }
     }
 

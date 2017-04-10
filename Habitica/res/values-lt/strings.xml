@@ -180,25 +180,14 @@
   <string name="sidebar_help">Pagalba &amp; DUK</string>
   <string name="complete_tutorial">Supratau!</string>
   <string name="dismiss_tutorial">Priminti man vėliau</string>
-  <string name="intro_1_title">Sveiki užsukę į Habitica</string>
-  <string name="intro_1_description">Prisijunkite prie virš %s žmonių smagiai atliekančių kasdienes užduotis. Susikurkite avatarą ir sekite savo realaus gyvenimo užduotis.</string>
-  <string name="intro_2_title">Progresas Žaidime = Progresas Gyvenime</string>
-  <string name="intro_2_description">Atidenk naujas žaidimo funkcijas žymėdamas savo gyvenimo užduotis. Užsidirbk šarvus, augintinius ir kitus atlygius siekdamas savo tikslų!</string>
-  <string name="intro_3_title">Bendrauk ir Kovok su Pabaisomis</string>
   <string name="intro_3_description">Sek savo tikslus pasitelkęs draugų pagalbą. Padėkit vienas kitam gyvenime kartu kovodami su pabaisomis!</string>
-  <string name="intro_finish_button">Pradėk</string>
   <string name="previous_button">Praeitas</string>
   <string name="next_button">Kitas</string>
   <string name="skip_button">Praleisti</string>
   <string name="setup_welcome_description">Sveiki užsukę į Habitica, kur tobulėjimas žaidime padės jums tobulėti gyvenime! Kai siekiate gyvenimo tikslų, gausite aprangos, įrankių, augintinių, misijų ir daugiau.</string>
   <string name="setup_welcome_title">Sveiki</string>
-  <string name="avatar_setup_description">Pirma, tau reik veikėjo, kuris žaidime atspindės tave! Tavo gyvenimo darbai atsispindės tavo veikėjo sveikatoje, patirtyje ir aukso kiekyje.</string>
-  <string name="task_setup_description">Nuostabu! Dabar sukurkime kelias užduotis, kad galėtum pradėti rinkti patirtį ir auksą.
-
-Pradžiai, kurias savo gyvenimo dalis norėtum tobulint?</string>
   <string name="setup_group_work">Darbas</string>
   <string name="setup_group_exercise">Sportas</string>
-  <string name="setup_group_heathWellness">Sveikata</string>
   <string name="setup_group_school">Mokslai</string>
   <string name="setup_group_teams">Komandos</string>
   <string name="setup_group_chores">Ruošos Darbai</string>

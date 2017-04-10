@@ -109,14 +109,18 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         AvatarCustomizationFragment fragment = new AvatarCustomizationFragment();
         fragment.type = type;
         fragment.category = category;
-        activity.displayFragment(fragment);
+        if (activity != null) {
+            activity.displayFragment(fragment);
+        }
     }
 
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        viewBinding.setPreferences(user.getPreferences());
-        this.setSize(user.getPreferences().getSize());
+        if (user != null) {
+            viewBinding.setPreferences(user.getPreferences());
+            this.setSize(user.getPreferences().getSize());
+        }
     }
 
     private void setSize(String size) {

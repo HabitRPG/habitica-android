@@ -124,7 +124,7 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiClient.GetMember(this.userId)
+        apiClient.getMember(this.userId)
 
                 .subscribe(this::updateView,
                         throwable -> {
@@ -248,7 +248,7 @@ public class FullProfileActivity extends BaseActivity {
         mountsTamedCount.setText(String.valueOf(user.getMountsTamedCount()));
 
         // Load the members achievements now
-        apiClient.GetMemberAchievements(this.userId)
+        apiClient.getMemberAchievements(this.userId)
 
                 .subscribe(this::fillAchievements,
                         throwable -> {
@@ -375,26 +375,28 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.GetItemDataList(outfitList, gotEntries);
+        contentCache.getItemDataList(outfitList, gotEntries);
     }
 
     public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {
         UserStatComputer userStatComputer = new UserStatComputer();
         List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
 
-        // @TODO: MAke this dynamic by iterating over rows and check type?
-        UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) statsRows.get(0);
-        addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats);
+        for (UserStatComputer.StatsRow row : statsRows) {
+            if (row.getClass().equals(UserStatComputer.EquipmentRow.class)) {
+                UserStatComputer.EquipmentRow equipmentRow = (UserStatComputer.EquipmentRow) row;
+                addEquipmentRow(equipmentTableLayout, equipmentRow.gearKey, equipmentRow.text, equipmentRow.stats);
+            } else if (row.getClass().equals(UserStatComputer.AttributeRow.class)) {
+                UserStatComputer.AttributeRow attributeRow2 = (UserStatComputer.AttributeRow) row;
+                addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary);
+            }
+        }
 
         stopAndHideProgress(equipmentProgress);
         equipmentTableLayout.setVisibility(View.VISIBLE);
 
-        // @TOOD: We could probably remove the excess parameters - thank you classes
-        UserStatComputer.AttributeRow attributeRow1 = (UserStatComputer.AttributeRow) statsRows.get(1);
-        addAttributeRow(getString(attributeRow1.labelId) + ": ", attributeRow1.strVal, attributeRow1.intVal, attributeRow1.conVal, attributeRow1.perVal, attributeRow1.roundDown, attributeRow1.isSummary);
-
-        UserStatComputer.AttributeRow attributeRow2 = (UserStatComputer.AttributeRow) statsRows.get(2);
-        addAttributeRow(getString(attributeRow2.labelId), attributeRow2.strVal, attributeRow2.intVal, attributeRow2.conVal, attributeRow2.perVal, attributeRow2.roundDown, attributeRow2.isSummary);
+        stopAndHideProgress(attributesProgress);
+        attributesTableLayout.setVisibility(View.VISIBLE);
     }
 
     public void gotCostume(List<ItemData> obj) {

@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
 import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallegeDetailDialogHolder;
+import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -248,7 +248,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     private void showChallengeLeaveDialog(){
         new AlertDialog.Builder(this)
                 .setTitle(this.getString(R.string.challenge_leave_title))
-                .setMessage(String.format(this.getString(R.string.challenge_leave_text), challenge.name))
+                .setMessage(this.getString(R.string.challenge_leave_text, challenge.name))
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 
@@ -319,23 +319,25 @@ public class ChallengeDetailActivity extends BaseActivity {
         public void bind(Challenge challenge) {
             this.challenge = challenge;
 
-            challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            if (challengeName != null) {
+                challengeName.setText(EmojiParser.parseEmojis(challenge.name));
+            }
             challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
 
-            memberCountTextView.setText(challenge.memberCount + "");
+            memberCountTextView.setText(String.valueOf(challenge.memberCount));
 
             if (challenge.prize == 0) {
                 gem_prize_layout.setVisibility(View.GONE);
             } else {
                 gem_prize_layout.setVisibility(View.VISIBLE);
-                gemPrizeTextView.setText(challenge.prize + "");
+                gemPrizeTextView.setText(String.valueOf(challenge.prize));
             }
         }
 
         @OnClick(R.id.btn_show_more)
         void onShowMore() {
 
-            ChallegeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
+            ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
                     HabiticaApplication.User, challenge,
                     challenge1 -> {
 
@@ -394,11 +396,8 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     public void onTaskDataReceived(TaskDirectionData data, Task task) {
         if (task.type.equals("reward")) {
-
             showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), UiUtils.SnackbarDisplayType.NORMAL);
-
         } else {
-
             if (HabiticaApplication.User != null) {
                 notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, () -> {
                     // retrieveUser? forward message to MainActivity ? or mark it to refresh ?

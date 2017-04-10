@@ -1,5 +1,38 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
+import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
+import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -35,36 +68,6 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -78,6 +81,7 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.exceptions.Exceptions;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Mickael Goubin
@@ -131,12 +135,11 @@ public class LoginActivity extends BaseActivity
     EditText mEmail;
     @BindView(R.id.confirm_password)
     EditText mConfirmPassword;
-    @BindView(R.id.fb_login_button)
-    Button mFacebookLoginBtn;
     @BindView(R.id.forgot_pw_tv)
     TextView mForgotPWTV;
     private CallbackManager callbackManager;
     private String googleEmail;
+    private LoginManager loginManager;
 
     @Override
     protected int getLayoutResId() {
@@ -184,10 +187,12 @@ public class LoginActivity extends BaseActivity
 
     private void setupFacebookLogin() {
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
+        loginManager = LoginManager.getInstance();
+        loginManager.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        Log.e("Login", "SUCCESS");
                         AccessToken accessToken = AccessToken.getCurrentAccessToken();
                         apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                                 .subscribe(LoginActivity.this, throwable -> hideProgress());
@@ -195,10 +200,12 @@ public class LoginActivity extends BaseActivity
 
                     @Override
                     public void onCancel() {
+                        Log.e("Login", "CANCEL");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
+                        exception.printStackTrace();
                     }
                 });
 
@@ -206,8 +213,11 @@ public class LoginActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-
-        super.onBackPressed();
+        if (isShowingForm) {
+            hideForm();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -334,6 +344,15 @@ public class LoginActivity extends BaseActivity
         if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR) {
             handleGoogleLoginResult();
         }
+
+        if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
+            //This is necessary because the regular login callback is not called for some reason
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            if (accessToken.getToken() != null) {
+                apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
+                        .subscribe(LoginActivity.this, throwable -> hideProgress());
+            }
+        }
     }
 
     private void parse(String contents) {
@@ -438,7 +457,7 @@ public class LoginActivity extends BaseActivity
 
     @OnClick(R.id.fb_login_button)
     public void handleFacebookLogin() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("user_friends"));
+        loginManager.logInWithReadPermissions(this, Collections.singletonList("user_friends"));
     }
 
     @OnClick(R.id.google_login_button)
@@ -468,9 +487,10 @@ public class LoginActivity extends BaseActivity
                 throw Exceptions.propagate(e);
             }
         })
+                .subscribeOn(Schedulers.io())
                 .flatMap(token -> apiClient.connectSocial("google", googleEmail, token))
-
                 .subscribe(LoginActivity.this, throwable -> {
+                    throwable.printStackTrace();
                     hideProgress();
                     if (throwable.getCause() != null && GoogleAuthException.class.isAssignableFrom(throwable.getCause().getClass())) {
                         handleGoogleAuthException((GoogleAuthException) throwable.getCause());
@@ -519,6 +539,7 @@ public class LoginActivity extends BaseActivity
             hideForm();
         }
     }
+
 
     private void showForm() {
         isShowingForm = true;
@@ -599,5 +620,6 @@ public class LoginActivity extends BaseActivity
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation);
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation);
         showAnimation.start();
+        UiUtils.dismissKeyboard(this);
     }
 }

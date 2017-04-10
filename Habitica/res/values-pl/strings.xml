@@ -181,25 +181,22 @@
   <string name="sidebar_help">Pomoc i FAQ</string>
   <string name="complete_tutorial">Jasne!</string>
   <string name="dismiss_tutorial">Przypomnij mi później</string>
-  <string name="intro_1_title">Witaj w Habitica</string>
-  <string name="intro_1_description">Dołącz do ponad %s ludzi bawiących się podczas wypełniania swoich zadań. Stwórz awatar i śledź swoje zadania w życiu codziennym.</string>
-  <string name="intro_2_title">Awans w grze = Awans w życiu</string>
-  <string name="intro_2_description">Odblokuj właściwości gry poprzez wypełnianie zadań w życiu. Zdobądź broń, chowańce i wiele innych nagród za zrealizowanie celów!</string>
-  <string name="intro_3_title">Połącz siły w innymi graczami i pokonuj potwory</string>
+  <string name="intro_1_subtitle">Witaj w</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">Postęp w grze</string>
+  <string name="intro_2_title">Postęp w życiu</string>
+  <string name="intro_2_description">Odblokuj cechy w grze przez wykonywanie twoich zadań z realnego życia. Zdobywaj broń, chowańce i znacznie więcej za realizacje swoich celów.</string>
+  <string name="intro_3_title">Walcz z potworami</string>
   <string name="intro_3_description">Zmierzaj do swoich celów z pomocą przyjaciół. Wspierajcie się wzajemnie w życiu i w walce, aby wspólnie się udoskonalać!</string>
-  <string name="intro_finish_button">Zaczynamy</string>
+  <string name="intro_finish_button">Zaczynajmy!</string>
   <string name="previous_button">Poprzedni</string>
   <string name="next_button">Następny</string>
   <string name="skip_button">Pomiń</string>
   <string name="setup_welcome_description">Witaj w Habitice, gdzie postęp w grze ulepszy Twoje życie! Osiągając cele w prawdziwym świecie, odblokowujesz ekwipunek, chowańce, misje i wiele więcej.</string>
   <string name="setup_welcome_title">Witaj</string>
-  <string name="avatar_setup_description">Na początek, potrzebujesz awatara - swojego odpowiednika w grze! To, co robisz w prawdziwym życiu, ma wpływ na zdrowie, poziom doświadczenia i złoto Twojego awatara.</string>
-  <string name="task_setup_description">Wspaniale! Teraz ustalmy Twoje zadania, żebyś zaczął zdobywać doświadczenie i złoto.
-
-Od czego chcesz zacząć poprawiać swoje życie?</string>
+  <string name="avatar_setup_description">Więc, jak chciałbyś wyglądać. Nie obawiaj się, możesz to później zmienić.</string>
   <string name="setup_group_work">Praca</string>
   <string name="setup_group_exercise">Ćwiczenia</string>
-  <string name="setup_group_heathWellness">Zdrowie i dobre samopoczucie</string>
   <string name="setup_group_school">Szkoła</string>
   <string name="setup_group_teams">Zespoły</string>
   <string name="setup_group_chores">Obowiązki domowe</string>
@@ -447,6 +444,10 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="challenge_details">Szczegóły wyzwania</string>
   <string name="challenge_leave_title">Opuść wyzwanie.</string>
   <string name="challenge_leave_text">Jesteś pewien, że chcesz opuścić wyzwanie “%s”?</string>
+  <string name="challenge_remove_tasks_title">Usuń zadania</string>
+  <string name="challenge_remove_tasks_text">Czy chcesz usunąć zadania</string>
+  <string name="remove_tasks">Usuń</string>
+  <string name="keep_tasks">Zachowaj</string>
   <string name="my_challenges">Moje wyzwania</string>
   <string name="public_challenges">Publiczne</string>
   <string name="challenges">Wyzwania</string>
@@ -474,4 +475,31 @@ Od czego chcesz zacząć poprawiać swoje życie?</string>
   <string name="open">Otwórz</string>
   <string name="notification_mystery_item">Otwórz pudełko i znajdź %s!</string>
   <string name="checkInRewardEarned">Zdobyłeś %1$s jako nagrodę za poświęcenie w poprawie swojego życia.</string>
+  <string name="pending_approval">oczekująca aprobata</string>
+  <string name="filters">Filtry</string>
+  <string name="done">Zrobione</string>
+  <string name="group_tasks_edit_description">Grupowe zadanie nie mogą być edytowane.</string>
+  <string name="group_tasks_edit_title">Nie możesz edytować tego zadania</string>
+  <string name="groups">Grupy</string>
+  <string name="all">Wszystkie</string>
+  <string name="none">Żadne</string>
+  <string name="owned">Posiadane</string>
+  <string name="not_owned">Nieposiadane</string>
+  <string name="new_game">Nowa\nGra</string>
+  <string name="login_btn_fb">Zaloguj z Facebookiem</string>
+  <string name="login_btn_google">Zaloguj z Google</string>
+  <string name="action_back">Wróć</string>
+  <string name="randomize">Losowy</string>
+  <string name="avatar_extras">Dodatki</string>
+  <string name="avatar_skin_color">Kolor skóry </string>
+  <string name="avatar_hair_color">Kolor włosów</string>
+  <string name="avatar_hair_bangs">Grzywka</string>
+  <string name="avatar_hair_ponytail">Koński ogon</string>
+  <string name="avatar_glasses">Okulary</string>
+  <string name="avatar_wheelchair">Wózek</string>
+  <string name="weak">Słaby</string>
+  <string name="strong">Silny</string>
+  <string name="gray">Szary</string>
+  <string name="dated">Przestarzały</string>
+  <string name="setuP_group_other">Pozostałe</string>
 </resources>

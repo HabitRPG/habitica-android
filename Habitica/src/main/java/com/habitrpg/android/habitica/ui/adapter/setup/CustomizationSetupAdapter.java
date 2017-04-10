@@ -58,7 +58,6 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Object obj = customizationList.get(position);
         ((CustomizationViewHolder) holder).bind(customizationList.get(position));
     }
 
@@ -155,12 +154,20 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
                 imageView.setImageDrawable(null);
             }
             textView.setText(customization.text);
-            if (isCustomizationActive(customization)) {
-                imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected);
-                textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+            if ("flowers".equals(customization.subcategory)) {
+                if (isCustomizationActive(customization)) {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected);
+                } else {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg);
+                }
             } else {
-                imageView.setBackgroundResource(R.drawable.setup_customization_bg);
-                textView.setTextColor(ContextCompat.getColor(context, R.color.white_50_alpha));
+                if (isCustomizationActive(customization)) {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected);
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+                } else {
+                    imageView.setBackgroundResource(R.drawable.setup_customization_bg);
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.white_50_alpha));
+                }
             }
         }
 
@@ -168,7 +175,11 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
         public void onClick(View v) {
             if (customization.path.equals("glasses")) {
                 EquipCommand command = new EquipCommand();
-                command.key = customization.key;
+                if (customization.key.length() == 0) {
+                    command.key = user.getItems().getGear().getEquipped().getEyeWear();
+                } else {
+                    command.key = customization.key;
+                }
                 command.type = "equipped";
                 EventBus.getDefault().post(command);
             } else {

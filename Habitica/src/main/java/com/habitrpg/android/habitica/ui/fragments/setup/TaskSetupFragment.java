@@ -82,7 +82,7 @@ public class TaskSetupFragment extends BaseFragment {
         this.taskGroups = new String[][]{
                 {getString(R.string.setup_group_work), "work"},
                 {getString(R.string.setup_group_exercise), "exercise"},
-                {getString(R.string.setup_group_heathWellness), "healthWellness"},
+                {getString(R.string.setup_group_health), "healthWellness"},
                 {getString(R.string.setup_group_school), "school"},
                 {getString(R.string.setup_group_teams), "teams"},
                 {getString(R.string.setup_group_chores), "chores"},

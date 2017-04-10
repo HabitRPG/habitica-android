@@ -15,6 +15,7 @@ import android.os.Build;
 
 import java.util.UUID;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
@@ -23,10 +24,12 @@ public class TagAPITests extends BaseAPITests {
 
     @Test
     public void shouldCreateTag() {
-        TestSubscriber<HabitResponse<Tag>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
         Tag tag = new Tag();
         tag.setName("foo");
-        apiClient.createTag(tag).subscribe(testSubscriber);
+        apiClient.createTag(tag)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -35,7 +38,7 @@ public class TagAPITests extends BaseAPITests {
 
     @Test
     public void shouldUpdateTag() {
-        TestSubscriber<HabitResponse<Tag>> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<Tag> testSubscriber = new TestSubscriber<>();
 
         Tag t = new Tag();
         String newname = "BAR";
@@ -44,19 +47,23 @@ public class TagAPITests extends BaseAPITests {
 
         //Attempt to update the test user's first tag
         String testId = getUser().getTags().get(0).getId();
-        apiClient.updateTag(testId,t).subscribe(testSubscriber);
+        apiClient.updateTag(testId,t)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
-        Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getData().getName());
+        Assert.assertEquals(newname,testSubscriber.getOnNextEvents().get(0).getName());
 
     }
 
     @Test
     public void shouldDeleteTag() {
-        TestSubscriber<HabitResponse<Void>> testSub = new TestSubscriber<>();
+        TestSubscriber<Void> testSub = new TestSubscriber<>();
 
         String testId = getUser().getTags().get(0).getId();
-        apiClient.deleteTag(testId).subscribe(testSub);
+        apiClient.deleteTag(testId)
+                .subscribe(testSub);
+        testSub.awaitTerminalEvent();
         testSub.assertNoErrors();
         testSub.assertCompleted();
     }
