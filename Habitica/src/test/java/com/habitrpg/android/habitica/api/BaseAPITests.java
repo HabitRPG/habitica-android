@@ -18,7 +18,9 @@ import android.content.Context;
 
 import java.security.InvalidParameterException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 public class BaseAPITests {
@@ -47,7 +49,8 @@ public class BaseAPITests {
         TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
         username = UUID.randomUUID().toString();
         apiClient.registerUser(username, username+"@example.com", password, password)
-        .subscribe(testSubscriber);
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         testSubscriber.assertCompleted();
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
         hostConfig.setUser(response.getId());
@@ -57,7 +60,9 @@ public class BaseAPITests {
     public HabitRPGUser getUser() {
         TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
 
-        apiClient.getUser().subscribe(userSubscriber);
+        apiClient.getUser()
+                .subscribe(userSubscriber);
+        userSubscriber.awaitTerminalEvent();
         userSubscriber.assertNoErrors();
         userSubscriber.assertCompleted();
         HabitRPGUser user = userSubscriber.getOnNextEvents().get(0);

@@ -17,7 +17,9 @@ import android.os.Build;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)
@@ -38,7 +40,9 @@ public class SocialAPITests extends BaseAPITests {
         HashMap<String, String> messageObject = new HashMap<>();
         messageObject.put("message", "Foo Bar"+messageSuffix);
         TestSubscriber<PostChatMessageResult> testSubscriber = new TestSubscriber<>();
-        apiClient.postGroupChat(groupID, messageObject).subscribe(testSubscriber);
+        apiClient.postGroupChat(groupID, messageObject)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         PostChatMessageResult result = testSubscriber.getOnNextEvents().get(0);
@@ -51,7 +55,9 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "1");
 
         TestSubscriber<Group> testSubscriber = new TestSubscriber<>();
-        apiClient.getGroup(groupID).subscribe(testSubscriber);
+        apiClient.getGroup(groupID)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -64,7 +70,9 @@ public class SocialAPITests extends BaseAPITests {
         postMessage(groupID, "2");
 
         TestSubscriber<List<ChatMessage>> testSubscriber = new TestSubscriber<>();
-        apiClient.listGroupChat(groupID).subscribe(testSubscriber);
+        apiClient.listGroupChat(groupID)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -76,6 +84,7 @@ public class SocialAPITests extends BaseAPITests {
         for (String messageID : this.messagesIDs) {
             apiClient.deleteMessage("habitrpg", messageID)
                     .subscribe(testSubscriber);
+            testSubscriber.awaitTerminalEvent();
             testSubscriber.assertNoErrors();
             testSubscriber.assertCompleted();
         }

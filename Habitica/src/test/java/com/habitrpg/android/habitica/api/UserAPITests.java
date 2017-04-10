@@ -15,6 +15,7 @@ import android.os.Build;
 
 import java.util.UUID;
 
+import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
@@ -27,7 +28,9 @@ public class UserAPITests extends BaseAPITests {
     @Test
     public void shouldLoadUserFromServer() {
         TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
-        apiClient.getUser().subscribe(testSubscriber);
+        apiClient.getUser()
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -36,7 +39,9 @@ public class UserAPITests extends BaseAPITests {
     @Test
     public void shouldLoadCompleteUserFromServer() {
         TestSubscriber<HabitRPGUser> testSubscriber = new TestSubscriber<>();
-        apiClient.retrieveUser(true).subscribe(testSubscriber);
+        apiClient.retrieveUser(true)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         testSubscriber.assertValueCount(1);
@@ -50,6 +55,7 @@ public class UserAPITests extends BaseAPITests {
         username = UUID.randomUUID().toString();
         apiClient.registerUser(username, username+"@example.com", password, password)
                 .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
@@ -61,7 +67,9 @@ public class UserAPITests extends BaseAPITests {
     @Test
     public void shouldLoginExistingUser() {
         TestSubscriber<UserAuthResponse> testSubscriber = new TestSubscriber<>();
-        apiClient.connectUser(username, password).subscribe(testSubscriber);
+        apiClient.connectUser(username, password)
+                .subscribe(testSubscriber);
+        testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         UserAuthResponse response = testSubscriber.getOnNextEvents().get(0);
