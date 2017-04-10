@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,13 +77,37 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback;
     private ItemTouchHelper.Callback mItemTouchCallback;
 
-    public static TaskRecyclerViewFragment newInstance(@Nullable HabitRPGUser user, String classType,
+    public static TaskRecyclerViewFragment newInstance(Context context, @Nullable HabitRPGUser user, String classType,
                                                        @Nullable SortableTasksRecyclerViewAdapter.SortTasksCallback sortCallback) {
         TaskRecyclerViewFragment fragment = new TaskRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;
         fragment.classType = classType;
         fragment.sortCallback = sortCallback;
+
+        switch (fragment.classType) {
+            case Task.TYPE_HABIT: {
+                fragment.tutorialStepIdentifier = "habits";
+                fragment.tutorialText = context.getString(R.string.tutorial_habits);
+                break;
+            }
+            case Task.FREQUENCY_DAILY: {
+                fragment.tutorialStepIdentifier = "dailies";
+                fragment.tutorialText = context.getString(R.string.tutorial_dailies);
+                break;
+            }
+            case Task.TYPE_TODO: {
+                fragment.tutorialStepIdentifier = "todos";
+                fragment.tutorialText = context.getString(R.string.tutorial_todos);
+                break;
+            }
+            case Task.TYPE_REWARD: {
+                fragment.tutorialStepIdentifier = "rewards";
+                fragment.tutorialText = context.getString(R.string.tutorial_rewards);
+                break;
+            }
+        }
+
         return fragment;
     }
 
@@ -200,29 +225,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
         if (savedInstanceState != null) {
             this.classType = savedInstanceState.getString(CLASS_TYPE_KEY, "");
-        }
-
-        switch (this.classType) {
-            case Task.TYPE_HABIT: {
-                this.tutorialStepIdentifier = "habits";
-                this.tutorialText = getString(R.string.tutorial_habits);
-                break;
-            }
-            case Task.FREQUENCY_DAILY: {
-                this.tutorialStepIdentifier = "dailies";
-                this.tutorialText = getString(R.string.tutorial_dailies);
-                break;
-            }
-            case Task.TYPE_TODO: {
-                this.tutorialStepIdentifier = "todos";
-                this.tutorialText = getString(R.string.tutorial_todos);
-                break;
-            }
-            case Task.TYPE_REWARD: {
-                this.tutorialStepIdentifier = "rewards";
-                this.tutorialText = getString(R.string.tutorial_rewards);
-                break;
-            }
         }
 
         return view;

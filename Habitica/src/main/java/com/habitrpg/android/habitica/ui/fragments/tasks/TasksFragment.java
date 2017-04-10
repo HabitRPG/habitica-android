@@ -234,16 +234,16 @@ public class TasksFragment extends BaseMainFragment {
 
                 switch (position) {
                     case 0:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_HABIT, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_HABIT, sortCallback);
                         break;
                     case 1:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_DAILY, sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_DAILY, sortCallback);
                         break;
                     case 3:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_REWARD, null);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_REWARD, null);
                         break;
                     default:
-                        fragment = TaskRecyclerViewFragment.newInstance(user, Task.TYPE_TODO,sortCallback);
+                        fragment = TaskRecyclerViewFragment.newInstance(getContext(), user, Task.TYPE_TODO,sortCallback);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);
