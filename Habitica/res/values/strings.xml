@@ -118,6 +118,16 @@
     <string name="frequency_weekly">On Certain Days of the Week</string>
     <string name="frequency_daily">Every X Days</string>
 
+    <string name="repeatables_summary_title">Summary</string>
+    <string name="repeatables_title">Repeats</string>
+    <string name="repeatables_on_title">Repeats On</string>
+    <string name="repeatables_frequency_daily">Daily</string>
+    <string name="repeatables_frequency_weekly">Weekly</string>
+    <string name="repeatables_frequency_monthly">Monthly</string>
+    <string name="repeatables_frequency_yearly">Yearly</string>
+    <string name="repeatables_frequency_day_of_month">Day of Month</string>
+    <string name="repeatables_frequency_day_of_week">Day of Week</string>
+
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
