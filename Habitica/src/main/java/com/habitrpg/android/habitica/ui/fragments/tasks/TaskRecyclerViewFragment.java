@@ -127,6 +127,12 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        if (classType.equals(Task.TYPE_DAILY)) {
+            if (user.getPreferences().getDailyDueDefaultView()) {
+                taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE);
+            }
+        }
+
         mItemTouchCallback = new ItemTouchHelper.Callback() {
             private Integer mFromPosition = null;
 

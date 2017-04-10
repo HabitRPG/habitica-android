@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -26,8 +27,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -242,7 +245,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private AvatarWithBarsViewModel avatarInHeader;
     private AlertDialog faintDialog;
     private AvatarView sideAvatarView;
-    private AvatarView dialogAvatarView;
     private Date lastSync;
     private TutorialView activeTutorialView;
     private boolean isloadingContent;
@@ -325,15 +327,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return result;
     }
 
-    private int getNavigationBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
     @Override
     protected void injectActivity(AppComponent component) {
         component.inject(this);
@@ -374,9 +367,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(getString(R.string.warning))
                         .setMessage(R.string.dont_keep_activities_warning)
-                        .setNeutralButton(R.string.close, (warningDialog, which) -> {
-                            warningDialog.dismiss();
-                        })
+                        .setNeutralButton(R.string.close, (warningDialog, which) -> warningDialog.dismiss())
                         .setPositiveButton(R.string.open_settings, (hatchingDialog, which) -> {
                             showDeveloperOptionsScreen();
                             hatchingDialog.dismiss();
@@ -1113,9 +1104,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     );
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
-                    .subscribe(res -> {
-                        onTaskDataReceived(res, event.Reward);
-                    }, error -> {
+                    .subscribe(res -> onTaskDataReceived(res, event.Reward), error -> {
                     });
         }
 
@@ -1139,17 +1128,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
         apiClient.openMysteryItem()
-                .subscribe(mysteryItem -> {
-                    apiClient.retrieveUser(false)
-                            .subscribe(new HabitRPGUserCallback(user1 -> {
-                                OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
-                                openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
-                                openedEvent.mysteryItem = mysteryItem;
-                                EventBus.getDefault().post(openedEvent);
-                                MainActivity.this.onUserReceived(user1);
-                            }), throwable -> {
-                            });
-                }, throwable -> {
+                .subscribe(mysteryItem -> apiClient.retrieveUser(false)
+                        .subscribe(new HabitRPGUserCallback(user1 -> {
+                            OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
+                            openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
+                            openedEvent.mysteryItem = mysteryItem;
+                            EventBus.getDefault().post(openedEvent);
+                            MainActivity.this.onUserReceived(user1);
+                        }), throwable -> {
+                        }), throwable -> {
                 });
     }
 
@@ -1198,15 +1185,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                             .setTitle(getString(R.string.hatched_pet_title, potionName, eggName))
                             .setView(petWrapper)
-                            .setPositiveButton(R.string.close, (hatchingDialog, which) -> {
-                                hatchingDialog.dismiss();
-                            })
+                            .setPositiveButton(R.string.close, (hatchingDialog, which) -> hatchingDialog.dismiss())
                             .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                 ShareEvent event1 = new ShareEvent();
                                 event1.sharedMessage = getString(R.string.share_hatched, potionName, eggName) + " https://habitica.com/social/hatch-pet";
                                 Bitmap sharedImage = Bitmap.createBitmap(140, 140, Bitmap.Config.ARGB_8888);
                                 Canvas canvas = new Canvas(sharedImage);
-                                canvas.drawColor(getResources().getColor(R.color.brand_300));
+                                canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300));
                                 petImageView.getDrawable().draw(canvas);
                                 event1.shareImage = sharedImage;
                                 EventBus.getDefault().post(event1);
@@ -1249,7 +1234,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                     event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
                                     Bitmap sharedImage = Bitmap.createBitmap(99, 99, Bitmap.Config.ARGB_8888);
                                     Canvas canvas = new Canvas(sharedImage);
-                                    canvas.drawColor(getResources().getColor(R.color.brand_300));
+                                    canvas.drawColor(ContextCompat.getColor(this, R.color.brand_300));
                                     mountImageView.getDrawable().draw(canvas);
                                     event1.shareImage = sharedImage;
                                     EventBus.getDefault().post(event1);
@@ -1322,7 +1307,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 hpBar.setPartyMembers(true);
                 AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
 
-                dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
+                AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setUser(user);
             }
 
@@ -1540,15 +1525,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (this.drawer != null) {
             this.drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, gravity);
         }
-    }
-
-    public void closeDrawer(int gravity) {
-        this.drawer.closeDrawer();
-    }
-
-    public void openDrawer(int gravity) {
-        EventBus.getDefault().post(new ToggledEditTagsEvent(false));
-        this.drawer.openDrawer();
     }
 
     @Subscribe

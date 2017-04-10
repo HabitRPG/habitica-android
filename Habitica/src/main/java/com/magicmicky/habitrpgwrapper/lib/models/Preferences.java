@@ -25,13 +25,13 @@ public class Preferences extends BaseModel {
     @ForeignKey(references = {@ForeignKeyReference(columnName = "suppressedModals_user_id",
             columnType = String.class,
             foreignColumnName = "userId")})
-    public SuppressedModals suppressModals;
+    SuppressedModals suppressModals;
     @Column
     @PrimaryKey
     @NotNull
     String user_id;
     @Column
-    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader;
+    private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView;
     @Column
     private String allocationMode, shirt, skin, size, background, chair, language, sound;
     @Column
@@ -234,5 +234,13 @@ public class Preferences extends BaseModel {
             suppressModals.userId = user_id;
 
         super.save();
+    }
+
+    public boolean getDailyDueDefaultView() {
+        return dailyDueDefaultView;
+    }
+
+    public void setDailyDueDefaultView(boolean dailyDueDefaultView) {
+        this.dailyDueDefaultView = dailyDueDefaultView;
     }
 }

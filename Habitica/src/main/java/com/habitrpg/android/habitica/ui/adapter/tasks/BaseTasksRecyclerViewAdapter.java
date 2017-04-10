@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     private TaskFilterHelper taskFilterHelper;
 
     public BaseTasksRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
-                                        Context newContext, String userID) {
+                                        Context newContext, @Nullable String userID) {
         this.setHasStableIds(true);
         this.taskType = taskType;
         this.context = newContext.getApplicationContext();

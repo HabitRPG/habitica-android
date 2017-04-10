@@ -1,28 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -43,8 +20,34 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
+import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -81,20 +84,20 @@ public class TasksFragment extends BaseMainFragment {
 
         viewPager = (ViewPager) v.findViewById(R.id.view_pager);
         View view = inflater.inflate(R.layout.floating_menu_tasks, floatingMenuWrapper, true);
-        if (Objects.equals(view.getClass(), FloatingActionMenu.class)) {
+        if (FloatingActionMenu.class.equals(view.getClass())) {
             floatingMenu = (FloatingActionMenu) view;
         } else {
             ViewGroup frame = (ViewGroup) view;
             floatingMenu = (FloatingActionMenu) frame.findViewById(R.id.fab_menu);
         }
         FloatingActionButton habit_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_habit);
-        habit_fab.setOnClickListener(v1 -> openNewTaskActivity("habit"));
+        habit_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_HABIT));
         FloatingActionButton daily_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_daily);
-        daily_fab.setOnClickListener(v1 -> openNewTaskActivity("daily"));
+        daily_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_DAILY));
         FloatingActionButton todo_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_todo);
-        todo_fab.setOnClickListener(v1 -> openNewTaskActivity("todo"));
+        todo_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_TODO));
         FloatingActionButton reward_fab = (FloatingActionButton) floatingMenu.findViewById(R.id.fab_new_reward);
-        reward_fab.setOnClickListener(v1 -> openNewTaskActivity("reward"));
+        reward_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_REWARD));
         floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
         if (this.activity != null) {
@@ -172,17 +175,37 @@ public class TasksFragment extends BaseMainFragment {
         }
         dialog.setListener((activeTaskFilter, activeTags) -> {
             int activePos = viewPager.getCurrentItem();
-            if (activePos >= 1) {
+            if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
             }
-            getActiveFragment().setActiveFilter(activeTaskFilter);
-            if (activePos < viewPager.getAdapter().getCount()) {
+            if (activePos < viewPager.getAdapter().getCount() && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
+            }
+            if (getActiveFragment() != null) {
+                getActiveFragment().setActiveFilter(activeTaskFilter);
+                if (Task.TYPE_DAILY.equals(getActiveFragment().classType)) {
+                    updateDailyDueDefaultSetting(activeTaskFilter);
+                }
+
             }
             taskFilterHelper.setTags(activeTags);
             updateFilterIcon();
+
         });
         dialog.show();
+    }
+
+    private void updateDailyDueDefaultSetting(String activeTaskFilter) {
+        Boolean showDueDefault = Task.FILTER_ACTIVE.equals(activeTaskFilter);
+        if (user != null) {
+            if (user.getPreferences().getDailyDueDefaultView() != showDueDefault) {
+                UpdateUserCommand command = new UpdateUserCommand();
+                Map<String, Object> data = new HashMap<>();
+                data.put("preferences.dailyDueDefaultView", showDueDefault);
+                command.updateData = data;
+                EventBus.getDefault().post(command);
+            }
+        }
     }
 
     public void refresh() {
@@ -410,8 +433,11 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void switchToTaskTab(String taskType) {
+        if (taskType == null) {
+            return;
+        }
         for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-            if (viewFragmentsDictionary.get(index).getClassName().equals(taskType) && viewPager != null) {
+            if (taskType.equals(viewFragmentsDictionary.get(index).getClassName()) && viewPager != null) {
                 viewPager.setCurrentItem(index);
             }
         }

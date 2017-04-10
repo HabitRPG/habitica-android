@@ -24,7 +24,7 @@ public class TaskFilterHelper {
     }
 
     public int howMany(String type) {
-        return this.tagsId.size() + (activeFilters.get(type) != null ? 1 : 0);
+        return this.tagsId.size() + (activeFilters.get(type) != null || Task.FILTER_ACTIVE.equals(activeFilters.get(type)) ? 1 : 0);
     }
 
     public List<String> getTags() {

@@ -17,13 +17,14 @@ import android.widget.CheckBox;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-class ChallegeFilterDialogHolder {
+class ChallengeFilterDialogHolder {
 
     @BindView(R.id.challenge_filter_recycler_view)
     RecyclerView groupRecyclerView;
@@ -51,7 +52,7 @@ class ChallegeFilterDialogHolder {
     private ChallengesFilterRecyclerViewAdapter adapter;
 
 
-    private ChallegeFilterDialogHolder(View view, Activity context) {
+    private ChallengeFilterDialogHolder(View view, Activity context) {
         this.context = context;
         ButterKnife.bind(this, view);
     }
@@ -61,12 +62,12 @@ class ChallegeFilterDialogHolder {
                            Action1<ChallengeFilterOptions> selectedGroupsCallback) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_filter, null);
 
-        ChallegeFilterDialogHolder challegeFilterDialogHolder = new ChallegeFilterDialogHolder(dialogLayout, activity);
+        ChallengeFilterDialogHolder challengeFilterDialogHolder = new ChallengeFilterDialogHolder(dialogLayout, activity);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setView(dialogLayout);
 
-        challegeFilterDialogHolder.bind(builder.show(), challengesViewed, currentFilter, selectedGroupsCallback);
+        challengeFilterDialogHolder.bind(builder.show(), challengesViewed, currentFilter, selectedGroupsCallback);
     }
 
     public void bind(AlertDialog dialog, List<Challenge> challengesViewed,
@@ -97,16 +98,19 @@ class ChallegeFilterDialogHolder {
     }
 
     private Collection<Group> getGroups(@Nullable List<Challenge> challenges){
-        HashMap<String, Group> groupMap = new HashMap<>();
+        Map<String, Group> groupMap = new HashMap<>();
 
         if (challenges != null) {
-            challenges.stream().filter(c -> !groupMap.containsKey(c.groupName)).forEach(c -> {
-                Group g = new Group();
-                g.id = c.groupId;
-                g.name = c.groupName;
+            for (Challenge challenge : challenges) {
+                if (groupMap.containsKey(challenge.groupName)) {
+                    continue;
+                }
+                Group group = new Group();
+                group.id = challenge.groupId;
+                group.name = challenge.groupName;
 
-                groupMap.put(c.groupName, g);
-            });
+                groupMap.put(challenge.groupName, group);
+            }
         }
 
         return groupMap.values();
