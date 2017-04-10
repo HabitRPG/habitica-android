@@ -12,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.5'
+        classpath 'io.fabric.tools:gradle:1.21.6'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath('com.noveogroup.android:check:1.2.3') {
@@ -78,7 +78,7 @@ dependencies {
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
 
     // Emojis
-    compile 'com.github.viirus:emoji-lib:0.0.3.2'
+    compile 'com.github.viirus:emoji-lib:0.0.3.4'
 
     // Markdown
     compile 'com.commonsware.cwac:anddown:0.3.0'
