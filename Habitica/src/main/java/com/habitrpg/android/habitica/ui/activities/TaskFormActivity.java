@@ -42,6 +42,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -259,6 +260,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private Task task;
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
+    private List<CheckBox> repeatablesWeekDayCheckboxes = new ArrayList<>();
     private NumberPicker frequencyPicker;
     private List<Tag> tags;
     private CheckListAdapter checklistAdapter;
@@ -542,28 +544,24 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
                     repeatablesOnTitleParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
                     reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
-
-                    return;
-                }
-
-                if (position == 1) {
+                }else if (position == 1) {
                     ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
-                    repeatablesFrequencyContainerParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 172, r.getDisplayMetrics());
+                    repeatablesFrequencyContainerParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 220, r.getDisplayMetrics());
                     repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
                     return;
+                } else {
+                    ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
+                    repeatablesOnSpinnerParams.height = 0;
+                    repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
+
+                    ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
+                    repeatablesOnTitleParams.height =  0;
+                    reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
+
+                    ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
+                    repeatablesFrequencyContainerParams.height = 0;
+                    repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
                 }
-
-                ViewGroup.LayoutParams repeatablesOnSpinnerParams = repeatablesOnSpinner.getLayoutParams();
-                repeatablesOnSpinnerParams.height = 0;
-                repeatablesOnSpinner.setLayoutParams(repeatablesOnSpinnerParams);
-
-                ViewGroup.LayoutParams repeatablesOnTitleParams = reapeatablesOnTextView.getLayoutParams();
-                repeatablesOnTitleParams.height =  0;
-                reapeatablesOnTextView.setLayoutParams(repeatablesOnTitleParams);
-
-                ViewGroup.LayoutParams repeatablesFrequencyContainerParams = repeatablesFrequencyContainer.getLayoutParams();
-                repeatablesFrequencyContainerParams.height = 0;
-                repeatablesFrequencyContainer.setLayoutParams(repeatablesFrequencyContainerParams);
             }
 
             @Override
@@ -596,6 +594,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
 
+        this.repeatablesFrequencyContainer.removeAllViews();
         String[] weekdays = getResources().getStringArray(R.array.weekdays);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String dayOfTheWeek = sharedPreferences.getString("FirstDayOfTheWeek",
@@ -607,11 +606,18 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         weekdays = weekdaysTemp.toArray(new String[1]);
 
         for (int i = 0; i < 7; i++) {
-            View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, repeatablesFrequencyContainer, false);
+            View weekdayRow = getLayoutInflater().inflate(R.layout.row_checklist, this.repeatablesFrequencyContainer, false);
             CheckBox checkbox = (CheckBox) weekdayRow.findViewById(R.id.checkbox);
             checkbox.setText(weekdays[i]);
             checkbox.setChecked(true);
-            frequencyContainer.addView(weekdayRow);
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    generateSummary();
+                }
+            });
+            repeatablesWeekDayCheckboxes.add(checkbox);
+            repeatablesFrequencyContainer.addView(weekdayRow);
         }
 
         generateSummary();
@@ -638,8 +644,49 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         String weekdays = "";
+        List<String> weekdayStrings = new ArrayList<>();
+        int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+        if (this.repeatablesWeekDayCheckboxes.get(offset).isChecked()) {
+            weekdayStrings.add("Monday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).isChecked()) {
+            weekdayStrings.add("Tuesday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).isChecked()) {
+            weekdayStrings.add("Wednesday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).isChecked()) {
+            weekdayStrings.add("Thursday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).isChecked()) {
+            weekdayStrings.add("Friday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).isChecked()) {
+            weekdayStrings.add("Saturday");
+        }
+        if (this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked()) {
+            weekdayStrings.add("Sunday");
+        }
+        weekdays = " on " + TextUtils.join(", ", weekdayStrings);
+        if (!frequency.equals("Weekly")) {
+            weekdays = "";
+        }
 
-        String summary = "Repeats " + frequency + " every " + everyX + " " + frequencyQualifier + " on " + weekdays;
+        if (frequency.equals("Monthly")) {
+            weekdays = "";
+            Calendar calendar = startDateListener.getCalendar();
+            String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
+            if (monthlyFreq.equals("Day of Month")) {
+                Integer date = calendar.get(Calendar.DATE);
+                weekdays = " on the " + date.toString();
+            } else {
+                Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
+                String dayLongName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                weekdays = " on the " + week.toString() + " week on " + dayLongName;
+            }
+        }
+
+        String summary = "Repeats " + frequency + " every " + everyX + " " + frequencyQualifier + weekdays;
         summaryTextView.setText(summary);
     }
 
@@ -1027,6 +1074,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
                 if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
                     task.setFrequency("weekly");
+                    String frequency = this.repeatablesFrequencySpinner.getSelectedItem().toString();
+                    if (frequency != null && RemoteConfigManager.repeatablesAreEnabled()) {
+                        task.setFrequency(frequency.toLowerCase());
+                    }
+
                     Days repeat = task.getRepeat();
                     if (repeat == null) {
                         repeat = new Days();
@@ -1041,6 +1093,32 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
                     repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
                     repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+
+                    if (RemoteConfigManager.repeatablesAreEnabled()) {
+                        repeat.setM(this.repeatablesWeekDayCheckboxes.get(offset).isChecked());
+                        repeat.setT(this.repeatablesWeekDayCheckboxes.get((offset + 1) % 7).isChecked());
+                        repeat.setW(this.repeatablesWeekDayCheckboxes.get((offset + 2) % 7).isChecked());
+                        repeat.setTh(this.repeatablesWeekDayCheckboxes.get((offset + 3) % 7).isChecked());
+                        repeat.setF(this.repeatablesWeekDayCheckboxes.get((offset + 4) % 7).isChecked());
+                        repeat.setS(this.repeatablesWeekDayCheckboxes.get((offset + 5) % 7).isChecked());
+                        repeat.setSu(this.repeatablesWeekDayCheckboxes.get((offset + 6) % 7).isChecked());
+                    }
+
+                    if (frequency.equals("monthly")) {
+                        Calendar calendar = startDateListener.getCalendar();
+                        String monthlyFreq = repeatablesOnSpinner.getSelectedItem().toString();
+                        if (monthlyFreq.equals("Day of Month")) {
+                            Integer date = calendar.get(Calendar.DATE);
+                            task.daysOfMonth = new ArrayList<>();
+                            task.daysOfMonth.add(date);
+                            task.weeksOfMonth = new ArrayList<>();
+                        } else {
+                            Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
+                            task.weeksOfMonth = new ArrayList<>();
+                            task.weeksOfMonth.add(week);
+                            task.daysOfMonth = new ArrayList<>();
+                        }
+                    }
                 } else {
                     task.setFrequency("daily");
                     task.setEveryX(this.frequencyPicker.getValue());

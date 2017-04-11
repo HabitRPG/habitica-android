@@ -110,6 +110,11 @@ public class Task extends BaseModel {
     @Column
     public Boolean isDue;
 
+    // These do need to be local columns because all logic is stored in
+    // is due for now
+    public List<Integer> daysOfMonth  = new ArrayList<>();
+    public List<Integer> weeksOfMonth  = new ArrayList<>();
+
     /**
      * @return the id
      */
