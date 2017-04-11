@@ -56,4 +56,9 @@ public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> im
                 .flatMap(this::deleteTag)
                 .toList();
     }
+
+    @Override
+    public void removeOldTags(List<Tag> onlineTags) {
+        localRepository.removeOldTags(onlineTags);
+    }
 }

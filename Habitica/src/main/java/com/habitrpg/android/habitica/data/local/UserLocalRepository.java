@@ -8,4 +8,5 @@ public interface UserLocalRepository extends BaseLocalRepository {
 
     Observable<HabitRPGUser> getUser(String userID);
 
+    void saveUser(HabitRPGUser user);
 }

@@ -100,10 +100,6 @@ public class TasksFragment extends BaseMainFragment {
         reward_fab.setOnClickListener(v1 -> openNewTaskActivity(Task.TYPE_REWARD));
         floatingMenu.setOnMenuButtonLongClickListener(this::onFloatingMenuLongClicked);
 
-        if (this.activity != null) {
-            this.activity.unlockDrawer(GravityCompat.END);
-        }
-
         loadTaskLists();
 
         if (bottomNavigation != null) {

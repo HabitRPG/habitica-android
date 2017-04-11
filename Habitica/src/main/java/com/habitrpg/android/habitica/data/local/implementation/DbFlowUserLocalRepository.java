@@ -18,4 +18,9 @@ public class DbFlowUserLocalRepository implements UserLocalRepository {
         return Observable.defer(() -> Observable.just(new Select()
         .from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).querySingle()));
     }
+
+    @Override
+    public void saveUser(HabitRPGUser user) {
+        user.async().save();
+    }
 }

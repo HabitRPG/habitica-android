@@ -8,7 +8,6 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import java.util.Map;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
@@ -30,7 +29,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<HabitRPGUser> retrieveUser(Boolean withTasks) {
-        return apiClient.retrieveUser(withTasks);
+        return apiClient.retrieveUser(withTasks)
+                .doOnNext(localRepository::saveUser);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
             oldUser.getStats().merge(newUser.getStats());
         }
 
-        oldUser.async().save();
+        localRepository.saveUser(oldUser);
         return oldUser;
     }
 }
