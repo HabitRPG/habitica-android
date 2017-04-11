@@ -7,11 +7,12 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observable;
 
 public interface TaskRepository extends BaseRepository  {
-    Observable<ArrayList<Task>> getTasks(String taskType);
+    Observable<List<Task>> getTasks(String taskType, String userID);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
@@ -21,4 +22,6 @@ public interface TaskRepository extends BaseRepository  {
     Observable<Task> createTask(Task task);
 
     Observable<Task> updateTask(Task task);
+
+    Observable<Void> deleteTask(String taskID);
 }

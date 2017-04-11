@@ -18,6 +18,11 @@ public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> im
     }
 
     @Override
+    public Observable<List<Tag>> getTags() {
+        return localRepository.getTags();
+    }
+
+    @Override
     public Observable<Tag> createTag(Tag tag) {
         return apiClient.createTag(tag);
     }

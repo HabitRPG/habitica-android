@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 @Config(constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)
-public class HabitRPGUserTest {
+public class UserTest {
 
     private HabitRPGUser user;
 

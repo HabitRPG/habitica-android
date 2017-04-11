@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -667,5 +668,18 @@ public class Task extends BaseModel {
             }
         }
         return false;
+    }
+
+    public void parseMarkdown() {
+        try {
+            this.parsedText = MarkdownParser.parseMarkdown(this.getText());
+        } catch (NullPointerException e) {
+            this.parsedText = this.getText();
+        }
+        try {
+            this.parsedNotes = MarkdownParser.parseMarkdown(this.getNotes());
+        } catch (NullPointerException e) {
+            this.parsedNotes = this.getNotes();
+        }
     }
 }

@@ -48,6 +48,7 @@ import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
@@ -232,6 +233,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Inject
     TaskRepository taskRepository;
+    @Inject
+    UserRepository userRepository;
 
     // endregion
 
@@ -244,23 +247,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private Date lastSync;
     private TutorialView activeTutorialView;
     private boolean isloadingContent;
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            MainActivity.this.user = habitRPGUser;
-            MainActivity.this.setUserData(true);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
 
     @Override
@@ -291,7 +277,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         pushNotificationManager = PushNotificationManager.getInstance(this);
 
-        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+        userRepository.getUser(hostConfig.getUser())
+                .subscribe(newUser -> {
+                    MainActivity.this.user = newUser;
+                    MainActivity.this.setUserData(true);
+                }, throwable -> {});
 
         setupToolbar(toolbar);
 
@@ -448,8 +438,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if (offset != user.getPreferences().getTimezoneOffset()) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
-                apiClient.updateUser(updateData)
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                userRepository.updateUser(user, updateData)
+                        .subscribe(this::onUserReceived, throwable -> {
                         });
             }
             runOnUiThread(() -> {
@@ -947,17 +937,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == SELECT_CLASS_RESULT) {
-            if (this.apiClient != null) {
-                this.apiClient.retrieveUser(true)
-
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                        });
-            }
+            retrieveUser();
         } else if (requestCode == GEM_PURCHASE_REQUEST) {
-            this.apiClient.retrieveUser(true)
-
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                    });
+            retrieveUser();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -977,8 +959,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        apiClient.updateUser(event.updateData)
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        userRepository.updateUser(user, event.updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
@@ -994,7 +976,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
         apiClient.unlockPath(event.path)
-
                 .subscribe(new UnlockCallback(this, this.user), throwable -> {
                 });
     }
@@ -1022,8 +1003,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             observable
 
                     .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .subscribe(buyResponse -> apiClient.retrieveUser(false)
-
+                    .subscribe(buyResponse -> userRepository.retrieveUser(false)
                             .subscribe(new HabitRPGUserCallback(this), throwable -> {
                             }), throwable -> {
                         HttpException error = (HttpException) throwable;
@@ -1115,16 +1095,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(final DeleteTaskCommand cmd) {
-        apiClient.deleteTask(cmd.TaskIdToDelete)
-                .subscribe(aVoid -> {
-                    EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
-                }, throwable -> {});
+        taskRepository.deleteTask(cmd.TaskIdToDelete)
+                .subscribe(aVoid -> EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete)), throwable -> {});
     }
 
     @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
         apiClient.openMysteryItem()
-                .subscribe(mysteryItem -> apiClient.retrieveUser(false)
+                .subscribe(mysteryItem -> userRepository.retrieveUser(false)
                         .subscribe(new HabitRPGUserCallback(user1 -> {
                             OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
                             openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
@@ -1154,7 +1132,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(SellItemCommand event) {
         this.apiClient.sellItem(event.item.getType(), event.item.getKey())
-
                 .subscribe(habitRPGUser -> {
                     user.setItems(habitRPGUser.getItems());
                     user.save();
@@ -1170,7 +1147,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
         this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
-
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
@@ -1206,7 +1182,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         final Pet pet = event.usingPet;
         this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
-
                 .subscribe(feedResponse -> {
                     MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
                     MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
@@ -1312,9 +1287,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        apiClient.revive()
-
-                                .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {
+                        userRepository.revive(user)
+                                .subscribe(this::onUserReceived, throwable -> {
                                 });
                     })
                     .create();
@@ -1340,9 +1314,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     protected void retrieveUser() {
-        this.apiClient.retrieveUser(true)
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                });
+        if (this.userRepository != null) {
+            this.userRepository.retrieveUser(true)
+                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                    });
+        }
     }
 
     @Subscribe
@@ -1372,9 +1348,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         String path = "flags.tutorial." + step.getTutorialGroup() + "." + step.getIdentifier();
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
-        apiClient.updateUser(updateData)
-
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        userRepository.updateUser(user,  updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
         this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();

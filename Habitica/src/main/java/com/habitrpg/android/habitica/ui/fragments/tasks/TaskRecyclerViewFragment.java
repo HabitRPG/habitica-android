@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
@@ -64,8 +65,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     ApiClient apiClient;
     @Inject
     TaskFilterHelper taskFilterHelper;
-    LinearLayoutManager layoutManager = null;
+    @Inject
+    UserRepository userRepository;
 
+    LinearLayoutManager layoutManager = null;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -323,7 +326,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        apiClient.retrieveUser(true)
+        userRepository.retrieveUser(true)
                 .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
                 .subscribe(
                         new HabitRPGUserCallback((MainActivity)getActivity()),

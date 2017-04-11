@@ -53,8 +53,8 @@ public class PartyInviteActivity extends BaseActivity {
     private String userIdToInvite;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            handleUserRecieved(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            handleUserRecieved(user);
         }
 
         @Override
@@ -63,7 +63,7 @@ public class PartyInviteActivity extends BaseActivity {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

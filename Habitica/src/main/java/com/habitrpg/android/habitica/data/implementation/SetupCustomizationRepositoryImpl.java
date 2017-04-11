@@ -6,9 +6,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

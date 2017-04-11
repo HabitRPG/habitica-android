@@ -32,8 +32,8 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private AppWidgetManager appWidgetManager;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            updateData(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            updateData(user);
         }
 
         @Override
@@ -42,7 +42,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

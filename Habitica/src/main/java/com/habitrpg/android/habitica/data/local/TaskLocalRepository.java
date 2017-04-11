@@ -5,12 +5,13 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observable;
 
 public interface TaskLocalRepository extends BaseLocalRepository {
 
-    Observable<ArrayList<Task>> getTasks(String taskType);
+    Observable<List<Task>> getTasks(String taskType, String userID);
 
     void saveTasks(TasksOrder tasksOrder, TaskList tasks);
 

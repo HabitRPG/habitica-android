@@ -4,6 +4,9 @@ import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.OrderBy;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +17,16 @@ import rx.Observable;
 public class DbFlowTaskLocalRepository implements TaskLocalRepository {
 
     @Override
-    public Observable<ArrayList<Task>> getTasks(String taskType) {
-        return null;
+    public Observable<List<Task>> getTasks(String taskType, String userID) {
+        return Observable.defer(() -> Observable.just(new Select().from(Task.class)
+                .where(Condition.column("type").eq(taskType))
+                .and(Condition.CombinedCondition
+                        .begin(Condition.column("completed").eq(false))
+                        .or(Condition.column("type").eq("daily"))
+                )
+                .and(Condition.column("user_id").eq(userID))
+                .orderBy(OrderBy.columns("position", "dateCreated").descending())
+                .queryList()));
     }
 
     @Override

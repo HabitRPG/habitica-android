@@ -54,8 +54,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            PreferencesFragment.this.setUser(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            PreferencesFragment.this.setUser(user);
         }
 
         @Override
@@ -64,7 +64,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

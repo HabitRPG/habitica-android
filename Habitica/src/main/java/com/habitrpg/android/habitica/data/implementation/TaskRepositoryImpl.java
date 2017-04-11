@@ -9,8 +9,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import rx.Observable;
 
@@ -24,8 +24,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<ArrayList<Task>> getTasks(String taskType) {
-        return this.localRepository.getTasks(taskType);
+    public Observable<List<Task>> getTasks(String taskType, String userID) {
+        return this.localRepository.getTasks(taskType, userID);
     }
 
     @Override
@@ -72,5 +72,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
             return Observable.empty();
         }
         return apiClient.updateTask(task.getId(), task);
+    }
+
+    @Override
+    public Observable<Void> deleteTask(String taskID) {
+        return apiClient.deleteTask(taskID);
     }
 }
