@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.data.implementation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
@@ -9,10 +9,16 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.ErrorResponse;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;

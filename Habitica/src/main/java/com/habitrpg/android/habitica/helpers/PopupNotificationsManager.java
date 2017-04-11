@@ -11,7 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
 

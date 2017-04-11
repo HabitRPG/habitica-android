@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.api;
 
 
-import com.habitrpg.android.habitica.ApiClientImpl;
+import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,6 @@ import java.security.InvalidParameterException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 public class BaseAPITests {

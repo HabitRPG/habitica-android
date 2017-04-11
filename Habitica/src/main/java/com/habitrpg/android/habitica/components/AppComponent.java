@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.components;
 
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;

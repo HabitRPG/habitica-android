@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica;
 
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.Transaction;

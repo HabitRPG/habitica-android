@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica;
 
 import android.support.annotation.Nullable;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.QuestBoss;
 import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
@@ -13,7 +13,6 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import rx.Observable;
 

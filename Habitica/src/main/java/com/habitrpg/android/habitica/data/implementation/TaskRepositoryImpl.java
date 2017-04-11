@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;

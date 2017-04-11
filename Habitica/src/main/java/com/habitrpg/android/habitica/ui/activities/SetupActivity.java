@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
-import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
@@ -35,21 +34,12 @@ import com.viewpagerindicator.IconPagerAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.preference.PreferenceManager;
-import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 
 import java.util.Calendar;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.magicmicky.habitrpgwrapper.lib.api;
+package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 

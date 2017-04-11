@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.TagLocalRepositoryImpl;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 
 import android.content.Context;
 

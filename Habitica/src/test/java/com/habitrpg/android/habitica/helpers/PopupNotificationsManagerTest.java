@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.ApiClientImpl;
+import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.Notification;
 import com.magicmicky.habitrpgwrapper.lib.models.notifications.NotificationData;
 
