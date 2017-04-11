@@ -81,7 +81,7 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
 
     private List<SetupCustomization> getGlasses() {
         return Arrays.asList(
-                SetupCustomization.createGlasses("eyewear_base_0", R.drawable.creator_blank_face),
+                SetupCustomization.createGlasses("", R.drawable.creator_blank_face),
                 SetupCustomization.createGlasses("eyewear_special_blackTopFrame", R.drawable.creator_eyewear_special_blacktopframe),
                 SetupCustomization.createGlasses("eyewear_special_blueTopFrame", R.drawable.creator_eyewear_special_bluetopframe),
                 SetupCustomization.createGlasses("eyewear_special_greenTopFrame", R.drawable.creator_eyewear_special_greentopframe),
