@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/empty_view"
-        style="@style/EmptyView"/>
+        style="@style/EmptyView"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>
