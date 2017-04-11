@@ -351,6 +351,9 @@ public class HabitRPGUser extends BaseModel {
     @Override
     public void save() {
         // We need to set the user_id to all other objects
+        if (id == null) {
+            return;
+        }
         preferences.user_id = id;
         stats.id = id;
         profile.user_Id = id;

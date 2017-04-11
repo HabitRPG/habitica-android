@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
+import android.support.annotation.Nullable;
+
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import java.util.ArrayList;
@@ -41,7 +43,10 @@ public class TaskFilterHelper {
 
     public List<Task> filter(List<Task> tasks) {
         List<Task> filtered = new ArrayList<>();
-        String activeFilter = activeFilters.get(tasks.get(0).type);
+        String activeFilter = null;
+        if (activeFilters != null && activeFilters.size() > 0) {
+            activeFilter = activeFilters.get(tasks.get(0).type);
+        }
         for (Task task : tasks) {
             if (isFiltered(task, activeFilter)) {
                 filtered.add(task);
@@ -51,7 +56,7 @@ public class TaskFilterHelper {
         return filtered;
     }
 
-    private boolean isFiltered(Task task, String activeFilter) {
+    private boolean isFiltered(Task task, @Nullable String activeFilter) {
         if (!task.containsAllTagIds(tagsId)) {
             return false;
         }
