@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -185,6 +186,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     protected SharedPreferences sharedPreferences;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    @BindView(R.id.appbar)
+    AppBarLayout appBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.detail_tabs)
@@ -1261,5 +1264,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    public boolean isAppBarExpanded() {
+        return (appBar.getHeight() - appBar.getBottom()) == 0;
     }
 }
