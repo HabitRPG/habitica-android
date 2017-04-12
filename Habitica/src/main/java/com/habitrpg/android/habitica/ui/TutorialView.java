@@ -66,6 +66,10 @@ public class TutorialView extends FrameLayout {
             } else {
                 speechBubbleView.setHasMoreContent(true);
             }
+        } else {
+            if (this.onReaction != null) {
+                this.onReaction.onTutorialCompleted(this.step);
+            }
         }
     }
 
@@ -85,13 +89,7 @@ public class TutorialView extends FrameLayout {
 
     @OnClick(R.id.background)
     public void backgroundClicked() {
-        if (isDisplayingLastStep()) {
-            if (this.onReaction != null) {
-                this.onReaction.onTutorialCompleted(this.step);
-            }
-        } else {
-            speechBubbleView.onClick(speechBubbleView);
-        }
+        speechBubbleView.onClick(speechBubbleView);
     }
 
     private boolean isDisplayingLastStep() {
