@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.EventBusException;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -41,7 +42,11 @@ public abstract class BaseFragment extends DialogFragment {
             if (step != null && !step.getWasCompleted() && (step.getDisplayedOn() == null || (new Date().getTime() - step.getDisplayedOn().getTime()) > 86400000)) {
                 DisplayTutorialEvent event = new DisplayTutorialEvent();
                 event.step = step;
-                event.tutorialText = tutorialText;
+                if (tutorialText != null) {
+                    event.tutorialText = tutorialText;
+                } else {
+                    event.tutorialTexts = tutorialTexts;
+                }
                 EventBus.getDefault().post(event);
             }
         }
@@ -56,6 +61,7 @@ public abstract class BaseFragment extends DialogFragment {
             return true;
         }
     };
+    public List<String> tutorialTexts;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

@@ -869,7 +869,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
-        this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+        if (tutorialEvent.tutorialText != null) {
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+        } else {
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts);
+        }
     }
 
     @Subscribe
@@ -1080,6 +1084,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private void displayTutorialStep(TutorialStep step, String text) {
         TutorialView view = new TutorialView(this, step, this);
         view.setTutorialText(text);
+        view.onReaction = this;
+        this.overlayLayout.addView(view);
+        this.activeTutorialView = view;
+
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", false);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
+    }
+
+    private void displayTutorialStep(TutorialStep step, List<String> texts) {
+        TutorialView view = new TutorialView(this, step, this);
+        view.setTutorialTexts(texts);
         view.onReaction = this;
         this.overlayLayout.addView(view);
         this.activeTutorialView = view;

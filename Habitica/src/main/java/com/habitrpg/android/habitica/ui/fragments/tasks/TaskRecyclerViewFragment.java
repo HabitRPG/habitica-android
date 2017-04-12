@@ -43,6 +43,8 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -100,22 +102,29 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         switch (fragment.classType) {
             case Task.TYPE_HABIT: {
                 fragment.tutorialStepIdentifier = "habits";
-                fragment.tutorialText = context.getString(R.string.tutorial_habits);
+                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_overview),
+                        context.getString(R.string.tutorial_habits_1),
+                        context.getString(R.string.tutorial_habits_2),
+                        context.getString(R.string.tutorial_habits_3),
+                        context.getString(R.string.tutorial_habits_4));
                 break;
             }
             case Task.FREQUENCY_DAILY: {
                 fragment.tutorialStepIdentifier = "dailies";
-                fragment.tutorialText = context.getString(R.string.tutorial_dailies);
+                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_dailies_1),
+                        context.getString(R.string.tutorial_dailies_2));
                 break;
             }
             case Task.TYPE_TODO: {
                 fragment.tutorialStepIdentifier = "todos";
-                fragment.tutorialText = context.getString(R.string.tutorial_todos);
+                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
+                        context.getString(R.string.tutorial_todos_2));
                 break;
             }
             case Task.TYPE_REWARD: {
                 fragment.tutorialStepIdentifier = "rewards";
-                fragment.tutorialText = context.getString(R.string.tutorial_rewards);
+                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_rewards_1),
+                        context.getString(R.string.tutorial_rewards_2));
                 break;
             }
         }

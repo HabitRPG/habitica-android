@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui;
 
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.views.Typewriter;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,19 +19,23 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpeechBubbleView extends FrameLayout {
+public class SpeechBubbleView extends FrameLayout implements View.OnClickListener {
 
     @BindView(R.id.name_plate)
     TextView namePlate;
 
     @BindView(R.id.textView)
-    TextView textView;
+    Typewriter textView;
 
     @BindView(R.id.npc_image_view)
     ImageView npcImageView;
 
     @BindView(R.id.confirmation_buttons)
     ViewGroup confirmationButtons;
+
+    @BindView(R.id.continue_indicator)
+    View continueIndicator;
+    private ShowNextListener showNextListener;
 
     public SpeechBubbleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,7 +58,43 @@ public class SpeechBubbleView extends FrameLayout {
         }
 
         confirmationButtons.setVisibility(View.GONE);
+
+        this.setOnClickListener(this);
     }
 
 
+    public void setConfirmationButtonVisibility(int visibility) {
+        confirmationButtons.setVisibility(visibility);
+    }
+
+    public void animateText(String text) {
+        this.textView.animateText(text);
+    }
+
+    public void setText(String text) {
+        this.textView.setText(text);
+    }
+
+    public void setHasMoreContent(Boolean hasMoreContent) {
+        continueIndicator.setVisibility(hasMoreContent ? View.VISIBLE : View.GONE);
+    }
+
+    public void setShowNextListener(ShowNextListener listener) {
+        showNextListener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (textView.isAnimating()) {
+            textView.stopTextAnimation();
+        } else {
+            if (showNextListener != null) {
+                showNextListener.showNextStep();
+            }
+        }
+    }
+
+    public interface ShowNextListener {
+        void showNextStep();
+    }
 }
