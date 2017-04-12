@@ -74,4 +74,8 @@ public class TutorialStep extends BaseModel {
     public void setDisplayedOn(Date displayedOn) {
         this.displayedOn = displayedOn;
     }
+
+    public boolean shouldDisplay() {
+        return  !this.getWasCompleted() && (this.getDisplayedOn() == null || (new Date().getTime() - this.getDisplayedOn().getTime()) > 86400000);
+    }
 }

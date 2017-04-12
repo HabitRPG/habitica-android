@@ -93,6 +93,8 @@
                 app:bb_inActiveTabColor="@color/brand_500"
                 app:bb_activeTabColor="@color/white"
                 app:bb_behavior="underNavbar"
+                app:bb_badgesHideWhenActive="true"
+                app:bb_badgeBackgroundColor="@color/brand_400"
                 />
 
         </LinearLayout>

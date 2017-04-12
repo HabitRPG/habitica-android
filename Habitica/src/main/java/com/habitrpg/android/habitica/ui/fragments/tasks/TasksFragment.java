@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
@@ -40,12 +39,17 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.roughike.bottombar.BottomBarTab;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -103,6 +107,7 @@ public class TasksFragment extends BaseMainFragment {
         loadTaskLists();
 
         if (bottomNavigation != null) {
+            bottomNavigation.setBadgesHideWhenActive(true);
             bottomNavigation.setOnTabSelectListener(tabId -> {
                 if (tabId == R.id.tab_habits) {
                     viewPager.setCurrentItem(0);
@@ -113,6 +118,7 @@ public class TasksFragment extends BaseMainFragment {
                 } else if (tabId == R.id.tab_rewards) {
                     viewPager.setCurrentItem(3);
                 }
+                updateBottomBarBadges();
             });
         }
 
@@ -308,6 +314,37 @@ public class TasksFragment extends BaseMainFragment {
         }
 
     }
+
+    private void updateBottomBarBadges() {
+        if (bottomNavigation == null) {
+            return;
+        }
+        List<TutorialStep> tutorialSteps = new Select().from(TutorialStep.class).where(Condition.column("identifier").in("habits", "dailies", "todos", "rewards")).queryList();
+
+        for (TutorialStep step : tutorialSteps) {
+            int id = -1;
+            switch (step.getIdentifier()) {
+                case "habits":
+                    id = R.id.tab_habits;
+                    break;
+                case "dailies":
+                    id = R.id.tab_dailies;
+                    break;
+                case "todos":
+                    id = R.id.tab_todos;
+                    break;
+                case "rewards":
+                    id = R.id.tab_rewards;
+                    break;
+            }
+            BottomBarTab tab = bottomNavigation.getTabWithId(id);
+            if (step.shouldDisplay()) {
+                tab.setBadgeCount(1);
+            } else {
+                tab.removeBadge();
+            }
+        }
+    }
     // endregion
 
     //region Events
@@ -435,6 +472,7 @@ public class TasksFragment extends BaseMainFragment {
         for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
             if (taskType.equals(viewFragmentsDictionary.get(index).getClassName()) && viewPager != null) {
                 viewPager.setCurrentItem(index);
+                updateBottomBarBadges();
             }
         }
     }

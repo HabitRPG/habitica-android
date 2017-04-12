@@ -39,7 +39,7 @@ public abstract class BaseFragment extends DialogFragment {
     private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
         @Override
         public void onResultReceived(TutorialStep step) {
-            if (step != null && !step.getWasCompleted() && (step.getDisplayedOn() == null || (new Date().getTime() - step.getDisplayedOn().getTime()) > 86400000)) {
+            if (step != null && step.shouldDisplay()) {
                 DisplayTutorialEvent event = new DisplayTutorialEvent();
                 event.step = step;
                 if (tutorialText != null) {
