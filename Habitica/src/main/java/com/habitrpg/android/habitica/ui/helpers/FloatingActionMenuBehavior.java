@@ -92,6 +92,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, final View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
+        View fabContainer = ((ViewGroup)child).getChildAt(0);
+
         /*
         Logic:
             - If we're scrolling downwards or we're at the bottom of the screen
@@ -99,8 +101,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
          */
         if ((dyConsumed > 20 || (dyConsumed == 0 && dyUnconsumed > 0)) && !isAnimating && !isOffScreen) {
             isAnimating = true;
-            slideFabOffScreen(child);
-            resetAnimatingStatusWithDelay(child);
+            slideFabOffScreen(fabContainer);
+            resetAnimatingStatusWithDelay(fabContainer);
             isOffScreen = true;
 
         /*
@@ -110,8 +112,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
          */
         } else if (isOffScreen && ((dyConsumed < -10 && !isAnimating) || dyUnconsumed < 0)) {
             isAnimating = true;
-            slideFabOnScreen(child);
-            resetAnimatingStatusWithDelay(child);
+            slideFabOnScreen(fabContainer);
+            resetAnimatingStatusWithDelay(fabContainer);
             isOffScreen = false;
         }
     }
