@@ -1,23 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
@@ -37,13 +23,25 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.squareup.haha.perflib.Main;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
