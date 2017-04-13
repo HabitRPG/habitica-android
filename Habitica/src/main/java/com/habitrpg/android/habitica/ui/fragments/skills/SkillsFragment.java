@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Skill;
 import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
@@ -42,7 +43,7 @@ public class SkillsFragment extends BaseMainFragment {
     private final int MEMBER_SELECTION_ACTIVITY = 11;
 
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     SkillsRecyclerViewAdapter adapter;
     private View view;
     private Skill selectedSkill;
@@ -77,8 +78,10 @@ public class SkillsFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.invalidateItemDecorations();
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(adapter);
     }
 
     private void checkUserLoadSkills() {
