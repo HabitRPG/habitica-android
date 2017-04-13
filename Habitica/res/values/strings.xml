@@ -45,10 +45,10 @@
 
     <!-- Adding tasks -->
     <string name="task_value">Value</string>
-    <string name="new_todo">New todo</string>
-    <string name="new_reward">New reward</string>
-    <string name="new_daily">New daily</string>
-    <string name="new_habit">New habit</string>
+    <string name="new_todo">New To-Do</string>
+    <string name="new_reward">New Reward</string>
+    <string name="new_daily">New Daily</string>
+    <string name="new_habit">New Habit</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
