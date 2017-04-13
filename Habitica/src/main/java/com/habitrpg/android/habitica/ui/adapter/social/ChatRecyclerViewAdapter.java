@@ -24,7 +24,10 @@ import net.pherth.android.emoji_library.EmojiTextView;
 import org.greenrobot.eventbus.EventBus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -181,6 +184,10 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         @BindView(R.id.tvLikes)
         @Nullable
         TextView tvLikes;
+        @BindView(R.id.community_guidelines_view)
+        @Nullable
+        TextView communityGuidelinesView;
+
         Context context;
         Resources res;
         int likeCount = 0;
@@ -240,6 +247,15 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                         tvLikes.setOnClickListener(this);
                     }
                 }
+            }
+
+            if (communityGuidelinesView != null) {
+                communityGuidelinesView.setPaintFlags(communityGuidelinesView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                communityGuidelinesView.setOnClickListener(v -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse("https://habitica.com/static/community-guidelines"));
+                    context.startActivity(i);
+                });
             }
         }
 
@@ -316,8 +332,8 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 tvLikes.setText("+" + likeCount);
             }
 
-            int backgroundColorRes = 0;
-            int foregroundColorRes = 0;
+            int backgroundColorRes;
+            int foregroundColorRes;
 
             if (likeCount != 0) {
                 if (currentUserLikedPost) {
