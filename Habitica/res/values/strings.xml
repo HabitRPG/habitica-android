@@ -258,7 +258,7 @@
     <string name="join">Join</string>
     <string name="leader">Leader</string>
     <string name="gems">Gems</string>
-    <string name="copy_as_todo">Copy as ToDo</string>
+    <string name="copy_as_todo">Copy as To-Do</string>
     <string name="send_pm">Send PM</string>
     <string name="flag">Flag</string>
     <string name="delete">Delete</string>
@@ -424,7 +424,7 @@
     <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
     <string name="widget_habit_button">Habitica Do Habit</string>
     <string name="widget_dailies">Habitica Dailies</string>
-    <string name="widget_todo_list">Habitica Todo List</string>
+    <string name="widget_todo_list">Habitica To-Do List</string>
     <string name="widget_add_task">Habitica Add Task</string>
     <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem.purchase.toolbartitle">Purchase</string>
