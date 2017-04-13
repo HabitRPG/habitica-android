@@ -15,10 +15,10 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.magicmicky.habitrpgwrapper.lib.api.ApiService;
 import com.magicmicky.habitrpgwrapper.lib.api.Server;
 import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
@@ -108,8 +108,9 @@ import okhttp3.Request;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
+import retrofit2.HttpException;
+import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.HttpException;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
@@ -306,7 +307,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
             this.showConnectionProblemDialog(R.string.internal_error_api);
         } else if (throwableClass.equals(SocketTimeoutException.class) || UnknownHostException.class.equals(throwableClass)) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body);
-        } else if (throwableClass.equals(HttpException.class)) {
+        } else if (throwableClass.equals(retrofit2.adapter.rxjava.HttpException.class)) {
             HttpException error = (HttpException) throwable;
             ErrorResponse res = getErrorResponse(error);
             int status = error.code();
@@ -317,12 +318,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
             }
 
             if (status >= 400 && status < 500) {
-                if (res != null && res.message != null && !res.message.isEmpty()) {
-                    showConnectionProblemDialog("", res.message);
+                if (res != null && res.getDisplayMessage().length() > 0) {
+                    showConnectionProblemDialog("", res.getDisplayMessage());
                 } else if (status == 401) {
                     showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body);
                 }
-
             } else if (status >= 500 && status < 600) {
                 this.showConnectionProblemDialog(R.string.internal_error_api);
             } else {
@@ -334,7 +334,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     public ErrorResponse getErrorResponse(HttpException error) {
-        retrofit2.Response<?> response = error.response();
+        Response<?> response = error.response();
         Converter<ResponseBody, ?> errorConverter =
                 gsonConverter
                         .responseBodyConverter(ErrorResponse.class, new Annotation[0], retrofitAdapter);
@@ -417,9 +417,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
                         .setTitle(resourceTitleString)
                         .setMessage(resourceMessageString)
-                        .setNeutralButton(android.R.string.ok, (dialog, which) -> {
-                            displayedAlert = null;
-                        });
+                        .setNeutralButton(android.R.string.ok, (dialog, which) -> displayedAlert = null);
 
                 if (!resourceTitleString.isEmpty()) {
                     builder.setIcon(R.drawable.ic_warning_black);
