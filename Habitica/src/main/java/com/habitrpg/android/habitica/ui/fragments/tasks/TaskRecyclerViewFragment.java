@@ -45,7 +45,9 @@ import com.squareup.haha.perflib.Main;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -100,11 +102,11 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         fragment.user = user;
         fragment.classType = classType;
         fragment.sortCallback = sortCallback;
-
+        List<String> tutorialTexts = null;
         switch (fragment.classType) {
             case Task.TYPE_HABIT: {
                 fragment.tutorialStepIdentifier = "habits";
-                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_overview),
+                tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_overview),
                         context.getString(R.string.tutorial_habits_1),
                         context.getString(R.string.tutorial_habits_2),
                         context.getString(R.string.tutorial_habits_3),
@@ -113,23 +115,28 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             }
             case Task.FREQUENCY_DAILY: {
                 fragment.tutorialStepIdentifier = "dailies";
-                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_dailies_1),
+                tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_dailies_1),
                         context.getString(R.string.tutorial_dailies_2));
                 break;
             }
             case Task.TYPE_TODO: {
                 fragment.tutorialStepIdentifier = "todos";
-                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
+                tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_todos_1),
                         context.getString(R.string.tutorial_todos_2));
                 break;
             }
             case Task.TYPE_REWARD: {
                 fragment.tutorialStepIdentifier = "rewards";
-                fragment.tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_rewards_1),
+                tutorialTexts = Arrays.asList(context.getString(R.string.tutorial_rewards_1),
                         context.getString(R.string.tutorial_rewards_2));
                 break;
             }
         }
+
+        if (tutorialTexts != null) {
+            fragment.tutorialTexts = new ArrayList<>(tutorialTexts);
+        }
+        fragment.tutorialCanBeDeferred = false;
 
         return fragment;
     }

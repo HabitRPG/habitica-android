@@ -35,10 +35,11 @@
         <LinearLayout
             android:id="@+id/confirmation_buttons"
             style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_gravity="right">
 
             <Button
                 android:id="@+id/dismissButton"
@@ -48,7 +49,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="@string/dismiss_tutorial"
-                android:theme="@style/DialogButton" />
+                android:theme="@style/DialogButton"/>
 
             <Button
                 android:id="@+id/completeButton"

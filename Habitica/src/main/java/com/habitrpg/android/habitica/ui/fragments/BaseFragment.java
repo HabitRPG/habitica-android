@@ -36,6 +36,7 @@ public abstract class BaseFragment extends DialogFragment {
     public String tutorialStepIdentifier;
     public String tutorialText;
     public Unbinder unbinder;
+    protected boolean tutorialCanBeDeferred = true;
     private TransactionListener<TutorialStep> tutorialStepTransactionListener = new TransactionListener<TutorialStep>() {
         @Override
         public void onResultReceived(TutorialStep step) {
@@ -47,6 +48,7 @@ public abstract class BaseFragment extends DialogFragment {
                 } else {
                     event.tutorialTexts = tutorialTexts;
                 }
+                event.canBeDeferred = tutorialCanBeDeferred;
                 EventBus.getDefault().post(event);
             }
         }

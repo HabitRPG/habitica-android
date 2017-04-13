@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data;
 
+import android.support.annotation.Nullable;
+
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 
 import java.util.Map;
@@ -14,4 +16,6 @@ public interface UserRepository extends BaseRepository {
     Observable<HabitRPGUser> retrieveUser(Boolean withTasks);
 
     Observable<HabitRPGUser> revive(HabitRPGUser user);
+
+    void resetTutorial(@Nullable HabitRPGUser user);
 }

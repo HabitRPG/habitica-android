@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import rx.Observable;
@@ -38,6 +40,20 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<HabitRPGUser> revive(HabitRPGUser user) {
         return apiClient.revive().map(newUser -> mergeUser(user, newUser));
+    }
+
+    @Override
+    public void resetTutorial(HabitRPGUser user) {
+        localRepository.getTutorialSteps()
+                .map(tutorialSteps -> {
+                    Map<String, Object> updateData = new HashMap<>();
+                    for (TutorialStep step : tutorialSteps) {
+                        updateData.put("flags.tutorial." + step.getTutorialGroup() + "." + step.getIdentifier(), false);
+                    }
+                    return updateData;
+                })
+                .flatMap(updateData -> updateUser(user, updateData))
+                .subscribe(tutorialSteps -> {}, throwable -> {});
     }
 
     @Nullable

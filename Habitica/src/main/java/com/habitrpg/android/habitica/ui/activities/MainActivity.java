@@ -873,9 +873,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
         if (tutorialEvent.tutorialText != null) {
-            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText, tutorialEvent.canBeDeferred);
         } else {
-            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts);
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts, tutorialEvent.canBeDeferred);
         }
     }
 
@@ -1084,10 +1084,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 });
     }
 
-    private void displayTutorialStep(TutorialStep step, String text) {
+    private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {
         TutorialView view = new TutorialView(this, step, this);
         view.setTutorialText(text);
         view.onReaction = this;
+        view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
         this.activeTutorialView = view;
 
@@ -1098,10 +1099,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
     }
 
-    private void displayTutorialStep(TutorialStep step, List<String> texts) {
+    private void displayTutorialStep(TutorialStep step, List<String> texts, boolean canBeDeferred) {
         TutorialView view = new TutorialView(this, step, this);
         view.setTutorialTexts(texts);
         view.onReaction = this;
+        view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
         this.activeTutorialView = view;
 

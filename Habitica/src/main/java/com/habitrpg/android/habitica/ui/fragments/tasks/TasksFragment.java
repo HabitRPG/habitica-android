@@ -48,6 +48,7 @@ import com.roughike.bottombar.BottomBarTab;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -321,27 +322,43 @@ public class TasksFragment extends BaseMainFragment {
         }
         List<TutorialStep> tutorialSteps = new Select().from(TutorialStep.class).where(Condition.column("identifier").in("habits", "dailies", "todos", "rewards")).queryList();
 
+        List<String> activeTutorialFragments = new ArrayList<>();
         for (TutorialStep step : tutorialSteps) {
             int id = -1;
+            String taskType = null;
             switch (step.getIdentifier()) {
                 case "habits":
                     id = R.id.tab_habits;
+                    taskType = Task.TYPE_HABIT;
                     break;
                 case "dailies":
                     id = R.id.tab_dailies;
+                    taskType = Task.TYPE_DAILY;
                     break;
                 case "todos":
                     id = R.id.tab_todos;
+                    taskType = Task.TYPE_TODO;
                     break;
                 case "rewards":
                     id = R.id.tab_rewards;
+                    taskType = Task.TYPE_REWARD;
                     break;
             }
             BottomBarTab tab = bottomNavigation.getTabWithId(id);
             if (step.shouldDisplay()) {
                 tab.setBadgeCount(1);
+                activeTutorialFragments.add(taskType);
             } else {
                 tab.removeBadge();
+            }
+        }
+        if (activeTutorialFragments.size() == 1) {
+            TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
+            if (fragment != null && fragment.tutorialTexts != null) {
+                String finalText = getContext().getString(R.string.tutorial_tasks_complete);
+                if (!fragment.tutorialTexts.contains(finalText)) {
+                    fragment.tutorialTexts.add(finalText);
+                }
             }
         }
     }
@@ -466,15 +483,22 @@ public class TasksFragment extends BaseMainFragment {
     }
 
     private void switchToTaskTab(String taskType) {
-        if (taskType == null) {
-            return;
+        int index = indexForTaskType(taskType);
+        if (viewPager != null && index != -1) {
+            viewPager.setCurrentItem(index);
+            updateBottomBarBadges();
         }
-        for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-            if (taskType.equals(viewFragmentsDictionary.get(index).getClassName()) && viewPager != null) {
-                viewPager.setCurrentItem(index);
-                updateBottomBarBadges();
+    }
+
+    private int indexForTaskType(String taskType) {
+        if (taskType != null) {
+            for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
+                if (taskType.equals(viewFragmentsDictionary.get(index).getClassName())) {
+                    return index;
+                }
             }
         }
+        return -1;
     }
 
     @Nullable

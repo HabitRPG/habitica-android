@@ -56,6 +56,10 @@ public class TutorialView extends FrameLayout {
         displayNextTutorialText();
     }
 
+    public void setCanBeDeferred(boolean canBeDeferred) {
+        dismissButton.setVisibility(canBeDeferred ? View.VISIBLE : View.GONE);
+    }
+
     private void displayNextTutorialText() {
         currentTextIndex++;
         if (currentTextIndex < tutorialTexts.size()) {

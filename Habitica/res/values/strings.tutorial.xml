@@ -11,6 +11,7 @@
     <string name="tutorial_todos_2">If your To-do has to be done by a certain time, set a due date. Looks like you can check one off — go ahead!</string>
     <string name="tutorial_rewards_1">Buy gear for your avatar with the gold you earn!</string>
     <string name="tutorial_rewards_2">You can also make real-world Custom Rewards based on what motivates you.</string>
+    <string name="tutorial_tasks_complete">That\'s all for now. If you need a reminder, check the FAQ section.</string>
 
     <string name="tutorial_equipment">When you buy equipment, it appears here. Your Battle Gear affects your stats, and your Costume (if enabled) affects what your avatar wears.</string>
     <string name="tutorial_items">Earn items by completing tasks and leveling up. Tap on an item to use it!</string>

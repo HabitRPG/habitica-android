@@ -13,4 +13,5 @@ public class DisplayTutorialEvent {
     public String tutorialText;
 
     public List<String> tutorialTexts;
+    public boolean canBeDeferred;
 }
