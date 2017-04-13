@@ -38,7 +38,7 @@ public class TaskAlarmManagerTest {
     @Before
     public void setUp() {
         context = ShadowApplication.getInstance().getApplicationContext();
-        taskAlarmManager = TaskAlarmManager.getInstance(context);
+        taskAlarmManager = new TaskAlarmManager(context);
     }
 
     @After

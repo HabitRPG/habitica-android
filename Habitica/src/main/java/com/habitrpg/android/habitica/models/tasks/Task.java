@@ -615,11 +615,15 @@ public class Task extends BaseModel {
         return this.isDisplayedActive(offset) && (this.checklist.size() != this.getCompletedChecklistCount());
     }
 
-    public Date getNextActiveDateAfter(Date oldTime) {
+    public Date getNextReminderOccurence(Date oldTime) {
         Calendar today = Calendar.getInstance();
 
         Calendar newTime = new GregorianCalendar();
         newTime.setTime(oldTime);
+        newTime.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+        if (today.before(newTime)) {
+            today.add(Calendar.DAY_OF_MONTH, -1);
+        }
 
         if (this.getFrequency().equals(FREQUENCY_DAILY)) {
             Calendar startDate = new GregorianCalendar();

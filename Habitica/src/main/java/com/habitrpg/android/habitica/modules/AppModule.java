@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.executors.UIThread;
 import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 
 import android.app.Application;
@@ -82,5 +83,11 @@ public class AppModule {
     @Singleton
     PostExecutionThread providePostExecutionThread(UIThread uiThread) {
         return uiThread;
+    }
+
+    @Provides
+    @Singleton
+    TaskAlarmManager providesTaskAlarmManager(Context context) {
+        return new TaskAlarmManager(context);
     }
 }

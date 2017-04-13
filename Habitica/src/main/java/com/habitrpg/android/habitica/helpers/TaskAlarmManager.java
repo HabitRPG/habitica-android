@@ -40,24 +40,16 @@ import static android.os.Build.VERSION.SDK_INT;
 public class TaskAlarmManager {
     public static final String TASK_ID_INTENT_KEY = "TASK_ID";
     public static final String TASK_NAME_INTENT_KEY = "TASK_NAME";
-    private static TaskAlarmManager instance = null;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
     private Context context;
     private AlarmManager am;
 
-    private TaskAlarmManager(Context context) {
+    public TaskAlarmManager(Context context) {
         HabiticaBaseApplication.getComponent().inject(this);
         this.context = context.getApplicationContext();
         EventBus.getDefault().register(this);
         am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    }
-
-    public static TaskAlarmManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new TaskAlarmManager(context);
-        }
-        return instance;
     }
 
     public static void scheduleDailyReminder(Context context) {
@@ -109,12 +101,13 @@ public class TaskAlarmManager {
             return;
         }
 
-        if (SDK_INT < Build.VERSION_CODES.KITKAT)
+        if (SDK_INT < Build.VERSION_CODES.KITKAT) {
             alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-        else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M)
+        } else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time, time + 60000, pendingIntent);
-        else if (SDK_INT >= Build.VERSION_CODES.M)
+        } else if (SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        }
     }
 
     @Subscribe
@@ -188,11 +181,12 @@ public class TaskAlarmManager {
     }
 
     private RemindersItem setTimeForDailyReminder(RemindersItem remindersItem, Task task) {
-        Calendar calendar = Calendar.getInstance();
         Date oldTime = remindersItem.getTime();
-        Date newTime = task.getNextActiveDateAfter(oldTime);
+        Date newTime = task.getNextReminderOccurence(oldTime);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(newTime);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), oldTime.getHours(), oldTime.getMinutes(), 0);
-        remindersItem.setTime(newTime);
+        remindersItem.setTime(calendar.getTime());
         return remindersItem;
     }
 

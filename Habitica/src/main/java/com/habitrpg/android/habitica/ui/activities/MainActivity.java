@@ -230,6 +230,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Inject
     TagRepository tagRepository;
 
+    @Inject
+    TaskAlarmManager taskAlarmManager;
+
     // endregion
 
     private Drawer drawer;
@@ -325,7 +328,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
-            TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
             try {
                 taskAlarmManager.scheduleAllSavedAlarms();
             } catch (Exception e) {

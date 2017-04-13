@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.components;
 
+import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
@@ -236,4 +238,8 @@ public interface AppComponent {
     void inject(GemPurchaseActivity gemPurchaseActivity);
 
     void inject(TaskFilterDialog taskFilterDialog);
+
+    void inject(TaskReceiver taskReceiver);
+
+    void inject(TaskAlarmBootReceiver taskAlarmBootReceiver);
 }
