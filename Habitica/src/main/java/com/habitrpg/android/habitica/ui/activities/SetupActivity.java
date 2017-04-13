@@ -2,44 +2,43 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
-import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
+import com.habitrpg.android.habitica.ui.views.FadingViewPager;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
-import android.view.Window;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,6 +50,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
 
@@ -58,6 +58,10 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     public ApiClient apiClient;
     @Inject
     protected HostConfig hostConfig;
+    @Inject
+    protected UserRepository userRepository;
+    @Inject
+    protected TaskRepository taskRepository;
     @BindView(R.id.view_pager)
     FadingViewPager pager;
     @BindView(R.id.nextButton)
@@ -68,8 +72,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     IconPageIndicator indicator;
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
+    @Nullable
     HabitRPGUser user;
-    Boolean completedSetup;
+    boolean completedSetup = false;
 
     @Override
     protected int getLayoutResId() {
@@ -79,9 +84,17 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).querySingle();
+        userRepository.getUser(hostConfig.getUser())
+                .flatMap(user -> {
+                    if (user == null) {
+                        return userRepository.retrieveUser(true);
+                    } else {
+                        return Observable.just(user);
+                    }
+                })
+                .subscribe(this::onUserReceived, throwable -> {
 
-        this.completedSetup = false;
+        });
 
         Map<String, Object> additionalData = new HashMap<>();
         additionalData.put("status", "displayed");
@@ -91,7 +104,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         for (String language : getResources().getStringArray(R.array.LanguageValues)) {
             if (language.equals(currentDeviceLanguage)) {
                 apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                        .subscribe(habitRPGUser -> {}, throwable -> {
                         });
             }
         }
@@ -119,16 +132,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-
-        if (this.pager.getAdapter() == null) {
-            if (this.user != null) {
-                setupViewpager();
-            } else {
-                this.apiClient.getUser()
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                        });
-            }
-        }
     }
 
     @Override
@@ -148,8 +151,8 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        this.apiClient.updateUser(event.updateData)
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        this.userRepository.updateUser(user, event.updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
@@ -170,10 +173,8 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         if (isLastPage()) {
             List<Task> newTasks = this.taskSetupFragment.createSampleTasks();
             this.completedSetup = true;
-            this.apiClient.createTasks(newTasks)
-                    .subscribe(tasks -> {
-                        onUserReceived(user);
-                    }, throwable -> {
+            this.taskRepository.createTasks(newTasks)
+                    .subscribe(tasks -> onUserReceived(user), throwable -> {
                     });
             //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
         }
@@ -234,6 +235,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             if (this.avatarSetupFragment != null) {
                 this.avatarSetupFragment.setUser(user);
             }
+            if (this.taskSetupFragment != null) {
+                this.taskSetupFragment.setUser(user);
+            }
         }
 
         Map<String, Object> additionalData = new HashMap<>();
@@ -256,13 +260,9 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
         @Override
         public Fragment getItem(int position) {
-            Fragment fragment = null;
+            Fragment fragment;
 
             switch (position) {
-                case 0: {
-                    fragment = new WelcomeFragment();
-                    break;
-                }
                 case 1: {
                     avatarSetupFragment = new AvatarSetupFragment();
                     avatarSetupFragment.activity = SetupActivity.this;
@@ -275,6 +275,10 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
                     taskSetupFragment = new TaskSetupFragment();
                     taskSetupFragment.setUser(user);
                     fragment = taskSetupFragment;
+                    break;
+                }
+                default: {
+                    fragment = new WelcomeFragment();
                     break;
                 }
             }

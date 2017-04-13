@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
@@ -38,7 +40,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         return apiClient.revive().map(newUser -> mergeUser(user, newUser));
     }
 
-    private HabitRPGUser mergeUser(HabitRPGUser oldUser, HabitRPGUser newUser) {
+    @Nullable
+    private HabitRPGUser mergeUser(@Nullable HabitRPGUser oldUser, HabitRPGUser newUser) {
+        if (oldUser == null) {
+            return null;
+        }
         if (newUser.getItems() != null) {
             oldUser.setItems(newUser.getItems());
         }

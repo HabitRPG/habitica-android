@@ -144,7 +144,7 @@ public class AvatarSetupFragment extends BaseFragment {
         this.adapter.setCustomizationList(customizationRepository.getCustomizations(activeCategory, activeSubCategory, user));
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(@Nullable HabitRPGUser user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();

@@ -91,7 +91,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             case "extras": {
                 switch (customization.subcategory) {
                     case "glasses":
-                        return customization.key.equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || (this.user.getItems().getGear().getEquipped().getEyeWear() == null && customization.key.length() == 0);
+                        return customization.key.equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || ("eyewear_base_0".equals(this.user.getItems().getGear().getEquipped().getEyeWear()) && customization.key.length() == 0);
                     case "flower":
                         return Integer.parseInt(customization.key) == prefs.getHair().getFlower();
                     case "wheelchair":
@@ -100,14 +100,6 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             }
         }
         return false;
-    }
-
-    private String getHairColor() {
-        if (this.user != null) {
-            return this.user.getPreferences().getHair().getColor();
-        } else {
-            return "";
-        }
     }
 
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -146,7 +138,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
                 imageView.setImageDrawable(null);
             }
             textView.setText(customization.text);
-            if ("flowers".equals(customization.subcategory)) {
+            if (!"0".equals(customization.key) && "flower".equals(customization.subcategory)) {
                 if (isCustomizationActive(customization)) {
                     imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected);
                 } else {

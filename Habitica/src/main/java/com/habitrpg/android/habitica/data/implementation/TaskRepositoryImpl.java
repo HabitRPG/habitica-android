@@ -96,6 +96,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
+    public Observable<List<Task>> createTasks(List<Task> newTasks) {
+        return apiClient.createTasks(newTasks);
+    }
+
+    @Override
     public void removeOldTasks(String userID, List<Task> onlineTaskList) {
         localRepository.removeOldTasks(userID, onlineTaskList);
     }

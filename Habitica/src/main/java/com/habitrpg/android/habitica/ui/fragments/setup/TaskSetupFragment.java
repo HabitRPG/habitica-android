@@ -62,7 +62,7 @@ public class TaskSetupFragment extends BaseFragment {
         return view;
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(@Nullable HabitRPGUser user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();

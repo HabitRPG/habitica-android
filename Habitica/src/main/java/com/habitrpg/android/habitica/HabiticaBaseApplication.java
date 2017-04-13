@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -100,6 +101,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
     }
 
     public static boolean checkUserAuthentication(Context context, HostConfig hostConfig) {
+        startActivity(SetupActivity.class, context);
         if (hostConfig == null || hostConfig.getApi() == null || hostConfig.getApi().equals("") || hostConfig.getUser() == null || hostConfig.getUser().equals("")) {
             startActivity(IntroActivity.class, context);
 

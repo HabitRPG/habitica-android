@@ -23,10 +23,10 @@ public interface TaskRepository extends BaseRepository  {
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> createTask(Task task);
-
     Observable<Task> updateTask(Task task);
-
     Observable<Void> deleteTask(String taskID);
+
+    Observable<List<Task>> createTasks(List<Task> newTasks);
 
     void removeOldTasks(String userID, List<Task> onlineTaskList);
     void removeOldChecklists(List<ChecklistItem> onlineChecklistItems);
