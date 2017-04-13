@@ -1,13 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.habitrpg.android.habitica.models.Challenge;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

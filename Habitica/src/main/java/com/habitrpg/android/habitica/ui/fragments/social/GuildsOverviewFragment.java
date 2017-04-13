@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.Group;
 
 import android.content.Context;
 import android.os.Bundle;

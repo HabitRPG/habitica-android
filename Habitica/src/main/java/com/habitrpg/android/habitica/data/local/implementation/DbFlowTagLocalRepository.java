@@ -4,7 +4,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 import android.database.sqlite.SQLiteDoneException;
 
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.habitrpg.android.habitica.models.Tag;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.language.From;

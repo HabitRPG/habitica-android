@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Notification;
-import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
+import com.habitrpg.android.habitica.models.Notification;
+import com.habitrpg.android.habitica.models.notifications.Reward;
 
 import android.content.Context;
 

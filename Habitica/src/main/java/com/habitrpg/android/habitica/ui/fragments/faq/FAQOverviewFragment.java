@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
+import com.habitrpg.android.habitica.models.FAQArticle;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.os.Bundle;

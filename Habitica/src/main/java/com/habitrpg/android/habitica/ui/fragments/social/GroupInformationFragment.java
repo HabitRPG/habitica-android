@@ -23,9 +23,9 @@ import com.habitrpg.android.habitica.helpers.QrCodeManager;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
 
 import javax.inject.Inject;
 

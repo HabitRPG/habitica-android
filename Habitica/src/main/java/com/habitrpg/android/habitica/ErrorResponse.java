@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabiticaError;
+import com.habitrpg.android.habitica.models.HabiticaError;
 
 import java.util.List;
 

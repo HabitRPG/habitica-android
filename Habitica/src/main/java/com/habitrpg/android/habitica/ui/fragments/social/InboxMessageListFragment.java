@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.ChatMessage;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import org.greenrobot.eventbus.Subscribe;
 

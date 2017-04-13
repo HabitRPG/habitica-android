@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers;
 
 import android.support.annotation.Nullable;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

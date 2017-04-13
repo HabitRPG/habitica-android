@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;

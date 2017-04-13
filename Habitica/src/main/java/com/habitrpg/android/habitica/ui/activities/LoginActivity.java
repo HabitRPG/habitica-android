@@ -27,8 +27,8 @@ import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.UserAuthResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;

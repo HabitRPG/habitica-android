@@ -4,7 +4,7 @@
 
     <data>
         <import type="java.util.Map"/>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.Outfit" />
+        <import type="com.habitrpg.android.habitica.models.Outfit" />
         <import type="android.view.View" />
 
         <variable

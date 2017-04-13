@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.EmojiKeyboard;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.ChatMessage;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiTextView;

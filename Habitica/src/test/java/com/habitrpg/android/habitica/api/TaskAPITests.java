@@ -2,10 +2,9 @@ package com.habitrpg.android.habitica.api;
 
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.TaskDirectionData;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;

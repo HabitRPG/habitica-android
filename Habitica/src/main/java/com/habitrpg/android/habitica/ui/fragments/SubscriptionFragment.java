@@ -20,8 +20,8 @@ import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.SubscriptionPlan;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;

@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.magicmicky.habitrpgwrapper.lib.models.CustomizationSet;
+import com.habitrpg.android.habitica.models.Customization;
+import com.habitrpg.android.habitica.models.CustomizationSet;
 
 import org.greenrobot.eventbus.EventBus;
 

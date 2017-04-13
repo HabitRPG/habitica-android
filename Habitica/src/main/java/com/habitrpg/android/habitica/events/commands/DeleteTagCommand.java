@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.habitrpg.android.habitica.models.Tag;
 
 /**
  * Created by jjbillings on 8.9.2016.

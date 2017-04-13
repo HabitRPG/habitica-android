@@ -9,7 +9,7 @@ import com.facebook.drawee.view.DraweeHolder;
 import com.facebook.drawee.view.MultiDraweeHolder;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import android.content.Context;
 import android.content.res.TypedArray;

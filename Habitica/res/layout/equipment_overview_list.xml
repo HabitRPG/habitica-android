@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="java.util.Map"/>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.Outfit" />
+        <import type="com.habitrpg.android.habitica.models.Outfit" />
         <variable name="categorytitle" type="String"/>
         <variable name="outfit" type="Outfit"/>
         <variable

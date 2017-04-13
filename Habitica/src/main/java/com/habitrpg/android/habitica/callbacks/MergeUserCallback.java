@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import android.support.annotation.Nullable;
 

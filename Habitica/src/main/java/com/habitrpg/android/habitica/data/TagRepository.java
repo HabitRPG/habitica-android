@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.habitrpg.android.habitica.models.Tag;
 
 import java.util.Collection;
 import java.util.List;

@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.HashMap;
 import java.util.Map;

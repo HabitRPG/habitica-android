@@ -5,14 +5,14 @@ import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.TaskDirection;
+import com.habitrpg.android.habitica.models.TaskDirectionData;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
 import org.greenrobot.eventbus.EventBus;
 

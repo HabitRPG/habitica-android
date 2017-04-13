@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import android.content.Context;
 

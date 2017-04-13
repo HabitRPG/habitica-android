@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 

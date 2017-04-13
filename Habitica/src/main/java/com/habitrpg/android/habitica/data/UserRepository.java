@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data;
 
 import android.support.annotation.Nullable;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import java.util.Map;
 

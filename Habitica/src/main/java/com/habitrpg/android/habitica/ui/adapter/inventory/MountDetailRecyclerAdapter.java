@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Mount;
 
 import org.greenrobot.eventbus.EventBus;
 

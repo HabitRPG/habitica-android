@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.habitrpg.android.habitica.models.TutorialStep;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -23,7 +23,6 @@ import com.squareup.leakcanary.RefWatcher;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.EventBusException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

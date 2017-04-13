@@ -6,8 +6,8 @@ import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.UserAuthResponse;
 
 import org.junit.After;
 import org.junit.Before;

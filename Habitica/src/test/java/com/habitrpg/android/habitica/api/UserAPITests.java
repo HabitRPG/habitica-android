@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.api;
 
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.UserAuthResponse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

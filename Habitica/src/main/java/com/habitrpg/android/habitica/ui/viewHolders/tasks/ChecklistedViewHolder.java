@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 

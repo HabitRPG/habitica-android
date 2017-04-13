@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.List;
 

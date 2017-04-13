@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
 
 import org.greenrobot.eventbus.EventBus;
 

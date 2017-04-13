@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.adapter.setup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.Preferences;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import org.greenrobot.eventbus.EventBus;
 

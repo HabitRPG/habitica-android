@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.helpers;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events;
 
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
+import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.List;
 

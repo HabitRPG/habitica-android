@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.tasks;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 

@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.HostConfig;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -15,15 +15,15 @@ import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
-import com.magicmicky.habitrpgwrapper.lib.models.AchievementGroup;
-import com.magicmicky.habitrpgwrapper.lib.models.AchievementResult;
-import com.magicmicky.habitrpgwrapper.lib.models.Buffs;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Outfit;
-import com.magicmicky.habitrpgwrapper.lib.models.Profile;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.android.habitica.models.AchievementGroup;
+import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.Buffs;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.Outfit;
+import com.habitrpg.android.habitica.models.Profile;
+import com.habitrpg.android.habitica.models.Stats;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 

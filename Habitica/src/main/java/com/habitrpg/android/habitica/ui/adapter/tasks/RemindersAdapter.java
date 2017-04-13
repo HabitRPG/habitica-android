@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
 import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 
 import android.graphics.Color;
 import android.support.annotation.Nullable;

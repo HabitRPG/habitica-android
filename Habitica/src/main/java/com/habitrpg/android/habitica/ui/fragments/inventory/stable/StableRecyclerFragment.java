@@ -9,10 +9,10 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Animal;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Mount;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.inventory.Animal;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;
 

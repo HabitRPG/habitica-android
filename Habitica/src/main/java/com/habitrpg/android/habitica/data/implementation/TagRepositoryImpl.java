@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.habitrpg.android.habitica.models.Tag;
 
 import java.util.Collection;
 import java.util.List;

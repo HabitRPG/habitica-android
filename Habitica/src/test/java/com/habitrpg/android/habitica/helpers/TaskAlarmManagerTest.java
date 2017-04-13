@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Days;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.junit.After;

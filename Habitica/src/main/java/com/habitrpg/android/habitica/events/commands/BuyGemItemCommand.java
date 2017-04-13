@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
+import com.habitrpg.android.habitica.models.ShopItem;
 
 public class BuyGemItemCommand {
 
