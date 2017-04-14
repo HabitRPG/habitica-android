@@ -92,7 +92,7 @@
                 android:id="@+id/new_game_button"
                 android:layout_width="@dimen/login_intro_button_size"
                 android:layout_height="@dimen/login_intro_button_size"
-                android:text="@string/new_game"
+                android:text="@string/register_btn"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/spacing_large"
