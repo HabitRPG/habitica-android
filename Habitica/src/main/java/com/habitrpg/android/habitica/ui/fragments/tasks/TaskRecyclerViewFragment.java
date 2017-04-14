@@ -87,6 +87,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     TextView emptyViewDescription;
 
     String classType;
+    @Nullable
     private HabitRPGUser user;
     private View view;
     @Nullable
@@ -181,7 +182,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         super.onCreateView(inflater, container, savedInstanceState);
 
         if (classType.equals(Task.TYPE_DAILY)) {
-            if (user.getPreferences().getDailyDueDefaultView()) {
+            if (user != null && user.getPreferences().getDailyDueDefaultView()) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE);
             }
         }

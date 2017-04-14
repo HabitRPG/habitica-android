@@ -196,6 +196,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
     ViewGroup overlayLayout;
+
+    @Inject
     PushNotificationManager pushNotificationManager;
     // region UseCases
 
@@ -271,8 +273,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (!HabiticaApplication.checkUserAuthentication(this, hostConfig)) {
             return;
         }
-
-        pushNotificationManager = PushNotificationManager.getInstance(this);
 
         userRepository.getUser(hostConfig.getUser())
                 .subscribe(newUser -> {

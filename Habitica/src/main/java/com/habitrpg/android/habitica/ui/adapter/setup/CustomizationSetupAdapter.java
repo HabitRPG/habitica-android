@@ -59,6 +59,9 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private boolean isCustomizationActive(SetupCustomization customization) {
+        if (this.user == null) {
+            return false;
+        }
         Preferences prefs = this.user.getPreferences();
         switch (customization.category) {
             case "body": {

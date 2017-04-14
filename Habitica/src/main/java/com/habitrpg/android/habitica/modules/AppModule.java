@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.modules;
 
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.executors.JobExecutor;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
@@ -9,6 +10,7 @@ import com.habitrpg.android.habitica.helpers.SoundFileLoader;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 
 import android.app.Application;
 import android.content.Context;
@@ -89,5 +91,11 @@ public class AppModule {
     @Singleton
     TaskAlarmManager providesTaskAlarmManager(Context context) {
         return new TaskAlarmManager(context);
+    }
+
+    @Provides
+    @Singleton
+    PushNotificationManager pushNotificationManager(ApiClient apiClient, SharedPreferences sharedPreferences, Context context) {
+        return new PushNotificationManager(apiClient, sharedPreferences, context);
     }
 }

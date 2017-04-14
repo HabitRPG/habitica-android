@@ -50,7 +50,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
-    private PushNotificationManager pushNotificationManager;
+    @Inject
+    PushNotificationManager pushNotificationManager;
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
@@ -80,8 +81,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         if (userID != null) {
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
         }
-
-        pushNotificationManager = PushNotificationManager.getInstance(this.getActivity());
     }
 
     @Override

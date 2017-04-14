@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.components;
 
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInstanceIDService;
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
@@ -242,4 +244,8 @@ public interface AppComponent {
     void inject(TaskReceiver taskReceiver);
 
     void inject(TaskAlarmBootReceiver taskAlarmBootReceiver);
+
+    void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
+
+    void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
 }
