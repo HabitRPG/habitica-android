@@ -133,11 +133,18 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
             customization.setType("background");
             customization.setIdentifier(key);
         }
+        if ("incentiveBackgrounds".equals(setName)) {
+            customization.setCustomizationSetName("Login Incentive");
+            customization.setPrice(0);
+            customization.setSetPrice(0);
+            customization.setIsBuyable(false);
+        } else {
+            customization.setPrice(7);
+            customization.setSetPrice(15);
+        }
 
         customization.setText(entry.get("text").getAsString());
         customization.setNotes(entry.getAsJsonObject().get("notes").getAsString());
-        customization.setPrice(7);
-        customization.setSetPrice(15);
 
         return customization;
     }

@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -19,7 +21,7 @@ public class Customization extends BaseModel {
     private String identifier, category, type, notes, customizationSet, customizationSetName, text;
 
     @Column
-    private boolean purchased;
+    private boolean purchased, isBuyable;
 
     @Column
     private Integer price, setPrice;
@@ -27,7 +29,7 @@ public class Customization extends BaseModel {
     @Column
     private Date availableFrom, availableUntil;
 
-    public void updateID() {
+    private void updateID() {
         this.id = this.identifier + "_" + this.type + "_" + this.category;
     }
 
@@ -86,7 +88,7 @@ public class Customization extends BaseModel {
         return this.customizationSetName;
     }
 
-    public void setCustomizationSetName(String customizationSetName) {
+    public void setCustomizationSetName(@Nullable String customizationSetName) {
         this.customizationSetName = customizationSetName;
     }
 
@@ -195,5 +197,13 @@ public class Customization extends BaseModel {
 
         return path;
 
+    }
+
+    public boolean getIsBuyable() {
+        return isBuyable;
+    }
+
+    public void setIsBuyable(boolean buyable) {
+        isBuyable = buyable;
     }
 }

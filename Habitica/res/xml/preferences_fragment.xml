@@ -180,4 +180,11 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/maintenance">
+        <Preference android:title="@string/reload_content"
+            android:key="reload_content"
+            android:order="99"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

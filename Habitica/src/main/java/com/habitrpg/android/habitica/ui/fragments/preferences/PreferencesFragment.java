@@ -152,6 +152,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT);
             }
             return true;
+        } else if (preference.getKey().equals("reload_content")) {
+            apiClient.getContent().subscribe(contentResult -> {}, throwable -> {});
         }
         return super.onPreferenceTreeClick(preference);
     }

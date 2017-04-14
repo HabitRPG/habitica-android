@@ -93,6 +93,8 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                 .and(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
                         .or(Condition.column("price").eq(0))
                         .or(Condition.column("price").isNull())
+                        .or(Condition.column("isBuyable").eq(true))
+                        .or(Condition.column("isBuyable").isNull())
                         .or(Condition.CombinedCondition.begin(
                                 Condition.CombinedCondition.begin(Condition.column("availableUntil").isNull())
                                         .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))
