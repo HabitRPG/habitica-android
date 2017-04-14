@@ -200,7 +200,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                swipeRefreshLayout.setEnabled(true);
                 if (mFromPosition == null) mFromPosition = viewHolder.getAdapterPosition();
                 ((ItemTouchHelperAdapter) recyclerAdapter).onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
@@ -220,6 +219,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
+                swipeRefreshLayout.setEnabled(true);
 
                 viewHolder.itemView.setBackgroundColor(Color.WHITE);
                 if (mFromPosition != null) {

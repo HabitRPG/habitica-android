@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -74,7 +75,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((HabiticaApplication) getActivity().getApplication()).getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
         context = getActivity();
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
