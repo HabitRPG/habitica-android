@@ -26,7 +26,15 @@ public class TaskFilterHelper {
     }
 
     public int howMany(String type) {
-        return this.tagsId.size() + (activeFilters.get(type) != null || Task.FILTER_ACTIVE.equals(activeFilters.get(type)) ? 1 : 0);
+        return this.tagsId.size() + (isTaskFilterActive(type) ? 1 : 0);
+    }
+
+    private boolean isTaskFilterActive(String type) {
+        if (Task.TYPE_TODO.equals(type)) {
+            return !Task.FILTER_ACTIVE.equals(activeFilters.get(type));
+        } else {
+            return !Task.FILTER_ALL.equals(activeFilters.get(type));
+        }
     }
 
     public List<String> getTags() {
