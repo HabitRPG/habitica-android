@@ -18,11 +18,11 @@ import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.AchievementGroup;
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.Buffs;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Outfit;
-import com.habitrpg.android.habitica.models.Profile;
-import com.habitrpg.android.habitica.models.Stats;
+import com.habitrpg.android.habitica.models.user.Buffs;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import net.pherth.android.emoji_library.EmojiEditText;

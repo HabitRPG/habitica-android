@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.app.Activity;

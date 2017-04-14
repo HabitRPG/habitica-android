@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Items;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Items;
 
 import org.junit.Before;
 import org.junit.Test;

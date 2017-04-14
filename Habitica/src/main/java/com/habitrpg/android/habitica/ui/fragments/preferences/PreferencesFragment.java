@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Preferences;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;

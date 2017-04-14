@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.Skill;
-import com.habitrpg.android.habitica.models.Stats;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 
 import org.greenrobot.eventbus.EventBus;

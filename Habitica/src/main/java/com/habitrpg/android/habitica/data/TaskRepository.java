@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data;
 
-import com.habitrpg.android.habitica.models.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;

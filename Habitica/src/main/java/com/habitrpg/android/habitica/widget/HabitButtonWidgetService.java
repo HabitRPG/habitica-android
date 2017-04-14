@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.widget;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.TaskDirection;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;

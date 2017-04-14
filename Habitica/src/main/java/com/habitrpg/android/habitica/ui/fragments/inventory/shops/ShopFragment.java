@@ -8,10 +8,10 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Shop;
-import com.habitrpg.android.habitica.models.ShopCategory;
-import com.habitrpg.android.habitica.models.ShopItem;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 
 import org.greenrobot.eventbus.Subscribe;
 

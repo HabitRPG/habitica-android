@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
-import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import org.greenrobot.eventbus.EventBus;
 

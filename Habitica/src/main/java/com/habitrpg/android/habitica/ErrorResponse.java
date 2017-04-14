@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica;
 
-import com.habitrpg.android.habitica.models.HabiticaError;
+import com.habitrpg.android.habitica.models.responses.HabiticaError;
 
 import java.util.List;
 

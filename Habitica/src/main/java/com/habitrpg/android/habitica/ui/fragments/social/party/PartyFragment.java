@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
-import com.habitrpg.android.habitica.models.Group;
-import com.habitrpg.android.habitica.models.UserParty;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.social.UserParty;
 
 import android.app.Activity;
 import android.app.AlertDialog;

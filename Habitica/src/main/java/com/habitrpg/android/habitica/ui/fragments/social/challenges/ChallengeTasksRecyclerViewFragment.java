@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.content.Context;

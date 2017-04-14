@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;

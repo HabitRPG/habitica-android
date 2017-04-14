@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
 import com.habitrpg.android.habitica.ui.fragments.BaseFragmentTests;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Hair;
-import com.habitrpg.android.habitica.models.Preferences;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Hair;
+import com.habitrpg.android.habitica.models.user.Preferences;
 
 public class AvatarCustomizationFragmentTest extends BaseFragmentTests<AvatarCustomizationFragment> {
 

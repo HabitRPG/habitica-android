@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.models.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;

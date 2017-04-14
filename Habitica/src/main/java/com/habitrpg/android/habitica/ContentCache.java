@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica;
 import android.support.annotation.Nullable;
 
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.QuestBoss;
+import com.habitrpg.android.habitica.models.inventory.QuestBoss;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.sql.builder.Condition;

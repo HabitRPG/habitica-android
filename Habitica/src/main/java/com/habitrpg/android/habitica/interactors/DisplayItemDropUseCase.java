@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 
 import javax.inject.Inject;
 

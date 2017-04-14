@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -5,8 +5,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions;
-import com.habitrpg.android.habitica.models.Challenge;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;

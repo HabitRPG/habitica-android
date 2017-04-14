@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.ContentGear;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.Customization;
+import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.inventory.Egg;

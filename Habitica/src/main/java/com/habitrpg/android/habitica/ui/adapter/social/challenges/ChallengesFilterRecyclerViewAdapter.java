@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.github.underscore.$;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import java.util.ArrayList;
 import java.util.Collection;

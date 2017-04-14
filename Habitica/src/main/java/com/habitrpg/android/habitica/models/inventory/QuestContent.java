@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.models.inventory;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.QuestBoss;
-import com.habitrpg.android.habitica.models.QuestCollect;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;

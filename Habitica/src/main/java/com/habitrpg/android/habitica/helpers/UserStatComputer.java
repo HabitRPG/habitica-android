@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import java.util.ArrayList;

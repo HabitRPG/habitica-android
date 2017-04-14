@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.QuestProgress;
+import com.habitrpg.android.habitica.models.inventory.QuestProgress;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 
 import android.net.Uri;

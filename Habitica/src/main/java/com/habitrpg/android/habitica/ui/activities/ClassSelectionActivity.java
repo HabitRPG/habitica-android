@@ -4,12 +4,12 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.models.Gear;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Hair;
-import com.habitrpg.android.habitica.models.Items;
-import com.habitrpg.android.habitica.models.Outfit;
-import com.habitrpg.android.habitica.models.Preferences;
+import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Hair;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Preferences;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

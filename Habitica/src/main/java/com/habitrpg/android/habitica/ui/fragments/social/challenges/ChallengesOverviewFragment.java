@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivity
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.Challenge;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

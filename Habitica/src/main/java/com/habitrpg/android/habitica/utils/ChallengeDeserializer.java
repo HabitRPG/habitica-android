@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import com.habitrpg.android.habitica.models.Challenge;
+import com.habitrpg.android.habitica.models.social.Challenge;
 
 import android.text.TextUtils;
 

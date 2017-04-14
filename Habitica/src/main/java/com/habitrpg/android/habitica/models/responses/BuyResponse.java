@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.responses;
 
-import com.habitrpg.android.habitica.models.Items;
+import com.habitrpg.android.habitica.models.user.Items;
 
 import java.util.HashMap;
 

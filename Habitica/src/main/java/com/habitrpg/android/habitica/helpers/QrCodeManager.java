@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;

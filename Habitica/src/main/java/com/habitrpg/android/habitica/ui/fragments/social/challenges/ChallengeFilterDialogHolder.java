@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter;
-import com.habitrpg.android.habitica.models.Challenge;
-import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.app.Activity;
 import android.app.AlertDialog;

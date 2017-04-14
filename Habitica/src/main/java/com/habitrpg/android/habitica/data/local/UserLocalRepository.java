@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.local;
 
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.List;

@@ -32,7 +32,7 @@ import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;

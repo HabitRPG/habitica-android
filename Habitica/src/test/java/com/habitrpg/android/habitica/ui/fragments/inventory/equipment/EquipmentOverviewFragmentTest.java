@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
 import com.habitrpg.android.habitica.ui.fragments.BaseFragmentTests;
-import com.habitrpg.android.habitica.models.Gear;
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Items;
-import com.habitrpg.android.habitica.models.Outfit;
-import com.habitrpg.android.habitica.models.Preferences;
+import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Preferences;
 
 public class EquipmentOverviewFragmentTest extends BaseFragmentTests<EquipmentOverviewFragment> {
 

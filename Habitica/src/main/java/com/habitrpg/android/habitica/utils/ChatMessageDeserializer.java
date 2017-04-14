@@ -7,9 +7,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-import com.habitrpg.android.habitica.models.Backer;
-import com.habitrpg.android.habitica.models.ChatMessage;
-import com.habitrpg.android.habitica.models.Contributor;
+import com.habitrpg.android.habitica.models.social.Backer;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Contributor;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

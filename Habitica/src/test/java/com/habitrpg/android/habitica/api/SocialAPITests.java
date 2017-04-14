@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.models.ChatMessage;
-import com.habitrpg.android.habitica.models.Group;
-import com.habitrpg.android.habitica.models.PostChatMessageResult;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 
 import org.junit.After;
 import org.junit.Test;

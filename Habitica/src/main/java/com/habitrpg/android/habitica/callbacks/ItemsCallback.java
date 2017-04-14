@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.models.HabitRPGUser;
-import com.habitrpg.android.habitica.models.Items;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Items;
 
 import rx.functions.Action1;
 

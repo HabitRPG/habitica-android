@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models;
 
+import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.Mount;

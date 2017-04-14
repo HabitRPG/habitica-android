@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

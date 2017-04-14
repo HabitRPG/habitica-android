@@ -6,9 +6,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import com.habitrpg.android.habitica.models.Customization;
-import com.habitrpg.android.habitica.models.Purchases;
-import com.habitrpg.android.habitica.models.SubscriptionPlan;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.user.Purchases;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
