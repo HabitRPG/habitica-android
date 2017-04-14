@@ -38,10 +38,10 @@
   <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
   <!--Adding tasks-->
   <string name="task_value">Valore</string>
-  <string name="new_todo">Nuova to-do</string>
+  <string name="new_todo">Nuova To-Do</string>
   <string name="new_reward">Nuova ricompensa</string>
-  <string name="new_daily">Nuova daily</string>
-  <string name="new_habit">Nuova habit</string>
+  <string name="new_daily">Nuova Daily</string>
+  <string name="new_habit">Nuova Habit</string>
   <string name="action_edit">Modifica</string>
   <string name="action_delete">Elimina</string>
   <string name="action_cancel">Annulla</string>
@@ -197,8 +197,10 @@
   <string name="setup_welcome_description">Benvenuto in Habitica, dove progredire nel gioco migliorerà la tua vita! Man mano che raggiungerai obiettivi nella vita reale, sbloccherai equipaggiamento, animali, missioni e altro.</string>
   <string name="setup_welcome_title">Benvenuto</string>
   <string name="avatar_setup_description">Quindi, che aspetto ti piacerebbe avere? Non preoccuparti, lo potrai cambiare in seguito.</string>
+  <string name="task_setup_description">Splendido! Ora dimmi, su cosa vorresti lavorare durante questo viaggio?</string>
   <string name="setup_group_work">Lavoro</string>
   <string name="setup_group_exercise">Esercizio fisico</string>
+  <string name="setup_group_health">Salute</string>
   <string name="setup_group_school">Scuola</string>
   <string name="setup_group_teams">Team</string>
   <string name="setup_group_chores">Faccende di casa</string>
@@ -232,7 +234,7 @@
   <string name="join">Partecipa</string>
   <string name="leader">Leader</string>
   <string name="gems">Gemme</string>
-  <string name="copy_as_todo">Copia come ToDo</string>
+  <string name="copy_as_todo">Copia come To-Do</string>
   <string name="send_pm">Invia messaggio privato</string>
   <string name="flag">Segnala</string>
   <string name="delete">Elimina</string>
@@ -524,4 +526,12 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="dated">Con scadenza</string>
   <string name="completed">Completate</string>
   <string name="setuP_group_other">Altro</string>
+  <string name="empty_title_habits">Non hai alcuna Habit.</string>
+  <string name="empty_description_habits">Le Habit sono attività che possono essere svolte in modo molto flessibile. Puoi usarle diverse volte al giorno, o non usarle affatto.</string>
+  <string name="empty_title_dailies">Non hai nessuna Daily</string>
+  <string name="empty_description_dailies">Le Daily sono delle attività che vanno svolte regolarmente. Scegli la frequenza con cui ti trovi meglio!</string>
+  <string name="empty_title_todos">Non hai alcuna To-do.</string>
+  <string name="empty_description_todos">Le To-do sono attività da completare solo una volta. Aggiungi una checklist alle tue To-do per aumentarne il valore.</string>
+  <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
+  <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
 </resources>

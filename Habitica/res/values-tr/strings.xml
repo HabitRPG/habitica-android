@@ -16,7 +16,6 @@
   <string name="Language_summary">Habitica dilini değiştirin</string>
   <string name="SP_user_qr_code">Sizin QR Kodunuz</string>
   <string name="PS_contact_title">Benimle iletişime geçin</string>
-  <string name="unknown_error">Bir hata oluştu...</string>
   <string name="pref_account_header">Hesap</string>
   <string name="pref_first_day_of_the_week_title">Haftanın İlk Günü</string>
   <string name="pref_first_day_of_the_week_summary">Tüm takvimlerde haftanın ilk günü</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Göreve Davet Edildin</string>
   <!--Adding tasks-->
   <string name="task_value">Değer</string>
-  <string name="new_todo">Yeni yapılacak iş</string>
-  <string name="new_reward">Yeni ödül</string>
-  <string name="new_daily">Yeni günlük iş</string>
-  <string name="new_habit">Yeni alışkanlık</string>
   <string name="action_edit">Düzenle</string>
   <string name="action_delete">Sil</string>
   <string name="action_cancel">İptal et</string>
@@ -197,8 +192,10 @@
   <string name="setup_welcome_description">Habitica\'ya hoşgeldin, oyunda ilerledikçe gerçek hayatını da geliştireceksin! Gerçek hayat hedeflerine ulaştıkça, ekipman, evcil hayvan, görevler ve dahasını da ortaya çıkaracaksın.</string>
   <string name="setup_welcome_title">Hoş Geldin</string>
   <string name="avatar_setup_description">Nasıl görünmek istersin? Dert etme, daha sonra bunları değiştirebilirsin.</string>
+  <string name="task_setup_description">Müthiş! Şimdi, bu yolculukta neyi geliştirmek istiyorsun?</string>
   <string name="setup_group_work">İş</string>
   <string name="setup_group_exercise">Egzersiz</string>
+  <string name="setup_group_health">Sağlık</string>
   <string name="setup_group_school">Okul</string>
   <string name="setup_group_teams">Takımlar</string>
   <string name="setup_group_chores">Günlük İşler</string>
@@ -232,7 +229,6 @@
   <string name="join">Katıl</string>
   <string name="leader">Lider</string>
   <string name="gems">Elmaslar</string>
-  <string name="copy_as_todo">Yapılacak İşlere kopyala</string>
   <string name="send_pm">ÖM Gönder</string>
   <string name="flag">Bildir</string>
   <string name="delete">Sil</string>
@@ -395,7 +391,6 @@
   <string name="all_dailies_completed">Tüm günlük işlerini tamamladın. Tebrikler!</string>
   <string name="widget_habit_button">Habitica Alışkanlığı Yap</string>
   <string name="widget_dailies">Habitica Günlük İşler</string>
-  <string name="widget_todo_list">Habitica Yapılacak İşler Listesi</string>
   <string name="widget_add_task">Habitica İş Ekle</string>
   <string name="google_services_missing">Google play services bulunamadı.</string>
   <string name="gem.purchase.toolbartitle">Satın al</string>
@@ -523,4 +518,9 @@
   <string name="dated">Tarihli</string>
   <string name="completed">Tamamlanmış</string>
   <string name="setuP_group_other">Diğer</string>
+  <string name="clear">Temizle</string>
+  <string name="empty_title_habits">Hiç Alışkanlık sahibi değilsin</string>
+  <string name="empty_title_dailies">Hiç Günlük İş sahibi değilsin</string>
+  <string name="empty_title_todos">Hiç Yapılacak İş sahibi değilsin</string>
+  <string name="empty_title_rewards">Hiç Ödül sahibi değilsin</string>
 </resources>

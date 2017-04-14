@@ -16,7 +16,6 @@
   <string name="Language_summary">Habitica の言語を変更する</string>
   <string name="SP_user_qr_code">QR コード</string>
   <string name="PS_contact_title">開発者に連絡する</string>
-  <string name="unknown_error">エラーが発生しました…</string>
   <string name="pref_account_header">アカウント</string>
   <string name="pref_first_day_of_the_week_title">週の最初の曜日</string>
   <string name="pref_first_day_of_the_week_summary">すべてのカレンダーでの週の最初の曜日</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">クエストに招待されました</string>
   <!--Adding tasks-->
   <string name="task_value">値</string>
-  <string name="new_todo">新しい To-Do</string>
-  <string name="new_reward">新しいごほうび</string>
-  <string name="new_daily">新しい日課</string>
-  <string name="new_habit">新しい習慣</string>
   <string name="action_edit">編集</string>
   <string name="action_delete">削除</string>
   <string name="action_cancel">戻る</string>
@@ -230,7 +225,6 @@
   <string name="join">参加する</string>
   <string name="leader">リーダー</string>
   <string name="gems">ジェム</string>
-  <string name="copy_as_todo">To-Doにコピーする</string>
   <string name="send_pm">PMを送る</string>
   <string name="flag">フラグ</string>
   <string name="delete">削除</string>
@@ -393,7 +387,6 @@
   <string name="all_dailies_completed">日課をすべて完了した。お見事!</string>
   <string name="widget_habit_button">Habitica の習慣</string>
   <string name="widget_dailies">Habitica の日課</string>
-  <string name="widget_todo_list">Habitica To-Do リスト</string>
   <string name="widget_add_task">Habitica のタスク追加</string>
   <string name="google_services_missing">Google Play サービスが見つかりません。</string>
   <string name="gem.purchase.toolbartitle">購入</string>

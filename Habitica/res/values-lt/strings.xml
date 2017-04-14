@@ -16,7 +16,6 @@
   <string name="Language_summary">Pakeisti Habitica kalbą</string>
   <string name="SP_user_qr_code">Tavo QR Kodas</string>
   <string name="PS_contact_title">Susisiekti</string>
-  <string name="unknown_error">Įvyko klaida...</string>
   <string name="pref_account_header">Paskyra</string>
   <string name="pref_first_day_of_the_week_title">Pirma Savaitės Diena</string>
   <string name="pref_first_day_of_the_week_summary">Pirma savaitės diena visuose kalendoriuose</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Pakvietimas į Misiją</string>
   <!--Adding tasks-->
   <string name="task_value">Reikšmė</string>
-  <string name="new_todo">Nauja vienkartinė užduotis</string>
-  <string name="new_reward">Naujas atlygis</string>
-  <string name="new_daily">Nauja dienos uždutis</string>
-  <string name="new_habit">Naujas įprotis</string>
   <string name="action_edit">Keisti</string>
   <string name="action_delete">Ištrinti</string>
   <string name="action_cancel">Atšaukti</string>
@@ -221,7 +216,6 @@
   <string name="join">Prisijungti</string>
   <string name="leader">Vadas</string>
   <string name="gems">Brangakmeniai</string>
-  <string name="copy_as_todo">Kopijuoti kaip Užduotį</string>
   <string name="send_pm">Siųsti Žinutę</string>
   <string name="flag">Žymėti</string>
   <string name="delete">Trinti</string>
@@ -377,7 +371,6 @@
   <string name="all_dailies_completed">Atlikai visas savo dienos užduotis. Puiku!</string>
   <string name="widget_habit_button">Habitica Pažymėti Įprotį</string>
   <string name="widget_dailies">Habitica Kasdienės Užduotys</string>
-  <string name="widget_todo_list">Habitica užduočių sąrašas</string>
   <string name="widget_add_task">Habitica Prodėti Užduotį</string>
   <string name="google_services_missing">Nepavyko rasti Google play paslaugos.</string>
   <string name="gem.purchase.toolbartitle">Pirkti</string>

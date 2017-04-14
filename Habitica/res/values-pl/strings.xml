@@ -16,7 +16,6 @@
   <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
-  <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
   <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Zaproszono Cię na misję</string>
   <!--Adding tasks-->
   <string name="task_value">Wartość</string>
-  <string name="new_todo">Nowe DoZrobienia</string>
-  <string name="new_reward">Nowa Nagroda</string>
-  <string name="new_daily">Nowe Codzienne</string>
-  <string name="new_habit">Nowy Nawyk</string>
   <string name="action_edit">Edytuj</string>
   <string name="action_delete">Usuń</string>
   <string name="action_cancel">Anuluj</string>
@@ -230,7 +225,6 @@
   <string name="join">Dołącz</string>
   <string name="leader">Lider</string>
   <string name="gems">Klejnoty</string>
-  <string name="copy_as_todo">Skopiuj jako Do-Zrobienia</string>
   <string name="send_pm">Wyślij wiadomość</string>
   <string name="flag">Oznacz</string>
   <string name="delete">Usuń</string>
@@ -393,7 +387,6 @@
   <string name="all_dailies_completed">Wykonałeś wszystkie codzienne. Brawo!</string>
   <string name="widget_habit_button">Nawyk Habitiki</string>
   <string name="widget_dailies">Codzienne Habitiki</string>
-  <string name="widget_todo_list">Lista do zrobienia Habitiki</string>
   <string name="widget_add_task">Dodaj zadanie do Habitiki</string>
   <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
   <string name="gem.purchase.toolbartitle">Zamów</string>

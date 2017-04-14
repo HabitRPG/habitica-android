@@ -16,7 +16,6 @@
   <string name="Language_summary">更改 Habitica的语言</string>
   <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
-  <string name="unknown_error">发生了一个错误……</string>
   <string name="pref_account_header">账号</string>
   <string name="pref_first_day_of_the_week_title">每周的第一天</string>
   <string name="pref_first_day_of_the_week_summary">在所有的日程表中，每周的第一天</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
   <string name="task_value">数值</string>
-  <string name="new_todo">新待办事项</string>
-  <string name="new_reward">新奖励</string>
-  <string name="new_daily">新每日任务</string>
-  <string name="new_habit">新习惯</string>
   <string name="action_edit">编辑</string>
   <string name="action_delete">删除</string>
   <string name="action_cancel">取消</string>
@@ -230,7 +225,6 @@
   <string name="join">加入</string>
   <string name="leader">会长</string>
   <string name="gems">宝石</string>
-  <string name="copy_as_todo">复制为待办事项</string>
   <string name="send_pm">发送私人信息</string>
   <string name="flag">标志</string>
   <string name="delete">删除</string>
@@ -393,7 +387,6 @@
   <string name="all_dailies_completed">你完成了所有没有任务。干得漂亮！</string>
   <string name="widget_habit_button">Habitica完成习惯</string>
   <string name="widget_dailies">Habitica每日任务</string>
-  <string name="widget_todo_list">Habitica 待办事项</string>
   <string name="widget_add_task">Habitica增加任务</string>
   <string name="google_services_missing">没有找到Google play服务。</string>
   <string name="gem.purchase.toolbartitle">购买</string>

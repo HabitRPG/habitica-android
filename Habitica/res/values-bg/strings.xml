@@ -16,7 +16,6 @@
   <string name="Language_summary">Промяна на езика на Хабитика</string>
   <string name="SP_user_qr_code">Вашият QR-код</string>
   <string name="PS_contact_title">Свържете се с мен</string>
-  <string name="unknown_error">Възникна грешка…</string>
   <string name="pref_account_header">Профил</string>
   <string name="pref_first_day_of_the_week_title">Начален ден на седмицата</string>
   <string name="pref_first_day_of_the_week_summary">Първият ден от седмицата във всички календари</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Получихте покана за мисия</string>
   <!--Adding tasks-->
   <string name="task_value">Стойност</string>
-  <string name="new_todo">Нова задача за изпълнение</string>
-  <string name="new_reward">Нова награда</string>
-  <string name="new_daily">Нова ежедневна задача</string>
-  <string name="new_habit">Нов навик</string>
   <string name="action_edit">Редактиране</string>
   <string name="action_delete">Изтриване</string>
   <string name="action_cancel">Отказ</string>
@@ -197,8 +192,10 @@
   <string name="setup_welcome_description">Добре дошли в Хабитика, където напредването в играта ще подобри истинския Ви живот! Докато изпълнявате реалните си цели, ще отключвате екипировка, любимци, мисии и още.</string>
   <string name="setup_welcome_title">Добре дошли</string>
   <string name="avatar_setup_description">Е, как искате да изглеждате? Не се притеснявайте, по-късно ще можете да промените това.</string>
+  <string name="task_setup_description">Страхотно! И така, върху какво искате да поработите по време на това пътешествие?</string>
   <string name="setup_group_work">Работа</string>
   <string name="setup_group_exercise">Упражнения</string>
+  <string name="setup_group_health">Здраве</string>
   <string name="setup_group_school">Училище</string>
   <string name="setup_group_teams">Екипи</string>
   <string name="setup_group_chores">Домакинска работа</string>
@@ -232,7 +229,6 @@
   <string name="join">Присъединяване</string>
   <string name="leader">Водач</string>
   <string name="gems">Диаманти</string>
-  <string name="copy_as_todo">Копиране като задача</string>
   <string name="send_pm">Изпращане на ЛС</string>
   <string name="flag">Докладване</string>
   <string name="delete">Изтриване</string>
@@ -395,7 +391,6 @@
   <string name="all_dailies_completed">Изпълнихте всичките си ежедневни задачи. Добра работа!</string>
   <string name="widget_habit_button">Извършване на навик в Хабитика</string>
   <string name="widget_dailies">Ежедневни задачи в Хабитика</string>
-  <string name="widget_todo_list">Задачи за изпълнение в Хабитика</string>
   <string name="widget_add_task">Добавяне на задача в Хабитика</string>
   <string name="google_services_missing">Услугите за „Google play“ не могат да бъдат намерени.</string>
   <string name="gem.purchase.toolbartitle">Купуване</string>
@@ -523,4 +518,12 @@
   <string name="dated">С дата</string>
   <string name="completed">Завършени</string>
   <string name="setuP_group_other">Други</string>
+  <string name="clear">Изчистване</string>
+  <string name="empty_title_habits">Нямате навици</string>
+  <string name="empty_description_habits">Навиците са задачи, които не се влияят от времето. Можете да ги отмятате много пъти през деня или пък да ги пропуснете.</string>
+  <string name="empty_title_dailies">Нямате ежедневни задачи</string>
+  <string name="empty_description_dailies">Ежедневните задачи са такива, които се повтарят през определено време. Изберете кога трябва де ги изпълнявате.</string>
+  <string name="empty_title_todos">Нямате задачи за изпълнение</string>
+  <string name="empty_description_todos">Задачите за изпълнение трябва да бъдат изпълнение само веднъж. Към тях можете да добавите подзадачи, като така ще увеличите стойността им.</string>
+  <string name="empty_title_rewards">Нямате награди</string>
 </resources>

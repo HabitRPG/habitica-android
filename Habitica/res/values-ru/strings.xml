@@ -181,7 +181,13 @@
   <string name="sidebar_help">Помощь и ЧаВо</string>
   <string name="complete_tutorial">Есть!</string>
   <string name="dismiss_tutorial">Напомнить позже</string>
+  <string name="intro_1_subtitle">Добро пожаловать в</string>
+  <string name="intro_1_title">Habitica</string>
+  <string name="intro_2_subtitle">Прогресс в игре</string>
+  <string name="intro_2_title">Прогресс в жизни</string>
+  <string name="intro_3_title">Сражайтесь с монстрами</string>
   <string name="intro_3_description">Добивайтесь поставленнх целей с помощью друзей. Поддерживайте друг друга в реальной жизни и в сражении, делая свою жизнь лучше!</string>
+  <string name="intro_finish_button">Давайте начнем!</string>
   <string name="previous_button">Назад</string>
   <string name="next_button">Далее</string>
   <string name="skip_button">Пропустить</string>
@@ -189,6 +195,7 @@
   <string name="setup_welcome_title">Добро пожаловать</string>
   <string name="setup_group_work">Работа</string>
   <string name="setup_group_exercise">Тренировки</string>
+  <string name="setup_group_health">Здоровье</string>
   <string name="setup_group_school">Школа</string>
   <string name="setup_group_teams">Команды</string>
   <string name="setup_group_chores">Домашние дела</string>
@@ -222,7 +229,7 @@
   <string name="join">Присоединиться</string>
   <string name="leader">Предводитель</string>
   <string name="gems">Самоцветы</string>
-  <string name="copy_as_todo">Скопировать как «Задание»</string>
+  <string name="copy_as_todo">Скопировать как «Ежедневное»</string>
   <string name="send_pm">Отправить личное сообщение</string>
   <string name="flag">Пометить</string>
   <string name="delete">Удалить</string>
@@ -385,7 +392,6 @@
   <string name="all_dailies_completed">Вы справились со всеми ежедневными заданиями. Так держать!</string>
   <string name="widget_habit_button">Привычки Habitica</string>
   <string name="widget_dailies">Ежедневные задания Habitica</string>
-  <string name="widget_todo_list">Список дел Habitica</string>
   <string name="widget_add_task">Добавить задачу Habitica</string>
   <string name="google_services_missing">Сервис Google play не найден.</string>
   <string name="gem.purchase.toolbartitle">Купить</string>
@@ -442,6 +448,9 @@
   <string name="challenge_details">Детали испытания</string>
   <string name="challenge_leave_title">Покинуть испытание</string>
   <string name="challenge_leave_text">Вы уверены, что хотите покинуть испытание “%s”?</string>
+  <string name="challenge_remove_tasks_title">Удалить задачи</string>
+  <string name="challenge_remove_tasks_text">Вы уверены, что хотите удалить задачи?</string>
+  <string name="remove_tasks">Удалить</string>
   <string name="my_challenges">Мои испытания</string>
   <string name="public_challenges">Общее</string>
   <string name="challenges">Испытания</string>
@@ -472,6 +481,30 @@
   <string name="notification_mystery_item">Вы открываете коробку и находите %s!</string>
   <string name="checkInRewardEarned">Вы заработали %1$s в качестве награды за преданность к улучшению жизни.</string>
   <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Ваш следующий приз будет доступен после  %1$d входа в игру</string>
+  <string name="pending_approval">ожидает утверждения</string>
+  <string name="filters">Фильтры</string>
+  <string name="done">Выполнено</string>
   <string name="group_tasks_edit_description">Групповые задания не могут быть редактированы.</string>
   <string name="group_tasks_edit_title">Нельзя редактировать это задание</string>
+  <string name="groups">Группы</string>
+  <string name="all">Все</string>
+  <string name="none">Никто</string>
+  <string name="owned">Принадлежит</string>
+  <string name="not_owned">Не принадлежит</string>
+  <string name="login_btn_fb">Зарегистрироваться с Facebook</string>
+  <string name="login_btn_google">Зарегистрироваться с Google</string>
+  <string name="action_back">Назад</string>
+  <string name="avatar_extras">Дополнительно</string>
+  <string name="avatar_skin_color">Цвет кожи</string>
+  <string name="avatar_hair_color">Цвет волос</string>
+  <string name="avatar_hair_bangs">Чёлка</string>
+  <string name="avatar_hair_ponytail">Конский хвост</string>
+  <string name="avatar_glasses">Очки</string>
+  <string name="avatar_wheelchair">Кресло-каталка</string>
+  <string name="weak">Стройное</string>
+  <string name="strong">Тучное</string>
+  <string name="gray">Серый</string>
+  <string name="completed">Завершить</string>
+  <string name="setuP_group_other">Другое</string>
+  <string name="clear">Очистить</string>
 </resources>
