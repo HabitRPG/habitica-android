@@ -17,25 +17,25 @@
         fab:menu_labels_paddingBottom="8dp"
         fab:menu_labels_paddingLeft="8dp"
 
-        fab:menu_colorNormal="@color/brand_300"
-        fab:menu_colorPressed="@color/brand_400"
+        fab:menu_colorNormal="@color/brand_400"
+        fab:menu_colorPressed="@color/brand_500"
         fab:menu_colorRipple="#FFFFFF"
         fab:menu_animationDelayPerItem="50"
         fab:menu_icon="@drawable/fab_add"
-        fab:menu_buttonSpacing="2dp">
+        fab:menu_buttonSpacing="4dp">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab.new.habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_colorNormal="@color/brand_300"
-            fab:fab_colorPressed="@color/brand_400"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/brand_500"
             fab:fab_colorRipple="#FFFFFF"
 
             fab:fab_shadowColor="#000"
-            fab:fab_elevationCompat="6dp"
-            android:src="@drawable/fab_add"
+            fab:fab_elevationCompat="4dp"
+            android:src="@drawable/add_habit"
             fab:fab_size="mini"
             fab:fab_label="@string/new_habit" />
 
@@ -44,14 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_colorNormal="@color/brand_300"
-            fab:fab_colorPressed="@color/brand_400"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/brand_500"
             fab:fab_colorRipple="#FFFFFF"
 
             fab:fab_shadowColor="#000"
-            fab:fab_elevationCompat="6dp"
+            fab:fab_elevationCompat="4dp"
 
-            android:src="@drawable/fab_add"
+            android:src="@drawable/add_daily"
             fab:fab_size="mini"
             fab:fab_label="@string/new_daily" />
 
@@ -60,14 +60,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_colorNormal="@color/brand_300"
-            fab:fab_colorPressed="@color/brand_400"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/brand_500"
             fab:fab_colorRipple="#FFFFFF"
 
             fab:fab_shadowColor="#000"
-            fab:fab_elevationCompat="6dp"
+            fab:fab_elevationCompat="4dp"
 
-            android:src="@drawable/fab_add"
+            android:src="@drawable/add_todo"
             fab:fab_size="mini"
             fab:fab_label="@string/new_todo" />
 
@@ -76,14 +76,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            fab:fab_colorNormal="@color/brand_300"
-            fab:fab_colorPressed="@color/brand_400"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_colorPressed="@color/brand_500"
             fab:fab_colorRipple="#FFFFFF"
 
             fab:fab_shadowColor="#000"
-            fab:fab_elevationCompat="6dp"
+            fab:fab_elevationCompat="4dp"
 
-            android:src="@drawable/fab_add"
+            android:src="@drawable/add_rewards"
             fab:fab_size="mini"
             fab:fab_label="@string/new_reward" />
 
