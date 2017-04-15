@@ -186,29 +186,12 @@ public class TasksFragment extends BaseMainFragment {
             }
             if (getActiveFragment() != null) {
                 getActiveFragment().setActiveFilter(activeTaskFilter);
-                if (Task.TYPE_DAILY.equals(getActiveFragment().classType)) {
-                    updateDailyDueDefaultSetting(activeTaskFilter);
-                }
-
             }
             taskFilterHelper.setTags(activeTags);
             updateFilterIcon();
 
         });
         dialog.show();
-    }
-
-    private void updateDailyDueDefaultSetting(String activeTaskFilter) {
-        Boolean showDueDefault = Task.FILTER_ACTIVE.equals(activeTaskFilter);
-        if (user != null) {
-            if (user.getPreferences().getDailyDueDefaultView() != showDueDefault) {
-                UpdateUserCommand command = new UpdateUserCommand();
-                Map<String, Object> data = new HashMap<>();
-                data.put("preferences.dailyDueDefaultView", showDueDefault);
-                command.updateData = data;
-                EventBus.getDefault().post(command);
-            }
-        }
     }
 
     public void refresh() {
