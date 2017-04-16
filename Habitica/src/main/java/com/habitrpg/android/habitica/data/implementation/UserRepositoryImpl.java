@@ -32,6 +32,13 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
+    public Observable<HabitRPGUser> updateUser(HabitRPGUser user, String key, Object value) {
+        Map<String, Object> updateData = new HashMap<>();
+        updateData.put(key, value);
+        return updateUser(user, updateData);
+    }
+
+    @Override
     public Observable<HabitRPGUser> retrieveUser(Boolean withTasks) {
         return apiClient.retrieveUser(withTasks)
                 .doOnNext(localRepository::saveUser);

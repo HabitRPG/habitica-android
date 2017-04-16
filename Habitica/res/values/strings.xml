@@ -210,8 +210,8 @@
     <string name="intro_2_subtitle">Progress in the game</string>
     <string name="intro_2_title">Progress in life</string>
     <string name="intro_2_description">Unlock features in the game by checking off your real life tasks. Earn armor, pets, and more as rewards for meeting your goals.</string>
-    <string name="intro_3_subtitle">Get social</string>
-    <string name="intro_3_title">Fight monsters</string>
+    <string name="intro_3_subtitle">Fight monsters</string>
+    <string name="intro_3_title">Get social</string>
     <string name="intro_3_description">Keep your goals on track with help from your friends. Support each other in life and in battle as you improve together!</string>
     <string name="intro_finish_button">Let\'s start!</string>
     <string name="previous_button">Previous</string>
@@ -551,7 +551,7 @@
     <string name="avatar_wheelchair">Wheelchair</string>
     <string name="weak">Weak</string>
     <string name="strong">Strong</string>
-    <string name="gray">Gray</string>
+    <string name="gray">Grey</string>
     <string name="dated">Dated</string>
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
@@ -567,4 +567,6 @@
     <string name="read_community_guidelines">Please read our Community Guidelines before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
+    <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
+    <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
 </resources>

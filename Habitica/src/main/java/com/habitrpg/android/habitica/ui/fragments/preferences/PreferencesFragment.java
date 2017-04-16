@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -45,7 +46,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public ApiClient apiClient;
     @Inject
     public SoundManager soundManager;
-    public MainActivity activity;
+    @Inject
+    UserRepository userRepository;
     private Context context;
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
@@ -202,13 +204,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             getActivity().getResources().updateConfiguration(configuration,
                     getActivity().getResources().getDisplayMetrics());
-
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.language", languageHelper.getLanguageCode());
-            apiClient.updateUser(updateData)
-
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
-                    });
+            userRepository.updateUser(user, "preferences.language", languageHelper.getLanguageCode())
+                    .subscribe(habitRPGUser -> {}, throwable -> {});
 
             Preferences preferences = user.getPreferences();
             preferences.setLanguage(languageHelper.getLanguageCode());
@@ -231,12 +228,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         } else if (key.equals("audioTheme")) {
             String newAudioTheme = sharedPreferences.getString(key, "off");
-
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.sound", newAudioTheme);
-            MergeUserCallback mergeUserCallback = new MergeUserCallback(activity, user);
-            apiClient.updateUser(updateData)
-                    .subscribe(mergeUserCallback, throwable -> {
+            userRepository.updateUser(user, "preferences.sound", newAudioTheme)
+                    .subscribe(habitRPGUser -> {}, throwable -> {
                     });
 
             Preferences preferences = user.getPreferences();
@@ -245,6 +238,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             soundManager.setSoundTheme(newAudioTheme);
 
             soundManager.preloadAllFiles();
+        } else if (key.equals("dailyDueDefaultView")) {
+            userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
+                    .subscribe(habitRPGUser -> {}, throwable -> {});
         }
     }
 
@@ -288,6 +284,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         if (user != null && user.getPreferences() != null) {
             TimePreference cdsTimePreference = (TimePreference) findPreference("cds_time");
             cdsTimePreference.setText(user.getPreferences().getDayStart() + ":00");
+            findPreference("dailyDueDefaultView").setDefaultValue(user.getPreferences().getDailyDueDefaultView());
         }
     }
 }

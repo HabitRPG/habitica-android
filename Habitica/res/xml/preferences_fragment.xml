@@ -85,6 +85,11 @@
             android:entryValues="@array/AudioValues"
             android:summary="@string/AudioTheme_summary"
             android:order="3"/>
+        <CheckBoxPreference android:title="@string/dailyDueDefaultView"
+            android:key="dailyDueDefaultView"
+            android:order="6"
+            android:summary="@string/dailyDueDefaultViewDescription"
+            />
         <Preference android:title="@string/logout"
             android:key="logout"
             android:summary="@string/logout_description"

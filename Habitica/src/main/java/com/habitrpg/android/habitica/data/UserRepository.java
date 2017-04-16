@@ -12,6 +12,7 @@ public interface UserRepository extends BaseRepository {
 
     Observable<HabitRPGUser> getUser(String userID);
     Observable<HabitRPGUser> updateUser(HabitRPGUser user, Map<String, Object> updateData);
+    Observable<HabitRPGUser> updateUser(HabitRPGUser user, String key, Object value);
 
     Observable<HabitRPGUser> retrieveUser(Boolean withTasks);
 

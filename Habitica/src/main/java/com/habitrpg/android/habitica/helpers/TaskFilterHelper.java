@@ -30,6 +30,9 @@ public class TaskFilterHelper {
     }
 
     private boolean isTaskFilterActive(String type) {
+        if (activeFilters.get(type) == null) {
+            return false;
+        }
         if (Task.TYPE_TODO.equals(type)) {
             return !Task.FILTER_ACTIVE.equals(activeFilters.get(type));
         } else {
