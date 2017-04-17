@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -63,6 +64,8 @@ public class AvatarSetupFragment extends BaseFragment {
     AvatarCategoryView extrasButton;
     @BindView(R.id.caret_view)
     ImageView caretView;
+    @BindView(R.id.speech_bubble)
+    SpeechBubbleView speechBubbleView;
 
     CustomizationSetupAdapter adapter;
     LinearLayoutManager layoutManager;
@@ -129,6 +132,14 @@ public class AvatarSetupFragment extends BaseFragment {
             this.updateAvatar();
         }
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && getContext() != null) {
+            speechBubbleView.animateText(getContext().getString(R.string.avatar_setup_description));
+        }
     }
 
     @Override

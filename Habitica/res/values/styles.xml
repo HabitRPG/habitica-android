@@ -351,4 +351,10 @@
         <item name="android:padding">8dp</item>
         <item name="android:textColor">@drawable/radio_button_text_color</item>
     </style>
+
+    <style name="TagEditTextTheme">
+        <item name="colorAccent">@color/black_20_alpha</item>
+        <item name="colorControlNormal">@color/black_20_alpha</item>
+        <item name="android:drawablePadding">@dimen/spacing_large</item>
+    </style>
 </resources>

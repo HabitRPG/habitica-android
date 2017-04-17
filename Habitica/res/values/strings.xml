@@ -264,7 +264,7 @@
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
-    <string name="add_tag">Add Tag</string>
+    <string name="add_tag">Add new Tag</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
     <string name="post">Post</string>

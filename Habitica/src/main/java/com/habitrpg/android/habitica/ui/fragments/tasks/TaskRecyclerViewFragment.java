@@ -181,7 +181,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        if (classType.equals(Task.TYPE_DAILY)) {
+        if (Task.TYPE_DAILY.equals(classType)) {
             if (user != null && user.getPreferences().getDailyDueDefaultView()) {
                 taskFilterHelper.setActiveFilter(Task.TYPE_DAILY, Task.FILTER_ACTIVE);
             }

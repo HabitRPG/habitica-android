@@ -3,8 +3,10 @@ package com.habitrpg.android.habitica.ui.views.tasks;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
@@ -74,11 +76,13 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     private Map<String, Tag> createdTags = new HashMap<>();
     private List<String> deletedTags = new ArrayList<>();
 
+    private Drawable addIcon;
     private boolean isEditing;
 
     public TaskFilterDialog(Context context, AppComponent component) {
         super(context);
         component.inject(this);
+        addIcon = ContextCompat.getDrawable(context, R.drawable.ic_add_purple_300_36dp);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_task_filter, null);
@@ -117,7 +121,6 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
             });
             clearButton.setEnabled(hasActiveFilters());
         }
-
     }
 
     @Override
@@ -147,10 +150,16 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
                 }
         );
+        int leftPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getContext().getResources().getDisplayMetrics());
+        int verticalPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getContext().getResources().getDisplayMetrics());
         for (Tag tag : tags) {
             AppCompatCheckBox tagCheckbox = new AppCompatCheckBox(getContext());
             tagCheckbox.setText(tag.getName());
-            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+            tagCheckbox.setPadding(tagCheckbox.getPaddingLeft()+ leftPadding,
+                    verticalPadding,
+                    tagCheckbox.getPaddingRight(),
+                    verticalPadding);
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList);
             tagCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
@@ -173,6 +182,8 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         Button button = new Button(getContext());
         button.setText(R.string.add_tag);
         button.setOnClickListener(v -> createTag());
+        button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null);
+        button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray);
         tagsList.addView(button);
     }
 
@@ -258,7 +269,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         tagsList.addView(wrapper);
     }
 
-    public void setActiveTags(List<String> tagIds) {
+    public void setActiveTags(@Nullable List<String> tagIds) {
         if (tagIds == null) {
             this.activeTags.clear();
         } else {
@@ -313,7 +324,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         setActiveFilter(activeFilter);
     }
 
-    private void setActiveFilter(String activeFilter) {
+    private void setActiveFilter(@Nullable String activeFilter) {
         filterType = activeFilter;
         int checkedId = -1;
         if (activeFilter == null) {

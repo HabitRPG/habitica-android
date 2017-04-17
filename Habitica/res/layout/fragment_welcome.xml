@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/light_gray_bg"
-              android:gravity="center_vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray_bg"
+    android:gravity="center_vertical">
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,10 +55,10 @@
                 android:layout_marginTop="18dp"/>
     </RelativeLayout>
     <com.habitrpg.android.habitica.ui.SpeechBubbleView
+        android:id="@+id/speech_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:namePlate="Justin"
-            app:text="@string/welcome_text"
             android:layout_marginLeft="@dimen/content_inset"
             android:layout_marginRight="@dimen/content_inset"/>
 </LinearLayout>

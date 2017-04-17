@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible"
-                android:layout_below="@id/city_view" />
+                android:layout_above="@id/city_view" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,10 +41,9 @@
                 android:id="@+id/left_cloud_view"
                 android:layout_toLeftOf="@id/cloud_anchor"
                 android:layout_marginRight="150dp"
-                android:layout_below="@id/cloud_anchor"
-                android:layout_alignParentLeft="false"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:layout_marginTop="150dp"
+                android:paddingBottom="460dp"
                 />
             <ImageView
                 android:layout_width="wrap_content"
@@ -53,10 +52,9 @@
                 android:id="@+id/right_cloud_view"
                 android:layout_toRightOf="@id/cloud_anchor"
                 android:layout_marginLeft="170dp"
-                android:layout_below="@id/cloud_anchor"
-                android:layout_alignParentLeft="false"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:layout_marginTop="240dp"
+                android:paddingBottom="400dp"
                 />
 
 
