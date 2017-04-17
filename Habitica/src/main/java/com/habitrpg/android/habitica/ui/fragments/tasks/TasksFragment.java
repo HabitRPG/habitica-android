@@ -181,7 +181,7 @@ public class TasksFragment extends BaseMainFragment {
             if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
             }
-            if (activePos < viewPager.getAdapter().getCount() && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
+            if (activePos < viewPager.getAdapter().getCount()-1 && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
                 viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
             }
             if (getActiveFragment() != null) {

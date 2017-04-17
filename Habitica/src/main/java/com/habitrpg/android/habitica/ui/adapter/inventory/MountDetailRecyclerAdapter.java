@@ -87,7 +87,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
-        public Boolean isOwned() {
+        Boolean isOwned() {
             if (ownedMapping != null && animal != null) {
                 if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
                     return true;

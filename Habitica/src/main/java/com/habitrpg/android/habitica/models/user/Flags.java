@@ -133,6 +133,10 @@ public class Flags extends BaseModel {
     @Override
     public void save() {
 
+        if (user_id == null) {
+            return;
+        }
+
         for (TutorialStep step : this.getTutorial()) {
             step.user_id = user_id;
         }
