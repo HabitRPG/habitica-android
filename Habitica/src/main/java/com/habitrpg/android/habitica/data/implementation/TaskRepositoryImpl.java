@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.playseeds.android.sdk.inappmessaging.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,6 +70,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
+        lastTaskAction = now;
         return apiClient.createItem(task)
                 .doOnNext(task1 -> {
                     localRepository.saveTask(task1);
@@ -82,6 +84,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
+        lastTaskAction = now;
         return apiClient.updateTask(task.getId(), task)
                 .doOnNext(task1 -> {
                     localRepository.saveTask(task1);
