@@ -63,7 +63,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/tags_title"
@@ -98,7 +100,7 @@
                 android:orientation="vertical"
                 android:showDividers="middle"
                 android:divider="@color/transparent"
-                android:dividerPadding="12dp"/>
+                android:dividerPadding="8dp"/>
         </ScrollView>
 
     </LinearLayout>

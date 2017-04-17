@@ -31,7 +31,6 @@
             android:paddingBottom="@dimen/task_top_bottom_padding"
             android:paddingEnd="@dimen/reward_spacing"
             android:paddingRight="@dimen/reward_spacing"
-            android:paddingStart="12dp"
             android:paddingTop="@dimen/task_top_bottom_padding">
 
             <net.pherth.android.emoji_library.EmojiTextView

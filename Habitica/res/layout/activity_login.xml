@@ -19,6 +19,7 @@
             android:background="@drawable/login_gradient"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:layout_marginRight="-2dp"
             >
             <ImageView
                 android:id="@+id/city_view"
@@ -70,7 +71,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/spacing_large"
+            android:paddingTop="@dimen/spacing_large"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
             android:id="@+id/login_intro_view"
             android:orientation="vertical"
             android:background="@color/transparent"
@@ -114,6 +117,7 @@
                 android:id="@+id/login_scrollview"
                 android:scrollIndicators="none"
                 tools:visibility="visible"
+                android:padding="0dp"
                 >
 
                 <LinearLayout

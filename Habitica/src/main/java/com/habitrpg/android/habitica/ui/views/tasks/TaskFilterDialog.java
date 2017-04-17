@@ -139,15 +139,12 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
     private void createTagViews() {
         ColorStateList colorStateList = new ColorStateList(
                 new int[][]{
-
                         new int[]{-android.R.attr.state_checked}, //disabled
                         new int[]{android.R.attr.state_checked} //enabled
                 },
                 new int[] {
-
-                        Color.GRAY, //disabled
+                        Color.LTGRAY, //disabled
                         ContextCompat.getColor(getContext(), R.color.brand_400) //enabled
-
                 }
         );
         int leftPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getContext().getResources().getDisplayMetrics());
@@ -155,11 +152,12 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         for (Tag tag : tags) {
             AppCompatCheckBox tagCheckbox = new AppCompatCheckBox(getContext());
             tagCheckbox.setText(tag.getName());
-            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
             tagCheckbox.setPadding(tagCheckbox.getPaddingLeft()+ leftPadding,
                     verticalPadding,
                     tagCheckbox.getPaddingRight(),
                     verticalPadding);
+            tagCheckbox.setTextColor(ContextCompat.getColor(getContext(), R.color.textColorLight));
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList);
             tagCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
@@ -184,6 +182,7 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
         button.setOnClickListener(v -> createTag());
         button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null);
         button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray);
+        button.setTextColor(ContextCompat.getColor(getContext(), R.color.text_light));
         tagsList.addView(button);
     }
 

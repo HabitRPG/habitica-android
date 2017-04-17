@@ -22,7 +22,14 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<HabitRPGUser> getUser(String userID) {
-        return localRepository.getUser(userID);
+        return localRepository.getUser(userID)
+                .flatMap(habitRPGUser -> {
+                    if (habitRPGUser == null) {
+                        return retrieveUser(true);
+                    } else {
+                        return Observable.just(habitRPGUser);
+                    }
+                });
     }
 
     @Override
