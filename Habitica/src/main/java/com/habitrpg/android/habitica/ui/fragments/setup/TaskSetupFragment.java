@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -35,6 +36,8 @@ public class TaskSetupFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.avatarView)
     AvatarView avatarView;
+    @BindView(R.id.speech_bubble)
+    SpeechBubbleView speechBubbleView;
     TaskSetupAdapter adapter;
     private String[][] taskGroups;
     private Object[][] tasks;
@@ -60,6 +63,14 @@ public class TaskSetupFragment extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && getContext() != null) {
+            speechBubbleView.animateText(getContext().getString(R.string.task_setup_description));
+        }
     }
 
     public void setUser(@Nullable HabitRPGUser user) {
