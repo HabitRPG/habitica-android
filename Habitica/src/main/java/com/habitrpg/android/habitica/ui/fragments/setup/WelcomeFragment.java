@@ -36,9 +36,4 @@ public class WelcomeFragment extends BaseFragment {
 
     @Override
     public void injectFragment(AppComponent component) {}
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
 }
