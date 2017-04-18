@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
 
 /**
  * Created by Negue on 26.11.2015.
@@ -76,11 +76,11 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
                         Seeds.sharedInstance().recordSeedsIAPEvent(purchase.sku, 19.99);
                     }
                 }, throwable -> {
-                    if (throwable.getClass().equals(HttpException.class)) {
+                    if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
                         HttpException error = (HttpException)throwable;
                         ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                         if (error.code() == 401) {
-                            if (res.message.equals("RECEIPT_ALREADY_USED")) {
+                            if (res.message != null && res.message.equals("RECEIPT_ALREADY_USED")) {
                                 purchasedOrderList.add(purchase.orderId);
 
                                     requestListener.onSuccess(verifiedPurchases);
@@ -105,11 +105,11 @@ public class HabiticaPurchaseVerifier extends BasePurchaseVerifier {
 
                         EventBus.getDefault().post(new UserSubscribedEvent());
                     }, throwable -> {
-                        if (throwable.getClass().equals(HttpException.class)) {
+                        if (throwable.getClass().equals(retrofit2.adapter.rxjava.HttpException.class)) {
                             HttpException error = (HttpException) throwable;
                             ErrorResponse res = apiClient.getErrorResponse((HttpException) throwable);
                             if (error.code() == 401) {
-                                if (res.message.equals("RECEIPT_ALREADY_USED")) {
+                                if (res.message != null && res.message.equals("RECEIPT_ALREADY_USED")) {
                                     purchasedOrderList.add(purchase.orderId);
 
                                     verifiedPurchases.add(purchase);
