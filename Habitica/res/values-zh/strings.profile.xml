@@ -13,5 +13,6 @@
     <string name="profile_private_message">私信</string>
     <string name="profile_achievements">成就</string>
     <string name="profile_achievement_ok">OK</string>
+    <string name="profile_qrcode_close">关闭</string>
 
 </resources>

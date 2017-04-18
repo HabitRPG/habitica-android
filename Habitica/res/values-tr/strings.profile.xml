@@ -13,5 +13,6 @@
     <string name="profile_private_message">Özel Mesaj</string>
     <string name="profile_achievements">Başarılar</string>
     <string name="profile_achievement_ok">Tamam</string>
+    <string name="profile_qrcode_close">Kapat</string>
 
 </resources>

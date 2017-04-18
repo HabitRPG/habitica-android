@@ -183,9 +183,9 @@
   <string name="dismiss_tutorial">Напомнить позже</string>
   <string name="intro_1_subtitle">Добро пожаловать в</string>
   <string name="intro_1_title">Habitica</string>
+  <string name="intro_1_description">Пришло время веселиться, пока вы делаете свою работу. Присоединитесь к %s участникам, уже улучшающих свою жизнь.</string>
   <string name="intro_2_subtitle">Прогресс в игре</string>
   <string name="intro_2_title">Прогресс в жизни</string>
-  <string name="intro_3_title">Сражайтесь с монстрами</string>
   <string name="intro_3_description">Добивайтесь поставленнх целей с помощью друзей. Поддерживайте друг друга в реальной жизни и в сражении, делая свою жизнь лучше!</string>
   <string name="intro_finish_button">Давайте начнем!</string>
   <string name="previous_button">Назад</string>
@@ -193,6 +193,8 @@
   <string name="skip_button">Пропустить</string>
   <string name="setup_welcome_description">Добро пожаловать в Habitica, где продвижение в игре помогает вам в рельной жизни! Выполняя реальные задачи, вы разблокируете снаряжение, питомцев, квесты и многое другое.</string>
   <string name="setup_welcome_title">Добро пожаловать</string>
+  <string name="avatar_setup_description">Итак, как бы вы хотели выглядеть? Не беспокойтесь, вы это сможете изменить позже.</string>
+  <string name="task_setup_description">Великолепно! Теперь, вы заинтересованы в работе на протяжении этого путешествия?</string>
   <string name="setup_group_work">Работа</string>
   <string name="setup_group_exercise">Тренировки</string>
   <string name="setup_group_health">Здоровье</string>
@@ -235,7 +237,6 @@
   <string name="delete">Удалить</string>
   <string name="name">Имя</string>
   <string name="description">Описание</string>
-  <string name="add_tag">Добавить метку</string>
   <string name="privacy">Приватность</string>
   <string name="write_message">Написать сообщение</string>
   <string name="post">Отправить</string>
@@ -423,6 +424,7 @@
   <string name="subscriptions">Абонемент</string>
   <string name="subscription_duration">Повторять каждые %s</string>
   <string name="subscribe">Подписаться</string>
+  <string name="subscribe.listitem2.description">Каждый месяц вы получаете уникальный косметический элемент для своего аватара! Плюс, каждые три месяца последовательной подписки таинственные путешественники во времени предоставят вам доступ к историческим (и футуристическим!) косметическим предметам.</string>
   <string name="subscribe.listitem3.description">Завершенный список дел и история доступны дольше.</string>
   <string name="subscription_hourglasses">+%d Мистических песочных часов</string>
   <string name="payment_method">Способ оплаты</string>
@@ -445,6 +447,7 @@
   <string name="twelve_months">12 месяцев</string>
   <string name="subscribe_prompt_thanks">Как подписчик вы получаете эти полезные преимущества:</string>
   <string name="subscription_status">Статус подписки</string>
+  <string name="byLeader">сделано %s</string>
   <string name="challenge_details">Детали испытания</string>
   <string name="challenge_leave_title">Покинуть испытание</string>
   <string name="challenge_leave_text">Вы уверены, что хотите покинуть испытание “%s”?</string>
@@ -503,8 +506,11 @@
   <string name="avatar_wheelchair">Кресло-каталка</string>
   <string name="weak">Стройное</string>
   <string name="strong">Тучное</string>
-  <string name="gray">Серый</string>
   <string name="completed">Завершить</string>
   <string name="setuP_group_other">Другое</string>
   <string name="clear">Очистить</string>
+  <string name="empty_title_habits">У вас нет привычек</string>
+  <string name="empty_title_todos">У вас нет задач</string>
+  <string name="empty_title_rewards">У вас нет вознаграждений</string>
+  <string name="reload_content">Обновить содержимое</string>
 </resources>

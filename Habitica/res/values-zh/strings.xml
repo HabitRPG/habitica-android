@@ -16,6 +16,7 @@
   <string name="Language_summary">更改 Habitica的语言</string>
   <string name="SP_user_qr_code">你的二维码</string>
   <string name="PS_contact_title">联系我</string>
+  <string name="unknown_error">发生错误……</string>
   <string name="pref_account_header">账号</string>
   <string name="pref_first_day_of_the_week_title">每周的第一天</string>
   <string name="pref_first_day_of_the_week_summary">在所有的日程表中，每周的第一天</string>
@@ -32,11 +33,15 @@
   <string name="preference_push_gifted_gems">赠送的钻石</string>
   <string name="preference_push_gifted_subscription">赠送的订阅</string>
   <string name="preference_push_invited_to_party">被邀请加入队伍</string>
-  <string name="preference_push_invited_to_guild">已邀请至工会</string>
+  <string name="preference_push_invited_to_guild">已邀请至公会</string>
   <string name="preference_push_your_quest_has_begun">你的冒险开始了</string>
   <string name="preference_push_invited_to_quest">被邀请加入冒险</string>
   <!--Adding tasks-->
   <string name="task_value">数值</string>
+  <string name="new_todo">新待办事项</string>
+  <string name="new_reward">新奖励</string>
+  <string name="new_daily">新每日任务</string>
+  <string name="new_habit">新习惯</string>
   <string name="action_edit">编辑</string>
   <string name="action_delete">删除</string>
   <string name="action_cancel">取消</string>
@@ -181,8 +186,6 @@
   <string name="intro_2_subtitle">游戏进度</string>
   <string name="intro_2_title">生活进度</string>
   <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧！</string>
-  <string name="intro_3_subtitle">获得社交</string>
-  <string name="intro_3_title">击退怪物</string>
   <string name="intro_3_description">和朋友们一起为目标努力吧。在生活和战斗中互相支持，共同进步！</string>
   <string name="intro_finish_button">让我们开始吧！</string>
   <string name="previous_button">上一页</string>
@@ -218,7 +221,7 @@
   <string name="setup_task_creativity_2">进行创新项目</string>
   <string name="setup_task_creativity_3">完成创新项目</string>
   <string name="gem.purchase.support">想要帮助我们维持Habitica？通过买宝石的方式来支持开发者吧！\n\n 宝石能用来购买额外的乐趣，包括：\n\n - 角色的酷酷的服装\n - 好看的背景\n - 能获得宠物蛋的有趣的任务\n - 1001级之前改变职业的能力\n\n非常感谢您帮助我们使Habitica变的更好。您的支持非常重要！</string>
-  <string name="my_guilds">我的工会</string>
+  <string name="my_guilds">我的公会</string>
   <string name="public_guilds">公共公会</string>
   <string name="guild">公会</string>
   <string name="leave">离开</string>
@@ -230,11 +233,10 @@
   <string name="delete">删除</string>
   <string name="name">名称</string>
   <string name="description">描述</string>
-  <string name="add_tag">添加标签</string>
   <string name="privacy">隐私</string>
   <string name="write_message">写消息</string>
   <string name="post">公告</string>
-  <string name="guild_search_hint">寻找工会</string>
+  <string name="guild_search_hint">查找公会</string>
   <string name="todo_due">到期：%s</string>
   <string name="daily_streak">目前连击数：%d</string>
   <string name="todo_has_duedate">任务有截止日</string>
@@ -457,7 +459,7 @@
   <string name="keep_tasks">保持</string>
   <string name="my_challenges">我的挑战</string>
   <string name="public_challenges">公共挑战</string>
-  <string name="challenges">享受挑战吧！</string>
+  <string name="challenges">挑战</string>
   <string name="daily">每日任务</string>
   <string name="habit">习惯</string>
   <string name="reward">奖励</string>
@@ -467,8 +469,8 @@
   <string name="challenge">挑战</string>
   <string name="go_to_challenge">参加挑战</string>
   <string name="not_part_of_a_challenge">你还没有加入任何挑战呢！</string>
-  <string name="join_a_challenge">加入一个挑战会将它的任务加入你的任务列表，完成一个挑战会给你一个成就，通常还有一些宝石奖励。</string>
-  <string name="check_the_public_challenge_tab">点击“公公挑战”按钮来寻找其他勇士创建的挑战吧！也许会有适合你的哟！</string>
+  <string name="join_a_challenge">加入一个挑战会将它的任务加入你的任务列表，然后去完成任务战胜其他habitican赢得成就甚至钻石吧！</string>
+  <string name="check_the_public_challenge_tab">点击“公会挑战”按钮来寻找其他勇士创建的挑战吧！也许会有适合你的哟！</string>
   <string name="add_reminder">增加提醒</string>
   <string name="warning">警告</string>
   <string name="open_settings">打开设置</string>
@@ -495,4 +497,21 @@
   <string name="none">无</string>
   <string name="owned">已拥有的</string>
   <string name="not_owned">未拥有的</string>
+  <string name="login_btn_fb">Facebook登录</string>
+  <string name="login_btn_google">Google登录</string>
+  <string name="action_back">返回</string>
+  <string name="avatar_skin_color">肤色</string>
+  <string name="avatar_hair_color">发色</string>
+  <string name="avatar_hair_bangs">刘海</string>
+  <string name="avatar_hair_ponytail">辫子</string>
+  <string name="avatar_glasses">眼镜</string>
+  <string name="avatar_wheelchair">轮椅</string>
+  <string name="weak">瘦小</string>
+  <string name="strong">强壮</string>
+  <string name="completed">完成</string>
+  <string name="setuP_group_other">其他</string>
+  <string name="empty_title_habits">你还没有任何习惯</string>
+  <string name="empty_title_dailies">你还没有任何每日任务</string>
+  <string name="empty_title_todos">你还没有任何待办事项</string>
+  <string name="empty_title_rewards">你还没有任何奖励项目</string>
 </resources>

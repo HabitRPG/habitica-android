@@ -187,8 +187,8 @@
   <string name="intro_2_subtitle">Progressi nel gioco</string>
   <string name="intro_2_title">Progressi nella vita</string>
   <string name="intro_2_description">Sblocca nuovi elementi nel gioco portando a termine gli impegni della vita reale. Ottieni armature, animali e altro come ricompensa per aver raggiunto i tuoi obiettivi.</string>
-  <string name="intro_3_subtitle">Sii Social</string>
-  <string name="intro_3_title">Combatti mostri</string>
+  <string name="intro_3_subtitle">Combatti mostri</string>
+  <string name="intro_3_title">Sii Social</string>
   <string name="intro_3_description">Tieni traccia dei tuoi obiettivi con l\'aiuto dei tuoi amici. Supportatevi a vicenda nella vita e nelle battaglie per migliorare insieme!</string>
   <string name="intro_finish_button">Iniziamo!</string>
   <string name="previous_button">Indietro</string>
@@ -240,7 +240,7 @@
   <string name="delete">Elimina</string>
   <string name="name">Nome</string>
   <string name="description">Descrizione</string>
-  <string name="add_tag">Aggiungi etichetta</string>
+  <string name="add_tag">Aggiungi una nuova etichetta</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Scrivi messaggio</string>
   <string name="post">Invia</string>
@@ -293,7 +293,7 @@
   <string name="use_animal">Usa</string>
   <string name="feed">Dai da mangiare</string>
   <string name="hatch_with">Fai nascere un animale con %s</string>
-  <string name="hatched_pet_title">E\' nato un %2$s %1$s!</string>
+  <string name="hatched_pet_title">È nato un %2$s %1$s!</string>
   <string name="close">Chiudi</string>
   <string name="share">Condividi</string>
   <string name="notification_pet_fed">Hai dato da mangiare al tuo %1$s %2$s!</string>
@@ -526,6 +526,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="dated">Con scadenza</string>
   <string name="completed">Completate</string>
   <string name="setuP_group_other">Altro</string>
+  <string name="clear">Deseleziona</string>
   <string name="empty_title_habits">Non hai alcuna Habit.</string>
   <string name="empty_description_habits">Le Habit sono attività che possono essere svolte in modo molto flessibile. Puoi usarle diverse volte al giorno, o non usarle affatto.</string>
   <string name="empty_title_dailies">Non hai nessuna Daily</string>
@@ -533,5 +534,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="empty_title_todos">Non hai alcuna To-do.</string>
   <string name="empty_description_todos">Le To-do sono attività da completare solo una volta. Aggiungi una checklist alle tue To-do per aumentarne il valore.</string>
   <string name="empty_title_rewards">Non hai nessuna Ricompensa</string>
+  <string name="reset_walkthrough">Ripristina la spiegazione introduttiva di Justin</string>
   <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
+  <string name="maintenance">Manutenzione</string>
 </resources>

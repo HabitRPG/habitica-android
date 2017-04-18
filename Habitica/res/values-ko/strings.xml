@@ -181,8 +181,6 @@
   <string name="intro_2_subtitle">게임의 진전</string>
   <string name="intro_2_title">삶의 진전</string>
   <string name="intro_2_description">실제 삶에서의 일을 처리하는 것으로 게임의 특색들을 잠금해제 하세요. 목표를 달성해 갑옷, 펫, 그리고 더 많은 것들을 얻으세요.</string>
-  <string name="intro_3_subtitle">친목을 다지세요</string>
-  <string name="intro_3_title">몬스터와 싸우세요</string>
   <string name="intro_3_description">친구들의 도움으로 당신의 목표를 유지시키세요. 일상 생활과 전투에서 서로를 도와가며 함께 성장하세요!</string>
   <string name="intro_finish_button">시작합시다!</string>
   <string name="previous_button">이전</string>
@@ -237,7 +235,6 @@
   <string name="delete">삭제</string>
   <string name="name">이름</string>
   <string name="description">설명</string>
-  <string name="add_tag">태그 더하기</string>
   <string name="privacy">개인정보 보호</string>
   <string name="write_message">메세지 작성</string>
   <string name="post">게시</string>

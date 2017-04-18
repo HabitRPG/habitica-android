@@ -222,7 +222,6 @@
   <string name="delete">Borrar</string>
   <string name="name">Nombre</string>
   <string name="description">Descripción</string>
-  <string name="add_tag">Añadir etiqueta</string>
   <string name="privacy">Privacidad</string>
   <string name="write_message">Escribir mensaje</string>
   <string name="post">Publicar</string>

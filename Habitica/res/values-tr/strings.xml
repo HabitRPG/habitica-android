@@ -16,6 +16,7 @@
   <string name="Language_summary">Habitica dilini değiştirin</string>
   <string name="SP_user_qr_code">Sizin QR Kodunuz</string>
   <string name="PS_contact_title">Benimle iletişime geçin</string>
+  <string name="unknown_error">Bir hata oluştu...</string>
   <string name="pref_account_header">Hesap</string>
   <string name="pref_first_day_of_the_week_title">Haftanın İlk Günü</string>
   <string name="pref_first_day_of_the_week_summary">Tüm takvimlerde haftanın ilk günü</string>
@@ -37,6 +38,10 @@
   <string name="preference_push_invited_to_quest">Göreve Davet Edildin</string>
   <!--Adding tasks-->
   <string name="task_value">Değer</string>
+  <string name="new_todo">Yeni Yapılacak İş</string>
+  <string name="new_reward">Yeni Ödül</string>
+  <string name="new_daily">Yeni Günlük İş</string>
+  <string name="new_habit">Yeni Alışkanlık</string>
   <string name="action_edit">Düzenle</string>
   <string name="action_delete">Sil</string>
   <string name="action_cancel">İptal et</string>
@@ -182,8 +187,8 @@
   <string name="intro_2_subtitle">Oyun gelişimi</string>
   <string name="intro_2_title">Hayatta gelişim</string>
   <string name="intro_2_description">Gerçek hayatındaki işlerini tamamlayarak oyun içindeki özellikleri aç. Zırh, evcil hayvan ve daha fazlasını hedeflerine ulaştığında ödül olarak kazan.</string>
-  <string name="intro_3_subtitle">Sosyalleş</string>
-  <string name="intro_3_title">Canavarlarla Savaş</string>
+  <string name="intro_3_subtitle">Canavarlarla savaş</string>
+  <string name="intro_3_title">Sosyalleş</string>
   <string name="intro_3_description">Hedeflerini arkadaşlarından yardım alarak devam ettir. Hayatta ve savaşlarda birbirinizi birlikte geliştirerek destek olun!</string>
   <string name="intro_finish_button">Hadi başlayalım!</string>
   <string name="previous_button">Önceki</string>
@@ -229,12 +234,12 @@
   <string name="join">Katıl</string>
   <string name="leader">Lider</string>
   <string name="gems">Elmaslar</string>
+  <string name="copy_as_todo">Yapılacak İşlere kopyala</string>
   <string name="send_pm">ÖM Gönder</string>
   <string name="flag">Bildir</string>
   <string name="delete">Sil</string>
   <string name="name">Ad</string>
   <string name="description">Tanım</string>
-  <string name="add_tag">Etiket Ekle</string>
   <string name="privacy">Gizlilik</string>
   <string name="write_message">Mesaj Yaz</string>
   <string name="post">Gönder</string>
@@ -391,6 +396,7 @@
   <string name="all_dailies_completed">Tüm günlük işlerini tamamladın. Tebrikler!</string>
   <string name="widget_habit_button">Habitica Alışkanlığı Yap</string>
   <string name="widget_dailies">Habitica Günlük İşler</string>
+  <string name="widget_todo_list">Habitica Yapılacak İşler Listesi</string>
   <string name="widget_add_task">Habitica İş Ekle</string>
   <string name="google_services_missing">Google play services bulunamadı.</string>
   <string name="gem.purchase.toolbartitle">Satın al</string>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
   <string name="tutorial_equipment">Tu pojawia się zakupiony ekwipunek. Wyposażenie Bojowe wpływa na Twoje statystyki, a Kostium (o ile włączony) na wygląd Twojego awatara.</string>
   <string name="tutorial_items">Zbieraj przedmioty kończąc zadania i zdobywając poziomy. Stuknij przedmiot, żeby go użyć!</string>
   <string name="tutorial_pets">Kończąc zadania w prawdziwym świecie, masz szansę znalezienia losowych jaj i eliksirów. Połącz je, aby wykluć chowańce.</string>

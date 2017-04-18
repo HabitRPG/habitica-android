@@ -180,8 +180,6 @@
   <string name="intro_1_title">Habitica</string>
   <string name="intro_2_subtitle">ゲームの進行</string>
   <string name="intro_2_title">人生の進行</string>
-  <string name="intro_3_subtitle">友達とつながって</string>
-  <string name="intro_3_title">モンスターと戦おう</string>
   <string name="intro_3_description">友達の力を借りて目標にしがみつこう。実生活とバトルでお互いに助け合い、いっしょに成長しよう!</string>
   <string name="intro_finish_button">始めましょう!</string>
   <string name="previous_button">戻る</string>
@@ -230,7 +228,6 @@
   <string name="delete">削除</string>
   <string name="name">名前</string>
   <string name="description">詳細</string>
-  <string name="add_tag">タグを追加する</string>
   <string name="privacy">プライバシー</string>
   <string name="write_message">メッセージを書く</string>
   <string name="post">投稿</string>

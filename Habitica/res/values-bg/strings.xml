@@ -182,8 +182,6 @@
   <string name="intro_2_subtitle">Напредък в играта</string>
   <string name="intro_2_title">Напредък в живота</string>
   <string name="intro_2_description">Отключвайте функционалности в играта като отбелязвате завършените задачи в истинския си живот. За изпълнението на целите си ще получавате екипировка, любимци и най-различни други награди.</string>
-  <string name="intro_3_subtitle">Общувайте</string>
-  <string name="intro_3_title">Бийте се с чудовища</string>
   <string name="intro_3_description">Приятелите Ви могат да Ви помогнат да постигнете целите си. Подкрепяйте се взаимно в живота и битките, за да израснете заедно!</string>
   <string name="intro_finish_button">Да започваме!</string>
   <string name="previous_button">Назад</string>
@@ -234,7 +232,6 @@
   <string name="delete">Изтриване</string>
   <string name="name">Име</string>
   <string name="description">Описание</string>
-  <string name="add_tag">Добавяне на етикет</string>
   <string name="privacy">Поверителност</string>
   <string name="write_message">Напишете съобщение</string>
   <string name="post">Изпр.</string>
@@ -514,7 +511,6 @@
   <string name="avatar_wheelchair">Инвалидна количка</string>
   <string name="weak">Слаби</string>
   <string name="strong">Силни</string>
-  <string name="gray">Сиви</string>
   <string name="dated">С дата</string>
   <string name="completed">Завършени</string>
   <string name="setuP_group_other">Други</string>

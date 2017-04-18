@@ -187,8 +187,8 @@
   <string name="intro_2_subtitle">Vooruitgang in het spel</string>
   <string name="intro_2_title">Vooruitgang in je leven</string>
   <string name="intro_2_description">Ontgrendel functies in het spel door taken in je echte leven af te vinken. Verdien uitrusting, huisdieren en meer als beloning voor het bereiken van je doelen.</string>
-  <string name="intro_3_subtitle">Word sociaal</string>
-  <string name="intro_3_title">Vecht tegen monsters</string>
+  <string name="intro_3_subtitle">Vecht tegen monsters</string>
+  <string name="intro_3_title">Wordt sociaal</string>
   <string name="intro_3_description">Houd je doelen op peil met hulp van je vrienden. Ondersteun elkaar in het leven en vecht samen terwijl je steeds beter wordt.</string>
   <string name="intro_finish_button">Laten we beginnen!</string>
   <string name="previous_button">Vorige</string>
@@ -240,7 +240,7 @@
   <string name="delete">Verwijderen</string>
   <string name="name">Naam</string>
   <string name="description">Beschrijving</string>
-  <string name="add_tag">Label toevoegen</string>
+  <string name="add_tag">Nieuwe label toevoegen</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Bericht schrijven</string>
   <string name="post">Post</string>
@@ -521,7 +521,7 @@
   <string name="avatar_wheelchair">Rolstoel</string>
   <string name="weak">Zwak</string>
   <string name="strong">Sterk</string>
-  <string name="gray">Grijs</string>
+  <string name="gray">Grijd</string>
   <string name="dated">Gedateerd</string>
   <string name="completed">Voltooid</string>
   <string name="setuP_group_other">Andere</string>
@@ -535,4 +535,8 @@
   <string name="empty_title_rewards">Je hebt geen beloningen</string>
   <string name="reset_walkthrough">Herstart Justin\'s inleiding</string>
   <string name="read_community_guidelines">Lees alsjeblieft onze gemeenschapsrichtlijnen voordat je berichten plaatst</string>
+  <string name="maintenance">Onderhoud</string>
+  <string name="reload_content">Inhoud herladen</string>
+  <string name="dailyDueDefaultView">Standaard de \'Onvoltooid\' tab laten zien in Dagelijkse Taken</string>
+  <string name="dailyDueDefaultViewDescription">Als deze optie aan staat, wordt standaard de \'onvoltooid\' tab getoond in plaats van \'alle\'</string>
 </resources>

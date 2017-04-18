@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="tutorial_overview">İşte geldik! İlgi alanlarına göre sana bazı işler doldurdum. Kendin de birkaç tane eklemeyi dene. Başlığa basarak işleri düzenleyebilirsin.</string>
   <string name="tutorial_equipment">Ekipman satın aldığında burada gözükür. Savaş Ekipmanın niteliklerini, ve Kostümün (eğer etkinse) avatarının ne giydiğini etkiler.</string>
   <string name="tutorial_items">Görevlerini tamamlayarak ve seviye yükselerek eşya kazan. Kullanmak için eşyanın üzerine tıkla!</string>
   <string name="tutorial_pets">Gerçek dünya işlerini tamamladıkça, artık rastgele yumurta ve iksir bulma şansın var. Hayvanları yumurtadan çıkarmak için o ikisini birleştir</string>

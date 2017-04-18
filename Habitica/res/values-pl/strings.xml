@@ -16,6 +16,7 @@
   <string name="Language_summary">Zmień język Habitici</string>
   <string name="SP_user_qr_code">Twój kod QR</string>
   <string name="PS_contact_title">Skontaktuj się ze mną</string>
+  <string name="unknown_error">Wystąpił błąd...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
   <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
@@ -37,6 +38,10 @@
   <string name="preference_push_invited_to_quest">Zaproszono Cię na misję</string>
   <!--Adding tasks-->
   <string name="task_value">Wartość</string>
+  <string name="new_todo">Nowe Do-Zrobienia</string>
+  <string name="new_reward">Nowa nagroda</string>
+  <string name="new_daily">Nowe codzienne</string>
+  <string name="new_habit">Nowy nawyk</string>
   <string name="action_edit">Edytuj</string>
   <string name="action_delete">Usuń</string>
   <string name="action_cancel">Anuluj</string>
@@ -181,7 +186,6 @@
   <string name="intro_2_subtitle">Postęp w grze</string>
   <string name="intro_2_title">Postęp w życiu</string>
   <string name="intro_2_description">Odblokuj cechy w grze przez wykonywanie twoich zadań z realnego życia. Zdobywaj broń, chowańce i znacznie więcej za realizacje swoich celów.</string>
-  <string name="intro_3_title">Walcz z potworami</string>
   <string name="intro_3_description">Zmierzaj do swoich celów z pomocą przyjaciół. Wspierajcie się wzajemnie w życiu i w walce, aby wspólnie się udoskonalać!</string>
   <string name="intro_finish_button">Zaczynajmy!</string>
   <string name="previous_button">Poprzedni</string>
@@ -192,6 +196,7 @@
   <string name="avatar_setup_description">Więc, jak chciałbyś wyglądać. Nie obawiaj się, możesz to później zmienić.</string>
   <string name="setup_group_work">Praca</string>
   <string name="setup_group_exercise">Ćwiczenia</string>
+  <string name="setup_group_health">Zdrowie</string>
   <string name="setup_group_school">Szkoła</string>
   <string name="setup_group_teams">Zespoły</string>
   <string name="setup_group_chores">Obowiązki domowe</string>
@@ -225,12 +230,12 @@
   <string name="join">Dołącz</string>
   <string name="leader">Lider</string>
   <string name="gems">Klejnoty</string>
+  <string name="copy_as_todo">Kopiuj jako Do-Zrobienia</string>
   <string name="send_pm">Wyślij wiadomość</string>
   <string name="flag">Oznacz</string>
   <string name="delete">Usuń</string>
   <string name="name">Nazwa</string>
   <string name="description">Opis</string>
-  <string name="add_tag">Dodaj tag</string>
   <string name="privacy">Prywatność</string>
   <string name="write_message">Napisz wiadomość</string>
   <string name="post">Wyślij</string>
@@ -387,6 +392,7 @@
   <string name="all_dailies_completed">Wykonałeś wszystkie codzienne. Brawo!</string>
   <string name="widget_habit_button">Nawyk Habitiki</string>
   <string name="widget_dailies">Codzienne Habitiki</string>
+  <string name="widget_todo_list">Lista Do-Zrobienia Habitiki</string>
   <string name="widget_add_task">Dodaj zadanie do Habitiki</string>
   <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
   <string name="gem.purchase.toolbartitle">Zamów</string>
@@ -492,7 +498,17 @@
   <string name="avatar_wheelchair">Wózek</string>
   <string name="weak">Słaby</string>
   <string name="strong">Silny</string>
-  <string name="gray">Szary</string>
   <string name="dated">Przestarzały</string>
+  <string name="completed">Ukończone</string>
   <string name="setuP_group_other">Pozostałe</string>
+  <string name="empty_title_habits">Nie posiadasz żadnych nawyków</string>
+  <string name="empty_description_habits">Nawyki są zadaniami nie posiadającymi sztywnego harmonogramu. Możesz je odhaczać wiele razy dziennie, lub w ogóle.</string>
+  <string name="empty_title_dailies">Nie posiadasz żadnych codziennych</string>
+  <string name="empty_description_dailies">Codzienne są zadaniami regularnie się powtarzającymi. Wybierz pasujący Ci harmonogram!</string>
+  <string name="empty_title_todos">Nie posiadasz żadnych Do-Zrobienia</string>
+  <string name="empty_description_todos">Do-Zrobienia są jednokrotnymi zadaniami. Dodaj listy kontrolne do swoich Do-Zrobienia, aby zwiększyć ich wartość.</string>
+  <string name="empty_title_rewards">Nie posiadasz żadnych nagród</string>
+  <string name="read_community_guidelines">Prosimy, przeczytaj Wytyczne Społeczności zanim umieścisz posta</string>
+  <string name="maintenance">Utrzymanie</string>
+  <string name="reload_content">Odśwież zawartość</string>
 </resources>

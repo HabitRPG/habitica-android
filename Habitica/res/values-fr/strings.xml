@@ -16,6 +16,7 @@
   <string name="Language_summary">Changer le langage d\'Habitica</string>
   <string name="SP_user_qr_code">Votre QR code</string>
   <string name="PS_contact_title">Contactez-moi</string>
+  <string name="unknown_error">Une erreur est survenue...</string>
   <string name="pref_account_header">Compte</string>
   <string name="pref_first_day_of_the_week_title">Premier jour de la semaine</string>
   <string name="pref_first_day_of_the_week_summary">Premier jour de la semaine dans tous les calendriers</string>
@@ -37,6 +38,10 @@
   <string name="preference_push_invited_to_quest">Invitation à une quête</string>
   <!--Adding tasks-->
   <string name="task_value">Valeur</string>
+  <string name="new_todo">Nouvelle tâche À Faire</string>
+  <string name="new_reward">Nouvelle Récompense</string>
+  <string name="new_daily">Nouvelle Quotidienne</string>
+  <string name="new_habit">Nouvelle Habitude</string>
   <string name="action_edit">Modifier</string>
   <string name="action_delete">Supprimer</string>
   <string name="action_cancel">Annuler</string>
@@ -182,8 +187,6 @@
   <string name="intro_2_subtitle">Progrès en jeu</string>
   <string name="intro_2_title">Progrès dans la vie</string>
   <string name="intro_2_description">Débloquez des fonctionnalités en jeu en validant vos tâches dans la vraie vie. Obtenez des équipements, des familiers, et d\'autres récompenses pour l\'accomplissement de vos objectifs.</string>
-  <string name="intro_3_subtitle">Sociabilisez-vous</string>
-  <string name="intro_3_title">Combattez des monstres</string>
   <string name="intro_3_description">Restez sur les rails de l\'accomplissement de vos buts avez l\'aide de vos amis. Épaulez-vous dans la vie et dans la bataille en vous améliorant ensemble !</string>
   <string name="intro_finish_button">C\'est parti !</string>
   <string name="previous_button">Précédent</string>
@@ -229,12 +232,12 @@
   <string name="join">Rejoindre</string>
   <string name="leader">Responsable</string>
   <string name="gems">Gemmes</string>
+  <string name="copy_as_todo">Copier comme une tâche À Faire</string>
   <string name="send_pm">Envoyer un MP</string>
   <string name="flag">Signaler</string>
   <string name="delete">Supprimer</string>
   <string name="name">Nom</string>
   <string name="description">Description</string>
-  <string name="add_tag">Ajouter une étiquette</string>
   <string name="privacy">Sécurité</string>
   <string name="write_message">Écrire un message</string>
   <string name="post">Envoyer</string>
@@ -514,7 +517,6 @@
   <string name="avatar_wheelchair">Fauteuil roulant</string>
   <string name="weak">Faibles</string>
   <string name="strong">Fortes</string>
-  <string name="gray">Grisées</string>
   <string name="dated">Datées</string>
   <string name="completed">Terminé</string>
   <string name="setuP_group_other">Autre</string>

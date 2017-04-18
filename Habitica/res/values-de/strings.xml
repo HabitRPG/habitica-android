@@ -182,8 +182,6 @@
   <string name="intro_2_subtitle">Fortschritt im Spiel</string>
   <string name="intro_2_title">Fortschritt im Leben</string>
   <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken deiner realen Aufgaben frei. Bekomme Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen deiner Ziele.</string>
-  <string name="intro_3_subtitle">Finde Gleichgesinnte</string>
-  <string name="intro_3_title">Bekämpfe Monster</string>
   <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Fangen wir an!</string>
   <string name="previous_button">Zurück</string>
@@ -233,7 +231,6 @@
   <string name="delete">Löschen</string>
   <string name="name">Name</string>
   <string name="description">Beschreibung</string>
-  <string name="add_tag">Tag hinzufügen</string>
   <string name="privacy">Privatsphäre</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
@@ -510,7 +507,6 @@
   <string name="avatar_wheelchair">Rollstuhl</string>
   <string name="weak">Schwach</string>
   <string name="strong">Stark</string>
-  <string name="gray">Grau</string>
   <string name="completed">Vervollständigt</string>
   <string name="setuP_group_other">Anderes</string>
   <string name="clear">löschen</string>
