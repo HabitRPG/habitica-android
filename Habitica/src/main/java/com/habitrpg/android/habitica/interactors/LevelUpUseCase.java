@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.SuppressedModals;
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Void> {
+public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats> {
 
     private SoundManager soundManager;
     private CheckClassSelectionUseCase checkClassSelectionUseCase;
@@ -34,8 +35,8 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Void> 
     }
 
     @Override
-    protected Observable buildUseCaseObservable(RequestValues requestValues) {
-        return Observable.from(() -> {
+    protected Observable<Stats> buildUseCaseObservable(RequestValues requestValues) {
+        return Observable.defer(() -> {
             soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp);
 
 
@@ -47,7 +48,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Void> 
                             }, throwable -> {
                             });
 
-                    return null;
+                    return Observable.just(requestValues.user.getStats());
                 }
             }
 
@@ -60,7 +61,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Void> 
             }
 
             final ShareEvent event = new ShareEvent();
-            event.sharedMessage = requestValues.compatActivity.getString(R.string.share_levelup, requestValues.newLevel + "") + " https://habitica.com/social/level-up";
+            event.sharedMessage = requestValues.compatActivity.getString(R.string.share_levelup, requestValues.newLevel) + " https://habitica.com/social/level-up";
             AvatarView avatarView = new AvatarView(requestValues.compatActivity, true, true, true);
             avatarView.setUser(requestValues.user);
             avatarView.onAvatarImageReady(avatarImage -> event.shareImage = avatarImage);
@@ -84,7 +85,7 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Void> 
                 alert.show();
             }
 
-            return null;
+            return Observable.just(requestValues.user.getStats());
 
         });
     }

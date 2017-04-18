@@ -1008,6 +1008,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             user.getStats().exp = data.getExp();
                             user.getStats().mp = data.getMp();
                             user.getStats().gp = data.getGp();
+                            user.getStats().lvl = data.getLvl();
                             setUserData(true);
                         }, throwable -> {});
             }
