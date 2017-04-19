@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.api;
 
 
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl;
+import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
 import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
@@ -39,7 +40,7 @@ public class BaseAPITests {
                 BuildConfig.PORT,
                 "",
                 "");
-        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), context);
+        apiClient = new ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, new EmptyCrashlyticsProxy(), new PopupNotificationsManager(context), context);
         generateUser();
     }
 
