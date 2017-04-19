@@ -1,17 +1,23 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
+import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
@@ -50,7 +56,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private Action0 refreshCallback;
     private boolean withFilter;
 
-    public void setWithFilter(boolean withFilter){
+    public void setWithFilter(boolean withFilter) {
         this.withFilter = withFilter;
     }
 
@@ -121,12 +127,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshEmptyLayout.setOnRefreshListener(this);
 
-        challengeFilterLayout.setVisibility(withFilter?View.VISIBLE:View.GONE);
+        challengeFilterLayout.setVisibility(withFilter ? View.VISIBLE : View.GONE);
         challengeFilterLayout.setClickable(true);
         challengeFilterLayout.setOnClickListener(view -> ChallengeFilterDialogHolder.showDialog(getActivity(), currentChallengesInView, lastFilterOptions, filterOptions -> {
-                    challengeAdapter.setFilterByGroups(filterOptions);
-                    this.lastFilterOptions = filterOptions;
-                }));
+            challengeAdapter.setFilterByGroups(filterOptions);
+            this.lastFilterOptions = filterOptions;
+        }));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));
         recyclerView.setAdapter(challengeAdapter);
@@ -214,5 +220,28 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     @Override
     public String customTitle() {
         return getString(R.string.sidebar_challenges);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_list_challenges, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_create_challenge:
+                Intent intent = new Intent(getActivity(), CreateChallengeActivity.class);
+                startActivity(intent);
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
