@@ -330,7 +330,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="dialog_go_back">Ritorna</string>
   <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
   <string name="change_class">Cambia la tua classe</string>
-  <string name="change_class_description">Cambia classe a riottieni i tuoi punti attributo per 3 gemme. Puoi assegnare i punti attributo attraverso il sito web.</string>
+  <string name="change_class_description">Cambia classe e riottieni i tuoi punti attributo per 3 gemme. Puoi assegnare i punti attributo attraverso il sito web.</string>
   <string name="enable_class">Abilita sistema delle classi</string>
   <string name="changing_class_progress">Cambiamento classe</string>
   <string name="by_email">Per e-mail</string>
@@ -537,4 +537,7 @@ Le Dailies mancate e le cattive Habit non li danneggiano molto, e hanno sempre m
   <string name="reset_walkthrough">Ripristina la spiegazione introduttiva di Justin</string>
   <string name="read_community_guidelines">Per favore, leggi le Linee guida della community prima di scrivere un post.</string>
   <string name="maintenance">Manutenzione</string>
+  <string name="reload_content">Ricarica contenuti</string>
+  <string name="dailyDueDefaultView">Visualizza lista Daily incomplete di default</string>
+  <string name="dailyDueDefaultViewDescription">Con questa opzione selezionata, le Daily mostrate saranno quelle della lista \'incomplete\' invece che \'tutte\'.</string>
 </resources>
