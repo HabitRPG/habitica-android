@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -18,8 +17,9 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +39,14 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_task_list)
     RecyclerView create_challenge_task_list;
 
-    private boolean displayingTaskForm;
+    private ChallengeTasksRecyclerViewAdapter challengeTasks;
+
+
+    Task addHabit;
+    Task addDaily;
+    Task addTodo;
+    Task addReward;
+
 
     @Override
     protected int getLayoutResId() {
@@ -65,6 +72,7 @@ public class CreateChallengeActivity extends BaseActivity {
         if (supportActionBar != null) {
             supportActionBar.setIcon(R.drawable.ic_close_white_24dp);
 
+            supportActionBar.setTitle(R.string.create_challenge);
             supportActionBar.setBackgroundDrawable(new ColorDrawable(resources.getColor(R.color.brand_200)));
             supportActionBar.setElevation(0);
         }
@@ -74,34 +82,28 @@ public class CreateChallengeActivity extends BaseActivity {
         locationAdapter.addAll("Tavern", "My Group", "Some other");
         challenge_location_spinner.setAdapter(locationAdapter);
 
-        Task addHabit = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_habit));
-        Task addDaily = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_daily));
-        Task addTodo = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_todo));
-        Task addReward = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_reward));
+        addHabit = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_habit));
+        addDaily = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_daily));
+        addTodo = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_todo));
+        addReward = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_reward));
+
 
         ArrayList<Task> taskList = new ArrayList<>();
         taskList.add(addHabit);
-        taskList.add(createTask(Task.TYPE_HABIT));
         taskList.add(addDaily);
-        taskList.add(createTask(Task.TYPE_DAILY));
         taskList.add(addTodo);
-        taskList.add(createTask(Task.TYPE_TODO));
         taskList.add(addReward);
-        taskList.add(createTask(Task.TYPE_REWARD));
 
-        ChallengeTasksRecyclerViewAdapter challengeTasks = new ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true);
+        challengeTasks = new ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true);
         challengeTasks.setTasks(taskList);
         challengeTasks.enableAddItem(t -> {
             if (t.equals(addHabit)) {
                 openNewTaskActivity(Task.TYPE_HABIT);
             } else if (t.equals(addDaily)) {
-
                 openNewTaskActivity(Task.TYPE_DAILY);
             } else if (t.equals(addTodo)) {
-
                 openNewTaskActivity(Task.TYPE_TODO);
             } else if (t.equals(addReward)) {
-
                 openNewTaskActivity(Task.TYPE_REWARD);
             }
         });
@@ -119,13 +121,10 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     private void openNewTaskActivity(String type) {
-        if (this.displayingTaskForm) {
-            return;
-        }
-
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
+        bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
 
         if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
             String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
@@ -134,26 +133,73 @@ public class CreateChallengeActivity extends BaseActivity {
             bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
         }
 
+        Intent intent = new Intent(this, TaskFormActivity.class);
+        intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        startActivityForResult(intent, 1);
+    }
+
+    private void openNewTaskActivity(Task task) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task);
+        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
+        bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
+
+        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
+            String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+
+            bundle.putString(TaskFormActivity.USER_ID_KEY, HabiticaApplication.User.getId());
+            bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        }
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-        this.displayingTaskForm = true;
         startActivityForResult(intent, 1);
     }
 
     @Subscribe
-    public void onEvent(TaskSaveEvent saveEvent)
+    public void onEvent(DeleteTaskCommand deleteTask){
+        challengeTasks.removeTask(deleteTask.TaskIdToDelete);
+    }
+
+    @Subscribe
+    public void onEvent(TaskTappedEvent tappedEvent)
     {
-
+        openNewTaskActivity(tappedEvent.Task);
     }
 
-    private Task createTask(String taskType) {
-        return createTask(taskType, "example " + taskType);
+    @Subscribe
+    public void onEvent(TaskSaveEvent saveEvent) {
+
+        if(saveEvent.task.getId() == null)
+            saveEvent.task.setId(UUID.randomUUID().toString());
+
+        if (!challengeTasks.updateTask(saveEvent.task)) {
+            Task taskAbove;
+
+            switch (saveEvent.task.getType()) {
+                case Task.TYPE_HABIT:
+                    taskAbove = addHabit;
+                    break;
+                case Task.TYPE_DAILY:
+                    taskAbove = addDaily;
+                    break;
+                case Task.TYPE_TODO:
+                    taskAbove = addTodo;
+                    break;
+                default:
+                    taskAbove = addReward;
+                    break;
+            }
+
+            challengeTasks.addTaskUnder(saveEvent.task, taskAbove);
+        }
     }
 
-    private Task createTask(String taskType, String taskName) {
+    private static Task createTask(String taskType, String taskName) {
         Task t = new Task();
 
         t.setId(UUID.randomUUID().toString());

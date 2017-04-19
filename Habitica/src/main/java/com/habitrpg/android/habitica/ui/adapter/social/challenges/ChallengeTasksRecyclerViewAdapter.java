@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.underscore.$;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
@@ -81,6 +82,15 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
 
     public void enableAddItem(Action1<Task> cb) {
         addItemCallback = cb;
+    }
+
+    public int addTaskUnder(Task taskToAdd, Task taskAbove){
+        int position = $.findIndex(this.content, t -> t.getId().equals(taskAbove.getId()));
+
+        content.add(position+1, taskToAdd);
+        filter();
+
+        return position;
     }
 
     @Override

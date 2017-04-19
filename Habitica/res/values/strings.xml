@@ -560,4 +560,5 @@
     <string name="location">Location</string>
     <string name="gem_reward">Gem reward</string>
     <string name="tasks">Tasks</string>
+    <string name="create_challenge">Create challenge</string>
 </resources>
