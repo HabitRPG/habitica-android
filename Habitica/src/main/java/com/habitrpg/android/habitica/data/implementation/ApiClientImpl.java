@@ -502,7 +502,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<Void> validateSubscription(SubscriptionValidationRequest request) {
-        return apiService.validateSubscription(request).compose(configureApiCallObserver());
+        return apiService.validateSubscription(request).map(habitResponse -> {
+            if (habitResponse.notifications != null) {
+                popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
+            }
+            return habitResponse.getData();
+        });
     }
 
     @Override
@@ -753,7 +758,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
     @Override
     public Observable<PurchaseValidationResult> validatePurchase(PurchaseValidationRequest request) {
-        return apiService.validatePurchase(request).compose(configureApiCallObserver());
+        return apiService.validatePurchase(request).map(habitResponse -> {
+            if (habitResponse.notifications != null) {
+                popupNotificationsManager.showNotificationDialog(habitResponse.notifications);
+            }
+            return habitResponse.getData();
+        });
     }
 
     @Override
