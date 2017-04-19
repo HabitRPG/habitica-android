@@ -178,9 +178,11 @@ public class LoginActivity extends BaseActivity
         backgroundContainer.post(() -> backgroundContainer.scrollTo(0, backgroundContainer.getBottom()));
         backgroundContainer.setScrollingEnabled(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }

@@ -46,8 +46,7 @@
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/Toolbar"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/Theme.AppCompat.Light"
-                    android:fitsSystemWindows="true"/>
+                    app:popupTheme="@style/Theme.AppCompat.Light" />
             </android.support.design.widget.CollapsingToolbarLayout>
 
             <android.support.design.widget.TabLayout
@@ -66,8 +65,7 @@
                 app:layout_collapseMode="pin"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@android:color/white"
-                app:tabMode="fixed"
-                android:fitsSystemWindows="true" />
+                app:tabMode="fixed" />
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
