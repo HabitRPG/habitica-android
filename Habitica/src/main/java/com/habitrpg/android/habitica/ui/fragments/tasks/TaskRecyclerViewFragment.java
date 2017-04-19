@@ -86,6 +86,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @BindView(R.id.empty_view_description)
     TextView emptyViewDescription;
 
+    @Nullable
     String classType;
     @Nullable
     private HabitRPGUser user;
@@ -261,25 +262,27 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 }
             });
 
-            switch (this.classType) {
-                case Task.TYPE_HABIT: {
-                    this.emptyViewTitle.setText(R.string.empty_title_habits);
-                    this.emptyViewDescription.setText(R.string.empty_description_habits);
-                    break;
-                }
-                case Task.FREQUENCY_DAILY: {
-                    this.emptyViewTitle.setText(R.string.empty_title_dailies);
-                    this.emptyViewDescription.setText(R.string.empty_description_dailies);
-                    break;
-                }
-                case Task.TYPE_TODO: {
-                    this.emptyViewTitle.setText(R.string.empty_title_todos);
-                    this.emptyViewDescription.setText(R.string.empty_description_todos);
-                    break;
-                }
-                case Task.TYPE_REWARD: {
-                    this.emptyViewTitle.setText(R.string.empty_title_rewards);
-                    break;
+            if (this.classType != null) {
+                switch (this.classType) {
+                    case Task.TYPE_HABIT: {
+                        this.emptyViewTitle.setText(R.string.empty_title_habits);
+                        this.emptyViewDescription.setText(R.string.empty_description_habits);
+                        break;
+                    }
+                    case Task.FREQUENCY_DAILY: {
+                        this.emptyViewTitle.setText(R.string.empty_title_dailies);
+                        this.emptyViewDescription.setText(R.string.empty_description_dailies);
+                        break;
+                    }
+                    case Task.TYPE_TODO: {
+                        this.emptyViewTitle.setText(R.string.empty_title_todos);
+                        this.emptyViewDescription.setText(R.string.empty_description_todos);
+                        break;
+                    }
+                    case Task.TYPE_REWARD: {
+                        this.emptyViewTitle.setText(R.string.empty_title_rewards);
+                        break;
+                    }
                 }
             }
         }
@@ -322,7 +325,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     String getClassName() {
-        return this.classType;
+        return this.classType != null ? this.classType : "";
     }
 
     @Subscribe
@@ -362,7 +365,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     }
 
     public void setActiveFilter(String activeFilter) {
-        taskFilterHelper.setActiveFilter(classType, activeFilter);
+        if (classType != null) {
+            taskFilterHelper.setActiveFilter(classType, activeFilter);
+        }
         recyclerAdapter.filter();
     }
 }

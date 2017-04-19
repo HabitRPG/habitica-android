@@ -89,4 +89,12 @@ public class Tag extends BaseModel {
         }
         return super.equals(o);
     }
+
+    @Override
+    public void save() {
+        if (user_id == null) {
+            return;
+        }
+        super.save();
+    }
 }
