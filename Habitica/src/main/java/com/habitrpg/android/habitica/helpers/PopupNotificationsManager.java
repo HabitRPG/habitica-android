@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,15 +71,18 @@ public class PopupNotificationsManager {
         DataBindingUtils.loadImage(imageView, imageKey);
 
         TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
+        youEarnedTexView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
         youEarnedTexView.setText(youEarnedMessage);
 
         String message = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
         TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
+        nextUnlockTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
         nextUnlockTextView.setText(message);
 
         Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
+        confirmButton.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
                 .setTitle(title)
                 .setView(view)
                 .setMessage("");
