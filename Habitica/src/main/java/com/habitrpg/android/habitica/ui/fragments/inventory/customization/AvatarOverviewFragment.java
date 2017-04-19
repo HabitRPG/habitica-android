@@ -117,7 +117,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        if (user != null) {
+        if (user != null && viewBinding != null) {
             viewBinding.setPreferences(user.getPreferences());
             this.setSize(user.getPreferences().getSize());
         }

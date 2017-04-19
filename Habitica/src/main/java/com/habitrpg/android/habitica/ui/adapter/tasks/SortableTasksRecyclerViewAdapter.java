@@ -27,7 +27,7 @@ public abstract class SortableTasksRecyclerViewAdapter<VH extends BaseTaskViewHo
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        if (filteredContent.size() < fromPosition || filteredContent.size() < toPosition) {
+        if (filteredContent.size() <= fromPosition || filteredContent.size() <= toPosition) {
             return;
         }
         Collections.swap(filteredContent, fromPosition, toPosition);

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.adapter.setup;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -70,8 +71,10 @@ public class TaskSetupAdapter extends RecyclerView.Adapter<TaskSetupAdapter.Task
 
             itemView.setOnClickListener(this);
 
-            icon = ContextCompat.getDrawable(context, R.drawable.ic_check_white_18dp);
-            icon.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY);
+            icon = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_check_white_18dp, null);
+            if (icon != null) {
+                icon.setColorFilter(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY);
+            }
         }
 
         public void bind(String[] taskGroup, Boolean isChecked) {

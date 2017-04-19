@@ -350,7 +350,7 @@ public class LoginActivity extends BaseActivity
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
             //This is necessary because the regular login callback is not called for some reason
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            if (accessToken.getToken() != null) {
+            if (accessToken != null && accessToken.getToken() != null) {
                 apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                         .subscribe(LoginActivity.this, throwable -> hideProgress());
             }

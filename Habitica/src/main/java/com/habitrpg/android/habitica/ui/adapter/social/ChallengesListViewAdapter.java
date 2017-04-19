@@ -55,16 +55,15 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
     }
 
     public void setFilterByGroups(ChallengeFilterOptions filterOptions){
-        this.challenges = $.filter(challengesSource, arg ->
-        {
+        this.challenges = $.filter(challengesSource, arg -> {
             boolean showChallenge = $.find(filterOptions.showByGroups, g -> g.id.contains(arg.groupId)).isPresent();
 
             boolean showByOwnership = true;
             if(filterOptions.showOwned == filterOptions.notOwned && this.user != null){
                 if (filterOptions.showOwned) {
-                    showByOwnership = Objects.equals(arg.leaderId, this.user.getId());
+                    showByOwnership = arg.leaderId.equals(this.user.getId());
                 } else {
-                    showByOwnership = !Objects.equals(arg.leaderId, this.user.getId());
+                    showByOwnership = !arg.leaderId.equals(this.user.getId());
                 }
             }
 
@@ -164,11 +163,11 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
         }
 
         public static String getLabelByTypeAndCount(Context context, String type, int count) {
-            if (Objects.equals(type, Challenge.TASK_ORDER_DAILYS)) {
+            if (Challenge.TASK_ORDER_DAILYS.equals(type)) {
                 return context.getString(count == 1 ? R.string.daily : R.string.dailies);
-            } else if (Objects.equals(type, Challenge.TASK_ORDER_HABITS)) {
+            } else if (Challenge.TASK_ORDER_HABITS.equals(type)) {
                 return context.getString(count == 1 ? R.string.habit : R.string.habits);
-            } else if (Objects.equals(type, Challenge.TASK_ORDER_REWARDS)) {
+            } else if (Challenge.TASK_ORDER_REWARDS.equals(type)) {
                 return context.getString(count == 1 ? R.string.reward : R.string.rewards);
             } else {
                 return context.getString(count == 1 ? R.string.todo : R.string.todos);

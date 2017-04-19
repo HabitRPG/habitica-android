@@ -170,7 +170,9 @@ public class TasksFragment extends BaseMainFragment {
         dialog.setActiveTags(taskFilterHelper.getTags());
         if (getActiveFragment() != null) {
             String taskType = getActiveFragment().classType;
-            dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
+            if (taskType != null) {
+                dialog.setTaskType(taskType, taskFilterHelper.getActiveFilter(taskType));
+            }
         }
         dialog.setListener((activeTaskFilter, activeTags) -> {
             int activePos = viewPager.getCurrentItem();
@@ -472,7 +474,8 @@ public class TasksFragment extends BaseMainFragment {
     private int indexForTaskType(String taskType) {
         if (taskType != null) {
             for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
-                if (taskType.equals(viewFragmentsDictionary.get(index).getClassName())) {
+                TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
+                if (fragment != null && taskType.equals(fragment.getClassName())) {
                     return index;
                 }
             }

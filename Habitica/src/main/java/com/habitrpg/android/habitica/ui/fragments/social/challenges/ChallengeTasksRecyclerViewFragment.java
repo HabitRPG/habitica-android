@@ -88,7 +88,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     public void setInnerAdapter() {
         this.recyclerAdapter = new ChallengeTasksRecyclerViewAdapter(null, 0, getContext(), userID, null);
 
-        if (tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
+        if (tasksOnInitialize != null && tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
             recyclerAdapter.setTasks(tasksOnInitialize);
         }
     }

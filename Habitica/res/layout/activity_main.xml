@@ -72,9 +72,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="bottom|center"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_alignParentBottom="true"
-            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior">
+            app:layout_behavior="com.habitrpg.android.habitica.ui.helpers.FloatingActionMenuBehavior"
+            android:padding="0dp">
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/floating_menu_wrapper"
                 android:layout_width="match_parent"
@@ -93,6 +94,8 @@
                 app:bb_behavior="underNavbar"
                 app:bb_badgesHideWhenActive="true"
                 app:bb_badgeBackgroundColor="@color/brand_400"
+                android:layout_gravity="bottom"
+                android:layout_margin="0dp"
                 />
 
         </LinearLayout>

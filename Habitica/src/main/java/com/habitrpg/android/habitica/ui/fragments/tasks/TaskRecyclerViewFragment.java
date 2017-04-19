@@ -197,7 +197,9 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
                 }
-                swipeRefreshLayout.setEnabled(false);
+                if (swipeRefreshLayout != null) {
+                    swipeRefreshLayout.setEnabled(false);
+                }
             }
 
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -220,8 +222,10 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
-                swipeRefreshLayout.setEnabled(true);
-
+                if (swipeRefreshLayout != null) {
+                    swipeRefreshLayout.setEnabled(true);
+                }
+                
                 viewHolder.itemView.setBackgroundColor(Color.WHITE);
                 if (mFromPosition != null) {
                     ((ItemTouchHelperDropCallback) recyclerAdapter).onDrop(mFromPosition, viewHolder.getAdapterPosition());
@@ -256,7 +260,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && swipeRefreshLayout != null) {
                         swipeRefreshLayout.setEnabled(((MainActivity)getActivity()).isAppBarExpanded());
                     }
                 }

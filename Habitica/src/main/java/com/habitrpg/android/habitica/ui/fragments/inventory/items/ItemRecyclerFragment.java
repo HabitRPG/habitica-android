@@ -72,6 +72,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Item hatchingItem;
     public Pet feedingPet;
     public HashMap<String, Integer> ownedPets;
+    @Nullable
     public HabitRPGUser user;
     LinearLayoutManager layoutManager = null;
 
@@ -156,7 +157,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (this.isHatching != null && this.isHatching) {
+        if (this.isHatching != null && this.isHatching && getDialog().getWindow() != null) {
             ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -202,7 +203,7 @@ public class ItemRecyclerFragment extends BaseFragment {
         }
 
         if (this.itemType.equals("special")) {
-            if (user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
+            if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
                 Item mysterItem = SpecialItem.makeMysteryItem(getContext());
                 mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
                 items.add(mysterItem);

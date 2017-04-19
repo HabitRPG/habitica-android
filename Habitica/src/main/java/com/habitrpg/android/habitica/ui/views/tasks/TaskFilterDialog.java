@@ -238,6 +238,9 @@ public class TaskFilterDialog extends AlertDialog implements RadioGroup.OnChecke
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (index >= tags.size()) {
+                    return;
+                }
                 Tag tag = tags.get(index);
                 tag.setName(s.toString());
                 if (createdTags.containsKey(tag.getId())) {

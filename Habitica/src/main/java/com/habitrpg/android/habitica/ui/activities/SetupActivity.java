@@ -298,6 +298,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private boolean isLastPage() {
-        return this.pager.getCurrentItem() == this.pager.getAdapter().getCount()-1;
+        return this.pager == null || this.pager.getCurrentItem() == this.pager.getAdapter().getCount() - 1;
     }
 }

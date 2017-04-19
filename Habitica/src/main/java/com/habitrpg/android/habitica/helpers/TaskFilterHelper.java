@@ -25,11 +25,11 @@ public class TaskFilterHelper {
         this.tagsId.add(tags);
     }
 
-    public int howMany(String type) {
+    public int howMany(@Nullable String type) {
         return this.tagsId.size() + (isTaskFilterActive(type) ? 1 : 0);
     }
 
-    private boolean isTaskFilterActive(String type) {
+    private boolean isTaskFilterActive(@Nullable String type) {
         if (activeFilters.get(type) == null) {
             return false;
         }
@@ -53,6 +53,9 @@ public class TaskFilterHelper {
     }
 
     public List<Task> filter(List<Task> tasks) {
+        if (tasks.size() == 0) {
+            return tasks;
+        }
         List<Task> filtered = new ArrayList<>();
         String activeFilter = null;
         if (activeFilters != null && activeFilters.size() > 0) {
