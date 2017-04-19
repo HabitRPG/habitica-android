@@ -87,6 +87,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String TASK_ID_KEY = "taskId";
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
+    public static final String SHOW_TAG_SELECTION = "show_tag_selection";
+    public static final String PARCELABLE_TASK = "parcelable_task";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
     public static final String SAVE_TO_DB = "saveToDb";
 
@@ -202,6 +204,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private String taskType;
     private String taskId;
     private String userId;
+    private boolean showTagSelection;
     private Task task;
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
@@ -228,11 +231,21 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
         userId = bundle.getString(USER_ID_KEY);
+        showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
+
+        tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
+
+        if(bundle.containsKey(PARCELABLE_TASK)){
+            task = bundle.getParcelable(PARCELABLE_TASK);
+            taskType = task.type;
+        }
+
         tagCheckBoxList = new ArrayList<>();
         selectedTags = new ArrayList<>();
         if (taskType == null) {
@@ -257,7 +270,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     finish();
                     dismissKeyboard();
 
-                    EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+                    String taskToDelete = this.taskId;
+
+                    if(taskToDelete == null && task != null){
+                        taskToDelete = task.getId();
+                    }
+
+                    EventBus.getDefault().post(new DeleteTaskCommand(taskToDelete));
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
                     dialog.dismiss();
                 }).show());
@@ -334,6 +353,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
 
             setTitle(task);
+
+            btnDelete.setEnabled(true);
+        } else if(task != null) {
+            populate(task);
+            taskText.requestFocus();
 
             btnDelete.setEnabled(true);
         } else {
