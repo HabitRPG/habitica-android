@@ -34,15 +34,17 @@ import com.habitrpg.android.habitica.data.local.implementation.DbFlowCustomizati
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowFAQLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowInventoryLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowSocialLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowTagLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowUserLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 @Module
 public class RepositoryModule {
@@ -50,12 +52,16 @@ public class RepositoryModule {
     @Provides
     SetupCustomizationRepository providesSetupCustomizationRepository(Context context) {
         return new SetupCustomizationRepositoryImpl(context);
-
     }
 
     @Provides
-    TaskLocalRepository providesTaskLocalRepository() {
-        return new DbFlowTaskLocalRepository();
+    Realm providesRealm(Context context) {
+        return Realm.getDefaultInstance();
+    }
+
+    @Provides
+    TaskLocalRepository providesTaskLocalRepository(Realm realm) {
+        return new RealmTaskLocalRepository(realm);
     }
 
     @Provides
@@ -65,8 +71,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    TagLocalRepository providesTagLocalRepository() {
-        return new DbFlowTagLocalRepository();
+    TagLocalRepository providesTagLocalRepository(Realm realm) {
+        return new RealmTagLocalRepository(realm);
     }
 
     @Provides

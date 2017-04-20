@@ -96,10 +96,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
@@ -129,7 +126,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -229,8 +225,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     // endregion
 
+    @Nullable
     private Drawer drawer;
+    @Nullable
     private AccountHeader accountHeader;
+    @Nullable
     private BaseMainFragment activeFragment;
     private AvatarWithBarsViewModel avatarInHeader;
     private AlertDialog faintDialog;
@@ -266,12 +265,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
-        userRepository.getUser(hostConfig.getUser())
-                .subscribe(newUser -> {
-                    MainActivity.this.user = newUser;
-                    MainActivity.this.setUserData(true);
-                }, throwable -> {});
-
         setupToolbar(toolbar);
 
         avatarInHeader = new AvatarWithBarsViewModel(this, avatar_with_bars);
@@ -291,6 +284,12 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
             avatar_with_bars.setPadding((int)px, getStatusBarHeight(), (int)px, 0);
         }
+
+        userRepository.getUser(hostConfig.getUser())
+                .subscribe(newUser -> {
+                    MainActivity.this.user = newUser;
+                    MainActivity.this.setUserData(true);
+                }, throwable -> {});
 
         EventBus.getDefault().register(this);
     }
@@ -455,13 +454,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
                     // multiple crashes because user is null
                     if (user != null) {
-                        ArrayList<Task> allTasks = new ArrayList<>();
-                        allTasks.addAll(user.getDailys());
-                        allTasks.addAll(user.getTodos());
-                        allTasks.addAll(user.getHabits());
-                        allTasks.addAll(user.getRewards());
 
-                        taskRepository.removeOldTasks(user.getId(), allTasks);
+                        /*taskRepository.removeOldTasks(user.getId(), allTasks);
 
                         ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
                         for (Task t : allTasks) {
@@ -487,7 +481,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         }
                         taskRepository.removeOldReminders(allReminders);
 
-                        tagRepository.removeOldTags(user.getTags());
+                        tagRepository.removeOldTags(user.getTags());*/
 
                         inventoryRepository.updateOwnedEquipment(user);
                     }
@@ -521,17 +515,20 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     private void updateUserAvatars() {
-        avatarInHeader.updateData(user);
+        if (avatarInHeader != null) {
+            avatarInHeader.updateData(user);
+        }
     }
 
     private void updateHeader() {
         updateUserAvatars();
         setTranslatedFragmentTitle(activeFragment);
 
-        android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
-
-        if (actionBarDrawerToggle != null) {
-            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        if (drawer != null) {
+            android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
+            if (actionBarDrawerToggle != null) {
+                actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
         }
     }
 
@@ -1146,16 +1143,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
                 .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.habit.getId()), error -> {
                 });
-    }
-
-    @Subscribe
-    public void onEvent(final TaskSaveEvent event) {
-        Task task = event.task;
-        if (event.created) {
-            this.taskRepository.createTask(task).subscribe(task1 -> {}, throwable -> {});
-        } else {
-            this.taskRepository.updateTask(task).subscribe(task1 -> {}, throwable -> {});
-        }
     }
 
     private void checkMaintenance() {

@@ -31,13 +31,8 @@ import java.util.Map;
 @Table(databaseName = HabitDatabase.NAME)
 public class HabitRPGUser extends BaseModel {
 
-    List<Task> dailys;
-    List<Task> todos;
-    List<Task> rewards;
-    List<Task> habits;
     List<Challenge> challengeList;
 
-    List<Tag> tags;
     @Column
     @PrimaryKey
     @SerializedName("_id")
@@ -239,85 +234,6 @@ public class HabitRPGUser extends BaseModel {
         this.purchased = purchased;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "habits")
-    public List<Task> getHabits() {
-        if (habits == null) {
-            habits = new Select()
-                    .from(Task.class)
-                    .where(Condition.column("type").eq("habit"))
-                    .and(Condition.column("user_id").eq(this.id))
-                    .queryList();
-        }
-        return habits;
-    }
-
-    public void setHabits(List<Task> habits) {
-        this.habits = habits;
-    }
-
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "dailys")
-    public List<Task> getDailys() {
-        if (dailys == null) {
-            dailys = new Select()
-                    .from(Task.class)
-                    .where(Condition.column("type").eq("daily"))
-                    .and(Condition.column("user_id").eq(this.id))
-                    .queryList();
-        }
-        return dailys;
-    }
-
-    public void setDailys(List<Task> dailys) {
-        this.dailys = dailys;
-    }
-
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "todos")
-    public List<Task> getTodos() {
-        if (todos == null) {
-            todos = new Select()
-                    .from(Task.class)
-                    .where(Condition.column("type").eq("todo"))
-                    .and(Condition.column("user_id").eq(this.id))
-                    .queryList();
-        }
-        return todos;
-    }
-
-    public void setTodos(List<Task> todos) {
-        this.todos = todos;
-    }
-
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "rewards")
-    public List<Task> getRewards() {
-        if (rewards == null) {
-            rewards = new Select()
-                    .from(Task.class)
-                    .where(Condition.column("type").eq("reward"))
-                    .and(Condition.column("user_id").eq(this.id))
-                    .queryList();
-        }
-        return rewards;
-    }
-
-    public void setRewards(List<Task> rewards) {
-        this.rewards = rewards;
-    }
-
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
-    public List<Tag> getTags() {
-        if (tags == null) {
-            tags = new Select()
-                    .from(Tag.class)
-                    .where(Condition.column("user_id").eq(this.id))
-                    .queryList();
-        }
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
     public Flags getFlags() {
         return flags;
     }
@@ -353,7 +269,7 @@ public class HabitRPGUser extends BaseModel {
 
     @Override
     public void save() {
-        // We need to set the user_id to all other objects
+        // We need to set the userId to all other objects
         if (id == null) {
             return;
         }
@@ -374,31 +290,6 @@ public class HabitRPGUser extends BaseModel {
         }
         if (invitations != null) {
             invitations.user_id = id;
-        }
-
-
-        ArrayList<Task> allTasks = new ArrayList<Task>();
-        if (dailys != null) {
-            allTasks.addAll(dailys);
-        }
-        if (todos != null) {
-            allTasks.addAll(todos);
-        }
-        if (habits != null) {
-            allTasks.addAll(habits);
-        }
-        if (rewards != null) {
-            allTasks.addAll(rewards);
-        }
-
-        for (Task t : allTasks) {
-            t.user_id = id;
-        }
-
-        if (tags != null) {
-            for (Tag t : tags) {
-                t.user_id = id;
-            }
         }
 
         List<Challenge> challenges = getChallengeList();

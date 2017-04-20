@@ -148,8 +148,6 @@ public abstract class ChecklistedViewHolder extends BaseTaskViewHolder implement
                 // it needs to be changed after the event is send -> to the server
                 // maybe a refactor is needed here
                 EventBus.getDefault().post(event);
-                task.completed = event.completed;
-                task.save();
             }
         } else {
             View v = (View) buttonView.getParent();

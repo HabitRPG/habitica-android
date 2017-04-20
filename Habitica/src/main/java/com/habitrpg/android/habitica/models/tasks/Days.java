@@ -1,26 +1,18 @@
 package com.habitrpg.android.habitica.models.tasks;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by viirus on 06/07/15.
  */
-@ModelContainer
-@Table(databaseName = HabitDatabase.NAME)
-public class Days extends BaseModel {
+public class Days extends RealmObject {
 
-    @Column
     @PrimaryKey
-    @NotNull
     String task_id;
 
-    @Column
     private boolean m, t, w, th, f, s, su;
 
     public Days() {

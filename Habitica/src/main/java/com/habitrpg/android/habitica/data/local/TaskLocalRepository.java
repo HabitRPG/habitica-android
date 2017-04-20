@@ -9,12 +9,13 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface TaskLocalRepository extends BaseLocalRepository {
 
-    Observable<List<Task>> getTasks(String taskType, String userID);
-    Observable<List<Task>> getTasks(String userId);
+    Observable<RealmResults<Task>> getTasks(String taskType, String userID);
+    Observable<RealmResults<Task>> getTasks(String userId);
 
     void saveTasks(TasksOrder tasksOrder, TaskList tasks);
 
@@ -28,6 +29,9 @@ public interface TaskLocalRepository extends BaseLocalRepository {
     void deleteTask(String taskID);
 
     Observable<Task> getTask(String taskId);
+    Observable<Task> getTaskCopy(String taskId);
 
     void markTaskCompleted(String taskId, boolean isCompleted);
+
+    void saveReminder(RemindersItem remindersItem);
 }

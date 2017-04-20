@@ -78,6 +78,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import rx.Observable;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";
@@ -246,7 +250,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 .setTitle(getString(R.string.taskform_delete_title))
                 .setMessage(getString(R.string.taskform_delete_message)).setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                     if (task != null) {
-                        task.delete();
+                        taskRepository.deleteTask(task.getId());
                     }
 
                     finish();
@@ -322,7 +326,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (taskId != null) {
-            taskRepository.getTask(taskId).subscribe(task -> {
+            taskRepository.getTask(taskId)
+                    .first()
+                    .subscribe(task -> {
                 this.task = task;
                 if (task != null) {
                     populate(task);
@@ -732,113 +738,128 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private boolean saveTask(Task task) {
-        task.text = MarkdownParser.parseCompiled(taskText.getText());
 
-        if (checklistAdapter != null) {
-            if (checklistAdapter.getCheckListItems() != null) {
-                task.setChecklist(checklistAdapter.getCheckListItems());
-            }
-        }
-
-        if (remindersAdapter != null) {
-            if (remindersAdapter.getRemindersItems() != null) {
-                task.setReminders(remindersAdapter.getRemindersItems());
-            }
-        }
-
-        if (task.text.isEmpty()) {
+        String text = MarkdownParser.parseCompiled(taskText.getText());
+        if (text == null || text.isEmpty()) {
             return false;
         }
 
-        task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+        taskRepository.executeTransaction(realm -> {
+            task.text = text;
 
-        if (this.taskDifficultySpinner.getSelectedItemPosition() == 0) {
-            task.setPriority((float) 0.1);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 1) {
-            task.setPriority((float) 1.0);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 2) {
-            task.setPriority((float) 1.5);
-        } else if (this.taskDifficultySpinner.getSelectedItemPosition() == 3) {
-            task.setPriority((float) 2.0);
-        }
-
-        if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
-            task.setAttribute(Task.ATTRIBUTE_STRENGTH);
-        } else {
-            switch (this.taskAttributeSpinner.getSelectedItemPosition()) {
-                case 0:
-                    task.setAttribute(Task.ATTRIBUTE_STRENGTH);
-                    break;
-                case 1:
-                    task.setAttribute(Task.ATTRIBUTE_INTELLIGENCE);
-                    break;
-                case 2:
-                    task.setAttribute(Task.ATTRIBUTE_CONSTITUTION);
-                    break;
-                case 3:
-                    task.setAttribute(Task.ATTRIBUTE_PERCEPTION);
-                    break;
+            if (checklistAdapter != null) {
+                if (checklistAdapter.getCheckListItems() != null) {
+                    for (ChecklistItem item : task.getChecklist()) {
+                        item.setText(checklistAdapter.checklistTexts.get(item.getId()));
+                    }
+                }
             }
-        }
 
-        switch (task.type) {
-            case "habit": {
-                task.setUp(positiveCheckBox.isChecked());
-                task.setDown(negativeCheckBox.isChecked());
+            if (remindersAdapter != null) {
+                if (remindersAdapter.getRemindersItems() != null) {
+                    task.getReminders().addAll(remindersAdapter.getRemindersItems());
+                }
             }
-            break;
 
-            case "daily": {
-                task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
 
-                if (this.dailyFrequencySpinner.getSelectedItemPosition() == 0) {
-                    task.setFrequency("weekly");
-                    Days repeat = task.getRepeat();
-                    if (repeat == null) {
-                        repeat = new Days();
-                        task.setRepeat(repeat);
+            RealmList<TaskTag> taskTags = new RealmList<>();
+            for (Tag tag : selectedTags) {
+                TaskTag tt = new TaskTag();
+                tt.setTag(tag);
+                tt.setTask(task);
+                taskTags.add(tt);
+            }
+            task.setTags(taskTags);
+
+            task.notes = MarkdownParser.parseCompiled(taskNotes.getText());
+
+            if (taskDifficultySpinner.getSelectedItemPosition() == 0) {
+                task.setPriority((float) 0.1);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 1) {
+                task.setPriority((float) 1.0);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 2) {
+                task.setPriority((float) 1.5);
+            } else if (taskDifficultySpinner.getSelectedItemPosition() == 3) {
+                task.setPriority((float) 2.0);
+            }
+
+            if (TextUtils.isEmpty(allocationMode) || !allocationMode.equals("taskbased")) {
+                task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+            } else {
+                switch (taskAttributeSpinner.getSelectedItemPosition()) {
+                    case 0:
+                        task.setAttribute(Task.ATTRIBUTE_STRENGTH);
+                        break;
+                    case 1:
+                        task.setAttribute(Task.ATTRIBUTE_INTELLIGENCE);
+                        break;
+                    case 2:
+                        task.setAttribute(Task.ATTRIBUTE_CONSTITUTION);
+                        break;
+                    case 3:
+                        task.setAttribute(Task.ATTRIBUTE_PERCEPTION);
+                        break;
+                }
+            }
+
+            switch (task.type) {
+                case "habit": {
+                    task.setUp(positiveCheckBox.isChecked());
+                    task.setDown(negativeCheckBox.isChecked());
+                }
+                break;
+
+                case "daily": {
+                    task.setStartDate(new Date(startDateListener.getCalendar().getTimeInMillis()));
+
+                    if (dailyFrequencySpinner.getSelectedItemPosition() == 0) {
+                        task.setFrequency("weekly");
+                        Days repeat = task.getRepeat();
+                        if (repeat == null) {
+                            repeat = new Days();
+                            task.setRepeat(repeat);
+                        }
+
+                        int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
+                        repeat.setM(weekdayCheckboxes.get(offset).isChecked());
+                        repeat.setT(weekdayCheckboxes.get((offset + 1) % 7).isChecked());
+                        repeat.setW(weekdayCheckboxes.get((offset + 2) % 7).isChecked());
+                        repeat.setTh(weekdayCheckboxes.get((offset + 3) % 7).isChecked());
+                        repeat.setF(weekdayCheckboxes.get((offset + 4) % 7).isChecked());
+                        repeat.setS(weekdayCheckboxes.get((offset + 5) % 7).isChecked());
+                        repeat.setSu(weekdayCheckboxes.get((offset + 6) % 7).isChecked());
+                    } else {
+                        task.setFrequency("daily");
+                        task.setEveryX(frequencyPicker.getValue());
+                    }
+                }
+                break;
+
+                case "todo": {
+                    if (dueDateCheckBox.isChecked()) {
+                        task.setDueDate(new Date(dueDateListener.getCalendar().getTimeInMillis()));
+                    } else {
+                        task.setDueDate(null);
+                    }
+                }
+                break;
+
+                case "reward": {
+                    String value = taskValue.getText().toString();
+                    if (!value.isEmpty()) {
+                        NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
+                        try {
+                            task.setValue(localFormat.parse(value).doubleValue());
+                        } catch (ParseException e) {
+                        }
+                    } else {
+                        task.setValue(0.0d);
                     }
 
-                    int offset = firstDayOfTheWeekHelper.getDailyTaskFormOffset();
-                    repeat.setM(this.weekdayCheckboxes.get(offset).isChecked());
-                    repeat.setT(this.weekdayCheckboxes.get((offset + 1) % 7).isChecked());
-                    repeat.setW(this.weekdayCheckboxes.get((offset + 2) % 7).isChecked());
-                    repeat.setTh(this.weekdayCheckboxes.get((offset + 3) % 7).isChecked());
-                    repeat.setF(this.weekdayCheckboxes.get((offset + 4) % 7).isChecked());
-                    repeat.setS(this.weekdayCheckboxes.get((offset + 5) % 7).isChecked());
-                    repeat.setSu(this.weekdayCheckboxes.get((offset + 6) % 7).isChecked());
-                } else {
-                    task.setFrequency("daily");
-                    task.setEveryX(this.frequencyPicker.getValue());
                 }
+                break;
             }
-            break;
-
-            case "todo": {
-                if (dueDateCheckBox.isChecked()) {
-                    task.setDueDate(new Date(dueDateListener.getCalendar().getTimeInMillis()));
-                } else {
-                    task.setDueDate(null);
-                }
-            }
-            break;
-
-            case "reward": {
-                String value = taskValue.getText().toString();
-                if (!value.isEmpty()) {
-                    NumberFormat localFormat = DecimalFormat.getInstance(Locale.getDefault());
-                    try {
-                        task.setValue(localFormat.parse(value).doubleValue());
-                    } catch (ParseException e) {
-                    }
-                } else {
-                    task.setValue(0.0d);
-                }
-
-            }
-            break;
-        }
-
+        });
         return true;
     }
 
@@ -858,24 +879,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (this.saveTask(this.task)) {
-            List<TaskTag> taskTags = new ArrayList<>();
-            for (Tag tag : selectedTags) {
-                TaskTag tt = new TaskTag();
-                tt.setTag(tag);
-                tt.setTask(task);
-                taskTags.add(tt);
-            }
-            //save
-            this.task.setTags(taskTags);
-            this.task.save();
             //send back to other elements.
-            TaskSaveEvent event = new TaskSaveEvent();
+            Observable<Task> observable;
             if (TaskFormActivity.this.task.getId() == null) {
-                event.created = true;
+                observable = taskRepository.createTask(task);
+            } else {
+                observable = taskRepository.updateTask(task);
             }
-
-            event.task = TaskFormActivity.this.task;
-            EventBus.getDefault().post(event);
+            observable.subscribe(task1 -> {}, throwable -> {});
         }
     }
 

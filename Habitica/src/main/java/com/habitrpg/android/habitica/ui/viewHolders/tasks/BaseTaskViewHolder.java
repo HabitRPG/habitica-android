@@ -95,16 +95,20 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
             } else {
                 this.titleTextView.setText(this.task.getText());
                 this.notesTextView.setText(this.task.getNotes());
-                Observable.just(this.task)
-                        .map(task1 -> {
-                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
-                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
-                            return task;
-                        })
+                Observable.just(this.task.getText())
+                        .map(MarkdownParser::parseMarkdown)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(task2 -> {
+                        .subscribe(parsedText -> {
+                            this.task.parsedText = parsedText;
                             this.titleTextView.setText(this.task.parsedText);
+                        }, Throwable::printStackTrace);
+                Observable.just(this.task.getNotes())
+                        .map(MarkdownParser::parseMarkdown)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(parsedNotes -> {
+                            this.task.parsedNotes = parsedNotes;
                             this.notesTextView.setText(this.task.parsedNotes);
                         }, Throwable::printStackTrace);
             }

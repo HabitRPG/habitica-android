@@ -7,11 +7,17 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 public class DbFlowTutorialLocalRepository implements TutorialLocalRepository {
     @Override
     public void close() {
+
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
 
     }
 

@@ -3,21 +3,9 @@ package com.habitrpg.android.habitica.models.tasks;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.ModelContainer;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,12 +16,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by viirus on 10/08/15.
- */
-@ModelContainer
-@Table(databaseName = HabitDatabase.NAME)
-public class Task extends BaseModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
+public class Task extends RealmObject {
     public static final String TYPE_HABIT = "habit";
     public static final String TYPE_TODO = "todo";
     public static final String TYPE_DAILY = "daily";
@@ -51,58 +39,36 @@ public class Task extends BaseModel {
     public static final String ATTRIBUTE_CONSTITUTION = "con";
     public static final String ATTRIBUTE_INTELLIGENCE = "int";
     public static final String ATTRIBUTE_PERCEPTION = "per";
-    @Column
-    @SerializedName("userId")
-    public String user_id;
-    @Column
+    public String userId;
     public Float priority;
-    @Column
     public String text, notes, attribute, type;
-    @Column
     public double value;
-    public List<TaskTag> tags;
-    @Column
+    public RealmList<TaskTag> tags;
     public Date dateCreated;
-    @Column
     public int position;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "group_id",
-            columnType = String.class,
-            foreignColumnName = "task_id")})
     public TaskGroupPlan group;
     //Habits
-    @Column
     public Boolean up, down;
     //todos/dailies
-    @Column
     public boolean completed;
-    public List<ChecklistItem> checklist;
-    public List<RemindersItem> reminders;
+    public RealmList<ChecklistItem> checklist;
+    public RealmList<RemindersItem> reminders;
     //dailies
-    @Column
     public String frequency;
-    @Column
     public Integer everyX, streak;
-    @Column
-    public
-    Date startDate;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "days_id",
-            columnType = String.class,
-            foreignColumnName = "task_id")})
+    public Date startDate;
     public Days repeat;
     //todos
-    @Column
     @SerializedName("date")
     public Date duedate;
     //TODO: private String lastCompleted;
     // used for buyable items
     public String specialTag;
+    @Ignore
     public CharSequence parsedText;
+    @Ignore
     public CharSequence parsedNotes;
-    @Column
     @PrimaryKey
-    @NotNull
     @SerializedName("_id")
     String id;
 
@@ -198,25 +164,15 @@ public class Task extends BaseModel {
         this.type = type;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "tags")
     public List<TaskTag> getTags() {
-        if (tags == null) {
-            tags = new Select()
-                    .from(TaskTag.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .queryList();
-        }
         return tags;
     }
 
-    public void setTags(List<TaskTag> tags) {
-        for (TaskTag tag : tags) {
-            tag.setTask(this);
-        }
+    public void setTags(RealmList<TaskTag> tags) {
         this.tags = tags;
     }
 
-    public boolean containsAnyTagId(ArrayList<String> tagIdList) {
+    public boolean containsAnyTagId(List<String> tagIdList) {
         getTags();
 
         for (TaskTag t : tags) {
@@ -231,7 +187,7 @@ public class Task extends BaseModel {
     public boolean containsAllTagIds(List<String> tagIdList) {
         getTags();
 
-        ArrayList<String> allTagIds = new ArrayList<String>();
+        List<String> allTagIds = new ArrayList<String>();
 
         for (TaskTag t : tags) {
             allTagIds.add(t.getTag().getId());
@@ -287,41 +243,19 @@ public class Task extends BaseModel {
     }
 
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "checklist")
     public List<ChecklistItem> getChecklist() {
-        if (this.checklist == null) {
-            this.checklist = new Select()
-                    .from(ChecklistItem.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .orderBy(true, "position")
-                    .queryList();
-        }
         return this.checklist;
     }
 
-    public void setChecklist(List<ChecklistItem> checklist) {
-        for (ChecklistItem checklistItem : checklist) {
-            checklistItem.setTask(this);
-        }
+    public void setChecklist(RealmList<ChecklistItem> checklist) {
         this.checklist = checklist;
     }
 
-    @OneToMany(methods = {OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "reminders")
     public List<RemindersItem> getReminders() {
-        if (this.reminders == null) {
-            this.reminders = new Select()
-                    .from(RemindersItem.class)
-                    .where(Condition.column("task_id").eq(this.id))
-                    .orderBy(true, "time")
-                    .queryList();
-        }
         return this.reminders;
     }
 
-    public void setReminders(List<RemindersItem> reminders) {
-        for (RemindersItem remindersItem : reminders) {
-            remindersItem.setTask(this);
-        }
+    public void setReminders(RealmList<RemindersItem> reminders) {
         this.reminders = reminders;
     }
 
@@ -432,79 +366,6 @@ public class Task extends BaseModel {
      */
     public void setAttribute(String attribute) {
         this.attribute = attribute;
-    }
-
-
-    @Override
-    public void save() {
-        if (this.getId() == null || this.getId().length() == 0) {
-            return;
-        }
-
-        List<TaskTag> tmpTags = tags;
-        List<ChecklistItem> tmpChecklist = checklist;
-        List<RemindersItem> tmpReminders = reminders;
-
-        // remove them, so that the database don't add empty entries
-
-        tags = null;
-        checklist = null;
-        reminders = null;
-
-        if (repeat != null) {
-            repeat.task_id = this.id;
-        }
-
-        if (group != null) {
-            group.task_id = this.id;
-        }
-
-        super.save();
-
-        tags = tmpTags;
-        checklist = tmpChecklist;
-        reminders = tmpReminders;
-
-        if (this.tags != null) {
-            for (TaskTag tag : this.tags) {
-                tag.setTask(this);
-                tag.async().save();
-            }
-        }
-
-        int position = 0;
-        if (this.checklist != null) {
-            for (ChecklistItem item : this.checklist) {
-                if (item.getTask() == null) {
-                    item.setTask(this);
-                }
-                item.setPosition(position);
-                item.async().save();
-                position++;
-            }
-        }
-
-        int index = 0;
-        if (this.reminders != null) {
-            for (RemindersItem item : this.reminders) {
-                if (item.getTask() == null) {
-                    item.setTask(this);
-                }
-                if (item.getId() == null) {
-                    item.setId(this.id + "task-reminder" + index);
-                }
-                item.async().save();
-                index++;
-            }
-        }
-    }
-
-    @Override
-    public void update() {
-        if (this.getId() == null || this.getId().length() == 0) {
-            return;
-        }
-        super.update();
     }
 
     public int getLightTaskColor() {
@@ -645,14 +506,6 @@ public class Task extends BaseModel {
         }
 
         return newTime.getTime();
-    }
-
-    @Override
-    public void delete() {
-        TaskDeleteEvent event = new TaskDeleteEvent();
-        event.task = this;
-        EventBus.getDefault().post(event);
-        super.delete();
     }
 
     public boolean isGroupTask() {

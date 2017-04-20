@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.modules.AppModule;
 
 import javax.inject.Inject;
@@ -74,7 +75,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
             int[] ids = {appWidgetId};
 
             if (taskId != null) {
-                taskRepository.postTaskDirection(taskId, direction)
+                taskRepository.taskChecked(taskId, TaskDirection.up.toString().equals(direction))
                         .subscribe(taskDirectionData -> {
                             taskRepository.getTask(taskId).subscribe(task -> {
                                 task.value = task.value + taskDirectionData.getDelta();

@@ -10,18 +10,22 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface TaskRepository extends BaseRepository  {
-    Observable<List<Task>> getTasks(String taskType, String userID);
-    Observable<List<Task>> getTasks(String userId);
+    Observable<RealmResults<Task>> getTasks(String taskType, String userID);
+    Observable<RealmResults<Task>> getTasks(String userId);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
     Observable<TaskDirectionData> taskChecked(Task task, boolean up);
+    Observable<TaskDirectionData> taskChecked(String taskId, boolean up);
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> getTask(String taskId);
+    Observable<Task> getTaskCopy(String taskId);
     Observable<Task> createTask(Task task);
     Observable<Task> updateTask(Task task);
     Observable<Void> deleteTask(String taskId);
@@ -34,7 +38,9 @@ public interface TaskRepository extends BaseRepository  {
     void removeOldTaskTags(List<TaskTag> onlineTaskTags);
     void removeOldReminders(List<RemindersItem> onlineReminders);
 
-    Observable<TaskDirectionData> postTaskDirection(String taskId, String direction);
-
     void markTaskCompleted(String taskId, boolean isCompleted);
+
+    void saveReminder(RemindersItem remindersItem);
+
+    void executeTransaction(Realm.Transaction transaction);
 }

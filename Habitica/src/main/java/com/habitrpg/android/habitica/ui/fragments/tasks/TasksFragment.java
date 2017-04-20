@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
@@ -164,7 +165,7 @@ public class TasksFragment extends BaseMainFragment {
     private void showFilterDialog() {
         TaskFilterDialog dialog = new TaskFilterDialog(getContext(), HabiticaBaseApplication.getComponent());
         if (user != null) {
-            dialog.setTags(user.getTags());
+            //dialog.setTags();
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
         if (getActiveFragment() != null) {
@@ -176,10 +177,10 @@ public class TasksFragment extends BaseMainFragment {
         dialog.setListener((activeTaskFilter, activeTags) -> {
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
-                viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
+                //viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
             }
             if (activePos < viewPager.getAdapter().getCount()-1 && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
-                viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
+                //viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
             }
             if (getActiveFragment() != null) {
                 getActiveFragment().setActiveFilter(activeTaskFilter);
@@ -351,12 +352,12 @@ public class TasksFragment extends BaseMainFragment {
             for (int index = 0; index < viewFragmentsDictionary.size(); index++) {
                 TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(index);
                 if (fragment != null) {
-                    BaseTasksRecyclerViewAdapter adapter = fragment.recyclerAdapter;
+                    RealmBaseTasksRecyclerViewAdapter adapter = fragment.recyclerAdapter;
                     if (adapter.getClass().equals(DailiesRecyclerViewHolder.class)) {
                         final DailiesRecyclerViewHolder dailyAdapter = (DailiesRecyclerViewHolder) fragment.recyclerAdapter;
                         dailyAdapter.dailyResetOffset = this.user.getPreferences().getDayStart();
                     }
-                    AsyncTask.execute(() -> adapter.loadContent(true));
+                    //AsyncTask.execute(() -> adapter.loadContent(true));
                 }
             }
         }

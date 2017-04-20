@@ -7,12 +7,18 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 
 public class DbFlowSocialLocalRepository implements SocialLocalRepository {
     @Override
     public void close() {
+
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
 
     }
 
@@ -31,7 +37,7 @@ public class DbFlowSocialLocalRepository implements SocialLocalRepository {
         return Observable.defer(() -> Observable.just(new Select()
                 .from(Challenge.class)
                 .where(Condition.column("name").isNotNull())
-                .and(Condition.column("user_id").is(userId))
+                .and(Condition.column("userId").is(userId))
                 .queryList()));
     }
 }

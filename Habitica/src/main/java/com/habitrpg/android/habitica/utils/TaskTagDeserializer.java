@@ -12,15 +12,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmList;
+
 public class TaskTagDeserializer implements JsonDeserializer<List<TaskTag>> {
     @Override
     public List<TaskTag> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<TaskTag> taskTags = new ArrayList<>();
-        List<Tag> allTags;
+        List<TaskTag> taskTags = new RealmList<>();
+        List<Tag> allTags = new ArrayList<>();
         try {
-            allTags = new Select()
-                    .from(Tag.class)
-                    .queryList();
         } catch (RuntimeException e) {
             //Tests don't have a database
             allTags = new ArrayList<>();

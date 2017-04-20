@@ -26,11 +26,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 public class DbFlowInventoryLocalRepository implements InventoryLocalRepository {
     @Override
     public void close() {
+
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
 
     }
 

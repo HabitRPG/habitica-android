@@ -41,6 +41,8 @@ import java.lang.reflect.Field;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends MultiDexApplication {
@@ -129,6 +131,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             // You should not init your app in this process.
             return;
         }
+        setupRealm();
         setupDagger();
         crashlyticsProxy.init(this);
         setupLeakCanary();
@@ -147,6 +150,16 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
         Fresco.initialize(this);
         checkIfNewVersion();
+    }
+
+    protected void setupRealm() {
+        Realm.init(this);
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder()
+                .schemaVersion(1);
+        if (BuildConfig.DEBUG) {
+            builder = builder.deleteRealmIfMigrationNeeded();
+        }
+        Realm.setDefaultConfiguration(builder.build());
     }
 
     private void checkIfNewVersion() {

@@ -71,7 +71,6 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     @Override
     public void onItemDismiss(int position) {
         if (position >= 0 && position < reminders.size()) {
-            reminders.get(position).async().delete();
             reminders.remove(position);
             notifyItemRemoved(position);
         }

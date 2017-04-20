@@ -10,11 +10,17 @@ import com.raizlabs.android.dbflow.sql.language.Where;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
 import rx.Observable;
 
 public class DbFlowCustomizationLocalRepository implements CustomizationLocalRepository {
     @Override
     public void close() {
+
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
 
     }
 

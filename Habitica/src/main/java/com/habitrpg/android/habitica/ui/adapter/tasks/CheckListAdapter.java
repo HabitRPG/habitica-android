@@ -17,7 +17,9 @@ import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import net.pherth.android.emoji_library.EmojiEditText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,21 +31,23 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         implements ItemTouchHelperAdapter {
 
     private final List<ChecklistItem> items = new ArrayList<>();
+    public final Map<String, String> checklistTexts = new HashMap<>();
 
     public CheckListAdapter(List<ChecklistItem> checklistItems) {
         items.addAll(checklistItems);
+        for (ChecklistItem item : checklistItems) {
+            checklistTexts.put(item.getId(), item.getText());
+        }
     }
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.checklist_item, parent, false);
-        ItemViewHolder itemViewHolder = new ItemViewHolder(view);
-        return itemViewHolder;
+        return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
-        holder.textWatcher.position = position;
         holder.checkListTextView.setText(items.get(position).getText());
     }
 
@@ -116,7 +120,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
         private class ChecklistTextWatcher implements TextWatcher {
 
-            public int position;
+            public String id;
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,7 +129,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                items.get(position).setText(checkListTextView.getText().toString());
+                checklistTexts.put(id, checkListTextView.getText().toString());
             }
 
             @Override

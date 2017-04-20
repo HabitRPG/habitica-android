@@ -7,27 +7,22 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 
-public class DailiesRecyclerViewHolder extends SortableTasksRecyclerViewAdapter<DailyViewHolder> {
+import io.realm.OrderedRealmCollection;
+
+public class DailiesRecyclerViewHolder extends RealmBaseTasksRecyclerViewAdapter<DailyViewHolder> {
 
     public int dailyResetOffset;
 
-    public DailiesRecyclerViewHolder(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource,
-                                     Context newContext, String userID, int dailyResetOffset,
-                                     @Nullable SortTasksCallback sortTasksCallback) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, userID, sortTasksCallback);
+    public DailiesRecyclerViewHolder(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, int dailyResetOffset) {
+        super(data, autoUpdate, layoutResource);
         this.dailyResetOffset = dailyResetOffset;
     }
 
     @Override
     public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new DailyViewHolder(getContentView(parent), dailyResetOffset);
-    }
-
-
-    @Override
-    protected void injectThis(AppComponent component) {
-        HabiticaBaseApplication.getComponent().inject(this);
     }
 }

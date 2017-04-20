@@ -18,19 +18,21 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import rx.Observable;
 
-public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<RewardViewHolder> {
+public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapter<RewardViewHolder> {
 
-    private final InventoryRepository inventoryRepository;
+    private final Context context;
+    private InventoryRepository inventoryRepository;
     @Nullable
-    private final HabitRPGUser user;
+    private HabitRPGUser user;
 
-    public RewardsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, @Nullable HabitRPGUser user, InventoryRepository inventoryRepository) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, user != null ? user.getId() : null);
-        this.user = user;
-        this.inventoryRepository = inventoryRepository;
+    public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, Context context) {
+        super(data, autoUpdate, layoutResource);
+        this.context = context;
     }
+
 
     @Override
     public RewardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,21 +81,9 @@ public class RewardsRecyclerViewAdapter extends BaseTasksRecyclerViewAdapter<Rew
                         }, throwable -> {}));
                     })
                     .subscribe(items -> {
-                        this.filteredContent.addAll(items);
                         notifyDataSetChanged();
                     }, throwable -> {
                     });
         }
-    }
-
-    @Override
-    protected void injectThis(AppComponent component) {
-        HabiticaBaseApplication.getComponent().inject(this);
-    }
-
-    @Override
-    public void setTasks(List<Task> tasks) {
-        super.setTasks(tasks);
-        this.loadEquipmentRewards();
     }
 }

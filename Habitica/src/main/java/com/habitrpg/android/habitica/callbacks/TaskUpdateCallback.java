@@ -14,8 +14,6 @@ public class TaskUpdateCallback implements Action1<Task> {
 
     @Override
     public void call(Task task) {
-        task.save();
-
         EventBus.getDefault().post(new TaskUpdatedEvent(task));
     }
 }

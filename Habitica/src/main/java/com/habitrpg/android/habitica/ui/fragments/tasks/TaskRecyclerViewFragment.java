@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
@@ -34,6 +35,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RealmBaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
@@ -54,6 +56,7 @@ import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 /**
  * TaskRecyclerViewFragment
@@ -63,7 +66,7 @@ import butterknife.ButterKnife;
  */
 public class TaskRecyclerViewFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
-    public BaseTasksRecyclerViewAdapter recyclerAdapter;
+    public RealmBaseTasksRecyclerViewAdapter recyclerAdapter;
     @Inject
     @Named(AppModule.NAMED_USER_ID)
     String userID;
@@ -75,6 +78,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     UserRepository userRepository;
     @Inject
     InventoryRepository inventoryRepository;
+    @Inject
+    TaskRepository taskRepository;
 
     LinearLayoutManager layoutManager = null;
 
@@ -147,33 +152,35 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
 
     // TODO needs a bit of cleanup
     public void setInnerAdapter() {
-        int layoutOfType;
         if (this.classType != null) {
-            switch (this.classType) {
-                case Task.TYPE_HABIT:
-                    layoutOfType = R.layout.habit_item_card;
-                    this.recyclerAdapter = new HabitsRecyclerViewAdapter(Task.TYPE_HABIT, taskFilterHelper, layoutOfType, getContext(), userID, sortCallback);
-                    allowReordering();
-                    break;
-                case Task.TYPE_DAILY:
-                    layoutOfType = R.layout.daily_item_card;
-                    int dailyResetOffset = 0;
-                    if (user != null) {
-                        dailyResetOffset = user.getPreferences().getDayStart();
-                    }
-                    this.recyclerAdapter = new DailiesRecyclerViewHolder(Task.TYPE_DAILY, taskFilterHelper, layoutOfType, getContext(), userID, dailyResetOffset, sortCallback);
-                    allowReordering();
-                    break;
-                case Task.TYPE_TODO:
-                    layoutOfType = R.layout.todo_item_card;
-                    this.recyclerAdapter = new TodosRecyclerViewAdapter(Task.TYPE_TODO, taskFilterHelper, layoutOfType, getContext(), userID, sortCallback);
-                    allowReordering();
-                    return;
-                case Task.TYPE_REWARD:
-                    layoutOfType = R.layout.reward_item_card;
-                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, taskFilterHelper, layoutOfType, getContext(), user, inventoryRepository);
-                    break;
-            }
+            taskRepository.getTasks(this.classType, userID).first().subscribe(tasks -> {
+                int layoutOfType;
+                switch (this.classType) {
+                    case Task.TYPE_HABIT:
+                        layoutOfType = R.layout.habit_item_card;
+                        this.recyclerAdapter = new HabitsRecyclerViewAdapter(tasks, true, layoutOfType);
+                        allowReordering();
+                        break;
+                    case Task.TYPE_DAILY:
+                        layoutOfType = R.layout.daily_item_card;
+                        int dailyResetOffset = 0;
+                        if (user != null) {
+                            dailyResetOffset = user.getPreferences().getDayStart();
+                        }
+                        this.recyclerAdapter = new DailiesRecyclerViewHolder(tasks, true, layoutOfType, dailyResetOffset);
+                        allowReordering();
+                        break;
+                    case Task.TYPE_TODO:
+                        layoutOfType = R.layout.todo_item_card;
+                        this.recyclerAdapter = new TodosRecyclerViewAdapter(tasks, true, layoutOfType);
+                        allowReordering();
+                        return;
+                    case Task.TYPE_REWARD:
+                        layoutOfType = R.layout.reward_item_card;
+                        this.recyclerAdapter = new RewardsRecyclerViewAdapter(tasks, true, layoutOfType, getContext());
+                        break;
+                }
+            });
         }
     }
 
@@ -336,31 +343,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         return this.classType != null ? this.classType : "";
     }
 
-    @Subscribe
-    public void onEvent(FilterTasksByTagsCommand cmd) {
-        recyclerAdapter.filter();
-    }
-
-    @Subscribe
-    public void onEvent(TaskCheckedCommand event) {
-        recyclerAdapter.checkTask(event.Task, event.completed);
-    }
-
-    @Subscribe
-    public void onEvent(TaskUpdatedEvent event) {
-        recyclerAdapter.updateTask(event.task);
-    }
-
-    @Subscribe
-    public void onEvent(TaskCreatedEvent event) {
-        recyclerAdapter.addTask(event.task);
-    }
-
-    @Subscribe
-    public void onEvent(TaskRemovedEvent event) {
-        recyclerAdapter.removeTask(event.deletedTaskId);
-    }
-
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
@@ -376,6 +358,6 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         if (classType != null) {
             taskFilterHelper.setActiveFilter(classType, activeFilter);
         }
-        recyclerAdapter.filter();
+        //recyclerAdapter.filter();
     }
 }

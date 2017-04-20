@@ -19,6 +19,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 
 
@@ -31,12 +33,12 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<List<Task>> getTasks(String taskType, String userID) {
+    public Observable<RealmResults<Task>> getTasks(String taskType, String userID) {
         return this.localRepository.getTasks(taskType, userID);
     }
 
     @Override
-    public Observable<List<Task>> getTasks(String userId) {
+    public Observable<RealmResults<Task>> getTasks(String userId) {
         return this.localRepository.getTasks(userId);
     }
 
@@ -57,20 +59,36 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
                 .doOnNext(res -> {
                     // save local task changes
                     if (task.type != null && !task.type.equals("reward")) {
-                        task.value = task.value + res.getDelta();
 
-                        this.localRepository.saveTask(task);
+                        this.localRepository.executeTransaction(realm -> {
+                            task.value = task.value + res.getDelta();
+                            if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
+                                task.completed = up;
+                            }
+                        });
                     }
                 });
     }
 
+    @Override
+    public Observable<TaskDirectionData> taskChecked(String taskId, boolean up) {
+        return localRepository.getTask(taskId)
+                .flatMap(task -> taskChecked(task, up));
+    }
+
     public Observable<Task> scoreChecklistItem(String taskId, String itemId){
-        return apiClient.scoreChecklistItem(taskId, itemId).doOnNext(this.localRepository::saveTask);
+        return apiClient.scoreChecklistItem(taskId, itemId)
+                .doOnNext(this.localRepository::saveTask);
     }
 
     @Override
     public Observable<Task> getTask(String taskId) {
         return localRepository.getTask(taskId);
+    }
+
+    @Override
+    public Observable<Task> getTaskCopy(String taskId) {
+        return localRepository.getTaskCopy(taskId);
     }
 
     @Override
@@ -81,10 +99,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         }
         lastTaskAction = now;
         return apiClient.createItem(task)
-                .doOnNext(task1 -> {
-                    localRepository.saveTask(task1);
-                    EventBus.getDefault().post(new TaskCreatedEvent(task1));
-                });
+                .doOnNext(localRepository::saveTask);
     }
 
     @Override
@@ -95,10 +110,7 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         }
         lastTaskAction = now;
         return apiClient.updateTask(task.getId(), task)
-                .doOnNext(task1 -> {
-                    localRepository.saveTask(task1);
-                    EventBus.getDefault().post(new TaskUpdatedEvent(task1));
-                });
+                .doOnNext(localRepository::saveTask);
     }
 
     @Override
@@ -138,12 +150,17 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskDirectionData> postTaskDirection(String taskId, String direction) {
-        return apiClient.postTaskDirection(taskId, direction);
+    public void markTaskCompleted(String taskId, boolean isCompleted) {
+        localRepository.markTaskCompleted(taskId, isCompleted);
     }
 
     @Override
-    public void markTaskCompleted(String taskId, boolean isCompleted) {
-        localRepository.markTaskCompleted(taskId, isCompleted);
+    public void saveReminder(RemindersItem remindersItem) {
+        localRepository.saveReminder(remindersItem);
+    }
+
+    @Override
+    public void executeTransaction(Realm.Transaction transaction) {
+        localRepository.executeTransaction(transaction);
     }
 }

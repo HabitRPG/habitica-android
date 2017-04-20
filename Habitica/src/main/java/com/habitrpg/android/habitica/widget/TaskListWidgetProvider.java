@@ -50,13 +50,12 @@ public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         setUp(context);
         if (intent.getAction().equals(DAILY_ACTION)) {
-            AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
             String taskId = intent.getStringExtra(TASK_ID_ITEM);
 
             if (taskId != null) {
-                taskRepository.postTaskDirection(taskId, TaskDirection.up.toString())
+                taskRepository.taskChecked(taskId, true)
                         .subscribe(taskDirectionData -> {
                             taskRepository.markTaskCompleted(taskId, true);
                             showToastForTaskDirection(context, taskDirectionData, userId);

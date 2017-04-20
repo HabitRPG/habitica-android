@@ -7,22 +7,20 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
 
-public class HabitsRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<HabitViewHolder> {
+import io.realm.OrderedRealmCollection;
+
+public class HabitsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapter<HabitViewHolder> {
 
 
-    public HabitsRecyclerViewAdapter(String taskType, TaskFilterHelper taskFilterHelper, int layoutResource, Context newContext, String userID, @Nullable SortTasksCallback sortCallback) {
-        super(taskType, taskFilterHelper, layoutResource, newContext, userID, sortCallback);
+    public HabitsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource) {
+        super(data, autoUpdate, layoutResource);
     }
 
     @Override
     public HabitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new HabitViewHolder(getContentView(parent));
-    }
-
-    @Override
-    protected void injectThis(AppComponent component) {
-        HabiticaBaseApplication.getComponent().inject(this);
     }
 }

@@ -103,6 +103,8 @@ import java.util.Map;
 
 import javax.net.ssl.SSLException;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -204,7 +206,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     public static GsonConverterFactory createGsonFactory() {
-        Type taskTagClassListType = new TypeToken<List<TaskTag>>() {
+        Type taskTagClassListType = new TypeToken<RealmList<TaskTag>>() {
         }.getType();
         Type skillListType = new TypeToken<List<Skill>>() {
         }.getType();
@@ -354,29 +356,13 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
             userObservable = Observable.zip(userObservable, tasksObservable,
                     (habitRPGUser, tasks) -> {
+                        List<Task> sortedTasks = new ArrayList<>();
+                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
+                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
+                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
+                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
 
-                        habitRPGUser.setHabits(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-                        habitRPGUser.setDailys(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-                        habitRPGUser.setTodos(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-                        habitRPGUser.setRewards(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-                        for (Task task : tasks.tasks.values()) {
-                            switch (task.getType()) {
-                                case Task.TYPE_HABIT:
-                                    habitRPGUser.getHabits().add(task);
-                                    break;
-                                case Task.TYPE_DAILY:
-                                    habitRPGUser.getDailys().add(task);
-                                    break;
-                                case Task.TYPE_TODO:
-                                    habitRPGUser.getTodos().add(task);
-                                    break;
-                                case Task.TYPE_REWARD:
-                                    habitRPGUser.getRewards().add(task);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        Realm.getDefaultInstance().executeTransactionAsync(realm -> realm.copyToRealmOrUpdate(sortedTasks));
 
                         return habitRPGUser;
                     });

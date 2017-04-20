@@ -27,15 +27,7 @@ public class TaskScoringCallback implements Action1<TaskDirectionData> {
 
     @Override
     public void call(TaskDirectionData taskDirectionData) {
-        taskRepository.getTask(taskId).subscribe(task -> {
-            if (task != null && task.type != null && !task.type.equals("reward")) {
-                task.value = task.value + taskDirectionData.getDelta();
-
-                taskRepository.saveTask(task);
-            }
-
-            mCallback.onTaskDataReceived(taskDirectionData, task);
-        });
+        taskRepository.getTask(taskId).first().subscribe(task -> mCallback.onTaskDataReceived(taskDirectionData, task));
         if (taskDirectionData.get_tmp() != null) {
             if (taskDirectionData.get_tmp().getDrop() != null) {
                 String type = taskDirectionData.get_tmp().getDrop().getType();

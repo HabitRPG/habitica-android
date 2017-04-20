@@ -212,7 +212,7 @@ public class TaskAlarmManager {
 
         setAlarm(context, cal.getTimeInMillis(), sender);
 
-        remindersItem.save();
+        taskRepository.saveReminder(remindersItem);
     }
 
     private void removeAlarmForRemindersItem(RemindersItem remindersItem) {
