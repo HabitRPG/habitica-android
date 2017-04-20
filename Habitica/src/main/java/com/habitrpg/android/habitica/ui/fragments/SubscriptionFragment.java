@@ -13,15 +13,15 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;

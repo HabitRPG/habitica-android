@@ -1,10 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;

@@ -1,38 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.AmplitudeManager;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
-import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -67,6 +34,38 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
+import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Collections;

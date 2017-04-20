@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
 import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 
 import junit.framework.Assert;
 

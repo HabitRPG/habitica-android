@@ -1,9 +1,6 @@
 package com.habitrpg.android.habitica.ui;
 
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,6 +9,9 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
 
 public class MaxHeightLinearLayout extends LinearLayout {
 

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events;
 
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 
 public class OpenedMysteryItemEvent {
 

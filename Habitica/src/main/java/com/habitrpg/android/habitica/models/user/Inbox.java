@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.models.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.raizlabs.android.dbflow.annotation.Column;

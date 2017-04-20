@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.google.gson.annotations.SerializedName;
-
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.raizlabs.android.dbflow.annotation.Column;

@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.helpers.RemindersManager;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.helpers.RemindersManager;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -135,4 +135,24 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     public Observable<List<Challenge>> getUserChallenges() {
         return apiClient.getUserChallenges();
     }
+
+    @Override
+    public Observable<HabitRPGUser> getMember(String userId) {
+        return apiClient.getMember(userId);
+    }
+
+    @Override
+    public Observable<Challenge> getChallenge(String challengeId) {
+        return localRepository.getChallenge(challengeId);
+    }
+
+    @Override
+    public Observable<List<Challenge>> getChallenges() {
+        return localRepository.getChallenges();
+    }
+
+    @Override
+    public Observable<List<Challenge>> getUserChallenges(String userId) {
+        return localRepository.getUserChallenges(userId);
+    }
 }

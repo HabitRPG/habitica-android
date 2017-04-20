@@ -1,11 +1,10 @@
 package com.habitrpg.android.habitica.models.shops;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.res.Resources;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import android.content.res.Resources;
 
 public class ShopItem {
 

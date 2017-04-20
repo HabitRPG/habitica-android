@@ -1,8 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 public class AddTaskWidgetProvider extends BaseWidgetProvider {
 

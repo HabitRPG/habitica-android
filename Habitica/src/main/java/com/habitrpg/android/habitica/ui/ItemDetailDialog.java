@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica.ui;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 
 public class ItemDetailDialog extends AlertDialog {
 

@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.models.tasks.Days;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Days;
-import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Date;

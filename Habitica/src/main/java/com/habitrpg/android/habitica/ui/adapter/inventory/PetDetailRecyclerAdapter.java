@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
@@ -20,6 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;

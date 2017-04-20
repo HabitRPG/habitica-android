@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.models.invitations;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;

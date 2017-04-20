@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
-import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,6 +16,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
+import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;

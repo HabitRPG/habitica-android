@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +7,14 @@ import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 
 import javax.inject.Inject;
 import javax.inject.Named;

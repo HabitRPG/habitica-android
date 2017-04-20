@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import android.support.annotation.Nullable;
-
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.HashMap;
 import java.util.List;

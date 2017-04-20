@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;

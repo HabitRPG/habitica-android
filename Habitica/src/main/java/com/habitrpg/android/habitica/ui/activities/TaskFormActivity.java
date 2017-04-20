@@ -56,8 +56,6 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.SimpleItemTouchHelperCallback;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;
@@ -80,9 +78,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     public static final String TASK_ID_KEY = "taskId";

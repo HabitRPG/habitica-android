@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.SerializedName;
+import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-
-import android.content.Context;
 
 /**
  * Created by MagicMicky on 12/06/2014.

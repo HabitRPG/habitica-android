@@ -14,6 +14,7 @@ import rx.Observable;
 
 public interface TaskRepository extends BaseRepository  {
     Observable<List<Task>> getTasks(String taskType, String userID);
+    Observable<List<Task>> getTasks(String userId);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 

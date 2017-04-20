@@ -48,4 +48,11 @@ public interface SocialRepository extends BaseRepository {
     Observable<Void> inviteToGroup(String id, Map<String, Object> inviteData);
 
     Observable<List<Challenge>> getUserChallenges();
+
+    Observable<HabitRPGUser> getMember(String userId);
+
+    Observable<Challenge> getChallenge(String challengeId);
+
+    Observable<List<Challenge>> getChallenges();
+    Observable<List<Challenge>> getUserChallenges(String id);
 }

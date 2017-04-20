@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.utils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 

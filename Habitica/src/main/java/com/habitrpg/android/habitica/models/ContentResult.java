@@ -3,11 +3,11 @@ package com.habitrpg.android.habitica.models;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import java.util.HashMap;
 import java.util.List;

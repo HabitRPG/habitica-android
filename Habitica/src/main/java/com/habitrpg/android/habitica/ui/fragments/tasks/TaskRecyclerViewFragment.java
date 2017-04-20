@@ -1,35 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.TaskCreatedEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
-import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
-import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
-import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,6 +13,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskRemovedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
+import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
+import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
+import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperAdapter;
+import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperDropCallback;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,6 +73,8 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     TaskFilterHelper taskFilterHelper;
     @Inject
     UserRepository userRepository;
+    @Inject
+    InventoryRepository inventoryRepository;
 
     LinearLayoutManager layoutManager = null;
 
@@ -168,7 +171,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                     return;
                 case Task.TYPE_REWARD:
                     layoutOfType = R.layout.reward_item_card;
-                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, taskFilterHelper, layoutOfType, getContext(), user, apiClient);
+                    this.recyclerAdapter = new RewardsRecyclerViewAdapter(Task.TYPE_REWARD, taskFilterHelper, layoutOfType, getContext(), user, inventoryRepository);
                     break;
             }
         }

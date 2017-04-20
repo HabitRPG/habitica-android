@@ -1,24 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.ContentReloadedEvent;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Animal;
-import com.habitrpg.android.habitica.models.inventory.Mount;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,8 +8,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.events.ContentReloadedEvent;
+import com.habitrpg.android.habitica.events.ReloadContentEvent;
+import com.habitrpg.android.habitica.models.inventory.Animal;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +37,10 @@ import rx.schedulers.Schedulers;
 
 public class StableRecyclerFragment extends BaseFragment {
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
+
+    @Inject
+    InventoryRepository inventoryRepository;
+
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
     @BindView(R.id.empty_view)
@@ -128,25 +131,16 @@ public class StableRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        Observable.defer(() -> {
-            if (itemType == null) {
-                throw new IllegalArgumentException();
-            }
-            List<Object> items = new ArrayList<>();
+        Observable<? extends Animal> observable;
 
-            Where<? extends Animal> query = null;
-            switch (itemType) {
-                case "pets":
-                    query = new Select().from(Pet.class).orderBy(true, "animalGroup", "animal", "color");
-                    break;
-                case "mounts":
-                    query = new Select().from(Mount.class).orderBy(true, "animalGroup", "animal", "color");
-                    break;
-            }
-            if (query == null) {
-                throw new IllegalArgumentException();
-            }
-            List<? extends Animal> unsortedAnimals = query.queryList();
+        if ("pets".equals(itemType)) {
+            observable = inventoryRepository.getPets().flatMap(Observable::from);
+        } else {
+            observable = inventoryRepository.getMounts().flatMap(Observable::from);
+        }
+
+        observable.toList().flatMap(unsortedAnimals -> {
+            List<Object> items = new ArrayList<>();
             if (unsortedAnimals.size() == 0) {
                 ReloadContentEvent event = new ReloadContentEvent();
                 EventBus.getDefault().post(event);
@@ -202,10 +196,7 @@ public class StableRecyclerFragment extends BaseFragment {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> {
-                    adapter.setItemList(items);
-                }, throwable -> {
-                });
+                .subscribe(items -> adapter.setItemList(items), throwable -> {});
     }
 
     @Subscribe

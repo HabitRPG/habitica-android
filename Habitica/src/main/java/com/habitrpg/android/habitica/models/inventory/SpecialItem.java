@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.models.inventory;
 
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
+
+import com.habitrpg.android.habitica.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,16 +1,16 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.inventory.QuestProgress;
-import com.habitrpg.android.habitica.models.inventory.QuestContent;
-
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.QuestProgress;
 
 import java.util.ArrayList;
 

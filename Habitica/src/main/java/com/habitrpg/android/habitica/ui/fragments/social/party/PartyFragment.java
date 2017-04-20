@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party;
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
-import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.social.UserParty;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -26,6 +14,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.social.UserParty;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.ChatListFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.GroupInformationFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class PartyFragment extends BaseMainFragment {
 
     public ViewPager viewPager;
     @Inject
-    ContentCache contentCache;
+    InventoryRepository inventoryRepository;
     @Nullable
     private Group group;
     private PartyMemberListFragment partyMemberListFragment;
@@ -131,11 +131,11 @@ public class PartyFragment extends BaseMainFragment {
         }
 
         if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
-            contentCache.getQuestContent(group.quest.key, content -> {
+            inventoryRepository.getQuestContent(group.quest.key).subscribe(content -> {
                 if (groupInformationFragment != null) {
                     groupInformationFragment.setQuestContent(content);
                 }
-            });
+            }, throwable -> {});
         }
 
     }

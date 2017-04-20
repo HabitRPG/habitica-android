@@ -11,11 +11,10 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
+import com.habitrpg.android.habitica.modules.AppModule;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
@@ -25,6 +24,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
     @Inject
     public TaskRepository taskRepository;
     @Inject
+    @Named(AppModule.NAMED_USER_ID)
     public String userId;
 
     private void setUp() {

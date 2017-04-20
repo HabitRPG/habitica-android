@@ -7,9 +7,9 @@ import android.view.View;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import javax.inject.Inject;
 

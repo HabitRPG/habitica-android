@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import java.util.HashMap;
 import java.util.Map;

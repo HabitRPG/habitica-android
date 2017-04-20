@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.data;
 
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import java.util.List;
 

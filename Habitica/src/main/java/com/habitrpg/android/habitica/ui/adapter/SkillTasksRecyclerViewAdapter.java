@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
-import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
 
 import java.util.UUID;
 

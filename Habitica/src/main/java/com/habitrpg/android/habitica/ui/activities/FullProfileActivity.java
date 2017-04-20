@@ -1,35 +1,9 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.UserStatComputer;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.Achievement;
-import com.habitrpg.android.habitica.models.AchievementGroup;
-import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.user.Buffs;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Outfit;
-import com.habitrpg.android.habitica.models.user.Profile;
-import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-
-import net.pherth.android.emoji_library.EmojiEditText;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,20 +20,50 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.UserStatComputer;
+import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.android.habitica.models.AchievementGroup;
+import com.habitrpg.android.habitica.models.AchievementResult;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.user.Buffs;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.adapter.social.AchievementAdapter;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+
+import net.pherth.android.emoji_library.EmojiEditText;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import rx.Observable;
 
 public class FullProfileActivity extends BaseActivity {
     @Inject
-    ContentCache contentCache;
+    InventoryRepository inventoryRepository;
     @Inject
     ApiClient apiClient;
+    @Inject
+    SocialRepository socialRepository;
     @BindView(R.id.profile_image)
     SimpleDraweeView profile_image;
     @BindView(R.id.profile_blurb)
@@ -124,8 +128,7 @@ public class FullProfileActivity extends BaseActivity {
 
         setTitle(R.string.profile_loading_data);
 
-        apiClient.getMember(this.userId)
-
+        socialRepository.getMember(this.userId)
                 .subscribe(this::updateView,
                         throwable -> {
                         });
@@ -134,7 +137,7 @@ public class FullProfileActivity extends BaseActivity {
         avatarWithBars.hideGems();
         avatarWithBars.valueBarLabelsToBlack();
 
-        avatar_with_bars.setBackgroundColor(getResources().getColor(R.color.transparent));
+        avatar_with_bars.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent));
 
         attributeRows.clear();
         attributesCardView.setOnClickListener(view -> toggleAttributeDetails());
@@ -171,24 +174,14 @@ public class FullProfileActivity extends BaseActivity {
 
         final AlertDialog addMessageDialog = new AlertDialog.Builder(this)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    HashMap<String, String> messageObject = new HashMap<>();
-                    messageObject.put("message", emojiEditText.getText().toString());
-                    messageObject.put("toUserId", userId);
-
-                    apiClient.postPrivateMessage(messageObject)
-
-                            .subscribe(postChatMessageResult -> {
-                                UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
-                                        String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL);
-                            }, throwable -> {
+                    socialRepository.postPrivateMessage(emojiEditText.getText().toString(), userId)
+                            .subscribe(postChatMessageResult -> UiUtils.showSnackbar(FullProfileActivity.this, FullProfileActivity.this.fullprofile_scrollview,
+                                    String.format(getString(R.string.profile_message_sent_to), userName), UiUtils.SnackbarDisplayType.NORMAL), throwable -> {
                             });
 
                     UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
                 })
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
-
-                    UiUtils.dismissKeyboard(HabiticaApplication.currentActivity);
-                })
+                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> UiUtils.dismissKeyboard(HabiticaApplication.currentActivity))
 
                 .create();
 
@@ -226,16 +219,13 @@ public class FullProfileActivity extends BaseActivity {
         }
         userIdText.setText(userId);
         copyUserIdButton.setVisibility(View.VISIBLE);
-        copyUserIdButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
-                        .getSystemService(view.getContext().CLIPBOARD_SERVICE);
-                android.content.ClipData clip = android.content.ClipData
-                        .newPlainText(
-                                userId, userId);
-                clipboard.setPrimaryClip(clip);
-            }
+        copyUserIdButton.setOnClickListener(view -> {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) view.getContext()
+                    .getSystemService(CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData
+                    .newPlainText(
+                            userId, userId);
+            clipboard.setPrimaryClip(clip);
         });
 
 
@@ -313,7 +303,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
-        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, null);
+        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, table);
 
         SimpleDraweeView draweeView = (SimpleDraweeView) gearRow.findViewById(R.id.gear_drawee);
 
@@ -329,8 +319,6 @@ public class FullProfileActivity extends BaseActivity {
 
         TextView keyTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView1);
         keyTextView.setText(text);
-
-        table.addView(gearRow);
 
         TextView valueTextView = (TextView) gearRow.findViewById(R.id.tableRowTextView2);
 
@@ -348,23 +336,16 @@ public class FullProfileActivity extends BaseActivity {
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
 
-        loadItemDataByOutfit(user.getItems().getGear().getEquipped(), obj -> {
-            gotGear(obj, user);
-            addNormalAddBuffAttributes(stats);
-
-            stopAndHideProgress(attributesProgress);
-        });
+        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), throwable -> {});
 
         if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getItems().getGear().getCostume(), obj -> {
-                gotCostume(obj);
-            });
+            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, throwable -> {});
         } else {
             costumeCard.setVisibility(View.GONE);
         }
     }
 
-    private void loadItemDataByOutfit(Outfit outfit, ContentCache.GotContentEntryCallback<List<ItemData>> gotEntries) {
+    private Observable<List<ItemData>> loadItemDataByOutfit(Outfit outfit) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());
@@ -375,7 +356,7 @@ public class FullProfileActivity extends BaseActivity {
         outfitList.add(outfit.getShield());
         outfitList.add(outfit.getWeapon());
 
-        contentCache.getItemDataList(outfitList, gotEntries);
+        return inventoryRepository.getItems(outfitList);
     }
 
     public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {
@@ -419,7 +400,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean roundDown, boolean isSummary) {
-        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, null);
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, attributesTableLayout);
         TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
         keyTextView.setText(label);
 
@@ -451,15 +432,13 @@ public class FullProfileActivity extends BaseActivity {
             tableRow.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);
         }
 
-        attributesTableLayout.addView(tableRow);
-
         return tableRow;
     }
 
     private void toggleAttributeDetails() {
         attributeDetailsHidden = !attributeDetailsHidden;
 
-        attributesCollapseIcon.setImageDrawable(getResources().getDrawable(attributeDetailsHidden
+        attributesCollapseIcon.setImageDrawable(ContextCompat.getDrawable(this, attributeDetailsHidden
                 ? R.drawable.ic_keyboard_arrow_right_black_24dp
                 : R.drawable.ic_keyboard_arrow_down_black_24dp));
 

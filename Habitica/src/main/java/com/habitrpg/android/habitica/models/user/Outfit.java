@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.SerializedName;
+import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import android.text.TextUtils;
 
 /**
  * Created by viirus on 20/07/15.

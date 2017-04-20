@@ -1,27 +1,43 @@
 package com.habitrpg.android.habitica.modules;
 
 
+import android.content.Context;
+
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.CustomizationRepository;
+import com.habitrpg.android.habitica.data.FAQRepository;
+import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.TutorialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.data.implementation.CustomizationRepositoryImpl;
+import com.habitrpg.android.habitica.data.implementation.FAQRepositoryImpl;
+import com.habitrpg.android.habitica.data.implementation.InventoryRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.SetupCustomizationRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.SocialRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TagRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TaskRepositoryImpl;
+import com.habitrpg.android.habitica.data.implementation.TutorialRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.UserRepositoryImpl;
+import com.habitrpg.android.habitica.data.local.CustomizationLocalRepository;
+import com.habitrpg.android.habitica.data.local.FAQLocalRepository;
+import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
+import com.habitrpg.android.habitica.data.local.TutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowCustomizationLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowFAQLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowInventoryLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowSocialLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTagLocalRepository;
-import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowTutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowUserLocalRepository;
-
-import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -76,5 +92,45 @@ public class RepositoryModule {
     @Provides
     SocialRepository providesSocialRepository(SocialLocalRepository localRepository, ApiClient apiClient) {
         return new SocialRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    InventoryLocalRepository providesInventoryLocalRepository() {
+        return new DbFlowInventoryLocalRepository();
+    }
+
+    @Provides
+    InventoryRepository providesInventoryRepository(InventoryLocalRepository localRepository, ApiClient apiClient) {
+        return new InventoryRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    FAQLocalRepository providesFAQLocalRepository() {
+        return new DbFlowFAQLocalRepository();
+    }
+
+    @Provides
+    FAQRepository providesFAQRepository(FAQLocalRepository localRepository, ApiClient apiClient) {
+        return new FAQRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    TutorialLocalRepository providesTutorialLocalRepository() {
+        return new DbFlowTutorialLocalRepository();
+    }
+
+    @Provides
+    TutorialRepository providesTutorialRepository(TutorialLocalRepository localRepository, ApiClient apiClient) {
+        return new TutorialRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    CustomizationLocalRepository providesCustomizationLocalRepository() {
+        return new DbFlowCustomizationLocalRepository();
+    }
+
+    @Provides
+    CustomizationRepository providesCustomizationRepository(CustomizationLocalRepository localRepository, ApiClient apiClient) {
+        return new CustomizationRepositoryImpl(localRepository, apiClient);
     }
 }

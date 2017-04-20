@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
+import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 

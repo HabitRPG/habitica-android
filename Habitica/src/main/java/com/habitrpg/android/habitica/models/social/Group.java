@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.google.gson.annotations.SerializedName;
-
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.List;

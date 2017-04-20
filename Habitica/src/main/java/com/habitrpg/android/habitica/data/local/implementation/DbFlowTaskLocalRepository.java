@@ -42,6 +42,17 @@ public class DbFlowTaskLocalRepository implements TaskLocalRepository {
                 .queryList()));
     }
 
+    @Override
+    public Observable<List<Task>> getTasks(String userId) {
+        return Observable.defer(() -> Observable.just(new Select().from(Task.class)
+                .where(Condition.column("user_id").eq(userId))
+                .and(Condition.CombinedCondition
+                        .begin(Condition.column("completed").eq(false))
+                        .or(Condition.column("type").eq("daily"))
+                )
+                .orderBy(OrderBy.columns("position", "dateCreated").descending())
+                .queryList()));    }
+
     public Observable<Task> getTask(String taskID) {
         return Observable.defer(() -> Observable.just(new Select().from(Task.class)
                 .where(Condition.column("id").eq(taskID))

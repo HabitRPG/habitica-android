@@ -9,11 +9,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
-
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Quest;
 
 import java.lang.reflect.Type;
 import java.util.List;

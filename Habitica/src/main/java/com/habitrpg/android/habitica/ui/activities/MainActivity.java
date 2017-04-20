@@ -38,6 +38,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
@@ -45,6 +46,7 @@ import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -89,6 +91,19 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
 import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
+import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.user.SpecialItems;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -102,37 +117,12 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
-import com.habitrpg.android.habitica.api.MaintenanceApiService;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Preferences;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.user.SpecialItems;
-import com.habitrpg.android.habitica.models.user.Stats;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
-import com.habitrpg.android.habitica.models.TutorialStep;
-import com.habitrpg.android.habitica.models.inventory.Egg;
-import com.habitrpg.android.habitica.models.inventory.Food;
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.habitrpg.android.habitica.models.inventory.Item;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.roughike.bottombar.BottomBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -231,6 +221,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     UserRepository userRepository;
     @Inject
     TagRepository tagRepository;
+    @Inject
+    InventoryRepository inventoryRepository;
 
     @Inject
     TaskAlarmManager taskAlarmManager;
@@ -497,7 +489,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
                         tagRepository.removeOldTags(user.getTags());
 
-                        updateOwnedDataForUser(user);
+                        inventoryRepository.updateOwnedEquipment(user);
                     }
                 }).start();
             }
@@ -526,58 +518,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
-    }
-
-    private void updateOwnedDataForUser(HabitRPGUser user) {
-        if (user == null || user.getItems() == null) {
-            return;
-        }
-        List<BaseModel> updates = new ArrayList<>();
-        updates.addAll(this.updateOwnedData(Egg.class, user.getItems().getEggs()));
-        updates.addAll(this.updateOwnedData(Food.class, user.getItems().getFood()));
-        updates.addAll(this.updateOwnedData(HatchingPotion.class, user.getItems().getHatchingPotions()));
-        updates.addAll(this.updateOwnedData(QuestContent.class, user.getItems().getQuests()));
-
-        updates.addAll(this.updateOwnedData(user.getItems().getGear().owned));
-        if (!updates.isEmpty()) {
-            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(updates)));
-        }
-    }
-
-    private <T extends Item> List<T> updateOwnedData(Class<T> itemClass, HashMap<String, Integer> ownedMapping) {
-        List<T> updates = new ArrayList<>();
-        if (ownedMapping == null) {
-            return updates;
-        }
-        List<T> items = new Select().from(itemClass).queryList();
-        for (T item : items) {
-            if (ownedMapping.containsKey(item.getKey()) && !item.getOwned().equals(ownedMapping.get(item.getKey()))) {
-                item.setOwned(ownedMapping.get(item.getKey()));
-                updates.add(item);
-            } else if (!ownedMapping.containsKey(item.getKey()) && item.getOwned() > 0) {
-                item.setOwned(0);
-                updates.add(item);
-            }
-        }
-        return updates;
-    }
-
-    private List<ItemData> updateOwnedData(HashMap<String, Boolean> ownedMapping) {
-        List<ItemData> updates = new ArrayList<>();
-        if (ownedMapping == null) {
-            return updates;
-        }
-        List<ItemData> items = new Select().from(ItemData.class).queryList();
-        for (ItemData item : items) {
-            if (ownedMapping.containsKey(item.key) && item.owned != ownedMapping.get(item.key)) {
-                item.owned = ownedMapping.get(item.key);
-                updates.add(item);
-            } else if (!ownedMapping.containsKey(item.key) && item.owned != null) {
-                item.owned = null;
-                updates.add(item);
-            }
-        }
-        return updates;
     }
 
     private void updateUserAvatars() {
@@ -1181,13 +1121,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
                 dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(new TaskScoringCallback(this, event.Task.getId()), error -> {
+                        .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.Task.getId()), error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
                 todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(new TaskScoringCallback(this, event.Task.getId()), error -> {
+                        .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.Task.getId()), error -> {
                         });
             }
             break;
@@ -1204,7 +1144,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
         habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(new TaskScoringCallback(this, event.habit.getId()), error -> {
+                .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.habit.getId()), error -> {
                 });
     }
 

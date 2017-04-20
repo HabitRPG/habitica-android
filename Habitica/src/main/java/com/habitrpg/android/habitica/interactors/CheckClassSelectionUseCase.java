@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
-import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 
 import javax.inject.Inject;
 

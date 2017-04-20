@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.modules.AppModule;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.models.responses.TaskDirection;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -23,10 +10,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import static com.habitrpg.android.habitica.BR.task;
 
 public abstract class TaskListWidgetProvider extends BaseWidgetProvider {
     public static final String DAILY_ACTION = "com.habitrpg.android.habitica.DAILY_ACTION";

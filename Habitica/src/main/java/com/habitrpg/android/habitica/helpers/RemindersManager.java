@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
-
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -15,6 +10,11 @@ import android.support.v7.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -1,19 +1,19 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
-import com.habitrpg.android.habitica.ui.ItemDetailDialog;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.ItemDetailDialog;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 

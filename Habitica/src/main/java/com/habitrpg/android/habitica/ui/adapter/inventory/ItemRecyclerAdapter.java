@@ -1,5 +1,13 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
@@ -8,9 +16,6 @@ import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.events.commands.SellItemCommand;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
@@ -18,16 +23,11 @@ import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import org.greenrobot.eventbus.EventBus;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.HashMap;
 import java.util.List;

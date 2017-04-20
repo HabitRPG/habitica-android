@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.BoughtGemsEvent;
-import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Stats;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -22,6 +10,18 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.BoughtGemsEvent;
+import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 

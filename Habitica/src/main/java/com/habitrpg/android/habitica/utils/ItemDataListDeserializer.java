@@ -5,8 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;

@@ -1,16 +1,18 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.google.gson.annotations.SerializedName;
+import android.database.sqlite.SQLiteException;
+import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.ui.AvatarView;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
@@ -20,9 +22,6 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import android.database.sqlite.SQLiteException;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

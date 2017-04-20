@@ -6,18 +6,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.data.CustomizationRepository;
 import com.habitrpg.android.habitica.models.ContentGear;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
@@ -29,7 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class ContentDeserializer implements JsonDeserializer<ContentResult> {
+
+    @Inject
+    CustomizationRepository customizationRepository;
 
     @Override
     public ContentResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

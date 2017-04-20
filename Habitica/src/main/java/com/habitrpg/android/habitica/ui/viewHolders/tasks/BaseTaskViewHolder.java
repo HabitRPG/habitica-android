@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.TaskTappedEvent;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.TaskTappedEvent;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindColor;
 import butterknife.BindView;

@@ -2,19 +2,15 @@ package com.habitrpg.android.habitica.helpers.notifications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.PushDevice;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 public class PushNotificationManager {
 

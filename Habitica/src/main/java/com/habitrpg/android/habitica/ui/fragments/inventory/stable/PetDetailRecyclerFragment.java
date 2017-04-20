@@ -1,19 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.commands.FeedCommand;
-import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,10 +8,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
+import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class PetDetailRecyclerFragment extends BaseMainFragment {
     private static final String ANIMAL_TYPE_KEY = "ANIMAL_TYPE_KEY";
+
+    @Inject
+    InventoryRepository inventoryRepository;
+
     public RecyclerView recyclerView;
     public PetDetailRecyclerAdapter adapter;
     public String animalType;
@@ -99,16 +104,14 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        Runnable itemsRunnable = () -> {
-            List<Pet> items = new Select().from(Pet.class).where(Condition.CombinedCondition
-                    .begin(Condition.column("animal").eq(animalType))
-                    .and(Condition.column("animalGroup").eq(animalGroup))).orderBy(true, "color").queryList();
-            adapter.setItemList(items);
-            animals = items;
-            adapter.setOwnedMapping(user.getItems().getPets());
-            adapter.setOwnedMountsMapping(user.getItems().getMounts());
-        };
-        itemsRunnable.run();
+        inventoryRepository.getPets(animalType, animalGroup).subscribe(pets -> {
+            adapter.setItemList(pets);
+            animals = pets;
+            if (user != null) {
+                adapter.setOwnedMapping(user.getItems().getPets());
+                adapter.setOwnedMountsMapping(user.getItems().getMounts());
+            }
+        }, throwable -> {});
     }
 
     @Subscribe

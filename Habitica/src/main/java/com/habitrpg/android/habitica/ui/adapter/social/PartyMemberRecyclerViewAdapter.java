@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
-import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
-import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -20,6 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.databinding.ValueBarBinding;
+import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
+import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
+import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 

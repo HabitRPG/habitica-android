@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.ContentCache;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +7,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,7 @@ public class TavernFragment extends BaseMainFragment {
     GroupInformationFragment questInfoFragment;
 
     @Inject
-    ContentCache contentCache;
+    InventoryRepository inventoryRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,11 +68,11 @@ public class TavernFragment extends BaseMainFragment {
                                 TavernFragment.this.tabLayout.setupWithViewPager(TavernFragment.this.viewPager);
                             }
 
-                            contentCache.getQuestContent(group.quest.key, content -> {
+                            inventoryRepository.getQuestContent(group.quest.key).subscribe(content -> {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }
-                            });
+                            }, throwable -> {});
                         }
                     }, throwable -> {
                     });

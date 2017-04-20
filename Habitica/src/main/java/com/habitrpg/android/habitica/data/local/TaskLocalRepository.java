@@ -14,6 +14,7 @@ import rx.Observable;
 public interface TaskLocalRepository extends BaseLocalRepository {
 
     Observable<List<Task>> getTasks(String taskType, String userID);
+    Observable<List<Task>> getTasks(String userId);
 
     void saveTasks(TasksOrder tasksOrder, TaskList tasks);
 

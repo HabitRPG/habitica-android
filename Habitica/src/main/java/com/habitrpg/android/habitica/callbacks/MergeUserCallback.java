@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.support.annotation.Nullable;
+
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 
 public class MergeUserCallback extends HabitRPGUserCallback {

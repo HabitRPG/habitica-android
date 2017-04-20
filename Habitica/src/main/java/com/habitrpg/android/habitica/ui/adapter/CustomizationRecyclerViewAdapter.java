@@ -1,17 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.models.inventory.Customization;
-import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -23,6 +11,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

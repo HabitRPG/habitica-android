@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.setup;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Preferences;
-import com.habitrpg.android.habitica.models.SetupCustomization;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -19,6 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.EquipCommand;
+import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
+import com.habitrpg.android.habitica.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;

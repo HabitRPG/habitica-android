@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import javax.inject.Inject;
 

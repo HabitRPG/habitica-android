@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.ui.AvatarView;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.habitrpg.android.habitica.models.Achievement;
-
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.Achievement;
+import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
 
 import java.util.List;
 

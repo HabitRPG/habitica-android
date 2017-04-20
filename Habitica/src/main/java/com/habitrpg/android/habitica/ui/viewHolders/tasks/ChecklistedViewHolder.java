@@ -1,15 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
-import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
-import net.pherth.android.emoji_library.EmojiTextView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +13,16 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
+import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+
+import net.pherth.android.emoji_library.EmojiTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;

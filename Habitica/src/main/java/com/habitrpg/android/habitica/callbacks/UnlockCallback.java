@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import rx.functions.Action1;
 

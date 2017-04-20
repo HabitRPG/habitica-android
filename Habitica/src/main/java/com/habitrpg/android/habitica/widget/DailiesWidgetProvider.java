@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.habitrpg.android.habitica.data.ApiClient;
+import android.content.Context;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-
-import android.content.Context;
+import com.habitrpg.android.habitica.data.ApiClient;
 
 import javax.inject.Inject;
 

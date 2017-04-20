@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.setup;
 
 
-import com.habitrpg.android.habitica.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -13,6 +11,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.habitrpg.android.habitica.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

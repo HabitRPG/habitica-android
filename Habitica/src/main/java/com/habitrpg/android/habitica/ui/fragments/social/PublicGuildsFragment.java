@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +12,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 
 import java.util.List;
 

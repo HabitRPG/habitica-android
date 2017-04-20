@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.models.social;
 
+import android.content.res.Resources;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.user.ContributorInfo;
-
-import android.content.res.Resources;
 
 import java.util.Date;
 import java.util.HashMap;

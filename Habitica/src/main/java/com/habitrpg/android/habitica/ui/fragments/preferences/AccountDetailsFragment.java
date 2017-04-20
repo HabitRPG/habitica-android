@@ -58,7 +58,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
             }
         }
 
-        qrCodeManager = new QrCodeManager(this.getContext());
+        qrCodeManager = new QrCodeManager(userRepository, this.getContext());
     }
 
     protected List<String> getAccountDetailsPreferences() {

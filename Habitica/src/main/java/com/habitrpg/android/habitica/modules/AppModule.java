@@ -1,5 +1,11 @@
 package com.habitrpg.android.habitica.modules;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.support.v7.preference.PreferenceManager;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.executors.JobExecutor;
@@ -11,12 +17,6 @@ import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.support.v7.preference.PreferenceManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

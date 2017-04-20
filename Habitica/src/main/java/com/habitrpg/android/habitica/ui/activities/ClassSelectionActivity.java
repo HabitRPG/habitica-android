@@ -1,20 +1,20 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.data.ApiClient;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.user.Gear;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.Hair;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Preferences;
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import com.habitrpg.android.habitica.ui.AvatarView;
 
 import javax.inject.Inject;
 

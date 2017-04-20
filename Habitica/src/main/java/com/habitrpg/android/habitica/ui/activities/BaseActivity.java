@@ -1,9 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.components.AppComponent;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +7,10 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.components.AppComponent;
 
 import butterknife.ButterKnife;
 

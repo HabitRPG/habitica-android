@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeHolder;
-import com.facebook.drawee.view.MultiDraweeHolder;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -27,6 +16,17 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeHolder;
+import com.facebook.drawee.view.MultiDraweeHolder;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import java.util.Collections;
 import java.util.EnumMap;

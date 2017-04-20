@@ -1,35 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.items;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.events.ContentReloadedEvent;
-import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
-import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.Egg;
-import com.habitrpg.android.habitica.models.inventory.Food;
-import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.habitrpg.android.habitica.models.inventory.Item;
-import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.habitrpg.android.habitica.models.inventory.SpecialItem;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.From;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,9 +10,30 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.events.ContentReloadedEvent;
+import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
+import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.models.inventory.Item;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.HashMap;
-import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +42,10 @@ import butterknife.OnClick;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
 public class ItemRecyclerFragment extends BaseFragment {
+
+    @Inject
+    InventoryRepository inventoryRepository;
+
     private static final String ITEM_TYPE_KEY = "CLASS_TYPE_KEY";
     @BindView(R.id.recyclerView)
     public RecyclerViewEmptySupport recyclerView;
@@ -179,40 +174,19 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        From from = null;
-        if (this.itemType == null) {
-            return;
-        }
-        switch (this.itemType) {
-            case "eggs":
-                from = new Select().from(Egg.class);
-                break;
-            case "hatchingPotions":
-                from = new Select().from(HatchingPotion.class);
-                break;
-            case "food":
-                from = new Select().from(Food.class);
-                break;
-            case "quests":
-                from = new Select().from(QuestContent.class);
-        }
-
-        List<Item> items = new ArrayList<>();
-        if (from != null) {
-            items.addAll(from.where(Condition.column("owned").greaterThan(0)).queryList());
-        }
-
-        if (this.itemType.equals("special")) {
-            if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
-                Item mysterItem = SpecialItem.makeMysteryItem(getContext());
-                mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
-                items.add(mysterItem);
+        inventoryRepository.getOwnedItems(itemType).subscribe(items -> {
+            if (this.itemType.equals("special")) {
+                if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
+                    Item mysterItem = SpecialItem.makeMysteryItem(getContext());
+                    mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
+                    items.add(mysterItem);
+                }
             }
-        }
 
-        if (items.size() > 0) {
-            adapter.setItemList(items);
-        }
+            if (items.size() > 0) {
+                adapter.setItemList(items);
+            }
+        }, throwable -> {});
     }
 
     @OnClick(R.id.openMarketButton)
@@ -235,24 +209,9 @@ public class ItemRecyclerFragment extends BaseFragment {
     @Subscribe
     public void openedMysteryItem(OpenedMysteryItemEvent event) {
         this.adapter.openedMysteryItem(event.numberLeft);
-        new Select().from(ItemData.class).where(Condition.column("key").eq(event.mysteryItem.getKey())).async().querySingle(new TransactionListener<ItemData>() {
-            @Override
-            public void onResultReceived(ItemData result) {
-                result.setOwned(true);
-                result.async().save();
-                MainActivity activity = (MainActivity) getActivity();
-                showSnackbar(activity, activity.floatingMenuWrapper, getString(R.string.notification_mystery_item, result.getText()), UiUtils.SnackbarDisplayType.NORMAL);
-            }
-
-            @Override
-            public boolean onReady(BaseTransaction<ItemData> transaction) {
-                return true;
-            }
-
-            @Override
-            public boolean hasResult(BaseTransaction<ItemData> transaction, ItemData result) {
-                return true;
-            }
+        inventoryRepository.getEquipment(event.mysteryItem.getKey()).subscribe(itemData -> {
+            MainActivity activity = (MainActivity) getActivity();
+            showSnackbar(activity, activity.floatingMenuWrapper, getString(R.string.notification_mystery_item, itemData.getText()), UiUtils.SnackbarDisplayType.NORMAL);
         });
     }
 }

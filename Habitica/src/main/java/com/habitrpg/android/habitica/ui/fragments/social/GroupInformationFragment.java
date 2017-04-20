@@ -17,15 +17,16 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
 import javax.inject.Inject;
 
@@ -40,6 +41,8 @@ public class GroupInformationFragment extends BaseFragment {
 
     @Inject
     ApiClient apiClient;
+    @Inject
+    UserRepository userRepository;
 
     @BindView(R.id.questMemberView)
     LinearLayout questMemberView;
@@ -106,7 +109,7 @@ public class GroupInformationFragment extends BaseFragment {
         bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
 
         if (this.group == null) {
-            QrCodeManager qrCodeManager = new QrCodeManager(this.getContext());
+            QrCodeManager qrCodeManager = new QrCodeManager(userRepository, this.getContext());
             qrCodeManager.setUpView(qrLayout);
 
             if (user != null && user.getInvitations().getParty() != null && user.getInvitations().getParty().getId() != null) {

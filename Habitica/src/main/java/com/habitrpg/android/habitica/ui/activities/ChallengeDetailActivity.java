@@ -1,8 +1,27 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.app.AlertDialog;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
@@ -15,39 +34,20 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase;
 import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
+import com.habitrpg.android.habitica.models.LeaveChallengeBody;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import net.pherth.android.emoji_library.EmojiParser;
 import net.pherth.android.emoji_library.EmojiTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import android.app.AlertDialog;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -72,6 +72,8 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @Inject
     public ApiClient apiClient;
+    @Inject
+    SocialRepository socialRepository;
 
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
@@ -101,6 +103,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     // endregion
 
+    @Nullable
     private Challenge challenge;
 
     @Override
@@ -221,10 +224,13 @@ public class ChallengeDetailActivity extends BaseActivity {
             transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commitAllowingStateLoss();
         }
 
-        challenge = new Select().from(Challenge.class).where(Condition.column("id").is(challengeId)).querySingle();
-
-        ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
-        challengeViewHolder.bind(challenge);
+        if (challengeId != null) {
+            socialRepository.getChallenge(challengeId).subscribe(challenge -> {
+                ChallengeDetailActivity.this.challenge = challenge;
+                ChallengeViewHolder challengeViewHolder = new ChallengeViewHolder(findViewById(R.id.challenge_header));
+                challengeViewHolder.bind(challenge);
+            });
+        }
     }
 
     @Override
@@ -248,7 +254,7 @@ public class ChallengeDetailActivity extends BaseActivity {
     private void showChallengeLeaveDialog(){
         new AlertDialog.Builder(this)
                 .setTitle(this.getString(R.string.challenge_leave_title))
-                .setMessage(this.getString(R.string.challenge_leave_text, challenge.name))
+                .setMessage(this.getString(R.string.challenge_leave_text, challenge != null ? challenge.name : ""))
                 .setPositiveButton(this.getString(R.string.yes), (dialog, which) -> {
                     dialog.dismiss();
 

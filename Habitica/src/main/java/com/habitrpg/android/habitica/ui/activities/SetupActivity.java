@@ -28,12 +28,12 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
 import com.habitrpg.android.habitica.ui.views.FadingViewPager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 

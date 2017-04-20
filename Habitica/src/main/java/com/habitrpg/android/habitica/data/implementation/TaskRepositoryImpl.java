@@ -36,6 +36,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
+    public Observable<List<Task>> getTasks(String userId) {
+        return this.localRepository.getTasks(userId);
+    }
+
+    @Override
     public Observable<TaskList> refreshTasks(TasksOrder tasksOrder) {
         return this.apiClient.getTasks()
                 .doOnNext(res -> this.localRepository.saveTasks(tasksOrder, res));

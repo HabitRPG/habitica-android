@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.callbacks;
 import android.support.annotation.Nullable;
 
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.Skill;
-import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
 
 import org.greenrobot.eventbus.EventBus;
 

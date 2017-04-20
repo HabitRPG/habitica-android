@@ -1,14 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.habitrpg.android.habitica.models.tasks.ItemData;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentDetailFragment extends BaseMainFragment {
+
+    @Inject
+    InventoryRepository inventoryRepository;
 
     public String type;
     public String equippedGear;
@@ -64,13 +65,6 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-
-        List<ItemData> gear = new Select()
-                .from(ItemData.class)
-                .where(Condition.CombinedCondition.begin(Condition.column("type").eq(this.type))
-                        .and(Condition.column("owned").eq(true))
-                ).queryList();
-
-        adapter.setGearList(gear);
+        inventoryRepository.getOwnedEquipment(type).subscribe(adapter::setGearList, throwable -> {});
     }
 }

@@ -12,16 +12,16 @@ import android.widget.LinearLayout;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +29,9 @@ import rx.Observable;
 import rx.functions.Action0;
 
 public class ChallengeListFragment extends BaseMainFragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    SocialRepository socialRepository;
 
     @BindView(R.id.challenge_filter_layout)
     LinearLayout challengeFilterLayout;
@@ -160,22 +163,24 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private void fetchLocalChallenges() {
         setRefreshingIfVisible(swipeRefreshLayout, true);
 
-        Where<Challenge> query = new Select().from(Challenge.class).where(Condition.column("name").isNotNull());
+        Observable<List<Challenge>> observable;
 
         if (viewUserChallengesOnly && user != null) {
-            query = query.and(Condition.column("user_id").is(user.getId()));
+            observable = socialRepository.getUserChallenges(user.getId());
+        } else {
+            observable = socialRepository.getChallenges();
         }
 
-        List<Challenge> challenges = query.queryList();
+        observable.subscribe(challenges -> {
+            if (challenges.size() != 0) {
+                setChallengeEntries(challenges);
+            }
 
-        if (challenges.size() != 0) {
-            setChallengeEntries(challenges);
-        }
+            setRefreshingIfVisible(swipeRefreshLayout, false);
 
-        setRefreshingIfVisible(swipeRefreshLayout, false);
-
-        // load online challenges & save to database
-        onRefresh();
+            // load online challenges & save to database
+            onRefresh();
+        }, throwable -> {});
     }
 
     private void setChallengeEntries(List<Challenge> challenges) {

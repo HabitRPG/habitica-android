@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models;
 
-import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.inventory.ItemData;
 
 import java.util.List;
 

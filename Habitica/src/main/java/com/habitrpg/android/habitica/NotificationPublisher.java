@@ -1,11 +1,5 @@
 package com.habitrpg.android.habitica;
 
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -15,41 +9,57 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
-import java.util.List;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 
 //https://gist.github.com/BrandonSmith/6679223
 public class NotificationPublisher extends BroadcastReceiver {
+
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     public static String NOTIFICATION_ID = "notification-id";
     public static String CHECK_DAILIES = "check-dailies";
     private Context context;
 
     public void onReceive(Context context, Intent intent) {
-        Log.d("NotificationPublisher", "Publishing notification");
-
         this.context = context;
+        if (taskRepository == null) {
+            HabiticaApplication.getComponent().inject(this);
+        }
 
         boolean check_dailies = intent.getBooleanExtra(CHECK_DAILIES, false);
         Notification notification = getNotification();
-        boolean show_notification = true;
         if (check_dailies) {
-            List<Task> dailies = new Select().from(Task.class)
-                    .where(Condition.column("type").eq("daily"))
-                    .and(Condition.column("completed").eq(false))
-                    .queryList();
-            show_notification = false;
-            for (Task task : dailies) {
-                if (task.isDue(0)) {
-                    show_notification = true;
-                    break;
+            taskRepository.getTasks(Task.TYPE_DAILY, userId).subscribe(dailies -> {
+                boolean showNotifications = false;
+                for (Task task : dailies) {
+                    if (task.isDue(0)) {
+                        showNotifications = true;
+                        break;
+                    }
                 }
-            }
-            TaskAlarmManager.scheduleDailyReminder(context);
-        }
-        if (show_notification) {
+                TaskAlarmManager.scheduleDailyReminder(context);
+                if (showNotifications) {
+                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+                    notificationManager.notify(id, notification);
+                }
+            }, throwable -> {});
+
+        } else {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             int id = intent.getIntExtra(NOTIFICATION_ID, 0);

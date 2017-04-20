@@ -1,13 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
-import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +7,14 @@ import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
+
+import com.habitrpg.android.habitica.BuildConfig;
+import com.habitrpg.android.habitica.HostConfig;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment;
+import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment;
 
 import butterknife.BindView;
 

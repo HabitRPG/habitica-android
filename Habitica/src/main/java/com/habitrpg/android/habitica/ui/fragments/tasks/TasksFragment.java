@@ -40,13 +40,12 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
 import com.roughike.bottombar.BottomBarTab;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -301,47 +300,47 @@ public class TasksFragment extends BaseMainFragment {
         if (bottomNavigation == null) {
             return;
         }
-        List<TutorialStep> tutorialSteps = new Select().from(TutorialStep.class).where(Condition.column("identifier").in("habits", "dailies", "todos", "rewards")).queryList();
-
-        List<String> activeTutorialFragments = new ArrayList<>();
-        for (TutorialStep step : tutorialSteps) {
-            int id = -1;
-            String taskType = null;
-            switch (step.getIdentifier()) {
-                case "habits":
-                    id = R.id.tab_habits;
-                    taskType = Task.TYPE_HABIT;
-                    break;
-                case "dailies":
-                    id = R.id.tab_dailies;
-                    taskType = Task.TYPE_DAILY;
-                    break;
-                case "todos":
-                    id = R.id.tab_todos;
-                    taskType = Task.TYPE_TODO;
-                    break;
-                case "rewards":
-                    id = R.id.tab_rewards;
-                    taskType = Task.TYPE_REWARD;
-                    break;
-            }
-            BottomBarTab tab = bottomNavigation.getTabWithId(id);
-            if (step.shouldDisplay()) {
-                tab.setBadgeCount(1);
-                activeTutorialFragments.add(taskType);
-            } else {
-                tab.removeBadge();
-            }
-        }
-        if (activeTutorialFragments.size() == 1) {
-            TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
-            if (fragment != null && fragment.tutorialTexts != null) {
-                String finalText = getContext().getString(R.string.tutorial_tasks_complete);
-                if (!fragment.tutorialTexts.contains(finalText)) {
-                    fragment.tutorialTexts.add(finalText);
+        tutorialRepository.getTutorialSteps(Arrays.asList("habits", "dailies", "todos", "rewards")).subscribe(tutorialSteps -> {
+            List<String> activeTutorialFragments = new ArrayList<>();
+            for (TutorialStep step : tutorialSteps) {
+                int id = -1;
+                String taskType = null;
+                switch (step.getIdentifier()) {
+                    case "habits":
+                        id = R.id.tab_habits;
+                        taskType = Task.TYPE_HABIT;
+                        break;
+                    case "dailies":
+                        id = R.id.tab_dailies;
+                        taskType = Task.TYPE_DAILY;
+                        break;
+                    case "todos":
+                        id = R.id.tab_todos;
+                        taskType = Task.TYPE_TODO;
+                        break;
+                    case "rewards":
+                        id = R.id.tab_rewards;
+                        taskType = Task.TYPE_REWARD;
+                        break;
+                }
+                BottomBarTab tab = bottomNavigation.getTabWithId(id);
+                if (step.shouldDisplay()) {
+                    tab.setBadgeCount(1);
+                    activeTutorialFragments.add(taskType);
+                } else {
+                    tab.removeBadge();
                 }
             }
-        }
+            if (activeTutorialFragments.size() == 1) {
+                TaskRecyclerViewFragment fragment = viewFragmentsDictionary.get(indexForTaskType(activeTutorialFragments.get(0)));
+                if (fragment != null && fragment.tutorialTexts != null) {
+                    String finalText = getContext().getString(R.string.tutorial_tasks_complete);
+                    if (!fragment.tutorialTexts.contains(finalText)) {
+                        fragment.tutorialTexts.add(finalText);
+                    }
+                }
+            }
+        }, throwable -> {});
     }
     // endregion
 

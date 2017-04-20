@@ -1,7 +1,8 @@
 package com.habitrpg.android.habitica.models.tasks;
 
-import com.google.gson.annotations.SerializedName;
+import android.support.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
@@ -19,8 +20,6 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
-
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
