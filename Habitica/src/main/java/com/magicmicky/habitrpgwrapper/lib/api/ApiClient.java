@@ -11,6 +11,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
+import com.magicmicky.habitrpgwrapper.lib.models.PostChallenge;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
@@ -199,6 +200,10 @@ public interface ApiClient {
     Observable<Challenge> joinChallenge(String challengeId);
 
     Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body);
+
+    Observable<Challenge> createChallenge(PostChallenge challenge);
+    Observable<Challenge> updateChallenge(PostChallenge challenge);
+    Observable<Void> deleteChallenge(String challengeId);
 
     //DEBUG: These calls only work on a local development server
 

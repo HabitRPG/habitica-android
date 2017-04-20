@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.modules;
 
 
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.implementation.ChallengeRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.SetupCustomizationRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TagRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TaskRepositoryImpl;
@@ -32,6 +34,7 @@ public class RepositoryModule {
     }
 
     @Provides
+    @Singleton
     ChallengeLocalRepository provideChallengeLocalRepository(){
         return new DbFlowChallengeLocalRepository();
     }
@@ -46,6 +49,13 @@ public class RepositoryModule {
     TaskRepository providesTaskRepository(TaskLocalRepository localRepository, ApiClient apiClient) {
         return new TaskRepositoryImpl(localRepository, apiClient);
     }
+
+    @Provides
+    @Singleton
+    ChallengeRepository providesChallengeRepository(ChallengeLocalRepository localRepository, ApiClient apiClient) {
+        return new ChallengeRepositoryImpl(localRepository, apiClient);
+    }
+
 
     @Provides
     TagLocalRepository providesTagLocalRepository() {

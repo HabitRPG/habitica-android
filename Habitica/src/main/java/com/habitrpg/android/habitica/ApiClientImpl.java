@@ -25,6 +25,7 @@ import com.magicmicky.habitrpgwrapper.lib.models.Group;
 import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
 import com.magicmicky.habitrpgwrapper.lib.models.Items;
 import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
+import com.magicmicky.habitrpgwrapper.lib.models.PostChallenge;
 import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationRequest;
 import com.magicmicky.habitrpgwrapper.lib.models.PurchaseValidationResult;
@@ -809,6 +810,22 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body) {
         return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver());
+    }
+
+
+    @Override
+    public Observable<Challenge> createChallenge(PostChallenge challenge){
+        return apiService.createChallenge(challenge).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Challenge> updateChallenge(PostChallenge challenge){
+        return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteChallenge(String challengeId){
+        return apiService.deleteChallenge(challengeId).compose(configureApiCallObserver());
     }
 
     @Override
