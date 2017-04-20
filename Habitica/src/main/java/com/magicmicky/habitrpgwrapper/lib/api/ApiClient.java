@@ -202,6 +202,7 @@ public interface ApiClient {
     Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body);
 
     Observable<Challenge> createChallenge(PostChallenge challenge);
+    Observable<Void> createChallengeTasks(String challengeId, List<Task> tasks);
     Observable<Challenge> updateChallenge(PostChallenge challenge);
     Observable<Void> deleteChallenge(String challengeId);
 

@@ -14,34 +14,53 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.PostChallenge;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CreateChallengeActivity extends BaseActivity {
+
+    @BindView(R.id.create_challenge_title)
+    EditText create_challenge_title;
+
+    @BindView(R.id.create_challenge_description)
+    EditText create_challenge_description;
+
+    @BindView(R.id.create_challenge_prize)
+    EditText create_challenge_prize;
+
+    @BindView(R.id.create_challenge_tag)
+    EditText create_challenge_tag;
 
     @BindView(R.id.challenge_location_spinner)
     Spinner challenge_location_spinner;
@@ -53,12 +72,16 @@ public class CreateChallengeActivity extends BaseActivity {
     @Inject
     ChallengeLocalRepository challengeLocalRepository;
 
+    @Inject
+    ChallengeRepository challengeRepository;
+
     private ChallengeTasksRecyclerViewAdapter challengeTasks;
 
     Task addHabit;
     Task addDaily;
     Task addTodo;
     Task addReward;
+    private GroupArrayAdapter locationAdapter;
 
 
     @Override
@@ -71,6 +94,40 @@ public class CreateChallengeActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_create_challenge, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_save) {
+            saveChallenge();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveChallenge() {
+        PostChallenge c = new PostChallenge();
+
+        int locationPos = challenge_location_spinner.getSelectedItemPosition();
+        Group locationGroup = locationAdapter.getItem(locationPos);
+
+        c.group = locationGroup.id;
+        c.name = create_challenge_title.getText().toString();
+        c.description = create_challenge_description.getText().toString();
+        c.shortName = create_challenge_tag.getText().toString();
+        c.prize = Integer.parseInt(create_challenge_prize.getText().toString());
+
+        List<Task> taskList = challengeTasks.getTaskList();
+        taskList.remove(addHabit);
+        taskList.remove(addDaily);
+        taskList.remove(addTodo);
+        taskList.remove(addReward);
+
+        challengeRepository.createChallenge(c, taskList).subscribe(createdChallenge -> {
+            finish();
+        }, throwable -> {
+            // UHOH
+        });
     }
 
     @Override
@@ -90,11 +147,11 @@ public class CreateChallengeActivity extends BaseActivity {
             supportActionBar.setElevation(0);
         }
 
-        GroupArrayAdapter locationAdapter = new GroupArrayAdapter(this);
+        locationAdapter = new GroupArrayAdapter(this);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         challengeLocalRepository.getGroups().subscribe(groups -> {
-            Group tavern =new Group();
-            tavern.id = "habitrpg";
+            Group tavern = new Group();
+            tavern.id = "00000000-0000-4000-A000-000000000000";
             tavern.name = getString(R.string.tavern);
 
             locationAdapter.add(tavern);
@@ -145,6 +202,7 @@ public class CreateChallengeActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
+        bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
 
         if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
@@ -165,6 +223,7 @@ public class CreateChallengeActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task);
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
+        bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
 
         if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
@@ -182,23 +241,22 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(DeleteTaskCommand deleteTask){
+    public void onEvent(DeleteTaskCommand deleteTask) {
         challengeTasks.removeTask(deleteTask.TaskIdToDelete);
     }
 
     @Subscribe
-    public void onEvent(TaskTappedEvent tappedEvent)
-    {
+    public void onEvent(TaskTappedEvent tappedEvent) {
         openNewTaskActivity(tappedEvent.Task);
     }
 
     @Subscribe
     public void onEvent(TaskSaveEvent saveEvent) {
 
-        if(saveEvent.task.getId() == null)
+        if (saveEvent.task.getId() == null)
             saveEvent.task.setId(UUID.randomUUID().toString());
 
-        if (!challengeTasks.updateTask(saveEvent.task)) {
+        if (!challengeTasks.replaceTask(saveEvent.task)) {
             Task taskAbove;
 
             switch (saveEvent.task.getType()) {
@@ -260,5 +318,25 @@ public class CreateChallengeActivity extends BaseActivity {
             checkedTextView.setText(getItem(position).name);
             return checkedTextView;
         }
+    }
+
+    @OnClick(R.id.challenge_add_gem_btn)
+    public void onAddGem() {
+        int currentVal = Integer.parseInt(create_challenge_prize.getText().toString());
+        currentVal++;
+
+        create_challenge_prize.setText("" + currentVal);
+    }
+
+    @OnClick(R.id.challenge_remove_gem_btn)
+    public void onRemoveGem() {
+
+        int currentVal = Integer.parseInt(create_challenge_prize.getText().toString());
+        currentVal--;
+
+        if (currentVal == 0)
+            currentVal = 1;
+
+        create_challenge_prize.setText("" + currentVal);
     }
 }

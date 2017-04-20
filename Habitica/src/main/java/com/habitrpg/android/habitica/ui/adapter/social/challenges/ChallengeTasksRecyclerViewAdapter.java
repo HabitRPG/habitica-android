@@ -19,9 +19,12 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
 import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 
+import java.util.List;
+
 import rx.functions.Action1;
 
-public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
+public class ChallengeTasksRecyclerViewAdapter
+        extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
     public static final String TASK_TYPE_ADD_ITEM = "ADD_ITEM";
 
     private static final int TYPE_HEADER = 0;
@@ -44,7 +47,7 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
         this.taskActionsDisabled = taskActionsDisabled;
     }
 
-    public void setDailyResetOffset(int newResetOffset){
+    public void setDailyResetOffset(int newResetOffset) {
         dailyResetOffset = newResetOffset;
     }
 
@@ -74,7 +77,7 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
         if (task.type.equals(Task.TYPE_REWARD))
             return TYPE_REWARD;
 
-        if(addItemCallback != null && task.type.equals(TASK_TYPE_ADD_ITEM))
+        if (addItemCallback != null && task.type.equals(TASK_TYPE_ADD_ITEM))
             return TYPE_ADD_ITEM;
 
         return TYPE_HEADER;
@@ -84,10 +87,10 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
         addItemCallback = cb;
     }
 
-    public int addTaskUnder(Task taskToAdd, Task taskAbove){
+    public int addTaskUnder(Task taskToAdd, Task taskAbove) {
         int position = $.findIndex(this.content, t -> t.getId().equals(taskAbove.getId()));
 
-        content.add(position+1, taskToAdd);
+        content.add(position + 1, taskToAdd);
         filter();
 
         return position;
@@ -120,6 +123,32 @@ public class ChallengeTasksRecyclerViewAdapter extends SortableTasksRecyclerView
 
         viewHolder.setDisabled(openTaskDisabled, taskActionsDisabled);
         return viewHolder;
+    }
+
+    public List<Task> getTaskList(){
+        return $.map(content, t -> t);
+    }
+
+
+    /**
+     * @param task
+     * @return true if task found&updated
+     */
+    public boolean replaceTask(Task task) {
+        int i;
+        for (i = 0; i < this.content.size(); ++i) {
+            if (content.get(i).getId().equals(task.getId())) {
+                break;
+            }
+        }
+        if (i < content.size()) {
+            content.set(i, task);
+
+            filter();
+            return true;
+        }
+
+        return false;
     }
 
     public class AddItemViewHolder extends BaseTaskViewHolder {

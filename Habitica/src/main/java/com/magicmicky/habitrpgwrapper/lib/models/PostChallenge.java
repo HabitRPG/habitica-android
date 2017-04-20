@@ -15,8 +15,6 @@ public class PostChallenge {
 
     public String description;
 
-    public String leaderName;
-
     public String group;
 
     public int prize;

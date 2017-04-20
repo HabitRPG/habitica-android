@@ -90,13 +90,9 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         return LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
     }
 
-    /**
-     * @param task
-     * @return true if task found&updated
-     */
-    public boolean updateTask(Task task) {
+    public void updateTask(Task task) {
         if (!taskType.equals(task.getType()))
-            return false;
+            return;
         int i;
         for (i = 0; i < this.content.size(); ++i) {
             if (content.get(i).getId().equals(task.getId())) {
@@ -105,12 +101,8 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
         }
         if (i < content.size()) {
             content.set(i, task);
-
-            filter();
-            return true;
         }
-
-        return false;
+        filter();
     }
 
     public void filter() {

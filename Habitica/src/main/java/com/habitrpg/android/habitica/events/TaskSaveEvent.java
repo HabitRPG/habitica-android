@@ -8,5 +8,5 @@ import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 public class TaskSaveEvent {
     public Task task;
     public boolean created;
-
+    public boolean ignoreEvent;
 }

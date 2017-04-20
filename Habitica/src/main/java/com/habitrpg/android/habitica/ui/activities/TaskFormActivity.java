@@ -92,6 +92,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
     public static final String SAVE_TO_DB = "saveToDb";
 
+    // in order to disable the event handler in MainActivity
+    public static final String SET_IGNORE_FLAG = "ignoreFlag";
+
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
     @BindView(R.id.task_value_layout)
@@ -205,6 +208,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private String taskId;
     private String userId;
     private boolean showTagSelection;
+    private boolean setIgnoreFlag;
     private Task task;
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
@@ -238,6 +242,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
+        setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
 
         tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
 
@@ -276,7 +281,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                         taskToDelete = task.getId();
                     }
 
-                    EventBus.getDefault().post(new DeleteTaskCommand(taskToDelete));
+                    EventBus.getDefault().post(new DeleteTaskCommand(taskToDelete, setIgnoreFlag));
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
                     dialog.dismiss();
                 }).show());
@@ -909,6 +914,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             if (TaskFormActivity.this.task.getId() == null) {
                 event.created = true;
             }
+            event.ignoreEvent = setIgnoreFlag;
 
             event.task = TaskFormActivity.this.task;
             EventBus.getDefault().post(event);
