@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInsta
 import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
+import com.habitrpg.android.habitica.ui.fragments.preferences.AccountDetailsFragment;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
@@ -77,6 +78,7 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyMemberListFr
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
+import com.habitrpg.android.habitica.widget.BaseWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetService;
@@ -248,4 +250,8 @@ public interface AppComponent {
     void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
 
     void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
+
+    void inject(AccountDetailsFragment accountDetailsFragment);
+
+    void inject(BaseWidgetProvider baseWidgetProvider);
 }

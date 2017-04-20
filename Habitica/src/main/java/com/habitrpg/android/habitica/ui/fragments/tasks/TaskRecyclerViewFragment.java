@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
 import com.habitrpg.android.habitica.events.commands.FilterTasksByTagsCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -63,7 +64,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     private static final String CLASS_TYPE_KEY = "CLASS_TYPE_KEY";
     public BaseTasksRecyclerViewAdapter recyclerAdapter;
     @Inject
-    @Named("UserID")
+    @Named(AppModule.NAMED_USER_ID)
     String userID;
     @Inject
     ApiClient apiClient;

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.data.ApiClient;
@@ -22,6 +23,8 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Inject
     public ApiClient apiClient;
+    @Inject
+    UserRepository userRepository;
     @Nullable
     public MainActivity activity;
     @Nullable
@@ -82,7 +85,9 @@ public abstract class BaseMainFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
             String userId = savedInstanceState.getString("userId");
-            this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+            if (userId != null) {
+                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, throwable -> {});
+            }
         }
 
         if (tabLayout != null) {
@@ -128,7 +133,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     }
 
     public String customTitle() {
-        return null;
+        return "";
     }
 
 

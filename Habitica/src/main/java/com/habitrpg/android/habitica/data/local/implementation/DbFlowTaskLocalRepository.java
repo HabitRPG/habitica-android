@@ -49,6 +49,14 @@ public class DbFlowTaskLocalRepository implements TaskLocalRepository {
     }
 
     @Override
+    public void markTaskCompleted(String taskId, boolean isCompleted) {
+        getTask(taskId).subscribe(task -> {
+            task.completed = isCompleted;
+            saveTask(task);
+        }, throwable -> {});
+    }
+
+    @Override
     public void saveTasks(TasksOrder tasksOrder, TaskList tasks) {
         sortTasks(tasks, tasksOrder.getHabits());
         sortTasks(tasks, tasksOrder.getDailys());

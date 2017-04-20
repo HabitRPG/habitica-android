@@ -9,7 +9,7 @@ import rx.Observable;
 
 public interface TagRepository extends BaseRepository {
 
-    Observable<List<Tag>> getTags();
+    Observable<List<Tag>> getTags(String userId);
 
     Observable<Tag> createTag(Tag tag);
     Observable<Tag> updateTag(Tag tag);

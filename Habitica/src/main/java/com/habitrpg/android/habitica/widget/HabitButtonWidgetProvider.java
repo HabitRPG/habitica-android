@@ -8,11 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -25,14 +23,13 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
     public static final String TASK_ID = "com.habitrpg.android.habitica.TASK_ID_ITEM";
     public static final String TASK_DIRECTION = "com.habitrpg.android.habitica.TASK_DIRECTION";
     @Inject
-    public ApiClient apiClient;
+    public TaskRepository taskRepository;
     @Inject
-    public HostConfig hostConfig;
+    public String userId;
 
-    private void setUp(Context context) {
-        if (apiClient == null) {
-            HabiticaBaseApplication application = HabiticaApplication.getInstance(context);
-            application.getComponent().inject(this);
+    private void setUp() {
+        if (taskRepository == null) {
+            HabiticaBaseApplication.getComponent().inject(this);
         }
     }
 
@@ -43,12 +40,12 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        setUp(context);
+        setUp();
         ComponentName thisWidget = new ComponentName(context,
                 HabitButtonWidgetProvider.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-        if (Build.VERSION.SDK_INT >= 16) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             for (int widgetId : allWidgetIds) {
                 Bundle options = appWidgetManager.getAppWidgetOptions(widgetId);
                 appWidgetManager.partiallyUpdateAppWidget(widgetId,
@@ -66,7 +63,7 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        setUp(context);
+        setUp();
         if (intent.getAction().equals(HABIT_ACTION)) {
             AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -77,17 +74,15 @@ public class HabitButtonWidgetProvider extends BaseWidgetProvider {
             int[] ids = {appWidgetId};
 
             if (taskId != null) {
-                apiClient.postTaskDirection(taskId, direction)
-
+                taskRepository.postTaskDirection(taskId, direction)
                         .subscribe(taskDirectionData -> {
-                            Task task = new Select().from(Task.class).where(Condition.column("id").eq(taskId)).querySingle();
-                            task.value = task.value + taskDirectionData.getDelta();
-                            task.save();
-                            showToastForTaskDirection(context, taskDirectionData, hostConfig.getUser());
+                            taskRepository.getTask(taskId).subscribe(task -> {
+                                task.value = task.value + taskDirectionData.getDelta();
+                                taskRepository.saveTask(task);
+                            });
+                            showToastForTaskDirection(context, taskDirectionData, userId);
                             this.onUpdate(context, mgr, ids);
-                        }, throwable -> {
-                            this.onUpdate(context, mgr, ids);
-                        });
+                        }, throwable -> this.onUpdate(context, mgr, ids));
             }
         }
         super.onReceive(context, intent);

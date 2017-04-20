@@ -20,9 +20,11 @@ public interface TaskRepository extends BaseRepository  {
     Observable<TaskDirectionData> taskChecked(Task task, boolean up);
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
+    Observable<Task> getTask(String taskId);
     Observable<Task> createTask(Task task);
     Observable<Task> updateTask(Task task);
-    Observable<Void> deleteTask(String taskID);
+    Observable<Void> deleteTask(String taskId);
+    void saveTask(Task task);
 
     Observable<List<Task>> createTasks(List<Task> newTasks);
 
@@ -30,4 +32,8 @@ public interface TaskRepository extends BaseRepository  {
     void removeOldChecklists(List<ChecklistItem> onlineChecklistItems);
     void removeOldTaskTags(List<TaskTag> onlineTaskTags);
     void removeOldReminders(List<RemindersItem> onlineReminders);
+
+    Observable<TaskDirectionData> postTaskDirection(String taskId, String direction);
+
+    void markTaskCompleted(String taskId, boolean isCompleted);
 }

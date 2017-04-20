@@ -26,6 +26,8 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
+    public static final String NAMED_USER_ID = "userId";
+
 
     private Application application;
 
@@ -46,7 +48,7 @@ public class AppModule {
     }
 
     @Provides
-    @Named("UserID")
+    @Named(NAMED_USER_ID)
     public String providesUserID(SharedPreferences sharedPreferences) {
         return sharedPreferences.getString(application.getString(R.string.SP_userID), "");
     }

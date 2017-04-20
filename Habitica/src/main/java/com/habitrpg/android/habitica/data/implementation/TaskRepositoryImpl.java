@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
-import com.playseeds.android.sdk.inappmessaging.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -65,6 +64,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
+    public Observable<Task> getTask(String taskId) {
+        return localRepository.getTask(taskId);
+    }
+
+    @Override
     public Observable<Task> createTask(Task task) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
@@ -99,6 +103,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
+    public void saveTask(Task task) {
+        localRepository.saveTask(task);
+    }
+
+    @Override
     public Observable<List<Task>> createTasks(List<Task> newTasks) {
         return apiClient.createTasks(newTasks);
     }
@@ -121,5 +130,15 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public void removeOldReminders(List<RemindersItem> onlineReminders) {
         localRepository.removeOldReminders(onlineReminders);
+    }
+
+    @Override
+    public Observable<TaskDirectionData> postTaskDirection(String taskId, String direction) {
+        return apiClient.postTaskDirection(taskId, direction);
+    }
+
+    @Override
+    public void markTaskCompleted(String taskId, boolean isCompleted) {
+        localRepository.markTaskCompleted(taskId, isCompleted);
     }
 }

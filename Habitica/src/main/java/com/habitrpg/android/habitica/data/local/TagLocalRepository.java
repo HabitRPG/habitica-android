@@ -7,7 +7,7 @@ import java.util.List;
 import rx.Observable;
 
 public interface TagLocalRepository extends BaseLocalRepository {
-    Observable<List<Tag>> getTags();
+    Observable<List<Tag>> getTags(String userId);
 
     void removeOldTags(List<Tag> onlineTags);
 }

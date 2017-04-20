@@ -1,28 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.data.SocialRepository;
-import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
-import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
-import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
-import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
-import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -35,6 +12,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
+import com.habitrpg.android.habitica.events.commands.CopyChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.DeleteChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
+import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
+import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
+import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.activities.MainActivity;
+import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.helpers.UiUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +53,8 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public boolean isTavern;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager layoutManager;
     private String groupId;
     private HabitRPGUser user;
@@ -90,14 +90,14 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId");
                 if (this.userId != null) {
-                    this.user = new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userId)).querySingle();
+                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, throwable -> {});
                 }
             }
 
         }
 
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_chat, container, false);
+            view = inflater.inflate(R.layout.fragment_refresh_recyclerview, container, false);
 
         return view;
     }
@@ -169,14 +169,12 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     public void onEvent(final FlagChatMessageCommand cmd) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.chat_flag_confirmation)
-                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> {
-                    socialRepository.flagMessage(cmd.groupId, cmd.chatMessage.id)
-                            .subscribe(aVoid -> {
-                                MainActivity activity = (MainActivity) getActivity();
-                                UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
-                            }, throwable -> {
-                            });
-                })
+                .setPositiveButton(R.string.flag_confirm, (dialog, id) -> socialRepository.flagMessage(cmd.groupId, cmd.chatMessage.id)
+                        .subscribe(aVoid -> {
+                            MainActivity activity = (MainActivity) getActivity();
+                            UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), "Flagged message by " + cmd.chatMessage.user, UiUtils.SnackbarDisplayType.NORMAL);
+                        }, throwable -> {
+                        }))
                 .setNegativeButton(R.string.action_cancel, (dialog, id) -> {
                 });
         builder.show();

@@ -25,4 +25,8 @@ public interface TaskLocalRepository extends BaseLocalRepository {
     void removeOldReminders(List<RemindersItem> onlineReminders);
 
     void deleteTask(String taskID);
+
+    Observable<Task> getTask(String taskId);
+
+    void markTaskCompleted(String taskId, boolean isCompleted);
 }

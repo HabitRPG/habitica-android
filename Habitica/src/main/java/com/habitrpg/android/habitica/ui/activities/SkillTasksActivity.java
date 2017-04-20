@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,21 +7,35 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.modules.AppModule;
+import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 
 public class SkillTasksActivity extends BaseActivity implements TaskClickActivity {
+
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     @BindView(R.id.viewpager)
     public ViewPager viewPager;
 
     @BindView(R.id.tab_layout)
     public TabLayout tabLayout;
-    protected HabitRPGUser user;
-    Map<Integer, SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new HashMap<>();
+    SparseArray<SkillTasksRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
 
     @Override
     protected int getLayoutResId() {
@@ -56,13 +63,13 @@ public class SkillTasksActivity extends BaseActivity implements TaskClickActivit
 
                 switch (position) {
                     case 0:
-                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(Task.TYPE_HABIT, SkillTasksActivity.this), Task.TYPE_HABIT);
+                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(taskRepository, Task.TYPE_HABIT, SkillTasksActivity.this, userId), Task.TYPE_HABIT);
                         break;
                     case 1:
-                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(Task.TYPE_DAILY, SkillTasksActivity.this), Task.TYPE_DAILY);
+                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(taskRepository, Task.TYPE_DAILY, SkillTasksActivity.this, userId), Task.TYPE_DAILY);
                         break;
                     default:
-                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(Task.TYPE_TODO, SkillTasksActivity.this), Task.TYPE_TODO);
+                        fragment = SkillTasksRecyclerViewFragment.newInstance(new SkillTasksRecyclerViewAdapter(taskRepository, Task.TYPE_TODO, SkillTasksActivity.this, userId), Task.TYPE_TODO);
                 }
 
                 viewFragmentsDictionary.put(position, fragment);

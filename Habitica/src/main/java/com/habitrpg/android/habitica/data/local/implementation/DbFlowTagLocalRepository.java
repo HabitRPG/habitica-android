@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.models.Tag;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
+import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -23,8 +24,9 @@ public class DbFlowTagLocalRepository implements TagLocalRepository {
     }
 
     @Override
-    public Observable<List<Tag>> getTags() {
+    public Observable<List<Tag>> getTags(String userId) {
         return Observable.defer(() -> Observable.just(new Select().from(Tag.class)
+                .where(Condition.column("user_id").eq(userId))
                 .orderBy(OrderBy.columns("position", "dateCreated").descending())
                 .queryList()));
     }

@@ -37,6 +37,8 @@ import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TagRepository;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
@@ -194,6 +196,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     @Inject
     TaskFilterHelper taskFilterHelper;
+    @Inject
+    TaskRepository taskRepository;
+    @Inject
+    TagRepository tagRepository;
 
     EmojiPopup popup;
 
@@ -321,13 +327,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         if (taskId != null) {
-            Task task = new Select().from(Task.class).byIds(taskId).querySingle();
-            this.task = task;
-            if (task != null) {
-                populate(task);
-            }
+            taskRepository.getTask(taskId).subscribe(task -> {
+                this.task = task;
+                if (task != null) {
+                    populate(task);
+                }
 
-            setTitle(task);
+                setTitle(task);
+            }, throwable -> {});
 
             btnDelete.setEnabled(true);
         } else {
@@ -404,12 +411,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             emojiToggle2.setOnClickListener(new emojiClickListener(newCheckListEditText));
         }
 
-        Observable.defer(() -> Observable.just(new Select().from(Tag.class)
-                .where(Condition.column("user_id").eq(this.userId))
-                .queryList())
-        )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        tagRepository.getTags(userId)
                 .subscribe(
                         loadedTags -> {
                             tags = loadedTags;

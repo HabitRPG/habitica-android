@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -33,7 +34,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     public RecyclerView recyclerView;
     public BaseTasksRecyclerViewAdapter recyclerAdapter;
     @Inject
-    @Named("UserID")
+    @Named(AppModule.NAMED_USER_ID)
     String userID;
 
     ObservableList<Task> tasksOnInitialize;

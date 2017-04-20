@@ -5,10 +5,13 @@ import android.support.annotation.Nullable;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
+import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -80,11 +83,35 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                 });
     }
 
-    @Nullable
-    private HabitRPGUser mergeUser(@Nullable HabitRPGUser oldUser, HabitRPGUser newUser) {
-        if (oldUser == null) {
-            return null;
-        }
+    @Override
+    public Observable<List<Skill>> getSkills(HabitRPGUser user) {
+        return localRepository.getSkills(user);
+    }
+
+    @Override
+    public Observable<List<Skill>> getSpecialItems(HabitRPGUser user) {
+        return localRepository.getSpecialItems(user);
+    }
+
+    @Override
+    public Observable<SkillResponse> useSkill(HabitRPGUser user, String key, String target, String taskId) {
+        return apiClient.useSkill(key, target, taskId).doOnNext(skillResponse -> {
+            if (user != null) {
+                mergeUser(user, skillResponse.user);
+            }
+        });
+    }
+
+    @Override
+    public Observable<SkillResponse> useSkill(HabitRPGUser user, String key, String target) {
+        return apiClient.useSkill(key, target).doOnNext(skillResponse -> {
+            if (user != null) {
+                mergeUser(user, skillResponse.user);
+            }
+        });
+    }
+
+    private HabitRPGUser mergeUser(HabitRPGUser oldUser, HabitRPGUser newUser) {
         if (newUser.getItems() != null) {
             oldUser.setItems(newUser.getItems());
         }
