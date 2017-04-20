@@ -31,7 +31,7 @@ public class PartyMemberListFragment extends BaseFragment {
     private PartyMemberRecyclerViewAdapter viewAdapter;
     private View view;
 
-    public void configure(Context ctx, @Nullable List<HabitRPGUser> members) {
+    public void configure(@Nullable Context ctx, @Nullable List<HabitRPGUser> members) {
         this.ctx = ctx;
         this.members = members;
 

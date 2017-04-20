@@ -562,7 +562,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<ArrayList<String>> postTaskNewPosition(String id, String position) {
+    public Observable<List<String>> postTaskNewPosition(String id, String position) {
         return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver());
     }
 
@@ -802,7 +802,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<ArrayList<Challenge>> getUserChallenges() {
+    public Observable<List<Challenge>> getUserChallenges() {
         return apiService.getUserChallenges().compose(configureApiCallObserver());
     }
 

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ShowChallengeDetailDialogCommand;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
@@ -22,18 +23,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
+import javax.inject.Inject;
 
 import rx.subjects.PublishSubject;
 
 public class ChallengesOverviewFragment extends BaseMainFragment {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public ViewPager viewPager;
     public FragmentStatePagerAdapter statePagerAdapter;
     int currentPage;
     private Stack<Integer> pageHistory;
     private boolean saveToHistory;
-    private PublishSubject<ArrayList<Challenge>> getUserChallengesObservable;
+    private PublishSubject<List<Challenge>> getUserChallengesObservable;
     private ChallengeListFragment userChallengesFragment;
     private ChallengeListFragment availableChallengesFragment;
 
@@ -71,8 +78,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
     }
 
     private void subscribeGetChallenges() {
-        this.apiClient.getUserChallenges()
-
+        this.socialRepository.getUserChallenges()
                 .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),
                         e -> getUserChallengesObservable.onError(e));
     }

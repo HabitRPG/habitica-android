@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -31,11 +32,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InboxFragment extends BaseMainFragment
         implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, HabitRPGUserCallback.OnUserReceived {
+
+    @Inject
+    UserRepository userRepository;
 
     @BindView(R.id.inbox_messages)
     LinearLayout inboxMessagesListView;
@@ -53,7 +59,6 @@ public class InboxFragment extends BaseMainFragment
         super.onCreateView(inflater, container, savedInstanceState);
 
         this.apiClient.markPrivateMessagesRead()
-
                 .subscribe(aVoid -> {
                 }, throwable -> {
                 });
@@ -75,7 +80,9 @@ public class InboxFragment extends BaseMainFragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        this.activity.getMenuInflater().inflate(R.menu.inbox, menu);
+        if (this.activity != null) {
+            this.activity.getMenuInflater().inflate(R.menu.inbox, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -92,6 +99,7 @@ public class InboxFragment extends BaseMainFragment
     }
 
     private void openNewMessageDialog() {
+        assert this.activity != null;
         this.chooseRecipientDialogView = this.activity.getLayoutInflater().inflate(R.layout.dialog_choose_message_recipient, null);
 
         Button scaneQRCodeButton = (Button) chooseRecipientDialogView.findViewById(R.id.scanQRCodeButton);
@@ -123,8 +131,8 @@ public class InboxFragment extends BaseMainFragment
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        this.apiClient.retrieveUser(true)
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+        this.userRepository.retrieveUser(true)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
@@ -173,7 +181,9 @@ public class InboxFragment extends BaseMainFragment
     private void openInboxMessages(String userID, String username) {
         InboxMessageListFragment inboxMessageListFragment = new InboxMessageListFragment();
         inboxMessageListFragment.setMessages(this.messages, username, userID);
-        this.activity.displayFragment(inboxMessageListFragment);
+        if (this.activity != null) {
+            this.activity.displayFragment(inboxMessageListFragment);
+        }
     }
 
     @Override

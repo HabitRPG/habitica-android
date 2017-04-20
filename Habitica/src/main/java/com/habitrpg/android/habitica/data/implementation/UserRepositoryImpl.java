@@ -70,6 +70,16 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                 .subscribe(tutorialSteps -> {}, throwable -> {});
     }
 
+    @Override
+    public Observable<HabitRPGUser> sleep(HabitRPGUser user) {
+        return apiClient.sleep()
+                .map(isSleeping -> {
+                    user.getPreferences().setSleep(isSleeping);
+                    localRepository.saveUser(user);
+                    return user;
+                });
+    }
+
     @Nullable
     private HabitRPGUser mergeUser(@Nullable HabitRPGUser oldUser, HabitRPGUser newUser) {
         if (oldUser == null) {

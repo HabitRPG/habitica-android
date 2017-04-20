@@ -1,35 +1,34 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.social.Challenge;
-import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
-import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest;
 import com.habitrpg.android.habitica.models.PurchaseValidationResult;
-import com.habitrpg.android.habitica.models.inventory.Quest;
-import com.habitrpg.android.habitica.models.shops.Shop;
-import com.habitrpg.android.habitica.models.responses.Status;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.auth.UserAuth;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.Status;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Items;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +108,7 @@ public interface ApiService {
     Observable<HabitResponse<TaskDirectionData>> postTaskDirection(@Path("id") String id, @Path("direction") String direction);
 
     @POST("tasks/{id}/move/to/{position}")
-    Observable<HabitResponse<ArrayList<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
+    Observable<HabitResponse<List<String>>> postTaskNewPosition(@Path("id") String id, @Path("position") String position);
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     Observable<HabitResponse<Task>> scoreChecklistItem(@Path("taskId") String taskId, @Path("itemId") String itemId);
@@ -273,7 +272,7 @@ public interface ApiService {
     /* challenges api */
 
     @GET("challenges/user")
-    Observable<HabitResponse<ArrayList<Challenge>>> getUserChallenges();
+    Observable<HabitResponse<List<Challenge>>> getUserChallenges();
 
     @GET("tasks/challenge/{challengeId}")
     Observable<HabitResponse<TaskList>> getChallengeTasks(@Path("challengeId") String challengeId);

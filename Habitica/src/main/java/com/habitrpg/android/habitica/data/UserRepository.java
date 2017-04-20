@@ -19,4 +19,6 @@ public interface UserRepository extends BaseRepository {
     Observable<HabitRPGUser> revive(HabitRPGUser user);
 
     void resetTutorial(@Nullable HabitRPGUser user);
+
+    Observable<HabitRPGUser> sleep(HabitRPGUser user);
 }

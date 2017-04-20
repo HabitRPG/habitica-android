@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.models.social.Group;
@@ -19,9 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import rx.functions.Action1;
 
 public class GuildFragment extends BaseMainFragment implements Action1<Group> {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public boolean isMember;
     public ViewPager viewPager;
@@ -34,8 +40,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
         if (this.guildInformationFragment != null) {
             this.guildInformationFragment.setGroup(guild);
         }
-        if (this.guild.chat == null && this.apiClient != null) {
-            apiClient.getGroup(this.guild.id)
+        if (this.guild.chat == null && this.socialRepository != null) {
+            socialRepository.retrieveGroup(this.guild.id)
                     .subscribe(this, throwable -> {
                     });
         }
@@ -65,8 +71,8 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiClient != null && this.guild != null) {
-            apiClient.getGroup(this.guild.id)
+        if (this.socialRepository != null && this.guild != null) {
+            socialRepository.retrieveGroup(this.guild.id)
                     .subscribe(this, throwable -> {
                     });
         }
@@ -74,14 +80,16 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (this.isMember) {
-            if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
-                this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
+        if (this.activity != null) {
+            if (this.isMember) {
+                if (this.user != null && this.user.getId().equals(this.guild.leaderID)) {
+                    this.activity.getMenuInflater().inflate(R.menu.guild_admin, menu);
+                } else {
+                    this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
+                }
             } else {
-                this.activity.getMenuInflater().inflate(R.menu.guild_member, menu);
+                this.activity.getMenuInflater().inflate(R.menu.guild_nonmember, menu);
             }
-        } else {
-            this.activity.getMenuInflater().inflate(R.menu.guild_nonmember, menu);
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -92,14 +100,18 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
         switch (id) {
             case R.id.menu_guild_join:
-                this.apiClient.joinGroup(this.guild.id)
+                this.socialRepository.joinGroup(this.guild.id)
                         .subscribe(this, throwable -> {
                         });
                 this.isMember = true;
                 return true;
             case R.id.menu_guild_leave:
-                this.apiClient.leaveGroup(this.guild.id)
-                        .subscribe(aVoid -> this.activity.supportInvalidateOptionsMenu(), throwable -> {
+                this.socialRepository.leaveGroup(this.guild.id)
+                        .subscribe(aVoid -> {
+                            if (this.activity != null) {
+                                this.activity.supportInvalidateOptionsMenu();
+                            }
+                        }, throwable -> {
                         });
                 this.isMember = false;
                 return true;
@@ -147,9 +159,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.guild);
+                        return getContext().getString(R.string.guild);
                     case 1:
-                        return activity.getString(R.string.chat);
+                        return getContext().getString(R.string.chat);
                 }
                 return "";
             }
@@ -220,8 +232,7 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiClient.updateGroup(this.guild.id, this.guild)
-
+                        this.socialRepository.updateGroup(this.guild)
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -246,7 +257,9 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
 
             this.guild = group;
         }
-        this.activity.supportInvalidateOptionsMenu();
+        if (this.activity != null) {
+            this.activity.supportInvalidateOptionsMenu();
+        }
     }
 
     @Override

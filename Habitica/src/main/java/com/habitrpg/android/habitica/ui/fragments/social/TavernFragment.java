@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.models.social.Group;
 
@@ -17,6 +18,9 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 public class TavernFragment extends BaseMainFragment {
+
+    @Inject
+    SocialRepository socialRepository;
 
     public ViewPager viewPager;
     Group tavern;
@@ -53,8 +57,8 @@ public class TavernFragment extends BaseMainFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (this.apiClient != null) {
-            apiClient.getGroup("habitrpg")
+        if (this.socialRepository != null) {
+            socialRepository.getGroup("habitrpg")
                     .subscribe(group -> {
                         TavernFragment.this.tavern = group;
                         if (group.quest != null && group.quest.key != null && TavernFragment.this.isAdded()) {
@@ -118,9 +122,9 @@ public class TavernFragment extends BaseMainFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.chat);
+                        return getContext().getString(R.string.chat);
                     case 1:
-                        return activity.getString(R.string.world_quest);
+                        return getContext().getString(R.string.world_quest);
                 }
                 return "";
             }

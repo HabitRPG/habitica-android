@@ -66,7 +66,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
     private ChallengeFilterOptions lastFilterOptions;
 
-    public void setObservable(Observable<ArrayList<Challenge>> listObservable) {
+    public void setObservable(Observable<List<Challenge>> listObservable) {
         listObservable
                 .subscribe(challenges -> {
 

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.party;
 import com.habitrpg.android.habitica.ContentCache;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -37,6 +38,9 @@ import javax.inject.Inject;
 
 public class PartyFragment extends BaseMainFragment {
 
+    @Inject
+    SocialRepository socialRepository;
+
     public ViewPager viewPager;
     @Inject
     ContentCache contentCache;
@@ -60,7 +64,8 @@ public class PartyFragment extends BaseMainFragment {
 
         // Get the full group data
         if (this.user != null && this.user.getParty() != null && this.user.getParty().id != null) {
-            apiClient.getGroup("party")
+            socialRepository.getGroup("party")
+                    .filter(group1 -> group1 != null)
                     .subscribe(group -> {
                         if (group == null) {
                             return;
@@ -69,8 +74,7 @@ public class PartyFragment extends BaseMainFragment {
 
                         updateGroupUI();
 
-                        apiClient.getGroupMembers(group.id, true)
-
+                        socialRepository.getGroupMembers(group.id, true)
                                 .subscribe(members -> {
                                             PartyFragment.this.group.members = members;
                                             updateGroupUI();
@@ -122,7 +126,9 @@ public class PartyFragment extends BaseMainFragment {
             chatListFragment.seenGroupId = group.id;
         }
 
-        PartyFragment.this.activity.supportInvalidateOptionsMenu();
+        if (this.activity != null) {
+            this.activity.supportInvalidateOptionsMenu();
+        }
 
         if (group != null && group.quest != null && group.quest.key != null && !group.quest.key.isEmpty()) {
             contentCache.getQuestContent(group.quest.key, content -> {
@@ -166,7 +172,7 @@ public class PartyFragment extends BaseMainFragment {
                         .setMessage(viewPager.getContext().getString(R.string.party_leave_confirmation))
                         .setPositiveButton(viewPager.getContext().getString(R.string.yes), (dialog, which) ->  {
                             if (this.group != null){
-                                this.apiClient.leaveGroup(this.group.id)
+                                this.socialRepository.leaveGroup(this.group.id)
                                         .subscribe(group -> getActivity().getSupportFragmentManager().beginTransaction().remove(PartyFragment.this).commit(), throwable -> {
                                         });
                             }
@@ -220,8 +226,7 @@ public class PartyFragment extends BaseMainFragment {
                         needsSaving = true;
                     }
                     if (needsSaving) {
-                        this.apiClient.updateGroup(this.group.id, this.group)
-
+                        this.socialRepository.updateGroup(this.group)
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -251,8 +256,7 @@ public class PartyFragment extends BaseMainFragment {
                         inviteData.put("uuids", invites);
                     }
                     if (this.group != null) {
-                        this.apiClient.inviteToGroup(this.group.id, inviteData)
-
+                        this.socialRepository.inviteToGroup(this.group.id, inviteData)
                                 .subscribe(aVoid -> {
                                 }, throwable -> {
                                 });
@@ -323,11 +327,11 @@ public class PartyFragment extends BaseMainFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return activity.getString(R.string.party);
+                        return getContext().getString(R.string.party);
                     case 1:
-                        return activity.getString(R.string.chat);
+                        return getContext().getString(R.string.chat);
                     case 2:
-                        return activity.getString(R.string.members);
+                        return getContext().getString(R.string.members);
                 }
                 return "";
             }

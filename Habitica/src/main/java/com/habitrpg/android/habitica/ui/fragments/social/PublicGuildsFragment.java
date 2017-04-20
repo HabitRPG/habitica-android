@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -23,10 +24,15 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PublicGuildsFragment extends BaseMainFragment implements SearchView.OnQueryTextListener {
+
+    @Inject
+    SocialRepository socialRepository;
 
     List<String> memberGuildIDs;
     List<Group> guilds;
@@ -36,7 +42,6 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
 
     private View view;
     private PublicGuildsRecyclerViewAdapter viewAdapter;
-    private SearchView guildSearchView;
 
     @Nullable
     @Override
@@ -71,9 +76,8 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     }
 
     private void fetchGuilds() {
-        if (this.apiClient != null) {
-            this.apiClient.listGroups("publicGuilds")
-
+        if (this.socialRepository != null) {
+            this.socialRepository.getGroups("publicGuilds")
                     .subscribe(groups -> {
                         PublicGuildsFragment.this.guilds = groups;
                         if (PublicGuildsFragment.this.viewAdapter != null) {
@@ -89,9 +93,9 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         inflater.inflate(R.menu.menu_public_guild, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_guild_search);
-        guildSearchView = (SearchView) searchItem.getActionView();
+        SearchView guildSearchView = (SearchView) searchItem.getActionView();
         SearchView.SearchAutoComplete theTextArea = (SearchView.SearchAutoComplete) guildSearchView.findViewById(R.id.search_src_text);
-        theTextArea.setHintTextColor(ContextCompat.getColor(this.activity, R.color.white));
+        theTextArea.setHintTextColor(ContextCompat.getColor(getContext(), R.color.white));
         guildSearchView.setQueryHint(getString(R.string.guild_search_hint));
         guildSearchView.setOnQueryTextListener(this);
 
@@ -100,7 +104,9 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     @Override
     public boolean onQueryTextSubmit(String s) {
         viewAdapter.getFilter().filter(s);
-        UiUtils.dismissKeyboard(this.activity);
+        if (this.activity != null) {
+            UiUtils.dismissKeyboard(this.activity);
+        }
         return true;
     }
 

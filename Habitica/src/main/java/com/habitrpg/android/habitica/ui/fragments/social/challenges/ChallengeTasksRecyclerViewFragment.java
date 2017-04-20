@@ -1,21 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
-import com.habitrpg.android.habitica.models.tasks.Task;
-
 import android.content.Context;
 import android.databinding.ObservableList;
 import android.os.Bundle;
@@ -27,6 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
+import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,8 +35,6 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     @Inject
     @Named("UserID")
     String userID;
-    @Inject
-    ApiClient apiClient;
 
     ObservableList<Task> tasksOnInitialize;
 

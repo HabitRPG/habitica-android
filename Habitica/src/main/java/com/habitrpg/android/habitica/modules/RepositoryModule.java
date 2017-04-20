@@ -2,16 +2,20 @@ package com.habitrpg.android.habitica.modules;
 
 
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
+import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.implementation.SetupCustomizationRepositoryImpl;
+import com.habitrpg.android.habitica.data.implementation.SocialRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TagRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TaskRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.UserRepositoryImpl;
+import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowSocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTagLocalRepository;
 import com.habitrpg.android.habitica.data.ApiClient;
@@ -62,5 +66,15 @@ public class RepositoryModule {
     @Provides
     UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient) {
         return new UserRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    SocialLocalRepository providesSocialLocalRepository() {
+        return new DbFlowSocialLocalRepository();
+    }
+
+    @Provides
+    SocialRepository providesSocialRepository(SocialLocalRepository localRepository, ApiClient apiClient) {
+        return new SocialRepositoryImpl(localRepository, apiClient);
     }
 }

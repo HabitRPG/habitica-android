@@ -1,10 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.habitrpg.android.habitica.models.social.Group;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,13 +10,24 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.habitrpg.android.habitica.R;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GuildsOverviewFragment extends BaseMainFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    @Inject
+    SocialRepository socialRepository;
 
     @BindView(R.id.my_guilds_listview)
     LinearLayout guildsListView;
@@ -68,9 +74,8 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     }
 
     private void fetchGuilds() {
-        if (this.apiClient != null && this.apiClient != null) {
-            this.apiClient.listGroups("guilds")
-
+        if (this.socialRepository != null) {
+            this.socialRepository.retrieveGroups("guilds")
                     .subscribe(groups -> {
                         GuildsOverviewFragment.this.guilds = groups;
                         GuildsOverviewFragment.this.setGuildsOnListView();
@@ -100,16 +105,20 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+        BaseMainFragment fragment;
         if (v == this.publicGuildsButton) {
             PublicGuildsFragment publicGuildsFragment = new PublicGuildsFragment();
             publicGuildsFragment.memberGuildIDs = this.guildIDs;
-            this.activity.displayFragment(publicGuildsFragment);
+            fragment = publicGuildsFragment;
         } else {
             Integer guildIndex = ((ViewGroup) v.getParent()).indexOfChild(v);
             GuildFragment guildFragment = new GuildFragment();
             guildFragment.setGuild(this.guilds.get(guildIndex));
             guildFragment.isMember = true;
-            this.activity.displayFragment(guildFragment);
+            fragment = guildFragment;
+        }
+        if (this.activity != null) {
+            this.activity.displayFragment(fragment);
         }
     }
 

@@ -70,7 +70,7 @@ public class GroupInformationFragment extends BaseFragment {
 
     }
 
-    public static GroupInformationFragment newInstance(@Nullable Group group, HabitRPGUser user) {
+    public static GroupInformationFragment newInstance(@Nullable Group group, @Nullable HabitRPGUser user) {
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();

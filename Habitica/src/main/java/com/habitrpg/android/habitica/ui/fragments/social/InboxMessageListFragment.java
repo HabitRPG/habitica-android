@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -26,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,6 +38,11 @@ import butterknife.ButterKnife;
  */
 public class InboxMessageListFragment extends BaseMainFragment
         implements SwipeRefreshLayout.OnRefreshListener, HabitRPGUserCallback.OnUserReceived {
+
+    @Inject
+    SocialRepository socialRepository;
+    @Inject
+    UserRepository userRepository;
 
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -47,7 +56,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     String replyToUserUUID;
 
     public InboxMessageListFragment() {
-        messages = new ArrayList<ChatMessage>();
+        messages = new ArrayList<>();
     }
 
     @Override
@@ -62,7 +71,7 @@ public class InboxMessageListFragment extends BaseMainFragment
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         chatRecyclerView.setLayoutManager(layoutManager);
 
-        chatAdapter = new ChatRecyclerViewAdapter(messages, user, null, false);
+        chatAdapter = new ChatRecyclerViewAdapter(messages, user, null);
         chatAdapter.setToInboxChat(this.replyToUserUUID);
         chatAdapter.setSendingUser(this.user);
         chatRecyclerView.setAdapter(chatAdapter);
@@ -75,12 +84,11 @@ public class InboxMessageListFragment extends BaseMainFragment
         component.inject(this);
     }
 
-        private void refreshUserInbox () {
-            this.swipeRefreshLayout.setRefreshing(true);
-            this.apiClient.retrieveUser(true)
-
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {});
-        }
+    private void refreshUserInbox () {
+        this.swipeRefreshLayout.setRefreshing(true);
+        this.userRepository.retrieveUser(true)
+                .subscribe(this::onUserReceived, throwable -> {});
+    }
 
     @Override
     public void onRefresh() {
@@ -118,17 +126,9 @@ public class InboxMessageListFragment extends BaseMainFragment
 
     @Subscribe
     public void onEvent(SendNewInboxMessageCommand cmd) {
-        HashMap<String, String> messageObject = new HashMap<>();
-        messageObject.put("message", cmd.Message);
-        messageObject.put("toUserId", cmd.UserToSendTo);
-
-            apiClient.postPrivateMessage(messageObject)
-
-                    .subscribe(postChatMessageResult -> {
-                        this.refreshUserInbox();
-                    }, throwable -> {
-                    });
-
+        socialRepository.postPrivateMessage(cmd.userToSendTo, cmd.message)
+                .subscribe(postChatMessageResult -> this.refreshUserInbox(), throwable -> {
+                });
         UiUtils.dismissKeyboard(getActivity());
     }
 

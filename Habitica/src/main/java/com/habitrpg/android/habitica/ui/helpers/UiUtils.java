@@ -48,7 +48,7 @@ public class UiUtils {
      *
      * @param context   Context.
      * @param container Parent view where Snackbar will appear.
-     * @param content   Message.
+     * @param content   message.
      */
     public static void showSnackbar(Context context, View container, String content, SnackbarDisplayType displayType) {
         Snackbar snackbar = Snackbar.make(container, content, Snackbar.LENGTH_LONG);
