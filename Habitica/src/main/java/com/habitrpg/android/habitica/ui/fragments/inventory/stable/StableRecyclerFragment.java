@@ -13,8 +13,9 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Animal;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -48,7 +49,7 @@ public class StableRecyclerFragment extends BaseFragment {
     public StableRecyclerAdapter adapter;
     public String itemType;
     public String itemTypeText;
-    public HabitRPGUser user;
+    public User user;
     GridLayoutManager layoutManager = null;
 
     private View view;

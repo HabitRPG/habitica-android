@@ -13,7 +13,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 
@@ -31,7 +32,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
     UserRepository userRepository;
 
     private QrCodeManager qrCodeManager;
-    private HabitRPGUser user;
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
         }
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

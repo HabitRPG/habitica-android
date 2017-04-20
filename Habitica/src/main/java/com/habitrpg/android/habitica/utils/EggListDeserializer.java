@@ -20,7 +20,8 @@ public class EggListDeserializer implements JsonDeserializer<List<Egg>> {
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<Egg> existingItems = new Select().from(Egg.class).queryList();
+            // TODO: fix this
+            List<Egg> existingItems = new ArrayList<>();
 
             for (Egg item : existingItems) {
                 if (object.has(item.getKey())) {

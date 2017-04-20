@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 
@@ -40,7 +40,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     private Context context;
 
     private TextView lvlText, goldText, silverText, gemsText;
-    private HabitRPGUser userObject;
+    private User userObject;
 
     private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
 
@@ -98,7 +98,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void updateData(HabitRPGUser user) {
+    public void updateData(User user) {
         userObject = user;
 
         Stats stats = user.getStats();
@@ -109,32 +109,31 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         avatarView.setUser(user);
 
-        if (stats.get_class() != null) {
+        if (stats.getHabitClass() != null) {
             userClass = stats.getTranslatedClassName(context);
         }
 
-        mpBar.valueBarLayout.setVisibility((stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+        mpBar.valueBarLayout.setVisibility((stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
-        if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected())) {
+        if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected() || userClass.length() == 0)) {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
             lvlText.setCompoundDrawables(null, null, null, null);
         } else {
             lvlText.setText(context.getString(R.string.user_level_with_class, user.getStats().getLvl(), userClass.substring(0, 1).toUpperCase(Locale.getDefault()) + userClass.substring(1)));
             Drawable drawable;
-            switch (stats.get_class()) {
-                case warrior:
+            switch (stats.getHabitClass()) {
+                case "warrior":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
                     break;
-                case rogue:
+                case "rogue":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_rogue, null);
                     break;
-                case wizard:
+                case "wizard":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_mage, null);
                     break;
-                case healer:
+                case "healer":
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_healer, null);
                     break;
-                case base:
                 default:
                     drawable = ResourcesCompat.getDrawable(res, R.drawable.ic_header_warrior, null);
 

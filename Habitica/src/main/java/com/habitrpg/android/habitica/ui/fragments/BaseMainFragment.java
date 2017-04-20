@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.roughike.bottombar.BottomBar;
 
@@ -36,13 +37,13 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Inject
     protected SoundManager soundManager;
     @Nullable
-    protected HabitRPGUser user;
+    protected User user;
 
-    public void setUser(@Nullable HabitRPGUser user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
     }
 
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         this.user = user;
     }
 

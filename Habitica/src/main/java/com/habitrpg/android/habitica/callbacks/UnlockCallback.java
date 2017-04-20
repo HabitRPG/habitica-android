@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.callbacks;
 
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import rx.functions.Action1;
 
@@ -12,9 +12,9 @@ public class UnlockCallback implements Action1<UnlockResponse> {
 
     private final HabitRPGUserCallback.OnUserReceived callback;
 
-    private HabitRPGUser user;
+    private User user;
 
-    public UnlockCallback(HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
+    public UnlockCallback(HabitRPGUserCallback.OnUserReceived callback, User user) {
         this.callback = callback;
         this.user = user;
     }
@@ -24,7 +24,6 @@ public class UnlockCallback implements Action1<UnlockResponse> {
         this.user.setPurchased(unlockResponse.purchased);
         this.user.setItems(unlockResponse.items);
         this.user.setPreferences(unlockResponse.preferences);
-        this.user.async().save();
 
         callback.onUserReceived(this.user);
     }

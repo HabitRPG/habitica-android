@@ -4,7 +4,7 @@ import android.content.res.Resources;
 
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 public class ShopItem {
 
@@ -129,7 +129,7 @@ public class ShopItem {
         this.unlockCondition = unlockCondition;
     }
 
-    public boolean canBuy(HabitRPGUser user) {
+    public boolean canBuy(User user) {
         if (getCurrency().equals("gold")) {
             return getValue() <= user.getStats().getGp();
         } else if (getCurrency().equals("gems")) {

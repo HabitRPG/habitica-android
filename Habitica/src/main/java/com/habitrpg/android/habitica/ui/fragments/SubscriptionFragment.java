@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.events.UserSubscribedEvent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
@@ -104,7 +104,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
 
-    private HabitRPGUser user;
+    private User user;
     private boolean hasLoadedSubscriptionOptions;
 
     @Override
@@ -268,7 +268,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         }
     }
 
-    public void setUser(HabitRPGUser newUser) {
+    public void setUser(User newUser) {
         user = newUser;
         this.updateSubscriptionInfo();
     }

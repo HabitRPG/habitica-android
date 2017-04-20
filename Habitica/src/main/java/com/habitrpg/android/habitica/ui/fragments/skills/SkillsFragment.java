@@ -17,9 +17,10 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
@@ -97,7 +98,7 @@ public class SkillsFragment extends BaseMainFragment {
     }
 
     @Override
-    public void setUser(HabitRPGUser user) {
+    public void setUser(User user) {
         super.setUser(user);
 
         checkUserLoadSkills();

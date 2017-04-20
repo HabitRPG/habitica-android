@@ -1,54 +1,33 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Created by MagicMicky on 16/03/14.
- */
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Items extends BaseModel {
+public class Items extends RealmObject {
 
+    @Ignore
     public HashMap<String, Integer> eggs;
+    @Ignore
     public HashMap<String, Integer> food;
+    @Ignore
     public HashMap<String, Integer> hatchingPotions;
+    @Ignore
     public HashMap<String, Integer> quests;
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
+    User user;
+    @Ignore
     HashMap<String, Integer> pets;
+    @Ignore
     HashMap<String, Boolean> mounts;
-    @Column
     private String currentMount;
-    @Column
     private String currentPet;
-    @Column
     private int lastDrop_count;
-    @Column
     private Date lastDrop_date;
 
     //private QuestContent quest;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "gear_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
     private Gear gear;
-
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "special_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
     private SpecialItems special;
 
     public Items(String currentMount, String currentPet, int lastDrop_count, Date lastDrop_date) {
@@ -109,14 +88,6 @@ public class Items extends BaseModel {
         this.special = specialItems;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
     public HashMap<String, Integer> getEggs() {
         return eggs;
     }
@@ -165,11 +136,4 @@ public class Items extends BaseModel {
         this.mounts = mounts;
     }
 
-    @Override
-    public void save() {
-        gear.user_id = user_id;
-        special.user_id = user_id;
-
-        super.save();
-    }
 }

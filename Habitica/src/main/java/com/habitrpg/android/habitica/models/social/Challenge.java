@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -70,7 +70,7 @@ public class Challenge extends BaseModel {
 
     public Group group;
 
-    public HabitRPGUser leader;
+    public User leader;
 
     public HashMap<String, String[]> getTasksOrder() {
         HashMap<String, String[]> map = new HashMap();

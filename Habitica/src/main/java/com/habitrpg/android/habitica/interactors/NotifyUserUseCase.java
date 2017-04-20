@@ -7,7 +7,7 @@ import android.view.View;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
@@ -41,7 +41,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
             if (requestValues.lvl > stats.getLvl()) {
                 return levelUpUseCase.observable(new LevelUpUseCase.RequestValues(requestValues.user, requestValues.lvl, requestValues.context))
                         .flatMap(aVoid -> userRepository.retrieveUser(false))
-                        .map(HabitRPGUser::getStats);
+                        .map(User::getStats);
             } else {
                 Pair<String, UiUtils.SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.user, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
                 showSnackbar(requestValues.context, requestValues.snackbarTargetView, pair.first, pair.second);
@@ -50,7 +50,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         });
     }
 
-    public static Pair<String, UiUtils.SnackbarDisplayType> getNotificationAndAddStatsToUser(HabitRPGUser user, double xp, double hp, double gold, double mp){
+    public static Pair<String, UiUtils.SnackbarDisplayType> getNotificationAndAddStatsToUser(User user, double xp, double hp, double gold, double mp){
 
         StringBuilder message = new StringBuilder();
         Stats stats = user.getStats();
@@ -86,7 +86,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         private AppCompatActivity context;
         private View snackbarTargetView;
         private Action0 retrieveUser;
-        private HabitRPGUser user;
+        private User user;
         private double xp;
         private double hp;
         private double gold;
@@ -94,7 +94,7 @@ public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, 
         private int lvl;
 
         public RequestValues(AppCompatActivity context, View snackbarTargetView, Action0 retrieveUser,
-                             HabitRPGUser user, double xp, double hp, double gold, double mp, int lvl) {
+                             User user, double xp, double hp, double gold, double mp, int lvl) {
             this.context = context;
             this.snackbarTargetView = snackbarTargetView;
             this.retrieveUser = retrieveUser;

@@ -2,42 +2,23 @@ package com.habitrpg.android.habitica.models.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by keithholliday on 6/20/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class Inbox extends BaseModel {
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
-    @Column
-    @PrimaryKey
-//    @NotNull
-            String user_Id;
+public class Inbox extends RealmObject {
 
-    @SerializedName("optOut")
-    @Expose
+    User user;
     private Boolean optOut;
-
-    @SerializedName("messages")
-    @Expose
+    @Ignore
     private Map<String, ChatMessage> messages;
-
-    @SerializedName("blocks")
-    @Expose
-    private List<Object> blocks = new ArrayList<Object>();
-
-    @SerializedName("newMessages")
-    @Expose
+    @Ignore
+    private List<Object> blocks = new ArrayList<>();
     private Integer newMessages;
 
     /**

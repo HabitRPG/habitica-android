@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.SortableTasksRecyclerViewAdapter;
@@ -40,10 +40,10 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
     ObservableList<Task> tasksOnInitialize;
 
     LinearLayoutManager layoutManager = null;
-    private HabitRPGUser user;
+    private User user;
     private View view;
 
-    public static ChallengeTasksRecyclerViewFragment newInstance(HabitRPGUser user, ObservableList<Task> tasks) {
+    public static ChallengeTasksRecyclerViewFragment newInstance(User user, ObservableList<Task> tasks) {
         ChallengeTasksRecyclerViewFragment fragment = new ChallengeTasksRecyclerViewFragment();
         fragment.setRetainInstance(true);
         fragment.user = user;

@@ -14,8 +14,9 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.SendNewInboxMessageCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
@@ -117,7 +118,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     }
 
     @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         this.user = user;
         this.setMessages(user.getInbox().getMessages(), this.chatRoomUser, this.replyToUserUUID);
         swipeRefreshLayout.setRefreshing(false);

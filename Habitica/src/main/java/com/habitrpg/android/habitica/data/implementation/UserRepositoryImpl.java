@@ -3,15 +3,16 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 
@@ -22,10 +23,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<HabitRPGUser> getUser(String userID) {
+    public Observable<User> getUser(String userID) {
         return localRepository.getUser(userID)
+                .first()
                 .flatMap(habitRPGUser -> {
-                    if (habitRPGUser == null) {
+                    if (habitRPGUser == null || !habitRPGUser.isValid()) {
                         return retrieveUser(true);
                     } else {
                         return Observable.just(habitRPGUser);
@@ -34,31 +36,31 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(HabitRPGUser user, Map<String, Object> updateData) {
+    public Observable<User> updateUser(User user, Map<String, Object> updateData) {
         return apiClient.updateUser(updateData)
                 .map(newUser -> mergeUser(user, newUser));
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(HabitRPGUser user, String key, Object value) {
+    public Observable<User> updateUser(User user, String key, Object value) {
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(key, value);
         return updateUser(user, updateData);
     }
 
     @Override
-    public Observable<HabitRPGUser> retrieveUser(Boolean withTasks) {
+    public Observable<User> retrieveUser(Boolean withTasks) {
         return apiClient.retrieveUser(withTasks)
                 .doOnNext(localRepository::saveUser);
     }
 
     @Override
-    public Observable<HabitRPGUser> revive(HabitRPGUser user) {
+    public Observable<User> revive(User user) {
         return apiClient.revive().map(newUser -> mergeUser(user, newUser));
     }
 
     @Override
-    public void resetTutorial(HabitRPGUser user) {
+    public void resetTutorial(User user) {
         localRepository.getTutorialSteps()
                 .map(tutorialSteps -> {
                     Map<String, Object> updateData = new HashMap<>();
@@ -72,7 +74,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<HabitRPGUser> sleep(HabitRPGUser user) {
+    public Observable<User> sleep(User user) {
         return apiClient.sleep()
                 .map(isSleeping -> {
                     user.getPreferences().setSleep(isSleeping);
@@ -82,17 +84,17 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<List<Skill>> getSkills(HabitRPGUser user) {
+    public Observable<RealmResults<Skill>> getSkills(User user) {
         return localRepository.getSkills(user);
     }
 
     @Override
-    public Observable<List<Skill>> getSpecialItems(HabitRPGUser user) {
+    public Observable<RealmResults<Skill>> getSpecialItems(User user) {
         return localRepository.getSpecialItems(user);
     }
 
     @Override
-    public Observable<SkillResponse> useSkill(HabitRPGUser user, String key, String target, String taskId) {
+    public Observable<SkillResponse> useSkill(User user, String key, String target, String taskId) {
         return apiClient.useSkill(key, target, taskId).doOnNext(skillResponse -> {
             if (user != null) {
                 mergeUser(user, skillResponse.user);
@@ -101,7 +103,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     @Override
-    public Observable<SkillResponse> useSkill(HabitRPGUser user, String key, String target) {
+    public Observable<SkillResponse> useSkill(User user, String key, String target) {
         return apiClient.useSkill(key, target).doOnNext(skillResponse -> {
             if (user != null) {
                 mergeUser(user, skillResponse.user);
@@ -109,7 +111,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         });
     }
 
-    private HabitRPGUser mergeUser(HabitRPGUser oldUser, HabitRPGUser newUser) {
+    private User mergeUser(User oldUser, User newUser) {
         if (newUser.getItems() != null) {
             oldUser.setItems(newUser.getItems());
         }

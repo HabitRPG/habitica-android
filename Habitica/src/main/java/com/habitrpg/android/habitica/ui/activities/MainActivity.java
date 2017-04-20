@@ -61,7 +61,6 @@ import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
@@ -80,6 +79,7 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -97,7 +97,7 @@ import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Inject
     public MaintenanceApiService maintenanceService;
-    public HabitRPGUser user;
+    public User user;
     @BindView(R.id.floating_menu_wrapper)
     public ViewGroup floatingMenuWrapper;
     @BindView(R.id.bottom_navigation)
@@ -587,7 +587,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         this.user = user;
         this.lastSync = new Date();
         MainActivity.this.setUserData(false);
@@ -614,9 +614,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (this.activeTutorialView != null) {
             this.removeActiveTutorialView();
         }
-        if (drawer.isDrawerOpen()) {
+        if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
+        } else if (drawer != null && drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
             drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
             EventBus.getDefault().post(new ToggledEditTagsEvent(false));
         } else {
@@ -763,7 +763,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                     user.getStats().setLvl(buyResponse.lvl);
                                 }
 
-                                user.async().save();
                                 MainActivity.this.setUserData(true);
 
                                 showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
@@ -782,7 +781,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         stats.setGp(gp);
 
         avatarInHeader.updateData(user);
-        user.async().save();
     }
 
     @Subscribe
@@ -830,7 +828,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.apiClient.sellItem(event.item.getType(), event.item.getKey())
                 .subscribe(habitRPGUser -> {
                     user.setItems(habitRPGUser.getItems());
-                    user.save();
                     user.setStats(habitRPGUser.getStats());
                     setUserData(false);
                 }, throwable -> {
@@ -1014,6 +1011,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         if (this.userRepository != null) {
             this.userRepository.retrieveUser(true)
                     .subscribe(this::onUserReceived, throwable -> {
+
                     });
         }
     }
@@ -1077,7 +1075,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onTutorialDeferred(TutorialStep step) {
         step.setDisplayedOn(new Date());
-        step.save();
 
         this.removeActiveTutorialView();
     }

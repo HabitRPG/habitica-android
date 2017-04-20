@@ -20,7 +20,8 @@ public class FoodListDeserializer implements JsonDeserializer<List<Food>> {
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<Food> existingItems = new Select().from(Food.class).queryList();
+            // TODO: fix this
+            List<Food> existingItems = new ArrayList<>();
 
             for (Food item : existingItems) {
                 if (object.has(item.getKey())) {

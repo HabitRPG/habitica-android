@@ -20,7 +20,8 @@ public class HatchingPotionListDeserializer implements JsonDeserializer<List<Hat
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<HatchingPotion> existingItems = new Select().from(HatchingPotion.class).queryList();
+            // TODO: fix this
+            List<HatchingPotion> existingItems = new ArrayList<>();
 
             for (HatchingPotion item : existingItems) {
                 if (object.has(item.getKey())) {

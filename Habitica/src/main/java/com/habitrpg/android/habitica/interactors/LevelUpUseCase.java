@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.helpers.SoundManager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.SuppressedModals;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -91,11 +91,11 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
     }
 
     public static final class RequestValues implements UseCase.RequestValues {
-        private HabitRPGUser user;
+        private User user;
         private int newLevel;
         private AppCompatActivity compatActivity;
 
-        public RequestValues(HabitRPGUser user, int newLevel, AppCompatActivity compatActivity) {
+        public RequestValues(User user, int newLevel, AppCompatActivity compatActivity) {
 
             this.user = user;
             this.newLevel = newLevel;

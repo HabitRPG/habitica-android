@@ -27,7 +27,8 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
 
 
         if (object.has("shirt")) {
-            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").isNot("background")).queryList();
+            // TODO: fix this
+            List<Customization> existingCustomizations = new ArrayList<>();
 
             for (Customization customization : existingCustomizations) {
                 if (object.has(customization.getType())) {
@@ -59,7 +60,8 @@ public class CustomizationDeserializer implements JsonDeserializer<List<Customiz
             }
         } else {
 
-            List<Customization> existingCustomizations = new Select().from(Customization.class).where(Condition.column("type").is("background")).queryList();
+            // TODO: fix this
+            List<Customization> existingCustomizations = new ArrayList<>();
 
             for (Customization customization : existingCustomizations) {
                 if (object.has(customization.getCustomizationSet())) {

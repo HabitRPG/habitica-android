@@ -1,40 +1,15 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
-/**
- * Created by MagicMicky on 16/03/14.
- */
+import io.realm.RealmObject;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Preferences extends BaseModel {
+public class Preferences extends RealmObject {
 
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "hair_user_id",
-            columnType = String.class,
-            foreignColumnName = "userId")})
     public Hair hair;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "suppressedModals_user_id",
-            columnType = String.class,
-            foreignColumnName = "userId")})
     SuppressedModals suppressModals;
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-    @Column
+    User user;
     private boolean costume, toolbarCollapsed, advancedCollapsed, tagsCollapsed, newTaskEdit, disableClasses, stickyHeader, sleep, hideHeader, dailyDueDefaultView;
-    @Column
     private String allocationMode, shirt, skin, size, background, chair, language, sound;
-    @Column
     private int dayStart, timezoneOffset;
 
     public Preferences() {
@@ -221,19 +196,6 @@ public class Preferences extends BaseModel {
 
     public void setLanguage(String language) {
         this.language = language;
-    }
-
-    @Override
-    public void save() {
-        if (user_id == null) {
-            return;
-        }
-        hair.userId = user_id;
-
-        if (suppressModals != null)
-            suppressModals.userId = user_id;
-
-        super.save();
     }
 
     public boolean getDailyDueDefaultView() {

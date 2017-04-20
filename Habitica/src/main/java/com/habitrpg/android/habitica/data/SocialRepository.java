@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,13 +43,13 @@ public interface SocialRepository extends BaseRepository {
     Observable<PostChatMessageResult> postPrivateMessage(String recipientId, String message);
 
 
-    Observable<List<HabitRPGUser>> getGroupMembers(String id, boolean includeAllPublicFields);
+    Observable<List<User>> getGroupMembers(String id, boolean includeAllPublicFields);
 
     Observable<Void> inviteToGroup(String id, Map<String, Object> inviteData);
 
     Observable<List<Challenge>> getUserChallenges();
 
-    Observable<HabitRPGUser> getMember(String userId);
+    Observable<User> getMember(String userId);
 
     Observable<Challenge> getChallenge(String challengeId);
 

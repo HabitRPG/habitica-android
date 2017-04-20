@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.TutorialStep;
 
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 
@@ -21,7 +22,7 @@ public class TutorialRepositoryImpl extends BaseRepositoryImpl<TutorialLocalRepo
     }
 
     @Override
-    public Observable<List<TutorialStep>> getTutorialSteps(List<String> keys) {
+    public Observable<RealmResults<TutorialStep>> getTutorialSteps(List<String> keys) {
         return localRepository.getTutorialSteps(keys);
     }
 }

@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.ChallengeDetailActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -70,7 +70,7 @@ public class ChallengeDetailDialogHolder {
     private AlertDialog dialog;
     private ApiClient apiClient;
     @Nullable
-    private HabitRPGUser user;
+    private User user;
     private Challenge challenge;
     private Action1<Challenge> challengeJoinedAction;
     private Action1<Challenge> challengeLeftAction;
@@ -82,7 +82,7 @@ public class ChallengeDetailDialogHolder {
         ButterKnife.bind(this, view);
     }
 
-    public static void showDialog(Activity activity, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
+    public static void showDialog(Activity activity, ApiClient apiClient, @Nullable User user, Challenge challenge,
                                   Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         View dialogLayout = activity.getLayoutInflater().inflate(R.layout.dialog_challenge_detail, null);
 
@@ -94,7 +94,7 @@ public class ChallengeDetailDialogHolder {
         challengeDetailDialogHolder.bind(builder.show(), apiClient, user, challenge, challengeJoinedAction, challengeLeftAction);
     }
 
-    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable HabitRPGUser user, Challenge challenge,
+    public void bind(AlertDialog dialog, ApiClient apiClient, @Nullable User user, Challenge challenge,
                      Action1<Challenge> challengeJoinedAction, Action1<Challenge> challengeLeftAction) {
         this.dialog = dialog;
         this.apiClient = apiClient;

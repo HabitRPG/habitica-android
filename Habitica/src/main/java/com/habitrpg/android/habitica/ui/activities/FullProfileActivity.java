@@ -30,13 +30,14 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.UserStatComputer;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.AchievementGroup;
 import com.habitrpg.android.habitica.models.AchievementResult;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.user.Buffs;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.Profile;
 import com.habitrpg.android.habitica.models.user.Stats;
@@ -55,6 +56,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.realm.RealmResults;
 import rx.Observable;
 
 public class FullProfileActivity extends BaseActivity {
@@ -190,7 +192,7 @@ public class FullProfileActivity extends BaseActivity {
         addMessageDialog.show();
     }
 
-    private void updateView(HabitRPGUser user) {
+    private void updateView(User user) {
         Profile profile = user.getProfile();
         Stats stats = user.getStats();
 
@@ -331,7 +333,7 @@ public class FullProfileActivity extends BaseActivity {
         return gearRow;
     }
 
-    private void addLevelAttributes(Stats stats, HabitRPGUser user) {
+    private void addLevelAttributes(Stats stats, User user) {
         float byLevelStat = Math.min(stats.getLvl() / 2.0f, 50f);
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
@@ -345,7 +347,7 @@ public class FullProfileActivity extends BaseActivity {
         }
     }
 
-    private Observable<List<ItemData>> loadItemDataByOutfit(Outfit outfit) {
+    private Observable<RealmResults<Equipment>> loadItemDataByOutfit(Outfit outfit) {
         ArrayList<String> outfitList = new ArrayList<>();
         outfitList.add(outfit.getArmor());
         outfitList.add(outfit.getBack());
@@ -359,9 +361,9 @@ public class FullProfileActivity extends BaseActivity {
         return inventoryRepository.getItems(outfitList);
     }
 
-    public void gotGear(List<ItemData> itemDataList, HabitRPGUser user) {
+    public void gotGear(List<Equipment> equipmentList, User user) {
         UserStatComputer userStatComputer = new UserStatComputer();
-        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(itemDataList, user);
+        List<UserStatComputer.StatsRow> statsRows = userStatComputer.computeClassBonus(equipmentList, user);
 
         for (UserStatComputer.StatsRow row : statsRows) {
             if (row.getClass().equals(UserStatComputer.EquipmentRow.class)) {
@@ -380,9 +382,9 @@ public class FullProfileActivity extends BaseActivity {
         attributesTableLayout.setVisibility(View.VISIBLE);
     }
 
-    public void gotCostume(List<ItemData> obj) {
+    public void gotCostume(List<Equipment> obj) {
         // fill costume table
-        for (ItemData i : obj) {
+        for (Equipment i : obj) {
             addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
         }
 

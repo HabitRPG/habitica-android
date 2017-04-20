@@ -1,37 +1,16 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.HashMap;
 
-/**
- * Created by viirus on 20/07/15.
- */
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Gear extends BaseModel {
+public class Gear extends RealmObject {
 
+    @Ignore
     public HashMap<String, Boolean> owned;
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "equipped_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
+    Items items;
     private Outfit equipped;
-    @Column
-    @ForeignKey(references = {@ForeignKeyReference(columnName = "costume_id",
-            columnType = String.class,
-            foreignColumnName = "user_id")})
     private Outfit costume;
 
     public Outfit getCostume() {
@@ -48,13 +27,5 @@ public class Gear extends BaseModel {
 
     public void setEquipped(Outfit equipped) {
         this.equipped = equipped;
-    }
-
-    @Override
-    public void save() {
-        equipped.user_id = user_id + "_equipped";
-        costume.user_id = user_id + "_costume";
-
-        super.save();
     }
 }

@@ -34,12 +34,12 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveTasks(TasksOrder tasksOrder, TaskList tasks) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealm(tasks.tasks.values()));
+        realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(tasks.tasks.values()));
     }
 
     @Override
     public void saveTask(Task task) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealm(task));
+        realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(task));
     }
 
     @Override
@@ -64,13 +64,15 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void deleteTask(String taskID) {
-        Task task = realm.where(Task.class).equalTo("id", taskID).findFirst();
+        Task task = realm.where(Task.class).equalTo("id", taskID).findFirstAsync();
         realm.executeTransaction(realm1 -> task.deleteFromRealm());
     }
 
     @Override
     public Observable<Task> getTask(String taskId) {
-        return realm.where(Task.class).equalTo("id", taskId).findFirst().asObservable();
+        return realm.where(Task.class).equalTo("id", taskId).findFirstAsync().asObservable()
+                .filter(realmObject -> realmObject.isLoaded())
+                .cast(Task.class);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void markTaskCompleted(String taskId, boolean isCompleted) {
-        Task task = realm.where(Task.class).equalTo("id", taskId).findFirst();
+        Task task = realm.where(Task.class).equalTo("id", taskId).findFirstAsync();
         realm.executeTransaction(realm1 -> task.completed = true);
     }
 

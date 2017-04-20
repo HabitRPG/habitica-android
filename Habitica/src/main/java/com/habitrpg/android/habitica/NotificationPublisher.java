@@ -11,6 +11,7 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.modules.AppModule;

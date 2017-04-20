@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
@@ -30,10 +30,10 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
 
     public Context context;
-    private List<HabitRPGUser> memberList;
+    private List<User> memberList;
     private boolean isMemberSelection;
 
-    public void setMemberList(List<HabitRPGUser> memberList, boolean isMemberSelection) {
+    public void setMemberList(List<User> memberList, boolean isMemberSelection) {
         this.memberList = memberList;
         this.isMemberSelection = isMemberSelection;
         this.notifyDataSetChanged();
@@ -93,7 +93,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             resources = itemView.getResources();
         }
 
-        public void bind(HabitRPGUser user) {
+        public void bind(User user) {
             android.content.Context ctx = itemView.getContext();
 
             avatarView.setUser(user);
@@ -105,20 +105,20 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
             classLabel.setText(user.getStats().getTranslatedClassName(context));
 
             int colorResourceID;
-            switch (user.getStats()._class) {
-                case healer: {
+            switch (user.getStats().habitClass) {
+                case "healer": {
                     colorResourceID = R.color.class_healer;
                     break;
                 }
-                case warrior: {
+                case "warrior": {
                     colorResourceID = R.color.class_warrior;
                     break;
                 }
-                case rogue: {
+                case "rogue": {
                     colorResourceID = R.color.class_rogue;
                     break;
                 }
-                case wizard: {
+                case "wizard": {
                     colorResourceID = R.color.class_wizard;
                     break;
                 }

@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.models.SetupCustomization;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public String userSize;
-    public HabitRPGUser user;
+    public User user;
     private List<SetupCustomization> customizationList;
 
     public void setCustomizationList(List<SetupCustomization> newCustomizationList) {

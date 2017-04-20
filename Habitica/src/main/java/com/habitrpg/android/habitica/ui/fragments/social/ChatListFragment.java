@@ -24,8 +24,9 @@ import com.habitrpg.android.habitica.events.commands.FlagChatMessageCommand;
 import com.habitrpg.android.habitica.events.commands.SendNewGroupMessageCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleInnCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -57,7 +58,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     SwipeRefreshLayout swipeRefreshLayout;
     LinearLayoutManager layoutManager;
     private String groupId;
-    private HabitRPGUser user;
+    private User user;
     private String userId;
     private ChatRecyclerViewAdapter chatAdapter;
     private View view;
@@ -65,7 +66,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     private boolean navigatedOnceToFragment = false;
     private boolean gotNewMessages = false;
 
-    public void configure(String groupId, @Nullable HabitRPGUser user, boolean isTavern) {
+    public void configure(String groupId, @Nullable User user, boolean isTavern) {
         this.groupId = groupId;
         this.user = user;
         if (this.user != null) {

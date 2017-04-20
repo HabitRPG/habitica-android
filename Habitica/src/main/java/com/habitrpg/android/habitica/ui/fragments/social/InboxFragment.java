@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -187,7 +187,7 @@ public class InboxFragment extends BaseMainFragment
     }
 
     @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         this.user = user;
         this.messages = user.getInbox().getMessages();
         this.setInboxMessages();

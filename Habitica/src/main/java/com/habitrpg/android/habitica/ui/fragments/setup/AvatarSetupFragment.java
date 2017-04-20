@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.models.SetupCustomization;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
@@ -74,7 +74,7 @@ public class AvatarSetupFragment extends BaseFragment {
     @Inject
     ApiClient apiClient;
 
-    private HabitRPGUser user;
+    private User user;
     private List<String> subcategories;
     private AvatarCategoryView activeButton;
     private String activeCategory;
@@ -155,7 +155,7 @@ public class AvatarSetupFragment extends BaseFragment {
         this.adapter.setCustomizationList(customizationRepository.getCustomizations(activeCategory, activeSubCategory, user));
     }
 
-    public void setUser(@Nullable HabitRPGUser user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();

@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.models.responses;
 
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
 public class SkillResponse {
 
-    public HabitRPGUser user;
-    public List<HabitRPGUser> partyMembers;
+    public User user;
+    public List<User> partyMembers;
     public Task task;
 
 }

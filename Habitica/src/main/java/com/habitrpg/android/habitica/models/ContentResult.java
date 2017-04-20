@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class ContentResult {
 
-    public ItemData potion;
+    public Equipment potion;
 
-    public ItemData armoire;
+    public Equipment armoire;
 
     public ContentGear gear;
 

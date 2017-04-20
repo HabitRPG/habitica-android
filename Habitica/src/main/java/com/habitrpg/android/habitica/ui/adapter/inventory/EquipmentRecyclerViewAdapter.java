@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,9 +26,9 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
     public String equippedGear;
     public Boolean isCostume;
     public String type;
-    private List<ItemData> gearList;
+    private List<Equipment> gearList;
 
-    public void setGearList(List<ItemData> gearList) {
+    public void setGearList(List<Equipment> gearList) {
         this.gearList = gearList;
         this.notifyDataSetChanged();
     }
@@ -69,7 +69,7 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
         @BindView(R.id.equippedIndicator)
         View equippedIndicator;
 
-        ItemData gear;
+        Equipment gear;
 
         Context context;
 
@@ -82,7 +82,7 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
             itemView.setOnClickListener(this);
         }
 
-        public void bind(ItemData gear) {
+        public void bind(Equipment gear) {
             this.gear = gear;
             this.gearNameTextView.setText(this.gear.text);
             this.gearNotesTextView.setText(this.gear.notes);

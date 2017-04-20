@@ -23,7 +23,8 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<QuestContent> existingItems = new Select().from(QuestContent.class).queryList();
+            // TODO: fix this
+            List<QuestContent> existingItems = new ArrayList<>();
 
             for (QuestContent item : existingItems) {
                 if (object.has(item.getKey())) {
@@ -63,10 +64,10 @@ public class QuestListDeserializer implements JsonDeserializer<List<QuestContent
                 }
                 vals.add(item);
             }
-            TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
+            //TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(vals)));
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((QuestContent) context.deserialize(item.getAsJsonObject(), QuestContent.class));
+                vals.add(context.deserialize(item.getAsJsonObject(), QuestContent.class));
             }
         }
 

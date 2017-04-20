@@ -1,31 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import io.realm.RealmObject;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class SpecialItems extends BaseModel {
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_id;
+public class SpecialItems extends RealmObject {
 
-    @Column
-    @NotNull
+    Items items;
     int seafoam, shinySeed, snowball, spookySparkles;
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 
     public int getSeafoam() {
         return seafoam;

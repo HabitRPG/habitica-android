@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.PurchaseValidationResult;
 import com.habitrpg.android.habitica.models.SubscriptionValidationRequest;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 
 import java.util.List;
@@ -46,13 +46,13 @@ public interface ApiClient {
 
     /* user API */
 
-    Observable<HabitRPGUser> getUser();
+    Observable<User> getUser();
 
-    Observable<HabitRPGUser> updateUser(Map<String, Object> updateDictionary);
+    Observable<User> updateUser(Map<String, Object> updateDictionary);
 
-    Observable<HabitRPGUser> registrationLanguage(String registrationLanguage);
+    Observable<User> registrationLanguage(String registrationLanguage);
 
-    Observable<List<ItemData>> getInventoryBuyableGear();
+    Observable<List<Equipment>> getInventoryBuyableGear();
 
     Observable<Items> equipItem(String type, String itemKey);
 
@@ -67,7 +67,7 @@ public interface ApiClient {
     Observable<Void> purchaseQuest(String key);
     Observable<Void> validateSubscription(SubscriptionValidationRequest request);
 
-    Observable<HabitRPGUser> sellItem(String itemType, String itemKey);
+    Observable<User> sellItem(String itemType, String itemKey);
 
     Observable<FeedResponse> feedPet(String petKey, String foodKey);
 
@@ -108,17 +108,17 @@ public interface ApiClient {
     Observable<UserAuthResponse> connectSocial(String network, String userId, String accessToken);
     Observable<Boolean> sleep();
 
-    Observable<HabitRPGUser> revive();
+    Observable<User> revive();
 
     Observable<SkillResponse> useSkill(String skillName, String targetType, String targetId);
 
     Observable<SkillResponse> useSkill(String skillName, String targetType);
 
-    Observable<HabitRPGUser> changeClass();
+    Observable<User> changeClass();
 
-    Observable<HabitRPGUser> changeClass(String className);
+    Observable<User> changeClass(String className);
 
-    Observable<HabitRPGUser> disableClasses();
+    Observable<User> disableClasses();
 
     Observable<Void> markPrivateMessagesRead();
 
@@ -140,9 +140,9 @@ public interface ApiClient {
 
     Observable<Void> deleteMessage(String groupId, String messageId);
 
-    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
+    Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields);
 
-    Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
+    Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId);
 
     // Like returns the full chat list
     Observable<ChatMessage> likeMessage(String groupId, String mid);
@@ -171,10 +171,10 @@ public interface ApiClient {
 
     Observable<PurchaseValidationResult> validatePurchase(PurchaseValidationRequest request);
 
-    Observable<HabitRPGUser> changeCustomDayStart(Map<String, Object> updateObject);
+    Observable<User> changeCustomDayStart(Map<String, Object> updateObject);
 
     //Members URL
-    Observable<HabitRPGUser> getMember(String memberId);
+    Observable<User> getMember(String memberId);
 
     Observable<AchievementResult> getMemberAchievements(String memberId);
 
@@ -212,9 +212,9 @@ public interface ApiClient {
 
     boolean hasAuthenticationKeys();
 
-    Observable<HabitRPGUser> retrieveUser(boolean withTasks);
+    Observable<User> retrieveUser(boolean withTasks);
 
     <T> Observable.Transformer<HabitResponse<T>, T> configureApiCallObserver();
 
-    Observable<ItemData> openMysteryItem();
+    Observable<Equipment> openMysteryItem();
 }

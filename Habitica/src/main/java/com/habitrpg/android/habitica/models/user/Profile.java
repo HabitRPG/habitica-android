@@ -1,28 +1,11 @@
 package com.habitrpg.android.habitica.models.user;
 
-/**
- * Created by MagicMicky on 16/03/14.
- */
+import io.realm.RealmObject;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+public class Profile extends RealmObject {
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Profile extends BaseModel {
-
-    @Column
-    @PrimaryKey
-    @NotNull
-    String user_Id;
-
-    @Column
+    User user;
     private String name;
-
-    @Column
     private String blurb, imageUrl;
 
     public Profile(String name) {

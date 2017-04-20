@@ -13,7 +13,8 @@ import android.widget.RemoteViews;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -71,7 +72,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         return remoteViews;
     }
 
-    private void updateData(HabitRPGUser user) {
+    private void updateData(User user) {
         if (user == null || user.getStats() == null) {
             return;
         }
@@ -92,7 +93,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
             remoteViews.setProgressBar(R.id.hp_bar, stats.getMaxHealth(), stats.getHp().intValue(), false);
             remoteViews.setProgressBar(R.id.exp_bar, stats.getToNextLevel(), stats.getExp().intValue(), false);
             remoteViews.setProgressBar(R.id.mp_bar, stats.getMaxMP(), stats.getMp().intValue(), false);
-            remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.get_class() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+            remoteViews.setViewVisibility(R.id.mp_wrapper, (stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
             int gp = (stats.getGp().intValue());
             int sp = (int) ((stats.getGp() - gp) * 100);

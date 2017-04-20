@@ -36,9 +36,9 @@ import com.habitrpg.android.habitica.models.auth.UserAuthSocial;
 import com.habitrpg.android.habitica.models.auth.UserAuthSocialTokens;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
@@ -60,7 +60,7 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
@@ -212,11 +212,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         }.getType();
         Type customizationListType = new TypeToken<List<Customization>>() {
         }.getType();
-        Type tutorialStepListType = new TypeToken<List<TutorialStep>>() {
+        Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {
         }.getType();
         Type faqArticleListType = new TypeToken<List<FAQArticle>>() {
         }.getType();
-        Type itemDataListType = new TypeToken<List<ItemData>>() {
+        Type itemDataListType = new TypeToken<List<Equipment>>() {
         }.getType();
         Type eggListType = new TypeToken<List<Egg>>() {
         }.getType();
@@ -347,9 +347,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         }
     }
 
-    public Observable<HabitRPGUser> retrieveUser(boolean withTasks) {
+    public Observable<User> retrieveUser(boolean withTasks) {
 
-        Observable<HabitRPGUser> userObservable = this.getUser();
+        Observable<User> userObservable = this.getUser();
 
         if (withTasks) {
             Observable<TaskList> tasksObservable = this.getTasks();
@@ -450,22 +450,22 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> getUser() {
+    public Observable<User> getUser() {
         return apiService.getUser().compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> updateUser(Map<String, Object> updateDictionary) {
+    public Observable<User> updateUser(Map<String, Object> updateDictionary) {
         return apiService.updateUser(updateDictionary).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> registrationLanguage(String registrationLanguage) {
+    public Observable<User> registrationLanguage(String registrationLanguage) {
         return apiService.registrationLanguage(registrationLanguage).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<ItemData>> getInventoryBuyableGear() {
+    public Observable<List<Equipment>> getInventoryBuyableGear() {
         return apiService.getInventoryBuyableGear().compose(configureApiCallObserver());
     }
 
@@ -513,7 +513,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> sellItem(String itemType, String itemKey) {
+    public Observable<User> sellItem(String itemType, String itemKey) {
         return apiService.sellItem(itemType, itemKey).compose(configureApiCallObserver());
     }
 
@@ -598,7 +598,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> revive() {
+    public Observable<User> revive() {
         return apiService.revive().compose(configureApiCallObserver());
     }
 
@@ -613,17 +613,17 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> changeClass() {
+    public Observable<User> changeClass() {
         return apiService.changeClass().compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> changeClass(String className) {
+    public Observable<User> changeClass(String className) {
         return apiService.changeClass(className).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> disableClasses() {
+    public Observable<User> disableClasses() {
         return apiService.disableClasses().compose(configureApiCallObserver());
     }
 
@@ -673,12 +673,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
+    public Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields) {
         return apiService.getGroupMembers(groupId, includeAllPublicFields).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<List<HabitRPGUser>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
+    public Observable<List<User>> getGroupMembers(String groupId, Boolean includeAllPublicFields, String lastId) {
         return apiService.getGroupMembers(groupId, includeAllPublicFields, lastId).compose(configureApiCallObserver());
     }
 
@@ -753,12 +753,12 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<HabitRPGUser> changeCustomDayStart(Map<String, Object> updateObject) {
+    public Observable<User> changeCustomDayStart(Map<String, Object> updateObject) {
         return apiService.changeCustomDayStart(updateObject).compose(configureApiCallObserver());
     }
 
     @Override
-    public Observable<HabitRPGUser> getMember(String memberId) {
+    public Observable<User> getMember(String memberId) {
         return apiService.getMember(memberId).compose(configureApiCallObserver());
     }
 
@@ -828,7 +828,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
 
     @Override
-    public Observable<ItemData> openMysteryItem() {
+    public Observable<Equipment> openMysteryItem() {
         return apiService.openMysteryItem().compose(configureApiCallObserver());
     }
 

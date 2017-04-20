@@ -3,11 +3,12 @@ package com.habitrpg.android.habitica.data.implementation;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import java.util.HashMap;
@@ -122,7 +123,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<HabitRPGUser>> getGroupMembers(String id, boolean includeAllPublicFields) {
+    public Observable<List<User>> getGroupMembers(String id, boolean includeAllPublicFields) {
         return apiClient.getGroupMembers(id, includeAllPublicFields);
     }
 
@@ -137,7 +138,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<HabitRPGUser> getMember(String userId) {
+    public Observable<User> getMember(String userId) {
         return apiClient.getMember(userId);
     }
 

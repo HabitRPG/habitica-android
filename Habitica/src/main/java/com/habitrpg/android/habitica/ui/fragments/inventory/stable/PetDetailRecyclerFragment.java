@@ -12,8 +12,9 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
@@ -128,7 +129,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     @Override
-    public void updateUserData(HabitRPGUser user) {
+    public void updateUserData(User user) {
         super.updateUserData(user);
         adapter.setOwnedMapping(user.getItems().getPets());
         adapter.setOwnedMountsMapping(user.getItems().getMounts());

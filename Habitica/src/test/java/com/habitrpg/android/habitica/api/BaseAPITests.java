@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.proxy.impl.EmptyCrashlyticsProxy;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 
 import org.junit.After;
@@ -56,15 +56,15 @@ public class BaseAPITests {
         hostConfig.setApi(response.getApiToken() != null ? response.getApiToken() : response.getToken());
     }
 
-    public HabitRPGUser getUser() {
-        TestSubscriber<HabitRPGUser> userSubscriber = new TestSubscriber<>();
+    public User getUser() {
+        TestSubscriber<User> userSubscriber = new TestSubscriber<>();
 
         apiClient.getUser()
                 .subscribe(userSubscriber);
         userSubscriber.awaitTerminalEvent();
         userSubscriber.assertNoErrors();
         userSubscriber.assertCompleted();
-        HabitRPGUser user = userSubscriber.getOnNextEvents().get(0);
+        User user = userSubscriber.getOnNextEvents().get(0);
 
         return user;
     }

@@ -26,7 +26,7 @@ import com.facebook.drawee.view.DraweeHolder;
 import com.facebook.drawee.view.MultiDraweeHolder;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -60,7 +60,7 @@ public class AvatarView extends View {
     private boolean hasPet;
     private boolean isOrphan;
     private MultiDraweeHolder<GenericDraweeHierarchy> multiDraweeHolder = new MultiDraweeHolder<>();
-    private HabitRPGUser user;
+    private User user;
     private RectF avatarRectF;
     private Matrix matrix = new Matrix();
     private AtomicInteger numberLayersInProcess = new AtomicInteger(0);
@@ -170,7 +170,7 @@ public class AvatarView extends View {
         return getLayerMap(user, true);
     }
 
-    private Map<LayerType, String> getLayerMap(@NonNull HabitRPGUser user, boolean resetHasAttributes) {
+    private Map<LayerType, String> getLayerMap(@NonNull User user, boolean resetHasAttributes) {
         EnumMap<LayerType, String> layerMap = user.getAvatarLayerMap();
 
         if (resetHasAttributes) hasBackground = hasMount = hasPet = false;
@@ -322,8 +322,8 @@ public class AvatarView extends View {
         }
     }
 
-    public void setUser(@NonNull HabitRPGUser user) {
-        HabitRPGUser oldUser = this.user;
+    public void setUser(@NonNull User user) {
+        User oldUser = this.user;
         this.user = user;
 
         if (oldUser != null) {

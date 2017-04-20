@@ -4,14 +4,15 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
 import com.habitrpg.android.habitica.models.inventory.Item;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLocalRepository> implements InventoryRepository {
@@ -26,7 +27,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<List<ItemData>> getItems(List<String> searchedKeys) {
+    public Observable<RealmResults<Equipment>> getItems(List<String> searchedKeys) {
         return localRepository.getItems(searchedKeys);
     }
 
@@ -36,17 +37,17 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<List<ItemData>> getInventoryBuyableGear() {
+    public Observable<List<Equipment>> getInventoryBuyableGear() {
         return apiClient.getInventoryBuyableGear();
     }
 
     @Override
-    public Observable<List<ItemData>> getOwnedEquipment(String type) {
+    public Observable<RealmResults<Equipment>> getOwnedEquipment(String type) {
         return localRepository.getOwnedEquipment(type);
     }
 
     @Override
-    public Observable<List<ItemData>> getOwnedEquipment() {
+    public Observable<RealmResults<Equipment>> getOwnedEquipment() {
         return localRepository.getOwnedEquipment();
     }
 
@@ -56,12 +57,12 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<ItemData> getEquipment(String key) {
+    public Observable<Equipment> getEquipment(String key) {
         return localRepository.getEquipment(key);
     }
 
     @Override
-    public Observable<ItemData> openMysteryItem(String key) {
+    public Observable<Equipment> openMysteryItem(String key) {
         return apiClient.openMysteryItem().doOnNext(itemData -> {
             itemData.setOwned(true);
             localRepository.saveEquipment(itemData);
@@ -69,32 +70,32 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public void saveEquipment(ItemData itemData) {
-        localRepository.saveEquipment(itemData);
+    public void saveEquipment(Equipment equipment) {
+        localRepository.saveEquipment(equipment);
     }
 
     @Override
-    public Observable<List<Mount>> getMounts() {
+    public Observable<RealmResults<Mount>> getMounts() {
         return localRepository.getMounts();
     }
 
     @Override
-    public Observable<List<Mount>> getMounts(String type, String group) {
+    public Observable<RealmResults<Mount>> getMounts(String type, String group) {
         return localRepository.getMounts(type, group);
     }
 
     @Override
-    public Observable<List<Pet>> getPets() {
+    public Observable<RealmResults<Pet>> getPets() {
         return localRepository.getPets();
     }
 
     @Override
-    public Observable<List<Pet>> getPets(String type, String group) {
+    public Observable<RealmResults<Pet>> getPets(String type, String group) {
         return localRepository.getPets(type, group);
     }
 
     @Override
-    public void updateOwnedEquipment(HabitRPGUser user) {
+    public void updateOwnedEquipment(User user) {
         localRepository.updateOwnedEquipment(user);
     }
 

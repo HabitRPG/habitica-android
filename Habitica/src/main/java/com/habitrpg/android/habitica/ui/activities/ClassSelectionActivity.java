@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.user.Gear;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Hair;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ClassSelectionActivity extends BaseActivity implements Action1<HabitRPGUser> {
+public class ClassSelectionActivity extends BaseActivity implements Action1<User> {
 
     String currentClass;
     Boolean isInitialSelection;
@@ -75,14 +75,14 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         healerOutfit.setHead("head_healer_5");
         healerOutfit.setShield("shield_healer_5");
         healerOutfit.setWeapon("weapon_healer_6");
-        HabitRPGUser healer = this.makeUser(preferences, healerOutfit);
+        User healer = this.makeUser(preferences, healerOutfit);
         healerAvatarView.setUser(healer);
 
         Outfit mageOutfit = new Outfit();
         mageOutfit.setArmor("armor_wizard_5");
         mageOutfit.setHead("head_wizard_5");
         mageOutfit.setWeapon("weapon_wizard_6");
-        HabitRPGUser mage = this.makeUser(preferences, mageOutfit);
+        User mage = this.makeUser(preferences, mageOutfit);
         mageAvatarView.setUser(mage);
 
         Outfit rogueOutfit = new Outfit();
@@ -90,7 +90,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         rogueOutfit.setHead("head_rogue_5");
         rogueOutfit.setShield("shield_rogue_6");
         rogueOutfit.setWeapon("weapon_rogue_6");
-        HabitRPGUser rogue = this.makeUser(preferences, rogueOutfit);
+        User rogue = this.makeUser(preferences, rogueOutfit);
         rogueAvatarView.setUser(rogue);
 
         Outfit warriorOutfit = new Outfit();
@@ -98,7 +98,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         warriorOutfit.setHead("head_warrior_5");
         warriorOutfit.setShield("shield_warrior_5");
         warriorOutfit.setWeapon("weapon_warrior_6");
-        HabitRPGUser warrior = this.makeUser(preferences, warriorOutfit);
+        User warrior = this.makeUser(preferences, warriorOutfit);
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
@@ -115,8 +115,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
         component.inject(this);
     }
 
-    public HabitRPGUser makeUser(Preferences preferences, Outfit outfit) {
-        HabitRPGUser user = new HabitRPGUser();
+    public User makeUser(Preferences preferences, Outfit outfit) {
+        User user = new User();
         user.setPreferences(preferences);
         user.setItems(new Items());
         user.getItems().setGear(new Gear());
@@ -223,7 +223,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<Habi
     }
 
     @Override
-    public void call(HabitRPGUser user) {
+    public void call(User user) {
         if (shouldFinish) {
             if (progressDialog != null) {
                 progressDialog.dismiss();

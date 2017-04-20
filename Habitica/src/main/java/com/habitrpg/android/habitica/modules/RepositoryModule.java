@@ -30,21 +30,20 @@ import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowCustomizationLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowFAQLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowInventoryLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowSocialLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowTutorialLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowUserLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmCustomizationLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmFAQLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmInventoryLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTagLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 @Module
 public class RepositoryModule {
@@ -81,8 +80,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserLocalRepository providesUserLocalRepository() {
-        return new DbFlowUserLocalRepository();
+    UserLocalRepository providesUserLocalRepository(Realm realm) {
+        return new RealmUserLocalRepository(realm);
     }
 
     @Provides
@@ -101,8 +100,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    InventoryLocalRepository providesInventoryLocalRepository() {
-        return new DbFlowInventoryLocalRepository();
+    InventoryLocalRepository providesInventoryLocalRepository(Realm realm) {
+        return new RealmInventoryLocalRepository(realm);
     }
 
     @Provides
@@ -111,8 +110,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    FAQLocalRepository providesFAQLocalRepository() {
-        return new DbFlowFAQLocalRepository();
+    FAQLocalRepository providesFAQLocalRepository(Realm realm) {
+        return new RealmFAQLocalRepository(realm);
     }
 
     @Provides
@@ -121,8 +120,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    TutorialLocalRepository providesTutorialLocalRepository() {
-        return new DbFlowTutorialLocalRepository();
+    TutorialLocalRepository providesTutorialLocalRepository(Realm realm) {
+        return new RealmTutorialLocalRepository(realm);
     }
 
     @Provides
@@ -131,8 +130,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    CustomizationLocalRepository providesCustomizationLocalRepository() {
-        return new DbFlowCustomizationLocalRepository();
+    CustomizationLocalRepository providesCustomizationLocalRepository(Realm realm) {
+        return new RealmCustomizationLocalRepository(realm);
     }
 
     @Provides

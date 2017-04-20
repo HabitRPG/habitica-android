@@ -5,7 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
@@ -13,21 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>> {
+public class ItemDataListDeserializer implements JsonDeserializer<List<Equipment>> {
     @Override
-    public List<ItemData> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<ItemData> vals = new ArrayList<>();
+    public List<Equipment> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        List<Equipment> vals = new ArrayList<>();
         if (json.isJsonObject()) {
             JsonObject object = json.getAsJsonObject();
 
-            List<ItemData> existingItems = new Select().from(ItemData.class).queryList();
+            // TODO: fix this
+            List<Equipment> existingItems = new ArrayList<>();
 
-            for (ItemData item : existingItems) {
+            for (Equipment item : existingItems) {
                 if (object.has(item.key)) {
                     JsonElement itemObject = object.get(item.key);
 
                     if (itemObject.isJsonObject()) {
-                        ItemData parsedItem = context.deserialize(itemObject.getAsJsonObject(), ItemData.class);
+                        Equipment parsedItem = context.deserialize(itemObject.getAsJsonObject(), Equipment.class);
                         item.text = parsedItem.text;
                         item.value = parsedItem.value;
                         item.type = parsedItem.type;
@@ -46,18 +47,18 @@ public class ItemDataListDeserializer implements JsonDeserializer<List<ItemData>
             }
 
             for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-                ItemData item;
+                Equipment item;
                 if (entry.getValue().isJsonObject()) {
-                    item = context.deserialize(entry.getValue(), ItemData.class);
+                    item = context.deserialize(entry.getValue(), Equipment.class);
                 } else {
-                    item = new ItemData();
+                    item = new Equipment();
                     item.key = entry.getKey();
                 }
                 vals.add(item);
             }
         } else {
             for (JsonElement item : json.getAsJsonArray()) {
-                vals.add((ItemData) context.deserialize(item.getAsJsonObject(), ItemData.class));
+                vals.add((Equipment) context.deserialize(item.getAsJsonObject(), Equipment.class));
             }
         }
 

@@ -7,18 +7,11 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-/**
- * Created by viirus on 15/11/15.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class SuppressedModals extends BaseModel {
+import io.realm.RealmObject;
 
-    @Column
-    @PrimaryKey
-    @NotNull
-    public String userId;
+public class SuppressedModals extends RealmObject {
 
-    @Column
+    Preferences preferences;
     private Boolean streak, raisePet, hatchPet, levelUp;
 
     public Boolean getStreak() {

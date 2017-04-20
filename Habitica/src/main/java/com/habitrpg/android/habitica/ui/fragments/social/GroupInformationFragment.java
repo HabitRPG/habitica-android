@@ -22,9 +22,10 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 
@@ -62,7 +63,7 @@ public class GroupInformationFragment extends BaseFragment {
     @Nullable
     private Group group;
     @Nullable
-    private HabitRPGUser user;
+    private User user;
     private QuestContent quest;
     private ValueBarBinding bossHpBar;
     private ValueBarBinding bossRageBar;
@@ -73,7 +74,7 @@ public class GroupInformationFragment extends BaseFragment {
 
     }
 
-    public static GroupInformationFragment newInstance(@Nullable Group group, @Nullable HabitRPGUser user) {
+    public static GroupInformationFragment newInstance(@Nullable Group group, @Nullable User user) {
         Bundle args = new Bundle();
 
         GroupInformationFragment fragment = new GroupInformationFragment();
@@ -196,7 +197,7 @@ public class GroupInformationFragment extends BaseFragment {
         }
         viewBinding.setHideParticipantCard(false);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for (HabitRPGUser member : group.members) {
+        for (User member : group.members) {
             final LinearLayout itemView = (LinearLayout) layoutInflater.inflate(R.layout.party_member_quest, questMemberView, false);
             TextView questResponse = (TextView) itemView.findViewById(R.id.rsvpneeded);
             TextView userName = (TextView) itemView.findViewById(R.id.username);

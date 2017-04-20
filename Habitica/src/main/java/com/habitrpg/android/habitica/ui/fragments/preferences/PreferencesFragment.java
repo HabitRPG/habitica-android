@@ -17,10 +17,11 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
@@ -47,7 +48,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
-    private HabitRPGUser user;
+    private User user;
     @Inject
     PushNotificationManager pushNotificationManager;
 
@@ -252,7 +253,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         }
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(User user) {
         this.user = user;
         if (user != null && user.getFlags() != null && user.getStats() != null) {
             if (user.getStats().getLvl() >= 10) {

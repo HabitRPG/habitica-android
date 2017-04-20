@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment;
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment;
@@ -73,7 +73,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     AvatarSetupFragment avatarSetupFragment;
     TaskSetupFragment taskSetupFragment;
     @Nullable
-    HabitRPGUser user;
+    User user;
     boolean completedSetup = false;
 
     @Override
@@ -223,7 +223,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     @Override
-    public void onUserReceived(HabitRPGUser user) {
+    public void onUserReceived(User user) {
         if (completedSetup) {
             this.startMainActivity();
             return;

@@ -4,60 +4,17 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public abstract class Item extends BaseModel {
+public interface Item {
 
-    @Column
-    @PrimaryKey
-    String key;
+    String getType();
 
-    @Column
-    String text, notes;
+    String getKey();
 
-    @Column
-    Integer value, owned;
+    void setOwned(int size);
 
-    public String getKey() {
-        return key;
-    }
+    String getText();
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+    Integer getOwned();
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public Integer getOwned() {
-        if (owned == null) {
-            return 0;
-        }
-        return owned;
-    }
-
-    public void setOwned(Integer owned) {
-        this.owned = owned;
-    }
-
-    public abstract String getType();
+    Integer getValue();
 }

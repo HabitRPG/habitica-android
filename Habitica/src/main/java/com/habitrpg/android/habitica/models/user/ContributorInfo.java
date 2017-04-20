@@ -2,21 +2,12 @@ package com.habitrpg.android.habitica.models.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.R;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import java.util.HashMap;
 
-/**
- * Created by keithholliday on 7/6/16.
- */
-@Table(databaseName = HabitDatabase.NAME)
-public class ContributorInfo extends BaseModel {
+import io.realm.RealmObject;
+
+public class ContributorInfo extends RealmObject {
 
     public static final HashMap<Integer, Integer> CONTRIBUTOR_COLOR_DICT;
 
@@ -34,25 +25,10 @@ public class ContributorInfo extends BaseModel {
         CONTRIBUTOR_COLOR_DICT.put(9, R.color.contributor_staff);
     }
 
-    @Column
-    @PrimaryKey
-    @NotNull
-    public String user_id;
-
-    @SerializedName("admin")
-    @Expose
+    public User user;
     private boolean admin;
-
-    @SerializedName("contributions")
-    @Expose
     private String contributions;
-
-    @SerializedName("level")
-    @Expose
     private int level;
-
-    @SerializedName("text")
-    @Expose
     private String text;
 
     public Boolean getAdmin() {

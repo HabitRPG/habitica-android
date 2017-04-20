@@ -5,8 +5,7 @@ import com.habitrpg.android.habitica.data.FAQRepository;
 import com.habitrpg.android.habitica.data.local.FAQLocalRepository;
 import com.habitrpg.android.habitica.models.FAQArticle;
 
-import java.util.List;
-
+import io.realm.RealmResults;
 import rx.Observable;
 
 
@@ -16,7 +15,7 @@ public class FAQRepositoryImpl extends ContentRepositoryImpl<FAQLocalRepository>
     }
 
     @Override
-    public Observable<List<FAQArticle>> getArticles() {
+    public Observable<RealmResults<FAQArticle>> getArticles() {
         return localRepository.getArticles();
     }
 }

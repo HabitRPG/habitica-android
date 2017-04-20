@@ -26,7 +26,7 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenNewPMActivityCommand;
 import com.habitrpg.android.habitica.events.commands.ToggleLikeMessageCommand;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 
 import net.pherth.android.emoji_library.EmojiTextView;
@@ -43,14 +43,14 @@ import butterknife.ButterKnife;
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ChatRecyclerViewHolder> {
 
     private List<ChatMessage> messages;
-    private HabitRPGUser user;
+    private User user;
     private String uuid;
     private String groupId;
     private boolean isInboxChat = false;
     private String replyToUserUUID;
-    private HabitRPGUser sendingUser;
+    private User sendingUser;
 
-    public ChatRecyclerViewAdapter(List<ChatMessage> messages, HabitRPGUser user, String groupId) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, User user, String groupId) {
         this.messages = messages;
         this.user = user;
         if (user != null) this.uuid = user.getId();
@@ -62,7 +62,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         this.isInboxChat = true;
     }
 
-    public void setSendingUser(@Nullable HabitRPGUser user) {
+    public void setSendingUser(@Nullable User user) {
         this.sendingUser = user;
     }
 

@@ -12,7 +12,8 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentOverviewBinding;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -128,7 +129,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
             inventoryRepository.getOwnedEquipment().subscribe(items -> {
                 this.nameMapping = new HashMap<>();
 
-                for (ItemData gear : items) {
+                for (Equipment gear : items) {
                     this.nameMapping.put(gear.key, gear.text);
                 }
 

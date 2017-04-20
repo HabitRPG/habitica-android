@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class UserStatComputer {
         public String stats;
     }
 
-    public List<StatsRow> computeClassBonus (List<ItemData> itemDataList, HabitRPGUser user) {
+    public List<StatsRow> computeClassBonus (List<Equipment> equipmentList, User user) {
         List<StatsRow> skillRows = new ArrayList<>();
 
         float strAttributes = 0;
@@ -44,7 +44,7 @@ public class UserStatComputer {
         float perClassBonus = 0;
 
         // Summarize stats and fill equipment table
-        for (ItemData i : itemDataList) {
+        for (Equipment i : equipmentList) {
             int str_ = (int) i.getStr();
             int int_ = (int) i.get_int();
             int con_ = (int) i.getCon();
@@ -93,8 +93,8 @@ public class UserStatComputer {
             }
 
             float classBonus = 0.5f;
-            Boolean userClassMatchesGearClass = !classDoesNotExist && itemClass.equals(user.getStats().get_class().toString());
-            Boolean userClassMatchesGearSpecialClass = !specialClassDoesNotExist && itemSpecialClass.equals(user.getStats().get_class().toString());
+            Boolean userClassMatchesGearClass = !classDoesNotExist && itemClass.equals(user.getStats().getHabitClass());
+            Boolean userClassMatchesGearSpecialClass = !specialClassDoesNotExist && itemSpecialClass.equals(user.getStats().getHabitClass());
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0;
 

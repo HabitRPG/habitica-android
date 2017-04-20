@@ -32,7 +32,9 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
 
         List<Customization> existingCustomizations;
         try {
-            existingCustomizations = new Select().from(Customization.class).queryList();
+
+            // TODO: fix this
+            existingCustomizations = new ArrayList<>();
         } catch (RuntimeException e) {
             //Tests don't have a database
             existingCustomizations = new ArrayList<>();
@@ -70,7 +72,8 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
             }
         }
 
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
+        // TODO: fix this
+        //TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
 
         purchases.customizations = customizations;
         purchases.setPlan(context.deserialize(object.get("plan"), SubscriptionPlan.class));

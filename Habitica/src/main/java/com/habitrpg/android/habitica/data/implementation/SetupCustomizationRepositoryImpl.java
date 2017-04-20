@@ -5,7 +5,7 @@ import android.content.Context;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.models.SetupCustomization;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +24,12 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
     }
 
     @Override
-    public List<SetupCustomization> getCustomizations(String category, HabitRPGUser user) {
+    public List<SetupCustomization> getCustomizations(String category, User user) {
         return getCustomizations(category, null, user);
     }
 
     @Override
-    public List<SetupCustomization> getCustomizations(String category, String subcategory, HabitRPGUser user) {
+    public List<SetupCustomization> getCustomizations(String category, String subcategory, User user) {
         switch (category) {
             case "body": {
                 switch (subcategory) {

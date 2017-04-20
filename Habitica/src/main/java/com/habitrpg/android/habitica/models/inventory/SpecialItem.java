@@ -8,11 +8,18 @@ import com.habitrpg.android.habitica.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SpecialItem extends Item {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class SpecialItem extends RealmObject implements Item {
+
+    @PrimaryKey
+    String key;
+    String text, notes;
+    Integer value, owned;
     public boolean isMysteryItem;
 
-    public static Item makeMysteryItem(Context context) {
+    public static SpecialItem makeMysteryItem(Context context) {
         SpecialItem item = new SpecialItem();
         item.text = context.getString(R.string.mystery_item);
         item.notes = context.getString(R.string.myster_item_notes);
@@ -26,5 +33,30 @@ public class SpecialItem extends Item {
     @Override
     public String getType() {
         return "special";
+    }
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setOwned(int size) {
+        owned = size;
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public Integer getOwned() {
+        return owned;
+    }
+
+    @Override
+    public Integer getValue() {
+        return value;
     }
 }

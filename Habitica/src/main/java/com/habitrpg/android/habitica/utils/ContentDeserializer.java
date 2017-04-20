@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
@@ -32,6 +32,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.realm.RealmObject;
+
 public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
     @Inject
@@ -39,13 +41,13 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
     @Override
     public ContentResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<BaseModel> items = new ArrayList<>();
+        List<RealmObject> items = new ArrayList<>();
 
         ContentResult result = new ContentResult();
         JsonObject object = json.getAsJsonObject();
 
-        result.potion = context.deserialize(object.get("potion"), ItemData.class);
-        result.armoire = context.deserialize(object.get("armoire"), ItemData.class);
+        result.potion = context.deserialize(object.get("potion"), Equipment.class);
+        result.armoire = context.deserialize(object.get("armoire"), Equipment.class);
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
 
         items.add(result.potion);
@@ -154,12 +156,12 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         for (Skill skill : result.spells) {
             spellKeys.add(skill.key);
         }
-        List<Skill> oldSkills = new Select().from(Skill.class).queryList();
+        /*List<Skill> oldSkills = new Select().from(Skill.class).queryList();
         for (Skill skill : oldSkills) {
             if (!spellKeys.contains(skill.key)) {
                 skill.delete();
             }
-        }
+        }*/
 
         result.appearances = context.deserialize(object.get("appearances"), new TypeToken<List<Customization>>() {
         }.getType());
@@ -176,7 +178,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
         items.addAll(result.faq);
 
-        TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(items)));
         return result;
     }
 

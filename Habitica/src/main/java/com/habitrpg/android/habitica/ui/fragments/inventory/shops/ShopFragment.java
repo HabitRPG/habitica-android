@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.events.UpdateGoldGemsPurchasedevent;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.shops.ShopCategory;
 import com.habitrpg.android.habitica.models.shops.ShopItem;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
@@ -39,7 +39,7 @@ public class ShopFragment extends BaseFragment {
     public TextView emptyView;
     public ShopRecyclerAdapter adapter;
     public String shopIdentifier;
-    public HabitRPGUser user;
+    public User user;
     public Shop shop;
     @Inject
     ApiClient apiClient;

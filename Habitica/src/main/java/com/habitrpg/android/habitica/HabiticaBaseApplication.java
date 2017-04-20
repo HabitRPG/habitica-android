@@ -22,7 +22,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.IntroActivity;
 import com.habitrpg.android.habitica.ui.activities.LoginActivity;
@@ -47,7 +47,7 @@ import io.realm.RealmConfiguration;
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
-    public static HabitRPGUser User;
+    public static com.habitrpg.android.habitica.models.user.User User;
     public static Activity currentActivity = null;
     private static AppComponent component;
     public RefWatcher refWatcher;

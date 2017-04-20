@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.activities.TaskClickActivity;
 

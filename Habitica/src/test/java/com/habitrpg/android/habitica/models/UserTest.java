@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 
 import org.junit.Before;
@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(RobolectricTestRunner.class)
 public class UserTest {
 
-    private HabitRPGUser user;
+    private User user;
 
     @Before
     public void setup() {
-        user = new HabitRPGUser();
+        user = new User();
         Items items = new Items();
         user.setItems(items);
     }

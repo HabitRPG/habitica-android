@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.models.inventory;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.Table;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@Table(databaseName = HabitDatabase.NAME)
-public class Food extends Item {
+public class Food extends RealmObject implements Item {
 
-    @Column
+    @PrimaryKey
+    String key;
+    String text, notes;
+    Integer value, owned;
     String target, article;
-
-    @Column
     Boolean canDrop;
 
     public String getTarget() {
@@ -39,5 +38,49 @@ public class Food extends Item {
 
     public String getType() {
         return "food";
+    }
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setOwned(int size) {
+
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    public Integer getOwned() {
+        return owned;
+    }
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

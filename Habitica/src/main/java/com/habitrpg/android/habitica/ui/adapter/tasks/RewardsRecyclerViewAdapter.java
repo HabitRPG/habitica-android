@@ -5,14 +5,12 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.models.inventory.ItemData;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
     private final Context context;
     private InventoryRepository inventoryRepository;
     @Nullable
-    private HabitRPGUser user;
+    private User user;
 
     public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, Context context) {
         super(data, autoUpdate, layoutResource);
@@ -45,7 +43,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
                     .flatMap(items -> {
                         // get itemdata list
                         ArrayList<String> itemKeys = new ArrayList<>();
-                        for (ItemData item : items) {
+                        for (Equipment item : items) {
                             itemKeys.add(item.key);
                         }
                         itemKeys.add("potion");
@@ -55,7 +53,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
                         return Observable.create((Observable.OnSubscribe<List<Task>>) subscriber -> inventoryRepository.getItems(itemKeys).subscribe(obj -> {
                             ArrayList<Task> buyableItems = new ArrayList<>();
                             if (obj != null) {
-                                for (ItemData item : obj) {
+                                for (Equipment item : obj) {
                                     Task reward = new Task();
                                     reward.text = item.text;
                                     reward.notes = item.notes;

@@ -4,8 +4,9 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 
 import java.util.List;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface CustomizationLocalRepository extends BaseLocalRepository {
-    Observable<List<Customization>> getCustomizations(String type, String category);
+    Observable<RealmResults<Customization>> getCustomizations(String type, String category);
 }

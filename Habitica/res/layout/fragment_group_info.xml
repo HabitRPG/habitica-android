@@ -7,7 +7,7 @@
         <import type="com.habitrpg.android.habitica.models.social.Group" />
         <import type="com.habitrpg.android.habitica.models.inventory.QuestContent" />
         <import type="com.habitrpg.android.habitica.models.invitations.PartyInvite" />
-        <import type="com.habitrpg.android.habitica.models.user.HabitRPGUser" />
+        <import type="com.habitrpg.android.habitica.models.user.User" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>
 
@@ -21,7 +21,7 @@
 
         <variable
             name="user"
-            type="HabitRPGUser" />
+            type="User" />
 
         <variable
             name="hideParticipantCard"
@@ -314,7 +314,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{quest.notes != null ? Html.fromHtml(quest.notes) : null}"
                         style="@style/CardText"
                         />
 

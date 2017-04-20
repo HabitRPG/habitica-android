@@ -16,7 +16,8 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
@@ -167,7 +168,7 @@ public class PartyInviteActivity extends BaseActivity {
         }
     }
 
-    public void handleUserRecieved(HabitRPGUser user) {
+    public void handleUserRecieved(User user) {
 
         if (this.userIdToInvite == null) {
             return;

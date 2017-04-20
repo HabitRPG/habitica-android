@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 
 import rx.functions.Action1;
@@ -9,9 +9,9 @@ public class ItemsCallback implements Action1<Items> {
 
     private final HabitRPGUserCallback.OnUserReceived mCallback;
 
-    private HabitRPGUser user;
+    private User user;
 
-    public ItemsCallback(HabitRPGUserCallback.OnUserReceived callback, HabitRPGUser user) {
+    public ItemsCallback(HabitRPGUserCallback.OnUserReceived callback, User user) {
         this.mCallback = callback;
         this.user = user;
     }
@@ -19,7 +19,6 @@ public class ItemsCallback implements Action1<Items> {
     @Override
     public void call(Items items) {
         this.user.setItems(items);
-        this.user.async().save();
         mCallback.onUserReceived(this.user);
     }
 }

@@ -16,10 +16,11 @@ import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
-import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
@@ -68,7 +69,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Pet feedingPet;
     public HashMap<String, Integer> ownedPets;
     @Nullable
-    public HabitRPGUser user;
+    public User user;
     LinearLayoutManager layoutManager = null;
 
     private View view;
