@@ -151,7 +151,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                 switch (this.classType) {
                     case Task.TYPE_HABIT:
                         layoutOfType = R.layout.habit_item_card;
-                        this.recyclerAdapter = new HabitsRecyclerViewAdapter(tasks, true, layoutOfType);
+                        this.recyclerAdapter = new HabitsRecyclerViewAdapter(tasks, true, layoutOfType, taskFilterHelper);
                         allowReordering();
                         break;
                     case Task.TYPE_DAILY:
@@ -160,12 +160,12 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
                         if (user != null) {
                             dailyResetOffset = user.getPreferences().getDayStart();
                         }
-                        this.recyclerAdapter = new DailiesRecyclerViewHolder(tasks, true, layoutOfType, dailyResetOffset);
+                        this.recyclerAdapter = new DailiesRecyclerViewHolder(tasks, true, layoutOfType, dailyResetOffset, taskFilterHelper);
                         allowReordering();
                         break;
                     case Task.TYPE_TODO:
                         layoutOfType = R.layout.todo_item_card;
-                        this.recyclerAdapter = new TodosRecyclerViewAdapter(tasks, true, layoutOfType);
+                        this.recyclerAdapter = new TodosRecyclerViewAdapter(tasks, true, layoutOfType, taskFilterHelper);
                         allowReordering();
                         return;
                     case Task.TYPE_REWARD:
@@ -311,6 +311,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setAdapter(recyclerAdapter);
+        recyclerAdapter.filter();
     }
 
     @Override
@@ -341,16 +342,13 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         swipeRefreshLayout.setRefreshing(true);
         userRepository.retrieveUser(true)
                 .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
-                .subscribe(
-                        new HabitRPGUserCallback((MainActivity)getActivity()),
-                        throwable -> {}
-                );
+                .subscribe(user1 -> {}, throwable -> {});
     }
 
     public void setActiveFilter(String activeFilter) {
         if (classType != null) {
             taskFilterHelper.setActiveFilter(classType, activeFilter);
         }
-        //recyclerAdapter.filter();
+        recyclerAdapter.filter();
     }
 }

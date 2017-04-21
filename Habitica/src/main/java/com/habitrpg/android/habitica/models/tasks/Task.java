@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.TaskDeleteEvent;
+import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,11 +40,13 @@ public class Task extends RealmObject {
     public static final String ATTRIBUTE_CONSTITUTION = "con";
     public static final String ATTRIBUTE_INTELLIGENCE = "int";
     public static final String ATTRIBUTE_PERCEPTION = "per";
+
+
     public String userId;
     public Float priority;
     public String text, notes, attribute, type;
-    public double value;
-    public RealmList<TaskTag> tags;
+    public Double value;
+    public RealmList<Tag> tags;
     public Date dateCreated;
     public int position;
     public TaskGroupPlan group;
@@ -164,19 +167,19 @@ public class Task extends RealmObject {
         this.type = type;
     }
 
-    public List<TaskTag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(RealmList<TaskTag> tags) {
+    public void setTags(RealmList<Tag> tags) {
         this.tags = tags;
     }
 
     public boolean containsAnyTagId(List<String> tagIdList) {
         getTags();
 
-        for (TaskTag t : tags) {
-            if (tagIdList.contains(t.getTag().getId())) {
+        for (Tag t : tags) {
+            if (tagIdList.contains(t.getId())) {
                 return true;
             }
         }
@@ -189,8 +192,8 @@ public class Task extends RealmObject {
 
         List<String> allTagIds = new ArrayList<String>();
 
-        for (TaskTag t : tags) {
-            allTagIds.add(t.getTag().getId());
+        for (Tag t : tags) {
+            allTagIds.add(t.getId());
         }
 
         return allTagIds.containsAll(tagIdList);

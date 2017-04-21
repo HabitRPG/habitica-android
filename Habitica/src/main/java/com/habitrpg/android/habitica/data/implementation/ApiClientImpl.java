@@ -206,7 +206,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     public static GsonConverterFactory createGsonFactory() {
-        Type taskTagClassListType = new TypeToken<RealmList<TaskTag>>() {
+        Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
         }.getType();
         Type skillListType = new TypeToken<List<Skill>>() {
         }.getType();

@@ -15,9 +15,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -26,8 +24,6 @@ import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -206,7 +202,6 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                     this.startActivity(intent);
                     getActivity().finishAffinity();
                 }
-                EventBus.getDefault().post(new RefreshUserCommand());
 
                 break;
             }

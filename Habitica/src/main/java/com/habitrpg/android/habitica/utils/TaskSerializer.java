@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 
@@ -22,8 +23,8 @@ public class TaskSerializer implements JsonSerializer<Task> {
         obj.addProperty("attribute", task.getAttribute());
         obj.addProperty("type", task.getType());
         JsonArray tagsList = new JsonArray();
-        for (TaskTag tag : task.getTags()) {
-            tagsList.add(tag.getTag().getId());
+        for (Tag tag : task.getTags()) {
+            tagsList.add(tag.getId());
         }
         obj.add("tags", tagsList);
         switch (task.getType()) {

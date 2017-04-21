@@ -20,7 +20,6 @@ import android.widget.Button;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.ItemsCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -159,7 +158,7 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                .subscribe(items -> {}, throwable -> {
                 });
     }
 

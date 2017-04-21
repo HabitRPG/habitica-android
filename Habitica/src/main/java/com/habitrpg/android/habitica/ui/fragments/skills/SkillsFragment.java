@@ -145,13 +145,7 @@ public class SkillsFragment extends BaseMainFragment {
         if (activity != null) {
             UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
         }
-        userRepository.retrieveUser(false)
-                .subscribe(habitRPGUser -> {
-                    if (activity != null) {
-                        activity.onUserReceived(habitRPGUser);
-                    }
-                }, throwable -> {
-                });
+        userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, throwable -> {});
     }
 
     @Override
@@ -185,7 +179,7 @@ public class SkillsFragment extends BaseMainFragment {
         } else {
             observable = userRepository.useSkill(user, skill.key, skill.target);
         }
-        observable.subscribe(new SkillCallback(activity, user, skill), throwable -> removeProgressDialog());
+        observable.subscribe(skillResponse -> {}, throwable -> removeProgressDialog());
     }
 
     private void displayProgressDialog() {

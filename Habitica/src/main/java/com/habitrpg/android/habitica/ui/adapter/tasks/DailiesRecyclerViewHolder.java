@@ -16,8 +16,8 @@ public class DailiesRecyclerViewHolder extends RealmBaseTasksRecyclerViewAdapter
 
     public int dailyResetOffset;
 
-    public DailiesRecyclerViewHolder(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, int dailyResetOffset) {
-        super(data, autoUpdate, layoutResource);
+    public DailiesRecyclerViewHolder(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, int dailyResetOffset, TaskFilterHelper taskFilterHelper) {
+        super(data, autoUpdate, layoutResource, taskFilterHelper);
         this.dailyResetOffset = dailyResetOffset;
     }
 

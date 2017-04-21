@@ -28,7 +28,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
 
     @Override
     public Observable<RealmResults<Equipment>> getItems(List<String> searchedKeys) {
-        return localRepository.getItems(searchedKeys);
+        return localRepository.getEquipment(searchedKeys);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     }
 
     @Override
-    public Observable<List<Item>> getOwnedItems(String itemType) {
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType) {
         return localRepository.getOwnedItems(itemType);
     }
 
@@ -102,5 +102,26 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     @Override
     public void changeOwnedCount(String type, String key, int amountToAdd) {
         localRepository.changeOwnedCount(type, key, amountToAdd);
+    }
+
+    @Override
+    public Observable<User> sellItem(User user, String type, String key) {
+        return localRepository.getItem(type, key)
+                .flatMap(item -> sellItem(user, item));
+    }
+
+    @Override
+    public Observable<User> sellItem(User user, Item item) {
+        return apiClient.sellItem(item.getType(), item.getKey())
+                .map(user1 -> {
+                    localRepository.executeTransaction(realm -> {
+                        if (user != null) {
+                            user.setItems(user1.getItems());
+                            user.setStats(user1.getStats());
+                            item.setOwned(item.getOwned()-1);
+                        }
+                    });
+                    return user;
+                });
     }
 }

@@ -30,4 +30,10 @@
         <attr name="iconDrawable" format="integer" />
         <attr name="categoryTitle" format="string" />
     </declare-styleable>
+    <declare-styleable name="ValueBar">
+        <attr name="barForegroundColor" format="color" />
+        <attr name="barIconDrawable" format="integer" />
+        <attr name="lightBackground" format="boolean" />
+        <attr name="description" format="string" />
+    </declare-styleable>
 </resources>

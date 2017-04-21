@@ -19,6 +19,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -43,6 +44,8 @@ public class User extends RealmObject {
     private Flags flags;
     private ContributorInfo contributor;
     private Invitations invitations;
+
+    RealmList<Tag> tags;
 
     @Ignore
     private List<PushDevice> pushDevices;
@@ -397,5 +400,9 @@ public class User extends RealmObject {
         }
 
         return mapSize;
+    }
+
+    public RealmList<Tag> getTags() {
+        return tags;
     }
 }

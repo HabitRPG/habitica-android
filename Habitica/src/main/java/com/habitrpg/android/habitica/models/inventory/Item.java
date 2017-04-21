@@ -4,7 +4,9 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public interface Item {
+import io.realm.RealmModel;
+
+public interface Item extends RealmModel {
 
     String getType();
 

@@ -15,14 +15,14 @@ import rx.Observable;
 public interface InventoryLocalRepository extends BaseLocalRepository {
     Observable<QuestContent> getQuestContent(String key);
 
-    Observable<RealmResults<Equipment>> getItems(List<String> searchedKeys);
+    Observable<RealmResults<Equipment>> getEquipment(List<String> searchedKeys);
 
     long getArmoireRemainingCount();
 
     Observable<RealmResults<Equipment>> getOwnedEquipment(String type);
     Observable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<List<Item>> getOwnedItems(String itemType);
+    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType);
 
     Observable<Equipment> getEquipment(String key);
 
@@ -37,4 +37,6 @@ public interface InventoryLocalRepository extends BaseLocalRepository {
     void updateOwnedEquipment(User user);
 
     void changeOwnedCount(String type, String key, int amountToAdd);
+
+    Observable<Item> getItem(String type, String key);
 }

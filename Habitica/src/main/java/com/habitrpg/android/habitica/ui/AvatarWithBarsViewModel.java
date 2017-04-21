@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -19,34 +18,45 @@ import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 
-/**
- * Created by Negue on 14.06.2015.
- */
-public class AvatarWithBarsViewModel implements View.OnClickListener {
-    private ValueBarBinding hpBar;
-    private ValueBarBinding xpBar;
-    private ValueBarBinding mpBar;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private AvatarView avatarView;
+public class AvatarWithBarsViewModel implements View.OnClickListener {
+    @BindView(R.id.hpBar)
+    ValueBar hpBar;
+    @BindView(R.id.xpBar)
+    ValueBar xpBar;
+    @BindView(R.id.mpBar)
+    ValueBar mpBar;
+    @BindView(R.id.avatarView)
+    AvatarView avatarView;
 
     private android.content.res.Resources res;
 
     private Context context;
 
-    private TextView lvlText, goldText, silverText, gemsText;
+    @BindView(R.id.lvl_tv)
+    TextView lvlText;
+    @BindView(R.id.gold_tv)
+    TextView goldText;
+    @BindView(R.id.silver_tv)
+    TextView silverText;
+    @BindView(R.id.gems_tv)
+    TextView gemsText;
+
     private User userObject;
 
     private int cachedMaxHealth, cachedMaxExp, cachedMaxMana;
 
     public AvatarWithBarsViewModel(Context context, View v) {
         this.context = context;
-
         res = context.getResources();
 
         if (v == null) {
@@ -54,16 +64,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             return;
         }
 
-        lvlText = (TextView) v.findViewById(R.id.lvl_tv);
-        goldText = (TextView) v.findViewById(R.id.gold_tv);
-        silverText = (TextView) v.findViewById(R.id.silver_tv);
-        gemsText = (TextView) v.findViewById(R.id.gems_tv);
-        View hpBarView = v.findViewById(R.id.hpBar);
+        ButterKnife.bind(this, v);
 
-        avatarView = (AvatarView) v.findViewById(R.id.avatarView);
-        hpBar = DataBindingUtil.bind(hpBarView);
-        xpBar = DataBindingUtil.bind(v.findViewById(R.id.xpBar));
-        mpBar = DataBindingUtil.bind(v.findViewById(R.id.mpBar));
 
         setHpBarData(0, 50);
         setXpBarData(0, 1);
@@ -76,25 +78,13 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         avatarView.setOnClickListener(this);
     }
 
-    public static void setHpBarData(ValueBarBinding valueBar, Stats stats, Context ctx) {
-        Integer maxHP = stats.getMaxHealth();
-        if (maxHP == null || maxHP == 0) {
-            maxHP = 50;
-        }
-
-        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP, ctx.getString(R.string.HP_default), ContextCompat.getColor(ctx, R.color.hpColor), R.drawable.ic_header_heart);
-    }
-
     // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
     // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBarBinding valueBar, float value, float valueMax, String description, int color, int icon) {
+    private static void setValueBar(ValueBar valueBar, float value, float valueMax) {
         double percent = Math.min(1, value / valueMax);
 
-        valueBar.setWeightToShow((float) percent);
-        valueBar.setText((int) value + "/" + (int) valueMax);
-        valueBar.setDescription(description);
-        valueBar.setBarForegroundColor(color);
-        valueBar.icHeader.setImageResource(icon);
+        valueBar.setBarWight((float) percent);
+        valueBar.setValueText((int) value + "/" + (int) valueMax);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -113,7 +103,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             userClass = stats.getTranslatedClassName(context);
         }
 
-        mpBar.valueBarLayout.setVisibility((stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
+        mpBar.setVisibility((stats.getHabitClass() == null || stats.getLvl() < 10 || user.getPreferences().getDisableClasses()) ? View.GONE : View.VISIBLE);
 
         if (user.getPreferences() != null && user.getFlags() != null && (user.getPreferences().getDisableClasses() || !user.getFlags().getClassSelected() || userClass.length() == 0)) {
             lvlText.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
@@ -156,31 +146,31 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         gemsText.setText(String.valueOf(gems.intValue()));
     }
 
-    public void setHpBarData(float value, int valueMax) {
+    private void setHpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxHealth;
         } else {
             cachedMaxHealth = valueMax;
         }
-        setValueBar(hpBar, (float) Math.ceil(value), valueMax, context.getString(R.string.HP_default), ContextCompat.getColor(context, R.color.hpColor), R.drawable.ic_header_heart);
+        setValueBar(hpBar, (float) Math.ceil(value), valueMax);
     }
 
-    public void setXpBarData(float value, int valueMax) {
+    private void setXpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxExp;
         } else {
             cachedMaxExp = valueMax;
         }
-        setValueBar(xpBar, (float) Math.floor(value), valueMax, context.getString(R.string.XP_default), ContextCompat.getColor(context, R.color.xpColor), R.drawable.ic_header_exp);
+        setValueBar(xpBar, (float) Math.floor(value), valueMax);
     }
 
-    public void setMpBarData(float value, int valueMax) {
+    private void setMpBarData(float value, int valueMax) {
         if (valueMax == 0) {
             valueMax = cachedMaxMana;
         } else {
             cachedMaxMana = valueMax;
         }
-        setValueBar(mpBar, (float) Math.floor(value), valueMax, context.getString(R.string.MP_default), ContextCompat.getColor(context, R.color.mpColor), R.drawable.ic_header_magic);
+        setValueBar(mpBar, (float) Math.floor(value), valueMax);
     }
 
     @Subscribe
@@ -209,8 +199,17 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
     }
 
     public void valueBarLabelsToBlack() {
-        hpBar.setPartyMembers(true);
-        mpBar.setPartyMembers(true);
-        xpBar.setPartyMembers(true);
+        hpBar.setLightBackground(true);
+        xpBar.setLightBackground(true);
+        mpBar.setLightBackground(true);
+    }
+
+    public static void setHpBarData(ValueBar valueBar, Stats stats) {
+        Integer maxHP = stats.getMaxHealth();
+        if (maxHP == null || maxHP == 0) {
+            maxHP = 50;
+        }
+
+        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP);
     }
 }

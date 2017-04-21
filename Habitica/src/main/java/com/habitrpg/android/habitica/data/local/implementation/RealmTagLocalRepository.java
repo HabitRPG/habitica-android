@@ -17,7 +17,7 @@ public class RealmTagLocalRepository extends RealmBaseLocalRepository implements
 
     @Override
     public Observable<RealmResults<Tag>> getTags(String userId) {
-        return realm.where(Tag.class).equalTo("userId", userId).findAll().asObservable();
+        return realm.where(Tag.class).equalTo("user.id", userId).findAll().asObservable();
     }
 
     @Override

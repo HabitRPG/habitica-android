@@ -24,11 +24,10 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.AddNewTaskCommand;
-import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.tasks.Task;
@@ -59,6 +58,8 @@ public class TasksFragment extends BaseMainFragment {
     public ViewPager viewPager;
     @Inject
     public TaskFilterHelper taskFilterHelper; // This will be used for this fragment. Currently being used to help filtering
+    @Inject
+    TagRepository tagRepository;
     MenuItem refreshItem;
     FloatingActionMenu floatingMenu;
     SparseArray<TaskRecyclerViewFragment> viewFragmentsDictionary = new SparseArray<>();
@@ -164,7 +165,7 @@ public class TasksFragment extends BaseMainFragment {
     private void showFilterDialog() {
         TaskFilterDialog dialog = new TaskFilterDialog(getContext(), HabiticaBaseApplication.getComponent());
         if (user != null) {
-            //dialog.setTags();
+            dialog.setTags(user.getTags());
         }
         dialog.setActiveTags(taskFilterHelper.getTags());
         if (getActiveFragment() != null) {
@@ -176,10 +177,10 @@ public class TasksFragment extends BaseMainFragment {
         dialog.setListener((activeTaskFilter, activeTags) -> {
             int activePos = viewPager.getCurrentItem();
             if (activePos >= 1 && viewFragmentsDictionary.get(activePos-1).recyclerAdapter != null) {
-                //viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
+                viewFragmentsDictionary.get(activePos-1).recyclerAdapter.filter();
             }
             if (activePos < viewPager.getAdapter().getCount()-1 && viewFragmentsDictionary.get(activePos+1).recyclerAdapter != null) {
-                //viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
+                viewFragmentsDictionary.get(activePos+1).recyclerAdapter.filter();
             }
             if (getActiveFragment() != null) {
                 getActiveFragment().setActiveFilter(activeTaskFilter);
@@ -368,8 +369,8 @@ public class TasksFragment extends BaseMainFragment {
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            allocationMode = user.getPreferences().getAllocationMode();
         }
 
         Bundle bundle = new Bundle();
@@ -386,13 +387,6 @@ public class TasksFragment extends BaseMainFragment {
         }
     }
 
-    @Subscribe
-    public void onEvent(RefreshUserCommand event) {
-        if (getActiveFragment() != null) {
-            getActiveFragment().onRefresh();
-        }
-    }
-
     @Nullable
     private TaskRecyclerViewFragment getActiveFragment() {
         return viewFragmentsDictionary.get(viewPager.getCurrentItem());
@@ -405,8 +399,8 @@ public class TasksFragment extends BaseMainFragment {
         }
 
         String allocationMode = "";
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
+        if (user != null && user.getPreferences() != null) {
+            allocationMode = user.getPreferences().getAllocationMode();
         }
 
         Bundle bundle = new Bundle();

@@ -15,8 +15,8 @@ import io.realm.OrderedRealmCollection;
 public class TodosRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapter<TodoViewHolder> {
 
 
-    public TodosRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource) {
-        super(data, autoUpdate, layoutResource);
+    public TodosRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, TaskFilterHelper taskFilterHelper) {
+        super(data, autoUpdate, layoutResource, taskFilterHelper);
     }
 
     @Override

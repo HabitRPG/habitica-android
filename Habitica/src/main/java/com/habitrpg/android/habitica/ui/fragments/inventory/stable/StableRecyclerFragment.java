@@ -199,9 +199,4 @@ public class StableRecyclerFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(items -> adapter.setItemList(items), throwable -> {});
     }
-
-    @Subscribe
-    public void reloadedContent(ContentReloadedEvent event) {
-        this.loadItems();
-    }
 }

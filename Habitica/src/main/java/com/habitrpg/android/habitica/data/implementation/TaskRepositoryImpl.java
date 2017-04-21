@@ -7,12 +7,15 @@ import com.habitrpg.android.habitica.events.TaskCreatedEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.models.responses.TaskDirection;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,6 +25,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Func2;
 
 
 public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> implements TaskRepository {
@@ -49,35 +53,60 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<TaskDirectionData> taskChecked(Task task, boolean up) {
+    public Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up) {
         long now = new Date().getTime();
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
         lastTaskAction = now;
         return this.apiClient.postTaskDirection(task.getId(), (up ? TaskDirection.up : TaskDirection.down).toString())
-                .doOnNext(res -> {
+                .map(res -> {
                     // save local task changes
-                    if (task.type != null && !task.type.equals("reward")) {
+                    TaskScoringResult result = new TaskScoringResult();
+                    Stats stats = user.getStats();
 
+                    result.taskValueDelta = res.getDelta();
+                    result.healthDelta = res.hp - stats.getHp();
+                    result.experienceDelta = res.exp - stats.getExp();
+                    result.manaDelta = res.mp - stats.getMp();
+                    result.goldDelta = res.gp - stats.getGp();
+                    result.hasLeveledUp = res.lvl > stats.getLvl();
+                    if (res.get_tmp() != null) {
+                        result.drop = res.get_tmp().getDrop();
+                    }
+
+                    if (task.type != null && !task.type.equals("reward")) {
                         this.localRepository.executeTransaction(realm -> {
                             task.value = task.value + res.getDelta();
                             if (Task.TYPE_DAILY.equals(task.type) || Task.TYPE_TODO.equals(task.type)) {
                                 task.completed = up;
                             }
+
+                            stats.setHp(res.hp);
+                            stats.setExp(res.exp);
+                            stats.setMp(res.mp);
+                            stats.setGp(res.gp);
+                            stats.setLvl(res.lvl);
+                            user.setStats(stats);
                         });
                     }
+
+                    return result;
                 });
     }
 
     @Override
-    public Observable<TaskDirectionData> taskChecked(String taskId, boolean up) {
+    public Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up) {
         return localRepository.getTask(taskId)
-                .flatMap(task -> taskChecked(task, up));
+                .flatMap(task -> taskChecked(user, task, up));
     }
 
     public Observable<Task> scoreChecklistItem(String taskId, String itemId){
         return apiClient.scoreChecklistItem(taskId, itemId)
+                .zipWith(localRepository.getTask(taskId), (newTask, oldTask) -> {
+                    newTask.position = oldTask.position;
+                    return newTask;
+                })
                 .doOnNext(this.localRepository::saveTask);
     }
 
@@ -110,6 +139,10 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         }
         lastTaskAction = now;
         return apiClient.updateTask(task.getId(), task)
+                .map(task1 -> {
+                    task1.position = task.position;
+                    return task1;
+                })
                 .doOnNext(localRepository::saveTask);
     }
 

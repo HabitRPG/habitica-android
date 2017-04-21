@@ -10,20 +10,21 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AvatarOverviewFragment extends BaseMainFragment implements AdapterView.OnItemSelectedListener {
+
+    @Inject
+    UserRepository userRepository;
 
     FragmentAvatarOverviewBinding viewBinding;
 
@@ -142,10 +143,8 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
         }
 
         if (this.user != null && !this.user.getPreferences().getSize().equals(newSize)) {
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.size", newSize);
-            apiClient.updateUser(updateData)
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
+            userRepository.updateUser(user, "preferences.size", newSize)
+                    .subscribe(user1 -> {}, throwable -> {
                     });
         }
     }

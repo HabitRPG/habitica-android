@@ -17,17 +17,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.SocialRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
 import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;
@@ -36,9 +35,11 @@ import com.habitrpg.android.habitica.interactors.HabitScoreUseCase;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.User;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDetailDialogHolder;
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
@@ -54,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +77,11 @@ public class ChallengeDetailActivity extends BaseActivity {
     public ApiClient apiClient;
     @Inject
     SocialRepository socialRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
+    @Inject
+    UserRepository userRepository;
 
     @BindView(R.id.floating_menu_wrapper)
     FrameLayout floatingMenuWrapper;
@@ -106,6 +113,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @Nullable
     private Challenge challenge;
+    private User user;
 
     @Override
     protected int getLayoutResId() {
@@ -135,6 +143,8 @@ public class ChallengeDetailActivity extends BaseActivity {
         String challengeId = extras.getString(CHALLENGE_ID);
 
         ObservableList<Task> fullList = new ObservableArrayList<>();
+
+        userRepository.getUser(userId).first().subscribe(user -> ChallengeDetailActivity.this.user = user, throwable -> {});
 
         if (challengeId != null) {
 
@@ -215,7 +225,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                     }, Throwable::printStackTrace);
         }
 
-        ChallengeTasksRecyclerViewFragment fragment = ChallengeTasksRecyclerViewFragment.newInstance(HabiticaApplication.User, fullList);
+        ChallengeTasksRecyclerViewFragment fragment = ChallengeTasksRecyclerViewFragment.newInstance(user, fullList);
 
         if (getSupportFragmentManager().getFragments() == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commitAllowingStateLoss();
@@ -264,7 +274,7 @@ public class ChallengeDetailActivity extends BaseActivity {
                                 challenge.user_id = null;
                                 challenge.async().save();
 
-                                HabiticaApplication.User.resetChallengeList();
+                                user.resetChallengeList();
                                 finish();
 
                             }, throwable -> {
@@ -345,7 +355,7 @@ public class ChallengeDetailActivity extends BaseActivity {
         void onShowMore() {
 
             ChallengeDetailDialogHolder.showDialog(ChallengeDetailActivity.this, ChallengeDetailActivity.this.apiClient,
-                    HabiticaApplication.User, challenge,
+                    user, challenge,
                     challenge1 -> {
 
                     },
@@ -357,14 +367,14 @@ public class ChallengeDetailActivity extends BaseActivity {
     public void onEvent(TaskCheckedCommand event) {
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
-                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
+                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
+                        .subscribe(this::onTaskDataReceived, error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
-                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(res -> EventBus.getDefault().post(new TaskUpdatedEvent(event.Task)), error -> {
+                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
+                        .subscribe(this::onTaskDataReceived, error -> {
                         });
             }
             break;
@@ -380,14 +390,14 @@ public class ChallengeDetailActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
-        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(res -> onTaskDataReceived(res, event.habit), error -> {
+        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(user, event.habit, event.Up))
+                .subscribe(this::onTaskDataReceived, error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(final BuyRewardCommand event) {
-        if (HabiticaApplication.User.getStats().getGp() < event.Reward.getValue()) {
+        if (user.getStats().getGp() < event.Reward.getValue()) {
             showSnackbar(this, floatingMenuWrapper, getString(R.string.no_gold), UiUtils.SnackbarDisplayType.FAILURE);
             return;
         }
@@ -395,26 +405,19 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         if (event.Reward.specialTag == null || !event.Reward.specialTag.equals("item")) {
 
-            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
-                    .subscribe(res -> onTaskDataReceived(res, event.Reward), error -> {});
+            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
+                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), UiUtils.SnackbarDisplayType.NORMAL), error -> {});
         }
 
     }
 
-    public void onTaskDataReceived(TaskDirectionData data, Task task) {
-        if (task.type.equals("reward")) {
-            showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), UiUtils.SnackbarDisplayType.NORMAL);
-        } else {
-            if (HabiticaApplication.User != null) {
-                notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, () -> {
-                    // retrieveUser? forward message to MainActivity ? or mark it to refresh ?
-                },
-                        HabiticaApplication.User, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()));
-            }
-
-            displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                    .subscribe(aVoid -> {}, throwable -> {});
+    public void onTaskDataReceived(TaskScoringResult data) {
+        if (user != null) {
+            notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp));
         }
-    }
 
+        displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+                .subscribe(aVoid -> {}, throwable -> {});
+    }
 }

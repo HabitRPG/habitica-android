@@ -27,7 +27,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
     private User user;
 
     public RewardsRecyclerViewAdapter(@Nullable OrderedRealmCollection<Task> data, boolean autoUpdate, int layoutResource, Context context) {
-        super(data, autoUpdate, layoutResource);
+        super(data, autoUpdate, layoutResource, null);
         this.context = context;
     }
 

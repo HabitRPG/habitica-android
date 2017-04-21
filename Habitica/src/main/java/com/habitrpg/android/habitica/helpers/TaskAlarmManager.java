@@ -117,18 +117,6 @@ public class TaskAlarmManager {
     }
 
     @Subscribe
-    public void onEvent(TaskSaveEvent event) {
-        Task task = event.task;
-        this.setAlarmsForTask(task);
-    }
-
-    @Subscribe
-    public void onEvent(TaskDeleteEvent event) {
-        Task task = event.task;
-        this.removeAlarmsForTask(task);
-    }
-
-    @Subscribe
     public void onEvent(ReminderDeleteEvent event) {
         RemindersItem remindersItem = event.reminder;
         this.removeAlarmForRemindersItem(remindersItem);

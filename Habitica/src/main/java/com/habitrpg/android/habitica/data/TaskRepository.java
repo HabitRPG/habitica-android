@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.data;
 
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
@@ -20,8 +22,8 @@ public interface TaskRepository extends BaseRepository  {
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
-    Observable<TaskDirectionData> taskChecked(Task task, boolean up);
-    Observable<TaskDirectionData> taskChecked(String taskId, boolean up);
+    Observable<TaskScoringResult> taskChecked(User user, Task task, boolean up);
+    Observable<TaskScoringResult> taskChecked(User user, String taskId, boolean up);
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> getTask(String taskId);

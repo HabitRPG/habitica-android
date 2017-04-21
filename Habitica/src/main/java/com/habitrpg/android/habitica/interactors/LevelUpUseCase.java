@@ -69,12 +69,10 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
             AlertDialog alert = new AlertDialog.Builder(requestValues.compatActivity)
                     .setTitle(R.string.levelup_header)
                     .setView(customView)
-                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> {
-                        checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
-                                .subscribe(aVoid -> {
-                                }, throwable -> {
-                                });
-                    })
+                    .setPositiveButton(R.string.levelup_button, (dialog, which) -> checkClassSelectionUseCase.observable(new CheckClassSelectionUseCase.RequestValues(requestValues.user, null))
+                            .subscribe(aVoid -> {
+                            }, throwable -> {
+                            }))
                     .setNeutralButton(R.string.share, (dialog, which) -> {
                         EventBus.getDefault().post(event);
                         dialog.dismiss();
@@ -95,10 +93,9 @@ public class LevelUpUseCase extends UseCase<LevelUpUseCase.RequestValues, Stats>
         private int newLevel;
         private AppCompatActivity compatActivity;
 
-        public RequestValues(User user, int newLevel, AppCompatActivity compatActivity) {
-
+        public RequestValues(User user, AppCompatActivity compatActivity) {
             this.user = user;
-            this.newLevel = newLevel;
+            this.newLevel = user.getStats().getLvl();
             this.compatActivity = compatActivity;
         }
     }

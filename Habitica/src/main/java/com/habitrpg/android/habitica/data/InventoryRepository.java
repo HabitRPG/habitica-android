@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
@@ -25,7 +27,7 @@ public interface InventoryRepository extends ContentRepository {
     Observable<RealmResults<Equipment>> getOwnedEquipment(String type);
     Observable<RealmResults<Equipment>> getOwnedEquipment();
 
-    Observable<List<Item>> getOwnedItems(String itemType);
+    Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType);
 
     Observable<Equipment> getEquipment(String key);
 
@@ -42,4 +44,7 @@ public interface InventoryRepository extends ContentRepository {
     void updateOwnedEquipment(User user);
 
     void changeOwnedCount(String type, String key, int amountToAdd);
+
+    Observable<User> sellItem(User user, String type, String key);
+    Observable<User> sellItem(User user, Item item);
 }

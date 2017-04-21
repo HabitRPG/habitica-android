@@ -39,10 +39,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
-import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
@@ -61,8 +58,6 @@ import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
 import net.pherth.android.emoji_library.EmojiEditText;
 import net.pherth.android.emoji_library.EmojiPopup;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -79,9 +74,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmObject;
 import rx.Observable;
 
 public class TaskFormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
@@ -257,10 +250,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     finish();
                     dismissKeyboard();
 
-                    EventBus.getDefault().post(new DeleteTaskCommand(taskId));
-                }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
-                    dialog.dismiss();
-                }).show());
+                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, throwable -> {});
+                }).setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss()).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.task_difficulties, android.R.layout.simple_spinner_item);
@@ -649,8 +640,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             fillTagCheckboxes();
         }
 
-        for (TaskTag tt : task.getTags()) {
-            selectedTags.add(tt.getTag());
+        for (Tag tag : task.getTags()) {
+            selectedTags.add(tag);
         }
 
         float priority = task.getPriority();
@@ -730,8 +721,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void fillTagCheckboxes() {
-        for (TaskTag tt : task.getTags()) {
-            int position = tags.indexOf(tt.getTag());
+        for (Tag tag : task.getTags()) {
+            int position = tags.indexOf(tag);
             if (tagCheckBoxList.size() > position && position >= 0) {
                 tagCheckBoxList.get(position).setChecked(true);
             }
@@ -763,13 +754,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
 
 
-            RealmList<TaskTag> taskTags = new RealmList<>();
-            for (Tag tag : selectedTags) {
-                TaskTag tt = new TaskTag();
-                tt.setTag(tag);
-                tt.setTask(task);
-                taskTags.add(tt);
-            }
+            RealmList<Tag> taskTags = new RealmList<>();
+            taskTags.addAll(selectedTags);
             task.setTags(taskTags);
 
             task.notes = MarkdownParser.parseCompiled(taskNotes.getText());

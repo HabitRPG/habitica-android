@@ -7,8 +7,10 @@ import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +20,8 @@ import rx.Observable;
 
 public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> implements UserRepository {
 
+    private Date lastSync;
+
     public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient) {
         super(localRepository, apiClient);
     }
@@ -25,7 +29,6 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<User> getUser(String userID) {
         return localRepository.getUser(userID)
-                .first()
                 .flatMap(habitRPGUser -> {
                     if (habitRPGUser == null || !habitRPGUser.isValid()) {
                         return retrieveUser(true);
@@ -50,8 +53,13 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<User> retrieveUser(Boolean withTasks) {
-        return apiClient.retrieveUser(withTasks)
-                .doOnNext(localRepository::saveUser);
+        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
+            return apiClient.retrieveUser(withTasks)
+                    .doOnNext(localRepository::saveUser)
+                    .doOnNext(user -> lastSync = new Date());
+        } else {
+            return Observable.empty();
+        }
     }
 
     @Override

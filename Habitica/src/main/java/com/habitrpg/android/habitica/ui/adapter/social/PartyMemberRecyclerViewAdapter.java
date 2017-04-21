@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.social;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.SelectMemberCommand;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
 import com.habitrpg.android.habitica.ui.helpers.ViewHelper;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,7 +75,8 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         @BindView(R.id.class_background_layout)
         View classBackground;
 
-        ValueBarBinding hpBar;
+        @BindView(R.id.hpBar)
+        ValueBar hpBar;
 
         Resources resources;
 
@@ -85,10 +85,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             ButterKnife.bind(this, itemView);
 
-            View hpBarView = itemView.findViewById(R.id.hpBar);
-
-            hpBar = DataBindingUtil.bind(hpBarView);
-            hpBar.setPartyMembers(true);
+            hpBar.setLightBackground(true);
 
             resources = itemView.getResources();
         }
@@ -98,7 +95,7 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
 
             avatarView.setUser(user);
 
-            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), ctx);
+            AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());
 
             lvl.setText(context.getString(R.string.user_level, user.getStats().getLvl()));
 

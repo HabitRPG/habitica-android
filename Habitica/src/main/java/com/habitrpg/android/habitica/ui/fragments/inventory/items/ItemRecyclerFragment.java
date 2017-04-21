@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.OrderedRealmCollection;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -97,7 +98,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
         adapter = (ItemRecyclerAdapter) recyclerView.getAdapter();
         if (adapter == null) {
-            adapter = new ItemRecyclerAdapter();
+            adapter = new ItemRecyclerAdapter(null, true);
             adapter.context = this.getActivity();
             adapter.isHatching = this.isHatching;
             adapter.isFeeding = this.isFeeding;
@@ -110,6 +111,12 @@ public class ItemRecyclerFragment extends BaseFragment {
                 adapter.feedingPet = this.feedingPet;
             }
             recyclerView.setAdapter(adapter);
+
+            adapter.getSellItemEvents()
+                    .flatMap(item -> inventoryRepository.sellItem(user, item))
+                    .subscribe(item -> {
+
+            }, throwable -> {});
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
@@ -169,23 +176,17 @@ public class ItemRecyclerFragment extends BaseFragment {
         outState.putString(ITEM_TYPE_KEY, this.itemType);
     }
 
-    @Subscribe
-    public void reloadedContent(ContentReloadedEvent event) {
-        this.loadItems();
-    }
-
     private void loadItems() {
         inventoryRepository.getOwnedItems(itemType).subscribe(items -> {
             if (this.itemType.equals("special")) {
                 if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
                     Item mysterItem = SpecialItem.makeMysteryItem(getContext());
                     mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
-                    items.add(mysterItem);
                 }
             }
 
             if (items.size() > 0) {
-                adapter.setItemList(items);
+                adapter.updateData((OrderedRealmCollection<Item>) items);
             }
         }, throwable -> {});
     }

@@ -47,7 +47,6 @@ import io.realm.RealmConfiguration;
 //contains all HabiticaApplicationLogic except dagger componentInitialisation
 public abstract class HabiticaBaseApplication extends MultiDexApplication {
 
-    public static com.habitrpg.android.habitica.models.user.User User;
     public static Activity currentActivity = null;
     private static AppComponent component;
     public RefWatcher refWatcher;

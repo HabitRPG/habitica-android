@@ -1,7 +1,10 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository;
+import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Equipment;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
@@ -11,7 +14,7 @@ import com.habitrpg.android.habitica.models.user.User;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rx.Observable;
 
@@ -30,7 +33,7 @@ public class RealmInventoryLocalRepository extends RealmBaseLocalRepository impl
     }
 
     @Override
-    public Observable<RealmResults<Equipment>> getItems(List<String> searchedKeys) {
+    public Observable<RealmResults<Equipment>> getEquipment(List<String> searchedKeys) {
         return realm.where(Equipment.class)
                 .in("key", (String[]) searchedKeys.toArray())
                 .findAll()
@@ -63,8 +66,23 @@ public class RealmInventoryLocalRepository extends RealmBaseLocalRepository impl
     }
 
     @Override
-    public Observable<List<Item>> getOwnedItems(String itemType) {
-        return null;
+    public Observable<? extends RealmResults<? extends Item>> getOwnedItems(String itemType) {
+        Class<? extends Item> itemClass = null;
+        switch (itemType) {
+            case "eggs":
+                itemClass = Egg.class;
+                break;
+            case "hatchingPotions":
+                itemClass = HatchingPotion.class;
+                break;
+            case "food":
+                itemClass = Food.class;
+                break;
+            case "quests":
+                itemClass = QuestContent.class;
+        }
+        return realm.where(itemClass).findAllAsync().asObservable()
+                .filter(RealmResults::isLoaded);
     }
 
     @Override
@@ -122,5 +140,26 @@ public class RealmInventoryLocalRepository extends RealmBaseLocalRepository impl
 
     @Override
     public void changeOwnedCount(String type, String key, int amountToAdd) {
+    }
+
+    @Override
+    public Observable<Item> getItem(String type, String key) {
+        Class<? extends RealmObject> itemClass = null;
+        switch (type) {
+            case "eggs":
+                itemClass = Egg.class;
+                break;
+            case "hatchingPotions":
+                itemClass = HatchingPotion.class;
+                break;
+            case "food":
+                itemClass = Food.class;
+                break;
+            case "quests":
+                itemClass = QuestContent.class;
+        }
+        return realm.where(itemClass).equalTo("key", key).findFirstAsync().asObservable()
+                .filter(realmObject -> realmObject.isLoaded())
+                .cast(Item.class);
     }
 }

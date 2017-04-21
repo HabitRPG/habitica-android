@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,7 +22,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,19 +38,12 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.api.MaintenanceApiService;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
-import com.habitrpg.android.habitica.callbacks.ItemsCallback;
-import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
-import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
-import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
-import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
@@ -61,25 +53,21 @@ import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
-import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.events.commands.SellItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
-import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -94,13 +82,13 @@ import com.habitrpg.android.habitica.interactors.TodoCheckUseCase;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
 import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel;
@@ -109,6 +97,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 import com.habitrpg.android.habitica.userpicture.BitmapUtils;
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
@@ -139,7 +128,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -148,8 +136,7 @@ import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LE
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
-public class MainActivity extends BaseActivity implements Action1<Throwable>, HabitRPGUserCallback.OnUserReceived,
-        TaskScoringCallback.OnTaskScored, TutorialView.OnTutorialReaction {
+public class MainActivity extends BaseActivity implements Action1<Throwable>, TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int GEM_PURCHASE_REQUEST = 111;
@@ -234,9 +221,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private AvatarWithBarsViewModel avatarInHeader;
     private AlertDialog faintDialog;
     private AvatarView sideAvatarView;
-    private Date lastSync;
     private TutorialView activeTutorialView;
-    private boolean isloadingContent;
 
 
     @Override
@@ -244,6 +229,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         return R.layout.activity_main;
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -313,11 +299,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         super.onResume();
 
         //resync, if last sync was more than 10 minutes ago
-        if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
-            if (this.apiClient != null && this.apiClient.hasAuthenticationKeys()) {
-                retrieveUser();
-                this.checkMaintenance();
-            }
+        if (this.apiClient != null && this.apiClient.hasAuthenticationKeys()) {
+            retrieveUser();
+            this.checkMaintenance();
         }
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
@@ -334,7 +318,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         //Recreate the fragment as a result.
         if (activeFragment != null && activeFragment.tabLayout == null) {
             activeFragment = null;
-            drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
+            if (drawer != null) {
+                drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
+            }
         }
 
         if (isAlwaysFinishActivitiesOptionEnabled()) {
@@ -373,8 +359,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
 
     private void saveLoginInformation() {
-        HabiticaApplication.User = user;
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         boolean ans = editor.putString(getString(R.string.SP_username), user.getAuthentication().getLocalAuthentication().getUsername())
@@ -386,6 +370,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     public void displayFragment(BaseMainFragment fragment) {
         if (this.activeFragment != null && fragment.getClass() == this.activeFragment.getClass()) {
             return;
@@ -425,10 +410,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             TimeZone timeZone = calendar.getTimeZone();
             long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
             if (offset != user.getPreferences().getTimezoneOffset()) {
-                Map<String, Object> updateData = new HashMap<>();
-                updateData.put("preferences.timezoneOffset", String.valueOf(offset));
-                userRepository.updateUser(user, updateData)
-                        .subscribe(this::onUserReceived, throwable -> {
+                userRepository.updateUser(user, "preferences.timezoneOffset", String.valueOf(offset))
+                        .subscribe(user1 -> {}, throwable -> {
                         });
             }
             runOnUiThread(() -> {
@@ -438,7 +421,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 if (activeFragment != null) {
                     activeFragment.updateUserData(user);
                 } else {
-                    drawer.setSelectionAtPosition(1);
+                    if (drawer != null) {
+                        drawer.setSelectionAtPosition(1);
+                    }
                 }
             });
 
@@ -511,7 +496,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .withBadgeStyle(badgeStyle);
         }
 
-        this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
+        if (this.drawer != null) {
+            this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
+        }
     }
 
     private void updateUserAvatars() {
@@ -522,7 +509,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     private void updateHeader() {
         updateUserAvatars();
-        setTranslatedFragmentTitle(activeFragment);
+        if (activeFragment != null) {
+            setTranslatedFragmentTitle(activeFragment);
+        }
 
         if (drawer != null) {
             android.support.v7.app.ActionBarDrawerToggle actionBarDrawerToggle = drawer.getActionBarDrawerToggle();
@@ -533,19 +522,21 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     public void updateSidebar() {
-        final IProfile profile = accountHeader.getProfiles().get(0);
-        if (user.getAuthentication() != null) {
-            if (user.getAuthentication().getLocalAuthentication() != null) {
-                profile.withEmail(user.getAuthentication().getLocalAuthentication().getEmail());
+        if (accountHeader != null) {
+            final IProfile profile = accountHeader.getProfiles().get(0);
+            if (user.getAuthentication() != null) {
+                if (user.getAuthentication().getLocalAuthentication() != null) {
+                    profile.withEmail(user.getAuthentication().getLocalAuthentication().getEmail());
+                }
             }
-        }
-        profile.withName(user.getProfile().getName());
-        sideAvatarView.setUser(user);
-        sideAvatarView.onAvatarImageReady(avatarImage -> {
-            profile.withIcon(avatarImage);
+            profile.withName(user.getProfile().getName());
+            sideAvatarView.setUser(user);
+            sideAvatarView.onAvatarImageReady(avatarImage -> {
+                profile.withIcon(avatarImage);
+                accountHeader.updateProfile(profile);
+            });
             accountHeader.updateProfile(profile);
-        });
-        accountHeader.updateProfile(profile);
+        }
 
         if (user.getPreferences() == null || user.getFlags() == null) {
             return;
@@ -557,49 +548,46 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             hasSpecialItems = specialItems.hasSpecialItems();
         }
 
-        IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-        if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
-                || (user.getFlags() != null && !user.getFlags().getClassSelected()))
-                && !hasSpecialItems) {
-            if (item != null) {
-                drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
-            }
-        } else {
-            IDrawerItem newItem;
-            if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
-                newItem = new PrimaryDrawerItem()
-                        .withName(this.getString(R.string.sidebar_skills))
-                        .withEnabled(false)
-                        .withBadge(this.getString(R.string.unlock_lvl_11))
-                        .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+        if (drawer != null) {
+            IDrawerItem item = drawer.getDrawerItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+            if (((user.getPreferences() != null && user.getPreferences().getDisableClasses())
+                    || (user.getFlags() != null && !user.getFlags().getClassSelected()))
+                    && !hasSpecialItems) {
+                if (item != null) {
+                    drawer.removeItem(MainDrawerBuilder.SIDEBAR_SKILLS);
+                }
             } else {
-                newItem = new PrimaryDrawerItem()
-                        .withName(this.getString(R.string.sidebar_skills))
-                        .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
-            }
-            if (item == null) {
-                drawer.addItemAtPosition(newItem, 1);
-            } else {
-                drawer.updateItem(newItem);
+                IDrawerItem newItem;
+                if (user.getStats().getLvl() < MIN_LEVEL_FOR_SKILLS && !hasSpecialItems) {
+                    newItem = new PrimaryDrawerItem()
+                            .withName(this.getString(R.string.sidebar_skills))
+                            .withEnabled(false)
+                            .withBadge(this.getString(R.string.unlock_lvl_11))
+                            .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+                } else {
+                    newItem = new PrimaryDrawerItem()
+                            .withName(this.getString(R.string.sidebar_skills))
+                            .withIdentifier(MainDrawerBuilder.SIDEBAR_SKILLS);
+                }
+                if (item == null) {
+                    drawer.addItemAtPosition(newItem, 1);
+                } else {
+                    drawer.updateItem(newItem);
 
+                }
             }
         }
     }
 
-    @Override
-    public void onUserReceived(User user) {
-        this.user = user;
-        this.lastSync = new Date();
-        MainActivity.this.setUserData(false);
-    }
-
-    public void setActiveFragment(BaseMainFragment fragment) {
+    public void setActiveFragment(@Nullable BaseMainFragment fragment) {
         this.activeFragment = fragment;
         setTranslatedFragmentTitle(fragment);
-        this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
+        if (this.drawer != null && this.activeFragment != null) {
+            this.drawer.setSelectionAtPosition(this.activeFragment.fragmentSidebarPosition, false);
+        }
     }
 
-    private void setTranslatedFragmentTitle(BaseMainFragment fragment) {
+    private void setTranslatedFragmentTitle(@Nullable BaseMainFragment fragment) {
         if (getSupportActionBar() == null) {
             return;
         }
@@ -616,9 +604,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (drawer != null && drawer.getDrawerLayout().isDrawerOpen(GravityCompat.END)) {
-            drawer.getDrawerLayout().closeDrawer(GravityCompat.END);
-            EventBus.getDefault().post(new ToggledEditTagsEvent(false));
         } else {
             super.onBackPressed();
             if (this.activeFragment != null) {
@@ -653,14 +638,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
         userRepository.updateUser(user, event.updateData)
-                .subscribe(this::onUserReceived, throwable -> {
+                .subscribe(user1 -> {}, throwable -> {
                 });
     }
 
     @Subscribe
     public void onEvent(EquipCommand event) {
         this.apiClient.equipItem(event.type, event.key)
-                .subscribe(new ItemsCallback(this, this.user), throwable -> {
+                .subscribe(items -> {}, throwable -> {
                 });
     }
 
@@ -669,13 +654,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
         apiClient.unlockPath(event.path)
-                .subscribe(new UnlockCallback(this, this.user), throwable -> {
+                .subscribe(unlockResponse -> {}, throwable -> {
                 });
     }
 
     @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
-        drawer.setSelection(event.identifier);
+        if (drawer != null) {
+            drawer.setSelection(event.identifier);
+        }
     }
 
     @Subscribe
@@ -696,9 +683,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             observable
                     .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
                     .subscribe(buyResponse -> userRepository.retrieveUser(false)
-                            .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                            .subscribe(user1 -> {}, throwable -> {
                             }), throwable -> {
-                        HttpException error = (HttpException) throwable;
+                        retrofit2.HttpException error = (retrofit2.HttpException) throwable;
                         if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
                             openGemPurchaseFragment(null);
                         }
@@ -770,8 +757,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             }
                     );
         } else {
-            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(event.Reward))
-                    .subscribe(res -> onTaskDataReceived(res, event.Reward), error -> {
+            buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
+                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), SnackbarDisplayType.NORMAL), error -> {
                     });
         }
 
@@ -784,29 +771,24 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Subscribe
-    public void onEvent(final DeleteTaskCommand cmd) {
-        taskRepository.deleteTask(cmd.TaskIdToDelete)
-                .subscribe(aVoid -> EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete)), throwable -> {});
-    }
-
-    @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
         apiClient.openMysteryItem()
                 .subscribe(mysteryItem -> userRepository.retrieveUser(false)
-                        .subscribe(new HabitRPGUserCallback(user1 -> {
+                        .subscribe(user1 -> {
                             OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
                             openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
                             openedEvent.mysteryItem = mysteryItem;
                             EventBus.getDefault().post(openedEvent);
-                            MainActivity.this.onUserReceived(user1);
-                        }), throwable -> {
+                        }, throwable -> {
                         }), throwable -> {
                 });
     }
 
     @Subscribe
     public void openGemPurchaseFragment(@Nullable OpenGemPurchaseFragmentCommand cmd) {
-        drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
+        if (drawer != null) {
+            drawer.setSelection(MainDrawerBuilder.SIDEBAR_PURCHASE);
+        }
     }
 
     @Subscribe
@@ -824,24 +806,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     @Subscribe
-    public void onEvent(SellItemCommand event) {
-        this.apiClient.sellItem(event.item.getType(), event.item.getKey())
-                .subscribe(habitRPGUser -> {
-                    user.setItems(habitRPGUser.getItems());
-                    user.setStats(habitRPGUser.getStats());
-                    setUserData(false);
-                }, throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(final HatchingCommand event) {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             return;
         }
         this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
-                .subscribe(new ItemsCallback(user1 -> {
-                    FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
+                .subscribe(items -> {
+                    FrameLayout petWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
 
                     DataBindingUtils.loadImage(petImageView, "Pet-" + event.usingEgg.getKey() + "-" + event.usingHatchingPotion.getKey());
@@ -864,7 +835,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             })
                             .create();
                     dialog.show();
-                }, this.user), throwable -> {
+                }, throwable -> {
                 });
     }
 
@@ -881,7 +852,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     MainActivity.this.setUserData(false);
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
-                        FrameLayout mountWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
+                        FrameLayout mountWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                         SimpleDraweeView mountImageView = (SimpleDraweeView) mountWrapper.findViewById(R.id.pet_imageview);
 
                         DataBindingUtils.loadImage(mountImageView, "Mount_Icon_" + event.usingPet.getKey());
@@ -890,9 +861,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle(getString(R.string.hatched_pet_title, colorName, animalName))
                                 .setView(mountWrapper)
-                                .setPositiveButton(R.string.close, (hatchingDialog, which) -> {
-                                    hatchingDialog.dismiss();
-                                })
+                                .setPositiveButton(R.string.close, (hatchingDialog, which) -> hatchingDialog.dismiss())
                                 .setNeutralButton(R.string.share, (hatchingDialog, which) -> {
                                     ShareEvent event1 = new ShareEvent();
                                     event1.sharedMessage = getString(R.string.share_raised, colorName, animalName) + " https://habitica.com/social/raise-pet";
@@ -915,44 +884,19 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void reloadContent(ReloadContentEvent event) {
-        if (!this.isloadingContent) {
-            this.isloadingContent = true;
-            this.apiClient.getContent()
-                    .subscribe(contentResult -> {
-                        isloadingContent = false;
-                        ContentReloadedEvent event1 = new ContentReloadedEvent();
-                        EventBus.getDefault().post(event1);
-                    }, throwable -> {
-                    });
-        }
+        this.inventoryRepository.retrieveContent()
+                .subscribe(contentResult -> {}, throwable -> {});
     }
 
-    @Override
-    public void onTaskDataReceived(TaskDirectionData data, Task task) {
-
-        if (task.type.equals("reward")) {
-
-            showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, task.getText()), SnackbarDisplayType.NORMAL);
-
-        } else {
-
-            if (user != null) {
-                notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper, this::retrieveUser,
-                        user, data.getExp(), data.getHp(), data.getGp(), data.getMp(), data.getLvl()))
-                        .subscribe(aVoid -> {
-                            user.getStats().hp = data.getHp();
-                            user.getStats().exp = data.getExp();
-                            user.getStats().mp = data.getMp();
-                            user.getStats().gp = data.getGp();
-                            user.getStats().lvl = data.getLvl();
-                            setUserData(true);
-                        }, throwable -> {});
-            }
-
-            displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+    public void displayTaskScoringResponse(TaskScoringResult data) {
+        if (user != null) {
+            notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
+                    user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp))
                     .subscribe(aVoid -> {}, throwable -> {});
         }
 
+        displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
+                .subscribe(aVoid -> {}, throwable -> {});
     }
 
 
@@ -964,13 +908,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         if (this.faintDialog == null) {
 
-            View customView = getLayoutInflater().inflate(R.layout.dialog_faint, null);
+            View customView = View.inflate(this, R.layout.dialog_faint, null);
             if (customView != null) {
-                View hpBarView = customView.findViewById(R.id.hpBar);
+                ValueBar hpBarView = (ValueBar) customView.findViewById(R.id.hpBar);
 
-                ValueBarBinding hpBar = DataBindingUtil.bind(hpBarView);
-                hpBar.setPartyMembers(true);
-                AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats(), this);
+                hpBarView.setLightBackground(true);
 
                 AvatarView dialogAvatarView = (AvatarView) customView.findViewById(R.id.avatarView);
                 dialogAvatarView.setUser(user);
@@ -982,7 +924,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
                         userRepository.revive(user)
-                                .subscribe(this::onUserReceived, throwable -> {
+                                .subscribe(user1 -> {}, throwable -> {
                                 });
                     })
                     .create();
@@ -1010,7 +952,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     protected void retrieveUser() {
         if (this.userRepository != null) {
             this.userRepository.retrieveUser(true)
-                    .subscribe(this::onUserReceived, throwable -> {
+                    .subscribe(user1 -> {}, throwable -> {
 
                     });
         }
@@ -1060,7 +1002,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
         userRepository.updateUser(user,  updateData)
-                .subscribe(this::onUserReceived, throwable -> {
+                .subscribe(user1 -> {}, throwable -> {
                 });
         this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
@@ -1114,14 +1056,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     public void onEvent(TaskCheckedCommand event) {
         switch (event.Task.type) {
             case Task.TYPE_DAILY: {
-                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.Task.getId()), error -> {
+                dailyCheckUseCase.observable(new DailyCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
+                        .subscribe(this::displayTaskScoringResponse, error -> {
                         });
             }
             break;
             case Task.TYPE_TODO: {
-                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(event.Task, !event.Task.getCompleted()))
-                        .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.Task.getId()), error -> {
+                todoCheckUseCase.observable(new TodoCheckUseCase.RequestValues(user, event.Task, !event.Task.getCompleted()))
+                        .subscribe(this::displayTaskScoringResponse, error -> {
                         });
             }
             break;
@@ -1131,14 +1073,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(ChecklistCheckedCommand event) {
         checklistCheckUseCase.observable(new ChecklistCheckUseCase.RequestValues(event.task.getId(), event.item.getId()))
-                .subscribe(new TaskUpdateCallback(), error -> {
+                .subscribe(task -> {}, error -> {
                 });
     }
 
     @Subscribe
     public void onEvent(HabitScoreEvent event) {
-        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(event.habit, event.Up))
-                .subscribe(new TaskScoringCallback(taskRepository, inventoryRepository, this, event.habit.getId()), error -> {
+        habitScoreUseCase.observable(new HabitScoreUseCase.RequestValues(user, event.habit, event.Up))
+                .subscribe(this::displayTaskScoringResponse, error -> {
                 });
     }
 

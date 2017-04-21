@@ -11,9 +11,9 @@ public class TaskDirectionData {
     private TaskDirectionDataTemp _tmp;
     public Double exp;
     public Double hp;
-    private Double gp;
+    public Double gp;
     public Double mp;
-    private Integer lvl;
+    public Integer lvl;
 
     public float getDelta() {
         return delta;

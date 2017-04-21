@@ -1,29 +1,11 @@
 package com.habitrpg.android.habitica.models.tasks;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by viirus on 06/07/15.
- */
 public class Days extends RealmObject {
 
-    @PrimaryKey
-    String task_id;
-
+    Task task;
     private boolean m, t, w, th, f, s, su;
-
-    public Days() {
-        this.m = false;
-        this.t = false;
-        this.w = false;
-        this.th = false;
-        this.f = false;
-        this.s = true;
-        this.su = true;
-    }
 
     public boolean getT() {
         return t;

@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.models;
 
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
 
@@ -18,11 +20,12 @@ public class Tag extends RealmObject {
     @PrimaryKey
     public String id;
 
-    public String userId;
-    public RealmList<TaskTag> tasks;
+    public User user;
+    public RealmList<Task> tasks;
     String name;
+    boolean challenge;
 
-    public List<TaskTag> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 

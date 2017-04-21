@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase;
 import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 
 import javax.inject.Inject;
@@ -72,15 +73,13 @@ public abstract class BaseWidgetProvider extends AppWidgetProvider {
         return configureRemoteViews(remoteViews, widgetId, columns, rows);
     }
 
-    protected void showToastForTaskDirection(Context context, TaskDirectionData data, String userID) {
+    protected void showToastForTaskDirection(Context context, TaskScoringResult data, String userID) {
         if (userRepository == null) {
             HabiticaApplication.getComponent().inject(this);
         }
-        userRepository.getUser(userID).subscribe(habitRPGUser -> {
-            Pair<String, UiUtils.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUser(habitRPGUser, data.exp, data.hp, data.getGp(), data.mp);
+            Pair<String, UiUtils.SnackbarDisplayType> pair = NotifyUserUseCase.getNotificationAndAddStatsToUser(data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta);
             Toast toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG);
             toast.show();
-        }, throwable -> {});
     }
 
     abstract public int layoutResourceId();
