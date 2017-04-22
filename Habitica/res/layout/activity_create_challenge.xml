@@ -87,6 +87,17 @@
                 android:text="@string/gem_reward"
                 android:textColor="#cc000000" />
 
+            <TextView
+                style="@style/Caption3"
+                android:id="@+id/create_challenge_gem_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="@string/gem_reward"
+                android:textColor="#f74e52"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,8 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableLeft="@drawable/plus"
-                    android:drawableTint="@color/brand_400" />
+                    android:drawableLeft="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
                     android:layout_width="18dp"
@@ -115,7 +125,7 @@
                     android:gravity="center"
                     android:inputType="number"
                     android:textColor="#8a000000"
-                    android:text="1"
+                    android:text="0"
                     android:id="@+id/create_challenge_prize"
                     android:textAlignment="center" />
 
@@ -125,8 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:drawableRight="@drawable/minus"
-                    android:drawableTint="@color/brand_400" />
+                    android:drawableRight="@drawable/challenge_gem_remove_button"/>
 
             </LinearLayout>
 

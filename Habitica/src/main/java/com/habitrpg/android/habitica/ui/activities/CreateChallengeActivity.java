@@ -18,9 +18,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
@@ -63,9 +66,17 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_tag)
     EditText create_challenge_tag;
 
+    @BindView(R.id.create_challenge_gem_error)
+    TextView create_challenge_gem_error;
+
     @BindView(R.id.challenge_location_spinner)
     Spinner challenge_location_spinner;
 
+    @BindView(R.id.challenge_add_gem_btn)
+    Button challenge_add_gem_btn;
+
+    @BindView(R.id.challenge_remove_gem_btn)
+    Button challenge_remove_gem_btn;
 
     @BindView(R.id.create_challenge_task_list)
     RecyclerView create_challenge_task_list;
@@ -112,7 +123,7 @@ public class CreateChallengeActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            if(editMode){
+            if (editMode) {
                 updateChallenge();
             } else {
                 createChallenge();
@@ -129,7 +140,7 @@ public class CreateChallengeActivity extends BaseActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        if(bundle != null) {
+        if (bundle != null) {
             challengeId = bundle.getString(CHALLENGE_ID_KEY, null);
         }
 
@@ -147,13 +158,13 @@ public class CreateChallengeActivity extends BaseActivity {
         String taskIdToDelete = deleteTask.TaskIdToDelete;
         challengeTasks.removeTask(taskIdToDelete);
 
-        if(editMode){
-            if(addedTasks.containsKey(taskIdToDelete)){
+        if (editMode) {
+            if (addedTasks.containsKey(taskIdToDelete)) {
                 addedTasks.remove(taskIdToDelete);
-            } else{
+            } else {
                 removedTasks.put(taskIdToDelete, null);
 
-                if(updatedTasks.containsKey(taskIdToDelete)){
+                if (updatedTasks.containsKey(taskIdToDelete)) {
                     updatedTasks.remove(taskIdToDelete);
                 }
             }
@@ -181,6 +192,8 @@ public class CreateChallengeActivity extends BaseActivity {
         currentVal++;
 
         create_challenge_prize.setText("" + currentVal);
+
+        checkGemAndLocation();
     }
 
     @OnClick(R.id.challenge_remove_gem_btn)
@@ -189,10 +202,37 @@ public class CreateChallengeActivity extends BaseActivity {
         int currentVal = Integer.parseInt(create_challenge_prize.getText().toString());
         currentVal--;
 
-        if (currentVal == 0)
-            currentVal = 1;
-
         create_challenge_prize.setText("" + currentVal);
+
+        checkGemAndLocation();
+    }
+
+    private void checkGemAndLocation() {
+        String inputValue = create_challenge_prize.getText().toString();
+
+        if(inputValue.isEmpty()){
+            inputValue = "0";
+        }
+
+        int currentVal = Integer.parseInt(inputValue);
+
+        // 0 is Tavern
+        int selectedLocation = challenge_location_spinner.getSelectedItemPosition();
+
+        double gemCount = HabiticaApplication.User.getGemCount();
+
+        if (selectedLocation == 0 && currentVal == 0) {
+            create_challenge_gem_error.setVisibility(View.VISIBLE);
+            create_challenge_gem_error.setText(R.string.challenge_create_error_tavern_one_gem);
+        } else if (currentVal > gemCount) {
+            create_challenge_gem_error.setVisibility(View.VISIBLE);
+            create_challenge_gem_error.setText(R.string.challenge_create_error_enough_gems);
+        } else {
+            create_challenge_gem_error.setVisibility(View.GONE);
+        }
+
+        challenge_remove_gem_btn.setEnabled(currentVal != 0);
+
     }
 
     private void fillControls() {
@@ -221,6 +261,22 @@ public class CreateChallengeActivity extends BaseActivity {
         }, Throwable::printStackTrace);
 
         challenge_location_spinner.setAdapter(locationAdapter);
+        challenge_location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                checkGemAndLocation();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        create_challenge_prize.setOnKeyListener((view, i, keyEvent) -> {
+            checkGemAndLocation();
+
+            return false;
+        });
 
         addHabit = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_habit));
         addDaily = createTask(ChallengeTasksRecyclerViewAdapter.TASK_TYPE_ADD_ITEM, resources.getString(R.string.add_daily));
@@ -291,6 +347,8 @@ public class CreateChallengeActivity extends BaseActivity {
                 }
             }
 
+            checkGemAndLocation();
+
             challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
                 tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
             }, Throwable::printStackTrace, () -> {
@@ -344,13 +402,13 @@ public class CreateChallengeActivity extends BaseActivity {
         startActivityForResult(intent, 1);
     }
 
-    private PostChallenge getChallengeData(){
+    private PostChallenge getChallengeData() {
         PostChallenge c = new PostChallenge();
 
         int locationPos = challenge_location_spinner.getSelectedItemPosition();
         Group locationGroup = locationAdapter.getItem(locationPos);
 
-        if(challengeId != null){
+        if (challengeId != null) {
             c.id = challengeId;
         }
 
@@ -419,13 +477,12 @@ public class CreateChallengeActivity extends BaseActivity {
 
             challengeTasks.addTaskUnder(task, taskAbove);
 
-            if(editMode){
+            if (editMode) {
                 addedTasks.put(task.getId(), task);
             }
         } else {
             // don't need to add the task to updatedTasks if its already been added right now
-            if(editMode && !addedTasks.containsKey(task.getId()))
-            {
+            if (editMode && !addedTasks.containsKey(task.getId())) {
                 updatedTasks.put(task.getId(), task);
             }
         }
