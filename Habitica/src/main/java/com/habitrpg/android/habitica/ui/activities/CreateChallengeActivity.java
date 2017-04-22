@@ -306,6 +306,7 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
         bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
+        bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
         if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
             String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
@@ -327,6 +328,7 @@ public class CreateChallengeActivity extends BaseActivity {
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
         bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
+        bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
         if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
             String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();

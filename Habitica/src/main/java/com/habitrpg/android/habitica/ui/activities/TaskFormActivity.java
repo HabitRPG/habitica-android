@@ -88,6 +88,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
     public static final String SHOW_TAG_SELECTION = "show_tag_selection";
+    public static final String SHOW_CHECKLIST = "show_checklist";
     public static final String PARCELABLE_TASK = "parcelable_task";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
     public static final String SAVE_TO_DB = "saveToDb";
@@ -208,6 +209,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private String taskId;
     private String userId;
     private boolean showTagSelection;
+    private boolean showChecklist;
     private boolean setIgnoreFlag;
     private Task task;
     private String allocationMode;
@@ -240,6 +242,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         taskId = bundle.getString(TASK_ID_KEY);
         userId = bundle.getString(USER_ID_KEY);
         showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
+        showChecklist = bundle.getBoolean(SHOW_CHECKLIST, true);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
         setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
@@ -350,6 +353,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             attributeWrapper.setVisibility(View.GONE);
         }
 
+        if(!showChecklist){
+            mainWrapper.removeView(checklistWrapper);
+        }
+
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
@@ -384,7 +391,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
         if (isTodo) {
             emojiToggle2 = (ImageButton) findViewById(R.id.emoji_toggle_btn2);
-        } else {
+        }
+
+        // if showChecklist is inactive the wrapper is wrapper, so the reference can't be found
+        if(emojiToggle2 == null) {
             emojiToggle2 = emojiToggle0;
         }
 
