@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
+import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
 import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -14,6 +16,33 @@ import rx.Observable;
 
 public class DbFlowChallengeLocalRepository implements ChallengeLocalRepository {
 
+    @Override
+    public Observable<Challenge> getChallenge(String id) {
+        return Observable.create(subscriber -> {
+            new Select().from(Challenge.class).where(Condition.column("id").is(id)).async().querySingle(new TransactionListener<Challenge>() {
+                @Override
+                public void onResultReceived(Challenge result) {
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public boolean onReady(BaseTransaction<Challenge> transaction) {
+                    return false;
+                }
+
+                @Override
+                public boolean hasResult(BaseTransaction<Challenge> transaction, Challenge result) {
+                    return true;
+                }
+            });
+        });
+    }
+
+    @Override
+    public Observable<List<Task>> getTasks(Challenge challenge) {
+        return null;
+    }
 
     @Override
     public void setUsersGroups(List<Group> groups) {

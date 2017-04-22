@@ -818,8 +818,14 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         return apiService.createChallenge(challenge).compose(configureApiCallObserver());
     }
 
+
     @Override
-    public Observable<Void> createChallengeTasks(String challengeId, List<Task> tasks) {
+    public Observable<Task> createChallengeTask(String challengeId, Task task) {
+        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks) {
         return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver());
     }
 

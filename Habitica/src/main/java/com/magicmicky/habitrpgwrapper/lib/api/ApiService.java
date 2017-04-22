@@ -292,7 +292,10 @@ public interface ApiService {
     Observable<HabitResponse<Challenge>> createChallenge(@Body PostChallenge challenge);
 
     @POST("tasks/challenge/{challengeId}")
-    Observable<HabitResponse<Void>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);
+    Observable<HabitResponse<Task>> createChallengeTask(@Path("challengeId") String challengeId, @Body Task task);
+
+    @POST("tasks/challenge/{challengeId}")
+    Observable<HabitResponse<List<Task>>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);
 
     @PUT("challenges/{challengeId}")
     Observable<HabitResponse<Challenge>> updateChallenge(@Path("challengeId") String challengeId, @Body PostChallenge challenge);
