@@ -45,10 +45,10 @@
             />
 
     <com.habitrpg.android.habitica.ui.SpeechBubbleView
+        android:id="@+id/speech_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:namePlate="Justin"
-            app:text="@string/avatar_setup_description"
             app:npcDrawable="@drawable/justin_textbox"
             android:layout_marginLeft="@dimen/content_inset"
             android:layout_marginRight="@dimen/content_inset"

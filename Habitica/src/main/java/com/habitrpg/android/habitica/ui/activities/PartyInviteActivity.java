@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.activities;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -53,8 +53,8 @@ public class PartyInviteActivity extends BaseActivity {
     private String userIdToInvite;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            handleUserRecieved(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            handleUserRecieved(user);
         }
 
         @Override
@@ -63,7 +63,7 @@ public class PartyInviteActivity extends BaseActivity {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/gearElementsLayout"
@@ -16,7 +17,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_vertical"
-            android:padding="5dp" />
+            android:layout_margin="12dp"
+            android:scaleType="center"
+            tools:src="@drawable/custom_reward"/>
 
         <LinearLayout
             android:id="@+id/textReward"
@@ -27,9 +30,7 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/task_top_bottom_padding"
             android:paddingEnd="@dimen/reward_spacing"
-            android:paddingLeft="@dimen/task_text_padding"
             android:paddingRight="@dimen/reward_spacing"
-            android:paddingStart="@dimen/task_text_padding"
             android:paddingTop="@dimen/task_top_bottom_padding">
 
             <net.pherth.android.emoji_library.EmojiTextView

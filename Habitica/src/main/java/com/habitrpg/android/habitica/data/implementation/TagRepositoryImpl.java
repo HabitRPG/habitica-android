@@ -2,20 +2,24 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.Tag;
 
 import java.util.Collection;
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Func0;
 
 
 public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> implements TagRepository {
 
     public TagRepositoryImpl(TagLocalRepository localRepository, ApiClient apiClient) {
         super(localRepository, apiClient);
+    }
+
+    @Override
+    public Observable<List<Tag>> getTags() {
+        return localRepository.getTags();
     }
 
     @Override
@@ -51,5 +55,10 @@ public class TagRepositoryImpl extends BaseRepositoryImpl<TagLocalRepository> im
         return Observable.defer(() -> Observable.from(tagIds))
                 .flatMap(this::deleteTag)
                 .toList();
+    }
+
+    @Override
+    public void removeOldTags(List<Tag> onlineTags) {
+        localRepository.removeOldTags(onlineTags);
     }
 }

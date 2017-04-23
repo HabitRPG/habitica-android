@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 /**
  * Created by viirus on 03/08/15.

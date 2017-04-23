@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.tasks.Task" />
+        <import type="com.habitrpg.android.habitica.models.tasks.Task" />
         <import type="android.view.View"/>
 
         <variable

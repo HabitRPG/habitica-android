@@ -16,7 +16,6 @@
   <string name="Language_summary">Cambiar el idioma de Habitica</string>
   <string name="SP_user_qr_code">Tu código QR</string>
   <string name="PS_contact_title">Contactar</string>
-  <string name="unknown_error">Se produjo un error...</string>
   <string name="pref_account_header">Cuenta</string>
   <string name="pref_first_day_of_the_week_title">Primer día de la semana</string>
   <string name="pref_first_day_of_the_week_summary">Primer día de la semana en todos los calendarios</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Invitado a una misión</string>
   <!--Adding tasks-->
   <string name="task_value">Valor</string>
-  <string name="new_todo">Nueva tarea</string>
-  <string name="new_reward">Nueva recompensa</string>
-  <string name="new_daily">Nueva tarea diaria</string>
-  <string name="new_habit">Nuevo hábito</string>
   <string name="action_edit">Editar</string>
   <string name="action_delete">Borrar</string>
   <string name="action_cancel">Cancelar</string>
@@ -222,13 +217,11 @@
   <string name="join">Unirse</string>
   <string name="leader">Líder</string>
   <string name="gems">Gemas</string>
-  <string name="copy_as_todo">Copiar como tarea</string>
   <string name="send_pm">Enviar mensaje privado</string>
   <string name="flag">Marcar</string>
   <string name="delete">Borrar</string>
   <string name="name">Nombre</string>
   <string name="description">Descripción</string>
-  <string name="add_tag">Añadir etiqueta</string>
   <string name="privacy">Privacidad</string>
   <string name="write_message">Escribir mensaje</string>
   <string name="post">Publicar</string>
@@ -385,7 +378,6 @@
   <string name="all_dailies_completed">Ha completado todas las tareas diarias. ¡Buen trabajo!</string>
   <string name="widget_habit_button">Hábitos Habitica</string>
   <string name="widget_dailies">Tareas diarias Habitica</string>
-  <string name="widget_todo_list">Lista de Tareas de Habítica.</string>
   <string name="widget_add_task">Añade tareas Habitica</string>
   <string name="google_services_missing">Los servidores de Google Play no pueden ser encontrados.</string>
   <string name="gem.purchase.toolbartitle">Comprar</string>

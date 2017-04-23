@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.events.commands.RefreshUserCommand;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -12,8 +14,8 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.prefs.TimePreference;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -44,18 +46,20 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public ApiClient apiClient;
     @Inject
     public SoundManager soundManager;
-    public MainActivity activity;
+    @Inject
+    UserRepository userRepository;
     private Context context;
     private TimePreference timePreference;
     private PreferenceScreen pushNotificationsPreference;
     private Preference classSelectionPreference;
     private HabitRPGUser user;
-    private PushNotificationManager pushNotificationManager;
+    @Inject
+    PushNotificationManager pushNotificationManager;
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            PreferencesFragment.this.setUser(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            PreferencesFragment.this.setUser(user);
         }
 
         @Override
@@ -64,7 +68,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };
@@ -73,15 +77,13 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((HabiticaApplication) getActivity().getApplication()).getComponent().inject(this);
+        HabiticaBaseApplication.getComponent().inject(this);
         context = getActivity();
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
             new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(userID)).async().querySingle(userTransactionListener);
         }
-
-        pushNotificationManager = PushNotificationManager.getInstance(this.getActivity());
     }
 
     @Override
@@ -152,6 +154,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
                 startActivityForResult(intent, MainActivity.SELECT_CLASS_RESULT);
             }
             return true;
+        } else if (preference.getKey().equals("reload_content")) {
+            apiClient.getContent().subscribe(contentResult -> {}, throwable -> {});
         }
         return super.onPreferenceTreeClick(preference);
     }
@@ -200,13 +204,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             getActivity().getResources().updateConfiguration(configuration,
                     getActivity().getResources().getDisplayMetrics());
-
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.language", languageHelper.getLanguageCode());
-            apiClient.updateUser(updateData)
-
-                    .subscribe(new MergeUserCallback(activity, user), throwable -> {
-                    });
+            userRepository.updateUser(user, "preferences.language", languageHelper.getLanguageCode())
+                    .subscribe(habitRPGUser -> {}, throwable -> {});
 
             Preferences preferences = user.getPreferences();
             preferences.setLanguage(languageHelper.getLanguageCode());
@@ -229,12 +228,8 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         } else if (key.equals("audioTheme")) {
             String newAudioTheme = sharedPreferences.getString(key, "off");
-
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.sound", newAudioTheme);
-            MergeUserCallback mergeUserCallback = new MergeUserCallback(activity, user);
-            apiClient.updateUser(updateData)
-                    .subscribe(mergeUserCallback, throwable -> {
+            userRepository.updateUser(user, "preferences.sound", newAudioTheme)
+                    .subscribe(habitRPGUser -> {}, throwable -> {
                     });
 
             Preferences preferences = user.getPreferences();
@@ -243,6 +238,9 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             soundManager.setSoundTheme(newAudioTheme);
 
             soundManager.preloadAllFiles();
+        } else if (key.equals("dailyDueDefaultView")) {
+            userRepository.updateUser(user, "preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
+                    .subscribe(habitRPGUser -> {}, throwable -> {});
         }
     }
 
@@ -286,6 +284,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
         if (user != null && user.getPreferences() != null) {
             TimePreference cdsTimePreference = (TimePreference) findPreference("cds_time");
             cdsTimePreference.setText(user.getPreferences().getDayStart() + ":00");
+            findPreference("dailyDueDefaultView").setDefaultValue(user.getPreferences().getDailyDueDefaultView());
         }
     }
 }

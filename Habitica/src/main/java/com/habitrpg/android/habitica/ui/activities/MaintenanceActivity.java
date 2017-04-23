@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
 
 import net.pherth.android.emoji_library.EmojiTextView;
 

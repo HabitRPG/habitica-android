@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.callbacks;
 
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import android.support.annotation.Nullable;
 
@@ -20,11 +20,11 @@ public class HabitRPGUserCallback implements Action1<HabitRPGUser> {
     }
 
     @Override
-    public void call(HabitRPGUser habitRPGUser) {
+    public void call(HabitRPGUser user) {
         // Negue: once everything is refactored to DbFlowTaskLocalRepository, this will be removed
-        habitRPGUser.async().save();
+        user.async().save();
         if (callBack != null) {
-            callBack.onUserReceived(habitRPGUser);
+            callBack.onUserReceived(user);
         }
     }
 

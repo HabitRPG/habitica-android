@@ -16,7 +16,6 @@
   <string name="Language_summary">Ganti bahasa dalam Habitica</string>
   <string name="SP_user_qr_code">QR Kodemu</string>
   <string name="PS_contact_title">Kontak saya</string>
-  <string name="unknown_error">Terjadi kesalahan...</string>
   <string name="pref_account_header">Akun</string>
   <string name="pref_first_day_of_the_week_title">Hari Pertama dalam Minggu</string>
   <string name="pref_first_day_of_the_week_summary">Hari pertama dalam minggu di semua kalender</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Terundang ke Tugas</string>
   <!--Adding tasks-->
   <string name="task_value">Nilai</string>
-  <string name="new_todo">Tugas baru</string>
-  <string name="new_reward">Hadiah baru</string>
-  <string name="new_daily">Keseharian baru</string>
-  <string name="new_habit">Kebiasaan baru</string>
   <string name="action_edit">Edit</string>
   <string name="action_delete">Hapus</string>
   <string name="action_cancel">Batal</string>
@@ -222,13 +217,11 @@
   <string name="join">Gabung</string>
   <string name="leader">Ketua</string>
   <string name="gems">Permata</string>
-  <string name="copy_as_todo">Salin sebagai Tugas</string>
   <string name="send_pm">Kirim PM</string>
   <string name="flag">Tandai</string>
   <string name="delete">Hapus</string>
   <string name="name">Nama </string>
   <string name="description">Deskripsi</string>
-  <string name="add_tag">Beri Label</string>
   <string name="privacy">Privasi</string>
   <string name="write_message">Tulis Pesan</string>
   <string name="post">Kirim</string>
@@ -384,7 +377,6 @@
   <string name="all_dailies_completed">Anda telah menyelesaikan semua keseharianmu. Selamat!</string>
   <string name="widget_habit_button">Habitica Melakukan Kebiasaan</string>
   <string name="widget_dailies">Keseharian Habitica</string>
-  <string name="widget_todo_list">Daftar Tugas Habitica</string>
   <string name="widget_add_task">Habitica Menambahkan Tugas</string>
   <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
   <string name="gem.purchase.toolbartitle">Bayar</string>

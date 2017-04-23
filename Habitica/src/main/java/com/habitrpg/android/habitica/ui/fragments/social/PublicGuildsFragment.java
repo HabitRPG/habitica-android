@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.ui.adapter.social.PublicGuildsRecyclerViewA
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,7 +43,7 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_guild_recyclerview, container, false);
+            view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
             unbinder = ButterKnife.bind(this, view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.activity));

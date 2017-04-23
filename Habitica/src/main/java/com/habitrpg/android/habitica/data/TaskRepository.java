@@ -1,17 +1,19 @@
 package com.habitrpg.android.habitica.data;
 
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observable;
 
 public interface TaskRepository extends BaseRepository  {
-    Observable<ArrayList<Task>> getTasks(String taskType);
+    Observable<List<Task>> getTasks(String taskType, String userID);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
@@ -19,6 +21,13 @@ public interface TaskRepository extends BaseRepository  {
     Observable<Task> scoreChecklistItem(String taskId, String itemId);
 
     Observable<Task> createTask(Task task);
-
     Observable<Task> updateTask(Task task);
+    Observable<Void> deleteTask(String taskID);
+
+    Observable<List<Task>> createTasks(List<Task> newTasks);
+
+    void removeOldTasks(String userID, List<Task> onlineTaskList);
+    void removeOldChecklists(List<ChecklistItem> onlineChecklistItems);
+    void removeOldTaskTags(List<TaskTag> onlineTaskTags);
+    void removeOldReminders(List<RemindersItem> onlineReminders);
 }

@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Schließe positive Gewohnheiten ab, um Gold und Erfahrung zu erhalten! Negative Gewohnheiten fügen Deinem Avatar beim Antippen Schaden zu, versuche diese also im echten Leben zu vermeiden!</string>
-  <string name="tutorial_dailies">Besiege Deine täglichen Aufgaben um Gold und Erfahrung zu erhalten. Vorsicht! Tägliche Aufgaben fügen Dir Schaden zu, wenn Du sie nicht rechtzeitig schaffst.</string>
-  <string name="tutorial_todos">Erledige Deine To-Dos im echten Leben und hake diese ab, um GOLD und ERFAHRUNG zu erhalten und so Belohnungen und neue Features freizuschalten!</string>
-  <string name="tutorial_rewards">Dies sind Deine Belohnungen! Erwirb Gold, indem Du reale Gewohnheiten, tägliche Aufgaben und To-Dos abschließt. Gib dieses hinterher für Belohnungen im Spiel oder selbsterstellte Belohnungen in der Realität aus!</string>
   <string name="tutorial_equipment">Wenn Du Ausrüstung kaufst, taucht diese hier auf. Deine Kampfausrüstung beeinflusst Deine Spielerstatistiken und Dein Kostüm (falls aktiviert) beeinflusst Dein Aussehen.</string>
   <string name="tutorial_items">Verdiene Gegenstände indem Du Aufgaben erledigst und Stufen aufsteigst. Tippe auf einen Gegenstand um ihn zu benutzen!</string>
   <string name="tutorial_pets">Wenn du Aufgaben abschließt, hast Du eine Chance, Eier und Tränke zu finden. Kombiniere sie, um Haustiere auszubrüten.</string>

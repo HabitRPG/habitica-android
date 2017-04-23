@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.Achievement;
+import com.habitrpg.android.habitica.models.Achievement;
 
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;

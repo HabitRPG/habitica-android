@@ -1,9 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="tutorial_habits">Completa le tue Habit (abitudini) positive per guadagnare oro ed esperienza! Le abitudini negative danneggeranno il tuo avatar se le tocchi, quindi cerca di evitarle nella vita reale!</string>
-  <string name="tutorial_dailies">Sconfiggi i tuoi impegni giornalieri (Daily) per guadagnare oro ed esperienza. Attenzione! Le Daily danneggeranno il tuo avatar se non le completerai in tempo.</string>
-  <string name="tutorial_todos">Completa i tuoi To-Do nella vita reale, poi spuntali per ottenere ORO ed ESPERIENZA in modo da poter comprare delle Ricompense e sbloccare nuove funzionalità di gioco!</string>
-  <string name="tutorial_rewards">Queste sono le tue Ricompense! Guadagna oro completando le tue Daily, Habit e To-Do. Poi spendilo in Ricompense nel gioco o nella vita reale!</string>
+  <string name="tutorial_overview">Eccoci qui! Ho creato alcune attività per te basate sui tuoi interessi. Prova ad aggiungerne qualcuna anche tu. Puoi modificare un\'attività toccando il titolo.</string>
+  <string name="tutorial_habits_1">Per prima cosa ci sono le Habit, le abitudini. Possono essere abitudini positive che vuoi migliorare o abitudini negative che vuoi abbandonare.</string>
+  <string name="tutorial_habits_2">Ogni volta che porti a termine un\'abitudine positiva, tocca il + per ottenere esperienza ed oro!</string>
+  <string name="tutorial_habits_3">Se ti fai tentare da un\'abitudine negativa, toccando - il tuo avatar perderà punti salute, per aiutarti a non farlo di nuovo.</string>
+  <string name="tutorial_todos_1">Usa le To-do per tenere traccia delle cose che devi fare solo una volta.</string>
+  <string name="tutorial_todos_2">Se le tue To-do devono essere completate entro un certo giorno, imposta una data di scadenza. Pare che tu possa completarne una, prova!</string>
+  <string name="tutorial_rewards_1">Compra oggetti per il tuo avatar con l\'oro che ottieni!</string>
+  <string name="tutorial_rewards_2">Puoi anche creare delle ricompense reali, basate su ciò che ti motiva.</string>
+  <string name="tutorial_tasks_complete">Per ora è tutto. Se hai bisogno di un ripasso, consulta la sezione FAQ.</string>
   <string name="tutorial_equipment">Quando compri dell\'equipaggiamento, apparirà qui. Il tuo equipaggiamento di battaglia influisce sulle tue statistiche, e il tuo Costume (se attivato) cambia ciò che indossa il tuo avatar.</string>
   <string name="tutorial_items">Guadagnati degli oggetti completando attività e salendo di livello. Tocca un oggetto per usarlo!</string>
   <string name="tutorial_pets">Man mano che porti a termine attività nella vita reale, ora potrai trovare casualmente uova e pozioni. Combinali per far nascere degli animali!</string>

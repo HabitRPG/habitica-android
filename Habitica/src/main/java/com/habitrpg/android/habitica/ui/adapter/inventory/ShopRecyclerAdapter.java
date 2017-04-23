@@ -6,9 +6,9 @@ import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.ui.ItemDetailDialog;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
-import com.magicmicky.habitrpgwrapper.lib.models.ShopCategory;
-import com.magicmicky.habitrpgwrapper.lib.models.ShopItem;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.shops.ShopCategory;
+import com.habitrpg.android.habitica.models.shops.ShopItem;
 
 import org.greenrobot.eventbus.EventBus;
 

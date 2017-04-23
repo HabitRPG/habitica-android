@@ -1,7 +1,11 @@
 package com.habitrpg.android.habitica.components;
 
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseInstanceIDService;
+import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessagingService;
+import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
+import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.SoundManager;
@@ -238,6 +242,14 @@ public interface AppComponent {
     void inject(GemPurchaseActivity gemPurchaseActivity);
 
     void inject(TaskFilterDialog taskFilterDialog);
+
+    void inject(TaskReceiver taskReceiver);
+
+    void inject(TaskAlarmBootReceiver taskAlarmBootReceiver);
+
+    void inject(HabiticaFirebaseInstanceIDService habiticaFirebaseInstanceIDService);
+
+    void inject(HabiticaFirebaseMessagingService habiticaFirebaseMessagingService);
 
     void inject(CreateChallengeActivity createChallengeActivity);
 }

@@ -1,16 +1,24 @@
 package com.habitrpg.android.habitica.data.implementation;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.events.TaskCreatedEvent;
+import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
+import com.playseeds.android.sdk.inappmessaging.Log;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Date;
+import java.util.List;
 
 import rx.Observable;
 
@@ -24,8 +32,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
-    public Observable<ArrayList<Task>> getTasks(String taskType) {
-        return this.localRepository.getTasks(taskType);
+    public Observable<List<Task>> getTasks(String taskType, String userID) {
+        return this.localRepository.getTasks(taskType, userID);
     }
 
     @Override
@@ -62,7 +70,12 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
-        return apiClient.createItem(task);
+        lastTaskAction = now;
+        return apiClient.createItem(task)
+                .doOnNext(task1 -> {
+                    localRepository.saveTask(task1);
+                    EventBus.getDefault().post(new TaskCreatedEvent(task1));
+                });
     }
 
     @Override
@@ -71,6 +84,42 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
         if (lastTaskAction > now-500) {
             return Observable.empty();
         }
-        return apiClient.updateTask(task.getId(), task);
+        lastTaskAction = now;
+        return apiClient.updateTask(task.getId(), task)
+                .doOnNext(task1 -> {
+                    localRepository.saveTask(task1);
+                    EventBus.getDefault().post(new TaskUpdatedEvent(task1));
+                });
+    }
+
+    @Override
+    public Observable<Void> deleteTask(String taskID) {
+        return apiClient.deleteTask(taskID)
+                .doOnNext(aVoid -> localRepository.deleteTask(taskID));
+    }
+
+    @Override
+    public Observable<List<Task>> createTasks(List<Task> newTasks) {
+        return apiClient.createTasks(newTasks);
+    }
+
+    @Override
+    public void removeOldTasks(String userID, List<Task> onlineTaskList) {
+        localRepository.removeOldTasks(userID, onlineTaskList);
+    }
+
+    @Override
+    public void removeOldChecklists(List<ChecklistItem> onlineChecklistItems) {
+        localRepository.removeOldChecklists(onlineChecklistItems);
+    }
+
+    @Override
+    public void removeOldTaskTags(List<TaskTag> onlineTaskTags) {
+        localRepository.removeOldTaskTags(onlineTaskTags);
+    }
+
+    @Override
+    public void removeOldReminders(List<RemindersItem> onlineReminders) {
+        localRepository.removeOldReminders(onlineReminders);
     }
 }

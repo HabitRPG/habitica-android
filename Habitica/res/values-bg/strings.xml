@@ -38,9 +38,9 @@
   <string name="preference_push_invited_to_quest">Получихте покана за мисия</string>
   <!--Adding tasks-->
   <string name="task_value">Стойност</string>
-  <string name="new_todo">Нова задача за изпълнение</string>
+  <string name="new_todo">Нова задача</string>
   <string name="new_reward">Нова награда</string>
-  <string name="new_daily">Нова ежедневна задача</string>
+  <string name="new_daily">Нова ежедневна</string>
   <string name="new_habit">Нов навик</string>
   <string name="action_edit">Редактиране</string>
   <string name="action_delete">Изтриване</string>
@@ -187,8 +187,8 @@
   <string name="intro_2_subtitle">Напредък в играта</string>
   <string name="intro_2_title">Напредък в живота</string>
   <string name="intro_2_description">Отключвайте функционалности в играта като отбелязвате завършените задачи в истинския си живот. За изпълнението на целите си ще получавате екипировка, любимци и най-различни други награди.</string>
-  <string name="intro_3_subtitle">Общувайте</string>
-  <string name="intro_3_title">Бийте се с чудовища</string>
+  <string name="intro_3_subtitle">Бийте се с чудовища</string>
+  <string name="intro_3_title">Общувайте</string>
   <string name="intro_3_description">Приятелите Ви могат да Ви помогнат да постигнете целите си. Подкрепяйте се взаимно в живота и битките, за да израснете заедно!</string>
   <string name="intro_finish_button">Да започваме!</string>
   <string name="previous_button">Назад</string>
@@ -197,8 +197,10 @@
   <string name="setup_welcome_description">Добре дошли в Хабитика, където напредването в играта ще подобри истинския Ви живот! Докато изпълнявате реалните си цели, ще отключвате екипировка, любимци, мисии и още.</string>
   <string name="setup_welcome_title">Добре дошли</string>
   <string name="avatar_setup_description">Е, как искате да изглеждате? Не се притеснявайте, по-късно ще можете да промените това.</string>
+  <string name="task_setup_description">Страхотно! И така, върху какво искате да поработите по време на това пътешествие?</string>
   <string name="setup_group_work">Работа</string>
   <string name="setup_group_exercise">Упражнения</string>
+  <string name="setup_group_health">Здраве</string>
   <string name="setup_group_school">Училище</string>
   <string name="setup_group_teams">Екипи</string>
   <string name="setup_group_chores">Домакинска работа</string>
@@ -238,7 +240,7 @@
   <string name="delete">Изтриване</string>
   <string name="name">Име</string>
   <string name="description">Описание</string>
-  <string name="add_tag">Добавяне на етикет</string>
+  <string name="add_tag">Добавяне на нов етикет</string>
   <string name="privacy">Поверителност</string>
   <string name="write_message">Напишете съобщение</string>
   <string name="post">Изпр.</string>
@@ -395,7 +397,7 @@
   <string name="all_dailies_completed">Изпълнихте всичките си ежедневни задачи. Добра работа!</string>
   <string name="widget_habit_button">Извършване на навик в Хабитика</string>
   <string name="widget_dailies">Ежедневни задачи в Хабитика</string>
-  <string name="widget_todo_list">Задачи за изпълнение в Хабитика</string>
+  <string name="widget_todo_list">Списък за изпълнение в Хабитика</string>
   <string name="widget_add_task">Добавяне на задача в Хабитика</string>
   <string name="google_services_missing">Услугите за „Google play“ не могат да бъдат намерени.</string>
   <string name="gem.purchase.toolbartitle">Купуване</string>
@@ -519,8 +521,22 @@
   <string name="avatar_wheelchair">Инвалидна количка</string>
   <string name="weak">Слаби</string>
   <string name="strong">Силни</string>
-  <string name="gray">Сиви</string>
+  <string name="gray">Изпълнени</string>
   <string name="dated">С дата</string>
   <string name="completed">Завършени</string>
   <string name="setuP_group_other">Други</string>
+  <string name="clear">Изчистване</string>
+  <string name="empty_title_habits">Нямате навици</string>
+  <string name="empty_description_habits">Навиците са задачи, които не се влияят от времето. Можете да ги отмятате много пъти през деня или пък да ги пропуснете.</string>
+  <string name="empty_title_dailies">Нямате ежедневни задачи</string>
+  <string name="empty_description_dailies">Ежедневните задачи са такива, които се повтарят през определено време. Изберете кога трябва де ги изпълнявате.</string>
+  <string name="empty_title_todos">Нямате задачи за изпълнение</string>
+  <string name="empty_description_todos">Задачите за изпълнение трябва да бъдат изпълнение само веднъж. Към тях можете да добавите подзадачи, като така ще увеличите стойността им.</string>
+  <string name="empty_title_rewards">Нямате награди</string>
+  <string name="reset_walkthrough">Нулиране на съветите на Джъстин</string>
+  <string name="read_community_guidelines">Моля, прочетете Обществените правила, преди да публикувате</string>
+  <string name="maintenance">Профилактика</string>
+  <string name="reload_content">Презареждане на съдържанието</string>
+  <string name="dailyDueDefaultView">Ежедневните по подразбиране да са неизпълнени</string>
+  <string name="dailyDueDefaultViewDescription">Ако това е избрано, ежедневните задачи по подразбиране ще се появяват в раздела с неизпълнени, вместо в този с всички задачи</string>
 </resources>

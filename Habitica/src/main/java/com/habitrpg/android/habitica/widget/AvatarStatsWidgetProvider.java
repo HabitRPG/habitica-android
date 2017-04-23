@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -32,8 +32,8 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
     private AppWidgetManager appWidgetManager;
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            updateData(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            updateData(user);
         }
 
         @Override
@@ -42,7 +42,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

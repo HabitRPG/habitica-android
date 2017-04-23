@@ -38,10 +38,10 @@
   <string name="preference_push_invited_to_quest">Invitation à une quête</string>
   <!--Adding tasks-->
   <string name="task_value">Valeur</string>
-  <string name="new_todo">Nouvelle tâche</string>
-  <string name="new_reward">Nouvelle récompense</string>
-  <string name="new_daily">Nouvelle tâche quotidienne</string>
-  <string name="new_habit">Nouvelle habitude</string>
+  <string name="new_todo">Nouvelle tâche À Faire</string>
+  <string name="new_reward">Nouvelle Récompense</string>
+  <string name="new_daily">Nouvelle Quotidienne</string>
+  <string name="new_habit">Nouvelle Habitude</string>
   <string name="action_edit">Modifier</string>
   <string name="action_delete">Supprimer</string>
   <string name="action_cancel">Annuler</string>
@@ -187,8 +187,7 @@
   <string name="intro_2_subtitle">Progrès en jeu</string>
   <string name="intro_2_title">Progrès dans la vie</string>
   <string name="intro_2_description">Débloquez des fonctionnalités en jeu en validant vos tâches dans la vraie vie. Obtenez des équipements, des familiers, et d\'autres récompenses pour l\'accomplissement de vos objectifs.</string>
-  <string name="intro_3_subtitle">Sociabilisez-vous</string>
-  <string name="intro_3_title">Combattez des monstres</string>
+  <string name="intro_3_subtitle">Combattez des monstres</string>
   <string name="intro_3_description">Restez sur les rails de l\'accomplissement de vos buts avez l\'aide de vos amis. Épaulez-vous dans la vie et dans la bataille en vous améliorant ensemble !</string>
   <string name="intro_finish_button">C\'est parti !</string>
   <string name="previous_button">Précédent</string>
@@ -197,8 +196,10 @@
   <string name="setup_welcome_description">Bienvenue sur Habitica, où progresser dans le jeu améliorera votre vie quotidienne ! En accomplissant vos buts dans le monde réel, vous débloquerez de l’expérience, des animaux, des quêtes, et bien plus encore.</string>
   <string name="setup_welcome_title">Bienvenue</string>
   <string name="avatar_setup_description">Alors, à quoi voudriez-vous ressembler ? Ne vous inquiétez pas, vous pourrez changer d\'apparence plus tard.</string>
+  <string name="task_setup_description">Bien ! Maintenant, que voudriez-vous travailler pendant cette aventure ?</string>
   <string name="setup_group_work">Travailler</string>
   <string name="setup_group_exercise">Faire de l\'exercice</string>
+  <string name="setup_group_health">Santé</string>
   <string name="setup_group_school">Ecole</string>
   <string name="setup_group_teams">Equipes</string>
   <string name="setup_group_chores">Tâches ménagères</string>
@@ -232,13 +233,12 @@
   <string name="join">Rejoindre</string>
   <string name="leader">Responsable</string>
   <string name="gems">Gemmes</string>
-  <string name="copy_as_todo">Copier comme tâche À Faire</string>
+  <string name="copy_as_todo">Copier comme une tâche À Faire</string>
   <string name="send_pm">Envoyer un MP</string>
   <string name="flag">Signaler</string>
   <string name="delete">Supprimer</string>
   <string name="name">Nom</string>
   <string name="description">Description</string>
-  <string name="add_tag">Ajouter une étiquette</string>
   <string name="privacy">Sécurité</string>
   <string name="write_message">Écrire un message</string>
   <string name="post">Envoyer</string>
@@ -395,7 +395,6 @@
   <string name="all_dailies_completed">Vous avez accompli toutes vos tâches quotidiennes. Bravo !</string>
   <string name="widget_habit_button">Réaliser une tâche Habitica</string>
   <string name="widget_dailies">Quotidiennes Habitica</string>
-  <string name="widget_todo_list">Liste des tâches À faire Habitica</string>
   <string name="widget_add_task">Ajouter une tâche Habitica</string>
   <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
   <string name="gem.purchase.toolbartitle">Acheter</string>
@@ -519,8 +518,15 @@
   <string name="avatar_wheelchair">Fauteuil roulant</string>
   <string name="weak">Faibles</string>
   <string name="strong">Fortes</string>
-  <string name="gray">Grisées</string>
   <string name="dated">Datées</string>
   <string name="completed">Terminé</string>
   <string name="setuP_group_other">Autre</string>
+  <string name="clear">Effacer</string>
+  <string name="empty_title_habits">Vous n\'avez aucune habitude</string>
+  <string name="empty_description_habits">Les habitudes sont des tâches qui n\'ont pas de planning défini. Vous pouvez les valider plusieurs fois par jour, ou pas du tout.</string>
+  <string name="empty_title_dailies">Vous n\'avez aucune tâche quotidienne</string>
+  <string name="empty_description_dailies">Les quotidiennes sont des tâches qui se répètent de façon régulière. Choisissez la planification qui vous convient !</string>
+  <string name="empty_title_todos">Vous n\'avez aucune tâche à faire</string>
+  <string name="empty_description_todos">Les tâches à faire sont des tâches qui ne doivent être validées qu\'une seule fois. Ajoutez des listes de vérifications pour augmenter leur valeur.</string>
+  <string name="empty_title_rewards">Vous n\'avez aucune récompense</string>
 </resources>

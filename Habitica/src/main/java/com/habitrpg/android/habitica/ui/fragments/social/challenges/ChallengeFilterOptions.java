@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import java.util.List;
 

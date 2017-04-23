@@ -6,10 +6,10 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.habitrpg.android.habitica.R;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +27,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
     private Context context;
     private boolean isAnimating;
     private boolean isOffScreen;
+    @Nullable
+    private FloatingActionMenu fab;
 
     public FloatingActionMenuBehavior(Context context, AttributeSet attrs) {
         super();
@@ -84,6 +86,12 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        ViewGroup fabContainer = (ViewGroup) child.findViewById(R.id.floating_menu_wrapper);
+        if (fabContainer.getChildCount() > 0) {
+            if (fabContainer.getChildAt(0).getClass().equals(FloatingActionMenu.class)) {
+                fab = (FloatingActionMenu) fabContainer.getChildAt(0);
+            }
+        }
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
                 super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
     }
@@ -92,6 +100,10 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, final View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
+        if (fab == null) {
+            return;
+        }
+
         /*
         Logic:
             - If we're scrolling downwards or we're at the bottom of the screen
@@ -99,8 +111,8 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
          */
         if ((dyConsumed > 20 || (dyConsumed == 0 && dyUnconsumed > 0)) && !isAnimating && !isOffScreen) {
             isAnimating = true;
-            slideFabOffScreen(child);
-            resetAnimatingStatusWithDelay(child);
+            slideFabOffScreen(fab);
+            resetAnimatingStatusWithDelay(fab);
             isOffScreen = true;
 
         /*
@@ -110,37 +122,26 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
          */
         } else if (isOffScreen && ((dyConsumed < -10 && !isAnimating) || dyUnconsumed < 0)) {
             isAnimating = true;
-            slideFabOnScreen(child);
-            resetAnimatingStatusWithDelay(child);
+            slideFabOnScreen(fab);
+            resetAnimatingStatusWithDelay(fab);
             isOffScreen = false;
         }
     }
 
-    private void resetAnimatingStatusWithDelay(final View child) {
+    private void resetAnimatingStatusWithDelay(final FloatingActionMenu child) {
         child.postDelayed(() -> {
             isAnimating = false;
-            FloatingActionMenu fab = (FloatingActionMenu) ((ViewGroup) child).getChildAt(0);
             if (isOffScreen && fab != null) {
-                fab.hideMenu(false);
+                child.hideMenu(false);
             }
         }, FAB_ANIMATION_DURATION);
     }
 
-    private void slideFabOffScreen(View view) {
-        Animation slideOff = AnimationUtils.loadAnimation(context, R.anim.fab_slide_out);
-        slideOff.setDuration(FAB_ANIMATION_DURATION);
-        slideOff.setFillAfter(true);
-        view.startAnimation(slideOff);
+    private void slideFabOffScreen(FloatingActionMenu view) {
+        view.hideMenu(true);
     }
 
-    private void slideFabOnScreen(View view) {
-        Animation slideIn = AnimationUtils.loadAnimation(context, R.anim.fab_slide_in);
-        slideIn.setDuration(FAB_ANIMATION_DURATION);
-        slideIn.setFillAfter(true);
-        FloatingActionMenu fab = (FloatingActionMenu) ((ViewGroup) view).getChildAt(0);
-        view.startAnimation(slideIn);
-        if (fab != null) {
-            fab.showMenu(false);
-        }
+    private void slideFabOnScreen(FloatingActionMenu view) {
+        view.showMenu(true);
     }
 }

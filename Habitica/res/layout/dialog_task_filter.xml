@@ -8,12 +8,15 @@
     android:layout_width="match_parent"
     android:layout_height="2dp"
     android:background="@color/pill_gray"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/task_type_title"
@@ -60,7 +63,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/tags_title"
@@ -80,7 +85,9 @@
                     android:layout_gravity="right"
                     android:text="@string/edit_tag_btn_edit"
                     android:textColor="#6133b4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    android:paddingRight="0dp"/>
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"

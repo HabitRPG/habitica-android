@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Notification;
-import com.magicmicky.habitrpgwrapper.lib.models.notifications.Reward;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.Notification;
+import com.habitrpg.android.habitica.models.notifications.Reward;
 
 import android.content.Context;
 
@@ -70,15 +71,18 @@ public class PopupNotificationsManager {
         DataBindingUtils.loadImage(imageView, imageKey);
 
         TextView youEarnedTexView = (TextView) view.findViewById(R.id.you_earned_message);
+        youEarnedTexView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
         youEarnedTexView.setText(youEarnedMessage);
 
         String message = context.getString(R.string.nextPrizeUnlocks, notification.data.nextRewardAt);
         TextView nextUnlockTextView = (TextView) view.findViewById(R.id.next_unlock_message);
+        nextUnlockTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorLight));
         nextUnlockTextView.setText(message);
 
         Button confirmButton = (Button) view.findViewById(R.id.confirm_button);
+        confirmButton.setTextColor(ContextCompat.getColor(context, R.color.brand_300));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity)
+        AlertDialog.Builder builder = new AlertDialog.Builder(HabiticaApplication.currentActivity, R.style.AlertDialogTheme)
                 .setTitle(title)
                 .setView(view)
                 .setMessage("");

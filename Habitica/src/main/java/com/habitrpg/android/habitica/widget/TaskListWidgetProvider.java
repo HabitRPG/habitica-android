@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.widget;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirection;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.responses.TaskDirection;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

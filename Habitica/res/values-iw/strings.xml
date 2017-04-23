@@ -15,7 +15,6 @@
   <string name="Language_title">שפה</string>
   <string name="SP_user_qr_code">קוד ה QR שלכם</string>
   <string name="PS_contact_title">צרו איתי קשר</string>
-  <string name="unknown_error">ארעה תקלה...</string>
   <string name="pref_account_header">חשבון</string>
   <string name="pref_first_day_of_the_week_title">היום הראשון בשבוע</string>
   <string name="pref_reminder_header">תזכורת יומית</string>
@@ -32,10 +31,6 @@
   <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
   <!--Adding tasks-->
   <string name="task_value">ערך</string>
-  <string name="new_todo">מטרה חדשה</string>
-  <string name="new_reward">פרס חדש</string>
-  <string name="new_daily">מטלה יומית חדשה</string>
-  <string name="new_habit">הרגל חדש</string>
   <string name="action_edit">עריכה</string>
   <string name="action_delete">מחיקה</string>
   <string name="action_cancel">ביטול</string>
@@ -214,13 +209,11 @@
   <string name="join">הצטרפו</string>
   <string name="leader">מנהיג</string>
   <string name="gems">אבני חן</string>
-  <string name="copy_as_todo">העתקה כמשימה</string>
   <string name="send_pm">שילחו הודעה פרטית</string>
   <string name="flag">דיווח</string>
   <string name="delete">מחיקה</string>
   <string name="name">שם</string>
   <string name="description">תיאור</string>
-  <string name="add_tag">הוסיפו תגית</string>
   <string name="privacy">פרטיות</string>
   <string name="write_message">כיתבו הודעה</string>
   <string name="post">שליחה</string>

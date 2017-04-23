@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.ui.activities.CreateChallengeActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.sql.language.Where;

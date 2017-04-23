@@ -16,7 +16,6 @@
   <string name="Language_summary">Habiticas Sprache ändern</string>
   <string name="SP_user_qr_code">Dein QR Code</string>
   <string name="PS_contact_title">Kontaktiere mich</string>
-  <string name="unknown_error">Ein Fehler ist aufgetreten...</string>
   <string name="pref_account_header">Konto</string>
   <string name="pref_first_day_of_the_week_title">Erster Tag der Woche</string>
   <string name="pref_first_day_of_the_week_summary">Erster Tag der Woche in allen Kalendern</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
   <!--Adding tasks-->
   <string name="task_value">Wert</string>
-  <string name="new_todo">Neuer To-Do-Eintrag</string>
-  <string name="new_reward">Neue Belohnung</string>
-  <string name="new_daily">Neue tägliche Aufgabe</string>
-  <string name="new_habit">Neue Gewohnheit</string>
   <string name="action_edit">Bearbeiten</string>
   <string name="action_delete">Löschen</string>
   <string name="action_cancel">Abbrechen</string>
@@ -187,7 +182,6 @@
   <string name="intro_2_subtitle">Fortschritt im Spiel</string>
   <string name="intro_2_title">Fortschritt im Leben</string>
   <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken deiner realen Aufgaben frei. Bekomme Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen deiner Ziele.</string>
-  <string name="intro_3_title">Bekämpfe Monster</string>
   <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
   <string name="intro_finish_button">Fangen wir an!</string>
   <string name="previous_button">Zurück</string>
@@ -198,6 +192,7 @@
   <string name="avatar_setup_description">Also, wie möchtest Du aussehen? Keine Sorge, Du kannst das jederzeit ändern.</string>
   <string name="setup_group_work">Arbeit</string>
   <string name="setup_group_exercise">Bewegung</string>
+  <string name="setup_group_health">Gesundheit</string>
   <string name="setup_group_school">Schule</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Hausarbeit</string>
@@ -231,13 +226,11 @@
   <string name="join">Beitreten</string>
   <string name="leader">Anführer</string>
   <string name="gems">Edelsteine</string>
-  <string name="copy_as_todo">Als To-Do kopieren</string>
   <string name="send_pm">PN senden</string>
   <string name="flag">Melden</string>
   <string name="delete">Löschen</string>
   <string name="name">Name</string>
   <string name="description">Beschreibung</string>
-  <string name="add_tag">Tag hinzufügen</string>
   <string name="privacy">Privatsphäre</string>
   <string name="write_message">Nachricht schreiben</string>
   <string name="post">posten</string>
@@ -394,7 +387,6 @@
   <string name="all_dailies_completed">Du hast alle deine täglichen Aufgaben erledigt. Gut gemacht!</string>
   <string name="widget_habit_button">Habitica: Gewohnheit</string>
   <string name="widget_dailies">Habitica: Tägliche Aufgaben</string>
-  <string name="widget_todo_list">Habitica-To-Do-Liste</string>
   <string name="widget_add_task">Habitica: Neue Aufgabe</string>
   <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden</string>
   <string name="gem.purchase.toolbartitle">Kaufen</string>
@@ -498,6 +490,7 @@
   <string name="done">Fertig</string>
   <string name="group_tasks_edit_description">Gruppenaufgaben können nicht bearbeitet werden.</string>
   <string name="group_tasks_edit_title">Aufgabe kann nicht bearbeitet werden</string>
+  <string name="groups">Gruppen</string>
   <string name="all">Alles</string>
   <string name="none">Nichts</string>
   <string name="owned">Im Besitz</string>
@@ -514,5 +507,14 @@
   <string name="avatar_wheelchair">Rollstuhl</string>
   <string name="weak">Schwach</string>
   <string name="strong">Stark</string>
-  <string name="gray">Grau</string>
+  <string name="completed">Vervollständigt</string>
+  <string name="setuP_group_other">Anderes</string>
+  <string name="clear">löschen</string>
+  <string name="empty_title_habits">Du hast keine Gewohnheiten</string>
+  <string name="empty_description_habits">Gewohnheiten sind Aufgaben ohne festen Zeitplan. Du kannst sie mehrmals am Tag oder gar nicht abhaken.</string>
+  <string name="empty_title_dailies">Du hast keine täglichen Aufgaben</string>
+  <string name="empty_description_dailies">Tägliche Aufgaben sind sich regelmäßig wiederholende Aufgaben. Such Dir den Zeitplan aus, der Dir am besten passt!</string>
+  <string name="empty_title_todos">Du hast keine To-Dos</string>
+  <string name="empty_description_todos">To-Dos sind Aufgaben, die nur einmal abgehakt werden. Füge Unteraufgaben zu To-Dos hinzu, um deren Wert zu steigern.</string>
+  <string name="empty_title_rewards">Du hast keine Belohnungen</string>
 </resources>

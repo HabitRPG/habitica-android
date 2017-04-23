@@ -2,9 +2,8 @@ package com.habitrpg.android.habitica.api;
 
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,6 @@ import android.os.Build;
 
 import java.util.UUID;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;

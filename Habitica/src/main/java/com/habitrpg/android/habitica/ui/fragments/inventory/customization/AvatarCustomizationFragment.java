@@ -5,9 +5,9 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.OrderBy;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -93,6 +93,8 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                 .and(Condition.CombinedCondition.begin(Condition.column("purchased").eq(true))
                         .or(Condition.column("price").eq(0))
                         .or(Condition.column("price").isNull())
+                        .or(Condition.column("isBuyable").eq(true))
+                        .or(Condition.column("isBuyable").isNull())
                         .or(Condition.CombinedCondition.begin(
                                 Condition.CombinedCondition.begin(Condition.column("availableUntil").isNull())
                                         .or(Condition.column("availableUntil").greaterThanOrEq(new Date().getTime())))

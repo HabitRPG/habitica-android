@@ -18,7 +18,7 @@
     <string name="Language_summary">Change Habitica\'s language</string>
     <string name="SP_user_qr_code">Your QR Code</string>
     <string name="PS_contact_title">Contact me</string>
-    <string name="unknown_error">An error happened…</string>
+    <string name="unknown_error">An error occurred…</string>
     <string name="pref_account_header">Account</string>
     <string name="pref_first_day_of_the_week_title">First Day of the Week</string>
     <string name="pref_first_day_of_the_week_summary">First day of the week in all calendars</string>
@@ -45,10 +45,10 @@
 
     <!-- Adding tasks -->
     <string name="task_value">Value</string>
-    <string name="new_todo">New todo</string>
-    <string name="new_reward">New reward</string>
-    <string name="new_daily">New daily</string>
-    <string name="new_habit">New habit</string>
+    <string name="new_todo">New To-Do</string>
+    <string name="new_reward">New Reward</string>
+    <string name="new_daily">New Daily</string>
+    <string name="new_habit">New Habit</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
@@ -210,8 +210,8 @@
     <string name="intro_2_subtitle">Progress in the game</string>
     <string name="intro_2_title">Progress in life</string>
     <string name="intro_2_description">Unlock features in the game by checking off your real life tasks. Earn armor, pets, and more as rewards for meeting your goals.</string>
-    <string name="intro_3_subtitle">Get social</string>
-    <string name="intro_3_title">Fight monsters</string>
+    <string name="intro_3_subtitle">Fight monsters</string>
+    <string name="intro_3_title">Get social</string>
     <string name="intro_3_description">Keep your goals on track with help from your friends. Support each other in life and in battle as you improve together!</string>
     <string name="intro_finish_button">Let\'s start!</string>
     <string name="previous_button">Previous</string>
@@ -258,13 +258,13 @@
     <string name="join">Join</string>
     <string name="leader">Leader</string>
     <string name="gems">Gems</string>
-    <string name="copy_as_todo">Copy as ToDo</string>
+    <string name="copy_as_todo">Copy as To-Do</string>
     <string name="send_pm">Send PM</string>
     <string name="flag">Flag</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
-    <string name="add_tag">Add Tag</string>
+    <string name="add_tag">Add new Tag</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
     <string name="post">Post</string>
@@ -424,7 +424,7 @@
     <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
     <string name="widget_habit_button">Habitica Do Habit</string>
     <string name="widget_dailies">Habitica Dailies</string>
-    <string name="widget_todo_list">Habitica Todo List</string>
+    <string name="widget_todo_list">Habitica To-Do List</string>
     <string name="widget_add_task">Habitica Add Task</string>
     <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem.purchase.toolbartitle">Purchase</string>
@@ -551,11 +551,24 @@
     <string name="avatar_wheelchair">Wheelchair</string>
     <string name="weak">Weak</string>
     <string name="strong">Strong</string>
-    <string name="gray">Gray</string>
+    <string name="gray">Grey</string>
     <string name="dated">Dated</string>
     <string name="completed">Completed</string>
     <string name="setuP_group_other">Other</string>
     <string name="clear">Clear</string>
+    <string name="empty_title_habits">You don\'t have any Habits</string>
+    <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
+    <string name="empty_title_dailies">You don\'t have any Dailies</string>
+    <string name="empty_description_dailies">Dailies are tasks that repeat on a regular basis. Choose the schedule that works for you!</string>
+    <string name="empty_title_todos">You don\'t have any To-Dos</string>
+    <string name="empty_description_todos">To-Dos are tasks that only need to be completed once. Add checklists to your To-Dos to increase their value.</string>
+    <string name="empty_title_rewards">You don\'t have any Rewards</string>
+    <string name="reset_walkthrough">Reset Justins Walkthrough</string>
+    <string name="read_community_guidelines">Please read our Community Guidelines before posting</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="reload_content">Reload Content</string>
+    <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
+    <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
     <string name="save">Save</string>
     <string name="location">Location</string>
     <string name="gem_reward">Gem reward</string>

@@ -4,7 +4,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;

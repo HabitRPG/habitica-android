@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.List;
 

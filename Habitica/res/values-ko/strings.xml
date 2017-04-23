@@ -16,7 +16,6 @@
   <string name="Language_summary">Habitica의 언어 바꾸기</string>
   <string name="SP_user_qr_code">당신의 QR코드</string>
   <string name="PS_contact_title">연락처</string>
-  <string name="unknown_error">오류가 발생했습니다...</string>
   <string name="pref_account_header">계정</string>
   <string name="pref_first_day_of_the_week_title">일주일의 첫날</string>
   <string name="pref_first_day_of_the_week_summary">모든 달력에서 일주일의 첫날</string>
@@ -38,10 +37,6 @@
   <string name="preference_push_invited_to_quest">퀘스트에 초대를 받았음</string>
   <!--Adding tasks-->
   <string name="task_value">값</string>
-  <string name="new_todo">새로운 할 일</string>
-  <string name="new_reward">새로운 보상</string>
-  <string name="new_daily">새로운 일일과제</string>
-  <string name="new_habit">새로운 습관</string>
   <string name="action_edit">수정</string>
   <string name="action_delete">삭제</string>
   <string name="action_cancel">취소</string>
@@ -186,8 +181,6 @@
   <string name="intro_2_subtitle">게임의 진전</string>
   <string name="intro_2_title">삶의 진전</string>
   <string name="intro_2_description">실제 삶에서의 일을 처리하는 것으로 게임의 특색들을 잠금해제 하세요. 목표를 달성해 갑옷, 펫, 그리고 더 많은 것들을 얻으세요.</string>
-  <string name="intro_3_subtitle">친목을 다지세요</string>
-  <string name="intro_3_title">몬스터와 싸우세요</string>
   <string name="intro_3_description">친구들의 도움으로 당신의 목표를 유지시키세요. 일상 생활과 전투에서 서로를 도와가며 함께 성장하세요!</string>
   <string name="intro_finish_button">시작합시다!</string>
   <string name="previous_button">이전</string>
@@ -237,13 +230,11 @@
   <string name="join">가입하기</string>
   <string name="leader">리더</string>
   <string name="gems">보석</string>
-  <string name="copy_as_todo">해야할 일로 복사하기</string>
   <string name="send_pm">개인 메시지 보내기</string>
   <string name="flag">신고</string>
   <string name="delete">삭제</string>
   <string name="name">이름</string>
   <string name="description">설명</string>
-  <string name="add_tag">태그 더하기</string>
   <string name="privacy">개인정보 보호</string>
   <string name="write_message">메세지 작성</string>
   <string name="post">게시</string>
@@ -400,7 +391,6 @@
   <string name="all_dailies_completed">오늘의 모든 일일과제를 달성하셨습니다. 잘 했어요!</string>
   <string name="widget_habit_button">Habitica 습관</string>
   <string name="widget_dailies">Habitica 일일과제</string>
-  <string name="widget_todo_list">Habitica 해야 할 일 목록</string>
   <string name="widget_add_task">Habitica 과제 추가</string>
   <string name="google_services_missing">구글 플레이 서비스를 찾을 수 없습니다.</string>
   <string name="gem.purchase.toolbartitle">구매</string>

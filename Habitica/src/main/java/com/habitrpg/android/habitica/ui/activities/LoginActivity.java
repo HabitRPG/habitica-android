@@ -26,9 +26,9 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView;
 import com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.UserAuthResponse;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.auth.UserAuthResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -178,9 +178,11 @@ public class LoginActivity extends BaseActivity
         backgroundContainer.post(() -> backgroundContainer.scrollTo(0, backgroundContainer.getBottom()));
         backgroundContainer.setScrollingEnabled(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
@@ -348,7 +350,7 @@ public class LoginActivity extends BaseActivity
         if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
             //This is necessary because the regular login callback is not called for some reason
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            if (accessToken.getToken() != null) {
+            if (accessToken != null && accessToken.getToken() != null) {
                 apiClient.connectSocial("facebook", accessToken.getUserId(), accessToken.getToken())
                         .subscribe(LoginActivity.this, throwable -> hideProgress());
             }

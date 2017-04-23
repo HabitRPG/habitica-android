@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social.challenges;
 
 
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
@@ -14,8 +14,8 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder;
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import android.content.Context;
 import android.databinding.ObservableList;
@@ -92,7 +92,7 @@ public class ChallengeTasksRecyclerViewFragment extends BaseFragment {
 
         challengeTasksRecyclerViewAdapter.setDailyResetOffset(user.getPreferences().getDayStart());
 
-        if (tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
+        if (tasksOnInitialize != null && tasksOnInitialize.size() != 0 && recyclerAdapter != null && recyclerAdapter.getItemCount() == 0) {
             recyclerAdapter.setTasks(tasksOnInitialize);
         }
     }

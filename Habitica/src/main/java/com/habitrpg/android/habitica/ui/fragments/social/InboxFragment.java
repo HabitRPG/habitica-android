@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.prefs.scanner.IntentIntegrator;
 import com.habitrpg.android.habitica.prefs.scanner.IntentResult;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import android.content.Context;
 import android.content.Intent;

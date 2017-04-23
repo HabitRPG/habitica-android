@@ -8,12 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

@@ -1,16 +1,11 @@
 package com.habitrpg.android.habitica.ui.adapter.setup;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -18,16 +13,13 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +59,9 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private boolean isCustomizationActive(SetupCustomization customization) {
+        if (this.user == null) {
+            return false;
+        }
         Preferences prefs = this.user.getPreferences();
         switch (customization.category) {
             case "body": {
@@ -99,7 +94,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             case "extras": {
                 switch (customization.subcategory) {
                     case "glasses":
-                        return customization.key.equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || (this.user.getItems().getGear().getEquipped().getEyeWear() == null && customization.key.length() == 0);
+                        return customization.key.equals(this.user.getItems().getGear().getEquipped().getEyeWear()) || ("eyewear_base_0".equals(this.user.getItems().getGear().getEquipped().getEyeWear()) && customization.key.length() == 0);
                     case "flower":
                         return Integer.parseInt(customization.key) == prefs.getHair().getFlower();
                     case "wheelchair":
@@ -108,14 +103,6 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
             }
         }
         return false;
-    }
-
-    private String getHairColor() {
-        if (this.user != null) {
-            return this.user.getPreferences().getHair().getColor();
-        } else {
-            return "";
-        }
     }
 
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -154,7 +141,7 @@ public class CustomizationSetupAdapter extends RecyclerView.Adapter<RecyclerView
                 imageView.setImageDrawable(null);
             }
             textView.setText(customization.text);
-            if ("flowers".equals(customization.subcategory)) {
+            if (!"0".equals(customization.key) && "flower".equals(customization.subcategory)) {
                 if (isCustomizationActive(customization)) {
                     imageView.setBackgroundResource(R.drawable.setup_customization_flower_bg_selected);
                 } else {

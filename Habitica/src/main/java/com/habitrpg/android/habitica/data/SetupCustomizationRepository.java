@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.data;
 
 
-import com.magicmicky.habitrpgwrapper.lib.models.Customization;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import java.util.List;
 

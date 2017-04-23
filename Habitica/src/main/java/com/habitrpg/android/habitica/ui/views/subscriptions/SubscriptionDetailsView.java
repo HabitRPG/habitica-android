@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views.subscriptions;
 
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 
 import android.content.ComponentName;
 import android.content.Context;

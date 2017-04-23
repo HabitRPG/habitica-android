@@ -19,11 +19,11 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeDet
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeTasksRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.LeaveChallengeBody;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.LeaveChallengeBody;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.tasks.Task;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

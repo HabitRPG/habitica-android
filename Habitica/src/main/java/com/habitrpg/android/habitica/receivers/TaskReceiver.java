@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.receivers;
 
+import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
@@ -14,6 +15,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
+import javax.inject.Inject;
+
 /**
  * Created by keithholliday on 5/29/16.
  */
@@ -23,12 +26,13 @@ public class TaskReceiver extends BroadcastReceiver {
 
     private String taskId;
     private String taskTitle;
-    private TaskAlarmManager taskAlarmManager;
+    @Inject
+    TaskAlarmManager taskAlarmManager;
 
     @Override
     public void onReceive(Context arg0, Intent arg1) {
         context = arg0;
-        taskAlarmManager = TaskAlarmManager.getInstance(context);
+        HabiticaApplication.getComponent().inject(this);
 
         Bundle extras = arg1.getExtras();
 

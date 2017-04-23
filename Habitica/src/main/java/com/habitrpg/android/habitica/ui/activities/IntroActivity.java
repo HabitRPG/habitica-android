@@ -1,11 +1,10 @@
 package com.habitrpg.android.habitica.ui.activities;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment;
-import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
@@ -60,9 +59,11 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
         apiClient.getContent()
                 .subscribe(contentResult -> {}, throwable -> {});
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_20_alpha));
+            }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 

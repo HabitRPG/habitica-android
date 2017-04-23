@@ -12,15 +12,15 @@ import com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.SpecialItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Item;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.inventory.SpecialItem;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -72,6 +72,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Item hatchingItem;
     public Pet feedingPet;
     public HashMap<String, Integer> ownedPets;
+    @Nullable
     public HabitRPGUser user;
     LinearLayoutManager layoutManager = null;
 
@@ -156,7 +157,7 @@ public class ItemRecyclerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (this.isHatching != null && this.isHatching) {
+        if (this.isHatching != null && this.isHatching && getDialog().getWindow() != null) {
             ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -202,7 +203,7 @@ public class ItemRecyclerFragment extends BaseFragment {
         }
 
         if (this.itemType.equals("special")) {
-            if (user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
+            if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
                 Item mysterItem = SpecialItem.makeMysteryItem(getContext());
                 mysterItem.setOwned(user.getPurchased().getPlan().mysteryItems.size());
                 items.add(mysterItem);

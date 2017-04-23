@@ -4,11 +4,12 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.executors.PostExecutionThread;
 import com.habitrpg.android.habitica.executors.ThreadExecutor;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Stats;
 
 import javax.inject.Inject;
 
@@ -21,35 +22,31 @@ import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 public class NotifyUserUseCase extends UseCase<NotifyUserUseCase.RequestValues, Stats> {
 
     public static final int MIN_LEVEL_FOR_SKILLS = 11;
+    private final UserRepository userRepository;
     private LevelUpUseCase levelUpUseCase;
 
     @Inject
     public NotifyUserUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
-                             LevelUpUseCase levelUpUseCase) {
+                             LevelUpUseCase levelUpUseCase, UserRepository userRepository) {
         super(threadExecutor, postExecutionThread);
         this.levelUpUseCase = levelUpUseCase;
+        this.userRepository = userRepository;
     }
 
     @Override
-    protected Observable<Stats> buildUseCaseObservable(RequestValues r) {
+    protected Observable<Stats> buildUseCaseObservable(RequestValues requestValues) {
         return Observable.defer(() -> {
-            Stats stats = r.user.getStats();
+            Stats stats = requestValues.user.getStats();
 
-            if (r.lvl > stats.getLvl()) {
-                levelUpUseCase.observable(new LevelUpUseCase.RequestValues(r.user, r.lvl, r.context))
-                        .subscribe(aVoid -> {
-                            r.retrieveUser.call();
-                            stats.setLvl(r.lvl);
-                        }, throwable -> {
-                        });
+            if (requestValues.lvl > stats.getLvl()) {
+                return levelUpUseCase.observable(new LevelUpUseCase.RequestValues(requestValues.user, requestValues.lvl, requestValues.context))
+                        .flatMap(aVoid -> userRepository.retrieveUser(false))
+                        .map(HabitRPGUser::getStats);
             } else {
-
-                Pair<String, UiUtils.SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(r.user, r.xp, r.hp, r.gold, r.mp);
-
-                showSnackbar(r.context, r.snackbarTargetView, pair.first, pair.second);
+                Pair<String, UiUtils.SnackbarDisplayType> pair = getNotificationAndAddStatsToUser(requestValues.user, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp);
+                showSnackbar(requestValues.context, requestValues.snackbarTargetView, pair.first, pair.second);
+                return Observable.just(stats);
             }
-
-            return Observable.just(stats);
         });
     }
 

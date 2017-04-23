@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.habitrpg.android.habitica.HabiticaApplication;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
@@ -16,8 +15,8 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 

@@ -5,17 +5,21 @@ import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.implementation.ChallengeRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.SetupCustomizationRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TagRepositoryImpl;
 import com.habitrpg.android.habitica.data.implementation.TaskRepositoryImpl;
+import com.habitrpg.android.habitica.data.implementation.UserRepositoryImpl;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
+import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowChallengeLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.DbFlowTaskLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.TagLocalRepositoryImpl;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowTagLocalRepository;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.local.implementation.DbFlowUserLocalRepository;
 
 import android.content.Context;
 
@@ -59,11 +63,21 @@ public class RepositoryModule {
 
     @Provides
     TagLocalRepository providesTagLocalRepository() {
-        return new TagLocalRepositoryImpl();
+        return new DbFlowTagLocalRepository();
     }
 
     @Provides
     TagRepository providesTagRepository(TagLocalRepository localRepository, ApiClient apiClient) {
         return new TagRepositoryImpl(localRepository, apiClient);
+    }
+
+    @Provides
+    UserLocalRepository providesUserLocalRepository() {
+        return new DbFlowUserLocalRepository();
+    }
+
+    @Provides
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient) {
+        return new UserRepositoryImpl(localRepository, apiClient);
     }
 }

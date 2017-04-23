@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.ui.AvatarView;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
 import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
@@ -52,8 +52,8 @@ public class QrCodeManager {
 
     private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
         @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            QrCodeManager.this.avatarView.setUser(habitRPGUser);
+        public void onResultReceived(HabitRPGUser user) {
+            QrCodeManager.this.avatarView.setUser(user);
         }
 
         @Override
@@ -62,7 +62,7 @@ public class QrCodeManager {
         }
 
         @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
+        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser user) {
             return true;
         }
     };

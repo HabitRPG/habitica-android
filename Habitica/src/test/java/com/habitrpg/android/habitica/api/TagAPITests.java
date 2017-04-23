@@ -1,8 +1,7 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.Tag;
 
 import junit.framework.Assert;
 
@@ -15,7 +14,6 @@ import android.os.Build;
 
 import java.util.UUID;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)

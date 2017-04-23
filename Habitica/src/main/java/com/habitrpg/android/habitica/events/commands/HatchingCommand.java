@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 
 public class HatchingCommand {
 

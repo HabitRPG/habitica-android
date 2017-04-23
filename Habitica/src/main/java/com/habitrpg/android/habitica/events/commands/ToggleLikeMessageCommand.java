@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.events.commands;
 
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
 
 /**
  * Created by Negue on 02.09.2015.

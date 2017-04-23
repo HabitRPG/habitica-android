@@ -107,7 +107,7 @@ public class AboutFragment extends Fragment {
         String bodyOfEmail = "Device: " + device +
                 " \nAndroid Version: " + version +
                 " \nAppVersion: " + getString(R.string.version_info, versionName, versionCode) +
-                " \nUser ID: " + userId +
+                " \nHabitRPGUser ID: " + userId +
                 " \nDetails: ";
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(

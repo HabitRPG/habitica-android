@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.helpers;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+import android.support.annotation.Nullable;
+
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +25,19 @@ public class TaskFilterHelper {
         this.tagsId.add(tags);
     }
 
-    public int howMany(String type) {
-        return this.tagsId.size() + (activeFilters.get(type) != null || Task.FILTER_ACTIVE.equals(activeFilters.get(type)) ? 1 : 0);
+    public int howMany(@Nullable String type) {
+        return this.tagsId.size() + (isTaskFilterActive(type) ? 1 : 0);
+    }
+
+    private boolean isTaskFilterActive(@Nullable String type) {
+        if (activeFilters.get(type) == null) {
+            return false;
+        }
+        if (Task.TYPE_TODO.equals(type)) {
+            return !Task.FILTER_ACTIVE.equals(activeFilters.get(type));
+        } else {
+            return !Task.FILTER_ALL.equals(activeFilters.get(type));
+        }
     }
 
     public List<String> getTags() {
@@ -40,8 +53,14 @@ public class TaskFilterHelper {
     }
 
     public List<Task> filter(List<Task> tasks) {
+        if (tasks.size() == 0) {
+            return tasks;
+        }
         List<Task> filtered = new ArrayList<>();
-        String activeFilter = activeFilters.get(tasks.get(0).type);
+        String activeFilter = null;
+        if (activeFilters != null && activeFilters.size() > 0) {
+            activeFilter = activeFilters.get(tasks.get(0).type);
+        }
         for (Task task : tasks) {
             if (isFiltered(task, activeFilter)) {
                 filtered.add(task);
@@ -51,7 +70,7 @@ public class TaskFilterHelper {
         return filtered;
     }
 
-    private boolean isFiltered(Task task, String activeFilter) {
+    private boolean isFiltered(Task task, @Nullable String activeFilter) {
         if (!task.containsAllTagIds(tagsId)) {
             return false;
         }

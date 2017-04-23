@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.helpers;
 
 import com.habitrpg.android.habitica.R;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRpgClass;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.HabitRpgClass;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
 
 import junit.framework.Assert;
 

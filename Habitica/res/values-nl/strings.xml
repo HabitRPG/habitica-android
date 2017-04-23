@@ -16,7 +16,7 @@
   <string name="Language_summary">Verander Habitica\'s taal</string>
   <string name="SP_user_qr_code">Je QR code</string>
   <string name="PS_contact_title">Contact</string>
-  <string name="unknown_error">Er ging iets mis...</string>
+  <string name="unknown_error">Een fout is opgetreden...</string>
   <string name="pref_account_header">Account</string>
   <string name="pref_first_day_of_the_week_title">Eerste dag van de week</string>
   <string name="pref_first_day_of_the_week_summary">Eerste dag van de week op alle kalenders</string>
@@ -187,8 +187,8 @@
   <string name="intro_2_subtitle">Vooruitgang in het spel</string>
   <string name="intro_2_title">Vooruitgang in je leven</string>
   <string name="intro_2_description">Ontgrendel functies in het spel door taken in je echte leven af te vinken. Verdien uitrusting, huisdieren en meer als beloning voor het bereiken van je doelen.</string>
-  <string name="intro_3_subtitle">Word sociaal</string>
-  <string name="intro_3_title">Vecht tegen monsters</string>
+  <string name="intro_3_subtitle">Vecht tegen monsters</string>
+  <string name="intro_3_title">Wordt sociaal</string>
   <string name="intro_3_description">Houd je doelen op peil met hulp van je vrienden. Ondersteun elkaar in het leven en vecht samen terwijl je steeds beter wordt.</string>
   <string name="intro_finish_button">Laten we beginnen!</string>
   <string name="previous_button">Vorige</string>
@@ -197,8 +197,10 @@
   <string name="setup_welcome_description">Welkom in Habitica, waar vooruitgang in het spel je leven zal verbeteren! Terwijl je echte doelen bereikt, verdien je uitrusting, huisdieren, queestes en meer.</string>
   <string name="setup_welcome_title">Welkom</string>
   <string name="avatar_setup_description">Dus, hoe wil jij er uit zien? Geen zorgen, je kan dit later veranderen.</string>
+  <string name="task_setup_description">Geweldig! Nu, waar zou je graag aan willen werken doorheen deze reis?</string>
   <string name="setup_group_work">Werk</string>
   <string name="setup_group_exercise">Sport</string>
+  <string name="setup_group_health">Gezondheid</string>
   <string name="setup_group_school">School</string>
   <string name="setup_group_teams">Teams</string>
   <string name="setup_group_chores">Klusjes</string>
@@ -238,7 +240,7 @@
   <string name="delete">Verwijderen</string>
   <string name="name">Naam</string>
   <string name="description">Beschrijving</string>
-  <string name="add_tag">Label toevoegen</string>
+  <string name="add_tag">Nieuwe label toevoegen</string>
   <string name="privacy">Privacy</string>
   <string name="write_message">Bericht schrijven</string>
   <string name="post">Post</string>
@@ -395,7 +397,7 @@
   <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
   <string name="widget_habit_button">Habitica Doe Gewoonte</string>
   <string name="widget_dailies">Habitica Dagelijkse taken</string>
-  <string name="widget_todo_list">Habitica To-do Lijst</string>
+  <string name="widget_todo_list">Habitica to-do lijst</string>
   <string name="widget_add_task">Habitica Voeg taak toe</string>
   <string name="google_services_missing">Google play diensten niet gevonden.</string>
   <string name="gem.purchase.toolbartitle">Kopen</string>
@@ -513,6 +515,28 @@
   <string name="avatar_extras">Extra\'s</string>
   <string name="avatar_skin_color">Huidskleur</string>
   <string name="avatar_hair_color">Haarkleur</string>
+  <string name="avatar_hair_bangs">Pony</string>
+  <string name="avatar_hair_ponytail">Paardenstaart</string>
   <string name="avatar_glasses">Bril</string>
   <string name="avatar_wheelchair">Rolstoel</string>
+  <string name="weak">Zwak</string>
+  <string name="strong">Sterk</string>
+  <string name="gray">Grijd</string>
+  <string name="dated">Gedateerd</string>
+  <string name="completed">Voltooid</string>
+  <string name="setuP_group_other">Andere</string>
+  <string name="clear">Wissen</string>
+  <string name="empty_title_habits">Je hebt geen gewoontes</string>
+  <string name="empty_description_habits">Gewoontes zijn taken die geen vast schema hebben. Je kan ze meerdere keren per dag afvinken of helemaal niet.</string>
+  <string name="empty_title_dailies">Je hebt geen dagelijkse taken</string>
+  <string name="empty_description_dailies">Dagelijkse taken zijn taken die op een vast schema herhalen. Kies de routine die voor jou werkt!</string>
+  <string name="empty_title_todos">Je hebt geen to-do\'s</string>
+  <string name="empty_description_todos">To-do\'s zijn taken die slechts een keer voltooid moeten worden. Voeg checklijsten aan je to-do\'s toe om hun waarde te verhogen.</string>
+  <string name="empty_title_rewards">Je hebt geen beloningen</string>
+  <string name="reset_walkthrough">Herstart Justin\'s inleiding</string>
+  <string name="read_community_guidelines">Lees alsjeblieft onze gemeenschapsrichtlijnen voordat je berichten plaatst</string>
+  <string name="maintenance">Onderhoud</string>
+  <string name="reload_content">Inhoud herladen</string>
+  <string name="dailyDueDefaultView">Standaard de \'Onvoltooid\' tab laten zien in Dagelijkse Taken</string>
+  <string name="dailyDueDefaultViewDescription">Als deze optie aan staat, wordt standaard de \'onvoltooid\' tab getoond in plaats van \'alle\'</string>
 </resources>

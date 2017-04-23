@@ -1,16 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks;
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.habitrpg.android.habitica.components.AppComponent;
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
-import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser;
-import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.support.annotation.Nullable;
@@ -18,6 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.habitrpg.android.habitica.HabiticaBaseApplication;
+import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
+import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
+import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,8 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
     public String taskType;
     @Inject
     protected CrashlyticsProxy crashlyticsProxy;
+    @Inject
+    protected TaskRepository taskRepository;
     protected List<Task> content;
     protected List<Task> filteredContent;
     private int layoutResource;
@@ -118,33 +117,16 @@ public abstract class BaseTasksRecyclerViewAdapter<VH extends BaseTaskViewHolder
 
     public void loadContent(boolean forced) {
         if (this.content == null || forced) {
-            List<Task> tasks = new ArrayList<>();
-            Observable.defer(() -> Observable.just(new Select().from(Task.class)
-                    .where(Condition.column("type").eq(this.taskType))
-                    .and(Condition.CombinedCondition
-                            .begin(Condition.column("completed").eq(false))
-                            .or(Condition.column("type").eq("daily"))
-                    )
-                    .and(Condition.column("user_id").eq(this.userID))
-                    .orderBy(OrderBy.columns("position", "dateCreated").descending())
-                    .queryList()))
+            taskRepository.getTasks(this.taskType, this.userID)
                     .flatMap(Observable::from)
                     .map(task -> {
-                        try {
-                            task.parsedText = MarkdownParser.parseMarkdown(task.getText());
-                        } catch (NullPointerException e) {
-                            task.parsedText = task.getText();
-                        }
-                        try {
-                            task.parsedNotes = MarkdownParser.parseMarkdown(task.getNotes());
-                        } catch (NullPointerException e) {
-                            task.parsedNotes = task.getNotes();
-                        }
+                        task.parseMarkdown();
                         return task;
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(tasks::add, crashlyticsProxy::logException, () -> setTasks(tasks));
+                    .toList()
+                    .subscribe(this::setTasks, crashlyticsProxy::logException);
         }
     }
 

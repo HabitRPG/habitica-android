@@ -1,10 +1,9 @@
 package com.habitrpg.android.habitica.api;
 
 import com.habitrpg.android.habitica.BuildConfig;
-import com.magicmicky.habitrpgwrapper.lib.models.ChatMessage;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.PostChatMessageResult;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
+import com.habitrpg.android.habitica.models.social.ChatMessage;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.responses.PostChatMessageResult;
 
 import org.junit.After;
 import org.junit.Test;
@@ -19,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.observers.TestSubscriber;
 
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M)

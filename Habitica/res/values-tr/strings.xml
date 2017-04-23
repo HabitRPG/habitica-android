@@ -38,10 +38,10 @@
   <string name="preference_push_invited_to_quest">Göreve Davet Edildin</string>
   <!--Adding tasks-->
   <string name="task_value">Değer</string>
-  <string name="new_todo">Yeni yapılacak iş</string>
-  <string name="new_reward">Yeni ödül</string>
-  <string name="new_daily">Yeni günlük iş</string>
-  <string name="new_habit">Yeni alışkanlık</string>
+  <string name="new_todo">Yeni Yapılacak İş</string>
+  <string name="new_reward">Yeni Ödül</string>
+  <string name="new_daily">Yeni Günlük İş</string>
+  <string name="new_habit">Yeni Alışkanlık</string>
   <string name="action_edit">Düzenle</string>
   <string name="action_delete">Sil</string>
   <string name="action_cancel">İptal et</string>
@@ -187,8 +187,8 @@
   <string name="intro_2_subtitle">Oyun gelişimi</string>
   <string name="intro_2_title">Hayatta gelişim</string>
   <string name="intro_2_description">Gerçek hayatındaki işlerini tamamlayarak oyun içindeki özellikleri aç. Zırh, evcil hayvan ve daha fazlasını hedeflerine ulaştığında ödül olarak kazan.</string>
-  <string name="intro_3_subtitle">Sosyalleş</string>
-  <string name="intro_3_title">Canavarlarla Savaş</string>
+  <string name="intro_3_subtitle">Canavarlarla savaş</string>
+  <string name="intro_3_title">Sosyalleş</string>
   <string name="intro_3_description">Hedeflerini arkadaşlarından yardım alarak devam ettir. Hayatta ve savaşlarda birbirinizi birlikte geliştirerek destek olun!</string>
   <string name="intro_finish_button">Hadi başlayalım!</string>
   <string name="previous_button">Önceki</string>
@@ -197,8 +197,10 @@
   <string name="setup_welcome_description">Habitica\'ya hoşgeldin, oyunda ilerledikçe gerçek hayatını da geliştireceksin! Gerçek hayat hedeflerine ulaştıkça, ekipman, evcil hayvan, görevler ve dahasını da ortaya çıkaracaksın.</string>
   <string name="setup_welcome_title">Hoş Geldin</string>
   <string name="avatar_setup_description">Nasıl görünmek istersin? Dert etme, daha sonra bunları değiştirebilirsin.</string>
+  <string name="task_setup_description">Müthiş! Şimdi, bu yolculukta neyi geliştirmek istiyorsun?</string>
   <string name="setup_group_work">İş</string>
   <string name="setup_group_exercise">Egzersiz</string>
+  <string name="setup_group_health">Sağlık</string>
   <string name="setup_group_school">Okul</string>
   <string name="setup_group_teams">Takımlar</string>
   <string name="setup_group_chores">Günlük İşler</string>
@@ -238,7 +240,6 @@
   <string name="delete">Sil</string>
   <string name="name">Ad</string>
   <string name="description">Tanım</string>
-  <string name="add_tag">Etiket Ekle</string>
   <string name="privacy">Gizlilik</string>
   <string name="write_message">Mesaj Yaz</string>
   <string name="post">Gönder</string>
@@ -523,4 +524,9 @@
   <string name="dated">Tarihli</string>
   <string name="completed">Tamamlanmış</string>
   <string name="setuP_group_other">Diğer</string>
+  <string name="clear">Temizle</string>
+  <string name="empty_title_habits">Hiç Alışkanlık sahibi değilsin</string>
+  <string name="empty_title_dailies">Hiç Günlük İş sahibi değilsin</string>
+  <string name="empty_title_todos">Hiç Yapılacak İş sahibi değilsin</string>
+  <string name="empty_title_rewards">Hiç Ödül sahibi değilsin</string>
 </resources>

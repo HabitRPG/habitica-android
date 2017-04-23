@@ -7,9 +7,9 @@ import android.preference.PreferenceManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.RemoteMessage;
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.PushDevice;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.PushDevice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,29 +27,17 @@ public class PushNotificationManager {
     static final String QUEST_BEGUN_PUSH_NOTIFICATION_KEY = "questStarted";
     static final String WON_CHALLENGE_PUSH_NOTIFICATION_KEY = "wonChallenge";
     private static final String DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference";
-    private static PushNotificationManager instance = null;
-    @Inject
+    private final Context context;
     public ApiClient apiClient;
 
     private String refreshedToken;
     private SharedPreferences sharedPreferences;
-    private Context context;
     private HabitRPGUser user;
 
-    protected PushNotificationManager(Context context) {
-        HabiticaBaseApplication.getComponent().inject(this);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public static PushNotificationManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new PushNotificationManager(context.getApplicationContext());
-        }
-
-        instance.refreshedToken = instance.sharedPreferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "");
-        instance.context = context.getApplicationContext();
-
-        return instance;
+    public PushNotificationManager(ApiClient apiClient, SharedPreferences sharedPreferences, Context context) {
+        this.apiClient = apiClient;
+        this.sharedPreferences = sharedPreferences;
+        this.context = context;
     }
 
     public void setUser(HabitRPGUser user) {
@@ -131,6 +119,10 @@ public class PushNotificationManager {
         String key = "";
 
         //@TODO: If user has push turned off to send
+
+        if (type == null) {
+            return true;
+        }
 
         if (type.equals(PARTY_INVITE_PUSH_NOTIFICATION_KEY)) {
             key = "preference_push_invited_to_party";

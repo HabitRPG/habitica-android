@@ -39,6 +39,7 @@ public class LoginBackgroundView extends RelativeLayout {
     private int width;
     private int height;
     private boolean didLayoutStars = false;
+    private FrameLayout.LayoutParams params;
 
     public LoginBackgroundView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -50,6 +51,7 @@ public class LoginBackgroundView extends RelativeLayout {
         super.onFinishInflate();
         ButterKnife.bind(this, this);
         starViews = new ArrayList<>();
+        params = new FrameLayout.LayoutParams(0, 0);
         generateStars();
         animateClouds();
     }
@@ -72,7 +74,9 @@ public class LoginBackgroundView extends RelativeLayout {
         this.width = parentWidth;
         this.height = (int)(parentHeight*SIZE_FACTOR);
         this.setMeasuredDimension(width, height);
-        this.setLayoutParams(new FrameLayout.LayoutParams(width, height));
+        params.width = width;
+        params.height = height;
+        this.setLayoutParams(params);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -83,7 +87,7 @@ public class LoginBackgroundView extends RelativeLayout {
     }
 
     public void generateStars() {
-        generateStars(1, 10, 20);
+        generateStars(1, 12, 25);
     }
 
     private void generateStars(int largeCount, int mediumCount, int smallCount) {

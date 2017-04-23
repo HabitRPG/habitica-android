@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.Group" />
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent" />
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.invitations.PartyInvite" />
-        <import type="com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser" />
+        <import type="com.habitrpg.android.habitica.models.social.Group" />
+        <import type="com.habitrpg.android.habitica.models.inventory.QuestContent" />
+        <import type="com.habitrpg.android.habitica.models.invitations.PartyInvite" />
+        <import type="com.habitrpg.android.habitica.models.user.HabitRPGUser" />
         <import type="android.view.View" />
         <import type="android.text.Html"/>
 

@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.ui.adapter.social;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
 import com.habitrpg.android.habitica.ui.fragments.social.GuildFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
+import com.habitrpg.android.habitica.models.social.Group;
 
 import org.greenrobot.eventbus.EventBus;
 

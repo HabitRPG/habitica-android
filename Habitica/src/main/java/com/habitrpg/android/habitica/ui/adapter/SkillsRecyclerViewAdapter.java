@@ -4,7 +4,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
+import com.habitrpg.android.habitica.models.Skill;
 
 import org.greenrobot.eventbus.EventBus;
 

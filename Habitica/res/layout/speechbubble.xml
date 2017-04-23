@@ -14,50 +14,63 @@
             android:layout_marginRight="30dp"/>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/white_rounded_bg"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp"
+        android:paddingTop="24dp"
+        android:layout_marginBottom="10dp">
+
+        <com.habitrpg.android.habitica.ui.views.Typewriter
+            android:id="@+id/textView"
+            style="@style/Subheader1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/white_rounded_bg"
-            android:paddingLeft="21dp"
-            android:paddingTop="16dp"
-            android:paddingRight="21dp"
-            android:paddingBottom="14dp"
-            android:layout_marginTop="56dp"
-            android:orientation="vertical">
-        <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            tools:text="@string/welcome_text" />
 
-                style="@style/Body1"
-                tools:text="@string/welcome_text"/>
         <LinearLayout
-                android:id="@+id/confirmation_buttons"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="?android:attr/buttonBarStyle" >
+            android:id="@+id/confirmation_buttons"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="right">
 
             <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dismiss_tutorial"
-                    android:id="@+id/dismissButton"
-                    android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton"
-                    style="?android:attr/buttonBarButtonStyle" />
+                android:id="@+id/dismissButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/dismiss_tutorial"
+                android:theme="@style/DialogButton"/>
 
             <Button
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/complete_tutorial"
-                    android:id="@+id/completeButton"
-                    android:layout_gravity="center_vertical"
-                    android:theme="@style/DialogButton"
-                    style="?android:attr/buttonBarButtonStyle" />
+                android:id="@+id/completeButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/complete_tutorial"
+                android:theme="@style/DialogButton" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/continue_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/speechbubble_caret"
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <TextView
             android:id="@+id/name_plate"
@@ -68,6 +81,6 @@
             android:gravity="center_vertical"
             android:textColor="@color/white"
             android:layout_marginLeft="21dp"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="32dp"
             android:textStyle="bold" />
 </FrameLayout>

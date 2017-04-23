@@ -2,10 +2,11 @@ package com.habitrpg.android.habitica.ui.fragments.faq;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
-import com.magicmicky.habitrpgwrapper.lib.models.FAQArticle;
+import com.habitrpg.android.habitica.models.FAQArticle;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
 import android.os.Bundle;
@@ -17,10 +18,15 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQOverviewFragment extends BaseMainFragment {
+    @Inject
+    UserRepository userRepository;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -34,6 +40,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
 
         unbinder = ButterKnife.bind(this, view);
         adapter = new FAQOverviewRecyclerAdapter();
+        adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), throwable -> {});
         adapter.activity = activity;
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));

@@ -11,11 +11,11 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.adapter.SkillsRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.ui.helpers.UiUtils;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Skill;
-import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.HabitResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.ui.menu.DividerItemDecoration;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.user.SpecialItems;
+import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.raizlabs.android.dbflow.sql.builder.Condition;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -37,15 +37,13 @@ import java.util.List;
 import butterknife.BindView;
 import rx.Observable;
 
-import static com.habitrpg.android.habitica.helpers.MathHelper.round;
-
 public class SkillsFragment extends BaseMainFragment {
 
     private final int TASK_SELECTION_ACTIVITY = 10;
     private final int MEMBER_SELECTION_ACTIVITY = 11;
 
     @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     SkillsRecyclerViewAdapter adapter;
     private View view;
     private Skill selectedSkill;
@@ -80,8 +78,10 @@ public class SkillsFragment extends BaseMainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.invalidateItemDecorations();
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(adapter);
     }
 
     private void checkUserLoadSkills() {

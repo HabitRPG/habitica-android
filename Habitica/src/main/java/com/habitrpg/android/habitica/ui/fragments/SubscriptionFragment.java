@@ -19,9 +19,9 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView;
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SubscriptionPlan;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.solovyev.android.checkout.ActivityCheckout;

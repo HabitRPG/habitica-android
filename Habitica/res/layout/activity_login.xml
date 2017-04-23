@@ -19,6 +19,7 @@
             android:background="@drawable/login_gradient"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:layout_marginRight="-2dp"
             >
             <ImageView
                 android:id="@+id/city_view"
@@ -33,7 +34,7 @@
                 android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible"
-                android:layout_below="@id/city_view" />
+                android:layout_above="@id/city_view" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,10 +42,9 @@
                 android:id="@+id/left_cloud_view"
                 android:layout_toLeftOf="@id/cloud_anchor"
                 android:layout_marginRight="150dp"
-                android:layout_below="@id/cloud_anchor"
-                android:layout_alignParentLeft="false"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:layout_marginTop="150dp"
+                android:paddingBottom="460dp"
                 />
             <ImageView
                 android:layout_width="wrap_content"
@@ -53,10 +53,9 @@
                 android:id="@+id/right_cloud_view"
                 android:layout_toRightOf="@id/cloud_anchor"
                 android:layout_marginLeft="170dp"
-                android:layout_below="@id/cloud_anchor"
-                android:layout_alignParentLeft="false"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:layout_marginTop="240dp"
+                android:paddingBottom="400dp"
                 />
 
 
@@ -72,7 +71,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/spacing_large"
+            android:paddingTop="@dimen/spacing_large"
+            android:paddingLeft="@dimen/spacing_large"
+            android:paddingRight="@dimen/spacing_large"
             android:id="@+id/login_intro_view"
             android:orientation="vertical"
             android:background="@color/transparent"
@@ -92,7 +93,7 @@
                 android:id="@+id/new_game_button"
                 android:layout_width="@dimen/login_intro_button_size"
                 android:layout_height="@dimen/login_intro_button_size"
-                android:text="@string/new_game"
+                android:text="@string/register_btn"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/spacing_large"
@@ -116,6 +117,7 @@
                 android:id="@+id/login_scrollview"
                 android:scrollIndicators="none"
                 tools:visibility="visible"
+                android:padding="0dp"
                 >
 
                 <LinearLayout

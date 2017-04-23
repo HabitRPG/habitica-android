@@ -1,17 +1,18 @@
 package com.habitrpg.android.habitica.ui.fragments.setup;
 
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.ui.AvatarView;
+import com.habitrpg.android.habitica.ui.SpeechBubbleView;
 import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,6 +64,8 @@ public class AvatarSetupFragment extends BaseFragment {
     AvatarCategoryView extrasButton;
     @BindView(R.id.caret_view)
     ImageView caretView;
+    @BindView(R.id.speech_bubble)
+    SpeechBubbleView speechBubbleView;
 
     CustomizationSetupAdapter adapter;
     LinearLayoutManager layoutManager;
@@ -132,6 +135,14 @@ public class AvatarSetupFragment extends BaseFragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && getContext() != null) {
+            speechBubbleView.animateText(getContext().getString(R.string.avatar_setup_description));
+        }
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -144,7 +155,7 @@ public class AvatarSetupFragment extends BaseFragment {
         this.adapter.setCustomizationList(customizationRepository.getCustomizations(activeCategory, activeSubCategory, user));
     }
 
-    public void setUser(HabitRPGUser user) {
+    public void setUser(@Nullable HabitRPGUser user) {
         this.user = user;
         if (avatarView != null) {
             updateAvatar();

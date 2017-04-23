@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -117,7 +117,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     @Override
     public void updateUserData(HabitRPGUser user) {
         super.updateUserData(user);
-        if (user != null) {
+        if (user != null && viewBinding != null) {
             viewBinding.setPreferences(user.getPreferences());
             this.setSize(user.getPreferences().getSize());
         }

@@ -2,13 +2,11 @@ package com.habitrpg.android.habitica.data.implementation;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.SetupCustomization;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.SetupCustomization;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +79,7 @@ public class SetupCustomizationRepositoryImpl implements SetupCustomizationRepos
 
     private List<SetupCustomization> getGlasses() {
         return Arrays.asList(
-                SetupCustomization.createGlasses("eyewear_base_0", R.drawable.creator_blank_face),
+                SetupCustomization.createGlasses("", R.drawable.creator_blank_face),
                 SetupCustomization.createGlasses("eyewear_special_blackTopFrame", R.drawable.creator_eyewear_special_blacktopframe),
                 SetupCustomization.createGlasses("eyewear_special_blueTopFrame", R.drawable.creator_eyewear_special_bluetopframe),
                 SetupCustomization.createGlasses("eyewear_special_greenTopFrame", R.drawable.creator_eyewear_special_greentopframe),

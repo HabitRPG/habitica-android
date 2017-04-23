@@ -13,5 +13,6 @@
     <string name="profile_private_message">Privébericht</string>
     <string name="profile_achievements">Prestaties</string>
     <string name="profile_achievement_ok">Oké</string>
+    <string name="profile_qrcode_close">Sluiten</string>
 
 </resources>

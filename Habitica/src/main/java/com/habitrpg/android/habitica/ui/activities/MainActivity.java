@@ -2,14 +2,12 @@ package com.habitrpg.android.habitica.ui.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDoneException;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,18 +17,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +40,14 @@ import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.callbacks.ItemsCallback;
-import com.habitrpg.android.habitica.callbacks.MergeUserCallback;
-import com.habitrpg.android.habitica.callbacks.TaskCreationCallback;
 import com.habitrpg.android.habitica.callbacks.TaskScoringCallback;
 import com.habitrpg.android.habitica.callbacks.TaskUpdateCallback;
 import com.habitrpg.android.habitica.callbacks.UnlockCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.DisplayFragmentEvent;
@@ -63,7 +60,6 @@ import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
-import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.ToggledEditTagsEvent;
 import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
@@ -106,29 +102,26 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider;
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider;
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider;
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.api.MaintenanceApiService;
-import com.magicmicky.habitrpgwrapper.lib.models.HabitRPGUser;
-import com.magicmicky.habitrpgwrapper.lib.models.Preferences;
-import com.magicmicky.habitrpgwrapper.lib.models.Shop;
-import com.magicmicky.habitrpgwrapper.lib.models.SpecialItems;
-import com.magicmicky.habitrpgwrapper.lib.models.Stats;
-import com.magicmicky.habitrpgwrapper.lib.models.Tag;
-import com.magicmicky.habitrpgwrapper.lib.models.TaskDirectionData;
-import com.magicmicky.habitrpgwrapper.lib.models.TutorialStep;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Egg;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Food;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.HatchingPotion;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Item;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.Pet;
-import com.magicmicky.habitrpgwrapper.lib.models.inventory.QuestContent;
-import com.magicmicky.habitrpgwrapper.lib.models.responses.MaintenanceResponse;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ChecklistItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Days;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.ItemData;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.RemindersItem;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.api.MaintenanceApiService;
+import com.habitrpg.android.habitica.models.user.HabitRPGUser;
+import com.habitrpg.android.habitica.models.user.Preferences;
+import com.habitrpg.android.habitica.models.shops.Shop;
+import com.habitrpg.android.habitica.models.user.SpecialItems;
+import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.responses.TaskDirectionData;
+import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Item;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.responses.MaintenanceResponse;
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
+import com.habitrpg.android.habitica.models.tasks.ItemData;
+import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
@@ -136,15 +129,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.BaseTransaction;
-import com.raizlabs.android.dbflow.runtime.transaction.TransactionListener;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
-import com.raizlabs.android.dbflow.sql.builder.Condition;
-import com.raizlabs.android.dbflow.sql.language.Delete;
-import com.raizlabs.android.dbflow.sql.language.From;
 import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.sql.language.Where;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.roughike.bottombar.BottomBar;
 
@@ -199,6 +186,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     protected SharedPreferences sharedPreferences;
     @Inject
     CrashlyticsProxy crashlyticsProxy;
+    @BindView(R.id.appbar)
+    AppBarLayout appBar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.detail_tabs)
@@ -207,6 +196,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     View avatar_with_bars;
     @BindView(R.id.overlayFrameLayout)
     ViewGroup overlayLayout;
+
+    @Inject
     PushNotificationManager pushNotificationManager;
     // region UseCases
 
@@ -236,6 +227,13 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Inject
     TaskRepository taskRepository;
+    @Inject
+    UserRepository userRepository;
+    @Inject
+    TagRepository tagRepository;
+
+    @Inject
+    TaskAlarmManager taskAlarmManager;
 
     // endregion
 
@@ -248,23 +246,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     private Date lastSync;
     private TutorialView activeTutorialView;
     private boolean isloadingContent;
-    private TransactionListener<HabitRPGUser> userTransactionListener = new TransactionListener<HabitRPGUser>() {
-        @Override
-        public void onResultReceived(HabitRPGUser habitRPGUser) {
-            MainActivity.this.user = habitRPGUser;
-            MainActivity.this.setUserData(true);
-        }
-
-        @Override
-        public boolean onReady(BaseTransaction<HabitRPGUser> baseTransaction) {
-            return true;
-        }
-
-        @Override
-        public boolean hasResult(BaseTransaction<HabitRPGUser> baseTransaction, HabitRPGUser habitRPGUser) {
-            return true;
-        }
-    };
 
 
     @Override
@@ -293,9 +274,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
-        pushNotificationManager = PushNotificationManager.getInstance(this);
-
-        new Select().from(HabitRPGUser.class).where(Condition.column("id").eq(hostConfig.getUser())).async().querySingle(userTransactionListener);
+        userRepository.getUser(hostConfig.getUser())
+                .subscribe(newUser -> {
+                    MainActivity.this.user = newUser;
+                    MainActivity.this.setUserData(true);
+                }, throwable -> {});
 
         setupToolbar(toolbar);
 
@@ -306,9 +289,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         drawer.setSelectionAtPosition(1, false);
         sideAvatarView = new AvatarView(this, true, false, false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_10_alpha));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_10_alpha));
+            }
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
@@ -316,7 +301,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         EventBus.getDefault().register(this);
-
     }
 
     public int getStatusBarHeight() {
@@ -346,7 +330,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
-            TaskAlarmManager taskAlarmManager = TaskAlarmManager.getInstance(this);
             try {
                 taskAlarmManager.scheduleAllSavedAlarms();
             } catch (Exception e) {
@@ -453,8 +436,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             if (offset != user.getPreferences().getTimezoneOffset()) {
                 Map<String, Object> updateData = new HashMap<>();
                 updateData.put("preferences.timezoneOffset", String.valueOf(offset));
-                apiClient.updateUser(updateData)
-                        .subscribe(new MergeUserCallback(this, user), throwable -> {
+                userRepository.updateUser(user, updateData)
+                        .subscribe(this::onUserReceived, throwable -> {
                         });
             }
             runOnUiThread(() -> {
@@ -486,7 +469,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                         allTasks.addAll(user.getHabits());
                         allTasks.addAll(user.getRewards());
 
-                        loadAndRemoveOldTasks(user.getId(), allTasks);
+                        taskRepository.removeOldTasks(user.getId(), allTasks);
 
                         ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
                         for (Task t : allTasks) {
@@ -494,7 +477,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 allChecklistItems.addAll(t.checklist);
                             }
                         }
-                        loadAndRemoveOldChecklists(allChecklistItems);
+                        taskRepository.removeOldChecklists(allChecklistItems);
 
                         ArrayList<TaskTag> allTaskTags = new ArrayList<>();
                         for (Task t : allTasks) {
@@ -502,7 +485,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 allTaskTags.addAll(t.getTags());
                             }
                         }
-                        loadAndRemoveOldTaskTags(allTaskTags);
+                        taskRepository.removeOldTaskTags(allTaskTags);
 
                         ArrayList<RemindersItem> allReminders = new ArrayList<>();
                         for (Task t : allTasks) {
@@ -510,71 +493,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                                 allReminders.addAll(t.getReminders());
                             }
                         }
-                        loadAndRemoveOldReminders(allReminders);
+                        taskRepository.removeOldReminders(allReminders);
 
-                        loadAndRemoveOldTags(user.getTags());
+                        tagRepository.removeOldTags(user.getTags());
 
                         updateOwnedDataForUser(user);
                     }
                 }).start();
             }
-        }
-    }
-
-    private void loadAndRemoveOldTasks(String userId, final List<Task> onlineEntries) {
-        final ArrayList<String> onlineTaskIdList = new ArrayList<>();
-
-        for (Task oTask : onlineEntries) {
-            onlineTaskIdList.add(oTask.getId());
-        }
-
-        Where<Task> query = new Select().from(Task.class).where(Condition.column("user_id").eq(userId));
-        try {
-            if (query.count() != onlineEntries.size()) {
-
-                // Load Database Tasks
-                query.async().queryList(new TransactionListener<List<Task>>() {
-                    @Override
-                    public void onResultReceived(List<Task> tasks) {
-
-                        ArrayList<Task> tasksToDelete = new ArrayList<>();
-
-                        for (Task dbTask : tasks) {
-                            if (!onlineTaskIdList.contains(dbTask.getId())) {
-                                tasksToDelete.add(dbTask);
-                            }
-                        }
-
-                        for (Task delTask : tasksToDelete) {
-                            // TaskTag
-                            new Delete().from(TaskTag.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                            // ChecklistItem
-                            new Delete().from(ChecklistItem.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                            // Days
-                            new Delete().from(Days.class).where(Condition.column("task_id").eq(delTask.getId())).async().execute();
-
-                            // TASK
-                            delTask.async().delete();
-
-                            EventBus.getDefault().post(new TaskRemovedEvent(delTask.getId()));
-                        }
-                    }
-
-                    @Override
-                    public boolean onReady(BaseTransaction<List<Task>> baseTransaction) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasResult(BaseTransaction<List<Task>> baseTransaction, List<Task> tasks) {
-                        return tasks != null && tasks.size() > 0;
-                    }
-                });
-            }
-        } catch (SQLiteDoneException ignored) {
-            //Ignored
         }
     }
 
@@ -600,191 +526,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
 
         this.drawer.updateItemAtPosition(newInboxItem, this.drawer.getPosition(MainDrawerBuilder.SIDEBAR_INBOX));
-    }
-
-
-    private void loadAndRemoveOldChecklists(final List<ChecklistItem> onlineEntries) {
-        final ArrayList<String> onlineChecklistItemIdList = new ArrayList<>();
-
-        for (ChecklistItem item : onlineEntries) {
-            onlineChecklistItemIdList.add(item.getId());
-        }
-
-        From<ChecklistItem> query = new Select().from(ChecklistItem.class);
-        try {
-            if (query.count() != onlineEntries.size()) {
-
-                // Load Database Checklist items
-                query.async().queryList(new TransactionListener<List<ChecklistItem>>() {
-                    @Override
-                    public void onResultReceived(List<ChecklistItem> items) {
-
-                        ArrayList<ChecklistItem> checkListItemsToDelete = new ArrayList<>();
-
-                        for (ChecklistItem chItem : items) {
-                            if (!onlineChecklistItemIdList.contains(chItem.getId())) {
-                                checkListItemsToDelete.add(chItem);
-                            }
-                        }
-
-                        for (ChecklistItem chItem : checkListItemsToDelete) {
-                            chItem.async().delete();
-                        }
-                    }
-
-                    @Override
-                    public boolean onReady(BaseTransaction<List<ChecklistItem>> baseTransaction) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasResult(BaseTransaction<List<ChecklistItem>> baseTransaction, List<ChecklistItem> items) {
-                        return items != null && items.size() > 0;
-                    }
-                });
-            }
-        } catch (SQLiteDoneException ignored) {
-            //Ignored
-        }
-
-    }
-
-    private void loadAndRemoveOldTaskTags(final List<TaskTag> onlineEntries) {
-        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
-
-        for (TaskTag item : onlineEntries) {
-            onlineTaskTagItemIdList.add(item.getId());
-        }
-
-        From<TaskTag> query = new Select().from(TaskTag.class);
-        try {
-            if (query.count() != onlineEntries.size()) {
-
-                // Load Database Checklist items
-                query.async().queryList(new TransactionListener<List<TaskTag>>() {
-                    @Override
-                    public void onResultReceived(List<TaskTag> items) {
-
-                        ArrayList<TaskTag> checkListItemsToDelete = new ArrayList<>();
-
-                        for (TaskTag ttag : items) {
-                            if (!onlineTaskTagItemIdList.contains(ttag.getId())) {
-                                checkListItemsToDelete.add(ttag);
-                            }
-                        }
-
-                        for (TaskTag ttag : checkListItemsToDelete) {
-                            ttag.async().delete();
-                        }
-                    }
-
-                    @Override
-                    public boolean onReady(BaseTransaction<List<TaskTag>> baseTransaction) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasResult(BaseTransaction<List<TaskTag>> baseTransaction, List<TaskTag> items) {
-                        return items != null && items.size() > 0;
-                    }
-                });
-            }
-        } catch (SQLiteDoneException ignored) {
-            //Ignored
-        }
-
-    }
-
-    private void loadAndRemoveOldReminders(final List<RemindersItem> onlineEntries) {
-        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
-
-        for (RemindersItem item : onlineEntries) {
-            onlineTaskTagItemIdList.add(item.getId());
-        }
-
-        From<RemindersItem> query = new Select().from(RemindersItem.class);
-        try {
-            if (query.count() != onlineEntries.size()) {
-
-                // Load Database Checklist items
-                query.async().queryList(new TransactionListener<List<RemindersItem>>() {
-                    @Override
-                    public void onResultReceived(List<RemindersItem> items) {
-
-                        ArrayList<RemindersItem> remindersToDelete = new ArrayList<>();
-
-                        for (RemindersItem reminder : items) {
-                            if (!onlineTaskTagItemIdList.contains(reminder.getId())) {
-                                remindersToDelete.add(reminder);
-                            }
-                        }
-
-                        for (RemindersItem reminder : remindersToDelete) {
-                            reminder.async().delete();
-                        }
-                    }
-
-                    @Override
-                    public boolean onReady(BaseTransaction<List<RemindersItem>> baseTransaction) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasResult(BaseTransaction<List<RemindersItem>> baseTransaction, List<RemindersItem> items) {
-                        return items != null && items.size() > 0;
-                    }
-                });
-            }
-        } catch (SQLiteDoneException ignored) {
-            //Ignored
-        }
-
-    }
-
-    private void loadAndRemoveOldTags(final List<Tag> onlineEntries) {
-        final ArrayList<String> onlineTaskTagItemIdList = new ArrayList<>();
-
-        for (Tag item : onlineEntries) {
-            onlineTaskTagItemIdList.add(item.getId());
-        }
-
-        From<Tag> query = new Select().from(Tag.class);
-        try {
-            if (query.count() != onlineEntries.size()) {
-
-                // Load Database Checklist items
-                query.async().queryList(new TransactionListener<List<Tag>>() {
-                    @Override
-                    public void onResultReceived(List<Tag> items) {
-
-                        ArrayList<Tag> tagsToDelete = new ArrayList<>();
-
-                        for (Tag tag : items) {
-                            if (!onlineTaskTagItemIdList.contains(tag.getId())) {
-                                tagsToDelete.add(tag);
-                            }
-                        }
-
-                        for (Tag tag : tagsToDelete) {
-                            tag.async().delete();
-                        }
-                    }
-
-                    @Override
-                    public boolean onReady(BaseTransaction<List<Tag>> baseTransaction) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasResult(BaseTransaction<List<Tag>> transaction, List<Tag> result) {
-                        return result != null && result.size() > 0;
-                    }
-                });
-            }
-        } catch (SQLiteDoneException ignored) {
-            //Ignored
-        }
-
     }
 
     private void updateOwnedDataForUser(HabitRPGUser user) {
@@ -952,17 +693,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == SELECT_CLASS_RESULT) {
-            if (this.apiClient != null) {
-                this.apiClient.retrieveUser(true)
-
-                        .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                        });
-            }
+            retrieveUser();
         } else if (requestCode == GEM_PURCHASE_REQUEST) {
-            this.apiClient.retrieveUser(true)
-
-                    .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                    });
+            retrieveUser();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -982,8 +715,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(UpdateUserCommand event) {
-        apiClient.updateUser(event.updateData)
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        userRepository.updateUser(user, event.updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
@@ -999,7 +732,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
         apiClient.unlockPath(event.path)
-
                 .subscribe(new UnlockCallback(this, this.user), throwable -> {
                 });
     }
@@ -1025,10 +757,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 observable = apiClient.purchaseItem(event.item.purchaseType, event.item.key);
             }
             observable
-
                     .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .subscribe(buyResponse -> apiClient.retrieveUser(false)
-
+                    .subscribe(buyResponse -> userRepository.retrieveUser(false)
                             .subscribe(new HabitRPGUserCallback(this), throwable -> {
                             }), throwable -> {
                         HttpException error = (HttpException) throwable;
@@ -1124,16 +854,14 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
 
-        apiClient.deleteTask(cmd.TaskIdToDelete)
-                .subscribe(aVoid -> {
-                    EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete));
-                }, throwable -> {});
+        taskRepository.deleteTask(cmd.TaskIdToDelete)
+                .subscribe(aVoid -> EventBus.getDefault().post(new TaskRemovedEvent(cmd.TaskIdToDelete)), throwable -> {});
     }
 
     @Subscribe
     public void openMysteryItem(OpenMysteryItemEvent event) {
         apiClient.openMysteryItem()
-                .subscribe(mysteryItem -> apiClient.retrieveUser(false)
+                .subscribe(mysteryItem -> userRepository.retrieveUser(false)
                         .subscribe(new HabitRPGUserCallback(user1 -> {
                             OpenedMysteryItemEvent openedEvent = new OpenedMysteryItemEvent();
                             openedEvent.numberLeft = user1.getPurchased().getPlan().mysteryItems.size();
@@ -1152,7 +880,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     @Subscribe
     public void onEvent(DisplayTutorialEvent tutorialEvent) {
-        this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText);
+        if (tutorialEvent.tutorialText != null) {
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialText, tutorialEvent.canBeDeferred);
+        } else {
+            this.displayTutorialStep(tutorialEvent.step, tutorialEvent.tutorialTexts, tutorialEvent.canBeDeferred);
+        }
     }
 
     @Subscribe
@@ -1163,7 +895,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     @Subscribe
     public void onEvent(SellItemCommand event) {
         this.apiClient.sellItem(event.item.getType(), event.item.getKey())
-
                 .subscribe(habitRPGUser -> {
                     user.setItems(habitRPGUser.getItems());
                     user.save();
@@ -1179,7 +910,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
             return;
         }
         this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
-
                 .subscribe(new ItemsCallback(user1 -> {
                     FrameLayout petWrapper = (FrameLayout) getLayoutInflater().inflate(R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
@@ -1215,7 +945,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         }
         final Pet pet = event.usingPet;
         this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
-
                 .subscribe(feedResponse -> {
                     MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
                     MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
@@ -1285,6 +1014,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                             user.getStats().exp = data.getExp();
                             user.getStats().mp = data.getMp();
                             user.getStats().gp = data.getGp();
+                            user.getStats().lvl = data.getLvl();
                             setUserData(true);
                         }, throwable -> {});
             }
@@ -1321,9 +1051,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        apiClient.revive()
-
-                                .subscribe(new MergeUserCallback(MainActivity.this, MainActivity.this.user), throwable -> {
+                        userRepository.revive(user)
+                                .subscribe(this::onUserReceived, throwable -> {
                                 });
                     })
                     .create();
@@ -1349,9 +1078,11 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
     }
 
     protected void retrieveUser() {
-        this.apiClient.retrieveUser(true)
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
-                });
+        if (this.userRepository != null) {
+            this.userRepository.retrieveUser(true)
+                    .subscribe(this::onUserReceived, throwable -> {
+                    });
+        }
     }
 
     @Subscribe
@@ -1362,10 +1093,26 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
                 });
     }
 
-    private void displayTutorialStep(TutorialStep step, String text) {
+    private void displayTutorialStep(TutorialStep step, String text, boolean canBeDeferred) {
         TutorialView view = new TutorialView(this, step, this);
         view.setTutorialText(text);
         view.onReaction = this;
+        view.setCanBeDeferred(canBeDeferred);
+        this.overlayLayout.addView(view);
+        this.activeTutorialView = view;
+
+        Map<String, Object> additionalData = new HashMap<>();
+        additionalData.put("eventLabel", step.getIdentifier() + "-android");
+        additionalData.put("eventValue", step.getIdentifier());
+        additionalData.put("complete", false);
+        AmplitudeManager.sendEvent("tutorial", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData);
+    }
+
+    private void displayTutorialStep(TutorialStep step, List<String> texts, boolean canBeDeferred) {
+        TutorialView view = new TutorialView(this, step, this);
+        view.setTutorialTexts(texts);
+        view.onReaction = this;
+        view.setCanBeDeferred(canBeDeferred);
         this.overlayLayout.addView(view);
         this.activeTutorialView = view;
 
@@ -1381,9 +1128,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         String path = "flags.tutorial." + step.getTutorialGroup() + "." + step.getIdentifier();
         Map<String, Object> updateData = new HashMap<>();
         updateData.put(path, true);
-        apiClient.updateUser(updateData)
-
-                .subscribe(new MergeUserCallback(this, user), throwable -> {
+        userRepository.updateUser(user,  updateData)
+                .subscribe(this::onUserReceived, throwable -> {
                 });
         this.overlayLayout.removeView(this.activeTutorialView);
         this.removeActiveTutorialView();
@@ -1473,12 +1219,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
         Task task = event.task;
         if (event.created) {
-            this.taskRepository.createTask(task).subscribe(new TaskCreationCallback(), throwable -> {
-                    });
+            this.taskRepository.createTask(task).subscribe(task1 -> {}, throwable -> {});
         } else {
-            this.taskRepository.updateTask(task)
-                    .subscribe(new TaskUpdateCallback(), throwable -> {
-                    });
+            this.taskRepository.updateTask(task).subscribe(task1 -> {}, throwable -> {});
         }
     }
 
@@ -1523,18 +1266,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
 
     }
 
-    public void unlockDrawer(int gravity) {
-        if (this.drawer != null) {
-            this.drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, gravity);
-        }
-    }
-
-    public void lockDrawer(int gravity) {
-        if (this.drawer != null) {
-            this.drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, gravity);
-        }
-    }
-
     @Subscribe
     public void onEvent(OpenFullProfileCommand cmd) {
         if (cmd.MemberId.equals("system"))
@@ -1547,5 +1278,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Ha
         intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    public boolean isAppBarExpanded() {
+        return (appBar.getHeight() - appBar.getBottom()) == 0;
     }
 }
