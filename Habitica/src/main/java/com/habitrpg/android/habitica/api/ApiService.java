@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.social.PostChallenge;
 
 import java.util.ArrayList;
 import java.util.List;

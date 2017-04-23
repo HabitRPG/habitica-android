@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.data.implementation;
 
 import com.github.underscore.$;
+import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
-import com.magicmicky.habitrpgwrapper.lib.api.ApiClient;
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.PostChallenge;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TaskList;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.PostChallenge;
+import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
 import java.util.ArrayList;
 import java.util.List;

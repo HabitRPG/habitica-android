@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica;
+package com.habitrpg.android.habitica.data.implementation;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
+import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.api.ApiService;
 import com.habitrpg.android.habitica.api.Server;
@@ -824,6 +825,32 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body) {
         return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Challenge> createChallenge(PostChallenge challenge) {
+        return apiService.createChallenge(challenge).compose(configureApiCallObserver());
+    }
+
+
+    @Override
+    public Observable<Task> createChallengeTask(String challengeId, Task task) {
+        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks) {
+        return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Challenge> updateChallenge(PostChallenge challenge) {
+        return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteChallenge(String challengeId) {
+        return apiService.deleteChallenge(challengeId).compose(configureApiCallObserver());
     }
 
     @Override

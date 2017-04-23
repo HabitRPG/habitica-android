@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;

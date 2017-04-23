@@ -1,6 +1,6 @@
-package com.magicmicky.habitrpgwrapper.lib.models;
+package com.habitrpg.android.habitica.models.social;
 
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.TasksOrder;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
 /**
  * Needs to be a separate Class, the normal Challenge has the group as Object

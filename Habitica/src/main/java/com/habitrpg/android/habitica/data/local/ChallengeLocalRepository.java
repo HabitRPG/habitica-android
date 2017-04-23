@@ -1,8 +1,9 @@
 package com.habitrpg.android.habitica.data.local;
 
-import com.magicmicky.habitrpgwrapper.lib.models.Challenge;
-import com.magicmicky.habitrpgwrapper.lib.models.Group;
-import com.magicmicky.habitrpgwrapper.lib.models.tasks.Task;
+
+import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.tasks.Task;
 
 import java.util.List;
 
