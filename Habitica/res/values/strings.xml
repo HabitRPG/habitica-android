@@ -578,4 +578,9 @@
     <string name="edit_challenge">Edit Challenge</string>
     <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a challenge in Tavern.</string>
     <string name="challenge_create_error_enough_gems">You don\'t have enough gems to create a challenge.</string>
+    <string name="identify_your_challenge_with_a_tag">Identify your challenge with a tag ..</string>
+    <string name="challenge_create_error_tag">Please set a tag.</string>
+    <string name="challenge_create_error_no_tasks">Please add at least one task.</string>
+    <string name="challenge_create_error_title">Please set a title.</string>
+    <string name="challenge_create_error_description">Please set a description.</string>
 </resources>

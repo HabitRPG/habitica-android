@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatTextView;
@@ -54,8 +55,14 @@ import butterknife.OnClick;
 public class CreateChallengeActivity extends BaseActivity {
     public static final String CHALLENGE_ID_KEY = "challengeId";
 
+    @BindView(R.id.create_challenge_title_input_layout)
+    TextInputLayout create_challenge_title_input_layout;
+
     @BindView(R.id.create_challenge_title)
     EditText create_challenge_title;
+
+    @BindView(R.id.create_challenge_description_input_layout)
+    TextInputLayout create_challenge_description_input_layout;
 
     @BindView(R.id.create_challenge_description)
     EditText create_challenge_description;
@@ -68,6 +75,12 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @BindView(R.id.create_challenge_gem_error)
     TextView create_challenge_gem_error;
+
+    @BindView(R.id.create_challenge_tag_error)
+    TextView create_challenge_tag_error;
+
+    @BindView(R.id.create_challenge_task_error)
+    TextView create_challenge_task_error;
 
     @BindView(R.id.challenge_location_spinner)
     Spinner challenge_location_spinner;
@@ -122,7 +135,7 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_save) {
+        if (item.getItemId() == R.id.action_save && validateAllFields()) {
             if (editMode) {
                 updateChallenge();
             } else {
@@ -131,6 +144,41 @@ public class CreateChallengeActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean validateAllFields(){
+        int errors = 0;
+
+        if(getEditTextString(create_challenge_title).isEmpty()){
+            errors++;
+            create_challenge_title_input_layout.setError(getString(R.string.challenge_create_error_title));
+        } else {
+            create_challenge_title_input_layout.setErrorEnabled(false);
+        }
+
+        if(getEditTextString(create_challenge_description).isEmpty()){
+            errors++;
+            create_challenge_description_input_layout.setError(getString(R.string.challenge_create_error_description));
+        } else{
+            create_challenge_description_input_layout.setErrorEnabled(false);
+        }
+
+        if(getEditTextString(create_challenge_tag).isEmpty()){
+            errors++;
+            create_challenge_tag_error.setVisibility(View.VISIBLE);
+        } else{
+            create_challenge_tag_error.setVisibility(View.GONE);
+        }
+
+        // all "Add {*}"-Buttons are one task itself, so we need atleast more than 4
+        if(challengeTasks.getTaskList().size() <= 4){
+            errors++;
+            create_challenge_task_error.setVisibility(View.VISIBLE);
+        } else {
+            create_challenge_task_error.setVisibility(View.GONE);
+        }
+
+        return errors == 0;
     }
 
     @Override
@@ -486,6 +534,10 @@ public class CreateChallengeActivity extends BaseActivity {
                 updatedTasks.put(task.getId(), task);
             }
         }
+    }
+
+    private String getEditTextString(EditText editText){
+        return editText.getText().toString();
     }
 
     private class GroupArrayAdapter extends ArrayAdapter<Group> {

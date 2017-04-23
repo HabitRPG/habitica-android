@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/brand_500"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat">
+                app:hintTextAppearance="@style/TextAppearance.AppCompat"
+                android:id="@+id/create_challenge_title_input_layout">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/brand_500"
 
+                android:id="@+id/create_challenge_description_input_layout"
                 app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
                 <EditText
@@ -172,14 +174,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:id="@+id/create_challenge_tag"
-                android:hint="Identify your challenge with a tag .."
+                android:hint="@string/identify_your_challenge_with_a_tag"
                 android:textColorHint="#61000000" />
+
+            <TextView
+                style="@style/Caption3"
+                android:id="@+id/create_challenge_tag_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:textColor="#f74e52"
+                android:text="@string/challenge_create_error_tag"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
 
             <TextView
                 style="@style/Subheader2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tasks" />
+
+            <TextView
+                style="@style/Caption3"
+                android:id="@+id/create_challenge_task_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:textColor="#f74e52"
+                android:text="@string/challenge_create_error_no_tasks"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
 
 
         </LinearLayout>
