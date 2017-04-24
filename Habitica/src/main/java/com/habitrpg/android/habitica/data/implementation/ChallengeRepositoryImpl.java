@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -98,26 +99,24 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
 
         challenge.tasksOrder = getTaskOrders(fullTaskList);
 
-
-        return Observable.create(subscriber -> {
-
-            Observable.from(observablesToWait)
-                    .flatMap(task -> task.subscribeOn(Schedulers.computation()))
-                    .toList()
-                    .subscribe(o -> {
-                        apiClient.updateChallenge(challenge)
-                                .subscribe(challenge1 -> {
-
-                                    subscriber.onNext(challenge1);
-                                    subscriber.onCompleted();
-                                }, throwable -> subscriber.onError(throwable));
-                    });
-        });
-
+        return Observable.from(observablesToWait)
+                .flatMap(task -> task.subscribeOn(Schedulers.computation()))
+                .toList()
+                .flatMap(tasks -> apiClient.updateChallenge(challenge));
     }
 
     @Override
     public Observable<Void> deleteChallenge(String challengeId) {
         return apiClient.deleteChallenge(challengeId);
+    }
+
+    @Override
+    public void setUsersGroups(List<Group> groups) {
+        localRepository.setUsersGroups(groups);
+    }
+
+    @Override
+    public Observable<List<Group>> getLocalGroups() {
+        return localRepository.getGroups();
     }
 }

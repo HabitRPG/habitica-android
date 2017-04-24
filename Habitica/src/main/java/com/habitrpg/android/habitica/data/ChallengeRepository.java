@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data;
 
 import com.habitrpg.android.habitica.models.social.Challenge;
+import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
@@ -27,4 +28,8 @@ public interface ChallengeRepository extends BaseRepository  {
     Observable<Challenge> updateChallenge(PostChallenge challenge, List<Task> fullTaskList,
                                           List<Task> addedTaskList, List<Task> updatedTaskList, List<String> removedTaskList);
     Observable<Void> deleteChallenge(String challengeId);
+
+    void setUsersGroups(List<Group> groups);
+
+    Observable<List<Group>> getLocalGroups();
 }

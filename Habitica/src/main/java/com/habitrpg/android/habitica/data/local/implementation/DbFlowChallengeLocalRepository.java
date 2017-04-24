@@ -18,25 +18,7 @@ public class DbFlowChallengeLocalRepository implements ChallengeLocalRepository 
 
     @Override
     public Observable<Challenge> getChallenge(String id) {
-        return Observable.create(subscriber -> {
-            new Select().from(Challenge.class).where(Condition.column("id").is(id)).async().querySingle(new TransactionListener<Challenge>() {
-                @Override
-                public void onResultReceived(Challenge result) {
-                    subscriber.onNext(result);
-                    subscriber.onCompleted();
-                }
-
-                @Override
-                public boolean onReady(BaseTransaction<Challenge> transaction) {
-                    return false;
-                }
-
-                @Override
-                public boolean hasResult(BaseTransaction<Challenge> transaction, Challenge result) {
-                    return true;
-                }
-            });
-        });
+        return Observable.defer(() -> Observable.just(new Select().from(Challenge.class).where(Condition.column("id").is(id)).querySingle()));
     }
 
     @Override
@@ -58,25 +40,7 @@ public class DbFlowChallengeLocalRepository implements ChallengeLocalRepository 
 
     @Override
     public Observable<List<Group>> getGroups() {
-        return Observable.create(subscriber -> {
-            new Select().from(Group.class).where(Condition.column("isMember").is(true)).async().queryList(new TransactionListener<List<Group>>() {
-                @Override
-                public void onResultReceived(List<Group> result) {
-                    subscriber.onNext(result);
-                    subscriber.onCompleted();
-                }
-
-                @Override
-                public boolean onReady(BaseTransaction<List<Group>> transaction) {
-                    return false;
-                }
-
-                @Override
-                public boolean hasResult(BaseTransaction<List<Group>> transaction, List<Group> result) {
-                    return true;
-                }
-            });
-        });
+        return Observable.defer(() -> Observable.just(new Select().from(Group.class).where(Condition.column("isMember").is(true)).queryList()));
     }
 
 

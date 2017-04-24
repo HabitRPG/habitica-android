@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.social;
 
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
+import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
 import com.habitrpg.android.habitica.models.social.Group;
@@ -36,7 +37,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Inject
-    ChallengeLocalRepository challengeLocalRepository;
+    ChallengeRepository challengeRepository;
 
     private List<Group> guilds;
     private ArrayList<String> guildIDs;
@@ -84,7 +85,7 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
                             swipeRefreshLayout.setRefreshing(false);
                         }
 
-                        challengeLocalRepository.setUsersGroups(groups);
+                        challengeRepository.setUsersGroups(groups);
                     }, throwable -> {
                     });
         }

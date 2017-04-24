@@ -21,7 +21,8 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder;
 
 import java.util.List;
 
-import rx.functions.Action1;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class ChallengeTasksRecyclerViewAdapter
         extends SortableTasksRecyclerViewAdapter<BaseTaskViewHolder> {
@@ -35,7 +36,7 @@ public class ChallengeTasksRecyclerViewAdapter
     private static final int TYPE_ADD_ITEM = 5;
 
     private int dailyResetOffset = 0;
-    private Action1<Task> addItemCallback;
+    private PublishSubject<Task> addItemSubject = PublishSubject.create();
     private boolean openTaskDisabled;
     private boolean taskActionsDisabled;
 
@@ -77,14 +78,14 @@ public class ChallengeTasksRecyclerViewAdapter
         if (task.type.equals(Task.TYPE_REWARD))
             return TYPE_REWARD;
 
-        if (addItemCallback != null && task.type.equals(TASK_TYPE_ADD_ITEM))
+        if (addItemSubject.hasObservers() && task.type.equals(TASK_TYPE_ADD_ITEM))
             return TYPE_ADD_ITEM;
 
         return TYPE_HEADER;
     }
 
-    public void enableAddItem(Action1<Task> cb) {
-        addItemCallback = cb;
+    public Observable<Task> addItemObservable(){
+        return addItemSubject;
     }
 
     public int addTaskUnder(Task taskToAdd, Task taskAbove) {
@@ -114,7 +115,7 @@ public class ChallengeTasksRecyclerViewAdapter
                 viewHolder = new RewardViewHolder(getContentView(parent, R.layout.reward_item_card));
                 break;
             case TYPE_ADD_ITEM:
-                viewHolder = new AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemCallback);
+                viewHolder = new AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemSubject);
                 break;
             default:
                 viewHolder = new DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider));
@@ -154,16 +155,16 @@ public class ChallengeTasksRecyclerViewAdapter
     public class AddItemViewHolder extends BaseTaskViewHolder {
 
         private Button addBtn;
-        private Action1<Task> callback;
+        private PublishSubject<Task> callback;
         private Task newTask;
 
-        public AddItemViewHolder(View itemView, Action1<Task> callback) {
+        public AddItemViewHolder(View itemView, PublishSubject<Task> callback) {
             super(itemView, false);
             this.callback = callback;
 
             addBtn = (Button) itemView.findViewById(R.id.btn_add_task);
             addBtn.setClickable(true);
-            addBtn.setOnClickListener(view -> callback.call(newTask));
+            addBtn.setOnClickListener(view -> callback.onNext(newTask));
             context = itemView.getContext();
         }
 

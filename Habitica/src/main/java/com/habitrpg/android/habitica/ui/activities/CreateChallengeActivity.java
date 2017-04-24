@@ -30,7 +30,6 @@ import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ChallengeRepository;
-import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
@@ -56,46 +55,43 @@ public class CreateChallengeActivity extends BaseActivity {
     public static final String CHALLENGE_ID_KEY = "challengeId";
 
     @BindView(R.id.create_challenge_title_input_layout)
-    TextInputLayout create_challenge_title_input_layout;
+    TextInputLayout createChallengeTitleInputLayout;
 
     @BindView(R.id.create_challenge_title)
-    EditText create_challenge_title;
+    EditText createChallengeTitle;
 
     @BindView(R.id.create_challenge_description_input_layout)
-    TextInputLayout create_challenge_description_input_layout;
+    TextInputLayout createChallengeDescriptionInputLayout;
 
     @BindView(R.id.create_challenge_description)
-    EditText create_challenge_description;
+    EditText createChallengeDescription;
 
     @BindView(R.id.create_challenge_prize)
-    EditText create_challenge_prize;
+    EditText createChallengePrize;
 
     @BindView(R.id.create_challenge_tag)
-    EditText create_challenge_tag;
+    EditText createChallengeTag;
 
     @BindView(R.id.create_challenge_gem_error)
-    TextView create_challenge_gem_error;
+    TextView createChallengeGemError;
 
     @BindView(R.id.create_challenge_tag_error)
-    TextView create_challenge_tag_error;
+    TextView createChallengeTagError;
 
     @BindView(R.id.create_challenge_task_error)
-    TextView create_challenge_task_error;
+    TextView createChallengeTaskError;
 
     @BindView(R.id.challenge_location_spinner)
-    Spinner challenge_location_spinner;
+    Spinner challengeLocationSpinner;
 
     @BindView(R.id.challenge_add_gem_btn)
-    Button challenge_add_gem_btn;
+    Button challengeAddGemBtn;
 
     @BindView(R.id.challenge_remove_gem_btn)
-    Button challenge_remove_gem_btn;
+    Button challengeRemoveGemBtn;
 
     @BindView(R.id.create_challenge_task_list)
-    RecyclerView create_challenge_task_list;
-
-    @Inject
-    ChallengeLocalRepository challengeLocalRepository;
+    RecyclerView createChallengeTaskList;
 
     @Inject
     ChallengeRepository challengeRepository;
@@ -146,36 +142,36 @@ public class CreateChallengeActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean validateAllFields(){
+    private boolean validateAllFields() {
         int errors = 0;
 
-        if(getEditTextString(create_challenge_title).isEmpty()){
+        if (getEditTextString(createChallengeTitle).isEmpty()) {
             errors++;
-            create_challenge_title_input_layout.setError(getString(R.string.challenge_create_error_title));
+            createChallengeTitleInputLayout.setError(getString(R.string.challenge_create_error_title));
         } else {
-            create_challenge_title_input_layout.setErrorEnabled(false);
+            createChallengeTitleInputLayout.setErrorEnabled(false);
         }
 
-        if(getEditTextString(create_challenge_description).isEmpty()){
+        if (getEditTextString(createChallengeDescription).isEmpty()) {
             errors++;
-            create_challenge_description_input_layout.setError(getString(R.string.challenge_create_error_description));
-        } else{
-            create_challenge_description_input_layout.setErrorEnabled(false);
+            createChallengeDescriptionInputLayout.setError(getString(R.string.challenge_create_error_description));
+        } else {
+            createChallengeDescriptionInputLayout.setErrorEnabled(false);
         }
 
-        if(getEditTextString(create_challenge_tag).isEmpty()){
+        if (getEditTextString(createChallengeTag).isEmpty()) {
             errors++;
-            create_challenge_tag_error.setVisibility(View.VISIBLE);
-        } else{
-            create_challenge_tag_error.setVisibility(View.GONE);
+            createChallengeTagError.setVisibility(View.VISIBLE);
+        } else {
+            createChallengeTagError.setVisibility(View.GONE);
         }
 
         // all "Add {*}"-Buttons are one task itself, so we need atleast more than 4
-        if(challengeTasks.getTaskList().size() <= 4){
+        if (challengeTasks.getTaskList().size() <= 4) {
             errors++;
-            create_challenge_task_error.setVisibility(View.VISIBLE);
+            createChallengeTaskError.setVisibility(View.VISIBLE);
         } else {
-            create_challenge_task_error.setVisibility(View.GONE);
+            createChallengeTaskError.setVisibility(View.GONE);
         }
 
         return errors == 0;
@@ -201,6 +197,13 @@ public class CreateChallengeActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
     @Subscribe
     public void onEvent(DeleteTaskCommand deleteTask) {
         String taskIdToDelete = deleteTask.TaskIdToDelete;
@@ -221,7 +224,7 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(TaskTappedEvent tappedEvent) {
-        openNewTaskActivity(tappedEvent.Task);
+        openNewTaskActivity(null, tappedEvent.Task);
     }
 
     @Subscribe
@@ -236,50 +239,50 @@ public class CreateChallengeActivity extends BaseActivity {
 
     @OnClick(R.id.challenge_add_gem_btn)
     public void onAddGem() {
-        int currentVal = Integer.parseInt(create_challenge_prize.getText().toString());
+        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
         currentVal++;
 
-        create_challenge_prize.setText("" + currentVal);
+        createChallengePrize.setText("" + currentVal);
 
-        checkGemAndLocation();
+        checkPrizeAndMinimumForTavern();
     }
 
     @OnClick(R.id.challenge_remove_gem_btn)
     public void onRemoveGem() {
 
-        int currentVal = Integer.parseInt(create_challenge_prize.getText().toString());
+        int currentVal = Integer.parseInt(createChallengePrize.getText().toString());
         currentVal--;
 
-        create_challenge_prize.setText("" + currentVal);
+        createChallengePrize.setText("" + currentVal);
 
-        checkGemAndLocation();
+        checkPrizeAndMinimumForTavern();
     }
 
-    private void checkGemAndLocation() {
-        String inputValue = create_challenge_prize.getText().toString();
+    private void checkPrizeAndMinimumForTavern() {
+        String inputValue = createChallengePrize.getText().toString();
 
-        if(inputValue.isEmpty()){
+        if (inputValue.isEmpty()) {
             inputValue = "0";
         }
 
         int currentVal = Integer.parseInt(inputValue);
 
         // 0 is Tavern
-        int selectedLocation = challenge_location_spinner.getSelectedItemPosition();
+        int selectedLocation = challengeLocationSpinner.getSelectedItemPosition();
 
         double gemCount = HabiticaApplication.User.getGemCount();
 
         if (selectedLocation == 0 && currentVal == 0) {
-            create_challenge_gem_error.setVisibility(View.VISIBLE);
-            create_challenge_gem_error.setText(R.string.challenge_create_error_tavern_one_gem);
+            createChallengeGemError.setVisibility(View.VISIBLE);
+            createChallengeGemError.setText(R.string.challenge_create_error_tavern_one_gem);
         } else if (currentVal > gemCount) {
-            create_challenge_gem_error.setVisibility(View.VISIBLE);
-            create_challenge_gem_error.setText(R.string.challenge_create_error_enough_gems);
+            createChallengeGemError.setVisibility(View.VISIBLE);
+            createChallengeGemError.setText(R.string.challenge_create_error_enough_gems);
         } else {
-            create_challenge_gem_error.setVisibility(View.GONE);
+            createChallengeGemError.setVisibility(View.GONE);
         }
 
-        challenge_remove_gem_btn.setEnabled(currentVal != 0);
+        challengeRemoveGemBtn.setEnabled(currentVal != 0);
 
     }
 
@@ -298,21 +301,21 @@ public class CreateChallengeActivity extends BaseActivity {
 
         locationAdapter = new GroupArrayAdapter(this);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        challengeLocalRepository.getGroups().subscribe(groups -> {
+        challengeRepository.getLocalGroups().subscribe(groups -> {
             Group tavern = new Group();
             tavern.id = "00000000-0000-4000-A000-000000000000";
-            tavern.name = getString(R.string.tavern);
+            tavern.name = getString(R.string.sidebar_tavern);
 
             locationAdapter.add(tavern);
 
             groups.forEach(group -> locationAdapter.add(group));
         }, Throwable::printStackTrace);
 
-        challenge_location_spinner.setAdapter(locationAdapter);
-        challenge_location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        challengeLocationSpinner.setAdapter(locationAdapter);
+        challengeLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                checkGemAndLocation();
+                checkPrizeAndMinimumForTavern();
             }
 
             @Override
@@ -320,8 +323,8 @@ public class CreateChallengeActivity extends BaseActivity {
 
             }
         });
-        create_challenge_prize.setOnKeyListener((view, i, keyEvent) -> {
-            checkGemAndLocation();
+        createChallengePrize.setOnKeyListener((view, i, keyEvent) -> {
+            checkPrizeAndMinimumForTavern();
 
             return false;
         });
@@ -340,27 +343,27 @@ public class CreateChallengeActivity extends BaseActivity {
 
         challengeTasks = new ChallengeTasksRecyclerViewAdapter(null, 0, this, "", null, false, true);
         challengeTasks.setTasks(taskList);
-        challengeTasks.enableAddItem(t -> {
+        challengeTasks.addItemObservable().subscribe(t -> {
             if (t.equals(addHabit)) {
-                openNewTaskActivity(Task.TYPE_HABIT);
+                openNewTaskActivity(Task.TYPE_HABIT, null);
             } else if (t.equals(addDaily)) {
-                openNewTaskActivity(Task.TYPE_DAILY);
+                openNewTaskActivity(Task.TYPE_DAILY, null);
             } else if (t.equals(addTodo)) {
-                openNewTaskActivity(Task.TYPE_TODO);
+                openNewTaskActivity(Task.TYPE_TODO, null);
             } else if (t.equals(addReward)) {
-                openNewTaskActivity(Task.TYPE_REWARD);
+                openNewTaskActivity(Task.TYPE_REWARD, null);
             }
         });
 
-        create_challenge_task_list.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+        createChallengeTaskList.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 // Stop only scrolling.
                 return rv.getScrollState() == RecyclerView.SCROLL_STATE_DRAGGING;
             }
         });
-        create_challenge_task_list.setAdapter(challengeTasks);
-        create_challenge_task_list.setLayoutManager(new LinearLayoutManager(this));
+        createChallengeTaskList.setAdapter(challengeTasks);
+        createChallengeTaskList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private static Task createTask(String taskType, String taskName) {
@@ -381,21 +384,21 @@ public class CreateChallengeActivity extends BaseActivity {
     private void fillControlsByChallenge() {
         challengeRepository.getChallenge(challengeId).subscribe(challenge -> {
 
-            create_challenge_title.setText(challenge.name);
-            create_challenge_description.setText(challenge.description);
-            create_challenge_tag.setText(challenge.shortName);
-            create_challenge_prize.setText(challenge.prize + "");
+            createChallengeTitle.setText(challenge.name);
+            createChallengeDescription.setText(challenge.description);
+            createChallengeTag.setText(challenge.shortName);
+            createChallengePrize.setText(challenge.prize + "");
 
             for (int i = 0; i < locationAdapter.getCount(); i++) {
                 Group group = locationAdapter.getItem(i);
 
                 if (group.id == challenge.groupId) {
-                    challenge_location_spinner.setSelection(i);
+                    challengeLocationSpinner.setSelection(i);
                     break;
                 }
             }
 
-            checkGemAndLocation();
+            checkPrizeAndMinimumForTavern();
 
             challengeRepository.getChallengeTasks(challengeId).subscribe(tasks -> {
                 tasks.tasks.forEach((s, task) -> addOrUpdateTaskInList(task));
@@ -406,31 +409,15 @@ public class CreateChallengeActivity extends BaseActivity {
         });
     }
 
-    private void openNewTaskActivity(String type) {
+    private void openNewTaskActivity(String type, Task task) {
         Bundle bundle = new Bundle();
-        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
-        bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
-        bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
-        bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
-        bundle.putBoolean(TaskFormActivity.SHOW_CHECKLIST, false);
 
-        if (HabiticaApplication.User != null && HabiticaApplication.User.getPreferences() != null) {
-            String allocationMode = HabiticaApplication.User.getPreferences().getAllocationMode();
-
-            bundle.putString(TaskFormActivity.USER_ID_KEY, HabiticaApplication.User.getId());
-            bundle.putString(TaskFormActivity.ALLOCATION_MODE_KEY, allocationMode);
+        if (task == null) {
+            bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type);
+        } else {
+            bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task);
         }
 
-        Intent intent = new Intent(this, TaskFormActivity.class);
-        intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        startActivityForResult(intent, 1);
-    }
-
-    private void openNewTaskActivity(Task task) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task);
         bundle.putBoolean(TaskFormActivity.SAVE_TO_DB, false);
         bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true);
         bundle.putBoolean(TaskFormActivity.SHOW_TAG_SELECTION, false);
@@ -453,7 +440,7 @@ public class CreateChallengeActivity extends BaseActivity {
     private PostChallenge getChallengeData() {
         PostChallenge c = new PostChallenge();
 
-        int locationPos = challenge_location_spinner.getSelectedItemPosition();
+        int locationPos = challengeLocationSpinner.getSelectedItemPosition();
         Group locationGroup = locationAdapter.getItem(locationPos);
 
         if (challengeId != null) {
@@ -461,10 +448,10 @@ public class CreateChallengeActivity extends BaseActivity {
         }
 
         c.group = locationGroup.id;
-        c.name = create_challenge_title.getText().toString();
-        c.description = create_challenge_description.getText().toString();
-        c.shortName = create_challenge_tag.getText().toString();
-        c.prize = Integer.parseInt(create_challenge_prize.getText().toString());
+        c.name = createChallengeTitle.getText().toString();
+        c.description = createChallengeDescription.getText().toString();
+        c.shortName = createChallengeTag.getText().toString();
+        c.prize = Integer.parseInt(createChallengePrize.getText().toString());
 
         return c;
     }
@@ -536,7 +523,7 @@ public class CreateChallengeActivity extends BaseActivity {
         }
     }
 
-    private String getEditTextString(EditText editText){
+    private String getEditTextString(EditText editText) {
         return editText.getText().toString();
     }
 

@@ -153,8 +153,8 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         goldText.setText(String.valueOf(gp));
         silverText.setText(String.valueOf(sp));
 
-        Double gems = user.getBalance() * 4;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        int gems = user.getGemCount();
+        gemsText.setText(String.valueOf(gems));
     }
 
     public void setHpBarData(float value, int valueMax) {
@@ -186,9 +186,9 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
     @Subscribe
     public void onEvent(BoughtGemsEvent gemsEvent) {
-        Double gems = userObject.getBalance() * 4;
+        int gems = userObject.getGemCount();
         gems += gemsEvent.NewGemsToAdd;
-        gemsText.setText(String.valueOf(gems.intValue()));
+        gemsText.setText(String.valueOf(gems));
     }
 
     @Override

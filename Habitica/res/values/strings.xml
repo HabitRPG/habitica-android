@@ -574,7 +574,6 @@
     <string name="gem_reward">Gem reward</string>
     <string name="tasks">Tasks</string>
     <string name="create_challenge">Create challenge</string>
-    <string name="tavern">Tavern</string>
     <string name="edit_challenge">Edit Challenge</string>
     <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a challenge in Tavern.</string>
     <string name="challenge_create_error_enough_gems">You don\'t have enough gems to create a challenge.</string>
