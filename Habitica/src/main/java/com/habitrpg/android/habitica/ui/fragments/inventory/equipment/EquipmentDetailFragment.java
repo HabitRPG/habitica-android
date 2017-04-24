@@ -66,6 +66,6 @@ public class EquipmentDetailFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        inventoryRepository.getOwnedEquipment(type).subscribe(adapter::setGearList, throwable -> {});
+        inventoryRepository.getOwnedEquipment(type).subscribe(adapter::setGearList, ReactiveErrorHandler.handleEmptyError());
     }
 }

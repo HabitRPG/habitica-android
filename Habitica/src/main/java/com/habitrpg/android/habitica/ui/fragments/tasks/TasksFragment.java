@@ -341,7 +341,7 @@ public class TasksFragment extends BaseMainFragment {
                     }
                 }
             }
-        }, throwable -> {});
+        }, ReactiveErrorHandler.handleEmptyError());
     }
     // endregion
 

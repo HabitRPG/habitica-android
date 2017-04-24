@@ -356,7 +356,7 @@ public class GroupInformationFragment extends BaseFragment {
     public void onPartyInviteRejected() {
         if (user != null) {
             apiClient.rejectGroupInvite(user.getInvitations().getParty().getId())
-                    .subscribe(aVoid -> viewBinding.setInvitation(null), throwable -> {});
+                    .subscribe(aVoid -> viewBinding.setInvitation(null), ReactiveErrorHandler.handleEmptyError());
         }
     }
 }

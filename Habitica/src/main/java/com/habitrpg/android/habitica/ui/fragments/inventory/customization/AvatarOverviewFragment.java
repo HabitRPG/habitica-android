@@ -65,7 +65,7 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
 
         if (apiClient != null) {
             apiClient.getContent()
-                    .subscribe(contentResult -> {}, throwable -> {});
+                    .subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
         }
     }
 

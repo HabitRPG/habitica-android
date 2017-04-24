@@ -164,7 +164,7 @@ public class PartyInviteActivity extends BaseActivity {
             }
             userIdToInvite = uri.getPathSegments().get(2);
 
-            userRepository.getUser(userId).subscribe(this::handleUserRecieved, throwable -> {});
+            userRepository.getUser(userId).subscribe(this::handleUserRecieved, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
@@ -184,6 +184,6 @@ public class PartyInviteActivity extends BaseActivity {
         inviteData.put("uuids", invites);
 
         this.socialRepository.inviteToGroup(user.getParty().getId(), inviteData)
-                .subscribe(aVoid -> {}, throwable -> {});
+                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 }

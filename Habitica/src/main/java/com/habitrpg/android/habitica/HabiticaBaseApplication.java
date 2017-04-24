@@ -179,7 +179,7 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
             ApiClient apiClient = this.lazyApiHelper.get();
 
             apiClient.getContent()
-                    .subscribe(contentResult -> { }, throwable -> {});
+                    .subscribe(contentResult -> { }, ReactiveErrorHandler.handleEmptyError());
         }
     }
 

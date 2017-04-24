@@ -58,7 +58,7 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener,
         this.finishButton.setOnClickListener(this);
 
         apiClient.getContent()
-                .subscribe(contentResult -> {}, throwable -> {});
+                .subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();

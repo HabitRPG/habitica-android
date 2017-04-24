@@ -54,9 +54,9 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<User> retrieveUser(Boolean withTasks) {
         if (this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
+            lastSync = new Date();
             return apiClient.retrieveUser(withTasks)
-                    .doOnNext(localRepository::saveUser)
-                    .doOnNext(user -> lastSync = new Date());
+                    .doOnNext(localRepository::saveUser);
         } else {
             return Observable.empty();
         }
@@ -78,7 +78,7 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
                     return updateData;
                 })
                 .flatMap(updateData -> updateUser(user, updateData))
-                .subscribe(tutorialSteps -> {}, throwable -> {});
+                .subscribe(tutorialSteps -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

@@ -76,7 +76,7 @@ public class RewardsRecyclerViewAdapter extends RealmBaseTasksRecyclerViewAdapte
                             }
                             subscriber.onNext(buyableItems);
                             subscriber.onCompleted();
-                        }, throwable -> {}));
+                        }, ReactiveErrorHandler.handleEmptyError()));
                     })
                     .subscribe(items -> {
                         notifyDataSetChanged();

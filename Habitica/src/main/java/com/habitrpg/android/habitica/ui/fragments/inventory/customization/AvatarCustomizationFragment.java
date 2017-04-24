@@ -87,7 +87,7 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, throwable -> {});
+        customizationRepository.getCustomizations(type, category).subscribe(adapter::setCustomizationList, ReactiveErrorHandler.handleEmptyError());
     }
 
     private void setGridSpanCount(int width) {

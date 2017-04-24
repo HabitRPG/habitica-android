@@ -71,7 +71,7 @@ public class QrCodeManager {
         avatarView.configureView(false, false, false);
         this.qrCodeWrapper = (FrameLayout) qrLayout.findViewById(R.id.qrCodeWrapper);
 
-        userRepository.getUser(userId).subscribe(avatarView::setUser, throwable -> {});
+        userRepository.getUser(userId).subscribe(avatarView::setUser, ReactiveErrorHandler.handleEmptyError());
 
         this.displayQrCode();
         this.setDownloadQr();

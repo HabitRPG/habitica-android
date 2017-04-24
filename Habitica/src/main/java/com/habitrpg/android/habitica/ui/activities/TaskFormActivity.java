@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.TagRepository;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.helpers.FirstDayOfTheWeekHelper;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.RemindersManager;
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper;
 import com.habitrpg.android.habitica.models.Tag;
@@ -47,7 +48,7 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.Days;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
+import com.habitrpg.android.habitica.modules.AppModule;
 import com.habitrpg.android.habitica.ui.WrapContentRecyclerViewLayoutManager;
 import com.habitrpg.android.habitica.ui.adapter.tasks.CheckListAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.RemindersAdapter;
@@ -71,6 +72,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -193,12 +195,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     TaskRepository taskRepository;
     @Inject
     TagRepository tagRepository;
+    @Inject
+    @Named(AppModule.NAMED_USER_ID)
+    String userId;
 
     EmojiPopup popup;
 
     private String taskType;
     private String taskId;
-    private String userId;
     private Task task;
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
@@ -225,7 +229,6 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         Bundle bundle = intent.getExtras();
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
-        userId = bundle.getString(USER_ID_KEY);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
         tagCheckBoxList = new ArrayList<>();
         selectedTags = new ArrayList<>();
@@ -250,7 +253,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     finish();
                     dismissKeyboard();
 
-                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, throwable -> {});
+                    taskRepository.deleteTask(taskId).subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss()).show());
 
         ArrayAdapter<CharSequence> difficultyAdapter = ArrayAdapter.createFromResource(this,
@@ -324,10 +327,12 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                 this.task = task;
                 if (task != null) {
                     populate(task);
+                    populateChecklistRecyclerView();
+                    populateRemindersRecyclerView();
                 }
 
                 setTitle(task);
-            }, throwable -> {});
+            }, ReactiveErrorHandler.handleEmptyError());
 
             btnDelete.setEnabled(true);
         } else {
@@ -440,11 +445,8 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private void createCheckListRecyclerView() {
-        List<ChecklistItem> checklistItems = new ArrayList<>();
-        if (task != null && task.getChecklist() != null) {
-            checklistItems = task.getChecklist();
-        }
-        checklistAdapter = new CheckListAdapter(checklistItems);
+
+        checklistAdapter = new CheckListAdapter();
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -457,6 +459,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(checklistAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void populateChecklistRecyclerView() {
+        List<ChecklistItem> checklistItems = new ArrayList<>();
+        if (task != null && task.getChecklist() != null) {
+            checklistItems = task.getChecklist();
+        }
+        checklistAdapter.setItems(checklistItems);
     }
 
     @OnClick(R.id.add_checklist_button)
@@ -473,7 +483,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             reminders = task.getReminders();
         }
 
-        remindersAdapter = new RemindersAdapter(reminders, taskType);
+        remindersAdapter = new RemindersAdapter(taskType);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -486,6 +496,15 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(remindersAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(remindersRecyclerView);
+    }
+
+    private void populateRemindersRecyclerView() {
+        List<RemindersItem> reminders = new ArrayList<>();
+        if (task != null && task.getReminders() != null) {
+            reminders = task.getReminders();
+        }
+
+        remindersAdapter.setReminders(reminders);
     }
 
     private void addNewReminder(RemindersItem remindersItem) {
@@ -741,16 +760,63 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
             if (checklistAdapter != null) {
                 if (checklistAdapter.getCheckListItems() != null) {
-                    for (ChecklistItem item : task.getChecklist()) {
-                        item.setText(checklistAdapter.checklistTexts.get(item.getId()));
+                    List<ChecklistItem> newItems = checklistAdapter.getCheckListItems();
+                    if (task.getChecklist() == null) {
+                        task.setChecklist(new RealmList<>());
                     }
+                    List<ChecklistItem> itemsToRemove = new ArrayList<>();
+                    for (ChecklistItem item : task.getChecklist()) {
+                        if (item.getId() == null) {
+                            itemsToRemove.add(item);
+                            break;
+                        }
+                        ChecklistItem newItem = null;
+                        for (ChecklistItem checkedItem : newItems) {
+                            if (item.getId().equals(checkedItem.getId())) {
+                                newItem = checkedItem;
+                                break;
+                            }
+                        }
+                        if (newItem == null) {
+                            itemsToRemove.add(item);
+                        } else {
+                            item.setText(newItem.getText());
+                            newItems.remove(newItem);
+                        }
+                    }
+                    task.getChecklist().removeAll(itemsToRemove);
+                    task.getChecklist().addAll(newItems);
                 }
             }
 
             if (remindersAdapter != null) {
                 if (remindersAdapter.getRemindersItems() != null) {
-                    task.getReminders().addAll(remindersAdapter.getRemindersItems());
-                }
+                    List<RemindersItem> newItems = remindersAdapter.getRemindersItems();
+                    if (task.getReminders() == null) {
+                        task.setReminders(new RealmList<>());
+                    }
+                    List<RemindersItem> itemsToRemove = new ArrayList<>();
+                    for (RemindersItem item : task.getReminders()) {
+                        if (item.getId() == null) {
+                            itemsToRemove.add(item);
+                            break;
+                        }
+                        RemindersItem newItem = null;
+                        for (RemindersItem checkedItem : newItems) {
+                            if (item.getId().equals(checkedItem.getId())) {
+                                newItem = checkedItem;
+                                break;
+                            }
+                        }
+                        if (newItem == null) {
+                            itemsToRemove.add(item);
+                        } else {
+                            item.setTime(newItem.getTime());
+                            newItems.remove(newItem);
+                        }
+                    }
+                    task.getReminders().removeAll(itemsToRemove);
+                    task.getReminders().addAll(newItems);                }
             }
 
 
@@ -873,7 +939,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             } else {
                 observable = taskRepository.updateTask(task);
             }
-            observable.subscribe(task1 -> {}, throwable -> {});
+            observable.subscribe(task1 -> {
+
+            }, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
@@ -917,7 +985,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         EditText datePickerText;
         DateFormat dateFormatter;
 
-        public DateEditTextListener(EditText dateText) {
+        DateEditTextListener(EditText dateText) {
             calendar = Calendar.getInstance();
 
             this.datePickerText = dateText;
@@ -977,7 +1045,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         EmojiEditText view;
 
-        public emojiClickListener(EmojiEditText view) {
+        emojiClickListener(EmojiEditText view) {
             this.view = view;
         }
 

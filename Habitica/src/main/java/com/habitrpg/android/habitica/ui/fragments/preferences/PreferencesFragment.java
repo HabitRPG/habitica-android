@@ -57,7 +57,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
 
         String userID = getPreferenceManager().getSharedPreferences().getString(context.getString(R.string.SP_userID), null);
         if (userID != null) {
-            userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, throwable -> {});
+            userRepository.getUser(userID).subscribe(PreferencesFragment.this::setUser, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
@@ -126,7 +126,7 @@ public class PreferencesFragment extends BasePreferencesFragment implements
             }
             return true;
         } else if (preference.getKey().equals("reload_content")) {
-            apiClient.getContent().subscribe(contentResult -> {}, throwable -> {});
+            apiClient.getContent().subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
         }
         return super.onPreferenceTreeClick(preference);
     }

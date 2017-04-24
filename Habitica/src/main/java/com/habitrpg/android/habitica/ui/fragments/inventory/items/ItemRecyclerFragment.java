@@ -116,7 +116,7 @@ public class ItemRecyclerFragment extends BaseFragment {
                     .flatMap(item -> inventoryRepository.sellItem(user, item))
                     .subscribe(item -> {
 
-            }, throwable -> {});
+            }, ReactiveErrorHandler.handleEmptyError());
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
@@ -188,7 +188,7 @@ public class ItemRecyclerFragment extends BaseFragment {
             if (items.size() > 0) {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }
-        }, throwable -> {});
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     @OnClick(R.id.openMarketButton)

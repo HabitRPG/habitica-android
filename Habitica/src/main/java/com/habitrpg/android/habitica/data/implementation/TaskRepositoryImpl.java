@@ -127,7 +127,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
             return Observable.empty();
         }
         lastTaskAction = now;
-        return apiClient.createItem(task)
+        return localRepository.getTaskCopy(task.getId()).first()
+                .flatMap(apiClient::createItem)
                 .doOnNext(localRepository::saveTask);
     }
 
@@ -138,7 +139,8 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
             return Observable.empty();
         }
         lastTaskAction = now;
-        return apiClient.updateTask(task.getId(), task)
+        return localRepository.getTaskCopy(task.getId()).first()
+                .flatMap(task1 -> apiClient.updateTask(task1.getId(), task1))
                 .map(task1 -> {
                     task1.position = task.position;
                     return task1;

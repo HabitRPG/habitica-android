@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                 .subscribe(newUser -> {
                     MainActivity.this.user = newUser;
                     MainActivity.this.setUserData(true);
-                }, throwable -> {});
+                }, ReactiveErrorHandler.handleEmptyError());
 
         EventBus.getDefault().register(this);
     }
@@ -885,18 +885,18 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
     @Subscribe
     public void reloadContent(ReloadContentEvent event) {
         this.inventoryRepository.retrieveContent()
-                .subscribe(contentResult -> {}, throwable -> {});
+                .subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     public void displayTaskScoringResponse(TaskScoringResult data) {
         if (user != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
                     user, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, data.hasLeveledUp))
-                    .subscribe(aVoid -> {}, throwable -> {});
+                    .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
         }
 
         displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                .subscribe(aVoid -> {}, throwable -> {});
+                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
 

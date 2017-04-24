@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseFragment extends DialogFragment {
 
@@ -40,6 +41,8 @@ public abstract class BaseFragment extends DialogFragment {
     public Unbinder unbinder;
     protected boolean tutorialCanBeDeferred = true;
     public List<String> tutorialTexts;
+
+    CompositeSubscription compositeSubscription;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -58,7 +61,7 @@ public abstract class BaseFragment extends DialogFragment {
                         event.canBeDeferred = tutorialCanBeDeferred;
                         EventBus.getDefault().post(event);
                     }
-                }, throwable -> {});
+                }, ReactiveErrorHandler.handleEmptyError());
             }
 
             String displayedClassName = this.getDisplayedClassName();
@@ -74,6 +77,7 @@ public abstract class BaseFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         injectFragment(HabiticaBaseApplication.getComponent());
+        compositeSubscription = new CompositeSubscription();
         super.onCreate(savedInstanceState);
     }
 
@@ -118,9 +122,15 @@ public abstract class BaseFragment extends DialogFragment {
         refWatcher.watch(this);
     }
 
+    @Override
+    public void onDestroy() {
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
+
     public String getDisplayedClassName() {
         return this.getClass().getSimpleName();
     }
-
-
 }

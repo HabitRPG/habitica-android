@@ -17,27 +17,21 @@ import com.habitrpg.android.habitica.ui.helpers.ItemTouchHelperViewHolder;
 import net.pherth.android.emoji_library.EmojiEditText;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by franzejr on 15/11/15.
- */
 public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter {
 
     private final List<ChecklistItem> items = new ArrayList<>();
-    public final Map<String, String> checklistTexts = new HashMap<>();
 
-    public CheckListAdapter(List<ChecklistItem> checklistItems) {
-        items.addAll(checklistItems);
-        for (ChecklistItem item : checklistItems) {
-            checklistTexts.put(item.getId(), item.getText());
-        }
+    public CheckListAdapter() {
+    }
+
+    public void setItems(List<ChecklistItem> items) {
+        this.items.addAll(items);
     }
 
     @Override
@@ -83,16 +77,16 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder implements
+    class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder, Button.OnClickListener {
 
-        public ChecklistTextWatcher textWatcher;
+        ChecklistTextWatcher textWatcher;
         @BindView(R.id.item_edittext)
         EmojiEditText checkListTextView;
         @BindView(R.id.delete_item_button)
         Button deleteButton;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             deleteButton.setOnClickListener(this);
@@ -129,12 +123,19 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Item
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                checklistTexts.put(id, checkListTextView.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if (id == null) {
+                    return;
+                }
+                for (ChecklistItem item : items) {
+                    if (id.equals(item.getId())) {
+                        item.setText(checkListTextView.getText().toString());
+                        break;
+                    }
+                }
             }
         }
     }

@@ -159,7 +159,7 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
                 userChallengesFragment.onRefresh();
                 availableChallengesFragment.onRefresh();
             });
-        }, throwable -> {});
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Subscribe

@@ -100,7 +100,7 @@ public class SkillTasksRecyclerViewAdapter extends RecyclerView.Adapter<SkillTas
                 } else {
                     notifyDataSetChanged();
                 }
-            }, throwable -> {});
+            }, ReactiveErrorHandler.handleEmptyError());
         } else {
             if (parentAdapter != null) {
                 parentAdapter.notifyDataSetChanged();

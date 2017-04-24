@@ -44,7 +44,7 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
 
     @Override
     public void markMessagesSeen(String seenGroupId) {
-        apiClient.seenMessages(seenGroupId).subscribe(aVoid -> {}, throwable -> {});
+        apiClient.seenMessages(seenGroupId).subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

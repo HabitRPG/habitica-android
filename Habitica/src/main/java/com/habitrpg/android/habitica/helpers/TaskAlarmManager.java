@@ -146,7 +146,7 @@ public class TaskAlarmManager {
     public void addAlarmForTaskId(String taskId) {
         taskRepository.getTask(taskId)
                 .filter(task -> Task.TYPE_DAILY.equals(task.type))
-                .subscribe(this::setAlarmsForTask, throwable -> {});
+                .subscribe(this::setAlarmsForTask, ReactiveErrorHandler.handleEmptyError());
     }
 
     public void scheduleAllSavedAlarms() {

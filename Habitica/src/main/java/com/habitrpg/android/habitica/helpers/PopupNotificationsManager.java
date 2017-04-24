@@ -93,7 +93,7 @@ public class PopupNotificationsManager {
             if (apiClient != null) {
                 // @TODO: This should be handled somewhere else? MAybe we notifiy via event
                 apiClient.readNotificaiton(notification.getId())
-                        .subscribe(next -> {}, throwable -> {});
+                        .subscribe(next -> {}, ReactiveErrorHandler.handleEmptyError());
             }
 
             dialog.hide();

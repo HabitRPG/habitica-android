@@ -12,7 +12,7 @@ import java.util.List;
 import io.realm.RealmResults;
 import rx.Observable;
 
-public interface InventoryLocalRepository extends BaseLocalRepository {
+public interface InventoryLocalRepository extends ContentLocalRepository {
     Observable<QuestContent> getQuestContent(String key);
 
     Observable<RealmResults<Equipment>> getEquipment(List<String> searchedKeys);

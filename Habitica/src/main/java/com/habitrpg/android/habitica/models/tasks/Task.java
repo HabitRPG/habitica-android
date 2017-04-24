@@ -43,9 +43,9 @@ public class Task extends RealmObject {
 
 
     public String userId;
-    public Float priority;
+    public float priority;
     public String text, notes, attribute, type;
-    public Double value;
+    public double value;
     public RealmList<Tag> tags;
     public Date dateCreated;
     public int position;
@@ -190,7 +190,7 @@ public class Task extends RealmObject {
     public boolean containsAllTagIds(List<String> tagIdList) {
         getTags();
 
-        List<String> allTagIds = new ArrayList<String>();
+        List<String> allTagIds = new ArrayList<>();
 
         for (Tag t : tags) {
             allTagIds.add(t.getId());

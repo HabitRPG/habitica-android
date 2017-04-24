@@ -50,7 +50,7 @@ public class AvatarStatsWidgetProvider extends BaseWidgetProvider {
         this.appWidgetManager = appWidgetManager;
         this.context = context;
 
-        userRepository.getUser(userId).subscribe(this::updateData, throwable -> {});
+        userRepository.getUser(userId).subscribe(this::updateData, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

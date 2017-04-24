@@ -42,7 +42,7 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
 
         String userID = getPreferenceManager().getSharedPreferences().getString(getContext().getString(R.string.SP_userID), null);
         if (userID != null) {
-            userRepository.getUser(userID).subscribe(this::setUser, throwable -> {});
+            userRepository.getUser(userID).subscribe(this::setUser, ReactiveErrorHandler.handleEmptyError());
         }
     }
 

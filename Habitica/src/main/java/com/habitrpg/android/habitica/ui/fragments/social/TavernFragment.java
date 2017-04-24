@@ -73,7 +73,7 @@ public class TavernFragment extends BaseMainFragment {
                                 if (questInfoFragment != null) {
                                     questInfoFragment.setQuestContent(content);
                                 }
-                            }, throwable -> {});
+                            }, ReactiveErrorHandler.handleEmptyError());
                         }
                     }, throwable -> {
                     });

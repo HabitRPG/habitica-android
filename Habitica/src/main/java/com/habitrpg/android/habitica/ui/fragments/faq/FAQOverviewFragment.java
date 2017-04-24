@@ -40,7 +40,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
 
         unbinder = ButterKnife.bind(this, view);
         adapter = new FAQOverviewRecyclerAdapter();
-        adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), throwable -> {});
+        adapter.getResetWalkthroughEvents().subscribe(aVoid -> this.userRepository.resetTutorial(user), ReactiveErrorHandler.handleEmptyError());
         adapter.activity = activity;
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -59,7 +59,7 @@ public class FAQOverviewFragment extends BaseMainFragment {
         if (user == null || adapter == null) {
             return;
         }
-        faqRepository.getArticles().subscribe(adapter::setArticles, throwable -> {});
+        faqRepository.getArticles().subscribe(adapter::setArticles, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

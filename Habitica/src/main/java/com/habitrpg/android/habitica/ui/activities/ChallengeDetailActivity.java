@@ -144,7 +144,7 @@ public class ChallengeDetailActivity extends BaseActivity {
 
         ObservableList<Task> fullList = new ObservableArrayList<>();
 
-        userRepository.getUser(userId).first().subscribe(user -> ChallengeDetailActivity.this.user = user, throwable -> {});
+        userRepository.getUser(userId).first().subscribe(user -> ChallengeDetailActivity.this.user = user, ReactiveErrorHandler.handleEmptyError());
 
         if (challengeId != null) {
 
@@ -418,6 +418,6 @@ public class ChallengeDetailActivity extends BaseActivity {
         }
 
         displayItemDropUseCase.observable(new DisplayItemDropUseCase.RequestValues(data, this, floatingMenuWrapper))
-                .subscribe(aVoid -> {}, throwable -> {});
+                .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 }

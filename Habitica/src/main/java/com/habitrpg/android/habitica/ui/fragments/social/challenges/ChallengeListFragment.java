@@ -181,7 +181,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
             // load online challenges & save to database
             onRefresh();
-        }, throwable -> {});
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     private void setChallengeEntries(List<Challenge> challenges) {

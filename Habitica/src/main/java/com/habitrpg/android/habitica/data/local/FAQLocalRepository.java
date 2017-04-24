@@ -7,7 +7,7 @@ import java.util.List;
 import io.realm.RealmResults;
 import rx.Observable;
 
-public interface FAQLocalRepository extends BaseLocalRepository {
+public interface FAQLocalRepository extends ContentLocalRepository {
 
     Observable<RealmResults<FAQArticle>> getArticles();
 }

@@ -112,7 +112,7 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
                 adapter.setOwnedMapping(user.getItems().getPets());
                 adapter.setOwnedMountsMapping(user.getItems().getMounts());
             }
-        }, throwable -> {});
+        }, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Subscribe

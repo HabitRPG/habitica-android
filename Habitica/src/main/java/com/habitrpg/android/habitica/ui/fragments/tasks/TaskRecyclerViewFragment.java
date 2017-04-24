@@ -342,7 +342,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         swipeRefreshLayout.setRefreshing(true);
         userRepository.retrieveUser(true)
                 .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
-                .subscribe(user1 -> {}, throwable -> {});
+                .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     public void setActiveFilter(String activeFilter) {

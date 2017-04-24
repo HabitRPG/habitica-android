@@ -33,10 +33,13 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Item
     private final String taskType;
     private RemindersManager remindersManager;
 
-    public RemindersAdapter(List<RemindersItem> remindersInc, String taskType) {
-        this.reminders.addAll(remindersInc);
+    public RemindersAdapter(String taskType) {
         this.remindersManager = new RemindersManager(taskType);
         this.taskType = taskType;
+    }
+
+    public void setReminders(List<RemindersItem> reminders) {
+        this.reminders.addAll(reminders);
     }
 
     @Override

@@ -94,7 +94,7 @@ public class SkillsFragment extends BaseMainFragment {
 
         Observable.concat(userRepository.getSkills(user).flatMap(Observable::from), userRepository.getSpecialItems(user).flatMap(Observable::from))
                 .toList()
-                .subscribe(skills -> adapter.setSkillList(skills), throwable -> {});
+                .subscribe(skills -> adapter.setSkillList(skills), ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class SkillsFragment extends BaseMainFragment {
         if (activity != null) {
             UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
         }
-        userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, throwable -> {});
+        userRepository.retrieveUser(false).subscribe(habitRPGUser -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

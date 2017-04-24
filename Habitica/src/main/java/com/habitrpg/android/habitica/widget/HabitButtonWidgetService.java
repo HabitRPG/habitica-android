@@ -53,7 +53,7 @@ public class HabitButtonWidgetService extends Service {
         makeTaskMapping();
 
         for (String taskid : this.taskMapping.keySet()) {
-            taskRepository.getTask(taskid).subscribe(this::updateData, throwable -> {});
+            taskRepository.getTask(taskid).subscribe(this::updateData, ReactiveErrorHandler.handleEmptyError());
         }
 
         stopSelf();

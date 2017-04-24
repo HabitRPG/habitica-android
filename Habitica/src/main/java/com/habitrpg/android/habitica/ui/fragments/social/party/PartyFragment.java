@@ -136,7 +136,7 @@ public class PartyFragment extends BaseMainFragment {
                 if (groupInformationFragment != null) {
                     groupInformationFragment.setQuestContent(content);
                 }
-            }, throwable -> {});
+            }, ReactiveErrorHandler.handleEmptyError());
         }
 
     }

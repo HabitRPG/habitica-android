@@ -134,7 +134,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
                 }
 
                 this.viewBinding.setEquipmentNames(this.nameMapping);
-            }, throwable -> {});
+            }, ReactiveErrorHandler.handleEmptyError());
         } else {
             this.viewBinding.setEquipmentNames(this.nameMapping);
         }

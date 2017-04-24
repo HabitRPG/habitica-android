@@ -41,7 +41,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
     @Override
     public ContentResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<RealmObject> items = new ArrayList<>();
 
         ContentResult result = new ContentResult();
         JsonObject object = json.getAsJsonObject();
@@ -50,9 +49,7 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         result.armoire = context.deserialize(object.get("armoire"), Equipment.class);
         result.gear = context.deserialize(object.get("gear"), ContentGear.class);
 
-        items.add(result.potion);
-        items.add(result.armoire);
-        items.addAll(result.gear.flat);
+
 
         result.quests = context.deserialize(object.get("quests"), new TypeToken<List<QuestContent>>() {
         }.getType());
@@ -62,11 +59,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         }.getType());
         result.hatchingPotions = context.deserialize(object.get("hatchingPotions"), new TypeToken<List<HatchingPotion>>() {
         }.getType());
-
-        items.addAll(result.quests);
-        items.addAll(result.eggs);
-        items.addAll(result.food);
-        items.addAll(result.hatchingPotions);
 
         result.pets = context.deserialize(object.get("pets"), new TypeToken<Map<String, Pet>>() {
         }.getType());
@@ -115,40 +107,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             }
         }
 
-        for (Pet pet : result.pets.values()) {
-            pet.setAnimalGroup("pets");
-            items.add(pet);
-        }
-        for (Pet pet : result.specialPets.values()) {
-            pet.setAnimalGroup("specialPets");
-            items.add(pet);
-        }
-        for (Pet pet : result.premiumPets.values()) {
-            pet.setAnimalGroup("premiumPets");
-            items.add(pet);
-        }
-        for (Pet pet : result.questPets.values()) {
-            pet.setAnimalGroup("questPets");
-            items.add(pet);
-        }
-
-        for (Mount mount : result.mounts.values()) {
-            mount.setAnimalGroup("mounts");
-            items.add(mount);
-        }
-        for (Mount mount : result.specialMounts.values()) {
-            mount.setAnimalGroup("specialMounts");
-            items.add(mount);
-        }
-        for (Mount mount : result.premiumMounts.values()) {
-            mount.setAnimalGroup("premiumMounts");
-            items.add(mount);
-        }
-        for (Mount mount : result.questMounts.values()) {
-            mount.setAnimalGroup("questMounts");
-            items.add(mount);
-        }
-
         result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {
         }.getType());
 
@@ -170,13 +128,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
         result.faq = context.deserialize(object.get("faq"), new TypeToken<List<FAQArticle>>() {
         }.getType());
-
-        items.addAll(result.spells);
-
-        items.addAll(result.appearances);
-        items.addAll(result.backgrounds);
-
-        items.addAll(result.faq);
 
         return result;
     }

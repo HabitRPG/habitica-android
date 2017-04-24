@@ -85,7 +85,7 @@ public abstract class BaseMainFragment extends BaseFragment {
         if (savedInstanceState != null && savedInstanceState.containsKey("userId")) {
             String userId = savedInstanceState.getString("userId");
             if (userId != null) {
-                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, throwable -> {});
+                userRepository.getUser(userId).subscribe(habitRPGUser -> user = habitRPGUser, ReactiveErrorHandler.handleEmptyError());
             }
         }
 

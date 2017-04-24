@@ -75,13 +75,13 @@ public class PushNotificationManager {
         pushDeviceData.put("type", "android");
         apiClient.addPushDevice(pushDeviceData)
 
-            .subscribe(aVoid -> {}, throwable -> {});
+            .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     public void removePushDeviceUsingStoredToken() {
         apiClient.deletePushDevice(this.refreshedToken)
 
-            .subscribe(aVoid -> {}, throwable -> {});
+            .subscribe(aVoid -> {}, ReactiveErrorHandler.handleEmptyError());
     }
 
     private Boolean userHasPushDevice() {

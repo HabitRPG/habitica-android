@@ -87,7 +87,7 @@ public class InboxMessageListFragment extends BaseMainFragment
     private void refreshUserInbox () {
         this.swipeRefreshLayout.setRefreshing(true);
         this.userRepository.retrieveUser(true)
-                .subscribe(this::onUserReceived, throwable -> {});
+                .subscribe(this::onUserReceived, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

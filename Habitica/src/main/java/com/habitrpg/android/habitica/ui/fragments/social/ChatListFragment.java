@@ -91,7 +91,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             if (savedInstanceState.containsKey("userId")) {
                 this.userId = savedInstanceState.getString("userId");
                 if (this.userId != null) {
-                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, throwable -> {});
+                    userRepository.getUser(userId).subscribe(habitRPGUser -> this.user = habitRPGUser, ReactiveErrorHandler.handleEmptyError());
                 }
             }
 

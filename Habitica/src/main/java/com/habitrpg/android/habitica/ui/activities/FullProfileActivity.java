@@ -338,10 +338,10 @@ public class FullProfileActivity extends BaseActivity {
 
         addAttributeRow(getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat, true, false);
 
-        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), throwable -> {});
+        loadItemDataByOutfit(user.getItems().getGear().getEquipped()).subscribe(gear -> this.gotGear(gear, user), ReactiveErrorHandler.handleEmptyError());
 
         if (user.getPreferences().getCostume()) {
-            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, throwable -> {});
+            loadItemDataByOutfit(user.getItems().getGear().getCostume()).subscribe(this::gotCostume, ReactiveErrorHandler.handleEmptyError());
         } else {
             costumeCard.setVisibility(View.GONE);
         }

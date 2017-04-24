@@ -197,6 +197,6 @@ public class StableRecyclerFragment extends BaseFragment {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> adapter.setItemList(items), throwable -> {});
+                .subscribe(items -> adapter.setItemList(items), ReactiveErrorHandler.handleEmptyError());
     }
 }
