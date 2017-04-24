@@ -1,15 +1,13 @@
 package com.habitrpg.android.habitica.models.social;
 
 import com.habitrpg.android.habitica.HabitDatabase;
-import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import java.util.HashMap;
 
 @Table(databaseName = HabitDatabase.NAME)
 public class Challenge extends BaseModel {
@@ -73,25 +71,5 @@ public class Challenge extends BaseModel {
 
     public HabitRPGUser leader;
 
-    public HashMap<String, String[]> getTasksOrder() {
-        HashMap<String, String[]> map = new HashMap();
-
-        if (!dailyList.isEmpty()) {
-            map.put(TASK_ORDER_DAILYS, dailyList.split(","));
-        }
-
-        if (!habitList.isEmpty()) {
-            map.put(TASK_ORDER_HABITS, habitList.split(","));
-        }
-
-        if (!rewardList.isEmpty()) {
-            map.put(TASK_ORDER_REWARDS, rewardList.split(","));
-        }
-
-        if (!todoList.isEmpty()) {
-            map.put(TASK_ORDER_TODOS, todoList.split(","));
-        }
-
-        return map;
-    }
+    public TasksOrder tasksOrder;
 }

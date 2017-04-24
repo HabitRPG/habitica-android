@@ -33,10 +33,10 @@ import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.events.TaskSaveEvent;
 import com.habitrpg.android.habitica.events.TaskTappedEvent;
 import com.habitrpg.android.habitica.events.commands.DeleteTaskCommand;
+import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -436,8 +436,8 @@ public class CreateChallengeActivity extends BaseActivity {
         startActivityForResult(intent, 1);
     }
 
-    private PostChallenge getChallengeData() {
-        PostChallenge c = new PostChallenge();
+    private Challenge getChallengeData() {
+        Challenge c = new Challenge();
 
         int locationPos = challengeLocationSpinner.getSelectedItemPosition();
         Group locationGroup = locationAdapter.getItem(locationPos);
@@ -446,7 +446,7 @@ public class CreateChallengeActivity extends BaseActivity {
             c.id = challengeId;
         }
 
-        c.group = locationGroup.id;
+        c.groupId = locationGroup.id;
         c.name = createChallengeTitle.getText().toString();
         c.description = createChallengeDescription.getText().toString();
         c.shortName = createChallengeTag.getText().toString();
@@ -456,7 +456,7 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     private void createChallenge() {
-        PostChallenge c = getChallengeData();
+        Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();
         taskList.remove(addHabit);
@@ -472,7 +472,7 @@ public class CreateChallengeActivity extends BaseActivity {
     }
 
     private void updateChallenge() {
-        PostChallenge c = getChallengeData();
+        Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();
         taskList.remove(addHabit);

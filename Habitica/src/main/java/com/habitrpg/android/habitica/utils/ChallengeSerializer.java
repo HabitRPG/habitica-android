@@ -6,13 +6,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.habitrpg.android.habitica.models.social.Challenge;
 
 import android.text.TextUtils;
 
 import java.lang.reflect.Type;
 
-public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
+public class ChallengeSerializer implements JsonDeserializer<Challenge>, JsonSerializer<Challenge> {
     @Override
     public Challenge deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
@@ -92,5 +94,23 @@ public class ChallengeDeserializer implements JsonDeserializer<Challenge> {
         }
 
         return "";
+    }
+
+    @Override
+    public JsonElement serialize(Challenge src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject object = new JsonObject();
+        object.addProperty("id", src.id);
+        object.addProperty("name", src.name);
+        object.addProperty("shortName", src.shortName);
+        object.addProperty("description", src.description);
+        object.addProperty("memberCount", src.memberCount);
+        object.addProperty("prize", src.prize);
+        object.addProperty("official", src.official);
+
+        object.addProperty("group", src.groupId);
+        object.add("tasksOrder", context.serialize(src.tasksOrder));
+
+
+        return object;
     }
 }

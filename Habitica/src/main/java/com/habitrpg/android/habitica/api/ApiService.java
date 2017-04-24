@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.tasks.ItemData;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,7 +288,7 @@ public interface ApiService {
     Observable<HabitResponse<Void>> leaveChallenge(@Path("challengeId") String challengeId, @Body LeaveChallengeBody body);
 
     @POST("challenges")
-    Observable<HabitResponse<Challenge>> createChallenge(@Body PostChallenge challenge);
+    Observable<HabitResponse<Challenge>> createChallenge(@Body Challenge challenge);
 
     @POST("tasks/challenge/{challengeId}")
     Observable<HabitResponse<Task>> createChallengeTask(@Path("challengeId") String challengeId, @Body Task task);
@@ -298,7 +297,7 @@ public interface ApiService {
     Observable<HabitResponse<List<Task>>> createChallengeTasks(@Path("challengeId") String challengeId, @Body List<Task> tasks);
 
     @PUT("challenges/{challengeId}")
-    Observable<HabitResponse<Challenge>> updateChallenge(@Path("challengeId") String challengeId, @Body PostChallenge challenge);
+    Observable<HabitResponse<Challenge>> updateChallenge(@Path("challengeId") String challengeId, @Body Challenge challenge);
 
     @DELETE("challenges/{challengeId}")
     Observable<HabitResponse<Void>> deleteChallenge(@Path("challengeId") String challengeId);

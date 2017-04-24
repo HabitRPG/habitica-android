@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data;
 
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 
@@ -14,7 +13,7 @@ public interface ChallengeRepository extends BaseRepository  {
     Observable<Challenge> getChallenge(String challengeId);
     Observable<TaskList> getChallengeTasks(String challengeId);
 
-    Observable<Challenge> createChallenge(PostChallenge challenge, List<Task> taskList);
+    Observable<Challenge> createChallenge(Challenge challenge, List<Task> taskList);
 
     /**
      *
@@ -25,7 +24,7 @@ public interface ChallengeRepository extends BaseRepository  {
      * @param removedTaskList tasks that has be to be removed
      * @return
      */
-    Observable<Challenge> updateChallenge(PostChallenge challenge, List<Task> fullTaskList,
+    Observable<Challenge> updateChallenge(Challenge challenge, List<Task> fullTaskList,
                                           List<Task> addedTaskList, List<Task> updatedTaskList, List<String> removedTaskList);
     Observable<Void> deleteChallenge(String challengeId);
 

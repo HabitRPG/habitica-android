@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.ChallengeRepository;
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
@@ -72,7 +71,7 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
     }
 
     @Override
-    public Observable<Challenge> createChallenge(PostChallenge challenge, List<Task> taskList) {
+    public Observable<Challenge> createChallenge(Challenge challenge, List<Task> taskList) {
         challenge.tasksOrder = getTaskOrders(taskList);
 
         return Observable.create(subscriber -> {
@@ -87,7 +86,7 @@ public class ChallengeRepositoryImpl extends BaseRepositoryImpl<ChallengeLocalRe
     }
 
     @Override
-    public Observable<Challenge> updateChallenge(PostChallenge challenge, List<Task> fullTaskList,
+    public Observable<Challenge> updateChallenge(Challenge challenge, List<Task> fullTaskList,
                                                  List<Task> addedTaskList, List<Task> updatedTaskList, List<String> removedTaskList) {
 
         ArrayList<Observable> observablesToWait = new ArrayList<>($.map(updatedTaskList, t -> apiClient.updateTask(t.getId(), t)));

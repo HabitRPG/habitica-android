@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.database.CheckListItemExcludeStrategy;
 import com.habitrpg.android.habitica.helpers.PopupNotificationsManager;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.api.ApiService;
 import com.habitrpg.android.habitica.api.Server;
@@ -66,7 +65,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
-import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
+import com.habitrpg.android.habitica.utils.ChallengeSerializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
 import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
 import com.habitrpg.android.habitica.utils.ContentDeserializer;
@@ -268,7 +267,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
-                .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
+                .registerTypeAdapter(Challenge.class, new ChallengeSerializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);
@@ -828,7 +827,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Challenge> createChallenge(PostChallenge challenge) {
+    public Observable<Challenge> createChallenge(Challenge challenge) {
         return apiService.createChallenge(challenge).compose(configureApiCallObserver());
     }
 
@@ -844,7 +843,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     }
 
     @Override
-    public Observable<Challenge> updateChallenge(PostChallenge challenge) {
+    public Observable<Challenge> updateChallenge(Challenge challenge) {
         return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver());
     }
 

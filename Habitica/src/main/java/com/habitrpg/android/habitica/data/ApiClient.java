@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.social.Group;
-import com.habitrpg.android.habitica.models.social.PostChallenge;
 import com.habitrpg.android.habitica.models.user.HabitRPGUser;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.LeaveChallengeBody;
@@ -201,11 +200,11 @@ public interface ApiClient {
 
     Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body);
 
-    Observable<Challenge> createChallenge(PostChallenge challenge);
+    Observable<Challenge> createChallenge(Challenge challenge);
 
     Observable<Task> createChallengeTask(String challengeId, Task task);
     Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks);
-    Observable<Challenge> updateChallenge(PostChallenge challenge);
+    Observable<Challenge> updateChallenge(Challenge challenge);
     Observable<Void> deleteChallenge(String challengeId);
 
     //DEBUG: These calls only work on a local development server
