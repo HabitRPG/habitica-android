@@ -432,7 +432,6 @@ public class CreateChallengeActivity extends BaseActivity {
 
         Intent intent = new Intent(this, TaskFormActivity.class);
         intent.putExtras(bundle);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
         startActivityForResult(intent, 1);
     }
