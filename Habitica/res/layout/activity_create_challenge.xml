@@ -169,25 +169,23 @@
                 android:text="Tag"
                 android:textColor="#cc000000" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
-                android:id="@+id/create_challenge_tag"
-                android:hint="@string/identify_your_challenge_with_a_tag"
-                android:textColorHint="#61000000" />
 
-            <TextView
-                style="@style/Caption3"
-                android:id="@+id/create_challenge_tag_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
-                android:textColor="#f74e52"
-                android:text="@string/challenge_create_error_tag"
-                android:visibility="gone"
-                tools:visibility="visible"/>
+                android:id="@+id/create_challenge_tag_input_layout"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat">
 
+                <EditText
+                    android:id="@+id/create_challenge_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:hint="@string/identify_your_challenge_with_a_tag"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#61000000" />
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 style="@style/Subheader2"

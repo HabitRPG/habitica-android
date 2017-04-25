@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.underscore.$;
 import com.habitrpg.android.habitica.HabiticaApplication;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -50,6 +53,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
 
 public class CreateChallengeActivity extends BaseActivity {
     public static final String CHALLENGE_ID_KEY = "challengeId";
@@ -69,14 +73,15 @@ public class CreateChallengeActivity extends BaseActivity {
     @BindView(R.id.create_challenge_prize)
     EditText createChallengePrize;
 
+
+    @BindView(R.id.create_challenge_tag_input_layout)
+    TextInputLayout createChallengeTagInputLayout;
+
     @BindView(R.id.create_challenge_tag)
     EditText createChallengeTag;
 
     @BindView(R.id.create_challenge_gem_error)
     TextView createChallengeGemError;
-
-    @BindView(R.id.create_challenge_tag_error)
-    TextView createChallengeTagError;
 
     @BindView(R.id.create_challenge_task_error)
     TextView createChallengeTaskError;
@@ -129,52 +134,80 @@ public class CreateChallengeActivity extends BaseActivity {
         return true;
     }
 
+    private boolean savingInProgress = false;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_save && validateAllFields()) {
+        if (item.getItemId() == R.id.action_save && !savingInProgress && validateAllFields()) {
+            savingInProgress = true;
+            ProgressDialog dialog = ProgressDialog.show(this, "", "Saving challenge data. Please wait...", true, false);
+
+            Observable<Challenge> observable;
+
             if (editMode) {
-                updateChallenge();
+                observable = updateChallenge();
             } else {
-                createChallenge();
+                observable = createChallenge();
             }
+
+            observable.subscribe(challenge -> {
+                dialog.dismiss();
+                savingInProgress = false;
+                finish();
+            }, throwable ->  {
+                dialog.dismiss();
+                savingInProgress = false;
+            });
+        } else if(item.getItemId() == android.R.id.home){
+            finish();
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private boolean validateAllFields() {
-        int errors = 0;
+        ArrayList<String> errorMessages = new ArrayList<>();
 
         if (getEditTextString(createChallengeTitle).isEmpty()) {
-            errors++;
-            createChallengeTitleInputLayout.setError(getString(R.string.challenge_create_error_title));
+            String titleEmptyError = getString(R.string.challenge_create_error_title);
+            createChallengeTitleInputLayout.setError(titleEmptyError);
+            errorMessages.add(titleEmptyError);
         } else {
             createChallengeTitleInputLayout.setErrorEnabled(false);
         }
 
-        if (getEditTextString(createChallengeDescription).isEmpty()) {
-            errors++;
-            createChallengeDescriptionInputLayout.setError(getString(R.string.challenge_create_error_description));
+        if (getEditTextString(createChallengeTag).isEmpty()) {
+            String tagEmptyError = getString(R.string.challenge_create_error_tag);
+
+            createChallengeTagInputLayout.setError(tagEmptyError);
+            errorMessages.add(tagEmptyError);
         } else {
-            createChallengeDescriptionInputLayout.setErrorEnabled(false);
+            createChallengeTagInputLayout.setErrorEnabled(false);
         }
 
-        if (getEditTextString(createChallengeTag).isEmpty()) {
-            errors++;
-            createChallengeTagError.setVisibility(View.VISIBLE);
-        } else {
-            createChallengeTagError.setVisibility(View.GONE);
+        String prizeError = checkPrizeAndMinimumForTavern();
+
+        if(!prizeError.isEmpty()){
+            errorMessages.add(prizeError);
         }
 
         // all "Add {*}"-Buttons are one task itself, so we need atleast more than 4
         if (challengeTasks.getTaskList().size() <= 4) {
-            errors++;
             createChallengeTaskError.setVisibility(View.VISIBLE);
+            errorMessages.add(getString(R.string.challenge_create_error_no_tasks));
         } else {
             createChallengeTaskError.setVisibility(View.GONE);
         }
 
-        return errors == 0;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage($.join(errorMessages, "\n"));
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        return errorMessages.size() == 0;
     }
 
     @Override
@@ -258,7 +291,9 @@ public class CreateChallengeActivity extends BaseActivity {
         checkPrizeAndMinimumForTavern();
     }
 
-    private void checkPrizeAndMinimumForTavern() {
+    private String checkPrizeAndMinimumForTavern() {
+        String errorResult = "";
+
         String inputValue = createChallengePrize.getText().toString();
 
         if (inputValue.isEmpty()) {
@@ -274,16 +309,21 @@ public class CreateChallengeActivity extends BaseActivity {
 
         if (selectedLocation == 0 && currentVal == 0) {
             createChallengeGemError.setVisibility(View.VISIBLE);
-            createChallengeGemError.setText(R.string.challenge_create_error_tavern_one_gem);
+            String error = getString(R.string.challenge_create_error_tavern_one_gem);
+            createChallengeGemError.setText(error);
+            errorResult = error;
         } else if (currentVal > gemCount) {
             createChallengeGemError.setVisibility(View.VISIBLE);
-            createChallengeGemError.setText(R.string.challenge_create_error_enough_gems);
+            String error = getString(R.string.challenge_create_error_enough_gems);
+            createChallengeGemError.setText(error);
+            errorResult = error;
         } else {
             createChallengeGemError.setVisibility(View.GONE);
         }
 
         challengeRemoveGemBtn.setEnabled(currentVal != 0);
 
+        return errorResult;
     }
 
     private void fillControls() {
@@ -455,7 +495,7 @@ public class CreateChallengeActivity extends BaseActivity {
         return c;
     }
 
-    private void createChallenge() {
+    private Observable<Challenge> createChallenge() {
         Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();
@@ -464,14 +504,10 @@ public class CreateChallengeActivity extends BaseActivity {
         taskList.remove(addTodo);
         taskList.remove(addReward);
 
-        challengeRepository.createChallenge(c, taskList).subscribe(createdChallenge -> {
-            finish();
-        }, throwable -> {
-            // UHOH
-        });
+        return challengeRepository.createChallenge(c, taskList);
     }
 
-    private void updateChallenge() {
+    private Observable<Challenge> updateChallenge() {
         Challenge c = getChallengeData();
 
         List<Task> taskList = challengeTasks.getTaskList();
@@ -480,14 +516,10 @@ public class CreateChallengeActivity extends BaseActivity {
         taskList.remove(addTodo);
         taskList.remove(addReward);
 
-        challengeRepository.updateChallenge(c, taskList, new ArrayList<>(addedTasks.values()),
+        return challengeRepository.updateChallenge(c, taskList, new ArrayList<>(addedTasks.values()),
                 new ArrayList<>(updatedTasks.values()),
                 new ArrayList<>(removedTasks.keySet())
-        ).subscribe(createdChallenge -> {
-            finish();
-        }, throwable -> {
-            // UHOH
-        });
+        );
     }
 
     private void addOrUpdateTaskInList(Task task) {
