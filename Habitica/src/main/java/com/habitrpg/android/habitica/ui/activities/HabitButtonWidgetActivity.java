@@ -71,6 +71,12 @@ public class HabitButtonWidgetActivity extends BaseActivity implements TaskClick
     }
 
     @Override
+    protected void onDestroy() {
+        taskRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void taskSelected(String taskId) {
         finishWithSelection(taskId);
     }

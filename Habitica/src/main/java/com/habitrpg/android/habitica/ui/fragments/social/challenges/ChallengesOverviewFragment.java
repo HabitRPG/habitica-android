@@ -75,6 +75,12 @@ public class ChallengesOverviewFragment extends BaseMainFragment {
         return v;
     }
 
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
     private void subscribeGetChallenges() {
         this.socialRepository.getUserChallenges()
                 .subscribe(challenges -> getUserChallengesObservable.onNext(challenges),

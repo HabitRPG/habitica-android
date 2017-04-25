@@ -52,7 +52,6 @@ import com.google.android.gms.common.Scopes;
 import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
@@ -86,7 +85,7 @@ import rx.schedulers.Schedulers;
  * @author Mickael Goubin
  */
 public class LoginActivity extends BaseActivity
-        implements Action1<UserAuthResponse>, HabitRPGUserCallback.OnUserReceived {
+        implements Action1<UserAuthResponse> {
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     private final static String TAG_ADDRESS = "address";
     private final static String TAG_USERID = "user";
@@ -415,7 +414,6 @@ public class LoginActivity extends BaseActivity
         }
     }
 
-    @Override
     public void onUserReceived(User user) {
         try {
             saveTokens(mTmpApiToken, mTmpUserToken);

@@ -4,10 +4,13 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Buffs extends RealmObject {
 
-    Stats stats;
+    @PrimaryKey
+    private String userId;
+
     public Float con, str, per;
     @SerializedName("int")
     public Float _int;    private Boolean snowball;
@@ -94,5 +97,13 @@ public class Buffs extends RealmObject {
 
     public Float getPer() {
         return per;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
@@ -37,7 +36,7 @@ import butterknife.ButterKnife;
  * Created by keithholliday on 6/20/16.
  */
 public class InboxMessageListFragment extends BaseMainFragment
-        implements SwipeRefreshLayout.OnRefreshListener, HabitRPGUserCallback.OnUserReceived {
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     SocialRepository socialRepository;
@@ -80,6 +79,13 @@ public class InboxMessageListFragment extends BaseMainFragment
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -117,7 +123,6 @@ public class InboxMessageListFragment extends BaseMainFragment
         }
     }
 
-    @Override
     public void onUserReceived(User user) {
         this.user = user;
         this.setMessages(user.getInbox().getMessages(), this.chatRoomUser, this.replyToUserUUID);

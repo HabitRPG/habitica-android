@@ -20,7 +20,7 @@ public class SubscriptionPlan extends RealmObject {
     public static String PLANID_BASIC12MONTH = "basic_12mo";
 
     @PrimaryKey
-    public String customerId;
+    private String customerId;
     public Date dateCreated;
     public Date dateUpdated;
     @Nullable
@@ -50,4 +50,10 @@ public class SubscriptionPlan extends RealmObject {
     }
 
 
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+        if (consecutive != null && !consecutive.isManaged()) {
+            consecutive.setCustomerId(customerId);
+        }
+    }
 }

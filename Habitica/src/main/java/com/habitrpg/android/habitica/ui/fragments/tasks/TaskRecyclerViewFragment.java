@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.InventoryRepository;
@@ -300,6 +299,14 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
         }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        userRepository.close();
+        inventoryRepository.close();
+        taskRepository.close();
+        super.onDestroy();
     }
 
     @Override

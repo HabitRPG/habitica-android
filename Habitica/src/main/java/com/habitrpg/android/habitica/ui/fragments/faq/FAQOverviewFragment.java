@@ -51,6 +51,13 @@ public class FAQOverviewFragment extends BaseMainFragment {
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        faqRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

@@ -123,6 +123,12 @@ public class TasksFragment extends BaseMainFragment {
         return v;
     }
 
+    @Override
+    public void onDestroy() {
+        tagRepository.close();
+        super.onDestroy();
+    }
+
     private boolean onFloatingMenuLongClicked(View view) {
         int currentType = viewPager.getCurrentItem();
         TaskRecyclerViewFragment currentFragment = viewFragmentsDictionary.get(currentType);

@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -18,7 +17,7 @@ import javax.inject.Inject;
 /**
  * Created by keithholliday on 6/30/16.
  */
-public class LocalNotificationActionReceiver extends BroadcastReceiver implements HabitRPGUserCallback.OnUserReceived {
+public class LocalNotificationActionReceiver extends BroadcastReceiver {
     @Inject
     public ApiClient apiClient;
 
@@ -38,11 +37,10 @@ public class LocalNotificationActionReceiver extends BroadcastReceiver implement
         this.context = context;
 
         this.apiClient.getUser()
-                .subscribe(new HabitRPGUserCallback(this), throwable -> {
+                .subscribe(this::onUserReceived, throwable -> {
                 });
     }
 
-    @Override
     public void onUserReceived(User user) {
         this.user = user;
         this.handleLocalNotificationAction(action);

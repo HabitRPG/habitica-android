@@ -6,8 +6,12 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Invitations extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     User user;
     private PartyInvite party;
@@ -39,5 +43,13 @@ public class Invitations extends RealmObject {
      */
     public void setGuilds(RealmList<GuildInvite> guilds) {
         this.guilds = guilds;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

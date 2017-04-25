@@ -62,6 +62,12 @@ public class GuildsOverviewFragment extends BaseMainFragment implements View.OnC
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

@@ -11,4 +11,8 @@ public class SkillResponse {
     public List<User> partyMembers;
     public Task task;
 
+    public double expDiff;
+    public double hpDiff;
+    public double goldDiff;
+
 }

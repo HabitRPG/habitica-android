@@ -7,9 +7,13 @@ import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.models.HabitRpgClass;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 public class Stats extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     User user;
     public Float con, str, per;
@@ -161,5 +165,19 @@ public class Stats extends RealmObject {
 
     public void setHabitClass(HabitRpgClass habitRpgClass) {
         habitClass = habitRpgClass.toString();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+        if (buffs != null && !buffs.isManaged()) {
+            buffs.setUserId(userId);
+        }
+        if (training != null && !training.isManaged()) {
+            training.setUserId(userId);
+        }
     }
 }

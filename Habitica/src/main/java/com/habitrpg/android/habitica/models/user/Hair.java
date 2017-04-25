@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Hair extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     public Preferences preferences;
     private int mustache, beard, bangs, base, flower;
@@ -70,5 +74,13 @@ public class Hair extends RealmObject {
 
     public boolean isAvailable(int hairId) {
         return hairId > 0;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -3,8 +3,12 @@ package com.habitrpg.android.habitica.models.user;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Training extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     Stats stats;
     public Float con, str, per;
@@ -51,6 +55,14 @@ public class Training extends RealmObject {
         this.str = stats.str != null ? stats.str : this.str;
         this.per = stats.per != null ? stats.per : this.per;
         this._int = stats._int != null ? stats._int : this._int;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
 

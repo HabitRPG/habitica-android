@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.R;
 import java.util.HashMap;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class ContributorInfo extends RealmObject {
 
@@ -24,6 +25,9 @@ public class ContributorInfo extends RealmObject {
         CONTRIBUTOR_COLOR_DICT.put(8, R.color.contributor_mod);
         CONTRIBUTOR_COLOR_DICT.put(9, R.color.contributor_staff);
     }
+
+    @PrimaryKey
+    private String userId;
 
     public User user;
     private boolean admin;
@@ -77,5 +81,13 @@ public class ContributorInfo extends RealmObject {
     public int getContributorForegroundColor() {
         int rColor = android.R.color.white;
         return rColor;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

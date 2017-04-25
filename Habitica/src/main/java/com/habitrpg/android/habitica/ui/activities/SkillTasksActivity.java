@@ -48,6 +48,12 @@ public class SkillTasksActivity extends BaseActivity implements TaskClickActivit
     }
 
     @Override
+    protected void onDestroy() {
+        taskRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     protected void injectActivity(AppComponent component) {
         component.inject(this);
     }

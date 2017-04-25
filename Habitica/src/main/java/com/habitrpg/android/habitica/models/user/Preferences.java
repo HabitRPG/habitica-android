@@ -2,8 +2,12 @@ package com.habitrpg.android.habitica.models.user;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Preferences extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     public Hair hair;
     SuppressedModals suppressModals;
@@ -204,5 +208,19 @@ public class Preferences extends RealmObject {
 
     public void setDailyDueDefaultView(boolean dailyDueDefaultView) {
         this.dailyDueDefaultView = dailyDueDefaultView;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+        if (hair != null && !hair.isManaged()) {
+            hair.setUserId(userId);
+        }
+        if (suppressModals != null && !suppressModals.isManaged()) {
+            suppressModals.setUserId(userId);
+        }
     }
 }

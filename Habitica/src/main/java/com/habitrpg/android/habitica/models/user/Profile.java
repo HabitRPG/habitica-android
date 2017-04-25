@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Profile extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     User user;
     private String name;
@@ -44,5 +48,13 @@ public class Profile extends RealmObject {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

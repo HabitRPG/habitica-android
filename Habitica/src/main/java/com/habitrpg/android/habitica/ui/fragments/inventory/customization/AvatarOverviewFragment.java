@@ -104,6 +104,12 @@ public class AvatarOverviewFragment extends BaseMainFragment implements AdapterV
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

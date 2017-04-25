@@ -79,6 +79,12 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
     }
 
     @Override
+    public void onDestroy() {
+        customizationRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

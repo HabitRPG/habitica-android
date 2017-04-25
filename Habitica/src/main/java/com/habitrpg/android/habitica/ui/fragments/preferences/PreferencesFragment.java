@@ -63,6 +63,12 @@ public class PreferencesFragment extends BasePreferencesFragment implements
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     protected void setupPreferences() {
         timePreference = (TimePreference) findPreference("reminder_time");
         boolean useReminder = getPreferenceManager().getSharedPreferences().getBoolean("use_reminder", false);

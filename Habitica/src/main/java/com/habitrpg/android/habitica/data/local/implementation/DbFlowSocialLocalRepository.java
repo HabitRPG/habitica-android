@@ -8,6 +8,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
 import rx.Observable;
 
 
@@ -20,6 +21,11 @@ public class DbFlowSocialLocalRepository implements SocialLocalRepository {
     @Override
     public void executeTransaction(Realm.Transaction transaction) {
 
+    }
+
+    @Override
+    public <T extends RealmObject> T getUnmanagedCopy(T object) {
+        return null;
     }
 
     @Override

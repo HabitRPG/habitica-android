@@ -114,6 +114,12 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);

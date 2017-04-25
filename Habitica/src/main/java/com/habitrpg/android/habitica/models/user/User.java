@@ -85,6 +85,33 @@ public class User extends RealmObject {
 
     public void setId(String id) {
         this.id = id;
+        if (stats != null && !stats.isManaged()) {
+            stats.setUserId(id);
+        }
+        if (inbox != null && !inbox.isManaged()) {
+            inbox.setUserId(id);
+        }
+        if (preferences != null && !preferences.isManaged()) {
+            preferences.setUserId(id);
+        }
+        if (profile != null && !profile.isManaged()) {
+            profile.setUserId(id);
+        }
+        if (items != null && !items.isManaged()) {
+            items.setUserId(id);
+        }
+        if (authentication != null && !authentication.isManaged()) {
+            authentication.setUserId(id);
+        }
+        if (flags != null && !flags.isManaged()) {
+            flags.setUserId(id);
+        }
+        if (contributor != null && !contributor.isManaged()) {
+            contributor.setUserId(id);
+        }
+        if (invitations != null && !invitations.isManaged()) {
+            invitations.setUserId(id);
+        }
     }
 
     public Stats getStats() {
@@ -93,6 +120,9 @@ public class User extends RealmObject {
 
     public void setStats(Stats stats) {
         this.stats = stats;
+        if (stats != null && id != null && !stats.isManaged()) {
+            stats.setUserId(id);
+        }
     }
 
     public Inbox getInbox() {
@@ -101,6 +131,9 @@ public class User extends RealmObject {
 
     public void setInbox(Inbox inbox) {
         this.inbox = inbox;
+        if (inbox != null && id != null && !inbox.isManaged()) {
+            inbox.setUserId(id);
+        }
     }
 
     public Profile getProfile() {
@@ -109,6 +142,9 @@ public class User extends RealmObject {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+        if (profile != null && id != null && !profile.isManaged()) {
+            profile.setUserId(id);
+        }
     }
 
     public ContributorInfo getContributor() {
@@ -117,6 +153,9 @@ public class User extends RealmObject {
 
     public void setContributor(ContributorInfo contributor) {
         this.contributor = contributor;
+        if (contributor != null && id != null && !contributor.isManaged()) {
+            contributor.setUserId(id);
+        }
     }
 
     public Invitations getInvitations() {
@@ -125,6 +164,9 @@ public class User extends RealmObject {
 
     public void setInvitations(Invitations invitations) {
         this.invitations = invitations;
+        if (invitations != null && id != null && !invitations.isManaged()) {
+            invitations.setUserId(id);
+        }
     }
 
     public UserParty getParty() {
@@ -141,6 +183,9 @@ public class User extends RealmObject {
 
     public void setItems(Items items) {
         this.items = items;
+        if (items != null && id != null && !items.isManaged()) {
+            items.setUserId(id);
+        }
     }
 
     public double getBalance() {
@@ -157,6 +202,9 @@ public class User extends RealmObject {
 
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
+        if (authentication != null && id != null) {
+            authentication.setUserId(id);
+        }
     }
 
     public Purchases getPurchased() {
@@ -165,6 +213,9 @@ public class User extends RealmObject {
 
     public void setPurchased(Purchases purchased) {
         this.purchased = purchased;
+        if (purchased != null && id != null) {
+            purchased.setUserId(id);
+        }
     }
 
     public Flags getFlags() {
@@ -173,6 +224,9 @@ public class User extends RealmObject {
 
     public void setFlags(Flags flags) {
         this.flags = flags;
+        if (flags != null && id != null) {
+            flags.setUserId(id);
+        }
     }
 
     public TasksOrder getTasksOrder() {
@@ -405,5 +459,9 @@ public class User extends RealmObject {
 
     public RealmList<Tag> getTags() {
         return tags;
+    }
+
+    public void setTags(RealmList<Tag> tags) {
+        this.tags = tags;
     }
 }

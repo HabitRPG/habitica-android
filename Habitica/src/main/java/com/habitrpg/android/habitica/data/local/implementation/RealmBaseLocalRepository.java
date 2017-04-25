@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation;
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
 
 abstract class RealmBaseLocalRepository implements BaseLocalRepository {
 
@@ -20,5 +21,10 @@ abstract class RealmBaseLocalRepository implements BaseLocalRepository {
     @Override
     public void executeTransaction(Realm.Transaction transaction) {
         realm.executeTransaction(transaction);
+    }
+
+    @Override
+    public <T extends RealmObject> T getUnmanagedCopy(T object) {
+        return realm.copyFromRealm(object);
     }
 }

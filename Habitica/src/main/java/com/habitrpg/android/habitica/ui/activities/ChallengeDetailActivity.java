@@ -246,6 +246,13 @@ public class ChallengeDetailActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        socialRepository.close();
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     protected void injectActivity(AppComponent component) {
         component.inject(this);
     }

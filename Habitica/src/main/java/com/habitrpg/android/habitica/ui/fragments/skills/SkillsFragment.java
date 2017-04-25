@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.SkillCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.UserRepository;
-import com.habitrpg.android.habitica.events.SkillUsedEvent;
 import com.habitrpg.android.habitica.events.commands.UseSkillCommand;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
@@ -50,7 +48,7 @@ public class SkillsFragment extends BaseMainFragment {
     private Skill selectedSkill;
     private ProgressDialog progressDialog;
 
-    static public Double round(Double value, int n) {
+    static public Double round(double value, int n) {
         return (Math.round(value * Math.pow(10, n))) / (Math.pow(10, n));
     }
 
@@ -68,6 +66,12 @@ public class SkillsFragment extends BaseMainFragment {
         this.tutorialText = getString(R.string.tutorial_skills);
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
     }
 
     @Override
@@ -92,7 +96,7 @@ public class SkillsFragment extends BaseMainFragment {
 
         adapter.mana = this.user.getStats().getMp();
 
-        Observable.concat(userRepository.getSkills(user).flatMap(Observable::from), userRepository.getSpecialItems(user).flatMap(Observable::from))
+        Observable.concat(userRepository.getSkills(user).first().flatMap(Observable::from), userRepository.getSpecialItems(user).first().flatMap(Observable::from))
                 .toList()
                 .subscribe(skills -> adapter.setSkillList(skills), ReactiveErrorHandler.handleEmptyError());
     }
@@ -121,26 +125,24 @@ public class SkillsFragment extends BaseMainFragment {
         }
     }
 
-    @Subscribe
-    public void onEvent(SkillUsedEvent event) {
+    public void displaySkillResult(Skill usedSkill, SkillResponse response) {
         removeProgressDialog();
-        Skill skill = event.usedSkill;
-        adapter.setMana(event.newMana);
+        adapter.setMana(response.user.getStats().mp);
         StringBuilder message = new StringBuilder();
-        if (skill.isSpecialItem) {
-            message.append(getContext().getString(R.string.used_skill_without_mana, skill.text));
+        if (usedSkill.isSpecialItem) {
+            message.append(getContext().getString(R.string.used_skill_without_mana, usedSkill.text));
         } else {
-            message.append(getContext().getString(R.string.used_skill, skill.text, skill.mana));
+            message.append(getContext().getString(R.string.used_skill, usedSkill.text, usedSkill.mana));
         }
 
-        if (event.xp != 0) {
-            message.append(" + ").append(round(event.xp, 2)).append(" XP");
+        if (response.expDiff != 0) {
+            message.append(" + ").append(round(response.expDiff, 2)).append(" XP");
         }
-        if (event.hp != 0) {
-            message.append(" + ").append(round(event.hp, 2)).append(" HP");
+        if (response.hpDiff != 0) {
+            message.append(" + ").append(round(response.hpDiff, 2)).append(" HP");
         }
-        if (event.gold != 0) {
-            message.append(" + ").append(round(event.gold, 2)).append(" GP");
+        if (response.goldDiff != 0) {
+            message.append(" + ").append(round(response.goldDiff, 2)).append(" GP");
         }
         if (activity != null) {
             UiUtils.showSnackbar(activity, activity.getFloatingMenuWrapper(), message.toString(), UiUtils.SnackbarDisplayType.NORMAL);
@@ -179,7 +181,7 @@ public class SkillsFragment extends BaseMainFragment {
         } else {
             observable = userRepository.useSkill(user, skill.key, skill.target);
         }
-        observable.subscribe(skillResponse -> {}, throwable -> removeProgressDialog());
+        observable.subscribe(skillResponse -> this.displaySkillResult(skill, skillResponse), throwable -> removeProgressDialog());
     }
 
     private void displayProgressDialog() {

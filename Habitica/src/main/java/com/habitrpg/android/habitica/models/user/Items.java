@@ -13,9 +13,12 @@ import java.util.HashMap;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 public class Items extends RealmObject {
 
+    @PrimaryKey
+    private String userId;
     public RealmList<Egg> eggs;
     public RealmList<Food> food;
     public RealmList<HatchingPotion> hatchingPotions;
@@ -138,4 +141,17 @@ public class Items extends RealmObject {
         this.mounts = mounts;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+        if (gear != null && !gear.isManaged()) {
+            gear.setUserId(userId);
+        }
+        if (special != null && !special.isManaged()) {
+            special.setUserId(userId);
+        }
+    }
 }

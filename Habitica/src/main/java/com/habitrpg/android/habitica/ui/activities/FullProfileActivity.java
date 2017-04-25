@@ -146,6 +146,12 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 

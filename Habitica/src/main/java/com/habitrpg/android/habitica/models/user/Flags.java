@@ -6,8 +6,12 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Flags extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     User user;
     RealmList<TutorialStep> tutorial;
@@ -101,4 +105,11 @@ public class Flags extends RealmObject {
         this.armoireEmpty = armoireEmpty;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -7,8 +7,12 @@ import java.util.HashMap;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 public class Gear extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     public RealmList<Equipment> owned;
     Items items;
@@ -29,5 +33,19 @@ public class Gear extends RealmObject {
 
     public void setEquipped(Outfit equipped) {
         this.equipped = equipped;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+        if (costume != null && !costume.isManaged()) {
+            costume.setUserId(userId+"costume");
+        }
+        if (equipped != null && !equipped.isManaged()) {
+            equipped.setUserId(userId+"equipped");
+        }
     }
 }

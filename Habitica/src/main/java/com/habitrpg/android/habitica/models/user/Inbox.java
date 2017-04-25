@@ -10,8 +10,12 @@ import java.util.Map;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 public class Inbox extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     User user;
     private Boolean optOut;
@@ -77,4 +81,11 @@ public class Inbox extends RealmObject {
         this.newMessages = newMessages;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

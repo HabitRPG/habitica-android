@@ -97,6 +97,12 @@ public class PartyFragment extends BaseMainFragment {
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

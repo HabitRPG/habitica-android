@@ -123,6 +123,12 @@ public abstract class BaseMainFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         if (user != null) {
             outState.putString("userId", user.getId());

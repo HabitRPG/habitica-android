@@ -2,8 +2,12 @@ package com.habitrpg.android.habitica.models.user;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class SpecialItems extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     Items items;
     int seafoam, shinySeed, snowball, spookySparkles;
@@ -42,5 +46,13 @@ public class SpecialItems extends RealmObject {
 
     public Boolean hasSpecialItems() {
         return seafoam > 0 || shinySeed > 0 || snowball > 0 || spookySparkles > 0;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

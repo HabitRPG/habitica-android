@@ -1,15 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
-import com.habitrpg.android.habitica.HabitDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.NotNull;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
-
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class SuppressedModals extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     Preferences preferences;
     private Boolean streak, raisePet, hatchPet, levelUp;
@@ -44,5 +41,13 @@ public class SuppressedModals extends RealmObject {
 
     public void setLevelUp(Boolean levelUp) {
         this.levelUp = levelUp;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

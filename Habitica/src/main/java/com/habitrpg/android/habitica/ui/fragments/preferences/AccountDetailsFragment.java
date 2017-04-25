@@ -46,6 +46,12 @@ public class AccountDetailsFragment extends BasePreferencesFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

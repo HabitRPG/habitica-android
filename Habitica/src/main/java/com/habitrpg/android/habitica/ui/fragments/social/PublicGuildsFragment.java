@@ -75,6 +75,12 @@ public class PublicGuildsFragment extends BaseMainFragment implements SearchView
         this.fetchGuilds();
     }
 
+    @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
     private void fetchGuilds() {
         if (this.socialRepository != null) {
             this.socialRepository.getGroups("publicGuilds")

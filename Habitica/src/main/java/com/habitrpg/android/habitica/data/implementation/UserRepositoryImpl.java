@@ -31,7 +31,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         return localRepository.getUser(userID)
                 .flatMap(habitRPGUser -> {
                     if (habitRPGUser == null || !habitRPGUser.isValid()) {
-                        return retrieveUser(true);
+                        return retrieveUser(true)
+                                .flatMap(user -> localRepository.getUser(user.getId()));
                     } else {
                         return Observable.just(habitRPGUser);
                     }
@@ -117,7 +118,14 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     @Override
     public Observable<SkillResponse> useSkill(User user, String key, String target) {
-        return apiClient.useSkill(key, target).doOnNext(skillResponse -> {
+        return apiClient.useSkill(key, target)
+                .map(response -> {
+                    response.hpDiff = response.user.getStats().getHp() - user.getStats().getHp();
+                    response.expDiff = response.user.getStats().getExp() - user.getStats().getExp();
+                    response.goldDiff = response.user.getStats().getGp() - user.getStats().getGp();
+                    return response;
+                })
+                .doOnNext(skillResponse -> {
             if (user != null) {
                 mergeUser(user, skillResponse.user);
             }
@@ -125,20 +133,21 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     }
 
     private User mergeUser(User oldUser, User newUser) {
+        User copiedUser = localRepository.getUnmanagedCopy(oldUser);
         if (newUser.getItems() != null) {
-            oldUser.setItems(newUser.getItems());
+            copiedUser.setItems(newUser.getItems());
         }
         if (newUser.getPreferences() != null) {
-            oldUser.setPreferences(newUser.getPreferences());
+            copiedUser.setPreferences(newUser.getPreferences());
         }
         if (newUser.getFlags() != null) {
-            oldUser.setFlags(newUser.getFlags());
+            copiedUser.setFlags(newUser.getFlags());
         }
         if (newUser.getStats() != null) {
-            oldUser.getStats().merge(newUser.getStats());
+            copiedUser.getStats().merge(newUser.getStats());
         }
 
-        localRepository.saveUser(oldUser);
+        localRepository.saveUser(copiedUser);
         return oldUser;
     }
 }

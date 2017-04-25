@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
+import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -118,8 +119,12 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                 .map(user1 -> {
                     localRepository.executeTransaction(realm -> {
                         if (user != null) {
-                            user.setItems(user1.getItems());
-                            user.setStats(user1.getStats());
+                            user1.getItems().setUserId(user.getId());
+                            Items items = realm.copyToRealmOrUpdate(user1.getItems());
+                            user1.getStats().setUserId(user.getId());
+                            Stats stats = realm.copyToRealmOrUpdate(user1.getStats());
+                            user.setItems(items);
+                            user.setStats(stats);
                             item.setOwned(item.getOwned()-1);
                         }
                     });

@@ -42,9 +42,11 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
     public Observable<RealmResults<Skill>> getSkills(User user) {
         return realm.where(Skill.class)
                 .equalTo("habitClass", user.getStats().getHabitClass())
-                .equalTo("lvl", user.getStats().lvl)
-                .findAll().asObservable()
-                .filter(RealmResults::isLoaded);
+                .lessThanOrEqualTo("lvl", user.getStats().lvl)
+                .findAll()
+                .asObservable()
+                .filter(RealmResults::isLoaded)
+                .map(skills -> skills);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
                 .in("key", ownedItems.toArray(new String[0]))
                 .findAll()
                 .asObservable()
-                .filter(RealmResults::isLoaded);
+                .filter(RealmResults::isLoaded)
+                .map(skills -> skills);
     }
 }

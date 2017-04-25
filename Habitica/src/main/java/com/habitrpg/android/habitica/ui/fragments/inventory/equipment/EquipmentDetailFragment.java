@@ -62,6 +62,12 @@ public class EquipmentDetailFragment extends BaseMainFragment {
     }
 
     @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

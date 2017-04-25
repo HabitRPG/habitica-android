@@ -64,6 +64,12 @@ public class GuildFragment extends BaseMainFragment implements Action1<Group> {
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

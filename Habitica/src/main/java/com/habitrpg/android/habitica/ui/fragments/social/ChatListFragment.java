@@ -104,6 +104,13 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     @Override
+    public void onDestroy() {
+        socialRepository.close();
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

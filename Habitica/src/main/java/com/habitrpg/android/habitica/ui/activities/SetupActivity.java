@@ -19,7 +19,6 @@ import android.widget.Button;
 
 import com.habitrpg.android.habitica.HostConfig;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.callbacks.HabitRPGUserCallback;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.TaskRepository;
@@ -51,7 +50,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Observable;
 
-public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HabitRPGUserCallback.OnUserReceived {
+public class SetupActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     @Inject
     public ApiClient apiClient;
@@ -139,6 +138,13 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        userRepository.close();
+        taskRepository.close();
+        super.onDestroy();
+    }
+
     private void setupViewpager() {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -175,7 +181,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
             this.taskRepository.createTasks(newTasks)
                     .subscribe(tasks -> onUserReceived(user), throwable -> {
                     });
-            //this.apiHelper.apiService.batchOperation(operations, new HabitRPGUserCallback(this));
         }
         this.pager.setCurrentItem(this.pager.getCurrentItem() + 1);
     }
@@ -221,7 +226,6 @@ public class SetupActivity extends BaseActivity implements ViewPager.OnPageChang
 
     }
 
-    @Override
     public void onUserReceived(User user) {
         if (completedSetup) {
             this.startMainActivity();

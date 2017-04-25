@@ -149,6 +149,12 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        inventoryRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }
@@ -178,7 +184,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getOwnedItems(itemType).subscribe(items -> {
+        inventoryRepository.getOwnedItems(itemType).first().subscribe(items -> {
             if (this.itemType.equals("special")) {
                 if (user != null && user.getPurchased() != null && user.getPurchased().getPlan().isActive()) {
                     Item mysterItem = SpecialItem.makeMysteryItem(getContext());

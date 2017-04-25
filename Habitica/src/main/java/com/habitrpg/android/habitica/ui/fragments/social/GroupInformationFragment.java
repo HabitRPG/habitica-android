@@ -122,6 +122,12 @@ public class GroupInformationFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        userRepository.close();
+        super.onDestroy();
+    }
+
+    @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
     }

@@ -5,8 +5,12 @@ import android.text.TextUtils;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Outfit extends RealmObject {
+
+    @PrimaryKey
+    private String userId;
 
     Gear gear;
     String armor, back, body, head, shield, weapon;
@@ -90,5 +94,13 @@ public class Outfit extends RealmObject {
         this.setHead(newOutfit.getHead());
         this.setHeadAccessory(newOutfit.getHeadAccessory());
         this.setShield(newOutfit.getShield());
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -89,6 +89,7 @@ import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
+import com.habitrpg.android.habitica.utils.UserDeserializer;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import java.io.IOException;
@@ -278,6 +279,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
                 .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
+                .registerTypeAdapter(User.class, new UserDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

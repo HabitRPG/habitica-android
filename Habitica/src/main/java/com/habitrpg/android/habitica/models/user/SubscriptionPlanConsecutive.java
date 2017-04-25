@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica.models.user;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class SubscriptionPlanConsecutive extends RealmObject {
+
+    @PrimaryKey
+    private String customerId;
 
     SubscriptionPlan subscriptionPlan;
     private int trinkets;
@@ -40,5 +44,13 @@ public class SubscriptionPlanConsecutive extends RealmObject {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }
