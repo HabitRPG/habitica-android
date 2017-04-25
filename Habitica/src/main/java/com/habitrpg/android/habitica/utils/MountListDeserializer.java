@@ -3,23 +3,53 @@ package com.habitrpg.android.habitica.utils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MountListDeserializer implements JsonDeserializer<HashMap<String, Mount>> {
+import io.realm.Realm;
+import io.realm.RealmList;
+
+public class MountListDeserializer implements JsonDeserializer<RealmList<Mount>> {
+
     @Override
-    public HashMap<String, Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        HashMap<String, Mount> vals = new HashMap<>();
-        for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-            Mount pet = new Mount();
-            pet.setKey(entry.getKey());
-            pet.setAnimal(entry.getKey().split("-")[0]);
-            pet.setColor(entry.getKey().split("-")[1]);
-            vals.put(entry.getKey(), pet);
+    public RealmList<Mount> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        RealmList<Mount> vals = new RealmList<>();
+        if (json.isJsonObject()) {
+            JsonObject object = json.getAsJsonObject();
+
+            Realm realm = Realm.getDefaultInstance();
+            List<Mount> existingItems = realm.copyFromRealm(realm.where(Mount.class).findAll());
+            realm.close();
+
+            for (Mount item : existingItems) {
+                if (object.has(item.getKey())) {
+                    JsonElement itemObject = object.get(item.getKey());
+                    item.setOwned(itemObject.getAsBoolean());
+                    vals.add(item);
+                    object.remove(item.getKey());
+                }
+            }
+
+            for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
+                Mount mount;
+                mount = new Mount();
+                mount.setKey(entry.getKey());
+                if (entry.getValue().isJsonNull()) {
+                    mount.setOwned(false);
+                } else {
+                    mount.setOwned(entry.getValue().getAsBoolean());
+                }
+                vals.add(mount);
+            }
+        } else {
+            for (JsonElement item : json.getAsJsonArray()) {
+                vals.add(context.deserialize(item.getAsJsonObject(), Mount.class));
+            }
         }
 
         return vals;

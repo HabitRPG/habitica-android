@@ -43,29 +43,26 @@ public class EquipmentDetailFragment extends BaseMainFragment {
 
         unbinder = ButterKnife.bind(this, v);
 
-        this.adapter = new EquipmentRecyclerViewAdapter();
+
+        this.adapter = new EquipmentRecyclerViewAdapter(null, true);
         this.adapter.equippedGear = this.equippedGear;
         this.adapter.isCostume = this.isCostume;
         this.adapter.type = this.type;
+        this.adapter.getEquipEvents()
+                .flatMap(key -> inventoryRepository.equipGear(user, key, isCostume))
+                .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError());
+
+
+        this.recyclerView.setAdapter(this.adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        this.recyclerView.setAdapter(this.adapter);
-
-        this.loadGear();
-
+        inventoryRepository.getOwnedEquipment(type).first().subscribe(this.adapter::updateData, ReactiveErrorHandler.handleEmptyError());
         return v;
     }
 
     @Override
     public void injectFragment(AppComponent component) {
         component.inject(this);
-    }
-
-    private void loadGear() {
-        if (user == null || adapter == null) {
-            return;
-        }
-        inventoryRepository.getOwnedEquipment(type).subscribe(adapter::setGearList, ReactiveErrorHandler.handleEmptyError());
     }
 }

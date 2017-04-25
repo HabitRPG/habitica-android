@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -47,4 +48,6 @@ public interface InventoryRepository extends ContentRepository {
 
     Observable<User> sellItem(User user, String type, String key);
     Observable<User> sellItem(User user, Item item);
+
+    Observable<Items> equipGear(User user, String equipment, boolean asCostume);
 }

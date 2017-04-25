@@ -35,12 +35,12 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveTasks(TasksOrder tasksOrder, TaskList tasks) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(tasks.tasks.values()));
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(tasks.tasks.values()));
     }
 
     @Override
     public void saveTask(Task task) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(task));
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(task));
     }
 
     @Override

@@ -19,7 +19,7 @@ import io.realm.RealmResults;
 import rx.Observable;
 
 
-public class RealmInventoryLocalRepository extends RealmBaseLocalRepository implements InventoryLocalRepository {
+public class RealmInventoryLocalRepository extends RealmContentLocalRepository implements InventoryLocalRepository {
     public RealmInventoryLocalRepository(Realm realm) {
         super(realm);
     }
@@ -35,7 +35,7 @@ public class RealmInventoryLocalRepository extends RealmBaseLocalRepository impl
     @Override
     public Observable<RealmResults<Equipment>> getEquipment(List<String> searchedKeys) {
         return realm.where(Equipment.class)
-                .in("key", (String[]) searchedKeys.toArray())
+                .in("key", searchedKeys.toArray(new String[0]))
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);
@@ -81,7 +81,10 @@ public class RealmInventoryLocalRepository extends RealmBaseLocalRepository impl
             case "quests":
                 itemClass = QuestContent.class;
         }
-        return realm.where(itemClass).findAllAsync().asObservable()
+        if (itemClass == null) {
+            return Observable.empty();
+        }
+        return realm.where(itemClass).greaterThan("owned", 0).findAllAsync().asObservable()
                 .filter(RealmResults::isLoaded);
     }
 

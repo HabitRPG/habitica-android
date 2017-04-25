@@ -8,6 +8,8 @@ import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.user.Items;
+import com.habitrpg.android.habitica.models.user.Outfit;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -122,6 +124,22 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                         }
                     });
                     return user;
+                });
+    }
+
+    @Override
+    public Observable<Items> equipGear(User user, String key, boolean asCostume) {
+        return apiClient.equipItem(asCostume ? "costume" : "equipped", key)
+                .doOnNext(items -> {
+                    if (user == null) {
+                        return;
+                    }
+                    localRepository.executeTransaction(realm -> {
+                        Outfit newOutfit = asCostume ? items.getGear().getCostume() : items.getGear().getEquipped();
+                        Outfit oldOutfit = asCostume ? user.getItems().getGear().getCostume() : user.getItems().getGear().getEquipped();
+                        oldOutfit.updateWith(newOutfit);
+                        user.setBalance(user.getBalance());
+                    });
                 });
     }
 }

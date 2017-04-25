@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,17 +21,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<EquipmentRecyclerViewAdapter.GearViewHolder> {
+public class EquipmentRecyclerViewAdapter extends RealmRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder> {
 
     public String equippedGear;
     public Boolean isCostume;
     public String type;
-    private List<Equipment> gearList;
 
-    public void setGearList(List<Equipment> gearList) {
-        this.gearList = gearList;
-        this.notifyDataSetChanged();
+    private PublishSubject<String> equipEvents = PublishSubject.create();
+
+    public EquipmentRecyclerViewAdapter(@Nullable OrderedRealmCollection<Equipment> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
     @Override
@@ -44,12 +49,13 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
 
     @Override
     public void onBindViewHolder(GearViewHolder holder, int position) {
-        holder.bind(gearList.get(position));
+        if (getData() != null) {
+            holder.bind(getData().get(position));
+        }
     }
 
-    @Override
-    public int getItemCount() {
-        return gearList == null ? 0 : gearList.size();
+    public Observable<String> getEquipEvents() {
+        return equipEvents.asObservable();
     }
 
     class GearViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -101,14 +107,7 @@ public class EquipmentRecyclerViewAdapter extends RecyclerView.Adapter<Equipment
 
         @Override
         public void onClick(View v) {
-            EquipCommand command = new EquipCommand();
-            command.key = this.gear.key;
-            if (isCostume) {
-                command.type = "costume";
-            } else {
-                command.type = "equipped";
-            }
-            EventBus.getDefault().post(command);
+            equipEvents.onNext(this.gear.key);
             if (this.gear.key.equals(equippedGear)) {
                 equippedGear = type + "_base_0";
             } else {

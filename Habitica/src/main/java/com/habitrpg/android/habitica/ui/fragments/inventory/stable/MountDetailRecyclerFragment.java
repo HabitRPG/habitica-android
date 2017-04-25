@@ -103,9 +103,6 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
         inventoryRepository.getMounts().subscribe(mounts -> {
             adapter.setItemList(mounts);
             animals = mounts;
-            if (user != null) {
-                adapter.setOwnedMapping(user.getItems().getMounts());
-            }
         });
     }
 

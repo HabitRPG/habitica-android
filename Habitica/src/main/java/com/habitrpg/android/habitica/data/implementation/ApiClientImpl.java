@@ -59,7 +59,6 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Purchases;
@@ -77,9 +76,11 @@ import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FoodListDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.HatchingPotionListDeserializer;
-import com.habitrpg.android.habitica.utils.ItemDataListDeserializer;
+import com.habitrpg.android.habitica.utils.EquipmentListDeserializer;
 import com.habitrpg.android.habitica.utils.MountListDeserializer;
+import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.PetListDeserializer;
+import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.RemindersItemSerializer;
@@ -210,26 +211,31 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         }.getType();
         Type skillListType = new TypeToken<List<Skill>>() {
         }.getType();
-        Type customizationListType = new TypeToken<List<Customization>>() {
+        Type customizationListType = new TypeToken<RealmList<Customization>>() {
         }.getType();
         Type tutorialStepListType = new TypeToken<RealmList<TutorialStep>>() {
         }.getType();
-        Type faqArticleListType = new TypeToken<List<FAQArticle>>() {
+        Type faqArticleListType = new TypeToken<RealmList<FAQArticle>>() {
         }.getType();
-        Type itemDataListType = new TypeToken<List<Equipment>>() {
+        Type itemDataListType = new TypeToken<RealmList<Equipment>>() {
         }.getType();
-        Type eggListType = new TypeToken<List<Egg>>() {
+        Type eggListType = new TypeToken<RealmList<Egg>>() {
         }.getType();
-        Type foodListType = new TypeToken<List<Food>>() {
+        Type foodListType = new TypeToken<RealmList<Food>>() {
         }.getType();
-        Type hatchingPotionListType = new TypeToken<List<HatchingPotion>>() {
+        Type hatchingPotionListType = new TypeToken<RealmList<HatchingPotion>>() {
         }.getType();
-        Type questContentListType = new TypeToken<List<QuestContent>>() {
+        Type questContentListType = new TypeToken<RealmList<QuestContent>>() {
         }.getType();
-        Type petListType = new TypeToken<Map<String, Pet>>() {
+        Type petMapType = new TypeToken<Map<String, Pet>>() {
         }.getType();
-        Type mountListType = new TypeToken<Map<String, Mount>>() {
+        Type mountMapType = new TypeToken<Map<String, Mount>>() {
         }.getType();
+        Type petListType = new TypeToken<RealmList<Pet>>() {
+        }.getType();
+        Type mountListType = new TypeToken<RealmList<Mount>>() {
+        }.getType();
+
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -258,13 +264,15 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(faqArticleListType, new FAQArticleListDeserilializer())
                 .registerTypeAdapter(Group.class, new GroupSerialization())
                 .registerTypeAdapter(Date.class, new DateDeserializer())
-                .registerTypeAdapter(itemDataListType, new ItemDataListDeserializer())
+                .registerTypeAdapter(itemDataListType, new EquipmentListDeserializer())
                 .registerTypeAdapter(eggListType, new EggListDeserializer())
                 .registerTypeAdapter(foodListType, new FoodListDeserializer())
                 .registerTypeAdapter(hatchingPotionListType, new HatchingPotionListDeserializer())
                 .registerTypeAdapter(questContentListType, new QuestListDeserializer())
                 .registerTypeAdapter(petListType, new PetListDeserializer())
                 .registerTypeAdapter(mountListType, new MountListDeserializer())
+                .registerTypeAdapter(petMapType, new PetMapDeserializer())
+                .registerTypeAdapter(mountMapType, new MountMapDeserializer())
                 .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
@@ -362,7 +370,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                         sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
                         sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
 
-                        Realm.getDefaultInstance().executeTransactionAsync(realm -> realm.copyToRealmOrUpdate(sortedTasks));
+                        Realm.getDefaultInstance().executeTransactionAsync(realm -> realm.insertOrUpdate(sortedTasks));
 
                         return habitRPGUser;
                     });

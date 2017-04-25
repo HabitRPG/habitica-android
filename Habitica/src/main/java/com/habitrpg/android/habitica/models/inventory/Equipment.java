@@ -6,7 +6,6 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Equipment extends RealmObject {
-    public static final String UNIQUE_IDENTIFIER = "key";
 
     public double value;
     public String type;

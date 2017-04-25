@@ -8,7 +8,7 @@ import io.realm.RealmResults;
 import rx.Observable;
 
 
-public class RealmCustomizationLocalRepository extends RealmBaseLocalRepository implements CustomizationLocalRepository {
+public class RealmCustomizationLocalRepository extends RealmContentLocalRepository implements CustomizationLocalRepository {
 
     public RealmCustomizationLocalRepository(Realm realm) {
         super(realm);

@@ -108,10 +108,6 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
         inventoryRepository.getPets(animalType, animalGroup).subscribe(pets -> {
             adapter.setItemList(pets);
             animals = pets;
-            if (user != null) {
-                adapter.setOwnedMapping(user.getItems().getPets());
-                adapter.setOwnedMountsMapping(user.getItems().getMounts());
-            }
         }, ReactiveErrorHandler.handleEmptyError());
     }
 
@@ -131,8 +127,6 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     @Override
     public void updateUserData(User user) {
         super.updateUserData(user);
-        adapter.setOwnedMapping(user.getItems().getPets());
-        adapter.setOwnedMountsMapping(user.getItems().getMounts());
     }
 
     @Override

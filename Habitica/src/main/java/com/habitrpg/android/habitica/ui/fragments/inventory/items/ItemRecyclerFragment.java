@@ -40,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
 
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
@@ -68,7 +69,7 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
-    public HashMap<String, Integer> ownedPets;
+    public RealmList<Pet> ownedPets;
     @Nullable
     public User user;
     LinearLayoutManager layoutManager = null;

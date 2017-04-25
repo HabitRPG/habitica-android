@@ -340,7 +340,7 @@ public class TaskRecyclerViewFragment extends BaseFragment implements View.OnCli
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        userRepository.retrieveUser(true)
+        userRepository.retrieveUser(true, true)
                 .doOnTerminate(() -> swipeRefreshLayout.setRefreshing(false))
                 .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
     }

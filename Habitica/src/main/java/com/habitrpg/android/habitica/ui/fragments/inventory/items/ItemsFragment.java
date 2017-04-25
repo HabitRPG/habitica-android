@@ -137,7 +137,9 @@ public class ItemsFragment extends BaseMainFragment {
             }
             fragment.isHatching = true;
             fragment.isFeeding = false;
-            fragment.ownedPets = this.user.getItems().getPets();
+            if (this.user != null) {
+                fragment.ownedPets = this.user.getItems().getPets();
+            }
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
     }

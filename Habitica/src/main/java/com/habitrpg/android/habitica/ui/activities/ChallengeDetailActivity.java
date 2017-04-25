@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.events.TaskUpdatedEvent;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.interactors.BuyRewardUseCase;
 import com.habitrpg.android.habitica.interactors.ChecklistCheckUseCase;
 import com.habitrpg.android.habitica.interactors.DailyCheckUseCase;

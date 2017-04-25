@@ -19,6 +19,7 @@ public interface UserRepository extends BaseRepository {
     Observable<User> updateUser(User user, String key, Object value);
 
     Observable<User> retrieveUser(Boolean withTasks);
+    Observable<User> retrieveUser(Boolean withTasks, Boolean forced);
 
     Observable<User> revive(User user);
 

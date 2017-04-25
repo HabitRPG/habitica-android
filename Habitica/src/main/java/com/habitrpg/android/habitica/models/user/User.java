@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.HabitDatabase;
 import com.habitrpg.android.habitica.models.PushDevice;
 import com.habitrpg.android.habitica.models.Tag;
+import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
@@ -392,7 +393,7 @@ public class User extends RealmObject {
         return getNullableMapSize(items.getMounts());
     }
 
-    private int getNullableMapSize(Map map) {
+    private int getNullableMapSize(RealmList map) {
         int mapSize = 0;
 
         if (map != null) {

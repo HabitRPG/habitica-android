@@ -1,26 +1,28 @@
 package com.habitrpg.android.habitica.models.user;
 
+import com.habitrpg.android.habitica.models.inventory.Egg;
+import com.habitrpg.android.habitica.models.inventory.Food;
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.QuestContent;
+
 import java.util.Date;
 import java.util.HashMap;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
 public class Items extends RealmObject {
 
-    @Ignore
-    public HashMap<String, Integer> eggs;
-    @Ignore
-    public HashMap<String, Integer> food;
-    @Ignore
-    public HashMap<String, Integer> hatchingPotions;
-    @Ignore
-    public HashMap<String, Integer> quests;
+    public RealmList<Egg> eggs;
+    public RealmList<Food> food;
+    public RealmList<HatchingPotion> hatchingPotions;
+    public RealmList<QuestContent> quests;
     User user;
-    @Ignore
-    HashMap<String, Integer> pets;
-    @Ignore
-    HashMap<String, Boolean> mounts;
+    RealmList<Pet> pets;
+    RealmList<Mount> mounts;
     private String currentMount;
     private String currentPet;
     private int lastDrop_count;
@@ -88,51 +90,51 @@ public class Items extends RealmObject {
         this.special = specialItems;
     }
 
-    public HashMap<String, Integer> getEggs() {
+    public RealmList<Egg> getEggs() {
         return eggs;
     }
 
-    public void setEggs(HashMap<String, Integer> eggs) {
+    public void setEggs(RealmList<Egg> eggs) {
         this.eggs = eggs;
     }
 
-    public HashMap<String, Integer> getFood() {
+    public RealmList<Food> getFood() {
         return food;
     }
 
-    public void setFood(HashMap<String, Integer> food) {
+    public void setFood(RealmList<Food> food) {
         this.food = food;
     }
 
-    public HashMap<String, Integer> getHatchingPotions() {
+    public RealmList<HatchingPotion> getHatchingPotions() {
         return hatchingPotions;
     }
 
-    public void setHatchingPotions(HashMap<String, Integer> hatchingPotions) {
+    public void setHatchingPotions(RealmList<HatchingPotion> hatchingPotions) {
         this.hatchingPotions = hatchingPotions;
     }
 
-    public HashMap<String, Integer> getQuests() {
+    public RealmList<QuestContent> getQuests() {
         return quests;
     }
 
-    public void setQuests(HashMap<String, Integer> quests) {
+    public void setQuests(RealmList<QuestContent> quests) {
         this.quests = quests;
     }
 
-    public HashMap<String, Integer> getPets() {
+    public RealmList<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(HashMap<String, Integer> pets) {
+    public void setPets(RealmList<Pet> pets) {
         this.pets = pets;
     }
 
-    public HashMap<String, Boolean> getMounts() {
+    public RealmList<Mount> getMounts() {
         return mounts;
     }
 
-    public void setMounts(HashMap<String, Boolean> mounts) {
+    public void setMounts(RealmList<Mount> mounts) {
         this.mounts = mounts;
     }
 

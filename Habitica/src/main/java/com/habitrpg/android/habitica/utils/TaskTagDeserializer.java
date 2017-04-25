@@ -18,11 +18,12 @@ import io.realm.RealmList;
 public class TaskTagDeserializer implements JsonDeserializer<List<Tag>> {
     @Override
     public List<Tag> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        List<Tag> tags = new RealmList<>();
+        RealmList<Tag> tags = new RealmList<>();
         List<Tag> databaseTags;
         try {
             Realm realm = Realm.getDefaultInstance();
             databaseTags = realm.copyFromRealm(realm.where(Tag.class).findAll());
+            realm.close();
         } catch (RuntimeException e) {
             //Tests don't have a database
             databaseTags = new ArrayList<>();

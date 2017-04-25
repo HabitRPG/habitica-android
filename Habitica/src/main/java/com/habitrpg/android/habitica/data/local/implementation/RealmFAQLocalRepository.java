@@ -7,7 +7,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
 
-public class RealmFAQLocalRepository extends RealmBaseLocalRepository implements FAQLocalRepository {
+public class RealmFAQLocalRepository extends RealmContentLocalRepository implements FAQLocalRepository {
 
     public RealmFAQLocalRepository(Realm realm) {
         super(realm);

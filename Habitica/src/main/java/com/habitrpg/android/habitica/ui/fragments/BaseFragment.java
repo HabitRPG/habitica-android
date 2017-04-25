@@ -49,7 +49,7 @@ public abstract class BaseFragment extends DialogFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (this.tutorialStepIdentifier != null && tutorialRepository != null) {
-                tutorialRepository.getTutorialStep(this.tutorialStepIdentifier).subscribe(step -> {
+                tutorialRepository.getTutorialStep(this.tutorialStepIdentifier).first().subscribe(step -> {
                     if (step != null && step.shouldDisplay()) {
                         DisplayTutorialEvent event = new DisplayTutorialEvent();
                         event.step = step;

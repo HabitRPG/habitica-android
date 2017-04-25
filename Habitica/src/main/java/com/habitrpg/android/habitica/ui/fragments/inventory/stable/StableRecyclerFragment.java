@@ -169,10 +169,7 @@ public class StableRecyclerFragment extends BaseFragment {
                 if (user != null && user.getItems() != null) {
                     switch (itemType) {
                         case "pets":
-                            if (user.getItems().getPets() != null
-                                    && user.getItems().getPets().containsKey(animal.getKey())
-                                    && user.getItems().getPets().get(animal.getKey()) != null
-                                    && user.getItems().getPets().get(animal.getKey()) > 0) {
+                            if (user.getItems().getPets() != null) {
                                 if (lastAnimal.getNumberOwned() == 0) {
                                     lastAnimal.setColor(animal.getColor());
                                 }
@@ -180,10 +177,7 @@ public class StableRecyclerFragment extends BaseFragment {
                             }
                             break;
                         case "mounts":
-                            if (user.getItems().getMounts() != null
-                                    && user.getItems().getMounts().containsKey(animal.getKey())
-                                    && user.getItems().getMounts().get(animal.getKey()) != null
-                                    && user.getItems().getMounts().get(animal.getKey())) {
+                            if (user.getItems().getMounts() != null) {
                                 if (lastAnimal.getNumberOwned() == 0) {
                                     lastAnimal.setColor(animal.getColor());
                                 }

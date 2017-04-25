@@ -81,4 +81,14 @@ public class Outfit extends RealmObject {
     public boolean isAvailable(String outfit) {
         return !TextUtils.isEmpty(outfit) && !outfit.endsWith("base_0");
     }
+
+    public void updateWith(Outfit newOutfit) {
+        this.setArmor(newOutfit.getArmor());
+        this.setBack(newOutfit.getBack());
+        this.setBody(newOutfit.getBody());
+        this.setEyeWear(newOutfit.getEyeWear());
+        this.setHead(newOutfit.getHead());
+        this.setHeadAccessory(newOutfit.getHeadAccessory());
+        this.setShield(newOutfit.getShield());
+    }
 }

@@ -29,7 +29,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
 
     @Override
     public void saveUser(User user) {
-        realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(user));
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(user));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
             }
         }
         return realm.where(Skill.class)
-                .in("key", (String[]) ownedItems.toArray())
+                .in("key", ownedItems.toArray(new String[0]))
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);

@@ -4,8 +4,10 @@ import com.habitrpg.android.habitica.models.inventory.Equipment;
 
 import java.util.List;
 
+import io.realm.RealmList;
+
 public class ContentGear {
 
-    public List<Equipment> flat;
+    public RealmList<Equipment> flat;
 
 }

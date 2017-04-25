@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
 import rx.Observable;
 import rx.subjects.PublishSubject;
@@ -44,7 +45,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;
-    public HashMap<String, Integer> ownedPets;
+    public RealmList<Pet> ownedPets;
     public Context context;
 
     private PublishSubject<Item> sellItemEvents = PublishSubject.create();
@@ -112,7 +113,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
             } else {
                 petKey = hatchingItem.getKey() + "-" + item.getKey();
             }
-            return ownedPets != null && ownedPets.containsKey(petKey) && ownedPets.get(petKey) > 0;
+            return ownedPets != null;
         }
 
         public void bind(Item item) {

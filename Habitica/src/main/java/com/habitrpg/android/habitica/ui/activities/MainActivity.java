@@ -68,6 +68,7 @@ import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.helpers.SoundManager;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
@@ -303,6 +304,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
             retrieveUser();
             this.checkMaintenance();
         }
+
+        reloadContent(null);
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             try {
@@ -643,13 +646,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
     }
 
     @Subscribe
-    public void onEvent(EquipCommand event) {
-        this.apiClient.equipItem(event.type, event.key)
-                .subscribe(items -> {}, throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(UnlockPathCommand event) {
         this.user.setBalance(this.user.getBalance() - event.balanceDiff);
         this.setUserData(false);
@@ -847,8 +843,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
         final Pet pet = event.usingPet;
         this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
                 .subscribe(feedResponse -> {
-                    MainActivity.this.user.getItems().getPets().put(pet.getKey(), feedResponse.value);
-                    MainActivity.this.user.getItems().getFood().put(event.usingFood.getKey(), event.usingFood.getOwned() - 1);
                     MainActivity.this.setUserData(false);
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
@@ -952,9 +946,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
     protected void retrieveUser() {
         if (this.userRepository != null) {
             this.userRepository.retrieveUser(true)
-                    .subscribe(user1 -> {}, throwable -> {
-
-                    });
+                    .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
         }
     }
 
