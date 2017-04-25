@@ -50,4 +50,6 @@ public interface InventoryRepository extends ContentRepository {
     Observable<User> sellItem(User user, Item item);
 
     Observable<Items> equipGear(User user, String equipment, boolean asCostume);
+
+    Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup);
 }

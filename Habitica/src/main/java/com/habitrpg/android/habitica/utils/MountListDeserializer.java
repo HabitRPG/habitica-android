@@ -36,9 +36,10 @@ public class MountListDeserializer implements JsonDeserializer<RealmList<Mount>>
             }
 
             for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-                Mount mount;
-                mount = new Mount();
+                Mount mount = new Mount();
                 mount.setKey(entry.getKey());
+                mount.setAnimal(entry.getKey().split("-")[0]);
+                mount.setColor(entry.getKey().split("-")[1]);
                 if (entry.getValue().isJsonNull()) {
                     mount.setOwned(false);
                 } else {

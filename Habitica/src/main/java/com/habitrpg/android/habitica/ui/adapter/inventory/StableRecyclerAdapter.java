@@ -105,7 +105,7 @@ public class StableRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ownedTextView.setVisibility(View.VISIBLE);
             this.imageView.setAlpha(1.0f);
             if (animal.getNumberOwned() > 0) {
-                this.ownedTextView.setText(animal.getNumberOwned().toString());
+                this.ownedTextView.setText(String.valueOf(animal.getNumberOwned()));
                 if (itemType.equals("pets")) {
                     DataBindingUtils.loadImage(this.imageView, "Pet-" + item.getKey());
                 } else {

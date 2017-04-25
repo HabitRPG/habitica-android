@@ -24,11 +24,12 @@ public class MountMapDeserializer implements JsonDeserializer<HashMap<String, Mo
             JsonObject object = json.getAsJsonObject();
 
             Realm realm = Realm.getDefaultInstance();
-            List<Pet> existingItems = realm.copyFromRealm(realm.where(Pet.class).findAll());
+            List<Mount> existingItems = realm.copyFromRealm(realm.where(Mount.class).findAll());
             realm.close();
 
-            for (Pet mount : existingItems) {
+            for (Mount mount : existingItems) {
                 if (object.has(mount.getKey())) {
+                    vals.put(mount.getKey(), mount);
                     object.remove(mount.getKey());
                 }
             }
@@ -36,7 +37,6 @@ public class MountMapDeserializer implements JsonDeserializer<HashMap<String, Mo
             for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
                 Mount mount;
                 mount = new Mount();
-                mount.setKey(entry.getKey());
                 mount.setKey(entry.getKey());
                 mount.setAnimal(entry.getKey().split("-")[0]);
                 mount.setColor(entry.getKey().split("-")[1]);

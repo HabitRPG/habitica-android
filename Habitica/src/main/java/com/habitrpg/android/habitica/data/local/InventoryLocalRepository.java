@@ -39,4 +39,6 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
     void changeOwnedCount(String type, String key, int amountToAdd);
 
     Observable<Item> getItem(String type, String key);
+
+    Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup);
 }

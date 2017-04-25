@@ -112,7 +112,7 @@ public class SkillsFragment extends BaseMainFragment {
     public void onEvent(UseSkillCommand command) {
         Skill skill = command.skill;
 
-        if (skill.isSpecialItem) {
+        if ("special".equals(skill.habitClass)) {
             selectedSkill = skill;
             Intent intent = new Intent(activity, SkillMemberActivity.class);
             startActivityForResult(intent, MEMBER_SELECTION_ACTIVITY);
@@ -129,7 +129,7 @@ public class SkillsFragment extends BaseMainFragment {
         removeProgressDialog();
         adapter.setMana(response.user.getStats().mp);
         StringBuilder message = new StringBuilder();
-        if (usedSkill.isSpecialItem) {
+        if ("special".equals(usedSkill.habitClass)) {
             message.append(getContext().getString(R.string.used_skill_without_mana, usedSkill.text));
         } else {
             message.append(getContext().getString(R.string.used_skill, usedSkill.text, usedSkill.mana));

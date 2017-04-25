@@ -11,5 +11,4 @@ public class Skill extends RealmObject {
     public String key;
     public String text, notes, target, habitClass;
     public Integer mana, lvl;
-    public boolean isSpecialItem;
 }

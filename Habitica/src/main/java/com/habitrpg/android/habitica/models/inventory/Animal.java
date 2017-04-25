@@ -30,13 +30,13 @@ public interface Animal {
 
     public void setColorText(String colorText);
 
-    public Boolean getPremium();
+    public boolean getPremium();
 
-    public void setPremium(Boolean premium);
+    public void setPremium(boolean premium);
 
-    public Boolean getLimited();
+    public boolean getLimited();
 
-    public void setLimited(Boolean limited);
+    public void setLimited(boolean limited);
 
     public Integer getNumberOwned();
 

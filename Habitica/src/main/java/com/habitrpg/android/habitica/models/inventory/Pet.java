@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.inventory;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Pet extends RealmObject implements Animal{
@@ -10,9 +11,10 @@ public class Pet extends RealmObject implements Animal{
     @PrimaryKey
     String key;
     String animal, color, animalGroup, animalText, colorText;
-    Boolean premium, limited;
+    boolean premium, limited;
 
-    Integer numberOwned;
+    @Ignore
+    private Integer numberOwned;
 
     public String getKey() {
         return key;
@@ -23,6 +25,9 @@ public class Pet extends RealmObject implements Animal{
     }
 
     public String getAnimal() {
+        if (animal == null) {
+            return getKey().split("-")[0];
+        }
         return animal;
     }
 
@@ -31,6 +36,9 @@ public class Pet extends RealmObject implements Animal{
     }
 
     public String getColor() {
+        if (color == null) {
+            return getKey().split("-")[1];
+        }
         return color;
     }
 
@@ -39,6 +47,9 @@ public class Pet extends RealmObject implements Animal{
     }
 
     public String getAnimalGroup() {
+        if (animalGroup == null) {
+            return "";
+        }
         return animalGroup;
     }
 
@@ -68,19 +79,19 @@ public class Pet extends RealmObject implements Animal{
         this.colorText = colorText;
     }
 
-    public Boolean getPremium() {
+    public boolean getPremium() {
         return premium;
     }
 
-    public void setPremium(Boolean premium) {
+    public void setPremium(boolean premium) {
         this.premium = premium;
     }
 
-    public Boolean getLimited() {
+    public boolean getLimited() {
         return limited;
     }
 
-    public void setLimited(Boolean limited) {
+    public void setLimited(boolean limited) {
         this.limited = limited;
     }
 
@@ -95,6 +106,9 @@ public class Pet extends RealmObject implements Animal{
         this.numberOwned = numberOwned;
     }
     public Integer getTrained() {
+        if (trained == null) {
+            return 0;
+        }
         return trained;
     }
 

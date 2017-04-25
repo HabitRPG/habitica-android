@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
-import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.inventory.PetDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -21,8 +20,6 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFr
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,13 +33,12 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     public PetDetailRecyclerAdapter adapter;
     public String animalType;
     public String animalGroup;
-    public List<Pet> animals;
     GridLayoutManager layoutManager = null;
 
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.usesTabLayout = false;
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
@@ -50,15 +46,13 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
 
             recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-            android.support.v4.app.FragmentActivity context = getActivity();
-
             layoutManager = new GridLayoutManager(getActivity(), 2);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
             adapter = (PetDetailRecyclerAdapter) recyclerView.getAdapter();
             if (adapter == null) {
-                adapter = new PetDetailRecyclerAdapter();
+                adapter = new PetDetailRecyclerAdapter(null, true);
                 adapter.context = this.getActivity();
                 adapter.itemType = this.animalType;
                 recyclerView.setAdapter(adapter);
@@ -111,10 +105,8 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getPets(animalType, animalGroup).subscribe(pets -> {
-            adapter.setItemList(pets);
-            animals = pets;
-        }, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.getPets(animalType, animalGroup).first().subscribe(adapter::updateData, ReactiveErrorHandler.handleEmptyError());
+        inventoryRepository.getOwnedMounts(animalType, animalGroup).subscribe(adapter::setOwnedMounts, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Subscribe

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.InventoryRepository;
+import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -30,13 +31,12 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     public MountDetailRecyclerAdapter adapter;
     public String animalType;
     public String animalGroup;
-    public List<Mount> animals;
     GridLayoutManager layoutManager = null;
 
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.usesTabLayout = false;
         super.onCreateView(inflater, container, savedInstanceState);
         if (view == null) {
@@ -44,15 +44,13 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
 
             recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-            android.support.v4.app.FragmentActivity context = getActivity();
-
             layoutManager = new GridLayoutManager(getActivity(), 2);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
 
             adapter = (MountDetailRecyclerAdapter) recyclerView.getAdapter();
             if (adapter == null) {
-                adapter = new MountDetailRecyclerAdapter();
+                adapter = new MountDetailRecyclerAdapter(null, true);
                 adapter.context = this.getActivity();
                 adapter.itemType = this.animalType;
                 recyclerView.setAdapter(adapter);
@@ -106,10 +104,7 @@ public class MountDetailRecyclerFragment extends BaseMainFragment {
     }
 
     private void loadItems() {
-        inventoryRepository.getMounts().subscribe(mounts -> {
-            adapter.setItemList(mounts);
-            animals = mounts;
-        });
+        inventoryRepository.getMounts(animalType, animalGroup).first().subscribe(adapter::updateData, ReactiveErrorHandler.handleEmptyError());
     }
 
     @Override

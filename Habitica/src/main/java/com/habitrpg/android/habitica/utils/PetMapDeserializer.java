@@ -23,12 +23,13 @@ public class PetMapDeserializer implements JsonDeserializer<HashMap<String, Pet>
             JsonObject object = json.getAsJsonObject();
 
             Realm realm = Realm.getDefaultInstance();
-            List<Mount> existingItems = realm.copyFromRealm(realm.where(Mount.class).findAll());
+            List<Pet> existingItems = realm.copyFromRealm(realm.where(Pet.class).findAll());
             realm.close();
 
-            for (Mount mount : existingItems) {
-                if (object.has(mount.getKey())) {
-                    object.remove(mount.getKey());
+            for (Pet pet : existingItems) {
+                if (object.has(pet.getKey())) {
+                    vals.put(pet.getKey(), pet);
+                    object.remove(pet.getKey());
                 }
             }
 

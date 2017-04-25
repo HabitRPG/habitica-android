@@ -38,17 +38,14 @@ public class PetListDeserializer implements JsonDeserializer<RealmList<Pet>> {
             }
 
             for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
-                Pet pet;
-                if (entry.getValue().isJsonObject()) {
-                    pet = context.deserialize(entry.getValue(), Food.class);
+                Pet pet = new Pet();
+                pet.setKey(entry.getKey());
+                pet.setAnimal(entry.getKey().split("-")[0]);
+                pet.setColor(entry.getKey().split("-")[1]);
+                if (entry.getValue().isJsonNull()) {
+                    pet.setTrained(0);
                 } else {
-                    pet = new Pet();
-                    pet.setKey(entry.getKey());
-                    if (entry.getValue().isJsonNull()) {
-                        pet.setTrained(0);
-                    } else {
-                        pet.setTrained(entry.getValue().getAsInt());
-                    }
+                    pet.setTrained(entry.getValue().getAsInt());
                 }
                 vals.add(pet);
             }

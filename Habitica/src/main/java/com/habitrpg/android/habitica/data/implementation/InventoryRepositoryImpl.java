@@ -147,4 +147,9 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
                     });
                 });
     }
+
+    @Override
+    public Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup) {
+        return localRepository.getOwnedMounts(animalType, animalGroup);
+    }
 }

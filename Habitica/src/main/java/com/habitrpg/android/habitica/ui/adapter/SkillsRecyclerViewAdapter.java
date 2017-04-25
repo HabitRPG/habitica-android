@@ -90,7 +90,7 @@ public class SkillsRecyclerViewAdapter extends RecyclerView.Adapter<SkillsRecycl
             skillNameTextView.setText(skill.text);
             skillNotesTextView.setText(skill.notes);
 
-            if (skill.isSpecialItem) {
+            if ("special".equals(skill.habitClass)) {
                 priceButton.setText(R.string.skill_transformation_use);
 
                 priceButton.setCompoundDrawables(null, null, null, null);

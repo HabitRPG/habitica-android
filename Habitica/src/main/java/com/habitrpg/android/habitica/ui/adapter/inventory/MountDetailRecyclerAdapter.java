@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.adapter.inventory;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,27 +20,18 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
-public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetailRecyclerAdapter.MountViewHolder> {
+public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder> {
 
     public String itemType;
     public Context context;
-    private List<Mount> itemList;
-    private HashMap<String, Boolean> ownedMapping;
 
-    public void setItemList(List<Mount> itemList) {
-        this.itemList = itemList;
-        this.notifyDataSetChanged();
-    }
-
-    public void setOwnedMapping(HashMap<String, Boolean> map) {
-        this.ownedMapping = map;
-        this.notifyDataSetChanged();
+    public MountDetailRecyclerAdapter(@Nullable OrderedRealmCollection<Mount> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
 
     @Override
@@ -53,12 +45,9 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
     @Override
     public void onBindViewHolder(MountViewHolder holder, int position) {
-        holder.bind(this.itemList.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return itemList == null ? 0 : itemList.size();
+        if (getData() != null) {
+            holder.bind(this.getData().get(position));
+        }
     }
 
     class MountViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -78,7 +67,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         Resources resources;
 
-        public MountViewHolder(View itemView) {
+        MountViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -87,21 +76,12 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
             itemView.setOnClickListener(this);
         }
 
-        Boolean isOwned() {
-            if (ownedMapping != null && animal != null) {
-                if (ownedMapping.containsKey(animal.getKey()) && ownedMapping.get(animal.getKey())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public void bind(Mount item) {
             animal = item;
             titleView.setText(item.getColorText());
             ownedTextView.setVisibility(View.GONE);
             this.imageView.setAlpha(1.0f);
-            if (this.isOwned()) {
+            if (this.animal.getOwned()) {
                 DataBindingUtils.loadImage(this.imageView, "Mount_Icon_" + itemType + "-" + item.getColor());
             } else {
                 DataBindingUtils.loadImage(this.imageView, "PixelPaw");
@@ -111,7 +91,7 @@ public class MountDetailRecyclerAdapter extends RecyclerView.Adapter<MountDetail
 
         @Override
         public void onClick(View v) {
-            if (!this.isOwned()) {
+            if (!this.animal.getOwned()) {
                 return;
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);

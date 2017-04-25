@@ -15,6 +15,8 @@ import com.habitrpg.android.habitica.events.ContentReloadedEvent;
 import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.Animal;
+import com.habitrpg.android.habitica.models.inventory.Mount;
+import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.MainActivity;
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter;
@@ -141,16 +143,14 @@ public class StableRecyclerFragment extends BaseFragment {
         Observable<? extends Animal> observable;
 
         if ("pets".equals(itemType)) {
-            observable = inventoryRepository.getPets().flatMap(Observable::from);
+            observable = inventoryRepository.getPets().first().flatMap(Observable::from);
         } else {
-            observable = inventoryRepository.getMounts().flatMap(Observable::from);
+            observable = inventoryRepository.getMounts().first().flatMap(Observable::from);
         }
 
         observable.toList().flatMap(unsortedAnimals -> {
             List<Object> items = new ArrayList<>();
             if (unsortedAnimals.size() == 0) {
-                ReloadContentEvent event = new ReloadContentEvent();
-                EventBus.getDefault().post(event);
                 return Observable.just(items);
             }
             String lastSectionTitle = "";
@@ -175,18 +175,14 @@ public class StableRecyclerFragment extends BaseFragment {
                 if (user != null && user.getItems() != null) {
                     switch (itemType) {
                         case "pets":
-                            if (user.getItems().getPets() != null) {
-                                if (lastAnimal.getNumberOwned() == 0) {
-                                    lastAnimal.setColor(animal.getColor());
-                                }
+                            Pet pet = (Pet) animal;
+                            if (pet.getTrained() > 0) {
                                 lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
                             break;
                         case "mounts":
-                            if (user.getItems().getMounts() != null) {
-                                if (lastAnimal.getNumberOwned() == 0) {
-                                    lastAnimal.setColor(animal.getColor());
-                                }
+                            Mount mount = (Mount) animal;
+                            if (mount.getOwned()) {
                                 lastAnimal.setNumberOwned(lastAnimal.getNumberOwned() + 1);
                             }
                             break;
@@ -194,9 +190,6 @@ public class StableRecyclerFragment extends BaseFragment {
                 }
             }
             return Observable.just(items);
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> adapter.setItemList(items), ReactiveErrorHandler.handleEmptyError());
+        }).subscribe(items -> adapter.setItemList(items), ReactiveErrorHandler.handleEmptyError());
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Observable;
 
 
@@ -104,7 +105,8 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public Observable<RealmResults<Mount>> getMounts() {
-        return realm.where(Mount.class).findAll()
+        return realm.where(Mount.class)
+                .findAllSorted("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
@@ -112,8 +114,8 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     @Override
     public Observable<RealmResults<Mount>> getMounts(String type, String group) {
         return realm.where(Mount.class)
-                .equalTo("group", group)
-                .equalTo("type", type)
+                .equalTo("animalGroup", group)
+                .equalTo("animal", type)
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);
@@ -121,7 +123,8 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
 
     @Override
     public Observable<RealmResults<Pet>> getPets() {
-        return realm.where(Pet.class).findAll()
+        return realm.where(Pet.class)
+                .findAllSorted("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .asObservable()
                 .filter(RealmResults::isLoaded);
     }
@@ -129,8 +132,8 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     @Override
     public Observable<RealmResults<Pet>> getPets(String type, String group) {
         return realm.where(Pet.class)
-                .equalTo("group", group)
-                .equalTo("type", type)
+                .equalTo("animalGroup", group)
+                .equalTo("animal", type)
                 .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded);
@@ -164,5 +167,16 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
         return realm.where(itemClass).equalTo("key", key).findFirstAsync().asObservable()
                 .filter(realmObject -> realmObject.isLoaded())
                 .cast(Item.class);
+    }
+
+    @Override
+    public Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup) {
+        return realm.where(Mount.class)
+                .equalTo("animalGroup", animalGroup)
+                .equalTo("animal", animalType)
+                .equalTo("owned", true)
+                .findAll()
+                .asObservable()
+                .filter(RealmResults::isLoaded);
     }
 }

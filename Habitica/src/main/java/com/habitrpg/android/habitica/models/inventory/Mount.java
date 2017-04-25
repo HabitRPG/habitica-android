@@ -1,15 +1,18 @@
 package com.habitrpg.android.habitica.models.inventory;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Mount extends RealmObject implements Animal {
 
-    Boolean owned;
+    boolean owned;
     @PrimaryKey
     String key;
     String animal, color, animalGroup, animalText, colorText;
-    Boolean premium, limited;
+    boolean premium, limited;
+
+    @Ignore
     Integer numberOwned;
 
     public String getKey() {
@@ -21,6 +24,9 @@ public class Mount extends RealmObject implements Animal {
     }
 
     public String getAnimal() {
+        if (animal == null) {
+            return key.split("-")[0];
+        }
         return animal;
     }
 
@@ -29,6 +35,9 @@ public class Mount extends RealmObject implements Animal {
     }
 
     public String getColor() {
+        if (color == null) {
+            return key.split("-")[1];
+        }
         return color;
     }
 
@@ -37,6 +46,9 @@ public class Mount extends RealmObject implements Animal {
     }
 
     public String getAnimalGroup() {
+        if (animalGroup == null) {
+            return "";
+        }
         return animalGroup;
     }
 
@@ -66,19 +78,19 @@ public class Mount extends RealmObject implements Animal {
         this.colorText = colorText;
     }
 
-    public Boolean getPremium() {
+    public boolean getPremium() {
         return premium;
     }
 
-    public void setPremium(Boolean premium) {
+    public void setPremium(boolean premium) {
         this.premium = premium;
     }
 
-    public Boolean getLimited() {
+    public boolean getLimited() {
         return limited;
     }
 
-    public void setLimited(Boolean limited) {
+    public void setLimited(boolean limited) {
         this.limited = limited;
     }
 
@@ -93,11 +105,11 @@ public class Mount extends RealmObject implements Animal {
         this.numberOwned = numberOwned;
     }
 
-    public Boolean getOwned() {
+    public boolean getOwned() {
         return owned;
     }
 
-    public void setOwned(Boolean owned) {
+    public void setOwned(boolean owned) {
         this.owned = owned;
     }
 }

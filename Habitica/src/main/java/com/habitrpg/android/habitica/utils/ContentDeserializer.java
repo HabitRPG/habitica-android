@@ -19,22 +19,14 @@ import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.realm.RealmList;
-import io.realm.RealmObject;
 
 public class ContentDeserializer implements JsonDeserializer<ContentResult> {
 
@@ -81,30 +73,36 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
             for (HatchingPotion potion : result.hatchingPotions) {
                 String key = egg.getKey() + "-" + potion.getKey();
                 if (pets.containsKey(key)) {
-                    pets.put(key, this.populatePet(pets.get(key), egg, potion));
+                    pets.put(key, this.populatePet(pets.get(key), egg, potion, "pets"));
                 }
                 if (specialPets.containsKey(key)) {
-                    specialPets.put(key, this.populatePet(specialPets.get(key), egg, potion));
+                    specialPets.put(key, this.populatePet(specialPets.get(key), egg, potion, "specialPets"));
                 }
                 if (premiumPets.containsKey(key)) {
-                    premiumPets.put(key, this.populatePet(premiumPets.get(key), egg, potion));
+                    premiumPets.put(key, this.populatePet(premiumPets.get(key), egg, potion, "premiumPets"));
                 }
                 if (questPets.containsKey(key)) {
-                    questPets.put(key, this.populatePet(questPets.get(key), egg, potion));
+                    questPets.put(key, this.populatePet(questPets.get(key), egg, potion, "questPets"));
                 }
                 if (mounts.containsKey(key)) {
-                    mounts.put(key, this.popupateMount(mounts.get(key), egg, potion));
+                    mounts.put(key, this.populateMount(mounts.get(key), egg, potion, "mounts"));
                 }
                 if (specialMounts.containsKey(key)) {
-                    specialMounts.put(key, this.popupateMount(specialMounts.get(key), egg, potion));
+                    specialMounts.put(key, this.populateMount(specialMounts.get(key), egg, potion, "specialMounts"));
                 }
                 if (premiumMounts.containsKey(key)) {
-                    premiumMounts.put(key, this.popupateMount(premiumMounts.get(key), egg, potion));
+                    premiumMounts.put(key, this.populateMount(premiumMounts.get(key), egg, potion, "premiumMounts"));
                 }
                 if (questMounts.containsKey(key)) {
-                    questMounts.put(key, this.popupateMount(questMounts.get(key), egg, potion));
+                    questMounts.put(key, this.populateMount(questMounts.get(key), egg, potion, "questMounts"));
                 }
             }
+        }
+        for (Pet pet : specialPets.values()) {
+            pet.setAnimalGroup("specialMounts");
+        }
+        for (Mount mount : specialMounts.values()) {
+            mount.setAnimalGroup("specialMounts");
         }
 
         result.pets = new RealmList<>();
@@ -122,17 +120,6 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         result.spells = context.deserialize(object.get("spells"), new TypeToken<List<Skill>>() {
         }.getType());
 
-        List<String> spellKeys = new ArrayList<>();
-        for (Skill skill : result.spells) {
-            spellKeys.add(skill.key);
-        }
-        /*List<Skill> oldSkills = new Select().from(Skill.class).queryList();
-        for (Skill skill : oldSkills) {
-            if (!spellKeys.contains(skill.key)) {
-                skill.delete();
-            }
-        }*/
-
         result.appearances = context.deserialize(object.get("appearances"), new TypeToken<RealmList<Customization>>() {
         }.getType());
         result.backgrounds = context.deserialize(object.get("backgrounds"), new TypeToken<RealmList<Customization>>() {
@@ -144,19 +131,21 @@ public class ContentDeserializer implements JsonDeserializer<ContentResult> {
         return result;
     }
 
-    private Mount popupateMount(Mount mount, Egg egg, HatchingPotion potion) {
+    private Mount populateMount(Mount mount, Egg egg, HatchingPotion potion, String group) {
         mount.setAnimalText(egg.getMountText());
         mount.setColorText(potion.getText());
         mount.setLimited(potion.getLimited());
         mount.setPremium(potion.getPremium());
+        mount.setAnimalGroup(group);
         return mount;
     }
 
-    private Pet populatePet(Pet pet, Egg egg, HatchingPotion potion) {
+    private Pet populatePet(Pet pet, Egg egg, HatchingPotion potion, String group) {
         pet.setAnimalText(egg.getText());
         pet.setColorText(potion.getText());
         pet.setLimited(potion.getLimited());
         pet.setPremium(potion.getPremium());
+        pet.setAnimalGroup(group);
         return pet;
     }
 }
