@@ -8,7 +8,9 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
@@ -44,6 +46,11 @@ public class LoginBackgroundView extends RelativeLayout {
     public LoginBackgroundView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.random = new Random();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        height = (int) (metrics.heightPixels*SIZE_FACTOR);
     }
 
     @Override
@@ -69,10 +76,7 @@ public class LoginBackgroundView extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
-        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-        this.width = parentWidth;
-        this.height = (int)(parentHeight*SIZE_FACTOR);
+        this.width = MeasureSpec.getSize(widthMeasureSpec);
         this.setMeasuredDimension(width, height);
         params.width = width;
         params.height = height;
