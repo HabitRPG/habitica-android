@@ -113,18 +113,6 @@ public class ItemsFragment extends BaseMainFragment {
     }
 
     @Subscribe
-    public void onEvent(InvitePartyToQuestCommand event) {
-        this.apiClient.inviteToQuest("party", event.questKey)
-
-                .subscribe(group -> {
-                    OpenMenuItemCommand event1 = new OpenMenuItemCommand();
-                    event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
-                    EventBus.getDefault().post(event1);
-                }, throwable -> {
-                });
-    }
-
-    @Subscribe
     public void showHatchingDialog(HatchingCommand event) {
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             ItemRecyclerFragment fragment = new ItemRecyclerFragment();
@@ -137,9 +125,6 @@ public class ItemsFragment extends BaseMainFragment {
             }
             fragment.isHatching = true;
             fragment.isFeeding = false;
-            if (this.user != null) {
-                fragment.ownedPets = this.user.getItems().getPets();
-            }
             fragment.show(getFragmentManager(), "hatchingDialog");
         }
     }

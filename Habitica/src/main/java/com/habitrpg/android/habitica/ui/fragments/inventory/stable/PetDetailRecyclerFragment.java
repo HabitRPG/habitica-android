@@ -58,6 +58,9 @@ public class PetDetailRecyclerFragment extends BaseMainFragment {
                 recyclerView.setAdapter(adapter);
                 this.loadItems();
 
+                compositeSubscription.add(adapter.getEquipEvents()
+                        .flatMap(key -> inventoryRepository.equip(user, "pet", key))
+                        .subscribe(items -> {}, ReactiveErrorHandler.handleEmptyError()));
             }
         }
 

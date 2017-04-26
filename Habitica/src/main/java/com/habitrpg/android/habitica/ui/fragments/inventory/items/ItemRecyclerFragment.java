@@ -69,7 +69,6 @@ public class ItemRecyclerFragment extends BaseFragment {
     public Boolean isFeeding;
     public Item hatchingItem;
     public Pet feedingPet;
-    public RealmList<Pet> ownedPets;
     @Nullable
     public User user;
     LinearLayoutManager layoutManager = null;
@@ -104,7 +103,6 @@ public class ItemRecyclerFragment extends BaseFragment {
             adapter.isHatching = this.isHatching;
             adapter.isFeeding = this.isFeeding;
             adapter.fragment = this;
-            adapter.ownedPets = this.ownedPets;
             if (this.hatchingItem != null) {
                 adapter.hatchingItem = this.hatchingItem;
             }
@@ -113,11 +111,17 @@ public class ItemRecyclerFragment extends BaseFragment {
             }
             recyclerView.setAdapter(adapter);
 
-            adapter.getSellItemEvents()
+            compositeSubscription.add(adapter.getSellItemEvents()
                     .flatMap(item -> inventoryRepository.sellItem(user, item))
-                    .subscribe(item -> {
+                    .subscribe(item -> {}, ReactiveErrorHandler.handleEmptyError()));
 
-            }, ReactiveErrorHandler.handleEmptyError());
+            compositeSubscription.add(adapter.getQuestInvitationEvents()
+                    .flatMap(quest -> inventoryRepository.inviteToQuest(quest))
+                            .subscribe(group -> {
+                                OpenMenuItemCommand event1 = new OpenMenuItemCommand();
+                                event1.identifier = MainDrawerBuilder.SIDEBAR_PARTY;
+                                EventBus.getDefault().post(event1);
+                            }, throwable -> {}));
         }
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
@@ -196,6 +200,8 @@ public class ItemRecyclerFragment extends BaseFragment {
                 adapter.updateData((OrderedRealmCollection<Item>) items);
             }
         }, ReactiveErrorHandler.handleEmptyError());
+
+        compositeSubscription.add(inventoryRepository.getOwnedPets().subscribe(adapter::setOwnedPets, ReactiveErrorHandler.handleEmptyError()));
     }
 
     @OnClick(R.id.openMarketButton)

@@ -810,7 +810,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
         if (event.usingEgg == null || event.usingHatchingPotion == null) {
             return;
         }
-        this.apiClient.hatchPet(event.usingEgg.getKey(), event.usingHatchingPotion.getKey())
+        this.inventoryRepository.hatchPet(event.usingEgg, event.usingHatchingPotion)
                 .subscribe(items -> {
                     FrameLayout petWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);
                     SimpleDraweeView petImageView = (SimpleDraweeView) petWrapper.findViewById(R.id.pet_imageview);
@@ -845,9 +845,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
             return;
         }
         final Pet pet = event.usingPet;
-        this.apiClient.feedPet(event.usingPet.getKey(), event.usingFood.getKey())
+        this.inventoryRepository.feedPet(event.usingPet, event.usingFood)
                 .subscribe(feedResponse -> {
-                    MainActivity.this.setUserData(false);
                     showSnackbar(MainActivity.this, floatingMenuWrapper, getString(R.string.notification_pet_fed, pet.getColorText(), pet.getAnimalText()), SnackbarDisplayType.NORMAL);
                     if (feedResponse.value == -1) {
                         FrameLayout mountWrapper = (FrameLayout) View.inflate(this, R.layout.pet_imageview, null);

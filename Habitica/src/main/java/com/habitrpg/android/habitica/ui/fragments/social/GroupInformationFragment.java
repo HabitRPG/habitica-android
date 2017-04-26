@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.databinding.FragmentGroupInfoBinding;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.helpers.QrCodeManager;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
@@ -28,6 +27,7 @@ import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.adapter.social.QuestCollectRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment;
+import com.habitrpg.android.habitica.ui.views.ValueBar;
 
 import javax.inject.Inject;
 
@@ -65,8 +65,8 @@ public class GroupInformationFragment extends BaseFragment {
     @Nullable
     private User user;
     private QuestContent quest;
-    private ValueBarBinding bossHpBar;
-    private ValueBarBinding bossRageBar;
+    private ValueBar bossHpBar;
+    private ValueBar bossRageBar;
 
     private QuestCollectRecyclerViewAdapter questCollectViewAdapter;
 
@@ -106,8 +106,8 @@ public class GroupInformationFragment extends BaseFragment {
 
         collectionStats.setLayoutManager(new LinearLayoutManager(getContext()));
         collectionStats.setAdapter(questCollectViewAdapter);
-        bossHpBar = DataBindingUtil.bind(view.findViewById(R.id.bossHpBar));
-        bossRageBar = DataBindingUtil.bind(view.findViewById(R.id.bossRageBar));
+        bossHpBar = (ValueBar) view.findViewById(R.id.bossHpBar);
+        bossRageBar = (ValueBar) view.findViewById(R.id.bossRageBar);
 
         if (this.group == null) {
             QrCodeManager qrCodeManager = new QrCodeManager(userRepository, this.getContext());
@@ -181,8 +181,16 @@ public class GroupInformationFragment extends BaseFragment {
             }
         }
 
-        bossHpBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.hp > 0) ? View.VISIBLE : View.GONE);
-        bossRageBar.valueBarLayout.setVisibility((quest.boss != null && quest.boss.rage_value > 0) ? View.VISIBLE : View.GONE);
+        boolean showHpBar = (quest.boss != null && quest.boss.hp > 0);
+        bossHpBar.setVisibility(showHpBar ? View.VISIBLE : View.GONE);
+        if (showHpBar) {
+            bossHpBar.set(group.quest.getProgress().hp, quest.boss.hp);
+        }
+        boolean showRageBar = (quest.boss != null && quest.boss.rage_value > 0);
+        bossRageBar.setVisibility(showRageBar ? View.VISIBLE : View.GONE);
+        if (showRageBar) {
+            bossHpBar.set(group.quest.getProgress().rage, quest.boss.rage_value);
+        }
 
         if (group.quest.members == null) {
             viewBinding.setHideParticipantCard(true);

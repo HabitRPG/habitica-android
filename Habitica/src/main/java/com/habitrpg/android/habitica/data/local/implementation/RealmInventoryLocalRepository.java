@@ -122,6 +122,26 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     }
 
     @Override
+    public Observable<RealmResults<Mount>> getOwnedMounts() {
+        return realm.where(Mount.class)
+                .equalTo("owned", true)
+                .findAllSorted("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup) {
+        return realm.where(Mount.class)
+                .equalTo("animalGroup", animalGroup)
+                .equalTo("animal", animalType)
+                .equalTo("owned", true)
+                .findAllSorted("animal")
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
     public Observable<RealmResults<Pet>> getPets() {
         return realm.where(Pet.class)
                 .findAllSorted("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
@@ -140,12 +160,38 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
     }
 
     @Override
+    public Observable<RealmResults<Pet>> getOwnedPets() {
+        return realm.where(Pet.class)
+                .greaterThan("trained", 0)
+                .findAllSorted("animalGroup", Sort.ASCENDING, "animal", Sort.ASCENDING)
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
+    public Observable<RealmResults<Pet>> getOwnedPets(String type, String group) {
+        return realm.where(Pet.class)
+                .equalTo("animalGroup", group)
+                .equalTo("animal", type)
+                .greaterThan("trained", 0)
+                .findAllSorted("animal")
+                .asObservable()
+                .filter(RealmResults::isLoaded);
+    }
+
+    @Override
     public void updateOwnedEquipment(User user) {
 
     }
 
     @Override
     public void changeOwnedCount(String type, String key, int amountToAdd) {
+        this.getItem(type, key).first().subscribe(item -> changeOwnedCount(item, amountToAdd));
+    }
+
+    @Override
+    public void changeOwnedCount(Item item, Integer amountToAdd) {
+        realm.executeTransaction(realm1 -> item.setOwned(item.getOwned()+amountToAdd));
     }
 
     @Override
@@ -167,16 +213,5 @@ public class RealmInventoryLocalRepository extends RealmContentLocalRepository i
         return realm.where(itemClass).equalTo("key", key).findFirstAsync().asObservable()
                 .filter(realmObject -> realmObject.isLoaded())
                 .cast(Item.class);
-    }
-
-    @Override
-    public Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup) {
-        return realm.where(Mount.class)
-                .equalTo("animalGroup", animalGroup)
-                .equalTo("animal", animalType)
-                .equalTo("owned", true)
-                .findAll()
-                .asObservable()
-                .filter(RealmResults::isLoaded);
     }
 }

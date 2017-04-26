@@ -569,4 +569,6 @@
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
+    <string name="boss_health">Boss Health</string>
+    <string name="boss_rage">Boss Rage</string>
 </resources>

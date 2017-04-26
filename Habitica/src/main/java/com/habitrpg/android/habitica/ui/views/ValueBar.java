@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -13,12 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +59,7 @@ public class ValueBar extends FrameLayout {
         descriptionTextView.setText(attributes.getString(R.styleable.ValueBar_description));
     }
 
-    public void setBarWight(float percent) {
+    public void setBarWeight(double percent) {
         setLayoutWeight(barView, percent);
         setLayoutWeight(barEmptySpace, 1.0f - percent);
     }
@@ -86,16 +81,23 @@ public class ValueBar extends FrameLayout {
         descriptionTextView.setTextColor(textColor);
     }
 
-    public static void setLayoutWeight(View view, float weight) {
+    public static void setLayoutWeight(View view, double weight) {
         view.clearAnimation();
         LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams) view.getLayoutParams();
         if (weight == 0.0f || weight == 1.0f) {
-            layout.weight = weight;
+            layout.weight = (float) weight;
             view.setLayoutParams(layout);
         } else if (layout.weight != weight) {
-            DataBindingUtils.LayoutWeightAnimation anim = new DataBindingUtils.LayoutWeightAnimation(view, weight);
+            DataBindingUtils.LayoutWeightAnimation anim = new DataBindingUtils.LayoutWeightAnimation(view, (float) weight);
             anim.setDuration(1250);
             view.startAnimation(anim);
         }
+    }
+
+    public void set(double value, double valueMax) {
+        double percent = Math.min(1, value / valueMax);
+
+        this.setBarWeight(percent);
+        this.setValueText((int) value + "/" + (int) valueMax);
     }
 }

@@ -4,19 +4,17 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.databinding.ValueBarBinding;
 import com.habitrpg.android.habitica.events.BoughtGemsEvent;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
-import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Stats;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.menu.MainDrawerBuilder;
 import com.habitrpg.android.habitica.ui.views.ValueBar;
 
@@ -76,15 +74,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
 
         avatarView.setClickable(true);
         avatarView.setOnClickListener(this);
-    }
-
-    // Layout_Weight don't accepts 0.7/0.3 to have 70% filled instead it shows the 30% , so I had to switch the values
-    // but on a 1.0/0.0 which switches to 0.0/1.0 it shows the blank part full size...
-    private static void setValueBar(ValueBar valueBar, float value, float valueMax) {
-        double percent = Math.min(1, value / valueMax);
-
-        valueBar.setBarWight((float) percent);
-        valueBar.setValueText((int) value + "/" + (int) valueMax);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -152,7 +141,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxHealth = valueMax;
         }
-        setValueBar(hpBar, (float) Math.ceil(value), valueMax);
+        hpBar.set(Math.ceil(value), valueMax);
     }
 
     private void setXpBarData(float value, int valueMax) {
@@ -161,7 +150,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxExp = valueMax;
         }
-        setValueBar(xpBar, (float) Math.floor(value), valueMax);
+        xpBar.set(Math.floor(value), valueMax);
     }
 
     private void setMpBarData(float value, int valueMax) {
@@ -170,7 +159,7 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
         } else {
             cachedMaxMana = valueMax;
         }
-        setValueBar(mpBar, (float) Math.floor(value), valueMax);
+        mpBar.set(Math.floor(value), valueMax);
     }
 
     @Subscribe
@@ -210,6 +199,6 @@ public class AvatarWithBarsViewModel implements View.OnClickListener {
             maxHP = 50;
         }
 
-        setValueBar(valueBar, (float) Math.ceil(stats.getHp().floatValue()), maxHP);
+        valueBar.set((float) Math.ceil(stats.getHp().floatValue()), maxHP);
     }
 }

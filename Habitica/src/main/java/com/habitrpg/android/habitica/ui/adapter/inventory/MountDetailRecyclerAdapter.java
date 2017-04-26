@@ -12,26 +12,32 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.habitrpg.android.habitica.R;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu;
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, MountDetailRecyclerAdapter.MountViewHolder> {
 
     public String itemType;
     public Context context;
 
+    private PublishSubject<String> equipEvents = PublishSubject.create();
+
     public MountDetailRecyclerAdapter(@Nullable OrderedRealmCollection<Mount> data, boolean autoUpdate) {
         super(data, autoUpdate);
+    }
+
+
+    public Observable<String> getEquipEvents() {
+        return equipEvents.asObservable();
     }
 
     @Override
@@ -96,14 +102,7 @@ public class MountDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Mount, 
             }
             BottomSheetMenu menu = new BottomSheetMenu(context);
             menu.addMenuItem(new BottomSheetMenuItem(resources.getString(R.string.use_animal)));
-            menu.setSelectionRunnable(index -> {
-                if (index == 0) {
-                    EquipCommand event = new EquipCommand();
-                    event.type = "mount";
-                    event.key = animal.getKey();
-                    EventBus.getDefault().post(event);
-                }
-            });
+            menu.setSelectionRunnable(index -> equipEvents.onNext(animal.getKey()));
             menu.show();
         }
     }

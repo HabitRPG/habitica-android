@@ -47,7 +47,7 @@ public class Food extends RealmObject implements Item {
 
     @Override
     public void setOwned(int size) {
-
+        owned = size;
     }
 
     @Override

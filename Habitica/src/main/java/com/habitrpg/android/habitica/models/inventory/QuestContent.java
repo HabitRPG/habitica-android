@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.models.inventory;
 
+import android.support.annotation.Nullable;
+
 import java.util.Collection;
 import java.util.HashMap;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -12,15 +15,14 @@ public class QuestContent extends RealmObject implements Item {
     @PrimaryKey
     String key;
     String text, notes;
-    Integer value, owned;
+    int value, owned;
     public String previous;
     public int lvl;
     public boolean canBuy;
     public String category;
     public QuestBoss boss;
 
-    @Ignore
-    HashMap<String, QuestCollect> collect;
+    RealmList<QuestCollect> collect;
 
     public String getPrevious() {
         return previous;
@@ -62,15 +64,11 @@ public class QuestContent extends RealmObject implements Item {
         this.boss = boss;
     }
 
-    public Collection<QuestCollect> getCollectCollection() {
-        return getCollect().values();
-    }
-
-    public HashMap<String, QuestCollect> getCollect() {
+    public RealmList<QuestCollect> getCollect() {
         return collect;
     }
 
-    public void setCollect(HashMap<String, QuestCollect> collect) {
+    public void setCollect(RealmList<QuestCollect> collect) {
         this.collect = collect;
     }
 
@@ -122,5 +120,15 @@ public class QuestContent extends RealmObject implements Item {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Nullable
+    public QuestCollect getCollectWithKey(String key) {
+        for (QuestCollect collect : this.collect) {
+            if (collect.key.equals(key)) {
+                return collect;
+            }
+        }
+        return null;
     }
 }

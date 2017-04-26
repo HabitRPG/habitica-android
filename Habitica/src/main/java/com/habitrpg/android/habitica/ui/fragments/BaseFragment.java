@@ -42,7 +42,7 @@ public abstract class BaseFragment extends DialogFragment {
     protected boolean tutorialCanBeDeferred = true;
     public List<String> tutorialTexts;
 
-    CompositeSubscription compositeSubscription;
+    protected CompositeSubscription compositeSubscription;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

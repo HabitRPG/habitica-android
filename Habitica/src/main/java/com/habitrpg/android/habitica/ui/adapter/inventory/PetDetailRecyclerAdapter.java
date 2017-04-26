@@ -28,17 +28,23 @@ import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetDetailRecyclerAdapter.PetViewHolder> {
 
     public String itemType;
     public Context context;
     private RealmResults<Mount> ownedMounts;
+    private PublishSubject<String> equipEvents = PublishSubject.create();
 
     public PetDetailRecyclerAdapter(@Nullable OrderedRealmCollection<Pet> data, boolean autoUpdate) {
         super(data, autoUpdate);
     }
 
+    public Observable<String> getEquipEvents() {
+        return equipEvents.asObservable();
+    }
 
     @Override
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -122,10 +128,7 @@ public class PetDetailRecyclerAdapter extends RealmRecyclerViewAdapter<Pet, PetD
             }
             menu.setSelectionRunnable(index -> {
                 if (index == 0) {
-                    EquipCommand event = new EquipCommand();
-                    event.type = "pet";
-                    event.key = animal.getKey();
-                    EventBus.getDefault().post(event);
+                    equipEvents.onNext(animal.getKey());
                 } else if (index == 1) {
                     FeedCommand event = new FeedCommand();
                     event.usingPet = animal;

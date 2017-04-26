@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
+import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
@@ -82,6 +83,7 @@ import com.habitrpg.android.habitica.utils.MountMapDeserializer;
 import com.habitrpg.android.habitica.utils.PetListDeserializer;
 import com.habitrpg.android.habitica.utils.PetMapDeserializer;
 import com.habitrpg.android.habitica.utils.PurchasedDeserializer;
+import com.habitrpg.android.habitica.utils.QuestCollectDeserializer;
 import com.habitrpg.android.habitica.utils.QuestListDeserializer;
 import com.habitrpg.android.habitica.utils.RemindersItemSerializer;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
@@ -237,6 +239,8 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         Type mountListType = new TypeToken<RealmList<Mount>>() {
         }.getType();
 
+        Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
+        }.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
         Gson gson = new GsonBuilder()
@@ -280,6 +284,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
                 .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
                 .registerTypeAdapter(User.class, new UserDeserializer())
+                .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

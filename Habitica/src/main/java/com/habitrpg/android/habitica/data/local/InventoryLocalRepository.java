@@ -31,14 +31,20 @@ public interface InventoryLocalRepository extends ContentLocalRepository {
     Observable<RealmResults<Mount>> getMounts();
     Observable<RealmResults<Mount>> getMounts(String type, String group);
 
+    Observable<RealmResults<Mount>> getOwnedMounts();
+    Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup);
+
     Observable<RealmResults<Pet>> getPets();
     Observable<RealmResults<Pet>> getPets(String type, String group);
+
+    Observable<RealmResults<Pet>> getOwnedPets();
+    Observable<RealmResults<Pet>> getOwnedPets(String type, String group);
 
     void updateOwnedEquipment(User user);
 
     void changeOwnedCount(String type, String key, int amountToAdd);
+    void changeOwnedCount(Item item, Integer amountToAdd);
 
     Observable<Item> getItem(String type, String key);
 
-    Observable<RealmResults<Mount>> getOwnedMounts(String animalType, String animalGroup);
 }

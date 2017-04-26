@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
+import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
@@ -35,7 +36,9 @@ import java.util.List;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 import rx.Observable;
+import rx.Subscription;
 import rx.subjects.PublishSubject;
 
 public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder> {
@@ -45,10 +48,11 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
     public Item hatchingItem;
     public Pet feedingPet;
     public ItemRecyclerFragment fragment;
-    public RealmList<Pet> ownedPets;
+    private RealmResults<Pet> ownedPets;
     public Context context;
 
     private PublishSubject<Item> sellItemEvents = PublishSubject.create();
+    private PublishSubject<QuestContent> questInvitationEvents = PublishSubject.create();
 
     public ItemRecyclerAdapter(@Nullable OrderedRealmCollection<Item> data, boolean autoUpdate) {
         super(data, autoUpdate);
@@ -90,13 +94,21 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         notifyItemChanged(itemPos);*/
     }
 
+    public void setOwnedPets(RealmResults<Pet> pets) {
+        ownedPets = pets;
+    }
+
+    public Observable<QuestContent> getQuestInvitationEvents() {
+        return questInvitationEvents.asObservable();
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Item item;
 
         Resources resources;
         ItemItemBinding binding;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
 
             resources = itemView.getResources();
@@ -106,14 +118,14 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
             itemView.setOnClickListener(this);
         }
 
-        public Boolean isPetOwned() {
+        Boolean isPetOwned() {
             String petKey;
             if (item instanceof Egg) {
                 petKey = item.getKey() + "-" + hatchingItem.getKey();
             } else {
                 petKey = hatchingItem.getKey() + "-" + item.getKey();
             }
-            return ownedPets != null;
+            return ownedPets != null && ownedPets.where().equalTo("key", petKey).count() > 0;
         }
 
         public void bind(Item item) {
@@ -185,9 +197,7 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
                         event.usingHatchingPotion = (HatchingPotion) item;
                         EventBus.getDefault().post(event);
                     } else if (item instanceof QuestContent) {
-                        InvitePartyToQuestCommand event = new InvitePartyToQuestCommand();
-                        event.questKey = item.getKey();
-                        EventBus.getDefault().post(event);
+                        questInvitationEvents.onNext((QuestContent) item);
                     } else if (item instanceof SpecialItem) {
                         EventBus.getDefault().post(new OpenMysteryItemEvent());
                     }
