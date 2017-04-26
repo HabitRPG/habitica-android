@@ -23,6 +23,7 @@ public abstract class BaseMainFragment extends BaseFragment {
     @Inject
     public ApiClient apiClient;
     @Inject
+    protected
     UserRepository userRepository;
     @Nullable
     public MainActivity activity;
@@ -124,7 +125,9 @@ public abstract class BaseMainFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        userRepository.close();
+        if (userRepository != null) {
+            userRepository.close();
+        }
         super.onDestroy();
     }
 

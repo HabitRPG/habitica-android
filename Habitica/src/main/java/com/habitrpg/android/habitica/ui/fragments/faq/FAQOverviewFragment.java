@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.FAQRepository;
-import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.ui.adapter.FAQOverviewRecyclerAdapter;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -22,8 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQOverviewFragment extends BaseMainFragment {
-    @Inject
-    UserRepository userRepository;
     @Inject
     FAQRepository faqRepository;
 
@@ -52,7 +49,6 @@ public class FAQOverviewFragment extends BaseMainFragment {
 
     @Override
     public void onDestroy() {
-        userRepository.close();
         faqRepository.close();
         super.onDestroy();
     }
