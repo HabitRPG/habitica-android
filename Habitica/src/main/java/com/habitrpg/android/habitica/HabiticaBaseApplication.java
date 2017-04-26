@@ -18,6 +18,7 @@ import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.amplitude.api.Amplitude;
+import com.amplitude.api.Identify;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.habitrpg.android.habitica.components.AppComponent;
@@ -140,6 +141,8 @@ public abstract class HabiticaBaseApplication extends MultiDexApplication {
         if (!BuildConfig.DEBUG) {
             try {
                 Amplitude.getInstance().initialize(this, getString(R.string.amplitude_app_id)).enableForegroundTracking(this);
+                Identify identify = new Identify().setOnce("androidStore", BuildConfig.STORE);
+                Amplitude.getInstance().identify(identify);
             } catch (Resources.NotFoundException e) {
                 //pass
             }
