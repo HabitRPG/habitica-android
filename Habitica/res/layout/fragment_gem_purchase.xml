@@ -24,7 +24,25 @@
             android:drawableTop="@drawable/ic_heart_large"
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
+        <TextView
+            android:id="@+id/notAvailableTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_billing_gems"
+            android:paddingTop="50dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/notAvailableButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/visit_habitica_website"
+            android:layout_marginBottom="50dp"
+            style="@style/Button.Purple"
+            android:visibility="gone" />
         <LinearLayout
+            android:id="@+id/gemPurchaseOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

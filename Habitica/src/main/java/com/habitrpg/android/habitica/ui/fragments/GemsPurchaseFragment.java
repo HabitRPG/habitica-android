@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.helpers.PurchaseTypes;
@@ -14,6 +15,9 @@ import org.solovyev.android.checkout.ProductTypes;
 import org.solovyev.android.checkout.RequestListener;
 import org.solovyev.android.checkout.Sku;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,10 +25,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseActivity.CheckoutFragment {
 
@@ -36,12 +43,20 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
     GemPurchaseOptionsView gems42View;
     @BindView(R.id.gems_84_view)
     GemPurchaseOptionsView gems84View;
+    @BindView(R.id.gemPurchaseOptions)
+    ViewGroup gemPurchaseOptions;
+
+    @BindView(R.id.notAvailableTextView)
+    TextView billingNotAvailableTextView;
+    @BindView(R.id.notAvailableButton)
+    Button billingNotAvailableButton;
 
     @Inject
     CrashlyticsProxy crashlyticsProxy;
 
     private GemPurchaseActivity listener;
     private BillingRequests billingRequests;
+    private boolean billingNotSupported;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +82,10 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
         gems84View.setOnPurchaseClickListener(v -> purchaseGems(PurchaseTypes.Purchase84Gems));
 
         gems84View.seedsImageButton.setOnClickListener(v -> ((GemPurchaseActivity) this.getActivity()).showSeedsPromo(getString(R.string.seeds_interstitial_gems), "store"));
+
+        if (billingNotSupported) {
+            setBillingNotSupported();
+        }
     }
 
     @Override
@@ -80,7 +99,7 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                     products -> {
                         Inventory.Product gems = products.get(ProductTypes.IN_APP);
                         if (!gems.supported) {
-                            // billing is not supported, user can't purchase anything
+                            setBillingNotSupported();
                             return;
                         }
                         java.util.List<Sku> skus = gems.getSkus();
@@ -88,6 +107,15 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                             updateButtonLabel(sku.id.code, sku.price);
                         }
                     });
+        }
+    }
+
+    private void setBillingNotSupported() {
+        billingNotSupported = true;
+        if (gemPurchaseOptions != null) {
+            gemPurchaseOptions.setVisibility(View.GONE);
+            billingNotAvailableButton.setVisibility(View.VISIBLE);
+            billingNotAvailableTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -136,6 +164,11 @@ public class GemsPurchaseFragment extends BaseFragment implements GemPurchaseAct
                 crashlyticsProxy.fabricLogE("Purchase", "Error", e);
             }
         });
+    }
 
+    @OnClick(R.id.notAvailableButton)
+    public void openWebsite() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.BASE_URL + "/"));
+        getContext().startActivity(intent);
     }
 }

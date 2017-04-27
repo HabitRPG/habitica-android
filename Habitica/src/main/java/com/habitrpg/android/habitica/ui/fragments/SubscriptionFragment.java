@@ -97,6 +97,11 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
     @BindView(R.id.subscribeBenefitsTitle)
     TextView subscribeBenefitsTitle;
 
+    @BindView(R.id.notAvailableTextView)
+    TextView billingNotAvailableTextView;
+    @BindView(R.id.notAvailableButton)
+    Button billingNotAvailableButton;
+
     @Nullable
     Sku selectedSubscriptionSku;
     List<Sku> skus;
@@ -106,6 +111,7 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
 
     private HabitRPGUser user;
     private boolean hasLoadedSubscriptionOptions;
+    private boolean billingNotSupported;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -145,6 +151,10 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
         this.subscribeListitem2Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem2Button, this.subscribeListItem2Description));
         this.subscribeListitem3Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem3Button, this.subscribeListItem3Description));
         this.subscribeListitem4Box.setOnClickListener(view1 -> toggleDescriptionView(this.subscribeListitem4Button, this.subscribeListItem4Description));
+
+        if (billingNotSupported) {
+            setBillingNotSupported();
+        }
     }
 
     private void toggleDescriptionView(ImageView button, TextView descriptionView) {
@@ -173,6 +183,11 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                     products -> {
                         Inventory.Product subscriptions = products.get(ProductTypes.SUBSCRIPTION);
 
+                        if (!subscriptions.supported) {
+                            setBillingNotSupported();
+                            return;
+                        }
+
                         skus = subscriptions.getSkus();
 
                         for (Sku sku : skus) {
@@ -182,6 +197,16 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                         hasLoadedSubscriptionOptions = true;
                         updateSubscriptionInfo();
                     });
+        }
+    }
+
+    private void setBillingNotSupported() {
+        billingNotSupported = true;
+        if (subscriptionOptions != null) {
+            subscriptionOptions.setVisibility(View.GONE);
+            loadingIndicator.setVisibility(View.GONE);
+            billingNotAvailableButton.setVisibility(View.VISIBLE);
+            billingNotAvailableTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -288,6 +313,8 @@ public class SubscriptionFragment extends BaseFragment implements GemPurchaseAct
                 this.subscriptionDetailsView.setPlan(plan);
                 this.subscribeBenefitsTitle.setText(R.string.subscribe_prompt_thanks);
                 this.subscriptionOptions.setVisibility(View.GONE);
+                billingNotAvailableButton.setVisibility(View.GONE);
+                billingNotAvailableTextView.setVisibility(View.GONE);
             } else {
                 if (!hasLoadedSubscriptionOptions) {
                     return;
