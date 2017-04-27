@@ -8,10 +8,6 @@ import com.google.gson.JsonParseException;
 import com.habitrpg.android.habitica.models.inventory.Customization;
 import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
-import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
-import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,22 +15,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by viirus on 14/01/16.
- */
+import io.realm.Realm;
+import io.realm.RealmList;
+
 public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
 
     @Override
     public Purchases deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject object = json.getAsJsonObject();
-        List<Customization> customizations = new ArrayList<Customization>();
+        RealmList<Customization> customizations = new RealmList<>();
         Purchases purchases = new Purchases();
 
         List<Customization> existingCustomizations;
         try {
-
-            // TODO: fix this
-            existingCustomizations = new ArrayList<>();
+            Realm realm = Realm.getDefaultInstance();
+            existingCustomizations = realm.copyFromRealm(realm.where(Customization.class).findAll());
+            realm.close();
         } catch (RuntimeException e) {
             //Tests don't have a database
             existingCustomizations = new ArrayList<>();
@@ -71,9 +67,6 @@ public class PurchasedDeserializer implements JsonDeserializer<Purchases> {
                 }
             }
         }
-
-        // TODO: fix this
-        //TransactionManager.getInstance().addTransaction(new SaveModelTransaction<>(ProcessModelInfo.withModels(customizations)));
 
         purchases.customizations = customizations;
         purchases.setPlan(context.deserialize(object.get("plan"), SubscriptionPlan.class));

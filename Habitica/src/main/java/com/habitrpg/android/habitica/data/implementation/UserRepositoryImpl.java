@@ -6,8 +6,10 @@ import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.TutorialStep;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
-import com.habitrpg.android.habitica.models.tasks.RemindersItem;
+import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.Date;
@@ -137,6 +139,40 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
     @Override
     public Observable<User> changeClass(String selectedClass) {
         return changeClass(selectedClass);
+    }
+
+    @Override
+    public Observable<UnlockResponse> unlockPath(User user, Customization customization) {
+        return apiClient.unlockPath(customization.getPath())
+                .doOnNext(unlockResponse -> {
+                    User copiedUser = localRepository.getUnmanagedCopy(user);
+                    copiedUser.setPreferences(unlockResponse.preferences);
+                    copiedUser.setPurchased(unlockResponse.purchased);
+                    copiedUser.setItems(unlockResponse.items);
+                    copiedUser.setBalance(copiedUser.getBalance()-customization.getPrice()/4.0);
+                    localRepository.saveUser(copiedUser);
+                });
+    }
+
+    @Override
+    public Observable<UnlockResponse> unlockPath(User user, CustomizationSet set) {
+        String path = "";
+        for (Customization customization : set.customizations) {
+            path = path + "," + customization.getPath();
+        }
+        if (path.length() == 0) {
+            return Observable.empty();
+        }
+        path = path.substring(1);
+        return apiClient.unlockPath(path)
+                .doOnNext(unlockResponse -> {
+                    User copiedUser = localRepository.getUnmanagedCopy(user);
+                    copiedUser.setPreferences(unlockResponse.preferences);
+                    copiedUser.setPurchased(unlockResponse.purchased);
+                    copiedUser.setItems(unlockResponse.items);
+                    copiedUser.setBalance(copiedUser.getBalance()-set.price/4.0);
+                    localRepository.saveUser(copiedUser);
+                });
     }
 
     private User mergeUser(User oldUser, User newUser) {

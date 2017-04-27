@@ -59,6 +59,12 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
                     return userRepository.updateUser(user, updatePath, customization.getIdentifier());
                 })
                 .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError()));
+        compositeSubscription.add(adapter.getUnlockCustomizationEvents()
+                .flatMap(customization -> userRepository.unlockPath(user, customization))
+                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
+        compositeSubscription.add(adapter.getUnlockSetEvents()
+                .flatMap(set -> userRepository.unlockPath(user, set))
+                .subscribe(unlockResponse -> {}, ReactiveErrorHandler.handleEmptyError()));
 
         layoutManager = new GridLayoutManager(activity, 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

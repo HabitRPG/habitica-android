@@ -3,7 +3,10 @@ package com.habitrpg.android.habitica.data;
 import android.support.annotation.Nullable;
 
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.inventory.Customization;
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet;
 import com.habitrpg.android.habitica.models.responses.SkillResponse;
+import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.List;
@@ -40,4 +43,7 @@ public interface UserRepository extends BaseRepository {
     Observable<User> disableClasses();
 
     Observable<User> changeClass(String selectedClass);
+
+    Observable<UnlockResponse> unlockPath(User user, Customization customization);
+    Observable<UnlockResponse> unlockPath(User user, CustomizationSet set);
 }

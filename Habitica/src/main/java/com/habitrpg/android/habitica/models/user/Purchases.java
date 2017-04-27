@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.models.inventory.Customization;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -13,8 +14,7 @@ public class Purchases extends RealmObject {
     @PrimaryKey
     private String userId;
 
-    @Ignore
-    public List<Customization> customizations;
+    public RealmList<Customization> customizations;
     User user;
     private SubscriptionPlan plan;
 
@@ -22,7 +22,7 @@ public class Purchases extends RealmObject {
         return customizations;
     }
 
-    public void setCustomizations(List<Customization> customizations) {
+    public void setCustomizations(RealmList<Customization> customizations) {
         this.customizations = customizations;
     }
 
