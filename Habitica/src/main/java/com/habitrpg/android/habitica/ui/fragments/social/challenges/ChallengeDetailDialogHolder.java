@@ -292,7 +292,6 @@ public class ChallengeDetailDialogHolder {
                     if (this.user != null) {
                         challenge.user_id = this.user.getId();
                     }
-                    challenge.async().save();
 
                     if (challengeJoinedAction != null) {
                         challengeJoinedAction.call(challenge);
@@ -313,7 +312,6 @@ public class ChallengeDetailDialogHolder {
                         showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
                                 .subscribe(aVoid -> {
                                     challenge.user_id = null;
-                                    challenge.async().save();
 
                                     if (this.user != null) {
                                         this.user.resetChallengeList();

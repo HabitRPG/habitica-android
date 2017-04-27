@@ -3,16 +3,15 @@ package com.habitrpg.android.habitica.models.social;
 import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.user.User;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by Negue on 16.09.2015.
- */
-public class Group extends BaseModel {
+public class Group extends RealmObject {
 
     @SerializedName("_id")
+    @PrimaryKey
     public String id;
 
     public double balance;
@@ -27,7 +26,7 @@ public class Group extends BaseModel {
 
     public int memberCount;
 
-    public Boolean isMember;
+    public boolean isMember;
 
     public String type;
 
@@ -37,15 +36,13 @@ public class Group extends BaseModel {
 
     public String privacy;
 
-    public List<ChatMessage> chat;
+    public RealmList<ChatMessage> chat;
 
-    public List<User> members;
+    public RealmList<User> members;
 
     public int challengeCount;
 
     public String leaderMessage;
-
-    // TODO Challenges
 
 
     @Override

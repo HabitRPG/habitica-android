@@ -86,12 +86,6 @@ public class FullProfileActivity extends BaseActivity {
     TableLayout equipmentTableLayout;
     @BindView(R.id.costume_table)
     TableLayout costumeTableLayout;
-    @BindView(R.id.avatar_attributes_progress)
-    ProgressBar attributesProgress;
-    @BindView(R.id.avatar_equip_progress)
-    ProgressBar equipmentProgress;
-    @BindView(R.id.avatar_costume_progress)
-    ProgressBar costumeProgress;
     @BindView(R.id.profile_costume_card)
     CardView costumeCard;
     @BindView(R.id.avatar_with_bars)
@@ -172,8 +166,7 @@ public class FullProfileActivity extends BaseActivity {
 
     private void showSendMessageToUserDialog() {
         LayoutInflater factory = LayoutInflater.from(this);
-        final View newMessageView = factory.inflate(
-                R.layout.profile_new_message_dialog, null);
+        final View newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null);
 
         EmojiEditText emojiEditText = (EmojiEditText) newMessageView.findViewById(R.id.edit_new_message_text);
 
@@ -247,7 +240,6 @@ public class FullProfileActivity extends BaseActivity {
 
         // Load the members achievements now
         apiClient.getMemberAchievements(this.userId)
-
                 .subscribe(this::fillAchievements,
                         throwable -> {
                         });
@@ -299,9 +291,15 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private String getFloorValueString(float val, boolean roundDown) {
-        return roundDown
-                ? ((int) Math.floor(val)) + ""
-                : (val == 0.0 ? "0" : val + "");
+        if (roundDown) {
+            return String.valueOf(Math.floor(val));
+        } else {
+            if (val == 0.0) {
+                return "0";
+            } else {
+                return String.valueOf(val);
+            }
+        }
     }
 
     private float getFloorValue(float val, boolean roundDown) {
@@ -311,7 +309,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addEquipmentRow(TableLayout table, String gearKey, String text, String stats) {
-        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, table);
+        TableRow gearRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_gear_tablerow, table, false);
 
         SimpleDraweeView draweeView = (SimpleDraweeView) gearRow.findViewById(R.id.gear_drawee);
 
@@ -335,6 +333,8 @@ public class FullProfileActivity extends BaseActivity {
         } else {
             valueTextView.setVisibility(View.GONE);
         }
+
+        table.addView(gearRow);
 
         return gearRow;
     }
@@ -381,11 +381,7 @@ public class FullProfileActivity extends BaseActivity {
             }
         }
 
-        stopAndHideProgress(equipmentProgress);
-        equipmentTableLayout.setVisibility(View.VISIBLE);
-
-        stopAndHideProgress(attributesProgress);
-        attributesTableLayout.setVisibility(View.VISIBLE);
+        addNormalAddBuffAttributes(user.getStats());
     }
 
     public void gotCostume(List<Equipment> obj) {
@@ -393,8 +389,6 @@ public class FullProfileActivity extends BaseActivity {
         for (Equipment i : obj) {
             addEquipmentRow(costumeTableLayout, i.getKey(), i.getText(), "");
         }
-
-        stopAndHideProgress(costumeProgress);
     }
 
     private void addNormalAddBuffAttributes(Stats stats) {
@@ -408,7 +402,7 @@ public class FullProfileActivity extends BaseActivity {
     }
 
     private TableRow addAttributeRow(String label, float strVal, float intVal, float conVal, float perVal, boolean roundDown, boolean isSummary) {
-        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, attributesTableLayout);
+        TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.profile_attributetablerow, attributesTableLayout, false);
         TextView keyTextView = (TextView) tableRow.findViewById(R.id.tv_attribute_type);
         keyTextView.setText(label);
 
@@ -439,6 +433,8 @@ public class FullProfileActivity extends BaseActivity {
             attributeRows.add(tableRow);
             tableRow.setVisibility(attributeDetailsHidden ? View.GONE : View.VISIBLE);
         }
+
+        attributesTableLayout.addView(tableRow);
 
         return tableRow;
     }

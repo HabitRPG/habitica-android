@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmResults;
 import rx.Observable;
 
 public interface SocialRepository extends BaseRepository {
@@ -53,6 +54,8 @@ public interface SocialRepository extends BaseRepository {
 
     Observable<Challenge> getChallenge(String challengeId);
 
-    Observable<List<Challenge>> getChallenges();
-    Observable<List<Challenge>> getUserChallenges(String id);
+    Observable<RealmResults<Challenge>> getChallenges();
+    Observable<RealmResults<Challenge>> getUserChallenges(String id);
+
+    Observable<Void> markPrivateMessagesRead(User user);
 }

@@ -67,6 +67,7 @@ import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
 import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
+import com.habitrpg.android.habitica.utils.ChatMessageListDeserializer;
 import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
 import com.habitrpg.android.habitica.utils.ContentDeserializer;
 import com.habitrpg.android.habitica.utils.CustomizationDeserializer;
@@ -238,8 +239,9 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
         }.getType();
         Type mountListType = new TypeToken<RealmList<Mount>>() {
         }.getType();
-
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
+        }.getType();
+        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
         }.getType();
 
         //Exclusion strategy needed for DBFlow https://github.com/Raizlabs/DBFlow/issues/121
@@ -285,6 +287,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
                 .registerTypeAdapter(User.class, new UserDeserializer())
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
+                .registerTypeAdapter(chatMessageListType, new ChatMessageListDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);

@@ -50,6 +50,16 @@ public class AvatarCustomizationFragment extends BaseMainFragment {
         unbinder = ButterKnife.bind(this, view);
         adapter = new CustomizationRecyclerViewAdapter();
 
+        compositeSubscription.add(adapter.getSelectCustomizationEvents()
+                .flatMap(customization -> {
+                    String updatePath = "preferences." + customization.getType();
+                    if (customization.getCategory() != null) {
+                        updatePath = updatePath + "." + customization.getCategory();
+                    }
+                    return userRepository.updateUser(user, updatePath, customization.getIdentifier());
+                })
+                .subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError()));
+
         layoutManager = new GridLayoutManager(activity, 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override

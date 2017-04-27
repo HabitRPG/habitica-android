@@ -117,12 +117,7 @@ public class EquipmentOverviewFragment extends BaseMainFragment {
         costumeShieldView.setOnClickListener(v1 -> displayEquipmentDetailList("shield", user.getItems().getGear().getCostume().getShield(), true));
 
         this.costumeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, Object> updateData = new HashMap<>();
-            updateData.put("preferences.costume", isChecked);
-            command.updateData = updateData;
-
-            EventBus.getDefault().post(command);
+            userRepository.updateUser(user, "preferences.costume", isChecked).subscribe(user1 -> {}, ReactiveErrorHandler.handleEmptyError());
         });
 
         if (this.nameMapping == null) {

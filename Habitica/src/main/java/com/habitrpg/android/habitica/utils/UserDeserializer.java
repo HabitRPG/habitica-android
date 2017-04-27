@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.user.Inbox;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.Profile;
+import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 
@@ -73,6 +74,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
         if (obj.has("challenges")) {
             user.setChallenges(context.deserialize(obj.get("challenges"), new TypeToken<List<String>>() {
             }.getType()));
+        }
+        if (obj.has("purchased")) {
+            user.setPurchased(context.deserialize(obj.get("purchased"), Purchases.class));
         }
 
         user.setId(obj.get("_id").getAsString());

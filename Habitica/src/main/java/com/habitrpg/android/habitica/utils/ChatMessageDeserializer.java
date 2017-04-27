@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.social.Backer;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
-import com.habitrpg.android.habitica.models.social.Contributor;
+import com.habitrpg.android.habitica.models.user.ContributorInfo;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -42,10 +42,11 @@ public class ChatMessageDeserializer implements JsonDeserializer<ChatMessage> {
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull()) {
                 if (obj.get("contributor").isJsonObject()) {
-                    message.contributor = context.deserialize(obj.get("contributor"), Contributor.class);
+                    message.contributor = context.deserialize(obj.get("contributor"), ContributorInfo.class);
                 } else {
-                    Contributor contributor = new Contributor();
-                    contributor.text = obj.get("contributor").getAsString();
+                    ContributorInfo contributor = new ContributorInfo();
+                    contributor.setText(obj.get("contributor").getAsString());
+                    contributor.setUserId(message.id);
                     message.contributor = contributor;
                 }
             }

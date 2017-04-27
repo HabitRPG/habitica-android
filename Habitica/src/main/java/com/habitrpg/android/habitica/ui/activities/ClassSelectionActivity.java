@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.components.AppComponent;
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.models.user.Gear;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.Hair;
@@ -39,7 +40,7 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
     AvatarView warriorAvatarView;
 
     @Inject
-    ApiClient apiClient;
+    UserRepository userRepository;
 
     ProgressDialog progressDialog;
 
@@ -102,10 +103,8 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
         warriorAvatarView.setUser(warrior);
 
         if (!isInitialSelection) {
-            apiClient.changeClass()
-                    .subscribe(user -> {
-                        classWasUnset = true;
-                    }, throwable -> {
+            userRepository.changeClass()
+                    .subscribe(user -> classWasUnset = true, throwable -> {
                     });
         }
     }
@@ -203,19 +202,13 @@ public class ClassSelectionActivity extends BaseActivity implements Action1<User
     private void optOutOfClasses() {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiClient.disableClasses()
-
-                .subscribe(this, throwable -> {
-                });
+        userRepository.disableClasses().subscribe(this, throwable -> {});
     }
 
     private void selectClass(String selectedClass) {
         shouldFinish = true;
         this.displayProgressDialog();
-        apiClient.changeClass(selectedClass)
-
-                .subscribe(this, throwable -> {
-                });
+        userRepository.changeClass(selectedClass).subscribe(this, throwable -> {});
     }
 
     private void displayProgressDialog() {

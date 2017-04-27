@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action0;
 
@@ -91,8 +92,6 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
                         } else {
                             challenge.user_id = null;
                         }
-
-                        challenge.async().save();
                     }
 
                     setRefreshingIfVisible(swipeRefreshLayout, false);
@@ -170,7 +169,7 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
     private void fetchLocalChallenges() {
         setRefreshingIfVisible(swipeRefreshLayout, true);
 
-        Observable<List<Challenge>> observable;
+        Observable<RealmResults<Challenge>> observable;
 
         if (viewUserChallengesOnly && user != null) {
             observable = socialRepository.getUserChallenges(user.getId());

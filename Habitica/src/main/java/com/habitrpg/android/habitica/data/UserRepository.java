@@ -34,4 +34,10 @@ public interface UserRepository extends BaseRepository {
     Observable<SkillResponse> useSkill(@Nullable User user, String key, String target, String taskId);
 
     Observable<SkillResponse> useSkill(@Nullable User user, String key, String target);
+
+    Observable<User> changeClass();
+
+    Observable<User> disableClasses();
+
+    Observable<User> changeClass(String selectedClass);
 }

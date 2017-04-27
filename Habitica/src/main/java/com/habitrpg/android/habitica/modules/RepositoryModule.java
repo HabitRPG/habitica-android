@@ -30,7 +30,7 @@ import com.habitrpg.android.habitica.data.local.TagLocalRepository;
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
-import com.habitrpg.android.habitica.data.local.implementation.DbFlowSocialLocalRepository;
+import com.habitrpg.android.habitica.data.local.implementation.RealmSocialLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmCustomizationLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmFAQLocalRepository;
 import com.habitrpg.android.habitica.data.local.implementation.RealmInventoryLocalRepository;
@@ -90,8 +90,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    SocialLocalRepository providesSocialLocalRepository() {
-        return new DbFlowSocialLocalRepository();
+    SocialLocalRepository providesSocialLocalRepository(Realm realm) {
+        return new RealmSocialLocalRepository(realm);
     }
 
     @Provides

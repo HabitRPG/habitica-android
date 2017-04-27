@@ -49,7 +49,6 @@ import com.habitrpg.android.habitica.events.DisplayTutorialEvent;
 import com.habitrpg.android.habitica.events.HabitScoreEvent;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
 import com.habitrpg.android.habitica.events.TaskRemovedEvent;
@@ -57,7 +56,6 @@ import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
-import com.habitrpg.android.habitica.events.commands.EquipCommand;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
 import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
@@ -65,7 +63,6 @@ import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentComm
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
 import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
-import com.habitrpg.android.habitica.events.commands.UpdateUserCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
@@ -305,7 +302,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
             this.checkMaintenance();
         }
 
-        reloadContent(null);
+        inventoryRepository.retrieveContent().subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
 
         if (this.sharedPreferences.getLong("lastReminderSchedule", 0) < new Date().getTime() - 86400000) {
             try {
@@ -643,22 +640,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
     }
 
     @Subscribe
-    public void onEvent(UpdateUserCommand event) {
-        userRepository.updateUser(user, event.updateData)
-                .subscribe(user1 -> {}, throwable -> {
-                });
-    }
-
-    @Subscribe
-    public void onEvent(UnlockPathCommand event) {
-        this.user.setBalance(this.user.getBalance() - event.balanceDiff);
-        this.setUserData(false);
-        apiClient.unlockPath(event.path)
-                .subscribe(unlockResponse -> {}, throwable -> {
-                });
-    }
-
-    @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
         if (drawer != null) {
             drawer.setSelection(event.identifier);
@@ -879,12 +860,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
 
     // endregion
 
-    @Subscribe
-    public void reloadContent(ReloadContentEvent event) {
-        this.inventoryRepository.retrieveContent()
-                .subscribe(contentResult -> {}, ReactiveErrorHandler.handleEmptyError());
-    }
-
     public void displayTaskScoringResponse(TaskScoringResult data) {
         if (user != null) {
             notifyUserUseCase.observable(new NotifyUserUseCase.RequestValues(this, floatingMenuWrapper,
@@ -920,9 +895,7 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                     .setView(customView)
                     .setPositiveButton(R.string.faint_button, (dialog, which) -> {
                         faintDialog = null;
-                        userRepository.revive(user)
-                                .subscribe(user1 -> {}, throwable -> {
-                                });
+                        userRepository.revive(user).subscribe(user1 -> {}, throwable -> {});
                     })
                     .create();
 

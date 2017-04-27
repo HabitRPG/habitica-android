@@ -12,16 +12,13 @@ import android.view.ViewGroup;
 import com.habitrpg.android.habitica.R;
 import com.habitrpg.android.habitica.databinding.ItemItemBinding;
 import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
-import com.habitrpg.android.habitica.events.ReloadContentEvent;
 import com.habitrpg.android.habitica.events.commands.FeedCommand;
 import com.habitrpg.android.habitica.events.commands.HatchingCommand;
-import com.habitrpg.android.habitica.events.commands.InvitePartyToQuestCommand;
 import com.habitrpg.android.habitica.models.inventory.Egg;
 import com.habitrpg.android.habitica.models.inventory.Food;
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion;
 import com.habitrpg.android.habitica.models.inventory.Item;
 import com.habitrpg.android.habitica.models.inventory.Pet;
-import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
 import com.habitrpg.android.habitica.models.inventory.SpecialItem;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
@@ -30,15 +27,10 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
-import java.util.List;
-
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.Subscription;
 import rx.subjects.PublishSubject;
 
 public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecyclerAdapter.ItemViewHolder> {
@@ -131,11 +123,6 @@ public class ItemRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ItemRecy
         public void bind(Item item) {
             this.item = item;
             binding.setTitle(item.getText());
-
-            if (item.getText() == null) {
-                ReloadContentEvent event = new ReloadContentEvent();
-                EventBus.getDefault().post(event);
-            }
 
             binding.setDisabled(false);
             if (item instanceof QuestContent) {

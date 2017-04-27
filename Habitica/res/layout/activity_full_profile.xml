@@ -156,7 +156,7 @@
                     android:id="@+id/profile_blurb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-		    android:textIsSelectable="true"
+                    android:textIsSelectable="true"
                     android:text="Blurb" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -224,13 +224,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/battle_gear"
                     android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/avatar_equip_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-
                 <TableLayout
                     android:id="@+id/equipment_table"
                     android:layout_width="match_parent"
@@ -258,13 +251,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/costume"
                     android:textStyle="bold" />
-
-                <ProgressBar
-                    android:id="@+id/avatar_costume_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
-
                 <TableLayout
                     android:id="@+id/costume_table"
                     android:layout_width="match_parent"
@@ -340,12 +326,6 @@
                     </TableRow>
 
                 </TableLayout>
-
-                <ProgressBar
-                    android:id="@+id/avatar_attributes_progress"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

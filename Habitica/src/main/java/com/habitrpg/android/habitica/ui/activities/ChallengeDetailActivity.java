@@ -280,7 +280,6 @@ public class ChallengeDetailActivity extends BaseActivity {
                     showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
                             .subscribe(aVoid -> {
                                 challenge.user_id = null;
-                                challenge.async().save();
 
                                 user.resetChallengeList();
                                 finish();

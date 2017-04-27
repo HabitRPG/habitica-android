@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
@@ -19,8 +20,7 @@ public class Inbox extends RealmObject {
 
     User user;
     private Boolean optOut;
-    @Ignore
-    private Map<String, ChatMessage> messages;
+    private RealmList<ChatMessage> messages;
     @Ignore
     private List<Object> blocks = new ArrayList<>();
     private Integer newMessages;
@@ -42,14 +42,14 @@ public class Inbox extends RealmObject {
     /**
      * @return The messages
      */
-    public Map<String, ChatMessage> getMessages() {
+    public RealmList<ChatMessage> getMessages() {
         return messages;
     }
 
     /**
      * @param messages The messages
      */
-    public void setMessages(Map<String, ChatMessage> messages) {
+    public void setMessages(RealmList<ChatMessage> messages) {
         this.messages = messages;
     }
 

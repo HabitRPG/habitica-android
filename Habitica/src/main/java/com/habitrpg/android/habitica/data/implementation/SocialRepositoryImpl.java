@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -148,12 +149,18 @@ public class SocialRepositoryImpl extends BaseRepositoryImpl<SocialLocalReposito
     }
 
     @Override
-    public Observable<List<Challenge>> getChallenges() {
+    public Observable<RealmResults<Challenge>> getChallenges() {
         return localRepository.getChallenges();
     }
 
     @Override
-    public Observable<List<Challenge>> getUserChallenges(String userId) {
+    public Observable<RealmResults<Challenge>> getUserChallenges(String userId) {
         return localRepository.getUserChallenges(userId);
+    }
+
+    @Override
+    public Observable<Void> markPrivateMessagesRead(User user) {
+        return apiClient.markPrivateMessagesRead()
+                .doOnNext(aVoid -> localRepository.executeTransaction(realm -> user.getInbox().setNewMessages(0)));
     }
 }

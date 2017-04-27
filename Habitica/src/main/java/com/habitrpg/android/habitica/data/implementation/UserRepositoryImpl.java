@@ -124,6 +124,21 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         });
     }
 
+    @Override
+    public Observable<User> changeClass() {
+        return apiClient.changeClass();
+    }
+
+    @Override
+    public Observable<User> disableClasses() {
+        return apiClient.disableClasses();
+    }
+
+    @Override
+    public Observable<User> changeClass(String selectedClass) {
+        return changeClass(selectedClass);
+    }
+
     private User mergeUser(User oldUser, User newUser) {
         User copiedUser = localRepository.getUnmanagedCopy(oldUser);
         if (newUser.getItems() != null) {

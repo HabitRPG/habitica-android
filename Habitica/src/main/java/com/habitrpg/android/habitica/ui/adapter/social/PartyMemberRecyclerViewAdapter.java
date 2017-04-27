@@ -91,8 +91,6 @@ public class PartyMemberRecyclerViewAdapter extends RecyclerView.Adapter<PartyMe
         }
 
         public void bind(User user) {
-            android.content.Context ctx = itemView.getContext();
-
             avatarView.setUser(user);
 
             AvatarWithBarsViewModel.setHpBarData(hpBar, user.getStats());

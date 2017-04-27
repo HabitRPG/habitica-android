@@ -50,6 +50,7 @@ public class User extends RealmObject {
 
     @Ignore
     private List<PushDevice> pushDevices;
+
     private Purchases purchased;
 
     @Ignore

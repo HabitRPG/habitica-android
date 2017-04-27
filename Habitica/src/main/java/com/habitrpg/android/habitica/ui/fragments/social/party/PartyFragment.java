@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.data.SocialRepository;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
 import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.social.UserParty;
+import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity;
 import com.habitrpg.android.habitica.ui.activities.PartyInviteActivity;
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment;
@@ -51,6 +52,7 @@ public class PartyFragment extends BaseMainFragment {
     private GroupInformationFragment groupInformationFragment;
     private ChatListFragment chatListFragment;
     private FragmentPagerAdapter viewPagerAdapter;
+    private List<User> members;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +79,7 @@ public class PartyFragment extends BaseMainFragment {
 
                         socialRepository.getGroupMembers(group.id, true)
                                 .subscribe(members -> {
-                                            PartyFragment.this.group.members = members;
+                                            PartyFragment.this.members = members;
                                             updateGroupUI();
                                         },
                                         throwable -> {

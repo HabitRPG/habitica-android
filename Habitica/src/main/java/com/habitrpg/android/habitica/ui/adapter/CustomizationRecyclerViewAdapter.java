@@ -31,6 +31,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -39,6 +41,8 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public double gemBalance;
     private List<Object> customizationList;
     private String activeCustomization;
+
+    private PublishSubject<Customization> selectCustomizationEvents = PublishSubject.create();
 
     public void updateOwnership(List<String> ownedCustomizations) {
         int position = 0;
@@ -138,6 +142,10 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         this.notifyDataSetChanged();
     }
 
+    public Observable<Customization> getSelectCustomizationEvents() {
+        return selectCustomizationEvents.asObservable();
+    }
+
     class CustomizationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.card_view)
@@ -221,16 +229,7 @@ public class CustomizationRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 return;
             }
 
-            UpdateUserCommand command = new UpdateUserCommand();
-            Map<String, Object> updateData = new HashMap<>();
-            String updatePath = "preferences." + customization.getType();
-            if (customization.getCategory() != null) {
-                updatePath = updatePath + "." + customization.getCategory();
-            }
-            updateData.put(updatePath, customization.getIdentifier());
-            command.updateData = updateData;
-
-            EventBus.getDefault().post(command);
+            selectCustomizationEvents.onNext(customization);
         }
     }
 
