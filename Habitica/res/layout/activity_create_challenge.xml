@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill_horizontal"
-                    android:hint="New challenge title"
+                    android:hint="@string/new_challenge_title"
                     android:id="@+id/create_challenge_title"
                     android:textColor="@color/white"
                     android:textColorHighlight="@color/brand_500"
@@ -56,7 +56,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description"
+                    android:hint="@string/description_optional"
                     android:inputType="textMultiLine"
 
                     android:id="@+id/create_challenge_description"
