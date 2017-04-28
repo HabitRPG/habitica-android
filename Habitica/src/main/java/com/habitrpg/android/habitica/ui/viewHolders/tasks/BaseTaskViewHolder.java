@@ -63,7 +63,6 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
     @BindView(R.id.approvalRequiredTextField)
     TextView approvalRequiredTextView;
 
-    boolean disabled;
 
     public BaseTaskViewHolder(View itemView) {
         this(itemView, true);
@@ -187,7 +186,7 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
 
     @Override
     public void onClick(View v) {
-        if (v != itemView || isDisabled()) {
+        if (v != itemView || this.openTaskDisabled) {
             return;
         }
 
@@ -201,13 +200,11 @@ public abstract class BaseTaskViewHolder extends RecyclerView.ViewHolder impleme
         return true;
     }
 
-    public boolean isDisabled() {
-        return disabled;
-    }
+    protected boolean openTaskDisabled, taskActionsDisabled;
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setDisabled(boolean openTaskDisabled, boolean taskActionsDisabled) {
+        this.openTaskDisabled = openTaskDisabled;
+        this.taskActionsDisabled = taskActionsDisabled;
 
-        itemView.setEnabled(!disabled);
     }
 }

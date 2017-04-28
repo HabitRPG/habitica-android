@@ -200,6 +200,13 @@ public interface ApiClient {
 
     Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body);
 
+    Observable<Challenge> createChallenge(Challenge challenge);
+
+    Observable<Task> createChallengeTask(String challengeId, Task task);
+    Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks);
+    Observable<Challenge> updateChallenge(Challenge challenge);
+    Observable<Void> deleteChallenge(String challengeId);
+
     //DEBUG: These calls only work on a local development server
 
     Observable<Void> debugAddTenGems();

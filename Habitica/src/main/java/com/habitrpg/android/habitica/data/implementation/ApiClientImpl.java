@@ -65,7 +65,7 @@ import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
-import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
+import com.habitrpg.android.habitica.utils.ChallengeSerializer;
 import com.habitrpg.android.habitica.utils.ChatMessageDeserializer;
 import com.habitrpg.android.habitica.utils.ChecklistItemSerializer;
 import com.habitrpg.android.habitica.utils.ContentDeserializer;
@@ -267,7 +267,7 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
                 .registerTypeAdapter(Task.class, new TaskSerializer())
                 .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
-                .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
+                .registerTypeAdapter(Challenge.class, new ChallengeSerializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .create();
         return GsonConverterFactory.create(gson);
@@ -824,6 +824,32 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
     @Override
     public Observable<Void> leaveChallenge(String challengeId, LeaveChallengeBody body) {
         return apiService.leaveChallenge(challengeId, body).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Challenge> createChallenge(Challenge challenge) {
+        return apiService.createChallenge(challenge).compose(configureApiCallObserver());
+    }
+
+
+    @Override
+    public Observable<Task> createChallengeTask(String challengeId, Task task) {
+        return apiService.createChallengeTask(challengeId, task).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<List<Task>> createChallengeTasks(String challengeId, List<Task> tasks) {
+        return apiService.createChallengeTasks(challengeId, tasks).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Challenge> updateChallenge(Challenge challenge) {
+        return apiService.updateChallenge(challenge.id, challenge).compose(configureApiCallObserver());
+    }
+
+    @Override
+    public Observable<Void> deleteChallenge(String challengeId) {
+        return apiService.deleteChallenge(challengeId).compose(configureApiCallObserver());
     }
 
     @Override

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:textAllCaps="false"
+        style="@style/Subheader2"
+        android:textColor="@color/brand_400"
+        android:background="#f9f9f9"
+        android:id="@+id/btn_add_task"
+        tools:text="Add habit">
+
+    </Button>
+
+</LinearLayout>

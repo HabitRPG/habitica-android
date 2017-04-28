@@ -86,7 +86,14 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     public static final String TASK_ID_KEY = "taskId";
     public static final String USER_ID_KEY = "userId";
     public static final String TASK_TYPE_KEY = "type";
+    public static final String SHOW_TAG_SELECTION = "show_tag_selection";
+    public static final String SHOW_CHECKLIST = "show_checklist";
+    public static final String PARCELABLE_TASK = "parcelable_task";
     public static final String ALLOCATION_MODE_KEY = "allocationModeKey";
+    public static final String SAVE_TO_DB = "saveToDb";
+
+    // in order to disable the event handler in MainActivity
+    public static final String SET_IGNORE_FLAG = "ignoreFlag";
 
     @BindView(R.id.task_value_edittext)
     EditText taskValue;
@@ -200,6 +207,9 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
     private String taskType;
     private String taskId;
     private String userId;
+    private boolean showTagSelection;
+    private boolean showChecklist;
+    private boolean setIgnoreFlag;
     private Task task;
     private String allocationMode;
     private List<CheckBox> weekdayCheckboxes = new ArrayList<>();
@@ -212,6 +222,7 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
     private RemindersManager remindersManager;
     private FirstDayOfTheWeekHelper firstDayOfTheWeekHelper;
+    private boolean saveToDb;
 
     @Override
     protected int getLayoutResId() {
@@ -224,10 +235,23 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+
         taskType = bundle.getString(TASK_TYPE_KEY);
         taskId = bundle.getString(TASK_ID_KEY);
         userId = bundle.getString(USER_ID_KEY);
+        showTagSelection = bundle.getBoolean(SHOW_TAG_SELECTION, true);
+        showChecklist = bundle.getBoolean(SHOW_CHECKLIST, true);
         allocationMode = bundle.getString(ALLOCATION_MODE_KEY);
+        saveToDb = bundle.getBoolean(SAVE_TO_DB, true);
+        setIgnoreFlag = bundle.getBoolean(SET_IGNORE_FLAG, false);
+
+        tagsWrapper.setVisibility(showTagSelection ? View.VISIBLE : View.GONE);
+
+        if(bundle.containsKey(PARCELABLE_TASK)){
+            task = bundle.getParcelable(PARCELABLE_TASK);
+            taskType = task.type;
+        }
+
         tagCheckBoxList = new ArrayList<>();
         selectedTags = new ArrayList<>();
         if (taskType == null) {
@@ -251,7 +275,13 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
                     finish();
                     dismissKeyboard();
 
-                    EventBus.getDefault().post(new DeleteTaskCommand(taskId));
+                    String taskToDelete = this.taskId;
+
+                    if(taskToDelete == null && task != null){
+                        taskToDelete = task.getId();
+                    }
+
+                    EventBus.getDefault().post(new DeleteTaskCommand(taskToDelete, setIgnoreFlag));
                 }).setNegativeButton(getString(R.string.no), (dialog, which) -> {
                     dialog.dismiss();
                 }).show());
@@ -320,6 +350,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             attributeWrapper.setVisibility(View.GONE);
         }
 
+        if(!showChecklist){
+            mainWrapper.removeView(checklistWrapper);
+        }
+
         if (taskId != null) {
             Task task = new Select().from(Task.class).byIds(taskId).querySingle();
             this.task = task;
@@ -328,6 +362,11 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
 
             setTitle(task);
+
+            btnDelete.setEnabled(true);
+        } else if(task != null) {
+            populate(task);
+            taskText.requestFocus();
 
             btnDelete.setEnabled(true);
         } else {
@@ -349,7 +388,10 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
         // If it's a to-do, change the emojiToggle2 to the actual emojiToggle2 (prevents NPEs when not a to-do task)
         if (isTodo) {
             emojiToggle2 = (ImageButton) findViewById(R.id.emoji_toggle_btn2);
-        } else {
+        }
+
+        // if showChecklist is inactive the wrapper is wrapper, so the reference can't be found
+        if(emojiToggle2 == null) {
             emojiToggle2 = emojiToggle0;
         }
 
@@ -870,12 +912,16 @@ public class TaskFormActivity extends BaseActivity implements AdapterView.OnItem
             }
             //save
             this.task.setTags(taskTags);
-            this.task.save();
+            if(saveToDb){
+                this.task.save();
+            }
+
             //send back to other elements.
             TaskSaveEvent event = new TaskSaveEvent();
             if (TaskFormActivity.this.task.getId() == null) {
                 event.created = true;
             }
+            event.ignoreEvent = setIgnoreFlag;
 
             event.task = TaskFormActivity.this.task;
             EventBus.getDefault().post(event);

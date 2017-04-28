@@ -571,4 +571,18 @@
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
+    <string name="save">Save</string>
+    <string name="location">Location</string>
+    <string name="gem_reward">Gem reward</string>
+    <string name="tasks">Tasks</string>
+    <string name="create_challenge">Create challenge</string>
+    <string name="edit_challenge">Edit Challenge</string>
+    <string name="challenge_create_error_tavern_one_gem">You need at least 1 gem to create a challenge in Tavern.</string>
+    <string name="challenge_create_error_enough_gems">You don\'t have enough gems to create a challenge.</string>
+    <string name="identify_your_challenge_with_a_tag">Identify your challenge with a tag ..</string>
+    <string name="challenge_create_error_tag">You need a tag to create this Challenge.</string>
+    <string name="challenge_create_error_no_tasks">You need to add at least one task to create this Challenge.</string>
+    <string name="challenge_create_error_title">You need a title to create this Challenge.</string>
+    <string name="description_optional">Description (optional)</string>
+    <string name="new_challenge_title">New challenge title</string>
 </resources>

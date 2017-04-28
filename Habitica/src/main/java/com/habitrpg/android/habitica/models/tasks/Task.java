@@ -20,6 +20,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.greenrobot.eventbus.EventBus;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  */
 @ModelContainer
 @Table(databaseName = HabitDatabase.NAME)
-public class Task extends BaseModel {
+public class Task extends BaseModel implements Parcelable {
     public static final String TYPE_HABIT = "habit";
     public static final String TYPE_TODO = "todo";
     public static final String TYPE_DAILY = "daily";
@@ -686,4 +688,83 @@ public class Task extends BaseModel {
             this.parsedNotes = this.getNotes();
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.user_id);
+        dest.writeValue(this.priority);
+        dest.writeString(this.text);
+        dest.writeString(this.notes);
+        dest.writeString(this.attribute);
+        dest.writeString(this.type);
+        dest.writeDouble(this.value);
+        dest.writeList(this.tags);
+        dest.writeLong(this.dateCreated != null ? this.dateCreated.getTime() : -1);
+        dest.writeInt(this.position);
+        dest.writeValue(this.up);
+        dest.writeValue(this.down);
+        dest.writeByte(this.completed ? (byte) 1 : (byte) 0);
+        dest.writeList(this.checklist);
+        dest.writeList(this.reminders);
+        dest.writeString(this.frequency);
+        dest.writeValue(this.everyX);
+        dest.writeValue(this.streak);
+        dest.writeLong(this.startDate != null ? this.startDate.getTime() : -1);
+        dest.writeParcelable(this.repeat, flags);
+        dest.writeLong(this.duedate != null ? this.duedate.getTime() : -1);
+        dest.writeString(this.specialTag);
+        dest.writeString(this.id);
+    }
+
+    public Task() {
+    }
+
+    protected Task(Parcel in) {
+        this.user_id = in.readString();
+        this.priority = (Float) in.readValue(Float.class.getClassLoader());
+        this.text = in.readString();
+        this.notes = in.readString();
+        this.attribute = in.readString();
+        this.type = in.readString();
+        this.value = in.readDouble();
+        this.tags = new ArrayList<TaskTag>();
+        in.readList(this.tags, TaskTag.class.getClassLoader());
+        long tmpDateCreated = in.readLong();
+        this.dateCreated = tmpDateCreated == -1 ? null : new Date(tmpDateCreated);
+        this.position = in.readInt();
+        this.up = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.down = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.completed = in.readByte() != 0;
+        this.checklist = new ArrayList<ChecklistItem>();
+        in.readList(this.checklist, ChecklistItem.class.getClassLoader());
+        this.reminders = new ArrayList<RemindersItem>();
+        in.readList(this.reminders, RemindersItem.class.getClassLoader());
+        this.frequency = in.readString();
+        this.everyX = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.streak = (Integer) in.readValue(Integer.class.getClassLoader());
+        long tmpStartDate = in.readLong();
+        this.startDate = tmpStartDate == -1 ? null : new Date(tmpStartDate);
+        this.repeat = in.readParcelable(Days.class.getClassLoader());
+        long tmpDuedate = in.readLong();
+        this.duedate = tmpDuedate == -1 ? null : new Date(tmpDuedate);
+        this.specialTag = in.readString();
+        this.id = in.readString();
+    }
+
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel source) {
+            return new Task(source);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 }

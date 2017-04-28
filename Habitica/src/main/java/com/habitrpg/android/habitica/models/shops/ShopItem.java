@@ -134,7 +134,7 @@ public class ShopItem {
         if (getCurrency().equals("gold")) {
             return getValue() <= user.getStats().getGp();
         } else if (getCurrency().equals("gems")) {
-            return getValue() <= (user.getBalance() * 4);
+            return getValue() <= (user.getGemCount());
         } else {
             return false;
         }
