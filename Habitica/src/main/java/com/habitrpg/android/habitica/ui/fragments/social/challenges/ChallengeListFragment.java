@@ -87,10 +87,10 @@ public class ChallengeListFragment extends BaseMainFragment implements SwipeRefr
 
                     for (Challenge challenge : challenges) {
                         if (userChallengesHash.contains(challenge.id) && challenge.name != null && !challenge.name.isEmpty()) {
-                            challenge.user_id = this.user.getId();
+                            challenge.userId = this.user.getId();
                             userChallenges.add(challenge);
                         } else {
-                            challenge.user_id = null;
+                            challenge.userId = null;
                         }
                     }
 

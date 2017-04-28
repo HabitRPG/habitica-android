@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation;
 
+import android.support.annotation.Nullable;
+
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository;
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
@@ -35,7 +37,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     @Override
-    public void saveTasks(String userId, TasksOrder tasksOrder, TaskList tasks) {
+    public void saveTasks(@Nullable String userId, TasksOrder tasksOrder, TaskList tasks) {
         realm.executeTransactionAsync(realm1 -> {
 
             List<Task> sortedTasks = new ArrayList<>();
@@ -44,7 +46,9 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
             sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
             sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
 
-            removeOldTasks(userId, sortedTasks);
+            if (userId != null) {
+                removeOldTasks(realm1, userId, sortedTasks);
+            }
 
             realm1.insertOrUpdate(sortedTasks);
         });
@@ -70,8 +74,8 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         realm.executeTransaction(realm1 -> realm1.insertOrUpdate(task));
     }
 
-    private void removeOldTasks(String userID, List<Task> onlineTaskList) {
-        RealmResults<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll();
+    private void removeOldTasks(Realm realm1, String userID, List<Task> onlineTaskList) {
+        RealmResults<Task> localTasks = realm1.where(Task.class).equalTo("userId", userID).findAll();
         for (Task localTask : localTasks) {
             if (!onlineTaskList.contains(localTask)) {
                 for (ChecklistItem item : localTask.checklist) {

@@ -19,7 +19,7 @@ import rx.Observable;
 public interface TaskRepository extends BaseRepository  {
     Observable<RealmResults<Task>> getTasks(String taskType, String userID);
     Observable<RealmResults<Task>> getTasks(String userId);
-    void saveTasks(TasksOrder order, TaskList tasks);
+    void saveTasks(String userId, TasksOrder order, TaskList tasks);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 

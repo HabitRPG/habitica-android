@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.social;
 
+import com.google.gson.annotations.SerializedName;
 import com.habitrpg.android.habitica.models.user.User;
 
 import java.util.HashMap;
@@ -26,7 +27,8 @@ public class Challenge extends RealmObject {
     public int prize;
     public boolean official;
     public int memberCount;
-    public String user_id;
+    @SerializedName("user_id")
+    public String userId;
     public String todoList;
     public String habitList;
     public String dailyList;

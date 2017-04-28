@@ -85,8 +85,8 @@ public class RepositoryModule {
     }
 
     @Provides
-    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient) {
-        return new UserRepositoryImpl(localRepository, apiClient);
+    UserRepository providesUserRepository(UserLocalRepository localRepository, ApiClient apiClient, TaskRepository taskRepository) {
+        return new UserRepositoryImpl(localRepository, apiClient, taskRepository);
     }
 
     @Provides

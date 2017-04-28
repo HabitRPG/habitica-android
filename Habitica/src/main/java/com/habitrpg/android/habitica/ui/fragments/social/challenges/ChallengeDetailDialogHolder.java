@@ -107,7 +107,7 @@ public class ChallengeDetailDialogHolder {
     }
 
     private void changeViewsByChallenge(Challenge challenge) {
-        setJoined(challenge.user_id != null && !challenge.user_id.isEmpty());
+        setJoined(challenge.userId != null && !challenge.userId.isEmpty());
 
         challengeName.setText(EmojiParser.parseEmojis(challenge.name));
         challengeDescription.setText(MarkdownParser.parseMarkdown(challenge.description));
@@ -290,7 +290,7 @@ public class ChallengeDetailDialogHolder {
         this.apiClient.joinChallenge(challenge.id)
                 .subscribe(challenge -> {
                     if (this.user != null) {
-                        challenge.user_id = this.user.getId();
+                        challenge.userId = this.user.getId();
                     }
 
                     if (challengeJoinedAction != null) {
@@ -311,7 +311,7 @@ public class ChallengeDetailDialogHolder {
 
                         showRemoveTasksDialog(keepTasks -> this.apiClient.leaveChallenge(challenge.id, new LeaveChallengeBody(keepTasks))
                                 .subscribe(aVoid -> {
-                                    challenge.user_id = null;
+                                    challenge.userId = null;
 
                                     if (this.user != null) {
                                         this.user.resetChallengeList();

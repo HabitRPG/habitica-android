@@ -177,7 +177,7 @@ public class ChallengesListViewAdapter extends RecyclerView.Adapter<ChallengesLi
             challengeDescription.setText(challenge.groupName);
 
             officialChallengeLayout.setVisibility(challenge.official ? View.VISIBLE : View.GONE);
-            boolean userIdExists = challenge.user_id != null && !challenge.user_id.isEmpty();
+            boolean userIdExists = challenge.userId != null && !challenge.userId.isEmpty();
 
             if (viewUserChallengesOnly) {
                 leaderParticipantLayout.setVisibility(View.GONE);

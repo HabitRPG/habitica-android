@@ -70,6 +70,9 @@ public class RealmUserLocalRepository extends RealmBaseLocalRepository implement
                 ownedItems.add("spookySparkles");
             }
         }
+        if (ownedItems.size() == 0) {
+            return Observable.empty();
+        }
         return realm.where(Skill.class)
                 .in("key", ownedItems.toArray(new String[0]))
                 .findAll()

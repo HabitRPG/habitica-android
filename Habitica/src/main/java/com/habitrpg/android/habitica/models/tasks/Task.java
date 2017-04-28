@@ -541,4 +541,13 @@ public class Task extends RealmObject {
             this.parsedNotes = this.getNotes();
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (Task.class.isAssignableFrom(obj.getClass())) {
+            Task otherTask = (Task) obj;
+            return this.id.equals(otherTask.getId());
+        }
+        return super.equals(obj);
+    }
 }
