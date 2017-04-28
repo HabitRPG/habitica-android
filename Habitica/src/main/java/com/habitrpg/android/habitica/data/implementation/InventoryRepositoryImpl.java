@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.Outfit;
@@ -205,5 +206,31 @@ public class InventoryRepositoryImpl extends ContentRepositoryImpl<InventoryLoca
     public Observable<Quest> inviteToQuest(QuestContent quest) {
         return apiClient.inviteToQuest("party", quest.getKey())
                 .doOnNext(quest1 -> localRepository.changeOwnedCount(quest, -1));
+    }
+
+    @Override
+    public Observable<BuyResponse> buyItem(User user, String id) {
+        return apiClient.buyItem(id)
+                .doOnNext(buyResponse -> localRepository.executeTransaction(realm -> {
+                    buyResponse.items.setUserId(user.getId());
+                    if (buyResponse.items != null) {
+                        user.setItems(buyResponse.items);
+                    }
+                    if (buyResponse.hp != null) {
+                        user.getStats().setHp(buyResponse.hp);
+                    }
+                    if (buyResponse.exp != null) {
+                        user.getStats().setExp(buyResponse.exp);
+                    }
+                    if (buyResponse.mp != null) {
+                        user.getStats().setMp(buyResponse.mp);
+                    }
+                    if (buyResponse.gp != null) {
+                        user.getStats().setGp(buyResponse.gp);
+                    }
+                    if (buyResponse.lvl != null) {
+                        user.getStats().setLvl(buyResponse.lvl);
+                    }
+                }));
     }
 }

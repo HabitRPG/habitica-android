@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.invitations.Invitations;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.UserParty;
 import com.habitrpg.android.habitica.models.tasks.Task;
+import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 import com.habitrpg.android.habitica.ui.AvatarView;
 
@@ -29,6 +30,8 @@ public class User extends RealmObject {
 
     @Ignore
     List<Challenge> challengeList;
+    @Ignore
+    public TaskList tasks;
 
     @PrimaryKey
     @SerializedName("_id")

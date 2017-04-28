@@ -47,6 +47,11 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     }
 
     @Override
+    public void saveTasks(TasksOrder order, TaskList tasks) {
+        localRepository.saveTasks(order, tasks);
+    }
+
+    @Override
     public Observable<TaskList> refreshTasks(TasksOrder tasksOrder) {
         return this.apiClient.getTasks()
                 .doOnNext(res -> this.localRepository.saveTasks(tasksOrder, res));
@@ -162,26 +167,6 @@ public class TaskRepositoryImpl extends BaseRepositoryImpl<TaskLocalRepository> 
     @Override
     public Observable<List<Task>> createTasks(List<Task> newTasks) {
         return apiClient.createTasks(newTasks);
-    }
-
-    @Override
-    public void removeOldTasks(String userID, List<Task> onlineTaskList) {
-        localRepository.removeOldTasks(userID, onlineTaskList);
-    }
-
-    @Override
-    public void removeOldChecklists(List<ChecklistItem> onlineChecklistItems) {
-        localRepository.removeOldChecklists(onlineChecklistItems);
-    }
-
-    @Override
-    public void removeOldTaskTags(List<TaskTag> onlineTaskTags) {
-        localRepository.removeOldTaskTags(onlineTaskTags);
-    }
-
-    @Override
-    public void removeOldReminders(List<RemindersItem> onlineReminders) {
-        localRepository.removeOldReminders(onlineReminders);
     }
 
     @Override

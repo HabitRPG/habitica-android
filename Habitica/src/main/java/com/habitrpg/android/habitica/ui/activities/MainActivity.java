@@ -51,8 +51,6 @@ import com.habitrpg.android.habitica.events.OpenMysteryItemEvent;
 import com.habitrpg.android.habitica.events.OpenedMysteryItemEvent;
 import com.habitrpg.android.habitica.events.SelectClassEvent;
 import com.habitrpg.android.habitica.events.ShareEvent;
-import com.habitrpg.android.habitica.events.TaskRemovedEvent;
-import com.habitrpg.android.habitica.events.ToggledInnStateEvent;
 import com.habitrpg.android.habitica.events.commands.BuyGemItemCommand;
 import com.habitrpg.android.habitica.events.commands.BuyRewardCommand;
 import com.habitrpg.android.habitica.events.commands.ChecklistCheckedCommand;
@@ -62,7 +60,6 @@ import com.habitrpg.android.habitica.events.commands.OpenFullProfileCommand;
 import com.habitrpg.android.habitica.events.commands.OpenGemPurchaseFragmentCommand;
 import com.habitrpg.android.habitica.events.commands.OpenMenuItemCommand;
 import com.habitrpg.android.habitica.events.commands.TaskCheckedCommand;
-import com.habitrpg.android.habitica.events.commands.UnlockPathCommand;
 import com.habitrpg.android.habitica.helpers.AmplitudeManager;
 import com.habitrpg.android.habitica.helpers.LanguageHelper;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
@@ -85,7 +82,6 @@ import com.habitrpg.android.habitica.models.shops.Shop;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.user.Preferences;
 import com.habitrpg.android.habitica.models.user.SpecialItems;
-import com.habitrpg.android.habitica.models.user.Stats;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.proxy.ifce.CrashlyticsProxy;
 import com.habitrpg.android.habitica.ui.AvatarView;
@@ -113,28 +109,23 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import rx.Observable;
-import rx.functions.Action1;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.habitrpg.android.habitica.interactors.NotifyUserUseCase.MIN_LEVEL_FOR_SKILLS;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.SnackbarDisplayType;
 import static com.habitrpg.android.habitica.ui.helpers.UiUtils.showSnackbar;
 
-public class MainActivity extends BaseActivity implements Action1<Throwable>, TutorialView.OnTutorialReaction {
+public class MainActivity extends BaseActivity implements TutorialView.OnTutorialReaction {
 
     public static final int SELECT_CLASS_RESULT = 11;
     public static final int GEM_PURCHASE_REQUEST = 111;
@@ -322,22 +313,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                 drawer.setSelectionAtPosition(this.sharedPreferences.getInt("lastActivePosition", 1));
             }
         }
-
-        if (isAlwaysFinishActivitiesOptionEnabled()) {
-            if (!sharedPreferences.getBoolean("showedFinishActivitiesWarning", false)) {
-                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(getString(R.string.warning))
-                        .setMessage(R.string.dont_keep_activities_warning)
-                        .setNeutralButton(R.string.close, (warningDialog, which) -> warningDialog.dismiss())
-                        .setPositiveButton(R.string.open_settings, (hatchingDialog, which) -> {
-                            showDeveloperOptionsScreen();
-                            hatchingDialog.dismiss();
-                        })
-                        .create();
-                dialog.show();
-                sharedPreferences.edit().putBoolean("showedFinishActivitiesWarning", true).apply();
-            }
-        }
     }
 
     @Override
@@ -405,15 +380,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                 apiClient.setLanguageCode(preferences.getLanguage());
                 soundManager.setSoundTheme(preferences.getSound());
             }
-
-            Calendar calendar = new GregorianCalendar();
-            TimeZone timeZone = calendar.getTimeZone();
-            long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
-            if (offset != user.getPreferences().getTimezoneOffset()) {
-                userRepository.updateUser(user, "preferences.timezoneOffset", String.valueOf(offset))
-                        .subscribe(user1 -> {}, throwable -> {
-                        });
-            }
             runOnUiThread(() -> {
                 updateHeader();
                 updateSidebar();
@@ -433,44 +399,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                 displayNewInboxMessagesBadge();
                 pushNotificationManager.setUser(user);
                 pushNotificationManager.addPushDeviceUsingStoredToken();
-
-                // Update the oldEntries
-                new Thread(() -> {
-
-                    // multiple crashes because user is null
-                    if (user != null) {
-
-                        /*taskRepository.removeOldTasks(user.getId(), allTasks);
-
-                        ArrayList<ChecklistItem> allChecklistItems = new ArrayList<>();
-                        for (Task t : allTasks) {
-                            if (t.checklist != null) {
-                                allChecklistItems.addAll(t.checklist);
-                            }
-                        }
-                        taskRepository.removeOldChecklists(allChecklistItems);
-
-                        ArrayList<TaskTag> allTaskTags = new ArrayList<>();
-                        for (Task t : allTasks) {
-                            if (t.getTags() != null) {
-                                allTaskTags.addAll(t.getTags());
-                            }
-                        }
-                        taskRepository.removeOldTaskTags(allTaskTags);
-
-                        ArrayList<RemindersItem> allReminders = new ArrayList<>();
-                        for (Task t : allTasks) {
-                            if (t.getReminders() != null) {
-                                allReminders.addAll(t.getReminders());
-                            }
-                        }
-                        taskRepository.removeOldReminders(allReminders);
-
-                        tagRepository.removeOldTags(user.getTags());*/
-
-                        inventoryRepository.updateOwnedEquipment(user);
-                    }
-                }).start();
             }
         }
     }
@@ -501,14 +429,10 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
         }
     }
 
-    private void updateUserAvatars() {
+    private void updateHeader() {
         if (avatarInHeader != null) {
             avatarInHeader.updateData(user);
         }
-    }
-
-    private void updateHeader() {
-        updateUserAvatars();
         if (activeFragment != null) {
             setTranslatedFragmentTitle(activeFragment);
         }
@@ -635,11 +559,6 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
     }
 
     @Subscribe
-    public void onEvent(ToggledInnStateEvent evt) {
-        avatarInHeader.updateData(user);
-    }
-
-    @Subscribe
     public void onEvent(OpenMenuItemCommand event) {
         if (drawer != null) {
             drawer.setSelection(event.identifier);
@@ -663,9 +582,8 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
             }
             observable
                     .doOnNext(aVoid -> showSnackbar(this, floatingMenuWrapper, getString(R.string.successful_purchase, event.item.text), SnackbarDisplayType.NORMAL))
-                    .subscribe(buyResponse -> userRepository.retrieveUser(false)
-                            .subscribe(user1 -> {}, throwable -> {
-                            }), throwable -> {
+                    .flatMap(buyResponse -> userRepository.retrieveUser(false))
+                    .subscribe(buyResponse -> {}, throwable -> {
                         retrofit2.HttpException error = (retrofit2.HttpException) throwable;
                         if (error.code() == 401 && event.item.getCurrency().equals("gems")) {
                             openGemPurchaseFragment(null);
@@ -696,10 +614,9 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
         }
 
         if (event.Reward.specialTag != null && event.Reward.specialTag.equals("item")) {
-            apiClient.buyItem(event.Reward.getId())
+            inventoryRepository.buyItem(user, event.Reward.getId())
                     .subscribe(buyResponse -> {
                                 String snackbarMessage = getString(R.string.successful_purchase, event.Reward.getText());
-
                                 if (event.Reward.getId().equals("armoire")) {
                                     if (buyResponse.armoire.get("type").equals("gear")) {
                                         snackbarMessage = getApplicationContext().getString(R.string.armoireEquipment, buyResponse.armoire.get("dropText"));
@@ -709,46 +626,15 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
                                         snackbarMessage = getApplicationContext().getString(R.string.armoireExp);
                                     }
                                     soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop);
-                                } else if (!event.Reward.getId().equals("potion")) {
-                                    EventBus.getDefault().post(new TaskRemovedEvent(event.Reward.getId()));
                                 }
-                                if (buyResponse.items != null) {
-                                    user.setItems(buyResponse.items);
-                                }
-                                if (buyResponse.hp != null) {
-                                    user.getStats().setHp(buyResponse.hp);
-                                }
-                                if (buyResponse.exp != null) {
-                                    user.getStats().setExp(buyResponse.exp);
-                                }
-                                if (buyResponse.mp != null) {
-                                    user.getStats().setMp(buyResponse.mp);
-                                }
-                                if (buyResponse.gp != null) {
-                                    user.getStats().setGp(buyResponse.gp);
-                                }
-                                if (buyResponse.lvl != null) {
-                                    user.getStats().setLvl(buyResponse.lvl);
-                                }
-
-                                MainActivity.this.setUserData(true);
-
                                 showSnackbar(MainActivity.this, floatingMenuWrapper, snackbarMessage, SnackbarDisplayType.NORMAL);
                             }, throwable -> {
                             }
                     );
         } else {
             buyRewardUseCase.observable(new BuyRewardUseCase.RequestValues(user, event.Reward))
-                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), SnackbarDisplayType.NORMAL), error -> {
-                    });
+                    .subscribe(res -> showSnackbar(this, floatingMenuWrapper, getString(R.string.notification_purchase, event.Reward.getText()), SnackbarDisplayType.NORMAL), error -> {});
         }
-
-        //Update the users gold
-        Stats stats = user.getStats();
-        Double gp = stats.getGp() - event.Reward.getValue();
-        stats.setGp(gp);
-
-        avatarInHeader.updateData(user);
     }
 
     @Subscribe
@@ -1088,16 +974,12 @@ public class MainActivity extends BaseActivity implements Action1<Throwable>, Tu
         return intent;
     }
 
-    @Override
-    public void call(Throwable throwable) {
-
-    }
 
     @Subscribe
     public void onEvent(OpenFullProfileCommand cmd) {
-        if (cmd.MemberId.equals("system"))
+        if (cmd.MemberId.equals("system")) {
             return;
-
+        }
         Bundle bundle = new Bundle();
         bundle.putString("userId", cmd.MemberId);
 

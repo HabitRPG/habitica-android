@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.inventory.Mount;
 import com.habitrpg.android.habitica.models.inventory.Pet;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestContent;
+import com.habitrpg.android.habitica.models.responses.BuyResponse;
 import com.habitrpg.android.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.user.Items;
 import com.habitrpg.android.habitica.models.user.User;
@@ -68,4 +69,6 @@ public interface InventoryRepository extends ContentRepository {
     Observable<Items> hatchPet(Egg egg, HatchingPotion hatchingPotion);
 
     Observable<Quest> inviteToQuest(QuestContent quest);
+
+    Observable<BuyResponse> buyItem(User user, String id);
 }

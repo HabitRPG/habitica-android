@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation;
 
 import com.habitrpg.android.habitica.data.ApiClient;
+import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.data.local.UserLocalRepository;
 import com.habitrpg.android.habitica.helpers.ReactiveErrorHandler;
@@ -12,9 +13,13 @@ import com.habitrpg.android.habitica.models.responses.SkillResponse;
 import com.habitrpg.android.habitica.models.responses.UnlockResponse;
 import com.habitrpg.android.habitica.models.user.User;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import io.realm.RealmResults;
 import rx.Observable;
@@ -24,8 +29,11 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
 
     private Date lastSync;
 
-    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient) {
+    private TaskRepository taskRepository;
+
+    public UserRepositoryImpl(UserLocalRepository localRepository, ApiClient apiClient, TaskRepository taskRepository) {
         super(localRepository, apiClient);
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -56,7 +64,18 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<UserLocalRepository> 
         if (forced || this.lastSync == null || (new Date().getTime() - this.lastSync.getTime()) > 180000) {
             lastSync = new Date();
             return apiClient.retrieveUser(withTasks)
-                    .doOnNext(localRepository::saveUser);
+                    .doOnNext(localRepository::saveUser)
+                    .doOnNext(user -> taskRepository.saveTasks(user.getTasksOrder(), user.tasks))
+                    .flatMap(user -> {
+                        Calendar calendar = new GregorianCalendar();
+                        TimeZone timeZone = calendar.getTimeZone();
+                        long offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.getTimeInMillis()), TimeUnit.MILLISECONDS);
+                        if (offset != user.getPreferences().getTimezoneOffset()) {
+                            return updateUser(user, "preferences.timezoneOffset", String.valueOf(offset));
+                        } else {
+                            return Observable.just(user);
+                        }
+                    });
         } else {
             return Observable.empty();
         }

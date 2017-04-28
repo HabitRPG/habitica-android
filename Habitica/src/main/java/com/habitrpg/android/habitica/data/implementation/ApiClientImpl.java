@@ -374,33 +374,11 @@ public class ApiClientImpl implements Action1<Throwable>, ApiClient {
 
             userObservable = Observable.zip(userObservable, tasksObservable,
                     (habitRPGUser, tasks) -> {
-                        List<Task> sortedTasks = new ArrayList<>();
-                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getHabits()));
-                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getDailys()));
-                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getTodos()));
-                        sortedTasks.addAll(sortTasks(tasks.tasks, habitRPGUser.getTasksOrder().getRewards()));
-
-                        Realm.getDefaultInstance().executeTransactionAsync(realm -> realm.insertOrUpdate(sortedTasks));
-
+                        habitRPGUser.tasks = tasks;
                         return habitRPGUser;
                     });
         }
         return userObservable;
-    }
-
-    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder) {
-        List<Task> taskList = new ArrayList<>();
-        int position = 0;
-        for (String taskId : taskOrder) {
-            Task task = taskMap.get(taskId);
-            if (task != null) {
-                task.position = position;
-                taskList.add(task);
-                position++;
-                taskMap.remove(taskId);
-            }
-        }
-        return taskList;
     }
 
     public boolean hasAuthenticationKeys() {

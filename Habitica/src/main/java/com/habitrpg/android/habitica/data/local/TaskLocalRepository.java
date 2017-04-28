@@ -17,14 +17,9 @@ public interface TaskLocalRepository extends BaseLocalRepository {
     Observable<RealmResults<Task>> getTasks(String taskType, String userID);
     Observable<RealmResults<Task>> getTasks(String userId);
 
-    void saveTasks(TasksOrder tasksOrder, TaskList tasks);
+    void saveTasks(String userId, TasksOrder tasksOrder, TaskList tasks);
 
     void saveTask(Task task);
-
-    void removeOldTasks(String userID, List<Task> onlineTaskList);
-    void removeOldChecklists(List<ChecklistItem> onlineChecklistItems);
-    void removeOldTaskTags(List<TaskTag> onlineTaskTags);
-    void removeOldReminders(List<RemindersItem> onlineReminders);
 
     void deleteTask(String taskID);
 

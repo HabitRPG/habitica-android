@@ -5,10 +5,11 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem;
 import com.habitrpg.android.habitica.models.tasks.RemindersItem;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
-import com.habitrpg.android.habitica.models.tasks.TaskTag;
 import com.habitrpg.android.habitica.models.tasks.TasksOrder;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -34,8 +35,34 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     @Override
-    public void saveTasks(TasksOrder tasksOrder, TaskList tasks) {
-        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(tasks.tasks.values()));
+    public void saveTasks(String userId, TasksOrder tasksOrder, TaskList tasks) {
+        realm.executeTransactionAsync(realm1 -> {
+
+            List<Task> sortedTasks = new ArrayList<>();
+            sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getHabits()));
+            sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getDailys()));
+            sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getTodos()));
+            sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.getRewards()));
+
+            removeOldTasks(userId, sortedTasks);
+
+            realm1.insertOrUpdate(sortedTasks);
+        });
+    }
+
+    private List<Task> sortTasks(Map<String, Task> taskMap, List<String> taskOrder) {
+        List<Task> taskList = new ArrayList<>();
+        int position = 0;
+        for (String taskId : taskOrder) {
+            Task task = taskMap.get(taskId);
+            if (task != null) {
+                task.position = position;
+                taskList.add(task);
+                position++;
+                taskMap.remove(taskId);
+            }
+        }
+        return taskList;
     }
 
     @Override
@@ -43,25 +70,21 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
         realm.executeTransaction(realm1 -> realm1.insertOrUpdate(task));
     }
 
-    @Override
-    public void removeOldTasks(String userID, List<Task> onlineTaskList) {
-
+    private void removeOldTasks(String userID, List<Task> onlineTaskList) {
+        RealmResults<Task> localTasks = realm.where(Task.class).equalTo("userId", userID).findAll();
+        for (Task localTask : localTasks) {
+            if (!onlineTaskList.contains(localTask)) {
+                for (ChecklistItem item : localTask.checklist) {
+                    item.deleteFromRealm();
+                }
+                for (RemindersItem item : localTask.reminders) {
+                    item.deleteFromRealm();
+                }
+                localTask.deleteFromRealm();
+            }
+        }
     }
 
-    @Override
-    public void removeOldChecklists(List<ChecklistItem> onlineChecklistItems) {
-
-    }
-
-    @Override
-    public void removeOldTaskTags(List<TaskTag> onlineTaskTags) {
-
-    }
-
-    @Override
-    public void removeOldReminders(List<RemindersItem> onlineReminders) {
-
-    }
 
     @Override
     public void deleteTask(String taskID) {
@@ -70,6 +93,7 @@ public class RealmTaskLocalRepository extends RealmBaseLocalRepository implement
     }
 
     @Override
+
     public Observable<Task> getTask(String taskId) {
         return realm.where(Task.class).equalTo("id", taskId).findFirstAsync().asObservable()
                 .filter(realmObject -> realmObject.isLoaded())

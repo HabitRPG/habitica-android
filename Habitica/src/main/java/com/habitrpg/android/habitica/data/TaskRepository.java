@@ -19,6 +19,7 @@ import rx.Observable;
 public interface TaskRepository extends BaseRepository  {
     Observable<RealmResults<Task>> getTasks(String taskType, String userID);
     Observable<RealmResults<Task>> getTasks(String userId);
+    void saveTasks(TasksOrder order, TaskList tasks);
 
     Observable<TaskList> refreshTasks(TasksOrder tasksOrder);
 
@@ -34,11 +35,6 @@ public interface TaskRepository extends BaseRepository  {
     void saveTask(Task task);
 
     Observable<List<Task>> createTasks(List<Task> newTasks);
-
-    void removeOldTasks(String userID, List<Task> onlineTaskList);
-    void removeOldChecklists(List<ChecklistItem> onlineChecklistItems);
-    void removeOldTaskTags(List<TaskTag> onlineTaskTags);
-    void removeOldReminders(List<RemindersItem> onlineReminders);
 
     void markTaskCompleted(String taskId, boolean isCompleted);
 
